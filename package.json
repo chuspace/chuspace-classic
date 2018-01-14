@@ -5,7 +5,7 @@
     "node": "9.4.0"
   },
   "scripts": {
-    "format": "yarn run prettier-standard 'app/javascript/**/*.{js,jsx}'",
+    "format": "yarn run prettier-standard '{app,config,bin}/**/*.{js,jsx}'",
     "relay": "yarn run relay-compiler --src ./app/javascript --schema ./app/javascript/graphql/schema.graphql"
   },
   "dependencies": {

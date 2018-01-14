@@ -10,7 +10,7 @@ const detect = require('detect-port')
 const config = environment.toWebpackConfig()
 const devServerUrl = `http://${config.devServer.host}:${config.devServer.port}`
 
-function camelize(text) {
+function camelize (text) {
   const separator = '_'
   const words = text.split(separator)
   if (words.length === 0) return text.charAt(0).toUpperCase() + word.slice(1)
@@ -26,7 +26,6 @@ function camelize(text) {
 
   return result
 }
-
 
 const detectPort = new Promise((resolve, reject) =>
   detect(config.devServer.port, (err, _port) => {
@@ -46,7 +45,9 @@ hypernova({
   devMode: true,
   port: 3030,
   async getComponent (name) {
-    const serverBundle = require(join(config.output.path, 'manifest.json'))['server.js']
+    const serverBundle = require(join(config.output.path, 'manifest.json'))[
+      'server.js'
+    ]
     const isDevServerRunning = await detectPort
 
     if (isDevServerRunning) {
