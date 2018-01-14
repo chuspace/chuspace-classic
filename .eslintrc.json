@@ -1,0 +1,16 @@
+{
+  "env": {
+    "node": true,
+    "es6": true,
+    "jest": true
+  },
+  "parser": "babel-eslint",
+  "extends": [
+    "standard",
+    "standard-jsx"
+  ],
+  "globals": {
+    "URLSearchParams": true,
+    "analytics": true
+  }
+}
