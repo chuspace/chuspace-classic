@@ -45,10 +45,10 @@ hypernova({
   devMode: true,
   port: 3030,
   async getComponent (name) {
-    const serverBundle = require(join(config.output.path, 'manifest.json'))[
-      'server.js'
-    ]
     const isDevServerRunning = await detectPort
+    const serverBundle = require(
+      join(config.output.path, 'manifest.json')
+    )['server.js']
 
     if (isDevServerRunning) {
       requireFromUrl(`${devServerUrl}${serverBundle}`)
