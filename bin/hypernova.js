@@ -56,7 +56,7 @@ hypernova({
       require(join(config.output.path, '..', serverBundle))
     }
 
-    console.log(`Rendering ${camelize(name)}`)
-    return renderReact(camelize(name), eval(camelize(name)))
+    console.log(`Rendering ${name}`)
+    return renderReact(name, eval(camelize(name)))
   }
 })

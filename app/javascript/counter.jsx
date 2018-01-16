@@ -2,7 +2,12 @@ import React, { Component } from 'react'
 
 export default class Counter extends Component {
   state = {
-    count: 0
+    count: 0,
+    text: 'Hello'
+  }
+
+  updateValue = (e) => {
+    this.setState({ text: e.target.value })
   }
 
   increment = e => {
