@@ -1,8 +1,6 @@
 import { renderReact } from '../utils/hypernova-nerv'
-import Counter from '../counter'
-import HelloReact from '../hello_react'
+import Signup from '../components/signup'
 
 document.addEventListener('DOMContentLoaded', () => {
-  renderReact('counter', Counter)
-  renderReact('hello_react', HelloReact)
+  renderReact('signup', Signup)
 })
