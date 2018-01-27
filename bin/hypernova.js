@@ -2,10 +2,10 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
 const { join } = require('path')
 const hypernova = require('hypernova/server')
-const { renderReact } = require('../app/javascript/utils/hypernova-nerv.js')
 const { environment } = require('@rails/webpacker')
 const requireFromUrl = require('require-from-url/sync')
 const detect = require('detect-port')
+const { renderReact } = require('../app/javascript/utils/hypernova-nerv.js')
 
 const config = environment.toWebpackConfig()
 const devServerUrl = `http://${config.devServer.host}:${config.devServer.port}`
