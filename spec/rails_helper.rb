@@ -8,8 +8,6 @@ require 'rspec/rails'
 require 'shoulda/matchers'
 require 'database_cleaner'
 
-FactoryGirl.find_definitions
-
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
@@ -18,10 +16,11 @@ ActiveJob::Base.queue_adapter = :test
 
 RSpec.configure do |config|
   config.before(:suite) do
+    FactoryBot.find_definitions
     DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.include(Shoulda::Matchers::ActiveModel, type: :model)
   config.include(Shoulda::Matchers::ActiveRecord, type: :model)
 
