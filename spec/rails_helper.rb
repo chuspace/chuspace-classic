@@ -1,17 +1,17 @@
-# This file is copied to spec/ when you run 'rails generate rspec:install'
-require 'spec_helper'
-ENV['RAILS_ENV'] ||= 'test'
+# frozen_string_literal: true
+
 require File.expand_path('../../config/environment', __FILE__)
-# Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+require 'spec_helper'
 require 'rspec/rails'
 require 'shoulda/matchers'
 require 'database_cleaner'
 
+ENV['RAILS_ENV'] ||= 'test'
+# Prevent database truncation if the environment is production
+abort('The Rails environment is running in production mode!') if Rails.env.production?
+
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
-
 ActiveRecord::Migration.maintain_test_schema!
-
 ActiveJob::Base.queue_adapter = :test
 
 RSpec.configure do |config|

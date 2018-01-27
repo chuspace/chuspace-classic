@@ -7,7 +7,6 @@ AllCops:
     - 'node_modules/**/*'
     - 'db/**/*'
     - 'vendor/**/*'
-    - 'spec/**/*'
     - 'bin/**/*'
 
 # Prefer &&/|| over and/or.
