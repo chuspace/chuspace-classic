@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'hypernova'
 require 'hypernova/plugins/development_mode_plugin'
 
