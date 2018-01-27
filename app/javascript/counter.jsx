@@ -6,7 +6,7 @@ export default class Counter extends Component {
     text: 'Hello'
   }
 
-  updateValue = (e) => {
+  updateValue = e => {
     this.setState({ text: e.target.value })
   }
 
