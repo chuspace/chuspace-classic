@@ -17,6 +17,14 @@
     "syntax-dynamic-import",
     "transform-object-rest-spread",
     "lodash",
+    ["css-modules-transform", {
+      "preprocessCss": "./config/webpack/loaders/sass.js",
+      "generateScopedName": "[name]__[local]___[hash:base64:5]",
+      "extensions": [
+        ".scss",
+        ".sass"
+      ]
+    }],
     [
       "transform-class-properties",
       {
