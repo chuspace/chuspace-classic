@@ -61,8 +61,12 @@ group :development do
   gem 'rails-erd', require: false
   # Debugging
   gem 'rails_panel'
+  gem 'meta_request'
+  # Benchmarks
+  gem 'derailed_benchmarks'
+  gem 'stackprof'
   # Code linting
-  gem 'rubocop'
+  gem 'rubocop', require: false
   # Security
   gem 'brakeman', require: false
   # Better messages
