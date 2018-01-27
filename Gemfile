@@ -20,7 +20,6 @@ gem 'mini_magick', '~> 4.8'
 # Graphql API
 gem 'graphql'
 # Auth
-gem 'devise'
 gem 'pundit'
 # State machine
 gem 'aasm'
