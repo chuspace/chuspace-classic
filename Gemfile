@@ -33,6 +33,7 @@ gem 'delivery_boy'
 gem 'racecar'
 # Server side rendering
 gem 'react-rails'
+gem 'mini_racer'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
