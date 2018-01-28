@@ -24,7 +24,6 @@ gem 'aasm'
 # Search
 gem 'searchkick'
 gem 'oj'
-gem 'typhoeus'
 # Jobs
 gem 'sidekiq'
 # ENV
