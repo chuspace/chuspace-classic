@@ -33,7 +33,6 @@ gem 'figaro'
 gem 'delivery_boy'
 gem 'racecar'
 # Server side rendering
-gem 'hypernova'
 gem 'react-rails'
 
 # Reduces boot times through caching; required in config/boot.rb

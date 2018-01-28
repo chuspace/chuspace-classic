@@ -4,8 +4,8 @@ environment.config.merge({
   resolve: {
     alias: {
       react: 'nervjs',
-      'react-dom': 'nervjs',
-      'react-dom/server': 'nervserver'
+      'react-dom/server': 'nerv-server',
+      'react-dom': 'nervjs'
     }
   }
 })

@@ -16,15 +16,11 @@
     "babel-preset-react": "^6.24.1",
     "bulma": "^0.6.2",
     "caniuse-lite": "^1.0.30000792",
-    "detect-port": "^1.2.2",
-    "glob": "^7.1.2",
-    "hypernova": "^2.2.0",
     "lodash": "^4.17.4",
     "lodash-webpack-plugin": "^0.11.4",
     "nerv-server": "^1.2.6",
     "nervjs": "^1.2.8",
     "react_ujs": "^2.4.3",
-    "require-from-url": "^3.1.2",
     "webpack": "^3.10.0"
   },
   "devDependencies": {

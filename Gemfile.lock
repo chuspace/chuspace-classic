@@ -103,8 +103,6 @@ GEM
       activesupport (>= 4.2.0)
     hashie (3.5.7)
     heapy (0.1.3)
-    hypernova (1.3.0)
-      faraday (~> 0.8)
     i18n (0.9.3)
       concurrent-ruby (~> 1.0)
     json (2.1.0)
@@ -289,7 +287,6 @@ DEPENDENCIES
   derailed_benchmarks
   factory_bot_rails
   figaro
-  hypernova
   listen (>= 3.0.5, < 3.2)
   meta_request
   mini_magick (~> 4.8)

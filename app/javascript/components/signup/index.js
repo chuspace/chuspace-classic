@@ -6,7 +6,7 @@ export default class Signup extends Component {
   render () {
     return (
       <div className={styles.container}>
-        <h1>Signup now at:</h1>
+        <h1>Signup now</h1>
         <p>Welcome to chuspace</p>
       </div>
     )
