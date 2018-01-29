@@ -6,4 +6,4 @@ module.exports = (data, file) => {
   } catch (e) {
     console.error(e)
   }
-};
+}
