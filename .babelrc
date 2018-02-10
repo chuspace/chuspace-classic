@@ -18,6 +18,20 @@
     "syntax-dynamic-import",
     "transform-object-rest-spread",
     "lodash",
+    ["module-resolver",
+      {
+        "root": [
+          "./app/javascript/src"
+        ],
+        "alias": {
+          "components": "./app/javascript/src/components",
+          "layouts": "./app/javascript/src/layouts",
+          "pages": "./app/javascript/src/pages",
+          "helpers": "./app/javascript/src/helpers",
+          "decorators": "./app/javascript/src/decorators"
+        }
+      }
+    ],
     ["css-modules-transform", {
       "preprocessCss": "./config/webpack/loaders/sass.js",
       "generateScopedName": "[name]__[local]___[hash:base64:5]",
