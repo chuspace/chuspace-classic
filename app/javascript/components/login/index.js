@@ -16,7 +16,7 @@ import 'antd/lib/grid/style/index.css'
 import 'antd/lib/card/style/index.css'
 import styles from './styles'
 
-class HorizontalLoginForm extends Component {
+class LoginForm extends Component {
   render () {
     return (
       <Row
@@ -58,6 +58,6 @@ class HorizontalLoginForm extends Component {
   }
 }
 
-const WrappedForm = Form.create({})(HorizontalLoginForm)
+const WrappedForm = Form.create({})(LoginForm)
 console.log(WrappedForm)
-export default HorizontalLoginForm
+export default LoginForm
