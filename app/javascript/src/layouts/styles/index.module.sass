@@ -1,0 +1,30 @@
+@value flex, justify-between, items-center from 'tachyons-flexbox'
+@value ma0, pv3, mr3 from 'tachyons-spacing'
+@value shadow-4 from 'tachyons-box-shadow'
+@value no-underline from 'tachyons-text-decoration'
+@value db from 'tachyons-display'
+@value f4 from 'tachyons-type-scale'
+
+.layout
+  width: 100%
+
+.header
+  composes: shadow-4
+
+.nav
+  composes: pv3 flex justify-between items-center
+
+.logo
+  composes: f4 db
+
+.logoLink
+  composes: no-underline
+
+.links
+  composes: flex
+
+.link
+  composes: no-underline mr3
+
+.link:last-child
+  margin-right: 0
