@@ -16,13 +16,13 @@ default: &default
   extensions:
     - .js
     - .jsx
-    - .sass
     - .css
     - .png
     - .svg
     - .gif
     - .jpeg
     - .jpg
+    - .module.sass
 
 development:
   <<: *default
