@@ -3,14 +3,12 @@ import classnames from 'classnames'
 
 import styles from './styles'
 
-const Container = (props) => (
-  <div className={classnames(
-    styles[props.size || 'mw8'], {
-      [styles.center]: props.center || true
-    }
-  )}>
-    {props.children}
-  </div>
-)
+const Container = (props) => {
+  return (
+    <div className={styles[props.size || 'regular']}>
+      {props.children}
+    </div>
+  )
+}
 
 export default Container

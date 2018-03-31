@@ -9,12 +9,12 @@ export default class MarketingLayout extends Component {
   render () {
     return (
       <div className={styles.layout}>
-        <header>
+        <header className={styles.header}>
           <Container>
             <nav class={styles.nav}>
               <div class={styles.logo}>
-                <a href='/' class='logo-link'>
-                  logo
+                <a href='/' class={styles.logoLink}>
+                  Chuspace
                 </a>
               </div>
               <div class={styles.links}>
