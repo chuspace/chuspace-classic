@@ -100,8 +100,22 @@ GEM
     get_process_mem (0.2.1)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    graphiql-rails (1.4.10)
+      railties
+      sprockets-rails
+    graphql (1.7.14)
+    graphql-batch (0.3.9)
+      graphql (>= 0.8, < 2)
+      promise.rb (~> 0.7.2)
+    graphql-client (0.12.2)
+      activesupport (>= 3.0, < 6.0)
+      graphql (~> 1.6)
     hashie (3.5.7)
     heapy (0.1.3)
+    html-pipeline (2.7.1)
+      activesupport (>= 2)
+      nokogiri (>= 1.4)
+    httpauth (0.2.1)
     i18n (1.0.0)
       concurrent-ruby (~> 1.0)
     json (2.1.0)
@@ -137,12 +151,26 @@ GEM
     nio4r (2.3.0)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
+    oauth2 (0.6.1)
+      faraday (~> 0.7)
+      httpauth (~> 0.1)
+      multi_json (~> 1.3)
     oj (3.5.0)
+    omniauth (1.8.1)
+      hashie (>= 3.4.6, < 3.6.0)
+      rack (>= 1.6.2, < 3)
+    omniauth-github (1.0.1)
+      omniauth (~> 1.0)
+      omniauth-oauth2 (~> 1.0)
+    omniauth-oauth2 (1.0.2)
+      oauth2 (~> 0.6.0)
+      omniauth (~> 1.0)
     parallel (1.12.1)
     parser (2.5.0.5)
       ast (~> 2.4.0)
     pg (0.21.0)
     powerpack (0.1.1)
+    promise.rb (0.7.4)
     puma (3.11.3)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
@@ -200,6 +228,8 @@ GEM
       railties (>= 3.2)
       tilt
     redis (4.0.1)
+    reverse_markdown (1.0.5)
+      nokogiri
     rspec-core (3.7.1)
       rspec-support (~> 3.7.0)
     rspec-expectations (3.7.0)
@@ -290,20 +320,27 @@ DEPENDENCIES
   derailed_benchmarks
   factory_bot_rails
   figaro
+  graphiql-rails
+  graphql
+  graphql-batch
+  graphql-client
+  html-pipeline
   listen (>= 3.0.5, < 3.2)
   meta_request
   mini_magick (~> 4.8)
   mini_racer
   oj
+  omniauth-github
   pg (~> 0.18)
   puma (~> 3.11)
   pundit
   racecar
-  rails (~> 5.2.0.beta2)
+  rails (~> 5.2.x)
   rails-erd
   rails_panel
   react-rails
   redis (~> 4.0)
+  reverse_markdown
   rspec-rails
   rubocop
   searchkick
@@ -317,7 +354,7 @@ DEPENDENCIES
   webpacker (>= 4.x)
 
 RUBY VERSION
-   ruby 2.5.0p0
+   ruby 2.5.1p57
 
 BUNDLED WITH
    1.16.1
