@@ -12,7 +12,7 @@ module Authentication
       if authenticated_user = User.find_by(id: cookies.encrypted[:user_id])
         Current.user = authenticated_user
       else
-        redirect_to new_session_url
+        redirect_to root_url
       end
     end
 end

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
+  skip_before_action :authenticate, on: :create
+
   def create
     user = User.find_or_create_from_auth_hash(auth_hash)
     cookies.encrypted[:user_id] = user.id
