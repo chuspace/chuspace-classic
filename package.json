@@ -34,7 +34,7 @@
     "tachyons-type-scale": "^6.1.0",
     "tachyons-typography": "^3.0.5",
     "tachyons-widths": "^5.2.1",
-    "webpack": "^4.4.1",
+    "webpack": "^4.5.0",
     "webpack-cli": "^2.0.13"
   },
   "devDependencies": {
