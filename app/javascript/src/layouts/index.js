@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
-import Container from 'components/container'
+import MarketingHeader from 'components/header/marketing'
+import MarketingFooter from 'components/footer/marketing'
 
 import styles from './styles'
 import './global.css'
@@ -9,30 +10,9 @@ export default class MarketingLayout extends Component {
   render () {
     return (
       <div className={styles.layout}>
-        <header className={styles.header}>
-          <Container>
-            <nav class={styles.nav}>
-              <div class={styles.logo}>
-                <a href='/' class={styles.logoLink}>
-                  Chuspace
-                </a>
-              </div>
-              <div class={styles.links}>
-                <a class={styles.link} href='/' >How it Works</a>
-                <a class={styles.link} href='/' >Pricing</a>
-                <a class={styles.link} href='/' >About</a>
-                <a class={styles.link} href='/' >Careers</a>
-                <a class={styles.link} href='/' >Sign Up</a>
-              </div>
-            </nav>
-          </Container>
-        </header>
-
+        <MarketingHeader />
         {this.props.children}
-
-        <footer>
-          I am footer
-        </footer>
+        <MarketingFooter />
       </div>
     )
   }
