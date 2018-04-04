@@ -8,7 +8,7 @@ ruby '2.5.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.x'
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 0.18'
+gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
@@ -17,6 +17,7 @@ gem 'webpacker', '>= 4.x'
 gem 'redis', '~> 4.0'
 # Use ActiveStorage variant
 gem 'mini_magick', '~> 4.8'
+gem 'aws-sdk-s3', require: false
 # Auth
 gem 'pundit'
 # State machine
@@ -37,7 +38,7 @@ gem 'mini_racer'
 # Graphql
 gem 'graphql'
 gem 'graphql-batch'
-gem 'graphql-client'
+gem 'graphql-client', git: 'https://github.com/github/graphql-client.git'
 
 # HTML to markdown
 gem 'reverse_markdown'
