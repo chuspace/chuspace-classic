@@ -12,6 +12,13 @@ test:
   brokers:
     - localhost:9092
 
+staging:
+  <<: *common
+  brokers:
+    - kafka1.myapp.com:9092
+    - kafka2.myapp.com:9092
+    - kafka3.myapp.com:9092
+
 production:
   <<: *common
   brokers:
