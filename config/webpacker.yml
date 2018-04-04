@@ -16,17 +16,17 @@ default: &default
   extensions:
     - .js
     - .jsx
-    - .css
+    - .sass
+    - .module.sass
     - .png
     - .svg
     - .gif
     - .jpeg
     - .jpg
-    - .module.sass
 
 development:
   <<: *default
-  compile: false
+  compile: true
 
   # Reference: https://webpack.js.org/configuration/dev-server/
   dev_server:
