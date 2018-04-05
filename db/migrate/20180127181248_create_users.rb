@@ -7,16 +7,17 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :first_name, null: false, default: ""
       t.string :last_name, null: false, default: ""
       t.string :email, null: false, default: ""
-      t.string :avatar, default: ""
+      t.string :avatar
 
       t.text :bio
+      t.string :login_token
 
       t.string :url, default: "", index: true
       t.string :company, default: "", index: true
       t.string :location, default: "", index: true
 
-      t.bigint :uid, null: false, default: 0
-      t.string :access_token, null: false, default: ""
+      t.bigint :uid, default: 0
+      t.string :access_token, default: ""
 
       ## Trackable
       t.integer  :sign_in_count, default: 0, null: false
