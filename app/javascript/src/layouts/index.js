@@ -11,7 +11,9 @@ export default class MarketingLayout extends Component {
     return (
       <div className={styles.layout}>
         <MarketingHeader />
-        {this.props.children}
+        <div className={styles.content}>
+          {this.props.children}
+        </div>
         <MarketingFooter />
       </div>
     )
