@@ -3,9 +3,8 @@
 Rails.application.routes.draw do
   root to: 'pages#index'
 
-
   post '/registerations', to: 'registerations#create'
-  get '/auth/:provider/callback', to: 'sessions#github'
+  get '/auth/:provider/callback', to: 'sessions#github', as: :omniauth
   post '/sessions', to: 'sessions#create'
   patch '/logout', to: 'sessions#destroy'
 

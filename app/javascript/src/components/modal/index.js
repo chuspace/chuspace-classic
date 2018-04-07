@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
 import Dialog from 'helpers/dialog'
-import Modal from './dialog'
+import Modal from './index'
 
 const modalNode = document.getElementById('modal-root')
 

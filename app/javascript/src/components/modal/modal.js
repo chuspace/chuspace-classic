@@ -1,7 +1,4 @@
 import React, { Component } from 'react'
-import Container from 'components/container'
-
-import styles from './styles'
 
 export default class Modal extends Component {
   dialogNode = null
@@ -10,18 +7,15 @@ export default class Modal extends Component {
     return (
       <dialog
         id='modal'
-        className={styles.modal}
+        className='modal mw6 center'
         ref={node => (this.dialogNode = node)}
       >
-        <Container>
-          <span
-            className={styles.close}
-            onClick={() => this.props.hideDialog()}
-          >
+        <div className='modal-body'>
+          <span className='modal-close' onClick={() => this.props.hideDialog()}>
             &#10005;
           </span>
           <div>{this.props.children}</div>
-        </Container>
+        </div>
       </dialog>
     )
   }

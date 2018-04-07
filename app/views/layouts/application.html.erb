@@ -3,11 +3,33 @@
   <head>
     <title>Chuspace</title>
     <%= csrf_meta_tags %>
-    <%= javascript_pack_tag 'application' %>
-    <%= stylesheet_pack_tag 'application' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="mw8 center">
+      <header class="header">
+        <nav class="nav pv3 flex justify-between items-center">
+          <div class="logo f4 db">
+            <%= link_to 'Chuspace', root_path, class: 'logo-link no-underline' %>
+          </div>
+          <div class="nav-links flex">
+            <%= link_to 'Sign in', '/auth/github', class: 'nav-link-item no-underline mr3' %>
+          </div>
+        </nav>
+      </header>
+
+      <div class="content">
+        <%= yield %>
+      </div>
+
+      <footer className="footer">
+        <div class="mw8 center">
+          I am footer
+        </div>
+      </footer>
+    </div>
   </body>
 </html>
