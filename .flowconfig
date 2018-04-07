@@ -1,0 +1,23 @@
+[ignore]
+.*/node_modules/fbjs/.*
+.*/node_modules/immutable/.*
+.*/vendor/*
+
+[include]
+
+[libs]
+
+[options]
+module.name_mapper.extension='sass' -> '<PROJECT_ROOT>/frontend/flow-types/CSSModule.js.flow'
+module.name_mapper.extension='module.sass' -> '<PROJECT_ROOT>/frontend/flow-types/CSSModule.js.flow'
+module.name_mapper.extension='png' -> '<PROJECT_ROOT>/frontend/flow-types/WebpackAsset.js.flow'
+module.name_mapper.extension='jpg' -> '<PROJECT_ROOT>/frontend/flow-types/WebpackAsset.js.flow'
+module.name_mapper.extension='svg' -> '<PROJECT_ROOT>/frontend/flow-types/WebpackAsset.js.flow'
+module.system.node.resolve_dirname=node_modules
+module.system.node.resolve_dirname=app/javascript/
+module.system.node.resolve_dirname=app/javascript/src/components
+module.system.node.resolve_dirname=app/javascript/src/pages
+
+esproposal.class_static_fields=enable
+esproposal.class_instance_fields=enable
+esproposal.decorators=ignore

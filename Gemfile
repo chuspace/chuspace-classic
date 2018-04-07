@@ -78,8 +78,6 @@ group :development do
   gem 'brakeman', require: false
   # Better messages
   gem 'awesome_print'
-  # Graphiql editor
-  gem 'graphiql-rails'
   # Pry
   gem 'pry-rails'
   gem 'pry-rescue'

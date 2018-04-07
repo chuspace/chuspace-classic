@@ -11,6 +11,7 @@
         "useBuiltIns": true
       }
     ],
+    "flow",
     "react"
   ],
   "plugins": [
@@ -18,11 +19,10 @@
     "syntax-dynamic-import",
     "transform-object-rest-spread",
     "lodash",
-    ["module-resolver",
+    [
+      "module-resolver",
       {
-        "root": [
-          "./app/javascript/src"
-        ],
+        "root": ["./app/javascript/src"],
         "alias": {
           "components": "./app/javascript/src/components",
           "layouts": "./app/javascript/src/layouts",
@@ -32,14 +32,14 @@
         }
       }
     ],
-    ["css-modules-transform", {
-      "preprocessCss": "./config/webpack/loaders/sass.js",
-      "generateScopedName": "[name]__[local]___[hash:base64:5]",
-      "extensions": [
-        ".scss",
-        ".sass"
-      ]
-    }],
+    [
+      "css-modules-transform",
+      {
+        "preprocessCss": "./config/webpack/loaders/sass.js",
+        "generateScopedName": "[name]__[local]___[hash:base64:5]",
+        "extensions": [".scss", ".sass"]
+      }
+    ],
     [
       "transform-class-properties",
       {

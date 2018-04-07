@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
-  skip_before_action :authenticate, on: :create
+  skip_before_action :authenticate, on: %i[create github]
 
   def create
     user = User.find_by(login_token: params[:token])
