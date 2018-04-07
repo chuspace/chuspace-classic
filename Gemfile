@@ -39,16 +39,12 @@ gem 'mini_racer'
 gem 'graphql'
 gem 'graphql-batch'
 gem 'graphql-client', git: 'https://github.com/github/graphql-client.git'
-
 # HTML to markdown
 gem 'reverse_markdown'
-
 # Markdown
 gem 'html-pipeline'
-
 # oAuth
 gem 'omniauth-github'
-
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
@@ -84,9 +80,14 @@ group :development do
   gem 'awesome_print'
   # Graphiql editor
   gem 'graphiql-rails'
+  # Pry
+  gem 'pry-rails'
+  gem 'pry-rescue'
+  gem 'pry-stack_explorer'
 end
 
 group :test do
   gem 'simplecov', require: false
   gem 'shoulda-matchers'
+  gem 'action-cable-testing'
 end
