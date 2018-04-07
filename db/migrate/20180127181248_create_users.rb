@@ -2,11 +2,11 @@
 
 class CreateUsers < ActiveRecord::Migration[5.2]
   def change
-    create_table :users, id: :uuid do |t|
+    create_table :users, id: :uuid, force: :cascade do |t|
       ## Database authenticatable
-      t.string :first_name, null: false, default: ""
-      t.string :last_name, null: false, default: ""
+      t.string :name, null: false, default: ""
       t.string :email, null: false, default: ""
+      t.string :username, null: false, default: ""
       t.string :avatar
 
       t.text :bio
@@ -30,6 +30,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
     end
 
     add_index :users, :email, unique: true
+    add_index :users, :username, unique: true
     add_index :users, :uid, unique: true
   end
 end

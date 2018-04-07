@@ -17,21 +17,12 @@ ActiveRecord::Schema.define(version: 2018_01_27_181248) do
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
-  create_table "accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name"
-    t.string "timezone"
-    t.string "country"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
+    t.uuid "record_id", null: false
     t.string "record_type", null: false
-    t.bigint "record_id", null: false
-    t.bigint "blob_id", null: false
+    t.uuid "blob_id", null: false
     t.datetime "created_at", null: false
-    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
@@ -47,9 +38,17 @@ ActiveRecord::Schema.define(version: 2018_01_27_181248) do
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "first_name", default: "", null: false
-    t.string "last_name", default: "", null: false
+    t.string "name", default: "", null: false
     t.string "email", default: "", null: false
+    t.string "username", default: "", null: false
+    t.string "avatar"
+    t.text "bio"
+    t.string "login_token"
+    t.string "url", default: ""
+    t.string "company", default: ""
+    t.string "location", default: ""
+    t.bigint "uid", default: 0
+    t.string "access_token", default: ""
     t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
@@ -57,7 +56,12 @@ ActiveRecord::Schema.define(version: 2018_01_27_181248) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["company"], name: "index_users_on_company"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["location"], name: "index_users_on_location"
+    t.index ["uid"], name: "index_users_on_uid", unique: true
+    t.index ["url"], name: "index_users_on_url"
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
 end

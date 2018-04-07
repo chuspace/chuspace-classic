@@ -10,6 +10,9 @@ class SessionsController < ApplicationController
   end
 
   def github
+    user = User.from_omniauth(auth_hash)
+    login(user) if user
+    redirect_to '/'
   end
 
   def destroy

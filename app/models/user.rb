@@ -4,7 +4,7 @@ class User < ApplicationRecord
   include Registerable
 
   validates :email, presence: true, uniqueness: true, email: true
-  validates :first_name, :last_name, :uid, :access_token, presence: true
+  validates :name, :uid, :access_token, presence: true
   has_one_attached :avatar
   has_secure_token :login_token
 end

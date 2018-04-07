@@ -12,7 +12,7 @@ const MarketingHeader = props => (
           </a>
         </div>
         <div class={styles.links}>
-          <a class={styles.link} href='/'>
+          <a class={styles.link} href='/auth/github'>
             Sign in
           </a>
         </div>

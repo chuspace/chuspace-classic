@@ -3,16 +3,12 @@
 Rails.application.routes.draw do
   root to: 'pages#index'
 
-  get '/auth/:provider/callback', to: 'sessions#create'
 
-  get 'logins/create'
-  get 'logins/new'
-  get 'signups/create'
-  get 'signups/new'
+  post '/registerations', to: 'registerations#create'
+  get '/auth/:provider/callback', to: 'sessions#github'
+  post '/sessions', to: 'sessions#create'
+  patch '/logout', to: 'sessions#destroy'
 
   post '/graphql', to: 'graphql#execute'
-
-  if Rails.env.development?
-    mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/graphql'
-  end
+  mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/graphql' if Rails.env.development?
 end

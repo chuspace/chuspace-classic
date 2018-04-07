@@ -4,7 +4,7 @@ class RegistrationsController < ApplicationController
   skip_before_action :authenticate, on: :create
 
   def create
-    user = User.register_from_email(email)
+    user = User.from_email(email)
     login(user) if user
     redirect_to '/'
   end
