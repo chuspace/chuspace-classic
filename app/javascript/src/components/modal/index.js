@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
 import Dialog from 'helpers/dialog'
-import Modal from './index'
+import Card from './card'
 
 const modalNode = document.getElementById('modal-root')
 
-export default class ModalPortal extends Component {
+export default class Modal extends Component {
   static defaultProps = {
     hidden: true
   }
@@ -21,6 +21,7 @@ export default class ModalPortal extends Component {
   componentDidMount () {
     modalNode.appendChild(this.el)
     this.dialog = new Dialog({ domNodeId: this.node.dialogNode.id })
+    !this.props.hidden && this.dialog.show()
   }
 
   componentDidUpdate () {
@@ -29,10 +30,10 @@ export default class ModalPortal extends Component {
 
   render = () =>
     ReactDOM.createPortal(
-      <Modal
+      <Card
         {...this.props}
         ref={node => (this.node = node)}
-        hideDialog={this.props.hide}
+        hide={this.props.hide}
       />,
       this.el
     )
