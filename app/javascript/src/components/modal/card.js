@@ -7,11 +7,14 @@ export default class Card extends Component {
     return (
       <dialog
         id='modal'
-        className='modal bn br2 shadow-3 mw7 center'
+        className='modal bn br2 pv4 shadow-3 w-50 center bg-light-green'
         ref={node => (this.dialogNode = node)}
       >
-        <div className='modal-body tc pa4 w-70 center'>
-          <span className='modal-close' onClick={() => this.props.hide()}>
+        <div className='modal-body tc w-70 center'>
+          <span
+            className='modal-close absolute top-1 right-1 pointer'
+            onClick={this.props.hide}
+          >
             &#10005;
           </span>
           <div>{this.props.children}</div>

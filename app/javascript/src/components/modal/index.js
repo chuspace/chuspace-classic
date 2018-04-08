@@ -7,10 +7,6 @@ import Card from './card'
 const modalNode = document.getElementById('modal-root')
 
 export default class Modal extends Component {
-  static defaultProps = {
-    hidden: true
-  }
-
   constructor (props) {
     super(props)
     this.el = document.createElement('div')
@@ -21,11 +17,7 @@ export default class Modal extends Component {
   componentDidMount () {
     modalNode.appendChild(this.el)
     this.dialog = new Dialog({ domNodeId: this.node.dialogNode.id })
-    !this.props.hidden && this.dialog.show()
-  }
-
-  componentDidUpdate () {
-    this.props.hidden ? this.dialog.hide() : this.dialog.show()
+    this.dialog.show()
   }
 
   render = () =>

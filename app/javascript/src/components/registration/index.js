@@ -1,26 +1,78 @@
 import React, { Component } from 'react'
 
 import Modal from 'components/modal'
+import Input from 'components/input'
+import Button from 'components/button'
+import LinkButton from 'components/link-button'
+import Link from 'components/link'
 
 export default class Registration extends Component {
   state = {
-    hidden: false
+    form: false
   }
+
+  showLogin = e => {
+    this.props.showLogin()
+    this.props.hideSignup()
+  }
+
+  showForm = e => {
+    e.preventDefault()
+    this.setState({ form: true })
+  }
+
+  reset = e => {
+    e.preventDefault()
+    this.setState({ form: false })
+  }
+
+  renderForm = () => (
+    <div className='registration-form'>
+      <h2 className='f2 lh-title'>Sign up with email</h2>
+      <p className='intro f5 lh-copy'>
+        Enter the email address associated with your account, and we’ll send a
+        magic link to your inbox.
+      </p>
+
+      <div className='form'>
+        <Input name='name' />
+        <Input name='email' />
+        <Button title='Submit' />
+      </div>
+
+      <a
+        className='black-90 center mt3 db no-underline f6 lh-copy'
+        href='#'
+        onClick={this.reset}
+      >
+        ← Go back
+      </a>
+    </div>
+  )
+
+  renderActions = () => (
+    <div className='registration-actions'>
+      <h2 className='f2 lh-title'>Join Chuspace</h2>
+      <p className='intro f5 lh-copy'>
+        Create an account to personalize your homepage, follow your favorite
+        authors and publications, applaud stories you love, and more.
+      </p>
+      <div className='actions mt4'>
+        <LinkButton title='Sign up with github' href='/auth/github' />
+        <LinkButton
+          title='Sign up with email'
+          href='#'
+          onClick={this.showForm}
+        />
+      </div>
+      <p>Already have an account? <Link title='Sign in' onClick={this.showLogin} /></p>
+    </div>
+  )
 
   render () {
     return (
-      <Modal {...this.props} hidden={this.state.hidden}>
-        <h1 className='f1'>Join Chuspace</h1>
-        <p className='intro'>
-          Create an account to personalize your homepage, follow your favorite
-          authors and publications, applaud stories you love, and more.
-        </p>
-        <div className='actions'>
-          <a href='/auth/github'>Signup with github</a>
-          <a href='#' onClick={this.renderForm}>
-            Signup with email
-          </a>
-        </div>
+      <Modal {...this.props}>
+        {this.state.form ? this.renderForm() : this.renderActions()}
       </Modal>
     )
   }

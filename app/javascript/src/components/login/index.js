@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
 
 import Modal from 'components/modal'
+import Input from 'components/input'
+import Button from 'components/button'
+import LinkButton from 'components/link-button'
 
 export default class Login extends Component {
   state = {
-    hidden: false,
     form: false
-  }
-
-  hide = e => {
-    e.preventDefault()
-    this.setState({ hidden: true })
   }
 
   showForm = e => {
@@ -32,11 +29,17 @@ export default class Login extends Component {
       </p>
 
       <div className='form'>
-        <input type='text' />
-        <a href='#' onClick={this.reset}>
-          All sign in options
-        </a>
+        <Input name='email' />
+        <Button title='Submit' />
       </div>
+
+      <a
+        className='black-90 center mt3 db no-underline f6 lh-copy'
+        href='#'
+        onClick={this.reset}
+      >
+        ← Go back
+      </a>
     </div>
   )
 
@@ -47,18 +50,20 @@ export default class Login extends Component {
         Sign in to access your personalized homepage, follow authors and topics
         you love, and clap for stories that matter to you.
       </p>
-      <div className='actions'>
-        <a href='/auth/github'>Sign in with github</a>
-        <a href='#' onClick={this.showForm}>
-          Sign in with email
-        </a>
+      <div className='actions mt4'>
+        <LinkButton title='Sign in with github' href='/auth/github' />
+        <LinkButton
+          title='Sign in with email'
+          href='#'
+          onClick={this.showForm}
+        />
       </div>
     </div>
   )
 
   render () {
     return (
-      <Modal {...this.props} hidden={this.state.hidden} hide={this.hide}>
+      <Modal {...this.props}>
         {this.state.form ? this.renderForm() : this.renderActions()}
       </Modal>
     )
