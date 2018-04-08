@@ -264,9 +264,11 @@ GEM
       execjs
       railties (>= 3.2)
       tilt
+    redcarpet (3.4.0)
     redis (4.0.1)
     reverse_markdown (1.0.5)
       nokogiri
+    rouge (3.1.1)
     rspec-core (3.7.1)
       rspec-support (~> 3.7.0)
     rspec-expectations (3.7.0)
@@ -391,8 +393,10 @@ DEPENDENCIES
   rails-erd
   rails_panel
   react-rails
+  redcarpet
   redis (~> 4.0)
   reverse_markdown
+  rouge
   rspec-rails
   rubocop
   sass-rails

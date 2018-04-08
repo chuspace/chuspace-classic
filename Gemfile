@@ -44,7 +44,9 @@ gem 'graphql-client', git: 'https://github.com/github/graphql-client.git'
 # HTML to markdown
 gem 'reverse_markdown'
 # Markdown
+gem 'redcarpet'
 gem 'html-pipeline'
+gem 'rouge'
 # oAuth
 gem 'omniauth-github'
 # Reduces boot times through caching; required in config/boot.rb
