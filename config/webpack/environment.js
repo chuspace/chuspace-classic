@@ -1,14 +1,7 @@
 const { environment } = require('@rails/webpacker')
 
 environment.config.merge({
-  stats: 'minimal',
-  resolve: {
-    alias: {
-      react: 'nervjs',
-      'react-dom/server': 'nerv-server',
-      'react-dom': 'nervjs'
-    }
-  }
+  stats: 'minimal'
 })
 
 module.exports = environment

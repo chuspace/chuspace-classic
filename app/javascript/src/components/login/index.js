@@ -30,7 +30,7 @@ export default class Login extends Component {
 
       <div className='form'>
         <Input name='email' />
-        <Button title='Submit' />
+        <Button title='Submit' className='center' />
       </div>
 
       <a
@@ -51,8 +51,13 @@ export default class Login extends Component {
         you love, and clap for stories that matter to you.
       </p>
       <div className='actions mt4'>
-        <LinkButton title='Sign in with github' href='/auth/github' />
         <LinkButton
+          className='center mb2'
+          title='Sign in with github'
+          href='/auth/github'
+        />
+        <LinkButton
+          className='center mb2'
           title='Sign in with email'
           href='#'
           onClick={this.showForm}

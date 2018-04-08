@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
 
-import Registration from 'components/registration'
-import Login from 'components/login'
-
 import LinkButton from 'components/link-button'
 import Link from 'components/link'
 
@@ -12,6 +9,12 @@ export default class GetStarted extends Component {
     signup: false
   }
 
+  async componentDidMount () {
+    const Registration = (await import('components/registration')).default
+    const Login = (await import('components/login')).default
+    this.setState({ Registration, Login })
+  }
+
   showLogin = e => this.setState({ login: true })
   hideLogin = e => this.setState({ login: false })
 
@@ -19,10 +22,14 @@ export default class GetStarted extends Component {
   hideSignup = e => this.setState({ signup: false })
 
   render () {
-    console.log(this.state)
+    const { Registration, Login } = this.state
     return (
-      <div className='nav-links flex'>
-        <Link title='Sign in' onClick={this.showLogin} />
+      <div className='nav-links flex items-center'>
+        <Link
+          title='Sign in'
+          className='mr4'
+          onClick={this.showLogin}
+        />
         <LinkButton title='Get Started' onClick={this.showSignup} />
         {this.state.signup && (
           <Registration

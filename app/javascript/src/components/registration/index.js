@@ -58,14 +58,22 @@ export default class Registration extends Component {
         authors and publications, applaud stories you love, and more.
       </p>
       <div className='actions mt4'>
-        <LinkButton title='Sign up with github' href='/auth/github' />
         <LinkButton
+          className='center mb2'
+          title='Sign up with github'
+          href='/auth/github'
+        />
+        <LinkButton
+          className='center'
           title='Sign up with email'
           href='#'
           onClick={this.showForm}
         />
       </div>
-      <p>Already have an account? <Link title='Sign in' onClick={this.showLogin} /></p>
+      <p>
+        Already have an account?{' '}
+        <Link title='Sign in' onClick={this.showLogin} />
+      </p>
     </div>
   )
 
