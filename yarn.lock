@@ -7369,54 +7369,6 @@ table@^4.0.2:
     slice-ansi "1.0.0"
     string-width "^2.1.1"
 
-tachyons-border-colors@^4.2.3:
-  version "4.2.3"
-  resolved "https://registry.yarnpkg.com/tachyons-border-colors/-/tachyons-border-colors-4.2.3.tgz#d634d1f0a7f39a612f9b4f92053e98aa212f4bf6"
-
-tachyons-border-radius@^5.1.3:
-  version "5.1.3"
-  resolved "https://registry.yarnpkg.com/tachyons-border-radius/-/tachyons-border-radius-5.1.3.tgz#b4677a6c8951ab8ba7a3d6e797a6c896db74f1f7"
-
-tachyons-borders@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/tachyons-borders/-/tachyons-borders-3.0.4.tgz#4d52c19ad3bcb7817a5c1078a2eb9dfb0b3dc40f"
-
-tachyons-box-shadow@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/tachyons-box-shadow/-/tachyons-box-shadow-2.0.4.tgz#a3bf4650efd67cffcfedce2489d8ba522644000c"
-
-tachyons-display@^5.0.4:
-  version "5.0.4"
-  resolved "https://registry.yarnpkg.com/tachyons-display/-/tachyons-display-5.0.4.tgz#9ec6918b0695753b7c296c0a1275c8b214b25b9a"
-
-tachyons-flexbox@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/tachyons-flexbox/-/tachyons-flexbox-2.1.0.tgz#cc12e9bd79653996cc8bd1b5fa2f6d6200bc2e77"
-
-tachyons-max-widths@^4.0.5:
-  version "4.0.5"
-  resolved "https://registry.yarnpkg.com/tachyons-max-widths/-/tachyons-max-widths-4.0.5.tgz#07243992827c21771f1579510b8a7a7784eccd01"
-
-tachyons-spacing@^6.0.4:
-  version "6.0.4"
-  resolved "https://registry.yarnpkg.com/tachyons-spacing/-/tachyons-spacing-6.0.4.tgz#54cbd6d902b2a36ab864110754ec9924e09935aa"
-
-tachyons-text-decoration@^4.0.5:
-  version "4.0.5"
-  resolved "https://registry.yarnpkg.com/tachyons-text-decoration/-/tachyons-text-decoration-4.0.5.tgz#d1387c749f348ed800af8205cd2f624f4a05e739"
-
-tachyons-type-scale@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/tachyons-type-scale/-/tachyons-type-scale-6.1.0.tgz#4566519793457afbb5d5d47568d456c172f0bd7c"
-
-tachyons-typography@^3.0.5:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/tachyons-typography/-/tachyons-typography-3.0.5.tgz#220a0285b3f04cf8502c552a1bc4109cf68de558"
-
-tachyons-widths@^5.2.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/tachyons-widths/-/tachyons-widths-5.2.1.tgz#4e148086734f9aaad377a2f580c679561f0c0155"
-
 tachyons@^4.9.1:
   version "4.9.1"
   resolved "https://registry.yarnpkg.com/tachyons/-/tachyons-4.9.1.tgz#f88d7059d6e53c833bf9351a26f18314c8fdc76a"
@@ -7563,6 +7515,10 @@ tunnel-agent@^0.6.0:
 tunnel-agent@~0.4.1:
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/tunnel-agent/-/tunnel-agent-0.4.3.tgz#6373db76909fe570e08d73583365ed828a74eeeb"
+
+turbolinks@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/turbolinks/-/turbolinks-5.1.1.tgz#3d418a2d8172edbde5e787bf74cb7bef151ae43f"
 
 tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
