@@ -20,7 +20,7 @@ module Authentication
       if authenticated_user = User.find_by(id: cookies.encrypted[:user_id])
         Current.user = authenticated_user
       else
-        redirect_to root_url
+        Current.user = nil
       end
     end
 end

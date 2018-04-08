@@ -8,22 +8,29 @@
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body class="application">
     <div class="mw8 center">
       <header class="header">
         <nav class="nav pv3 flex justify-between items-center">
           <div class="logo f4 db">
             <%= link_to 'Chuspace', root_path, class: 'logo-link no-underline' %>
           </div>
-          <div class="nav-links flex">
-            <%= link_to 'Sign in', '/auth/github', class: 'nav-link-item no-underline mr3' %>
-          </div>
+          <% if Current.user.present? %>
+            <span><%= Current.user.name %></span>
+            <div class="nav-links flex">
+              <%= link_to 'Sign out', logout_path, method: :patch, class: 'nav-link-item no-underline mr3' %>
+            </div>
+          <% else %>
+            <div class="nav-links flex">
+              <%= link_to 'Sign in', '/auth/github', class: 'nav-link-item no-underline mr3' %>
+            </div>
+          <% end %>
         </nav>
       </header>
 
-      <div class="content">
+      <section class="content">
         <%= yield %>
-      </div>
+      </section>
 
       <footer className="footer">
         <div class="mw8 center">
