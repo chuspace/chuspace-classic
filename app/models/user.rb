@@ -8,4 +8,6 @@ class User < ApplicationRecord
   validates :name, presence: true
   has_one_attached :avatar
   has_secure_token :login_token
+
+  has_one :repo
 end

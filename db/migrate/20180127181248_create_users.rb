@@ -19,7 +19,6 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       # Github
       t.bigint :github_uid
       t.string :github_access_token
-      t.bigint :github_repo_id
 
       ## Trackable
       t.integer  :sign_in_count, default: 0, null: false
