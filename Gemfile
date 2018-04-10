@@ -37,10 +37,14 @@ gem 'racecar'
 # Server side rendering
 gem 'react-rails'
 gem 'mini_racer'
+# Github
+gem 'octokit'
+# HTTP requests and caching
+gem 'faraday'
+gem 'typhoeus'
 # Graphql
 gem 'graphql'
 gem 'graphql-batch'
-gem 'graphql-client', git: 'https://github.com/github/graphql-client.git'
 # HTML to markdown
 gem 'reverse_markdown'
 # Markdown
