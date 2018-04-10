@@ -4,13 +4,15 @@
     "es6": true,
     "jest": true
   },
+  "plugins": ["flowtype"],
   "parser": "babel-eslint",
-  "extends": [
-    "standard",
-    "standard-jsx"
-  ],
+  "extends": ["standard", "standard-jsx"],
   "globals": {
     "URLSearchParams": true,
     "analytics": true
+  },
+  "rules": {
+    "flowtype/define-flow-type": 1,
+    "flowtype/use-flow-type": 1
   }
 }
