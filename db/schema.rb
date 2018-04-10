@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2018_01_27_181248) do
     t.string "email", default: "", null: false
     t.string "username", default: "", null: false
     t.string "avatar"
+    t.integer "state", default: 0
     t.text "bio"
     t.string "login_token"
     t.string "url", default: ""
@@ -59,6 +60,7 @@ ActiveRecord::Schema.define(version: 2018_01_27_181248) do
     t.index ["company"], name: "index_users_on_company"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["location"], name: "index_users_on_location"
+    t.index ["state"], name: "index_users_on_state"
     t.index ["uid"], name: "index_users_on_uid", unique: true
     t.index ["url"], name: "index_users_on_url"
     t.index ["username"], name: "index_users_on_username", unique: true

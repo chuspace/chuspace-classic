@@ -9,6 +9,8 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :username, null: false, default: ""
       t.string :avatar
 
+      t.integer :state, default: 0
+
       t.text :bio
       t.string :login_token
 
@@ -32,5 +34,6 @@ class CreateUsers < ActiveRecord::Migration[5.2]
     add_index :users, :email, unique: true
     add_index :users, :username, unique: true
     add_index :users, :uid, unique: true
+    add_index :users, :state
   end
 end

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  include Registerable
+  include Users::Registrable
+  include Users::Activateable
 
   validates :email, presence: true, uniqueness: true, email: true
   validates :name, :uid, :access_token, presence: true
