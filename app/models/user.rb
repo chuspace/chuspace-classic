@@ -2,9 +2,10 @@
 
 class User < ApplicationRecord
   include Users::Registrable
+  include Users::Github
 
   validates :email, presence: true, uniqueness: true, email: true
-  validates :name, :uid, :access_token, presence: true
+  validates :name, presence: true
   has_one_attached :avatar
   has_secure_token :login_token
 end
