@@ -42,14 +42,14 @@ ActiveRecord::Schema.define(version: 2018_01_27_181248) do
     t.string "email", default: "", null: false
     t.string "username", default: "", null: false
     t.string "avatar"
-    t.integer "state", default: 0
     t.text "bio"
     t.string "login_token"
     t.string "url", default: ""
     t.string "company", default: ""
     t.string "location", default: ""
-    t.bigint "uid", default: 0
-    t.string "access_token", default: ""
+    t.bigint "github_uid"
+    t.string "github_access_token"
+    t.bigint "github_repo_id"
     t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
@@ -59,9 +59,8 @@ ActiveRecord::Schema.define(version: 2018_01_27_181248) do
     t.datetime "updated_at", null: false
     t.index ["company"], name: "index_users_on_company"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["github_uid"], name: "index_users_on_github_uid", unique: true
     t.index ["location"], name: "index_users_on_location"
-    t.index ["state"], name: "index_users_on_state"
-    t.index ["uid"], name: "index_users_on_uid", unique: true
     t.index ["url"], name: "index_users_on_url"
     t.index ["username"], name: "index_users_on_username", unique: true
   end

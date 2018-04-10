@@ -8,6 +8,5 @@ Rails.application.routes.draw do
   post '/sessions', to: 'sessions#create', as: :login
   patch '/logout', to: 'sessions#destroy', as: :logout
 
-  get '/onboarding', to: 'onboarding#index', as: :onboarding
   post '/graphql', to: 'graphql#execute', as: :graphql
 end

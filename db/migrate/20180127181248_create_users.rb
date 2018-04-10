@@ -9,17 +9,17 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :username, null: false, default: ""
       t.string :avatar
 
-      t.integer :state, default: 0
-
+      # Profile
       t.text :bio
       t.string :login_token
-
       t.string :url, default: "", index: true
       t.string :company, default: "", index: true
       t.string :location, default: "", index: true
 
-      t.bigint :uid, default: 0
-      t.string :access_token, default: ""
+      # Github
+      t.bigint :github_uid
+      t.string :github_access_token
+      t.bigint :github_repo_id
 
       ## Trackable
       t.integer  :sign_in_count, default: 0, null: false
@@ -33,7 +33,6 @@ class CreateUsers < ActiveRecord::Migration[5.2]
 
     add_index :users, :email, unique: true
     add_index :users, :username, unique: true
-    add_index :users, :uid, unique: true
-    add_index :users, :state
+    add_index :users, :github_uid, unique: true
   end
 end

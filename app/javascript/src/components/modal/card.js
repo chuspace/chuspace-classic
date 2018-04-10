@@ -15,7 +15,7 @@ export default class Card extends Component<Props> {
     return (
       <dialog
         id='modal'
-        className='modal bn br2 pv4 shadow-3 w-50 center brand-bg-green-lighter'
+        className='modal bn br2 pv4 shadow-3 w-50 center brand-bg-green'
         ref={node => (this.dialogNode = node)}
       >
         <div className='modal-body tc w-70 center'>

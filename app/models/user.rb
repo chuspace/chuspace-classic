@@ -2,7 +2,6 @@
 
 class User < ApplicationRecord
   include Users::Registrable
-  include Users::Activateable
 
   validates :email, presence: true, uniqueness: true, email: true
   validates :name, :uid, :access_token, presence: true

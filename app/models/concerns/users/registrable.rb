@@ -9,13 +9,13 @@ module Users
         create!(params)
       end
 
-      def from_omniauth(auth)
-        where(uid: auth.uid).first_or_initialize.tap do |user|
+      def from_github(auth)
+        where(uid: auth.github_uid).first_or_initialize.tap do |user|
           user.email = auth.info.email
-          user.uid = auth.uid
           user.name = auth.info.name
           user.username = auth.info.nickname
-          user.access_token = auth.credentials.token
+          user.github_uid = auth.uid
+          user.github_access_token = auth.credentials.token
           remote_file = RemoteFileToBlobService.new(auth.info.image)
           user.avatar.attach(remote_file.blob)
           user.save!
