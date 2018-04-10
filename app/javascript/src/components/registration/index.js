@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react'
 
 import Modal from 'components/modal'
@@ -6,22 +8,31 @@ import Button from 'components/button'
 import LinkButton from 'components/link-button'
 import Link from 'components/link'
 
-export default class Registration extends Component {
+type Props = {
+  showLogin: () => void,
+  hideSignup: () => void
+}
+
+type State = {
+  form: boolean
+}
+
+export default class Registration extends Component<Props, State> {
   state = {
     form: false
   }
 
-  showLogin = e => {
+  showLogin = (e: SyntheticEvent<HTMLButtonElement>) => {
     this.props.showLogin()
     this.props.hideSignup()
   }
 
-  showForm = e => {
+  showForm = (e: SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
     this.setState({ form: true })
   }
 
-  reset = e => {
+  reset = (e: SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
     this.setState({ form: false })
   }
@@ -35,9 +46,9 @@ export default class Registration extends Component {
       </p>
 
       <div className='form'>
-        <Input name='name' />
+        <Input name='name' autoFocus />
         <Input name='email' />
-        <Button title='Submit' />
+        <Button title='Submit' className='center' />
       </div>
 
       <a
@@ -70,9 +81,13 @@ export default class Registration extends Component {
           onClick={this.showForm}
         />
       </div>
-      <p>
+      <p className='mt4'>
         Already have an account?{' '}
-        <Link title='Sign in' onClick={this.showLogin} />
+        <Link
+          title='Sign in'
+          className='dib dark-green bb b--dark-green pb1'
+          onClick={this.showLogin}
+        />
       </p>
     </div>
   )

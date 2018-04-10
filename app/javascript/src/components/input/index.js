@@ -1,12 +1,29 @@
-import React from 'react'
+// @flow
 
-const Input = props => (
+import React from 'react'
+import classNames from 'classnames'
+
+type Props = {
+  placeholder?: string,
+  autoFocus?: boolean,
+  type: string,
+  className?: string,
+  name?: string
+}
+
+const Input = (props: Props) => (
   <input
-    autoFocus
-    className='center ba b--light-gray pa2 br2 db w5 mb2 input-reset'
-    type={props.type || 'text'}
+    placeholder={props.placeholder}
+    autoFocus={props.autoFocus}
+    className={classNames('center ba b--light-gray pa2 br2 db w5 mb2 input-reset', props.className)}
+    type={props.type}
     name={props.name}
   />
 )
+
+Input.defaultProps = {
+  autoFocus: false,
+  type: 'text'
+}
 
 export default Input

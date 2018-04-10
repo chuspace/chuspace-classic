@@ -20,11 +20,13 @@ export default class Modal extends Component {
     this.dialog.show()
   }
 
-  render = () => (
-    <Card
-      {...this.props}
-      ref={node => (this.node = node)}
-      hide={this.props.hide}
-    />
-  )
+  render = () =>
+    ReactDOM.createPortal(
+      <Card
+        {...this.props}
+        ref={node => (this.node = node)}
+        hide={this.props.hide}
+      />,
+      this.el
+    )
 }

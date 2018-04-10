@@ -1,7 +1,15 @@
+// @flow
+
+import type { Node } from 'react'
 import React, { Component } from 'react'
 
-export default class Card extends Component {
-  dialogNode = null
+type Props = {
+  hide: boolean,
+  children: Node
+}
+
+export default class Card extends Component<Props> {
+  dialogNode: null | HTMLElement = null
 
   render () {
     return (
