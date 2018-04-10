@@ -2,6 +2,7 @@
 
 Types::MutationType = GraphQL::ObjectType.define do
   name 'Mutation'
+  description 'The query root of this schema for mutating data.'
 
   # TODO: Remove me
   field :testField, types.String do
