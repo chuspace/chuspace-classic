@@ -3,8 +3,12 @@
 module Resolvers
   module Repos
     class CreateResolver < ApplicationResolver
+      include Rails.application.routes.url_helpers
+
       def call
-        response = Current.user.github_client.create_repo(name, github_repo_params)
+        github_params[:homepage] = user_url(Current.user) if Rails.env.production?
+        response = Current.user.github_client.create_repo(name, github_params)
+
         repo = Current.user.build_repo(repo_params)
         repo.github_repo_id = response.id
         repo.github_repo_full_name = response.full_name
@@ -29,7 +33,7 @@ module Resolvers
           params.permit(:name, :description)
         end
 
-        def github_repo_params
+        def github_params
           params.permit(:description, :organization, :license, :private, :auto_init)
         end
     end

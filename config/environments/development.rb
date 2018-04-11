@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+Rails.application.routes.default_url_options = { host: 'chuspace.test' }
+
 Rails.application.configure do
   # Verifies that versions and hashed value of the package contents in the project's package.json
   config.webpacker.check_yarn_integrity = true
@@ -44,7 +46,8 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  # Set default urls
+  config.action_mailer.default_url_options = { host: 'chuspace.test'}
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
