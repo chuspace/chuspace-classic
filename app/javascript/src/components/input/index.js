@@ -13,9 +13,13 @@ type Props = {
 
 const Input = (props: Props) => (
   <input
+    autoComplete='off'
     placeholder={props.placeholder}
     autoFocus={props.autoFocus}
-    className={classNames('center ba b--light-gray pa2 br2 db w5 mb2 input-reset', props.className)}
+    className={classNames(
+      'f6 center ba b--light-green pa2 br2 db w5 mb2 input-reset',
+      props.className
+    )}
     type={props.type}
     name={props.name}
   />

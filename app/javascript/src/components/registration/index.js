@@ -46,9 +46,9 @@ export default class Registration extends Component<Props, State> {
       </p>
 
       <div className='form'>
-        <Input name='name' autoFocus />
-        <Input name='email' />
-        <Button title='Submit' className='center' />
+        <Input name='username' placeholder='johndoe' autoFocus />
+        <Input name='email' placeholder='john@acme.inc' />
+        <Button title='Submit' className='center bg-black white bn mt3' />
       </div>
 
       <a
@@ -70,12 +70,12 @@ export default class Registration extends Component<Props, State> {
       </p>
       <div className='actions mt4'>
         <LinkButton
-          className='center mb2'
+          className='center mb2 bg-white black'
           title='Sign up with github'
           href='/auth/github'
         />
         <LinkButton
-          className='center'
+          className='center bg-white black'
           title='Sign up with email'
           href='#'
           onClick={this.showForm}

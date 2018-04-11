@@ -47,7 +47,7 @@ export default class Login extends Component<Props, State> {
 
       <div className='form'>
         <Input name='email' autoFocus />
-        <Button title='Submit' className='center' />
+        <Button title='Submit' className='center bg-black white bn mt3' />
       </div>
 
       <a
@@ -69,12 +69,12 @@ export default class Login extends Component<Props, State> {
       </p>
       <div className='actions mt4'>
         <LinkButton
-          className='center mb2'
+          className='center mb2 bg-white black'
           title='Sign in with github'
           href='/auth/github'
         />
         <LinkButton
-          className='center mb2'
+          className='center mb2 bg-white black'
           title='Sign in with email'
           href='#'
           onClick={this.showForm}

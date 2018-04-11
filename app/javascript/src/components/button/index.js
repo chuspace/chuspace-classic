@@ -13,7 +13,7 @@ const Button = (props: Props) => (
   <button
     onClick={props.onClick}
     className={classNames(
-      'bg-white hover-bg-near-white shadow-5 black-90 pointer ba b--light-gray pa2 br2 db mw5 no-underline outline-0',
+      'pointer ba b--light-green pa2 br2 db mw5 no-underline outline-0',
       props.className
     )}
   >
