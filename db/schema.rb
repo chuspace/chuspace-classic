@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_01_27_181248) do
+ActiveRecord::Schema.define(version: 2018_04_10_190729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -37,19 +37,27 @@ ActiveRecord::Schema.define(version: 2018_01_27_181248) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "repos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "github_id", null: false
+    t.uuid "user_id", null: false
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "email", default: "", null: false
-    t.string "username", default: "", null: false
+    t.string "nickname", default: "", null: false
     t.string "avatar"
+    t.string "login_token", null: false
     t.text "bio"
-    t.string "login_token"
-    t.string "url", default: ""
+    t.string "website", default: ""
     t.string "company", default: ""
     t.string "location", default: ""
     t.bigint "github_uid"
     t.string "github_access_token"
-    t.bigint "github_repo_id"
     t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
@@ -57,12 +65,10 @@ ActiveRecord::Schema.define(version: 2018_01_27_181248) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["company"], name: "index_users_on_company"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["github_uid"], name: "index_users_on_github_uid", unique: true
-    t.index ["location"], name: "index_users_on_location"
-    t.index ["url"], name: "index_users_on_url"
-    t.index ["username"], name: "index_users_on_username", unique: true
+    t.index ["login_token"], name: "index_users_on_login_token"
+    t.index ["nickname"], name: "index_users_on_nickname", unique: true
   end
 
 end
