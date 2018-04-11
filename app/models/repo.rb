@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Repo < ApplicationRecord
-  validates :name, presence: true, uniqueness: true, scope: :user_id
-  validates :github_id, :user_id, presence: true
+  include Sluggable, Repos::Github
+
+  belongs_to :user
+  validates :name, :user_id, presence: true
 end

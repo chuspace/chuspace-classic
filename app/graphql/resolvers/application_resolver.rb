@@ -2,7 +2,7 @@
 
 module Resolvers
   class ApplicationResolver
-    attr_reader :params, :record, :pundit, :context, :viewer
+    attr_reader :params, :arguments, :record, :pundit, :context, :viewer
 
     def self.call(*args)
       new(*args).call
@@ -18,7 +18,6 @@ module Resolvers
     end
 
     private
-
       def error_message_for(field, message, options = {})
         { errors: [OpenStruct.new(field: field, messages: [message])], **options }
       end

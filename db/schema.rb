@@ -39,11 +39,15 @@ ActiveRecord::Schema.define(version: 2018_04_10_190729) do
 
   create_table "repos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
-    t.bigint "github_id", null: false
-    t.uuid "user_id", null: false
+    t.string "slug", null: false
     t.string "description"
+    t.uuid "user_id", null: false
+    t.bigint "github_repo_id", null: false
+    t.string "github_repo_full_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["github_repo_id"], name: "index_repos_on_github_repo_id", unique: true
+    t.index ["slug"], name: "index_repos_on_slug", unique: true
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

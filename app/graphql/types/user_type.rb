@@ -13,4 +13,5 @@ Types::UserType = GraphQL::ObjectType.define do
   field :website, !types.String, 'User website url'
   field :company, !types.String, 'User company'
   field :location, !types.String, 'User location'
+  field :repo, Types::RepoType, 'Github repo', preload: :repo
 end

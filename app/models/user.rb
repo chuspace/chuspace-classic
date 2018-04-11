@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  include Users::Registrable
-  include Users::Github
+  include Users::Registrable, Users::Github
 
   validates :email, presence: true, uniqueness: true, email: true
   validates :name, presence: true
