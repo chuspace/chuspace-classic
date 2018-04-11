@@ -2,7 +2,7 @@
 
 Types::UserType = GraphQL::ObjectType.define do
   name 'User'
-  description 'Exposes user model fields'
+  description 'User object'
   global_id_field :id
 
   field :name, types.String, 'User full name'

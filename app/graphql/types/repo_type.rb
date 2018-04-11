@@ -2,7 +2,7 @@
 
 Types::RepoType = GraphQL::ObjectType.define do
   name 'Repo'
-  description 'Exposes repo model fields'
+  description 'Repo object'
   global_id_field :id
 
   field :name, types.String, 'Repo name'

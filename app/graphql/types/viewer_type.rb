@@ -2,7 +2,7 @@
 
 Types::ViewerType = GraphQL::ObjectType.define do
   name 'Viewer'
-  description 'Support unassociated root queries that fetches collections.'
+  description 'Viewer object'
 
   implements GraphQL::Relay::Node.interface
   global_id_field :id
