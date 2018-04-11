@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
 class Graphql::QueryController < Graphql::BaseController
+  include GraphqlQueryCache
+
   before_action :verify!, except: :schema
   before_action :authenticate!, except: :schema, unless: :unauthenticated?
 
   def execute
     variables = ensure_hash(params[:variables])
-    result = ChuspaceSchema.execute(params[:query], variables: variables, context: context_hash)
+    document  = graphql_document(params[:query])
+    result    = ChuspaceSchema.execute(document: document, variables: variables, context: context_hash)
 
     if result['errors']
       render json: { errors: result['errors'] }, status: :unprocessable_entity
