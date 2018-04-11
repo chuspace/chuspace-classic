@@ -8,5 +8,5 @@ class User < ApplicationRecord
   has_one_attached :avatar
   has_secure_token :login_token
 
-  has_one :repo
+  has_one :repo, dependent: :destroy
 end

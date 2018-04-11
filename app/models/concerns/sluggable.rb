@@ -9,7 +9,7 @@ module Sluggable
   end
 
   def to_param
-    name.parameterize.join('-')
+    name.parameterize
   end
 
   private

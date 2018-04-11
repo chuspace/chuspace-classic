@@ -10,6 +10,7 @@ GraphQL::Field.accepts_definitions(
     type.metadata[:preload].concat(args)
   end,
 
+  cache: GraphQL::Define.assign_metadata_key(:cache_proc),
   visibility: GraphQL::Define.assign_metadata_key(:visibility_proc)
 )
 

@@ -4,7 +4,7 @@ module Resolvers
   module Repos
     class CreateResolver < ApplicationResolver
       def call
-        response = Current.user.github_client.create_repo(params[:name], github_repo_params)
+        response = Current.user.github_client.create_repo(name, github_repo_params)
         repo = Current.user.build_repo(repo_params)
         repo.github_repo_id = response.id
         repo.github_repo_full_name = response.full_name
@@ -21,6 +21,10 @@ module Resolvers
       end
 
       private
+        def name
+          params[:name]&.parameterize
+        end
+
         def repo_params
           params.permit(:name, :description)
         end
