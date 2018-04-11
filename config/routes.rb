@@ -8,5 +8,8 @@ Rails.application.routes.draw do
   post '/sessions', to: 'sessions#create', as: :login
   patch '/logout', to: 'sessions#destroy', as: :logout
 
-  post '/graphql', to: 'graphql#execute', as: :graphql
+  namespace :graphql do
+    post '/', to: 'query#execute', as: :graphql
+    get '/schema', to: 'query#schema', as: :schema if Rails.env.development?
+  end
 end

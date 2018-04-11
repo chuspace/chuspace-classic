@@ -1,0 +1,5 @@
+en:
+  graphql:
+    errors:
+      unauthorized: User unauthorized
+      not_found: Resource not found
