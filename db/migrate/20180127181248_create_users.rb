@@ -4,9 +4,9 @@ class CreateUsers < ActiveRecord::Migration[5.2]
   def change
     create_table :users, id: :uuid, force: :cascade do |t|
       ## Database authenticatable
-      t.string :name, null: false, default: ""
-      t.string :email, null: false, default: ""
-      t.string :nickname, null: false, default: ""
+      t.string :name, null: false
+      t.string :email, null: false
+      t.string :nickname, null: false
       t.string :avatar
 
       # Passwordless login
@@ -14,9 +14,9 @@ class CreateUsers < ActiveRecord::Migration[5.2]
 
       # Profile
       t.text :bio
-      t.string :website, default: ""
-      t.string :company, default: ""
-      t.string :location, default: ""
+      t.string :website
+      t.string :company
+      t.string :location
 
       # Github
       t.bigint :github_uid
