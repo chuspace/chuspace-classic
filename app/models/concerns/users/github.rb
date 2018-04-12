@@ -4,10 +4,6 @@ module Users
   module Github
     extend ActiveSupport::Concern
 
-    included do
-      validates :github_uid, :github_access_token, presence: true
-    end
-
     def github_client
       @github_client ||= ::Github.new(github_access_token).client
     end

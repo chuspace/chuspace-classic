@@ -10,7 +10,6 @@ module Users
       end
 
       def from_github(auth)
-        puts auth.inspect
         where(github_uid: auth.uid).first_or_initialize.tap do |user|
           # Required
           user.email = auth.info.email

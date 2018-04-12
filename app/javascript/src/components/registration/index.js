@@ -45,9 +45,9 @@ export default class Registration extends Component<Props, State> {
         magic link to your inbox.
       </p>
 
-      <div className='form'>
-        <Input name='username' placeholder='johndoe' autoFocus />
-        <Input name='email' placeholder='john@acme.inc' />
+      <div className='form measure center w5'>
+        <Input name='username' placeholder='Username' autoFocus />
+        <Input name='email' placeholder='Email' />
         <Button title='Submit' className='center bg-black white bn mt3' />
       </div>
 
