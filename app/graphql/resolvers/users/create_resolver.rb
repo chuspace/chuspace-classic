@@ -5,6 +5,7 @@ class Resolvers::Users::CreateResolver < Resolvers::ApplicationResolver
     user = User.new(user_params)
 
     if user.save
+      UserMailer.with(user: user).send_magic_login.deliver_later
       { user: user }
     else
       { errors: user.graphql_validation_errors }

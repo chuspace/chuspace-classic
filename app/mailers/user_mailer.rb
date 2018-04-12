@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class UserMailer < ApplicationMailer
-  def magic_login
-    mail(to: Current.user.email, subject: t('.subject'))
+  def send_magic_login
+    @user = params[:user]
+    mail(to: @user.email, subject: t('.subject'))
   end
 end

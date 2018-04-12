@@ -8,7 +8,7 @@ en:
               invalid: Username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen
 
   user_mailer:
-    magic_login:
+    send_magic_login:
       subject: Log in to Chuspace
       link_request: You don’t need a password to access your Chuspace account. Just click the secure link below.
       heading: Log in to Chuspace

@@ -10,7 +10,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :avatar
 
       # Passwordless login
-      t.string :auth_token, null: false, index: true
+      t.string :auth_token, null: false
 
       # Profile
       t.text :bio
@@ -35,5 +35,6 @@ class CreateUsers < ActiveRecord::Migration[5.2]
     add_index :users, :email, unique: true
     add_index :users, :nickname, unique: true
     add_index :users, :github_uid, unique: true
+    add_index :users, :auth_token, unique: true
   end
 end

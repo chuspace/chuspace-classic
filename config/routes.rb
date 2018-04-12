@@ -3,7 +3,6 @@
 Rails.application.routes.draw do
   root to: 'pages#index'
 
-  post '/registerations', to: 'registerations#create', as: :registration
   get '/auth/:provider/callback', to: 'sessions#github', as: :omniauth_callback
   get '/magic-login', to: 'sessions#create', as: :magic_login
   post '/sessions', to: 'sessions#create', as: :login

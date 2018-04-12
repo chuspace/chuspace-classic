@@ -1,27 +1,54 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
-  skip_before_action :authenticate, on: %i[create github]
+  before_action :failure, only: :github, if: :malformed_auth?
 
   def create
-    user = User.find_by(auth_token: params[:token])
-    login(user) if user
-    redirect_to '/'
+    if Current.user.present?
+      redirect_to root_path
+    else
+      user = User.find_by(auth_token: params[:token])
+      if user
+        user.regenerate_auth_token
+        login(user)
+        redirect_to root_path
+      else
+        failure
+      end
+    end
   end
 
   def github
-    user = User.from_github(auth_hash)
-    login(user) if user
-    redirect_to '/'
+    if Current.user.present?
+      redirect_to root_path
+    else
+      user = User.from_github(auth_hash)
+      if user
+        login(user)
+        redirect_to root_path
+      else
+        failure
+      end
+    end
   end
 
   def destroy
     logout
-    redirect_to '/'
+    redirect_to root_path
+  end
+
+  def failure
+    redirect_to root_path
   end
 
   private
     def auth_hash
       request.env['omniauth.auth']
+    end
+
+    def malformed_auth?
+      auth_hash.blank? ||
+        auth_hash.credentials.blank? ||
+        auth_hash.info.name.blank?
     end
 end

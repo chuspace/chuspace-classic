@@ -8,4 +8,6 @@ Types::MutationType = GraphQL::ObjectType.define do
   field :create_repo, field: Mutations::Repos::CreateMutation.field, visibility: -> { Current.user.presence }
   # Users
   field :create_user, field: Mutations::Users::CreateMutation.field
+  # Logins
+  field :create_login, field: Mutations::Logins::CreateMutation.field
 end
