@@ -55,6 +55,7 @@ class Graphql::QueryController < Graphql::BaseController
 
     def operations
       %w[
+        graphiql
         IntrospectionQuery
         loginMutation
         magicLoginMutation
