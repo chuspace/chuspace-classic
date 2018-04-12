@@ -14,7 +14,7 @@ class Resolvers::Repos::CreateResolver < Resolvers::ApplicationResolver
     repo.github_repo_full_name = response.full_name
 
     if repo.save
-      { repo: repo, viewer: viewer }
+      { repo: repo }
     else
       Current.user.github_client.delete_repo(response.id)
       { errors: repo.graphql_validation_errors }

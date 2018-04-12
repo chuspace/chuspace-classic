@@ -11,7 +11,6 @@ Mutations::Repos::CreateMutation = GraphQL::Relay::Mutation.define do
   input_field :private, types.Boolean, 'Is this a private repo? e.g. true'
   input_field :auto_init, types.Boolean, 'Should initialize a readme? e.g. true'
 
-  return_field :viewer, Types::ViewerType
   return_field :repo, Types::RepoType
   return_interfaces [Interfaces::MutationErrorsInterface]
 
