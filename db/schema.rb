@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 2018_04_10_190729) do
     t.string "email", default: "", null: false
     t.string "nickname", default: "", null: false
     t.string "avatar"
-    t.string "login_token", null: false
+    t.string "auth_token", null: false
     t.text "bio"
     t.string "website", default: ""
     t.string "company", default: ""
@@ -69,9 +69,9 @@ ActiveRecord::Schema.define(version: 2018_04_10_190729) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["auth_token"], name: "index_users_on_auth_token"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["github_uid"], name: "index_users_on_github_uid", unique: true
-    t.index ["login_token"], name: "index_users_on_login_token"
     t.index ["nickname"], name: "index_users_on_nickname", unique: true
   end
 

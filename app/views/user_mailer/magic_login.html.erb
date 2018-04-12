@@ -1,0 +1,12 @@
+<%= t('.link_request') %>
+
+<table cellpadding="0" cellspacing="0">
+  <tr>
+    <td style="display: block;">
+      <a href="<%= magic_login_url(token: login_token) %>" style="font-size:24px; font-weight: bold; width: 100%; display: inline-block;">
+        <%= "#{t('.heading')} &raquo;".html_safe %>
+      </a>
+      <br/>
+    </td>
+  </tr>
+</table>

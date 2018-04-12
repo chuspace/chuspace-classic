@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
   skip_before_action :authenticate, on: %i[create github]
 
   def create
-    user = User.find_by(login_token: params[:token])
+    user = User.find_by(auth_token: params[:token])
     login(user) if user
     redirect_to '/'
   end
