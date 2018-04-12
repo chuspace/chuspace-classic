@@ -2,33 +2,26 @@
 
 class SessionsController < ApplicationController
   before_action :failure, only: :github, if: :malformed_auth?
+  skip_before_action :authenticate, on: %i[create github]
 
   def create
-    if Current.user.present?
+    user = User.find_by(auth_token: params[:token])
+    if user
+      user.regenerate_auth_token
+      login(user) if user
       redirect_to root_path
     else
-      user = User.find_by(auth_token: params[:token])
-      if user
-        user.regenerate_auth_token
-        login(user)
-        redirect_to root_path
-      else
-        failure
-      end
+      failure
     end
   end
 
   def github
-    if Current.user.present?
+    user = User.from_github(auth_hash)
+    if user
+      login(user) if user
       redirect_to root_path
     else
-      user = User.from_github(auth_hash)
-      if user
-        login(user)
-        redirect_to root_path
-      else
-        failure
-      end
+      failure
     end
   end
 
