@@ -51,15 +51,15 @@ ActiveRecord::Schema.define(version: 2018_04_10_190729) do
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name", default: "", null: false
-    t.string "email", default: "", null: false
-    t.string "nickname", default: "", null: false
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "nickname", null: false
     t.string "avatar"
     t.string "auth_token", null: false
     t.text "bio"
-    t.string "website", default: ""
-    t.string "company", default: ""
-    t.string "location", default: ""
+    t.string "website"
+    t.string "company"
+    t.string "location"
     t.bigint "github_uid"
     t.string "github_access_token"
     t.integer "sign_in_count", default: 0, null: false
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 2018_04_10_190729) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["auth_token"], name: "index_users_on_auth_token"
+    t.index ["auth_token"], name: "index_users_on_auth_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["github_uid"], name: "index_users_on_github_uid", unique: true
     t.index ["nickname"], name: "index_users_on_nickname", unique: true
