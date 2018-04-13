@@ -1,6 +1,14 @@
 /* global Rails */
 
-import { Environment, RecordSource, Store } from 'relay-runtime'
+import {
+  Environment,
+  RecordSource,
+  Store,
+  fetchQuery,
+  commitMutation,
+  commitLocalUpdate
+} from 'relay-runtime'
+
 import {
   RelayNetworkLayer,
   urlMiddleware,
@@ -13,16 +21,24 @@ import {
 } from 'react-relay-network-modern'
 
 import ActionCable from 'actioncable'
+import Rails from 'rails-ujs'
+
 import createSubscriptionHandler from 'graphql-ruby-client/subscriptions/createHandler'
 
 const __DEV__ = process.env.NODE_ENV === 'development'
 const cable = ActionCable.createConsumer()
 
+const fetchOperation = urlMiddleware({
+  url: req => Promise.resolve('/graphql'),
+  credentials: 'same-origin',
+  headers: {
+    'X-CSRF-Token': Rails.csrfToken()
+  }
+})
+
 const subscriptionHandler = createSubscriptionHandler({
   cable,
-  fetchOperation: urlMiddleware({
-    url: req => Promise.resolve('/graphql')
-  })
+  fetchOperation
 })
 
 const options = {
@@ -35,9 +51,7 @@ const network = new RelayNetworkLayer(
       size: 100,
       ttl: 900000
     }),
-    urlMiddleware({
-      url: req => Promise.resolve('/graphql')
-    }),
+    fetchOperation,
     batchMiddleware({
       batchUrl: requestMap => Promise.resolve('/graphql/batch'),
       batchTimeout: 10
@@ -57,13 +71,7 @@ const network = new RelayNetworkLayer(
         )
       },
       statusCodes: [500, 503, 504]
-    }),
-    next => async req => {
-      req.fetchOpts.headers['X-CSRF-token'] = Rails.csrfToken()
-      req.fetchOpts.credentials = 'same-origin'
-      const res = await next(req)
-      return res
-    }
+    })
   ],
   options
 )
@@ -72,4 +80,9 @@ const source = new RecordSource()
 const store = new Store(source)
 const environment = new Environment({ network, store })
 
-export default environment
+export default {
+  environment,
+  fetchQuery: fetchQuery.bind(undefined, environment),
+  commitMutation: commitMutation.bind(undefined, environment),
+  commitLocalUpdate: commitLocalUpdate.bind(undefined, environment)
+}

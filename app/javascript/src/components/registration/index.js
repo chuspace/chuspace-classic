@@ -1,12 +1,16 @@
 // @flow
 
 import React, { Component } from 'react'
+import omit from 'lodash/omit'
 
 import Modal from 'components/modal'
 import Input from 'components/input'
 import Button from 'components/button'
 import LinkButton from 'components/link-button'
 import Link from 'components/link'
+import RelayClient from 'helpers/relay-client'
+
+import CreateNewUserMutation from 'mutations/users/create-user'
 
 type Props = {
   showLogin: () => void,
@@ -14,12 +18,35 @@ type Props = {
 }
 
 type State = {
-  form: boolean
+  form: boolean,
+  name: string,
+  email: string,
+  nickname: string
 }
 
 export default class Registration extends Component<Props, State> {
   state = {
-    form: false
+    form: false,
+    email: '',
+    nickname: '',
+    name: ''
+  }
+
+  handleInputChange = (e: SyntheticEvent<HTMLInputElement>) =>
+    this.setState({ [e.currentTarget.name]: e.currentTarget.value })
+
+  handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    RelayClient.commitMutation({
+      mutation: CreateNewUserMutation,
+      variables: {
+        input: omit(this.state, ['form'])
+      },
+      onCompleted: (response, errors) => {
+        console.log('Response received from server.', response, errors)
+      },
+      onError: err => console.error(err)
+    })
   }
 
   showLogin = (e: SyntheticEvent<HTMLButtonElement>) => {
@@ -45,11 +72,28 @@ export default class Registration extends Component<Props, State> {
         magic link to your inbox.
       </p>
 
-      <div className='form measure center w5'>
-        <Input name='username' placeholder='Username' autoFocus />
-        <Input name='email' placeholder='Email' />
+      <form className='form measure center w5' onSubmit={this.handleSubmit}>
+        <Input
+          autoComplete='name'
+          onChange={this.handleInputChange}
+          name='name'
+          placeholder='Full name'
+          autoFocus
+        />
+        <Input
+          autoComplete='off'
+          onChange={this.handleInputChange}
+          name='nickname'
+          placeholder='Username'
+        />
+        <Input
+          autoComplete='email'
+          onChange={this.handleInputChange}
+          name='email'
+          placeholder='Email'
+        />
         <Button title='Submit' className='center bg-black white bn mt3' />
-      </div>
+      </form>
 
       <a
         className='black-90 center mt3 db no-underline f6 lh-copy'

@@ -16,6 +16,7 @@ module.name_mapper.extension='svg' -> '<PROJECT_ROOT>/frontend/flow-types/Webpac
 module.system.node.resolve_dirname=node_modules
 module.system.node.resolve_dirname=app/javascript
 module.system.node.resolve_dirname=app/javascript/src
+module.system.node.resolve_dirname=app/javascript/src/graphql
 
 esproposal.class_static_fields=enable
 esproposal.class_instance_fields=enable

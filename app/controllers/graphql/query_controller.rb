@@ -50,7 +50,7 @@ class Graphql::QueryController < Graphql::BaseController
     end
 
     def operation
-      params[:operationName]
+      params[:id]
     end
 
     def operations
@@ -59,7 +59,7 @@ class Graphql::QueryController < Graphql::BaseController
         IntrospectionQuery
         loginMutation
         magicLoginMutation
-        signupMutation
+        createUserMutation
       ]
     end
 

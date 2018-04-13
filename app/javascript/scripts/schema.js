@@ -13,7 +13,7 @@ fetch(`http://${process.env.API_HOST}/graphql/schema`, {
   })
   .then(schema => {
     fs.writeFileSync(
-      path.join(__dirname, '../graphql/schema.graphql'),
+      path.join(__dirname, '../data/schema.graphql'),
       `${schema}\n`
     )
   })

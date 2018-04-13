@@ -6,7 +6,9 @@ import classNames from 'classnames'
 type Props = {
   placeholder?: string,
   autoFocus?: boolean,
+  autoComplete?: string,
   type: string,
+  onChange: (e: SyntheticEvent<HTMLInputElement>) => void,
   helpText?: string,
   className?: string,
   name?: string
@@ -15,7 +17,8 @@ type Props = {
 const Input = (props: Props) => (
   <Fragment>
     <input
-      autoComplete='off'
+      autoComplete={props.autoComplete || 'off'}
+      onChange={props.onChange}
       placeholder={props.placeholder}
       autoFocus={props.autoFocus}
       className={classNames(
