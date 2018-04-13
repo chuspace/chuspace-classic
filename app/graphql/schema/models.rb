@@ -3,7 +3,6 @@
 module Schema
   MODELS = {
     'User' => User,
-    'Repo' => Repo,
-    'Blog' => Blog
+    'Repo' => Repo
   }.freeze
 end

@@ -3,9 +3,9 @@
 class Resolvers::Logins::CreateResolver < Resolvers::ApplicationResolver
   def call
     user = User.find_by(email: params[:email])
-    UserMailer.with(user: user).send_magic_login.deliver_later
 
     if user
+      UserMailer.with(user: user).send_magic_login.deliver_later
       { user: user }
     else
       { errors: user.graphql_validation_errors }

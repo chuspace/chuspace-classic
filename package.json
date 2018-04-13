@@ -5,11 +5,17 @@
     "node": "9.4.0"
   },
   "scripts": {
+    "relay":
+      "relay-compiler --src ./app/javascript/src --schema ./app/javascript/graphql/schema.graphql --extensions js",
+    "schema":
+      "API_HOST=chuspace.test NODE_ENV=development babel-node ./app/javascript/scripts/schema.js",
     "format": "yarn run prettier-standard '{app,config,bin}/**/*.{js,jsx}'",
-    "flow-typed-install": "flow-typed install -s -o --libdefDir ./app/javascript/flow-types"
+    "flow-typed-install":
+      "flow-typed install -s -o --libdefDir ./app/javascript/flow-types"
   },
   "dependencies": {
     "@rails/webpacker": "4.0.0-pre.2",
+    "actioncable": "^5.2.0",
     "babel-plugin-css-modules-transform": "^1.5.0",
     "babel-plugin-lodash": "^3.3.2",
     "babel-plugin-module-resolver": "~3.1.1",
@@ -22,6 +28,7 @@
     "dialog-polyfill": "^0.4.9",
     "flow-bin": "^0.69.0",
     "graphql": "0.13.0",
+    "graphql-ruby-client": "^1.4.0",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.5",
     "lodash-webpack-plugin": "^0.11.4",
@@ -30,6 +37,7 @@
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "react-relay": "^1.5.0",
+    "react-relay-network-modern": "^2.1.2",
     "react_ujs": "~2.4.4",
     "relay-compiler": "^1.5.0",
     "relay-runtime": "^1.5.0",
@@ -39,6 +47,7 @@
     "webpack-cli": "^2.0.14"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-eslint": "~8.2.2",
     "eslint": "~4.19.1",
     "eslint-config-standard": "~11.0.0",
