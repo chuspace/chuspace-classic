@@ -10,7 +10,7 @@ import 'graphiql/graphiql.css'
 Rails.start()
 
 const graphQLFetcher = async graphQLParams => {
-  graphQLParams.operationName = graphQLParams.operationName || 'graphiql'
+  graphQLParams.id = graphQLParams.operationName || 'graphiql'
 
   const response = await fetch(window.location.origin + '/graphql', {
     method: 'post',
