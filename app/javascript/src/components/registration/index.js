@@ -3,6 +3,8 @@
 import React, { Component } from 'react'
 import Confetti from 'react-confetti'
 import sizeMe from 'react-sizeme'
+import debounce from 'lodash/debounce'
+import isEmpty from 'lodash/isEmpty'
 
 import Modal from 'components/modal'
 import Input from 'components/input'
@@ -12,6 +14,7 @@ import Link from 'components/link'
 import RelayClient from 'helpers/relay-client'
 import { parseValidationErrors } from 'helpers/errors'
 
+import CheckNicknameMutation from 'mutations/nicknames/check-nickname'
 import CreateNewUserMutation from 'mutations/users/create-user'
 
 type Props = {
@@ -64,7 +67,33 @@ export default class Registration extends Component<Props, State> {
   handleInputChange = (e: SyntheticEvent<HTMLInputElement>) => {
     const form = { ...this.state.form }
     form[e.currentTarget.name] = e.currentTarget.value
-    this.setState({ form, errors: Registration.Form })
+    this.setState(
+      { form, errors: Registration.Form },
+      debounce(() => this.handleNicknameCheck(), 300)
+    )
+  }
+
+  handleNicknameCheck = () => {
+    if (isEmpty(this.state.form.nickname)) return
+    RelayClient.commitMutation({
+      mutation: CheckNicknameMutation,
+      variables: {
+        input: { nickname: this.state.form.nickname }
+      },
+      onCompleted: ({ check_nickname: response }, errors) => {
+        if (response.errors) {
+          const parsedErrors = parseValidationErrors(response.errors)
+          this.setState({ errors: parsedErrors })
+        }
+      },
+      onError: err => {
+        this.setState({ form: Registration.Form })
+        /* $FlowFixMe */
+        this.formNode.reset()
+        console.log('i run error')
+        console.error(err)
+      }
+    })
   }
 
   handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {

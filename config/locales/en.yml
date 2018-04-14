@@ -15,3 +15,6 @@ en:
 
   create_login:
     not_found: We couldn't find that email 🍌. Perhaps you mispelled it?
+
+  check_nickname:
+    taken: Oops! %{nickname} is already taken 🍌. Try something else.

@@ -8,6 +8,7 @@ class User < ApplicationRecord
   validates :nickname,
             presence: true,
             uniqueness: true,
+            length: { in: 1..39 },
             format: { with: /\A[a-z\d][a-z\d-]*[a-z\d]\z/i }
 
   has_one_attached :avatar
