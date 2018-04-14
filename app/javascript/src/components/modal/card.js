@@ -4,15 +4,21 @@ import type { Node } from 'react'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import octicons from 'octicons'
+import keydown from 'react-keydown'
 
 type Props = {
-  hide: boolean,
+  hide: (e?: SyntheticEvent<HTMLButtonElement>) => void,
   className?: string,
   children: Node
 }
 
 export default class Card extends Component<Props> {
   dialogNode: null | HTMLElement = null
+
+  @keydown('esc')
+  hide () {
+    this.props.hide()
+  }
 
   render () {
     return (

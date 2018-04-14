@@ -6656,6 +6656,12 @@ react-dom@^16.3.1:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
+react-keydown@^1.9.7:
+  version "1.9.7"
+  resolved "https://registry.yarnpkg.com/react-keydown/-/react-keydown-1.9.7.tgz#cd168d4b0194b6ef71bca47e5c1cbc5d24ab5498"
+  dependencies:
+    core-js "^2.5.0"
+
 react-relay-network-modern@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/react-relay-network-modern/-/react-relay-network-modern-2.1.2.tgz#cb1aaf130e3cf17d880df0f65fcd96f597796bb6"
