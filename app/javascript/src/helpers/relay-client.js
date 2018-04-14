@@ -1,5 +1,3 @@
-/* global Rails */
-
 import {
   Environment,
   RecordSource,

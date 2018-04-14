@@ -3,6 +3,7 @@
 import type { Node } from 'react'
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import octicons from 'octicons'
 
 type Props = {
   hide: boolean,
@@ -24,12 +25,13 @@ export default class Card extends Component<Props> {
         ref={node => (this.dialogNode = node)}
       >
         <div className='modal-body tc w-70 center'>
-          <span
+          <div
             className='modal-close absolute top-1 right-1 pointer'
             onClick={this.props.hide}
-          >
-            &#10005;
-          </span>
+            dangerouslySetInnerHTML={{
+              __html: octicons.x.toSVG()
+            }}
+          />
           <div>{this.props.children}</div>
         </div>
       </dialog>

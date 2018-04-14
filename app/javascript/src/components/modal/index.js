@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
+import { createPortal } from 'react-dom'
 
 import Dialog from 'helpers/dialog'
 import Card from './card'
@@ -21,7 +21,7 @@ export default class Modal extends Component {
   }
 
   render = () =>
-    ReactDOM.createPortal(
+    createPortal(
       <Card
         {...this.props}
         ref={node => (this.node = node)}
