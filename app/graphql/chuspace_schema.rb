@@ -23,6 +23,7 @@ ChuspaceSchema = GraphQL::Schema.define do
   use GraphQL::Batch
   instrument(:field, Schema::Instrumentations::Preload.new)
   instrument(:field, Schema::Instrumentations::Permission.new)
+  instrument(:field, Schema::Instrumentations::Cache.new)
 end
 
 # Timeout if query doesn't resolve in 10 seconds

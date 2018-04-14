@@ -23,14 +23,14 @@ const InputError = (props: { error?: string, value?: string }) => (
     {props.value &&
       (props.error ? (
         <div
-          className='icon absolute right-1 top-1'
+          className='input-icon absolute right-1'
           dangerouslySetInnerHTML={{
             __html: octicons.alert.toSVG({ class: 'fill-red' })
           }}
         />
       ) : (
         <div
-          className='icon absolute right-1 top-1'
+          className='input-icon absolute right-1'
           dangerouslySetInnerHTML={{
             __html: octicons.check.toSVG({ class: 'fill-green' })
           }}

@@ -11,5 +11,7 @@ Types::MutationType = GraphQL::ObjectType.define do
   # Logins
   field :create_login, field: Mutations::Logins::CreateMutation.field
   # Nicknames
-  field :check_nickname, field: Mutations::Nicknames::CheckMutation.field
+  field :check_nickname, field: Mutations::Nicknames::CheckMutation.field do
+    cache ->(_object, args, _context) { "check_nickname_#{args['nickname']}" }
+  end
 end
