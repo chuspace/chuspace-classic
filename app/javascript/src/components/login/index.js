@@ -8,36 +8,120 @@ import Button from 'components/button'
 import Link from 'components/link'
 import LinkButton from 'components/link-button'
 
+import RelayClient from 'helpers/relay-client'
+import { parseValidationErrors } from 'helpers/errors'
+
+import CreateNewLoginMutation from 'mutations/logins/create-login'
+
 type Props = {
   showSignup: () => void,
   hideLogin: () => void
 }
 
 type State = {
-  form: boolean
+  showForm: boolean,
+  success: boolean,
+  errors: {
+    email: string
+  },
+  form: {
+    email: string
+  }
 }
 
 export default class Login extends Component<Props, State> {
+  static Form = {
+    email: ''
+  }
+
+  formNode = null
+
   state = {
-    form: false
+    showForm: false,
+    success: false,
+    form: Login.Form,
+    errors: Login.Form
+  }
+
+  handleInputChange = (e: SyntheticEvent<HTMLInputElement>) => {
+    const form = { ...this.state.form }
+    form[e.currentTarget.name] = e.currentTarget.value
+    this.setState({ form, errors: Login.Form })
   }
 
   showRegistration = (e: SyntheticEvent<HTMLButtonElement>) => {
-    this.props.showSignup()
     this.props.hideLogin()
+    this.props.showSignup()
+  }
+
+  handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    RelayClient.commitMutation({
+      mutation: CreateNewLoginMutation,
+      variables: {
+        input: this.state.form
+      },
+      onCompleted: ({ create_login: response }, errors) => {
+        if (response.errors) {
+          const parsedErrors = parseValidationErrors(response.errors)
+          this.setState({ errors: parsedErrors })
+          return
+        }
+
+        if (response.user.id) {
+          /* $FlowFixMe */
+          this.formNode.reset()
+          this.setState({ form: Login.Form, success: true }, () =>
+            setTimeout(() => this.props.hideLogin(), 5000)
+          )
+        }
+      },
+      onError: err => {
+        this.setState({ form: Login.Form })
+        /* $FlowFixMe */
+        this.formNode.reset()
+        console.log('i run error')
+        console.error(err)
+      }
+    })
   }
 
   showForm = (e: SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    this.setState({ form: true })
+    this.setState({ showForm: true })
   }
 
   reset = (e: SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    this.setState({ form: false })
+    this.setState({ showForm: false })
   }
 
   renderForm = () => (
+    <form
+      className='form measure center w-60'
+      onSubmit={this.handleSubmit}
+      ref={node => (this.formNode = node)}
+    >
+      <Input
+        placeholder='Email'
+        autoComplete='email'
+        name='email'
+        value={this.state.form.email}
+        error={this.state.errors.email}
+        onChange={this.handleInputChange}
+        autoFocus
+      />
+      <Button title='Submit' className='center bg-black white bn mt3' />
+    </form>
+  )
+
+  renderSuccess = () => (
+    <div className='pa3 bg-light-yellow'>
+      <p className='intro f5 lh-copy'>We have sent you a link to login.</p>
+    </div>
+  )
+
+  renderLogin = () => (
     <div className='login-form'>
       <h2 className='f2 lh-title'>Sign in with email</h2>
       <p className='intro f5 lh-copy'>
@@ -45,10 +129,7 @@ export default class Login extends Component<Props, State> {
         magic link to your inbox.
       </p>
 
-      <div className='form'>
-        <Input name='email' autoFocus />
-        <Button title='Submit' className='center bg-black white bn mt3' />
-      </div>
+      {this.state.success ? this.renderSuccess() : this.renderForm()}
 
       <a
         className='black-90 center mt3 db no-underline f6 lh-copy'
@@ -93,8 +174,8 @@ export default class Login extends Component<Props, State> {
 
   render () {
     return (
-      <Modal {...this.props}>
-        {this.state.form ? this.renderForm() : this.renderActions()}
+      <Modal {...this.props} className='brand-bg-blue'>
+        {this.state.showForm ? this.renderLogin() : this.renderActions()}
       </Modal>
     )
   }

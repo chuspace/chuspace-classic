@@ -2,9 +2,11 @@
 
 import type { Node } from 'react'
 import React, { Component } from 'react'
+import classNames from 'classnames'
 
 type Props = {
   hide: boolean,
+  className?: string,
   children: Node
 }
 
@@ -15,7 +17,10 @@ export default class Card extends Component<Props> {
     return (
       <dialog
         id='modal'
-        className='modal bn br2 pv4 shadow-3 w-50 center brand-bg-green'
+        className={classNames(
+          'modal bn br2 pv4 shadow-3 w-50 center',
+          this.props.className
+        )}
         ref={node => (this.dialogNode = node)}
       >
         <div className='modal-body tc w-70 center'>

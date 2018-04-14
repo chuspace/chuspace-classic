@@ -4,7 +4,7 @@ class Resolvers::Users::CreateResolver < Resolvers::ApplicationResolver
   def call
     user = User.new(user_params)
 
-    if user.save
+    if user.valid? && user.save
       UserMailer.with(user: user).send_magic_login.deliver_later
       { user: user }
     else

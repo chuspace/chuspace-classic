@@ -8,7 +8,7 @@ class Resolvers::Logins::CreateResolver < Resolvers::ApplicationResolver
       UserMailer.with(user: user).send_magic_login.deliver_later
       { user: user }
     else
-      { errors: user.graphql_validation_errors }
+      error_message_for(:email, I18n.t('.create_login.not_found'))
     end
   end
 end

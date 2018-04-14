@@ -12,3 +12,6 @@ en:
       subject: Log in to Chuspace
       link_request: You don’t need a password to access your Chuspace account. Just click the secure link below.
       heading: Log in to Chuspace
+
+  create_login:
+    not_found: We couldn't find that email 🍌. Perhaps you mispelled it?
