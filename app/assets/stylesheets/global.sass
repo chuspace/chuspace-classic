@@ -21,12 +21,16 @@ dialog
     background-color: rgba(255,255,255,.65)
 
 input
+  font-family: inherit
   -webkit-appearance: none
   -moz-appearance: none
 
-button::-moz-focus-inner
-  border: 0
-  padding: 0
+
+button
+  font-family: inherit
+  &::-moz-focus-inner
+    border: 0
+    padding: 0
 
 input,
 a
@@ -36,3 +40,6 @@ a
 
   &:focus
     outline: none
+
+  &:-webkit-autofill
+    -webkit-box-shadow: 0 0 0 30px white inset

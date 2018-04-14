@@ -1,7 +1,6 @@
 // @flow
 
 import React, { Component } from 'react'
-import omit from 'lodash/omit'
 
 import Modal from 'components/modal'
 import Input from 'components/input'
@@ -9,6 +8,7 @@ import Button from 'components/button'
 import LinkButton from 'components/link-button'
 import Link from 'components/link'
 import RelayClient from 'helpers/relay-client'
+import { parseValidationErrors } from 'helpers/errors'
 
 import CreateNewUserMutation from 'mutations/users/create-user'
 
@@ -18,34 +18,66 @@ type Props = {
 }
 
 type State = {
-  form: boolean,
-  name: string,
-  email: string,
-  nickname: string
+  showForm: boolean,
+  errors: {
+    name: string,
+    email: string,
+    nickname: string
+  },
+  form: {
+    name: string,
+    email: string,
+    nickname: string
+  }
 }
 
 export default class Registration extends Component<Props, State> {
-  state = {
-    form: false,
+  static Form = {
     email: '',
     nickname: '',
     name: ''
   }
 
-  handleInputChange = (e: SyntheticEvent<HTMLInputElement>) =>
-    this.setState({ [e.currentTarget.name]: e.currentTarget.value })
+  formNode: ?HTMLFormElement
+
+  state = {
+    showForm: false,
+    form: Registration.Form,
+    errors: Registration.Form
+  }
+
+  handleInputChange = (e: SyntheticEvent<HTMLInputElement>) => {
+    const form = { ...this.state.form }
+    form[e.currentTarget.name] = e.currentTarget.value
+    this.setState({ form })
+  }
 
   handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
     RelayClient.commitMutation({
       mutation: CreateNewUserMutation,
       variables: {
-        input: omit(this.state, ['form'])
+        input: this.state.form
       },
-      onCompleted: (response, errors) => {
-        console.log('Response received from server.', response, errors)
+      onCompleted: ({ create_user: user }, errors) => {
+        if (user.errors) {
+          const parsedErrors = parseValidationErrors(user.errors)
+          this.setState({ errors: parsedErrors })
+          return
+        }
+
+        this.setState({ form: Registration.Form })
+        /* $FlowFixMe */
+        this.formNode.reset()
+        console.log('Response received from server.', user, errors)
       },
-      onError: err => console.error(err)
+      onError: err => {
+        this.setState({ form: Registration.Form })
+        /* $FlowFixMe */
+        this.formNode.reset()
+        console.log('i run error')
+        console.error(err)
+      }
     })
   }
 
@@ -56,12 +88,12 @@ export default class Registration extends Component<Props, State> {
 
   showForm = (e: SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    this.setState({ form: true })
+    this.setState({ showForm: true })
   }
 
   reset = (e: SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    this.setState({ form: false })
+    this.setState({ showForm: false })
   }
 
   renderForm = () => (
@@ -72,24 +104,33 @@ export default class Registration extends Component<Props, State> {
         magic link to your inbox.
       </p>
 
-      <form className='form measure center w5' onSubmit={this.handleSubmit}>
+      <form
+        className='form measure center w5'
+        onSubmit={this.handleSubmit}
+        ref={node => (this.formNode = node)}
+      >
         <Input
           autoComplete='name'
           onChange={this.handleInputChange}
           name='name'
+          value={this.state.form.name}
+          error={this.state.errors.name}
           placeholder='Full name'
           autoFocus
         />
         <Input
-          autoComplete='off'
           onChange={this.handleInputChange}
           name='nickname'
+          error={this.state.errors.nickname}
+          value={this.state.form.nickname}
           placeholder='Username'
         />
         <Input
           autoComplete='email'
           onChange={this.handleInputChange}
+          error={this.state.errors.email}
           name='email'
+          value={this.state.form.email}
           placeholder='Email'
         />
         <Button title='Submit' className='center bg-black white bn mt3' />
@@ -139,7 +180,7 @@ export default class Registration extends Component<Props, State> {
   render () {
     return (
       <Modal {...this.props}>
-        {this.state.form ? this.renderForm() : this.renderActions()}
+        {this.state.showForm ? this.renderForm() : this.renderActions()}
       </Modal>
     )
   }

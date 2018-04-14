@@ -1,4 +1,3 @@
-/* global Rails */
 import 'babel-polyfill'
 
 import React from 'react'
