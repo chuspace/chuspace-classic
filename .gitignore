@@ -43,3 +43,6 @@ yarn-error.log*
 /node_modules
 yarn-debug.log*
 .yarn-integrity
+
+# Relay
+**/__generated__/**/*
