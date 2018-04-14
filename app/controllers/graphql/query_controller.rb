@@ -57,6 +57,7 @@ class Graphql::QueryController < Graphql::BaseController
       %w[
         graphiql
         IntrospectionQuery
+        checkNicknameMutation
         createLoginMutation
         createUserMutation
       ]
