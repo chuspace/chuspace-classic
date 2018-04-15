@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   resources :check_nicknames, only: :create
   resources :magic_logins, only: :index
   resources :users
+  resources :articles
 end
