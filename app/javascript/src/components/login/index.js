@@ -1,6 +1,8 @@
 // @flow
 
 import React, { Component } from 'react'
+import axiosClient from 'helpers/axios-client'
+import to from 'helpers/await-to'
 
 import Modal from 'components/modal'
 import Input from 'components/input'
@@ -8,14 +10,10 @@ import Button from 'components/button'
 import Link from 'components/link'
 import LinkButton from 'components/link-button'
 
-import RelayClient from 'helpers/relay-client'
-import { parseValidationErrors } from 'helpers/errors'
-
-import CreateNewLoginMutation from 'mutations/logins/create-login'
-
 type Props = {
   showSignup: () => void,
-  hideLogin: () => void
+  hideLogin: () => void,
+  login_path: string
 }
 
 type State = {
@@ -54,36 +52,23 @@ export default class Login extends Component<Props, State> {
     this.props.showSignup()
   }
 
-  handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+  handleSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
-    RelayClient.commitMutation({
-      mutation: CreateNewLoginMutation,
-      variables: {
-        input: this.state.form
-      },
-      onCompleted: ({ create_login: response }, errors) => {
-        if (response.errors) {
-          const parsedErrors = parseValidationErrors(response.errors)
-          this.setState({ errors: parsedErrors })
-          return
-        }
+    const [error] = await to(
+      axiosClient.post(this.props.login_path, {
+        ...this.state.form
+      })
+    )
 
-        if (response.user.id) {
-          /* $FlowFixMe */
-          this.formNode.reset()
-          this.setState({ form: Login.Form, success: true }, () =>
-            setTimeout(() => this.props.hideLogin(), 5000)
-          )
-        }
-      },
-      onError: err => {
-        this.setState({ form: Login.Form })
-        /* $FlowFixMe */
-        this.formNode.reset()
-        console.log('i run error')
-        console.error(err)
-      }
-    })
+    if (error) {
+      this.setState({ errors: error.response.data.errors })
+    } else {
+      /* $FlowFixMe */
+      this.formNode.reset()
+      this.setState({ form: Login.Form, success: true }, () =>
+        setTimeout(() => this.props.hideLogin(), 5000)
+      )
+    }
   }
 
   showForm = (e: SyntheticEvent<HTMLButtonElement>) => {

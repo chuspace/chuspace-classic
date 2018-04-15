@@ -5,13 +5,13 @@ class SessionsController < ApplicationController
   skip_before_action :authenticate, on: %i[create github]
 
   def create
-    user = User.find_by(auth_token: params[:token])
+    user = User.find_by(email: session_params[:email])
+
     if user
-      user.regenerate_auth_token
-      login(user) if user
-      redirect_to root_path
+      UserMailer.with(user: user).send_magic_login.deliver_later
+      render json: { id: user.id }.to_json
     else
-      failure
+      render json: { errors: { email: I18n.t('.create_login.not_found') } }, status: 422
     end
   end
 
@@ -35,6 +35,10 @@ class SessionsController < ApplicationController
   end
 
   private
+    def session_params
+      params.require(:session).permit(:email)
+    end
+
     def auth_hash
       request.env['omniauth.auth']
     end

@@ -20,7 +20,7 @@
               <%= link_to 'Sign out', logout_path, method: :patch, class: 'nav-link-item no-underline mr3' %>
             </div>
           <% else %>
-           <%= react_component 'get-started/index', {}, { prerender: true } %>
+           <%= react_component 'get-started/index', { registrations_path: users_path, login_path: login_path, check_nicknames_path: check_nicknames_path }, { prerender: true } %>
           <% end %>
         </nav>
       </header>

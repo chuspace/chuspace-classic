@@ -4,17 +4,17 @@ Rails.application.routes.draw do
   root to: 'pages#index'
 
   get '/auth/:provider/callback', to: 'sessions#github', as: :omniauth_callback
-  get '/magic-login', to: 'sessions#create', as: :magic_login
   post '/sessions', to: 'sessions#create', as: :login
   patch '/logout', to: 'sessions#destroy', as: :logout
 
-  resources :repos, only: :new
+  resources :repos
+  resources :check_nicknames, only: :create
+  resources :magic_logins, only: :create
+  resources :users
 
   namespace :graphql do
     post '/', to: 'query#execute', as: :graphql
     get 'editor', to: 'editor#index', as: :graphiql
     get 'schema', to: 'query#schema', as: :schema if Rails.env.development?
   end
-
-  get '/:nickname', to: 'users#show', as: :user
 end

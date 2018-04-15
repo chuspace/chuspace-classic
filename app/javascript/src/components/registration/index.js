@@ -6,20 +6,22 @@ import sizeMe from 'react-sizeme'
 import debounce from 'lodash/debounce'
 import isEmpty from 'lodash/isEmpty'
 
+import axiosClient from 'helpers/axios-client'
+import to from 'helpers/await-to'
+
 import Modal from 'components/modal'
 import Input from 'components/input'
 import Button from 'components/button'
 import LinkButton from 'components/link-button'
 import Link from 'components/link'
-import RelayClient from 'helpers/relay-client'
-import { parseValidationErrors } from 'helpers/errors'
 
-import CheckNicknameMutation from 'mutations/nicknames/check-nickname'
-import CreateNewUserMutation from 'mutations/users/create-user'
+import { parseValidationErrors } from 'helpers/errors'
 
 type Props = {
   showLogin: () => void,
   hideSignup: () => void,
+  check_nicknames_path: string,
+  registrations_path: string,
   size: {
     width: number,
     height: number
@@ -73,59 +75,36 @@ export default class Registration extends Component<Props, State> {
     )
   }
 
-  handleNicknameCheck = () => {
+  handleNicknameCheck = async () => {
     if (isEmpty(this.state.form.nickname)) return
-    RelayClient.commitMutation({
-      mutation: CheckNicknameMutation,
-      variables: {
-        input: { nickname: this.state.form.nickname }
-      },
-      onCompleted: ({ check_nickname: response }, errors) => {
-        if (response.errors) {
-          const parsedErrors = parseValidationErrors(response.errors)
-          this.setState({ errors: parsedErrors })
-        }
-      },
-      onError: err => {
-        this.setState({ form: Registration.Form })
-        /* $FlowFixMe */
-        this.formNode.reset()
-        console.log('i run error')
-        console.error(err)
-      }
-    })
+    const [error] = await to(
+      axiosClient.post(this.props.check_nicknames_path, {
+        nickname: this.state.form.nickname
+      })
+    )
+
+    if (error) {
+      this.setState({
+        errors: parseValidationErrors(error.response.data.errors)
+      })
+    }
   }
 
-  handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+  handleSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
-    RelayClient.commitMutation({
-      mutation: CreateNewUserMutation,
-      variables: {
-        input: this.state.form
-      },
-      onCompleted: ({ create_user: response }, errors) => {
-        if (response.errors) {
-          const parsedErrors = parseValidationErrors(response.errors)
-          this.setState({ errors: parsedErrors })
-          return
-        }
+    const [error] = await to(
+      axiosClient.post(this.props.registrations_path, { ...this.state.form })
+    )
 
-        if (response.user.id) {
-          /* $FlowFixMe */
-          this.formNode.reset()
-          this.setState({ form: Registration.Form, success: true }, () =>
-            setTimeout(() => this.props.hideSignup(), 5000)
-          )
-        }
-      },
-      onError: err => {
-        this.setState({ form: Registration.Form })
-        /* $FlowFixMe */
-        this.formNode.reset()
-        console.log('i run error')
-        console.error(err)
-      }
-    })
+    if (error) {
+      this.setState({ errors: parseValidationErrors(error.response.data.errors) })
+    } else {
+      /* $FlowFixMe */
+      this.formNode.reset()
+      this.setState({ form: Registration.Form, success: true }, () =>
+        setTimeout(() => this.props.hideSignup(), 5000)
+      )
+    }
   }
 
   showLogin = (e: SyntheticEvent<HTMLButtonElement>) => {

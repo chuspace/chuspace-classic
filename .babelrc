@@ -15,7 +15,6 @@
     "react"
   ],
   "plugins": [
-    "relay",
     "transform-decorators-legacy",
     "syntax-dynamic-import",
     "transform-object-rest-spread",

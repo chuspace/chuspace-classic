@@ -42,9 +42,6 @@ gem 'octokit'
 # HTTP requests and caching
 gem 'faraday'
 gem 'typhoeus'
-# Graphql
-gem 'graphql'
-gem 'graphql-batch'
 # HTML to markdown
 gem 'reverse_markdown'
 # Markdown

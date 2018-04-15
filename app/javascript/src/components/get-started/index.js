@@ -49,6 +49,7 @@ export default class GetStarted extends Component<Props, State> {
 
         {this.state.signup && (
           <Registration
+            {...this.props}
             hide={this.hideSignup}
             hideSignup={this.hideSignup}
             showLogin={this.showLogin}
@@ -57,6 +58,7 @@ export default class GetStarted extends Component<Props, State> {
 
         {this.state.login && (
           <Login
+            {...this.props}
             hide={this.hideLogin}
             hideLogin={this.hideLogin}
             showSignup={this.showSignup}
