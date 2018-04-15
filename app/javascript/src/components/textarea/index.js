@@ -7,22 +7,20 @@ import withInputDecorator from 'decorators/input-decorator'
 type Props = {
   placeholder?: string,
   autoFocus?: boolean,
-  autoComplete?: string,
-  type?: string,
   onChange?: (e: SyntheticEvent<HTMLInputElement>) => void,
   helpText?: string,
   className?: string,
+  rows?: number,
   name: string,
   value?: string,
   error?: string,
-  label?: string,
   required?: boolean,
   defaultValue?: string
 }
 
-const Input = (props: Props) => (
-  <input
-    autoComplete={props.autoComplete || 'off'}
+const Textarea = (props: Props) => (
+  <textarea
+    rows={props.rows}
     onChange={props.onChange}
     placeholder={props.placeholder}
     autoFocus={props.autoFocus}
@@ -30,18 +28,17 @@ const Input = (props: Props) => (
       'input f6 ba b--light-green pa2 w-100 br2 db mb2 input-reset',
       props.className
     )}
-    type={props.type}
     name={props.name}
     value={props.value}
     defaultValue={props.defaultValue}
   />
 )
 
-Input.defaultProps = {
+Textarea.defaultProps = {
   autoFocus: false,
   required: false,
-  type: 'text',
+  rows: 1,
   helpText: ''
 }
 
-export default withInputDecorator(Input)
+export default withInputDecorator(Textarea)

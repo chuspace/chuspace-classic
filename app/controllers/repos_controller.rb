@@ -4,12 +4,16 @@ class ReposController < ApplicationController
   before_action :authenticate!
 
   def new
+    @repo = Repo.new(user: Current.user)
+    @owners = Current.user.github_orgs
+    render component: 'new-repo/index',
+           props: { owners: @owners, repos_path: repos_path },
+           prerender: false
   end
 
   def create
     github_params[:homepage] = user_url(Current.user) if Rails.env.production?
     response = Current.user.github_client.create_repo(name, github_params)
-
     repo = Current.user.build_repo(repo_params)
     repo.github_repo_id = response.id
     repo.github_repo_full_name = response.full_name
@@ -31,10 +35,10 @@ class ReposController < ApplicationController
     end
 
     def repo_params
-      params.permit(:name, :description)
+      params.permit(:name, :description, :owner)
     end
 
     def github_params
-      params.permit(:description, :organization, :license, :private, :auto_init)
+      params.permit(:description, :organization)
     end
 end
