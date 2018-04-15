@@ -26,9 +26,7 @@
         "alias": {
           "components": "./app/javascript/src/components",
           "helpers": "./app/javascript/src/helpers",
-          "decorators": "./app/javascript/src/decorators",
-          "mutations": "./app/javascript/src/graphql/mutations",
-          "queries": "./app/javascript/src/graphql/queries"
+          "decorators": "./app/javascript/src/decorators"
         }
       }
     ],
