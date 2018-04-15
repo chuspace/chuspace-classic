@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   resources :repos
   resources :check_nicknames, only: :create
-  resources :magic_logins, only: :create
+  resources :magic_logins, only: :index
   resources :users
 
   namespace :graphql do

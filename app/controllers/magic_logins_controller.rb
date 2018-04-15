@@ -3,7 +3,7 @@
 class MagicLoginsController < ApplicationController
   skip_before_action :authenticate
 
-  def create
+  def index
     user = User.find_by(auth_token: params[:token])
 
     if user
