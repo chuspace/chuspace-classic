@@ -15,14 +15,14 @@ class ReposController < ApplicationController
     repo.github_repo_full_name = response.full_name
 
     if repo.save
-      { repo: repo }
+      render json: { id: repo.id }
     else
       Current.user.github_client.delete_repo(response.id)
-      { errors: repo.graphql_validation_errors }
+      render json: { errors: repo.errors.messages }
     end
 
   rescue Octokit::UnprocessableEntity => e
-    error_message_for(e.errors.first[:field], e.errors.first[:message])
+    render json: { errors: e.errors }
   end
 
   private

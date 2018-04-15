@@ -11,10 +11,4 @@ Rails.application.routes.draw do
   resources :check_nicknames, only: :create
   resources :magic_logins, only: :index
   resources :users
-
-  namespace :graphql do
-    post '/', to: 'query#execute', as: :graphql
-    get 'editor', to: 'editor#index', as: :graphiql
-    get 'schema', to: 'query#schema', as: :schema if Rails.env.development?
-  end
 end
