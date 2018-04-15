@@ -18,7 +18,7 @@ class ReposController < ApplicationController
       render json: { id: repo.id }
     else
       Current.user.github_client.delete_repo(response.id)
-      render json: { errors: repo.errors.messages }
+      render json: { errors: repo.api_validation_errors}
     end
 
   rescue Octokit::UnprocessableEntity => e

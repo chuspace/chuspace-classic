@@ -1,3 +1,8 @@
 <h1>Repos#new</h1>
 <p>New me in app/views/repos/index.html.erb</p>
-<%= react_component 'new-repo/index', {}, { prerender: true } %>
+
+<%= form_for @article, url: {action: "create"}, html: {class: "nifty_form"} do |f| %>
+  <%= f.text_field :title %>
+  <%= f.text_area :body, size: "60x12" %>
+  <%= f.submit "Create" %>
+<% end %>

@@ -13,7 +13,7 @@ class CheckNicknamesController < ApplicationController
       if new_user.valid_attributes?(:nickname)
         head :no_content
       else
-        render json: { errors: new_user.errors.messages }, status: 422
+        render json: { errors: new_user.api_validation_errors }, status: 422
       end
     end
   end

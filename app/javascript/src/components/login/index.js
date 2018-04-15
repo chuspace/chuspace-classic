@@ -66,7 +66,7 @@ export default class Login extends Component<Props, State> {
       /* $FlowFixMe */
       this.formNode.reset()
       this.setState({ form: Login.Form, success: true }, () =>
-        setTimeout(() => this.props.hideLogin(), 5000)
+        setTimeout(() => this.props.hideLogin(), 2000)
       )
     }
   }

@@ -8,7 +8,7 @@ class UsersController < ApplicationController
       UserMailer.with(user: user).send_magic_login.deliver_later
       render json: { id: user.id }
     else
-      render json: { errors: user.errors.messages }, status: 422
+      render json: { errors: user.api_validation_errors }, status: 422
     end
   end
 

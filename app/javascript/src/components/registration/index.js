@@ -15,8 +15,6 @@ import Button from 'components/button'
 import LinkButton from 'components/link-button'
 import Link from 'components/link'
 
-import { parseValidationErrors } from 'helpers/errors'
-
 type Props = {
   showLogin: () => void,
   hideSignup: () => void,
@@ -85,7 +83,7 @@ export default class Registration extends Component<Props, State> {
 
     if (error) {
       this.setState({
-        errors: parseValidationErrors(error.response.data.errors)
+        errors: error.response.data.errors
       })
     }
   }
@@ -98,7 +96,7 @@ export default class Registration extends Component<Props, State> {
 
     if (error) {
       this.setState({
-        errors: parseValidationErrors(error.response.data.errors)
+        errors: error.response.data.errors
       })
     } else {
       /* $FlowFixMe */
