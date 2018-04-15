@@ -97,7 +97,9 @@ export default class Registration extends Component<Props, State> {
     )
 
     if (error) {
-      this.setState({ errors: parseValidationErrors(error.response.data.errors) })
+      this.setState({
+        errors: parseValidationErrors(error.response.data.errors)
+      })
     } else {
       /* $FlowFixMe */
       this.formNode.reset()
