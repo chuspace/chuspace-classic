@@ -22,11 +22,11 @@ class ReposController < ApplicationController
       render json: { id: repo.id }
     else
       Current.user.github_client.delete_repo(response.id)
-      render json: { errors: repo.api_validation_errors}
+      render json: { errors: repo.api_validation_errors }, status: 422
     end
 
   rescue Octokit::UnprocessableEntity => e
-    render json: { errors: e.errors }
+    render json: { errors: parse_api_errors(e.errors) }, status: 422
   end
 
   private

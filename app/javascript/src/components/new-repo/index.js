@@ -37,8 +37,6 @@ export default class NewRepo extends Component {
       axiosClient.post(this.props.repos_path, { ...this.state.form })
     )
 
-    console.log(error)
-
     if (error) {
       this.setState({
         errors: error.response.data.errors
@@ -47,7 +45,7 @@ export default class NewRepo extends Component {
       /* $FlowFixMe */
       this.formNode.reset()
       this.setState({ form: NewRepo.Form, success: true }, () =>
-        setTimeout(() => this.props.hideSignup(), 5000)
+        setTimeout(() => (window.location.href = '/'), 5000)
       )
     }
   }
@@ -63,7 +61,7 @@ export default class NewRepo extends Component {
         label='Owner'
         onChange={this.handleInputChange}
         name='organization'
-        error={this.state.errors.owner}
+        error={this.state.errors.organization}
         autoFocus
         required
       >
@@ -80,7 +78,7 @@ export default class NewRepo extends Component {
         autoComplete='off'
         label='Repo name'
         onChange={this.handleInputChange}
-        error={this.state.errors.repo}
+        error={this.state.errors.name}
         name='name'
         value={this.state.form.repo}
         placeholder='Repo name'
@@ -106,7 +104,7 @@ export default class NewRepo extends Component {
   renderSuccess = () => (
     <div className='pa3 bg-light-yellow'>
       <p className='intro f5 lh-copy'>
-        Horray! Welcome. We have sent you a link to login.
+        Awesome! You are all set to post articles on Chuspace.
       </p>
     </div>
   )
@@ -122,8 +120,8 @@ export default class NewRepo extends Component {
                 A repository contains all the files for your project, including
                 the revision history.
               </p>
-              {this.state.success ? this.renderSuccess() : this.renderForm()}
             </div>
+            {this.state.success ? this.renderSuccess() : this.renderForm()}
           </div>
         </div>
       </div>
