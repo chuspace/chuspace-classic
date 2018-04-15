@@ -26,6 +26,8 @@ import createSubscriptionHandler from 'graphql-ruby-client/subscriptions/createH
 const __DEV__ = process.env.NODE_ENV === 'development'
 const cable = ActionCable.createConsumer()
 
+let relayEnvironment = null
+
 const fetchOperation = urlMiddleware({
   url: req => Promise.resolve('/graphql'),
   credentials: 'same-origin',
@@ -74,11 +76,31 @@ const network = new RelayNetworkLayer(
   options
 )
 
-const source = new RecordSource()
-const store = new Store(source)
-const environment = new Environment({ network, store })
+export const initEnvironment = ({ records = {} } = {}) => {
+  const source = new RecordSource(records)
+  const store = new Store(source)
+
+  if (!process.browser) {
+    return new Environment({
+      network,
+      store
+    })
+  }
+
+  if (!relayEnvironment) {
+    relayEnvironment = new Environment({
+      network,
+      store
+    })
+  }
+
+  return relayEnvironment
+}
+
+const environment = initEnvironment()
 
 export default {
+  initEnvironment: initEnvironment,
   environment,
   fetchQuery: fetchQuery.bind(undefined, environment),
   commitMutation: commitMutation.bind(undefined, environment),
