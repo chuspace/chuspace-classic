@@ -18,6 +18,7 @@ default: &default
     - .jsx
     - .sass
     - .module.sass
+    - .css
     - .png
     - .svg
     - .gif
