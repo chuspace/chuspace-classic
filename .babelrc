@@ -26,7 +26,8 @@
         "alias": {
           "components": "./app/javascript/src/components",
           "helpers": "./app/javascript/src/helpers",
-          "decorators": "./app/javascript/src/decorators"
+          "decorators": "./app/javascript/src/decorators",
+          "editor": "./app/javascript/src/editor"
         }
       }
     ],
