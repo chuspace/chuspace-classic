@@ -8,7 +8,7 @@ module Authentication
   end
 
   def login(user)
-    cookies.encrypted[:user_id] = { value: user.id, expiry: 1.year.from_now }
+    cookies.encrypted[:user_id] = { value: user.id, expires: 1.year.from_now }
   end
 
   def logout
