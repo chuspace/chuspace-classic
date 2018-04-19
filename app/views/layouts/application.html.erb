@@ -3,36 +3,21 @@
   <head>
     <title>Chuspace</title>
     <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body class="application">
     <div class="mw8 center">
-      <header class="header">
-        <nav class="nav pv3 flex justify-between items-center">
-          <div class="logo f4 db">
-            <%= link_to 'Chuspace', root_path, class: 'logo-link no-underline black-90' %>
-          </div>
-          <% if Current.user.present? %>
-            <span><%= Current.user.name %></span>
-            <div class="nav-links flex">
-              <%= link_to 'Sign out', logout_path, method: :patch, class: 'nav-link-item no-underline mr3' %>
-            </div>
-          <% else %>
-           <%= react_component 'get-started/index', { registrations_path: users_path, login_path: login_path, check_nicknames_path: check_nicknames_path }, { prerender: true } %>
-          <% end %>
-        </nav>
-      </header>
+      <%= render 'layouts/header' %>
 
       <section class="content">
         <%= yield %>
       </section>
 
-      <footer className="footer">
-        <div class="mw8 center">
-          I am footer
-        </div>
+      <footer class="footer">
+        I am footer
       </footer>
     </div>
 

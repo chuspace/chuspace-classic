@@ -1,2 +1,14 @@
-<h1>Posts#new</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
+<div class='editor w-75 center pv5'>
+  <div class="dt w-100 bb b--black-05 pb2 mt2">
+    <div class="dtc w3 w4-ns v-mid">
+      <%= image_tag(url_for(Current.user.avatar), class: "ba b--black-10 db br-100 w3 w4-ns h3 h4-ns") %>
+    </div>
+    <div class="dtc v-mid pl3">
+      <h1 class="f6 f5-ns fw6 lh-title black mv0"><%= Current.user.name %></h1>
+      <h2 class="f6 fw4 mt0 mb0 black-60"><%= Current.user.bio %></h2>
+      <h2 class="f6 fw4 mt0 mb0 black-60"><%= Current.user.company %></h2>
+      <h2 class="f6 fw4 mt0 mb0 black-60"><%= Current.user.location %></h2>
+    </div>
+  </div>
+  <%= react_component 'chu-editor/index' %>
+</div>
