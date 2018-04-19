@@ -1,0 +1,9 @@
+<header class='header'>
+  <nav class='nav pv3 flex justify-between items-center'>
+    <div class='logo f3 b db'>
+      <%= link_to 'Chuspace', root_path, class: 'logo-link no-underline black-90' %>
+    </div>
+
+    <%= react_component 'user-nav/index', { name: Current.user.name, avatar: url_for(Current.user.avatar) }, {prerender: true }  %>
+  </nav>
+</header>

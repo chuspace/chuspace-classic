@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chuspace</title>
+    <%= csrf_meta_tags %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body class="application">
+    <div class="mw8 center">
+      <%= render 'layouts/header' %>
+
+      <section class="content">
+        <%= yield %>
+      </section>
+    </div>
+  </body>
+</html>
