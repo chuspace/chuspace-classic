@@ -7,7 +7,7 @@ type Props = {
   title: string,
   className?: string,
   href?: string,
-  method: string,
+  method?: string,
   rel: string,
   onClick?: (evt: SyntheticEvent<HTMLButtonElement>) => void
 }
@@ -25,7 +25,6 @@ const Link = (props: Props) => (
 )
 
 Link.defaultProps = {
-  method: 'get',
   ref: 'nofollow'
 }
 

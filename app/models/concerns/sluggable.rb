@@ -4,16 +4,23 @@ module Sluggable
   extend ActiveSupport::Concern
 
   included do
-    validates :slug, presence: true, uniqueness: { scope: :user_id }
     before_validation :assign_slug
   end
 
+  class_methods do
+    attr_reader :slug_attribute
+
+    def sluggable(attribute = :name)
+      @slug_attribute = attribute
+    end
+  end
+
   def to_param
-    name.parameterize
+    send(self.class.slug_attribute).parameterize
   end
 
   private
     def assign_slug
-      self.slug = name&.parameterize
+      self.slug = send(self.class.slug_attribute)&.parameterize
     end
 end

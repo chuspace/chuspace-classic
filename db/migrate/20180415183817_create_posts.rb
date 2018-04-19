@@ -6,6 +6,8 @@ class CreatePosts < ActiveRecord::Migration[5.2]
       t.text :body
       t.uuid :user_id
       t.uuid :repo_id
+      t.string :commit
+      t.integer :version
       t.string :tags, array: true, default: []
       t.boolean :state
       t.datetime :published_at

@@ -43,6 +43,8 @@ ActiveRecord::Schema.define(version: 2018_04_15_183817) do
     t.text "body"
     t.uuid "user_id"
     t.uuid "repo_id"
+    t.string "commit"
+    t.integer "version"
     t.string "tags", default: [], array: true
     t.boolean "state"
     t.datetime "published_at"
