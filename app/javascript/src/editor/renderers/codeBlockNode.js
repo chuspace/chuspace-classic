@@ -1,6 +1,5 @@
 // @flow
 import * as React from 'react'
-import type { nodeProps } from './type'
 
 export const codeBlockNode = options => {
   const CodeBlockComponent = ({ attributes, children, node }: nodeProps) => {

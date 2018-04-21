@@ -1,3 +1,5 @@
+// @flow
+
 import isHotkey from 'is-hotkey'
 import isEmpty from 'lodash/isEmpty'
 

@@ -3,14 +3,11 @@
 import { STRIKETHROUGH } from 'editor/constants/marks'
 import markPlugin from 'editor/plugins/mark'
 
-const StrikeThroughPlugin = opt => {
-  const options = Object.assign(
-    {
-      type: STRIKETHROUGH,
-      tagName: 's'
-    },
-    opt
-  )
+const StrikeThroughPlugin = () => {
+  const options = Object.assign({
+    type: STRIKETHROUGH,
+    tagName: 's'
+  })
 
   return markPlugin(options, 'ctrl+opt+d')
 }

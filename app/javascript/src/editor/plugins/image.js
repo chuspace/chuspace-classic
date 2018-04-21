@@ -3,7 +3,6 @@
 import { IMAGE } from 'editor/constants/inlines'
 import imageNode from 'editor/renderers/ImageNode'
 import nodeAttrs from 'editor/attributes/node'
-import type { nodeProps } from 'editor/types'
 
 const ImagePlugin = () => {
   const options = Object.assign({

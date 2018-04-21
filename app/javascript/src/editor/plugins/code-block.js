@@ -1,3 +1,5 @@
+// @flow
+
 import { CODE, CODE_LINE } from 'editor/constants/blocks'
 import { codeBlockNode, codeLineNode } from 'editor/renderers/codeBlockNode'
 

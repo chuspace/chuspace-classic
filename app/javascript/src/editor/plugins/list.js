@@ -5,15 +5,12 @@ import { OL_LIST, UL_LIST, LIST_ITEM } from 'editor/constants/blocks'
 import nodeAttrs from 'editor/attributes/node'
 import commonNode from 'editor/renderers/commonNode'
 
-const ListPlugin = opt => {
-  const options = Object.assign(
-    {
-      olType: OL_LIST,
-      ulType: UL_LIST,
-      liType: LIST_ITEM
-    },
-    opt
-  )
+const ListPlugin = () => {
+  const options = Object.assign({
+    olType: OL_LIST,
+    ulType: UL_LIST,
+    liType: LIST_ITEM
+  })
 
   return {
     renderNode: props => {

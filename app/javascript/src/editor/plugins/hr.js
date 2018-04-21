@@ -1,12 +1,12 @@
+// @flow
+
 import React from 'react'
 import { HR } from 'editor/constants/blocks'
 
 const HrPlugin = () => {
-  const options = Object.assign(
-    {
-      hrType: HR
-    }
-  )
+  const options = Object.assign({
+    hrType: HR
+  })
 
   return {
     renderNode: props => {

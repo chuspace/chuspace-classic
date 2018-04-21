@@ -1,3 +1,5 @@
+// @flow
+
 // Blocks
 export { default as BlockQuotePlugin } from './blockquote'
 export { default as CodeBlockPlugin } from './code-block'

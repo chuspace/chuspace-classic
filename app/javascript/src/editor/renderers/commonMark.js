@@ -1,6 +1,5 @@
 // @flow
 import * as React from 'react'
-import type { nodeProps } from './type'
 import mapValues from 'lodash/mapValues'
 
 export default function (Tag, stylesAttr) {

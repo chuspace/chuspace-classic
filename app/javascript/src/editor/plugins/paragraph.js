@@ -3,15 +3,12 @@ import commonNode from 'editor/renderers/commonNode'
 import nodeAttrs from 'editor/attributes/node'
 import { PARAGRAPH } from 'editor/constants/blocks'
 
-const ParagraphPlugin = opt => {
-  const options = Object.assign(
-    {
-      type: PARAGRAPH,
-      tagName: 'p',
-      ...nodeAttrs
-    },
-    opt
-  )
+const ParagraphPlugin = () => {
+  const options = Object.assign({
+    type: PARAGRAPH,
+    tagName: 'p',
+    ...nodeAttrs
+  })
 
   return {
     renderNode: props => {

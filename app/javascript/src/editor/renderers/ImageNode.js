@@ -1,7 +1,6 @@
 // @flow
 import * as React from 'react'
 import type { Change } from 'slate'
-import type { nodeProps } from './type'
 
 export default function (options) {
   const NodeComponent = ({ ...props }: nodeProps) => {

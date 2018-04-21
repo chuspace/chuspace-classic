@@ -1,6 +1,5 @@
 // @flow
 import * as React from 'react'
-import type { nodeProps } from './type'
 
 export default function (options) {
   const LinkNode = ({ attributes, children, node }: nodeProps) => {

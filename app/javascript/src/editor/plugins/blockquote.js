@@ -1,7 +1,5 @@
 // @flow
 
-import type { nodeProps } from 'editor/types'
-
 import commonNode from 'editor/renderers/commonNode'
 import omit from 'lodash/omit'
 import isHotkey from 'is-hotkey'
