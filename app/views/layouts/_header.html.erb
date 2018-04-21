@@ -5,9 +5,9 @@
     </div>
 
     <% if Current.user.present? %>
-      <%= react_component 'user-nav/index', { name: Current.user.name, avatar: url_for(Current.user.avatar) }, {prerender: true }  %>
+      <%= react_component 'header/user', { name: Current.user.name, avatar: url_for(Current.user.avatar), logout_path: logout_path }, { prerender: true }  %>
     <% else %>
-      <%= react_component 'get-started/index', { registrations_path: users_path, login_path: login_path, check_nicknames_path: check_nicknames_path }, { prerender: true } %>
+      <%= react_component 'header/guest', { registrations_path: users_path, login_path: login_path, check_nicknames_path: check_nicknames_path }, { prerender: true } %>
     <% end %>
   </nav>
 </header>

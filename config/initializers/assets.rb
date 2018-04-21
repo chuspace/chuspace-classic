@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
 Rails.application.config.assets.paths << Rails.root.join('node_modules/normalize.css')
-Rails.application.config.assets.paths << Rails.root.join('node_modules/tachyons/src')
+Rails.application.config.assets.paths << Rails.root.join('node_modules/tachyons/css')

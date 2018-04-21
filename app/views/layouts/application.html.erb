@@ -11,16 +11,11 @@
   <body class="application">
     <div class="mw8 center">
       <%= render 'layouts/header' %>
-
       <section class="content">
         <%= yield %>
       </section>
-
-      <footer class="footer">
-        I am footer
-      </footer>
+      <%= render 'layouts/footer' %>
     </div>
-
     <div id="modal-root" />
   </body>
 </html>

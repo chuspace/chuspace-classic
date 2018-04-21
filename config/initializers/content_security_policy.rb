@@ -5,7 +5,7 @@
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
 
 Rails.application.config.content_security_policy do |p|
-  p.default_src :self, :https
+  # p.default_src :self, :https
   p.font_src    :self, :https, :data
   # p.img_src     :self, :https, :data
   p.object_src  :none

@@ -15,6 +15,7 @@ class User < ApplicationRecord
   has_secure_token :auth_token
 
   has_one :repo, dependent: :destroy
+  has_many :posts, dependent: :destroy
 
   def to_param
     nickname
