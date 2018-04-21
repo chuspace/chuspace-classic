@@ -5,6 +5,9 @@ var Turbolinks = require('turbolinks')
 var componentRequireContext = require.context('src/components', true)
 var ReactRailsUJS = require('react_ujs')
 
+require('tachyons/src/tachyons')
+require('styles/application')
+
 Rails.start()
 Turbolinks.start()
 ReactRailsUJS.useContext(componentRequireContext)

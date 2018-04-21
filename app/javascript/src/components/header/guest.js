@@ -13,7 +13,7 @@ type State = {
   signup: boolean
 }
 
-export default class GetStarted extends Component<Props, State> {
+export default class GuestNav extends Component<Props, State> {
   Registration: ComponentType<Props> = () => null
   Login: ComponentType<Props> = () => null
 

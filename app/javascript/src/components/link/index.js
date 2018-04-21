@@ -8,7 +8,7 @@ type Props = {
   className?: string,
   href?: string,
   method?: string,
-  rel: string,
+  rel?: string,
   onClick?: (evt: SyntheticEvent<HTMLButtonElement>) => void
 }
 
