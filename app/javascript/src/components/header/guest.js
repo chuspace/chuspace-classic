@@ -3,65 +3,53 @@
 import type { ComponentType } from 'react'
 import React, { Component } from 'react'
 
+import GettingStarted from 'decorators/getting-started'
 import LinkButton from 'components/link-button'
 import Link from 'components/link'
 
-type Props = {}
-
-type State = {
+type Props = {
+  signup: boolean,
   login: boolean,
-  signup: boolean
+  Registration: ComponentType<{}>,
+  Login: ComponentType<{}>,
+  showSignup: (*) => void,
+  hideSignup: (*) => void,
+  showLogin: (*) => void,
+  hideLogin: (*) => void
 }
 
-export default class GuestNav extends Component<Props, State> {
-  Registration: ComponentType<Props> = () => null
-  Login: ComponentType<Props> = () => null
-
-  state = {
-    login: false,
-    signup: false
-  }
-
-  async componentDidMount () {
-    /* $FlowFixMe */
-    this.Registration = (await import('components/registration')).default
-    /* $FlowFixMe */
-    this.Login = (await import('components/login')).default
-  }
-
-  showLogin = (e: SyntheticEvent<HTMLButtonElement>) =>
-    this.setState({ login: true })
-  hideLogin = (e: SyntheticEvent<HTMLButtonElement>) =>
-    this.setState({ login: false })
-
-  showSignup = (e: SyntheticEvent<HTMLButtonElement>) =>
-    this.setState({ signup: true })
-  hideSignup = (e: SyntheticEvent<HTMLButtonElement>) =>
-    this.setState({ signup: false })
-
+@GettingStarted
+export default class GuestNav extends Component<Props> {
   render () {
-    const { Registration, Login } = this
+    const {
+      Registration,
+      Login,
+      showSignup,
+      hideSignup,
+      showLogin,
+      hideLogin
+    } = this.props
 
     return (
       <div className='nav-links flex items-center'>
-        <Link title='Sign in' className='mr4' onClick={this.showLogin} />
-        <LinkButton title='Get Started' onClick={this.showSignup} />
+        <Link title='Sign in' className='mr4' onClick={showLogin} />
+        <LinkButton title='Get Started' onClick={showSignup} />
 
-        {this.state.signup && (
+        {this.props.signup && (
           <Registration
             {...this.props}
-            hide={this.hideSignup}
-            hideSignup={this.hideSignup}
-            showLogin={this.showLogin}
+            hide={hideSignup}
+            hideSignup={hideSignup}
+            showLogin={showLogin}
           />
         )}
 
-        {this.state.login && (
+        {this.props.login && (
           <Login
             {...this.props}
-            hide={this.hideLogin}
-            hideLogin={this.hideLogin}
-            showSignup={this.showSignup}
+            hide={hideLogin}
+            hideLogin={hideLogin}
+            showSignup={showSignup}
           />
         )}
       </div>

@@ -9,13 +9,12 @@ import isEmpty from 'lodash/isEmpty'
 import axiosClient from 'helpers/axios-client'
 import to from 'helpers/await-to'
 
-import Modal from 'components/modal'
 import Input from 'components/input'
 import Button from 'components/button'
 import LinkButton from 'components/link-button'
 import Link from 'components/link'
 
-type Props = {
+export type Props = {
   showLogin: () => void,
   hideSignup: () => void,
   check_nicknames_path: string,
@@ -221,12 +220,12 @@ export default class Registration extends Component<Props, State> {
 
   render () {
     return (
-      <Modal {...this.props} className='brand-bg-green'>
+      <div>
         {this.state.success && (
           <Confetti {...this.props.size} recycle={false} />
         )}
         {this.state.showForm ? this.renderRegistration() : this.renderActions()}
-      </Modal>
+      </div>
     )
   }
 }

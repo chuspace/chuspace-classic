@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react'
 export default class PostsIndex extends PureComponent {
   render () {
     return (
-      <section className='mw7 center pv5'>
+      <section className='mw7 center'>
         <h2 className='ph3 ph0-l'>News</h2>
         <article className='pv4 bt bb b--black-10 ph3 ph0-l'>
           <div className='flex flex-column flex-row-ns'>
