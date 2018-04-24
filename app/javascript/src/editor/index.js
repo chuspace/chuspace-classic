@@ -1,20 +1,21 @@
-// @flow
-import type { Value, Change } from 'slate'
-
-import * as React from 'react'
-import { Editor } from 'slate-react'
-import EditPrism from 'slate-prism'
-import EditBlockquote from 'slate-edit-blockquote'
-import EditList from 'slate-edit-list'
-import PluginEditCode from 'slate-edit-code'
-import BLOCKS from 'markup-it/lib/constants/blocks'
-import MARKS from 'markup-it/lib/constants/marks'
-import INLINES from 'markup-it/lib/constants/inlines'
 import 'prismjs/themes/prism.css'
 import 'github-markdown-css'
 
-import { DEFAULT as DEFAULT_LIST } from 'editor/helpers/list'
+import * as React from 'react'
 import * as editorPlugins from 'editor/plugins'
+
+// @flow
+import type { Change, Value } from 'slate'
+
+import BLOCKS from 'markup-it/lib/constants/blocks'
+import { DEFAULT as DEFAULT_LIST } from 'editor/helpers/list'
+import EditBlockquote from 'slate-edit-blockquote'
+import EditList from 'slate-edit-list'
+import EditPrism from 'slate-prism'
+import { Editor } from 'slate-react'
+import INLINES from 'editor/constants/inlines'
+import MARKS from 'markup-it/lib/constants/marks'
+import PluginEditCode from 'slate-edit-code'
 
 const options = Object.assign({
   markdownOption: {

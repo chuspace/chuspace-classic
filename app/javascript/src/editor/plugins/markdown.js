@@ -1,33 +1,31 @@
 // @flow
 
-import type { Change } from 'slate'
-
-// plugins
-import PluginEditCode from 'slate-edit-code'
-
 // constant
 import { KEY_ENTER, KEY_SPACE } from 'editor/constants/keys'
-import DEFAULT_LIST from 'editor/constants/list'
+
 import BLOCKS from 'markup-it/lib/constants/blocks'
+import type { Change } from 'slate'
+import DEFAULT_LIST from 'editor/constants/list'
+import INLINES from 'editor/constants/inlines'
 import MARKS from 'markup-it/lib/constants/marks'
-import INLINES from 'markup-it/lib/constants/inlines'
-
-// event handlers
-import onEnter from 'editor/handlers/on-enter'
-
+// plugins
+import PluginEditCode from 'slate-edit-code'
 // match
 import matchBlockquote from 'editor/match/blockquote'
-import matchCodeBlock from 'editor/match/codeBlock'
-import matchCode from 'editor/match/code'
-import matchHeader from 'editor/match/header'
 import matchBold from 'editor/match/bold'
-import matchItalic from 'editor/match/italic'
-import matchStrikeThrough from 'editor/match/strikethrough'
 import matchBoldItalic from 'editor/match/boldItalic'
+import matchCode from 'editor/match/code'
+import matchCodeBlock from 'editor/match/codeBlock'
+import matchEmoji from 'editor/match/emoji'
+import matchHeader from 'editor/match/header'
 import matchHr from 'editor/match/hr'
 import matchImage from 'editor/match/image'
+import matchItalic from 'editor/match/italic'
 import matchLink from 'editor/match/link'
 import matchList from 'editor/match/list'
+import matchStrikeThrough from 'editor/match/strikethrough'
+// event handlers
+import onEnter from 'editor/handlers/on-enter'
 
 const codePlugin = PluginEditCode({
   onlyIn: node => node.type === 'code_block'
@@ -126,7 +124,7 @@ const checkPatterns = function (options, change) {
     return matchLink(options.inlines.LINK, currentTextNode, matched, change)
   }
 
-  if (lastChar === '*' || lastChar === '_') {
+  if (lastChar === '*' || lastChar === '_' || lastChar === ':') {
     if ((matched = prevTextFromSpace.match(/\s?(\*\*\*|___)((?!\1).)+?\1$/m))) {
       // [Bold + Italic] ***[strong + italic]***, ___[strong + italic]___
       return matchBoldItalic(options.marks, currentTextNode, matched, change)
@@ -140,6 +138,11 @@ const checkPatterns = function (options, change) {
     ) {
       // [Italic] _em_, *em*
       return matchItalic(options.marks.ITALIC, currentTextNode, matched, change)
+    } else if (
+      (matched = prevTextFromSpace.match(/\s?(:)((?!\1).)+?\1$/m))
+    ) {
+      // [Emoji] :smile:
+      return matchEmoji(options.inlines.EMOJI, currentTextNode, matched, change)
     }
   }
 

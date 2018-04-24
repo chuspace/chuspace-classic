@@ -1,9 +1,13 @@
 // @flow
 import * as React from 'react'
 
+import loadLanguages from 'prismjs/components/index.js'
+
 export const codeBlockNode = options => {
   const CodeBlockComponent = ({ attributes, children, node }: nodeProps) => {
     const syntax = options.getSyntax(node)
+    loadLanguages([syntax])
+
     return (
       <div className='relative'>
         <div

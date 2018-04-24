@@ -45,8 +45,7 @@ export default class EditorComponent extends React.Component<Props, State> {
     this.setState(
       {
         value
-      },
-      () => console.log(mdParser.serializeDocument(this.state.value.document))
+      }
     )
   }
 

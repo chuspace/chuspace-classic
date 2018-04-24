@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react'
+
 import { Emoji } from 'emoji-mart'
 
 export default function ({ getEmoji }) {
@@ -16,6 +17,5 @@ export default function ({ getEmoji }) {
   }
 
   EmojiComponent.displayName = 'emoji-node'
-
   return EmojiComponent
 }

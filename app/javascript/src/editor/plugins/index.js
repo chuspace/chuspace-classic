@@ -24,3 +24,5 @@ export { default as CodePlugin } from './code'
 // Inline
 export { default as ImagePlugin } from './image'
 export { default as LinkPlugin } from './link'
+export { default as EmojiPlugin } from './emoji'
+export { default as EmbedPlugin } from './embed'

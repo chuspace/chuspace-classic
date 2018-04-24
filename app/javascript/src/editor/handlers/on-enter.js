@@ -1,8 +1,9 @@
 // @flow
 
 import type { Change } from 'slate'
-import EditList from 'slate-edit-list'
 import EditBlockquote from 'slate-edit-blockquote'
+import EditList from 'slate-edit-list'
+import matchEmbed from 'editor/match/embed'
 
 export default function onEnter (options: any, change: Change) {
   const { value } = change
@@ -15,6 +16,9 @@ export default function onEnter (options: any, change: Change) {
     options.blockquoteOption
   ).utils
 
+  console.log(getCurrentblock.type)
+  return matchEmbed(currentTextNode, change)
+
   if (
     getCurrentblock.type === options.blocks.CODE_LINE ||
     getCurrentblock.type === options.blocks.CODE ||
@@ -22,7 +26,9 @@ export default function onEnter (options: any, change: Change) {
     isSelectionInList(value) ||
     isSelectionInBlockquote(value) ||
     currentLineText.length > selection.focusOffset
-  ) { return }
+  ) {
+
+  }
 
   return change.insertBlock(options.blocks.PARAGRAPH)
 }

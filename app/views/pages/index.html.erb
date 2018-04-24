@@ -1,8 +1,4 @@
 <div class='home'>
-  <div class='bg-yellow-pattern pa3 mv4'>
-    <div class='w-50 center tc'>
-      <%= react_component 'banner/index', { registrations_path: users_path, login_path: login_path, check_nicknames_path: check_nicknames_path }, { prerender: true } %>
-    </div>
-  </div>
+  <%= render 'banner' unless Current.user %>
   <%= react_component 'posts/index', { posts: @posts }, { prerender: true } %>
 </div>
