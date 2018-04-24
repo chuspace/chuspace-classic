@@ -1,15 +1,17 @@
 // @flow
 import * as React from 'react'
-import classNames from 'classnames'
-import type { Value, Change } from 'slate'
-import { Value as EditorValue } from 'slate'
-import { State as MarkdownParser } from 'markup-it'
-import markdown from 'markup-it/lib/markdown'
-import Fullscreen from 'react-full-screen'
-import Editor from 'editor'
-import axiosClient from 'helpers/axios-client'
-import to from 'helpers/await-to'
+
+import type { Change, Value } from 'slate'
+
 import Button from 'components/button'
+import Editor from 'editor'
+import { Value as EditorValue } from 'slate'
+import Fullscreen from 'react-full-screen'
+import { State as MarkdownParser } from 'markup-it'
+import axiosClient from 'helpers/axios-client'
+import classNames from 'classnames'
+import markdown from 'markup-it/lib/markdown'
+import to from 'helpers/await-to'
 
 const mdParser = MarkdownParser.create(markdown)
 
@@ -40,9 +42,12 @@ export default class EditorComponent extends React.Component<Props, State> {
   }
 
   onChange = ({ value }: Value): void => {
-    this.setState({
-      value
-    })
+    this.setState(
+      {
+        value
+      },
+      () => console.log(mdParser.serializeDocument(this.state.value.document))
+    )
   }
 
   createPost = async (e: SyntheticEvent<HTMLButtonElement>) => {

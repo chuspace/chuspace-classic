@@ -58,7 +58,6 @@
     "slate-schema-violations": "^0.1.8",
     "tachyons": "^4.9.1",
     "tether-drop": "^1.4.2",
-    "turbolinks": "^5.1.1",
     "webpack": "^4.5.0",
     "webpack-cli": "^2.0.14"
   },
