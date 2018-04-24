@@ -1,11 +1,11 @@
 // @flow
 
-import type { ComponentType } from 'react'
 import React, { Component } from 'react'
 
+import type { ComponentType } from 'react'
 import GettingStarted from 'decorators/getting-started'
-import LinkButton from 'components/link-button'
 import Link from 'components/link'
+import LinkButton from 'components/link-button'
 
 type Props = {
   signup: boolean,
@@ -25,9 +25,7 @@ export default class GuestNav extends Component<Props> {
       Registration,
       Login,
       showSignup,
-      hideSignup,
-      showLogin,
-      hideLogin
+      showLogin
     } = this.props
 
     return (
@@ -38,18 +36,12 @@ export default class GuestNav extends Component<Props> {
         {this.props.signup && (
           <Registration
             {...this.props}
-            hide={hideSignup}
-            hideSignup={hideSignup}
-            showLogin={showLogin}
           />
         )}
 
         {this.props.login && (
           <Login
             {...this.props}
-            hide={hideLogin}
-            hideLogin={hideLogin}
-            showSignup={showSignup}
           />
         )}
       </div>

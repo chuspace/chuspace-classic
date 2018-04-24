@@ -7,7 +7,6 @@ const ParagraphPlugin = () => {
   const options = Object.assign({
     type: PARAGRAPH,
     tagName: 'p',
-    className: 'f5 f4-l lh-copy',
     ...nodeAttrs
   })
 

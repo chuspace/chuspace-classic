@@ -1,10 +1,11 @@
 // @flow
 
-import type { Node } from 'react'
 import React, { Component } from 'react'
+
+import type { Node } from 'react'
 import classNames from 'classnames'
-import octicons from 'octicons'
 import keydown from 'react-keydown'
+import octicons from 'octicons'
 
 type Props = {
   hide: (e?: SyntheticEvent<HTMLButtonElement>) => void,

@@ -1,14 +1,14 @@
 // @flow
 
 import React, { Component } from 'react'
-import axiosClient from 'helpers/axios-client'
-import to from 'helpers/await-to'
 
-import Modal from 'components/modal'
-import Input from 'components/input'
 import Button from 'components/button'
+import Input from 'components/input'
 import Link from 'components/link'
 import LinkButton from 'components/link-button'
+import Modal from 'components/modal'
+import axiosClient from 'helpers/axios-client'
+import to from 'helpers/await-to'
 
 type Props = {
   showSignup: () => void,
@@ -159,7 +159,7 @@ export default class Login extends Component<Props, State> {
 
   render () {
     return (
-      <Modal {...this.props} className='brand-bg-blue'>
+      <Modal {...this.props} hide={this.props.hideLogin} className='brand-bg-blue'>
         {this.state.showForm ? this.renderLogin() : this.renderActions()}
       </Modal>
     )

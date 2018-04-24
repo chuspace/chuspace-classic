@@ -1,18 +1,17 @@
 // @flow
 
 import React, { Component } from 'react'
+
+import Button from 'components/button'
 import Confetti from 'react-confetti'
-import sizeMe from 'react-sizeme'
+import Input from 'components/input'
+import Link from 'components/link'
+import LinkButton from 'components/link-button'
+import axiosClient from 'helpers/axios-client'
 import debounce from 'lodash/debounce'
 import isEmpty from 'lodash/isEmpty'
-
-import axiosClient from 'helpers/axios-client'
+import sizeMe from 'react-sizeme'
 import to from 'helpers/await-to'
-
-import Input from 'components/input'
-import Button from 'components/button'
-import LinkButton from 'components/link-button'
-import Link from 'components/link'
 
 export type Props = {
   showLogin: () => void,

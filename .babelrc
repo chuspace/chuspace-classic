@@ -24,6 +24,7 @@
       {
         "root": ["./app/javascript/src"],
         "alias": {
+          "types": "./app/javascript/flow-types",
           "styles": "./app/javascript/styles",
           "components": "./app/javascript/src/components",
           "helpers": "./app/javascript/src/helpers",

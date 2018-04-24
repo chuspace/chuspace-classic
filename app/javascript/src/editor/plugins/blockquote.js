@@ -1,4 +1,5 @@
 // @flow
+import type { nodeProps } from 'types/editor'
 
 import commonNode from 'editor/renderers/commonNode'
 import omit from 'lodash/omit'
