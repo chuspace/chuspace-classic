@@ -3,6 +3,7 @@ import * as React from 'react'
 
 export default function ({ getHref }) {
   const EmbedNode = ({ attributes, children, node }: nodeProps) => {
+    console.log('i run')
     return (
       <a
         {...attributes}

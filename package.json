@@ -9,6 +9,7 @@
     "flow-typed-install": "flow-typed install -s -o --libdefDir ./app/javascript/flow-types"
   },
   "dependencies": {
+    "@canner/slate-editor-renderer": "^1.2.8",
     "@rails/webpacker": "4.0.0-pre.2",
     "actioncable": "^5.2.0",
     "axios": "^0.18.0",

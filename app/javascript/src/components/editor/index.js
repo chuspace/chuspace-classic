@@ -10,10 +10,12 @@ import Fullscreen from 'react-full-screen'
 import { State as MarkdownParser } from 'markup-it'
 import axiosClient from 'helpers/axios-client'
 import classNames from 'classnames'
+import html from 'markup-it/lib/html'
 import markdown from 'markup-it/lib/markdown'
 import to from 'helpers/await-to'
 
 const mdParser = MarkdownParser.create(markdown)
+const htmlSerializer = MarkdownParser.create(html)
 
 type Props = {
   value: Value,
@@ -42,11 +44,9 @@ export default class EditorComponent extends React.Component<Props, State> {
   }
 
   onChange = ({ value }: Value): void => {
-    this.setState(
-      {
-        value
-      }
-    )
+    this.setState({
+      value
+    }, () => console.log(htmlSerializer.serializeDocument(this.state.value.document)))
   }
 
   createPost = async (e: SyntheticEvent<HTMLButtonElement>) => {
