@@ -1,38 +1,28 @@
 // @flow
 import * as React from 'react'
 
-import type { Change, Value } from 'slate'
-
 import Button from 'components/button'
-import Editor from 'editor'
-import { Value as EditorValue } from 'slate'
 import Fullscreen from 'react-full-screen'
-import { State as MarkdownParser } from 'markup-it'
+import Textarea from 'components/textarea'
 import axiosClient from 'helpers/axios-client'
 import classNames from 'classnames'
-import markdown from 'markup-it/lib/markdown'
 import to from 'helpers/await-to'
 
-const mdParser = MarkdownParser.create(markdown)
-
 type Props = {
-  value: Value,
   onChange: (change: Change) => void,
   posts_path: string
 }
 
 type State = {
-  value: Value,
   isFull: boolean
 }
 
-export default class EditorComponent extends React.Component<Props, State> {
+export default class Editor extends React.Component<Props, State> {
   constructor (props: Props) {
     super(props)
-    const document = mdParser.deserializeToDocument('')
 
     this.state = {
-      value: EditorValue.create({ document }),
+      value: '',
       isFull: false
     }
   }
@@ -41,12 +31,8 @@ export default class EditorComponent extends React.Component<Props, State> {
     this.setState({ isFull: !this.state.isFull })
   }
 
-  onChange = ({ value }: Value): void => {
-    this.setState(
-      {
-        value
-      }
-    )
+  onChange = (e): void => {
+    console.log(e.target.value)
   }
 
   createPost = async (e: SyntheticEvent<HTMLButtonElement>) => {
@@ -79,8 +65,9 @@ export default class EditorComponent extends React.Component<Props, State> {
       >
         <div classes={containerClasses}>
           <div classes={editorContainerClasses}>
-            <Editor
+            <Textarea
               autoFocus
+              rows={10}
               placeholder='Write your story'
               value={value}
               onChange={this.onChange}
