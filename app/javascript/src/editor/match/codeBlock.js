@@ -1,7 +1,7 @@
 // @flow
 import type { Change, Node } from 'slate'
+import { Data, Range } from 'slate'
 
-import { Range, Data } from 'slate'
 import PluginEditCode from 'slate-edit-code'
 
 export default function (

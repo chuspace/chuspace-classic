@@ -1,7 +1,7 @@
 // @flow
 
-import React from 'react'
 import { HR } from 'editor/constants/blocks'
+import React from 'react'
 
 const HrPlugin = () => {
   const options = Object.assign({

@@ -1,9 +1,9 @@
 // @flow
 
-import { OL_LIST, UL_LIST, LIST_ITEM } from 'editor/constants/blocks'
+import { LIST_ITEM, OL_LIST, UL_LIST } from 'editor/constants/blocks'
 
-import nodeAttrs from 'editor/attributes/node'
 import commonNode from 'editor/renderers/commonNode'
+import nodeAttrs from 'editor/attributes/node'
 
 const ListPlugin = () => {
   const options = Object.assign({

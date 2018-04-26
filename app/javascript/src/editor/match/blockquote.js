@@ -1,6 +1,8 @@
 // @flow
-import { Range } from 'slate'
+
 import type { Change, Node } from 'slate'
+
+import { Range } from 'slate'
 
 export default function (
   type: string,

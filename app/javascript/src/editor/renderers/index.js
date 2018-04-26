@@ -1,10 +1,10 @@
-import commonNode from './commonNode';
 import codeBlockNode from './codeBlockNode';
-import videoNode from './videoNode';
-import imageNode from './imageNode';
 import commonMark from './commonMark';
+import commonNode from './commonNode';
 import emojiNode from './emojiNode';
+import imageNode from './imageNode';
 import linkNode from './linkNode';
+import videoNode from './videoNode';
 
 export default {
   commonNode,

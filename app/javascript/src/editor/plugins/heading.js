@@ -1,8 +1,5 @@
 // @flow
 
-import isHotkey from 'is-hotkey'
-import isEmpty from 'lodash/isEmpty'
-
 import {
   HEADING_1,
   HEADING_2,
@@ -12,10 +9,12 @@ import {
   HEADING_6,
   PARAGRAPH
 } from 'editor/constants/blocks'
-import { KEY_BACKSPACE } from 'editor/constants/keys'
 
-import { haveBlocks } from 'editor/utils/have'
+import { KEY_BACKSPACE } from 'editor/constants/keys'
 import commonNode from 'editor/renderers/commonNode'
+import { haveBlocks } from 'editor/utils/have'
+import isEmpty from 'lodash/isEmpty'
+import isHotkey from 'is-hotkey'
 import nodeAttrs from 'editor/attributes/node'
 
 const applyChange = (change, type) => {

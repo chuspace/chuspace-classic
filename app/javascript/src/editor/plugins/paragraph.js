@@ -1,7 +1,7 @@
-import omit from 'lodash/omit'
+import { PARAGRAPH } from 'editor/constants/blocks'
 import commonNode from 'editor/renderers/commonNode'
 import nodeAttrs from 'editor/attributes/node'
-import { PARAGRAPH } from 'editor/constants/blocks'
+import omit from 'lodash/omit'
 
 const ParagraphPlugin = () => {
   const options = Object.assign({

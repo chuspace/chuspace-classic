@@ -1,7 +1,7 @@
 // @flow
 
-import markPlugin from './mark'
 import { CODE } from 'editor/constants/marks'
+import markPlugin from './mark'
 
 const CodePlugin = () => {
   const options = Object.assign({

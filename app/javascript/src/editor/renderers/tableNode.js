@@ -1,6 +1,7 @@
 // @flow
 /* eslint-disable react/display-name */
 import * as React from 'react'
+
 import mapValues from 'lodash/mapValues'
 
 export const tableNode = options => {

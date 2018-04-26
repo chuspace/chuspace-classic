@@ -1,8 +1,8 @@
 // @flow
 import type { Change, Node } from 'slate'
 
-import blocklist from 'editor/helpers/list'
 import { Range } from 'slate'
+import blocklist from 'editor/helpers/list'
 
 export default function (
   listOption: any,

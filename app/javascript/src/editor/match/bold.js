@@ -1,9 +1,9 @@
 // @flow
 import type { Change, Text } from 'slate'
-
 import { Mark, Range } from 'slate'
-import trailingSpace from 'editor/utils/trailing-space'
+
 import removeAllMark from 'editor/utils/remove-all-marks'
+import trailingSpace from 'editor/utils/trailing-space'
 
 export default function (
   type: string,
