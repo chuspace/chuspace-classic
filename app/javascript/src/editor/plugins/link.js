@@ -6,7 +6,8 @@ import linkNode from 'editor/renderers/linkNode'
 const LinkPlugin = () => {
   const options = Object.assign({
     type: LINK,
-    getHref: node => node.data.get('href')
+    getHref: node => node.data.get('href'),
+    getClass: node => node.data.get('class')
   })
 
   return {

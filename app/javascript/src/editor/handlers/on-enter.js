@@ -16,8 +16,11 @@ export default function onEnter (options: any, change: Change) {
     options.blockquoteOption
   ).utils
 
-  console.log(getCurrentblock.type)
-  return matchEmbed(currentTextNode, change)
+  let matched
+
+  if ((matched = currentLineText.match(/^https:\/\/gist\.github\.com/m))) {
+    return matchEmbed(currentTextNode, matched, change)
+  }
 
   if (
     getCurrentblock.type === options.blocks.CODE_LINE ||
@@ -27,7 +30,6 @@ export default function onEnter (options: any, change: Change) {
     isSelectionInBlockquote(value) ||
     currentLineText.length > selection.focusOffset
   ) {
-
   }
 
   return change.insertBlock(options.blocks.PARAGRAPH)
