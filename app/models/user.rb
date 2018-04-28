@@ -17,6 +17,8 @@ class User < ApplicationRecord
   has_one :repo, dependent: :destroy
   has_many :posts, dependent: :destroy
 
+  before_validation :normalize_email_and_nickname
+
   def to_param
     nickname
   end
@@ -24,4 +26,10 @@ class User < ApplicationRecord
   def self.chuspace
     find_by(email: 'gaurav@gauravtiwari.co.uk') || first
   end
+
+  private
+    def normalize_email_and_nickname
+      self.email = self.email&.downcase&.strip
+      self.nickname = self.nickname&.downcase&.strip
+    end
 end

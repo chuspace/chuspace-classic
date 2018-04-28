@@ -1,29 +1,29 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  email: MyString
-  nickname: MyString
+gaurav:
+  name: Gaurav Tiwari
+  email: gaurav@chuspace.com
+  nickname: gaurav
   avatar: MyString
-  auth_token: MyString
-  bio: MyString
-  website: MyString
-  company: MyString
-  location: MyString
+  auth_token: <%= SecureRandom.hex(11) %>
+  bio: Developer
+  website: https://chuspace.com
+  company: Chuspace
+  location: Manchester
   github_nickname: MyString
-  github_uid: MyString
+  github_uid: <%= SecureRandom.hex(6) %>
   github_access_token: MyString
 
-two:
-  name: MyString
-  email: MyString
-  nickname: MyString
+parul:
+  name: Parul Singh
+  email: parul@chuspace.com
+  nickname: parul
   avatar: MyString
-  auth_token: MyString
-  bio: MyString
+  auth_token: <%= SecureRandom.hex(11) %>
+  bio: Designer
   website: MyString
   company: MyString
   location: MyString
   github_nickname: MyString
-  github_uid: MyString
+  github_uid: <%= SecureRandom.hex(8) %>
   github_access_token: MyString

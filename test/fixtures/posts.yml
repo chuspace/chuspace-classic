@@ -1,25 +1,25 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: MyString
-  slug: MyString
-  body: MyString
-  user: one
-  repo: one
+welcome:
+  title: Welcome to Chuspace
+  slug: welcome-to-chuspace
+  body: Welcome to Chuspace blogging
+  user: gaurav
+  repo: foo
   commit: MyString
   version: 1
-  tags: MyString
+  tags: ['MyString']
   state: false
   published_at: 2018-04-28 11:23:10
 
-two:
-  title: MyString
-  slug: MyString
-  body: MyString
-  user: two
-  repo: two
+hello:
+  title: Hello World!
+  slug: hello-world
+  body: Hello world from Chuspace
+  user: parul
+  repo: bar
   commit: MyString
   version: 1
-  tags: MyString
+  tags: ['MyString']
   state: false
   published_at: 2018-04-28 11:23:10

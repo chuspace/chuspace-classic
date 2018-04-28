@@ -154,6 +154,8 @@ GEM
     mini_racer (0.1.15)
       libv8 (~> 6.3)
     minitest (5.11.3)
+    minitest-matchers_vaccine (1.0.4)
+      minitest (~> 5.0)
     msgpack (1.2.4)
     multi_json (1.13.1)
     multipart-post (2.0.0)
@@ -305,6 +307,7 @@ DEPENDENCIES
   image_processing (~> 1.2)
   listen (>= 3.0.5)
   mini_racer
+  minitest-matchers_vaccine
   octokit
   oj
   omniauth-github

@@ -1,17 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  slug: MyString
+foo:
+  name: Foo Repo
+  slug: foo-repo
   description: MyString
-  user: one
-  github_repo_id: 
-  github_repo_full_name: MyString
+  user: gaurav
+  github_repo_id: <%= SecureRandom.random_number(10000000) %>
+  github_repo_full_name: gaurav/one
 
-two:
-  name: MyString
-  slug: MyString
+bar:
+  name: Bar Repo
+  slug: bar-repo
   description: MyString
-  user: two
-  github_repo_id: 
-  github_repo_full_name: MyString
+  user: parul
+  github_repo_id: <%= SecureRandom.random_number(10000000) %>
+  github_repo_full_name: parul/two

@@ -81,5 +81,6 @@ end
 group :test do
   gem 'simplecov', require: false
   gem 'shoulda-matchers'
+  gem 'minitest-matchers_vaccine'
   gem 'rails-controller-testing'
 end

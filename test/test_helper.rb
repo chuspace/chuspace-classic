@@ -4,16 +4,24 @@ ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 require 'rails/test_help'
 
+DatabaseCleaner.strategy = :transaction
+
+module AroundEachTest
+  def before_setup
+    super
+    DatabaseCleaner.clean
+    DatabaseCleaner.start
+  end
+end
+
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
-    with.test_framework :test_unit
+    with.test_framework :minitest
     with.library :rails
   end
 end
 
 class ActiveSupport::TestCase
-  # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
+  include AroundEachTest
   fixtures :all
-
-  # Add more helper methods to be used by all tests here...
 end
