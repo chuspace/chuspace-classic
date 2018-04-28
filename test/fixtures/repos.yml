@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  slug: MyString
+  description: MyString
+  user: one
+  github_repo_id: 
+  github_repo_full_name: MyString
+
+two:
+  name: MyString
+  slug: MyString
+  description: MyString
+  user: two
+  github_repo_id: 
+  github_repo_full_name: MyString
