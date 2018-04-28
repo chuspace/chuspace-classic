@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-git_source(:github) { |repo| 'https://github.com/#{repo}.git' }
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.1'
+ruby '2.6.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.x'
+gem 'rails', github: 'rails/rails'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.x'
 # Use Puma as the app server
@@ -16,13 +16,12 @@ gem 'webpacker', '>= 4.x'
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '>= 4.0'
 # Use ActiveStorage variant
-gem 'mini_magick', '>= 4.8'
+gem 'ruby-vips'
+gem 'image_processing', '~> 1.2'
 gem 'aws-sdk-s3', require: false
 # caching
 gem 'readthis'
 gem 'hiredis'
-# Sprockets sass
-gem 'sass-rails'
 # Auth
 gem 'pundit'
 # State machine
@@ -52,14 +51,14 @@ gem 'rouge'
 gem 'omniauth-github'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
+# JSON serializers
+gem 'fast_jsonapi'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Testing
   gem 'database_cleaner'
-  gem 'rspec-rails'
-  gem 'factory_bot_rails'
 end
 
 group :development do
@@ -82,5 +81,4 @@ end
 group :test do
   gem 'simplecov', require: false
   gem 'shoulda-matchers'
-  gem 'action-cable-testing'
 end
