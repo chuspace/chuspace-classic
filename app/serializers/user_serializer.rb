@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class UserSerializer
   include RouteHelpers
   include FastJsonapi::ObjectSerializer
@@ -9,14 +7,14 @@ class UserSerializer
              :location, :github_nickname
 
   attribute :avatar_mini do |object|
-    url_for(object.avatar.variant(resize: '50x50'))
+    url_for(object.avatar.variant(resize_to_fit: [50, 50]))
   end
 
   attribute :avatar_thumbnail do |object|
-    url_for(object.avatar.variant(resize: '100x100'))
+    url_for(object.avatar.variant(resize_to_fit: [100, 100]))
   end
 
   attribute :avatar_large do |object|
-    url_for(object.avatar.variant(resize: '230x230'))
+    url_for(object.avatar.variant(resize_to_fit: [230, 230]))
   end
 end

@@ -197,6 +197,8 @@ GEM
       rack
     rack-test (1.0.0)
       rack (>= 1.0, < 3)
+    rails-controller-testing (0.0.3)
+      rails (>= 4.2)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -311,6 +313,7 @@ DEPENDENCIES
   puma (>= 3.11)
   pundit
   rails!
+  rails-controller-testing
   react-rails
   readthis
   redcarpet
@@ -330,7 +333,7 @@ DEPENDENCIES
   webpacker (>= 4.x)
 
 RUBY VERSION
-   ruby 2.6.0p-1
+   ruby 2.5.1p57
 
 BUNDLED WITH
    1.16.1
