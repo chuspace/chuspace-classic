@@ -11,13 +11,14 @@ require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'action_view/railtie'
 require 'action_cable/engine'
+require 'active_support/core_ext/numeric/bytes'
 
 Bundler.require(*Rails.groups)
 
 module Chuspace
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.2
+    config.load_defaults 6.0
     config.generators.system_tests = nil
 
     config.active_job.queue_adapter = :sidekiq
@@ -25,7 +26,6 @@ module Chuspace
     config.generators do |generate|
       generate.orm :active_record, primary_key_type: :uuid
       generate.helper false
-      generate.assets false
       generate.view_specs false
     end
 
@@ -43,5 +43,8 @@ module Chuspace
       compression_threshold: 2.kilobytes,
       redis: { url: ENV.fetch('REDIS_URL'), driver: :hiredis }
     }
+
+    # Use Vips for processing variants.
+    config.active_storage.variant_processor = :vips
   end
 end
