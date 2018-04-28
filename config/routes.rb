@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   resources :repos
   resources :check_nicknames, only: :create
   resources :magic_logins, only: :index
-  resources :users
+  resources :users, except: :show
   resources :posts
+
+  get '/:nickname', to: 'users#show', as: :profile
 end
