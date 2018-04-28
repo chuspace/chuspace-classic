@@ -7,7 +7,6 @@ import initials from 'initials'
 type Props = {
   name: string,
   align: 'left' | 'right' | 'none',
-  size: 'thumbnail' | 'small' | 'medium' | 'large' | 'huge',
   src?: string | null,
   onClick?: (e: SyntheticEvent<HTMLDivElement>) => void,
   className?: string
@@ -15,8 +14,7 @@ type Props = {
 
 export default class Avatar extends React.PureComponent<Props> {
   static defaultProps = {
-    align: 'none',
-    size: 'small'
+    align: 'none'
   }
 
   avatarNode: null | HTMLElement = null
@@ -54,7 +52,7 @@ export default class Avatar extends React.PureComponent<Props> {
   }
 
   renderAvatar (): Element<any> {
-    return <img className='h2 w2 br-100' src={this.props.src} />
+    return <img className='br2' src={this.props.src} />
   }
 
   renderInitials (): string {
@@ -70,10 +68,7 @@ export default class Avatar extends React.PureComponent<Props> {
       <span
         ref={node => (this.avatarNode = node)}
         onClick={this.props.onClick}
-        className={classNames(
-          'h2 w2 br-100 flex justify-center items-center',
-          this.props.className
-        )}
+        className={classNames('br2', this.props.className)}
         style={this.anonymousStyles()}
       >
         {this.props.src ? this.renderAvatar() : this.renderInitials()}

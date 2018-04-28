@@ -14,9 +14,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
 
       # Profile
       t.text :bio
-      t.string :website
       t.string :company
-      t.string :location
 
       # Github
       t.string :github_nickname

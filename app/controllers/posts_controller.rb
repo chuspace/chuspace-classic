@@ -17,7 +17,6 @@ class PostsController < ApplicationController
   def new
     render component: 'posts/new', props: { user: {
         name: Current.user.name,
-        location: Current.user.location,
         avatar: url_for(Current.user.avatar),
         company: Current.user.company,
         bio: Current.user.bio

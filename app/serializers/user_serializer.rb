@@ -4,9 +4,9 @@ class UserSerializer
   include RouteHelpers
   include FastJsonapi::ObjectSerializer
 
-  cache_options enabled: true, cache_length: 12.hours
-  attributes :id, :name, :email, :nickname, :bio, :website, :company,
-             :location, :github_nickname
+  cache_options enabled: true, cache_length: 12.hours unless Rails.env.development?
+
+  attributes :id, :name, :email, :nickname, :bio, :company, :github_nickname
 
   attribute :avatar_mini do |object|
     url_for(object.avatar.variant(resize_to_fit: [50, 50]))
@@ -17,6 +17,6 @@ class UserSerializer
   end
 
   attribute :avatar_large do |object|
-    url_for(object.avatar.variant(resize_to_fit: [230, 230]))
+    url_for(object.avatar.variant(resize_to_fit: [100, 100]))
   end
 end
