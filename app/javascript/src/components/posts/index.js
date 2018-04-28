@@ -4,7 +4,7 @@ export default class PostsIndex extends PureComponent {
   render () {
     return (
       <section className='mw7 center'>
-        <h2 className='ph3 ph0-l'>News</h2>
+        <h2 className='ph3 ph0-l'>Latest</h2>
         <article className='pv4 bt bb b--black-10 ph3 ph0-l'>
           <div className='flex flex-column flex-row-ns'>
             <div className='w-100 w-60-ns pr3-ns order-2 order-1-ns'>

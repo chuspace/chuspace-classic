@@ -21,6 +21,7 @@ module Users
           user.company = auth.extra.raw_info.company
           # Github
           user.github_uid = auth.uid
+          user.github_nickname = auth.info.nickname
           user.github_access_token = auth.credentials.token
           # Avatar
           remote_file = RemoteFileToBlobService.new(auth.info.image)

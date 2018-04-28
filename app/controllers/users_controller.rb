@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  before_action :find_user, except: %i[index create]
+
   def create
     user = User.new(user_params)
 
@@ -13,6 +15,8 @@ class UsersController < ApplicationController
   end
 
   def show
+    user = UserSerializer.new(@user).serialized_json
+    render component: 'users/show', props: user
   end
 
   private

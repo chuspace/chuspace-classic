@@ -1,6 +1,5 @@
 // @flow
 import type { Element } from 'react'
-
 import React from 'react'
 import classNames from 'classnames'
 import initials from 'initials'
@@ -10,7 +9,7 @@ type Props = {
   align: 'left' | 'right' | 'none',
   size: 'thumbnail' | 'small' | 'medium' | 'large' | 'huge',
   src?: string | null,
-  onClick: (e: SyntheticEvent<HTMLDivElement>) => void,
+  onClick?: (e: SyntheticEvent<HTMLDivElement>) => void,
   className?: string
 }
 

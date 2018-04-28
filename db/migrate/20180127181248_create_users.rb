@@ -19,6 +19,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :location
 
       # Github
+      t.string :github_nickname
       t.bigint :github_uid
       t.string :github_access_token
 

@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 2018_04_15_183817) do
     t.string "website"
     t.string "company"
     t.string "location"
+    t.string "github_nickname"
     t.bigint "github_uid"
     t.string "github_access_token"
     t.integer "sign_in_count", default: 0, null: false
