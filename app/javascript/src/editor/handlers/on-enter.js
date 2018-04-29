@@ -3,6 +3,7 @@
 import type { Change } from 'slate'
 import EditBlockquote from 'slate-edit-blockquote'
 import EditList from 'slate-edit-list'
+import isUrl from 'is-url'
 import matchEmbed from 'editor/match/embed'
 
 export default function onEnter (options: any, change: Change) {
@@ -16,10 +17,8 @@ export default function onEnter (options: any, change: Change) {
     options.blockquoteOption
   ).utils
 
-  let matched
-
-  if ((matched = currentLineText.match(/^https:\/\/gist\.github\.com/m))) {
-    return matchEmbed(currentTextNode, matched, change)
+  if (isUrl(currentLineText)) {
+    return matchEmbed(currentTextNode, change)
   }
 
   if (
