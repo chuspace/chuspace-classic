@@ -39,7 +39,7 @@ const plugins = [
   PluginEditCode(options.codeOption),
   EditBlockquote(options.blockquoteOption),
   EditList(options.listOption),
-  ...Object.values(editorPlugins).map((f) => f.call())
+  ...Object.values(editorPlugins).map(f => f.call())
 ]
 
 type Props = {

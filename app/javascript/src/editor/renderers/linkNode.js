@@ -7,7 +7,6 @@ export default function (options) {
       <a
         {...attributes}
         href={options.getHref(node)}
-        className={options.getClass(node)}
         data-slate-type='link'
       >
         {children}

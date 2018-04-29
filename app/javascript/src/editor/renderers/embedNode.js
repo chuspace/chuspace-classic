@@ -1,23 +1,14 @@
 // @flow
 import * as React from 'react'
 
-export default function ({ getHref }) {
-  const EmbedNode = ({ attributes, children, node }: nodeProps) => {
-    console.log('i run')
-    return (
-      <a
-        {...attributes}
-        href={getHref(node)}
-        className='embedly-card'
-        data-slate-type='html'
-        data-card-key='227fa5d8a5cc4ccba3db93b52b1a5238'
-      >
-        {children}
-      </a>
-    )
+import Video from './videoNode'
+
+export default function (options) {
+  const EmbedNode = (props: nodeProps) => {
+    return <Video {...props} options={options} />
   }
 
-  EmbedNode.displayName = `html-node`
+  EmbedNode.displayName = `embed-node`
 
   return EmbedNode
 }

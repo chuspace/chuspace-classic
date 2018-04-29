@@ -1,13 +1,15 @@
 // @flow
 import type { Change, Text } from 'slate'
 
-export default function (currentTextNode: Text, matched: any, change: Change) {
+import { HTML } from 'editor/constants/inlines'
+
+export default function (currentTextNode: Text, change: Change) {
   const currentLineText = currentTextNode.text
-  return change
+  change
     .insertInline({
-      type: 'link',
+      type: HTML,
       isVoid: true,
-      data: { href: currentLineText, class: 'embedly-card' }
+      data: { href: currentLineText }
     })
     .removeNodeByKey(currentTextNode.key, { normalize: false })
 }

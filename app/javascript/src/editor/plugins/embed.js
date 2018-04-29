@@ -10,7 +10,7 @@ const EmbedPlugin = () => {
   })
 
   return {
-    renderNode: props => {
+    renderNode: (props) => {
       if (props.node.type === options.type) return embedNode(options)(props)
     }
   }
