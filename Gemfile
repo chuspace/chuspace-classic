@@ -48,7 +48,7 @@ gem 'redcarpet'
 gem 'html-pipeline'
 gem 'rouge'
 # oAuth
-gem 'omniauth-github'
+gem 'omniauth-github', '>= 1.3.0'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 # JSON serializers
