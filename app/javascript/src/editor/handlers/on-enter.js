@@ -29,6 +29,7 @@ export default function onEnter (options: any, change: Change) {
     isSelectionInBlockquote(value) ||
     currentLineText.length > selection.focusOffset
   ) {
+    return
   }
 
   return change.insertBlock(options.blocks.PARAGRAPH)

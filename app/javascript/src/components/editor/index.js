@@ -44,9 +44,15 @@ export default class EditorComponent extends React.Component<Props, State> {
   }
 
   onChange = ({ value }: Value): void => {
-    this.setState({
-      value
-    }, () => console.log(htmlSerializer.serializeDocument(this.state.value.document)))
+    this.setState(
+      {
+        value
+      },
+      () => {
+        console.log(htmlSerializer.serializeDocument(this.state.value.document))
+        console.log(mdParser.serializeDocument(this.state.value.document))
+      }
+    )
   }
 
   createPost = async (e: SyntheticEvent<HTMLButtonElement>) => {

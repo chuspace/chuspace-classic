@@ -1,15 +1,16 @@
 // @flow
 import type { Change, Text } from 'slate'
 
-import { HTML } from 'editor/constants/inlines'
+import INLINES from 'markup-it/lib/constants/inlines'
 
 export default function (currentTextNode: Text, change: Change) {
   const currentLineText = currentTextNode.text
   change
     .insertInline({
-      type: HTML,
+      type: INLINES.HTML,
       isVoid: true,
-      data: { href: currentLineText }
+      data: { html: currentLineText }
     })
-    .removeNodeByKey(currentTextNode.key, { normalize: false })
+    .removeNodeByKey(currentTextNode.key)
+    .collapseToEnd()
 }

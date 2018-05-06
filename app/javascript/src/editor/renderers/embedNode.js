@@ -1,14 +1,48 @@
-// @flow
-import * as React from 'react'
+// @ flow
 
-import Video from './videoNode'
+/* global iframely */
 
-export default function (options) {
-  const EmbedNode = (props: nodeProps) => {
-    return <Video {...props} options={options} />
+import React from 'react'
+import axios from 'axios'
+
+async function getEmbed (url: string) {
+  try {
+    const response = await axios.get('http://iframe.ly/api/iframely', {
+      params: {
+        api_key: '376392514861f59ada33d2',
+        iframe: true,
+        iframely: 'less',
+        omit_script: true,
+        omit_css: true,
+        url
+      }
+    })
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+export default class EmbedNode extends React.Component {
+  state = {
+    iframelyEmbedHtmlCode: null
   }
 
-  EmbedNode.displayName = `embed-node`
+  async componentWillMount () {
+    window.iframely && iframely.load()
+    const response = await getEmbed(this.props.options.getHref(this.props.node))
+    this.setState({ iframelyEmbedHtmlCode: response.data.html })
+  }
 
-  return EmbedNode
+  render () {
+    let { attributes } = this.props
+
+    return (
+      <span
+        {...attributes}
+        ref={this.embed}
+        dangerouslySetInnerHTML={{ __html: this.state.iframelyEmbedHtmlCode }}
+      />
+    )
+  }
 }

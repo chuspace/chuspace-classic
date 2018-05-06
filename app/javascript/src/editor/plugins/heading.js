@@ -31,13 +31,13 @@ const plugin = (type, tagName, hotkey) => {
 
     onKeyDown: (e: any, change: Change) => {
       const { value } = change
-      const { blocks } = value
+      const { blocks, selection } = value
       const getCurrentblock = blocks.get(0)
 
       if (
         e.key === KEY_BACKSPACE &&
         getCurrentblock.type === type &&
-        isEmpty(getCurrentblock.text)
+        (isEmpty(getCurrentblock.text) || selection.focusOffset === 0)
       ) {
         return change.setBlocks(PARAGRAPH)
       }

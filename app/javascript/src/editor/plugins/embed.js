@@ -1,17 +1,20 @@
+import EmbedComponent from 'editor/renderers/embedNode'
 // @flow
+import INLINES from 'markup-it/lib/constants/inlines'
+import React from 'react'
 
-import { HTML } from 'editor/constants/inlines'
-import embedNode from 'editor/renderers/embedNode'
-
+console.log(INLINES)
 const EmbedPlugin = () => {
   const options = Object.assign({
-    type: HTML,
-    getHref: node => node.data.get('href')
+    type: INLINES.HTML,
+    getHref: node => node.data.get('html')
   })
 
   return {
-    renderNode: (props) => {
-      if (props.node.type === options.type) return embedNode(options)(props)
+    renderNode: props => {
+      if (props.node.type === options.type) {
+        return <EmbedComponent {...props} options={options} />
+      }
     }
   }
 }
