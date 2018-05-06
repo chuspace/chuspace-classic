@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react'
 
-import { Emoji } from 'emoji-mart'
+import { Emoji } from 'emoji-mart/dist/index'
 
 export default function ({ getEmoji }) {
   const EmojiComponent = ({ attributes, node }: nodeProps) => {

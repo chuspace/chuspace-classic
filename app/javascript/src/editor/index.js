@@ -1,10 +1,11 @@
+// @flow
+
 import 'prismjs/themes/prism.css'
 import 'github-markdown-css'
 
 import * as React from 'react'
 import * as editorPlugins from 'editor/plugins'
 
-// @flow
 import type { Change, Value } from 'slate'
 
 import BLOCKS from 'markup-it/lib/constants/blocks'
@@ -53,12 +54,7 @@ export default class ChuEditor extends React.Component<Props> {
 
     return (
       <div className='markdown-body pv3 f4 lh-copy'>
-        <Editor
-          value={value}
-          plugins={plugins}
-          onChange={onChange}
-          {...rest}
-        />
+        <Editor value={value} plugins={plugins} onChange={onChange} {...rest} />
       </div>
     )
   }
