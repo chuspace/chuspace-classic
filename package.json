@@ -25,7 +25,7 @@
     "caniuse-lite": "~1.0.30000835",
     "classnames": "^2.2.5",
     "dialog-polyfill": "^0.4.9",
-    "emoji-mart": "^2.6.0",
+    "emoji-mart": "2.5.1",
     "flow-bin": "^0.71.0",
     "github-markdown-css": "^2.10.0",
     "immutable": "^3.8.2",

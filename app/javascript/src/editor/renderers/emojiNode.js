@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react'
 
-import { Emoji } from 'emoji-mart/dist/index'
+import { Emoji } from 'emoji-mart'
 
 export default function ({ getEmoji }) {
   const EmojiComponent = ({ attributes, node }: nodeProps) => {
@@ -10,9 +10,15 @@ export default function ({ getEmoji }) {
         {...attributes}
         style={{ display: 'inline-block' }}
         data-slate-type='emoji'
-      >
-        <Emoji emoji={getEmoji(node)} size={18} />
-      </span>
+        contentEditable={false}
+        dangerouslySetInnerHTML={{
+          __html: Emoji({
+            html: true,
+            emoji: getEmoji(node),
+            size: 16
+          })
+        }}
+      />
     )
   }
 

@@ -50,7 +50,7 @@ export default class EditorComponent extends React.Component<Props, State> {
       },
       () => {
         console.log(htmlSerializer.serializeDocument(this.state.value.document))
-        console.log(mdParser.serializeDocument(this.state.value.document))
+        // console.log(mdParser.serializeDocument(this.state.value.document))
       }
     )
   }
