@@ -1,47 +1,50 @@
 // @ flow
 
-/* global iframely */
+/* global embedly */
 
 import React from 'react'
-import axios from 'axios'
 
-async function getEmbed (url: string) {
-  try {
-    const response = await axios.get('http://iframe.ly/api/iframely', {
-      params: {
-        api_key: '376392514861f59ada33d2',
-        iframe: true,
-        iframely: 'less',
-        omit_script: true,
-        omit_css: true,
-        url
-      }
-    })
-    return response
-  } catch (error) {
-    return error
-  }
+if (typeof window !== 'undefined') {
+  ;(function (w, d) {
+    const id = 'embedly-platform'
+    const n = 'script'
+    if (!d.getElementById(id)) {
+      w.embedly =
+        w.embedly ||
+        function () {
+          ;(w.embedly.q = w.embedly.q || []).push(arguments)
+        }
+      var e = d.createElement(n)
+      e.id = id
+      e.async = 1
+      e.src =
+        (document.location.protocol === 'https:' ? 'https' : 'http') +
+        '://cdn.embedly.com/widgets/platform.js'
+      var s = d.getElementsByTagName(n)[0]
+      s.parentNode.insertBefore(e, s)
+    }
+  })(window, document)
 }
 
 export default class EmbedNode extends React.Component {
   state = {
-    iframelyEmbedHtmlCode: null
+    response: null
   }
 
-  async componentWillMount () {
-    window.iframely && iframely.load()
-    const response = await getEmbed(this.props.options.getHref(this.props.node))
-    this.setState({ iframelyEmbedHtmlCode: response.data.html })
+  embed (el) {
+    if (el) embedly('card', el)
   }
 
   render () {
-    let { attributes } = this.props
-
+    const { attributes } = this.props
     return (
-      <span
+      <a
         {...attributes}
+        href={this.props.options.getHref(this.props.node)}
+        data-card-key='227fa5d8a5cc4ccba3db93b52b1a5238'
+        data-card-controls='0'
+        data-card-recommend='0'
         ref={this.embed}
-        dangerouslySetInnerHTML={{ __html: this.state.iframelyEmbedHtmlCode }}
       />
     )
   }
