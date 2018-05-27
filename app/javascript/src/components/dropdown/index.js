@@ -1,9 +1,9 @@
 // @flow
 
-import type { Node } from 'react'
 import React, { Component } from 'react'
+
 import Drop from 'tether-drop'
-import keydown from 'react-keydown'
+import type { Node } from 'react'
 
 type Props = {
   hide: (e?: SyntheticEvent<HTMLButtonElement>) => void,
@@ -29,7 +29,7 @@ export default class Dropdown extends Component<Props> {
   }
 
   componentWillUnmount () {
-    this.drop.destroy()
+    this.drop && this.drop.destroy()
   }
 
   render () {

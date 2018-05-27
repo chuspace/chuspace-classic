@@ -78,24 +78,6 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@canner/slate-editor-renderer@^1.2.9":
-  version "1.2.9"
-  resolved "https://registry.yarnpkg.com/@canner/slate-editor-renderer/-/slate-editor-renderer-1.2.9.tgz#aa7ecf6ef3a95952f1a04ba440aea0496b66d629"
-  dependencies:
-    "@canner/slate-helper-inline-adddata" "^0.1.2"
-    emoji-mart "^2.5.0"
-    js-video-url-parser "^0.2.7"
-    lodash.mapvalues "^4.6.0"
-    quill-icons "^0.6.0"
-    react-icons "^2.2.7"
-    react-loading-image "^0.4.0"
-    react-resizable "^1.7.5"
-    slate-edit-table "^0.15.0-alpha.4"
-
-"@canner/slate-helper-inline-adddata@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@canner/slate-helper-inline-adddata/-/slate-helper-inline-adddata-0.1.2.tgz#071b256d20a21051fd945cf634f0db1a1ba0331f"
-
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -2247,8 +2229,8 @@ core-js@^1.0.0:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
 
 core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0, core-js@^2.5.3:
-  version "2.5.6"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.6.tgz#0fe6d45bf3cac3ac364a9d72de7576f4eb221b9d"
+  version "2.5.7"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.7.tgz#f972608ff0cead68b841a16a932d0b183791814e"
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -2542,6 +2524,10 @@ deep-extend@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.5.1.tgz#b894a9dd90d3023fbf1c55a394fb858eb2066f1f"
 
+deep-extend@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.6.0.tgz#c4fa7c95404a17a9c3e8ca7e1537312b736330ac"
+
 deep-is@~0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
@@ -2808,7 +2794,7 @@ elliptic@^6.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
-emoji-mart@2.6.1, emoji-mart@^2.5.0:
+emoji-mart@2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/emoji-mart/-/emoji-mart-2.6.1.tgz#222b9d8f20c4484758266b847588f84cc2db384c"
 
@@ -4675,10 +4661,6 @@ js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
 
-js-video-url-parser@^0.2.7:
-  version "0.2.7"
-  resolved "https://registry.yarnpkg.com/js-video-url-parser/-/js-video-url-parser-0.2.7.tgz#179de801d9363bfd44437b2b93f7e4fe59980e4d"
-
 js-yaml@^3.10.0, js-yaml@^3.11.0, js-yaml@^3.4.3, js-yaml@^3.7.0, js-yaml@^3.9.1:
   version "3.11.0"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.11.0.tgz#597c1a8bd57152f26d622ce4117851a51f5ebaef"
@@ -4998,10 +4980,6 @@ lodash.has@^4.0:
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/lodash.has/-/lodash.has-4.5.2.tgz#d19f4dc1095058cccbe2b0cdf4ee0fe4aa37c862"
 
-lodash.mapvalues@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.mapvalues/-/lodash.mapvalues-4.6.0.tgz#1bafa5005de9dd6f4f26668c30ca37230cc9689c"
-
 lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
@@ -5013,14 +4991,6 @@ lodash.merge@^4.6.0:
 lodash.mergewith@^4.6.0:
   version "4.6.1"
   resolved "https://registry.yarnpkg.com/lodash.mergewith/-/lodash.mergewith-4.6.1.tgz#639057e726c3afbdb3e7d42741caa8d6e4335927"
-
-lodash.omit@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/lodash.omit/-/lodash.omit-4.5.0.tgz#6eb19ae5a1ee1dd9df0b969e66ce0b7fa30b5e60"
-
-lodash.pick@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/lodash.pick/-/lodash.pick-4.4.0.tgz#52f05610fff9ded422611441ed1fc123a03001b3"
 
 lodash.tail@^4.1.1:
   version "4.1.1"
@@ -5050,10 +5020,6 @@ lodash.unescape@4.0.1:
 lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
-
-lodash.xor@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/lodash.xor/-/lodash.xor-4.5.0.tgz#4d48ed7e98095b0632582ba714d3ff8ae8fb1db6"
 
 lodash@^4.0.0, lodash@^4.1.1, lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.3.0, lodash@~4.17.4:
   version "4.17.10"
@@ -6789,7 +6755,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@15.x, prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
+prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
   dependencies:
@@ -6892,15 +6858,6 @@ querystringify@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.0.0.tgz#fa3ed6e68eb15159457c89b37bc6472833195755"
 
-quill-icons@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/quill-icons/-/quill-icons-0.6.0.tgz#4e20344670dcce149725cff5216fd3bdfcfb0a76"
-  dependencies:
-    classnames "^2.2.5"
-    lodash.omit "^4.5.0"
-    lodash.pick "^4.4.0"
-    lodash.xor "^4.5.0"
-
 rails-ujs@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/rails-ujs/-/rails-ujs-5.2.0.tgz#d93f7a969a226c0ae67044172955be8c1cdf49fc"
@@ -6940,10 +6897,10 @@ raw-body@2.3.2:
     unpipe "1.0.0"
 
 rc@^1.1.7:
-  version "1.2.7"
-  resolved "https://registry.yarnpkg.com/rc/-/rc-1.2.7.tgz#8a10ca30d588d00464360372b890d06dacd02297"
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/rc/-/rc-1.2.8.tgz#cd924bf5200a075b83c188cd6b9e211b7fc0d3ed"
   dependencies:
-    deep-extend "^0.5.1"
+    deep-extend "^0.6.0"
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
@@ -6961,13 +6918,6 @@ react-dom@^16.4.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-"react-draggable@^2.2.6 || ^3.0.3":
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/react-draggable/-/react-draggable-3.0.5.tgz#c031e0ed4313531f9409d6cd84c8ebcec0ddfe2d"
-  dependencies:
-    classnames "^2.2.5"
-    prop-types "^15.6.0"
-
 react-full-screen@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/react-full-screen/-/react-full-screen-0.2.2.tgz#3939b362cccaa983fb2845ca0c363f29999f485a"
@@ -6983,16 +6933,6 @@ react-highlight@^0.12.0:
   dependencies:
     highlight.js "^9.11.0"
 
-react-icon-base@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/react-icon-base/-/react-icon-base-2.1.0.tgz#a196e33fdf1e7aaa1fda3aefbb68bdad9e82a79d"
-
-react-icons@^2.2.7:
-  version "2.2.7"
-  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-2.2.7.tgz#d7860826b258557510dac10680abea5ca23cf650"
-  dependencies:
-    react-icon-base "2.1.0"
-
 react-immutable-proptypes@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/react-immutable-proptypes/-/react-immutable-proptypes-2.1.0.tgz#023d6f39bb15c97c071e9e60d00d136eac5fa0b4"
@@ -7002,10 +6942,6 @@ react-keydown@^1.9.7:
   resolved "https://registry.yarnpkg.com/react-keydown/-/react-keydown-1.9.7.tgz#cd168d4b0194b6ef71bca47e5c1cbc5d24ab5498"
   dependencies:
     core-js "^2.5.0"
-
-react-loading-image@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/react-loading-image/-/react-loading-image-0.4.0.tgz#53a6fa6c93f38cdcf4f2a016a20d49f9a6a3fcf2"
 
 react-portal@^3.1.0:
   version "3.2.0"
@@ -7018,13 +6954,6 @@ react-portal@^4.1.5:
   resolved "https://registry.yarnpkg.com/react-portal/-/react-portal-4.1.5.tgz#6665d4d2a92d47d6f8b07a6529e26fc52d5cccde"
   dependencies:
     prop-types "^15.5.8"
-
-react-resizable@^1.7.5:
-  version "1.7.5"
-  resolved "https://registry.yarnpkg.com/react-resizable/-/react-resizable-1.7.5.tgz#83eb75bb3684da6989bbbf4f826e1470f0af902e"
-  dependencies:
-    prop-types "15.x"
-    react-draggable "^2.2.6 || ^3.0.3"
 
 react-sizeme@^2.4.4:
   version "2.4.4"
@@ -7762,10 +7691,6 @@ slate-edit-code@^0.15.0:
 slate-edit-list@^0.11.3:
   version "0.11.3"
   resolved "https://registry.yarnpkg.com/slate-edit-list/-/slate-edit-list-0.11.3.tgz#d27ff2ff93a83bef49131a6a44b87a9558c9d44c"
-
-slate-edit-table@^0.15.0-alpha.4:
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/slate-edit-table/-/slate-edit-table-0.15.0.tgz#474dc3a18ee1496f431ed017b5c4aa11f211abb9"
 
 slate-hotkeys@^0.1.2:
   version "0.1.2"
@@ -8532,8 +8457,8 @@ upath@^1.0.0:
   resolved "https://registry.yarnpkg.com/upath/-/upath-1.1.0.tgz#35256597e46a581db4793d0ce47fa9aebfc9fabd"
 
 uri-js@^4.2.1:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/uri-js/-/uri-js-4.2.1.tgz#4595a80a51f356164e22970df64c7abd6ade9850"
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/uri-js/-/uri-js-4.2.2.tgz#94c540e1ff772956e2299507c010aea6c8838eb0"
   dependencies:
     punycode "^2.1.0"
 
@@ -8871,8 +8796,8 @@ which-module@^2.0.0:
   resolved "https://registry.yarnpkg.com/which-module/-/which-module-2.0.0.tgz#d9ef07dce77b9902b8a3a8fa4b31c3e3f7e6e87a"
 
 which@1, which@^1.2.14, which@^1.2.9, which@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/which/-/which-1.3.0.tgz#ff04bdfc010ee547d780bec38e1ac1c2777d253a"
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/which/-/which-1.3.1.tgz#a45043d54f5805316da8d62f9f50918d3da70b0a"
   dependencies:
     isexe "^2.0.0"
 
