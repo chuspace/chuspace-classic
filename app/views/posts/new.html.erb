@@ -1,9 +1,11 @@
 <div class='editor w-75 center pv5'>
-  <div class='dt w-100 bb b--black-05 pb2 mt2'>
-    <div class='dtc w3 w4-ns v-mid'>
-      <%= image_tag @user.avatar, class: 'ba b--black-10 db br-100 w3 w4-ns h3 h4-ns' %>
-    </div>
-    <div class='dtc v-mid pl3'>
+  <div class='flex items-center w-100 mt2'>
+    <%= react_component 'avatar/index', {
+        src: url_for(@user.avatar.variant(resize_to_fit: [50, 50])),
+        name: @user.name
+      }
+    %>
+    <div class='pl3'>
       <h1 class='f6 f5-ns fw6 lh-title black mv0'><%= @user.name %></h1>
       <h2 class='f6 fw4 mt0 mb0 black-60'><%= @user.bio %></h2>
       <h2 class='f6 fw4 mt0 mb0 black-60'><%= @user.company %></h2>

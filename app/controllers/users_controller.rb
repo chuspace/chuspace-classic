@@ -15,8 +15,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    user = UserSerializer.new(@user).serialized_json
-    render component: 'users/show', props: user
   end
 
   private
