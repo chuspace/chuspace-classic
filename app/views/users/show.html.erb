@@ -1,0 +1,24 @@
+<div class='mw7 profile mv5 center'>
+  <div class='sidebar mb5 flex items-center'>
+    <div class='flex'>
+      <%= react_component 'avatar/index', {
+          src: url_for(@user.avatar.variant(resize_to_fit: [50, 50])),
+          name: @user.name
+        }
+      %>
+    </div>
+    <div class='personal pl4 w-75'>
+      <h1 class='f4 lh-solid mb0 black-80'><%= @user.name %></h1>
+      <p class='lh-copy mv1 gray f5'><%= @user.company %></p>
+      <p class='lh-copy mt1 black-70 mb0'><%= @user.bio %></p>
+    </div>
+
+    <div class='actions'>
+      <%= react_component 'button/index', { title: 'Follow' } %>
+    </div>
+  </div>
+
+  <div class='posts'>
+    <%= react_component 'posts/index' %>
+  </div>
+</div>
