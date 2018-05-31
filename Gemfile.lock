@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 6edf354b656ec556c3573402019504a519531953
+  revision: e6ef1fe056d7da084a4e8d3b817223e9a28e6200
   specs:
     actioncable (6.0.0.alpha)
       actionpack (= 6.0.0.alpha)
@@ -72,7 +72,7 @@ GEM
     ast (2.4.0)
     awesome_print (1.8.0)
     aws-eventstream (1.0.0)
-    aws-partitions (1.87.0)
+    aws-partitions (1.88.0)
     aws-sdk-core (3.21.2)
       aws-eventstream (~> 1.0)
       aws-partitions (~> 1.0)
@@ -279,7 +279,7 @@ GEM
       ethon (>= 0.9.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    unicode-display_width (1.3.2)
+    unicode-display_width (1.3.3)
     web-console (3.6.2)
       actionview (>= 5.0)
       activemodel (>= 5.0)
