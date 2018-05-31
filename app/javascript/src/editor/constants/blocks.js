@@ -23,6 +23,7 @@ module.exports = {
   HEADING_6: 'header_six',
   // Table
   TABLE: 'table',
+  TABLE_HEAD: 'table_head',
   TABLE_ROW: 'table_row',
   TABLE_CELL: 'table_cell',
   // Lists

@@ -4,15 +4,16 @@ import * as React from 'react'
 import type { Change, Value } from 'slate'
 
 import Button from 'components/button'
-import Editor from 'editor'
+import Editor from 'rich-editor'
 import { Value as EditorValue } from 'slate'
 import Fullscreen from 'react-full-screen'
 import { State as MarkdownParser } from 'markup-it'
-import Placeholder from 'editor/renderers/placeholderNode'
 import axiosClient from 'helpers/axios-client'
 import classNames from 'classnames'
 import html from 'markup-it/lib/html'
 import markdown from 'markup-it/lib/markdown'
+import renderPlaceholder from 'editor/renderers/placeholderNode'
+import schema from 'editor/schema'
 import to from 'helpers/await-to'
 
 const mdParser = MarkdownParser.create(markdown)
@@ -88,9 +89,9 @@ export default class EditorComponent extends React.Component<Props, State> {
           <div classes={editorContainerClasses}>
             <Editor
               autoFocus
-              titlePlaceholder='Your title'
-              bodyPlaceholder='Write your body'
+              renderPlaceholder={renderPlaceholder}
               value={value}
+              schema={schema}
               onChange={this.onChange}
             />
             <Button
