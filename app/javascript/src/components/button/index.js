@@ -7,7 +7,7 @@ type Props = {
   title: string,
   className?: string,
   disabled: boolean,
-  onClick?: (evt: SyntheticEvent<HTMLButtonElement>) => void
+  onClick?: (evt: SyntheticEvent<HTMLButtonElement>) => void | Promise<any>
 }
 
 const Button = (props: Props) => (
