@@ -8,6 +8,7 @@ import Editor from 'editor'
 import { Value as EditorValue } from 'slate'
 import Fullscreen from 'react-full-screen'
 import { State as MarkdownParser } from 'markup-it'
+import Placeholder from 'editor/renderers/placeholderNode'
 import axiosClient from 'helpers/axios-client'
 import classNames from 'classnames'
 import html from 'markup-it/lib/html'
@@ -87,7 +88,8 @@ export default class EditorComponent extends React.Component<Props, State> {
           <div classes={editorContainerClasses}>
             <Editor
               autoFocus
-              placeholder='Write your story'
+              titlePlaceholder='Your title'
+              bodyPlaceholder='Write your body'
               value={value}
               onChange={this.onChange}
             />

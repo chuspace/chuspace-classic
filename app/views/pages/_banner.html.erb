@@ -1,11 +1,19 @@
 <div class='bg-yellow-pattern pa4 mv3'>
   <div class='w-40 center tc'>
-    <%= react_component 'banner/index',
-      {
-        registrations_path: users_path,
-        login_path: login_path,
-        check_nicknames_path: check_nicknames_path
-      }, { prerender: true }
-    %>
+    <div class='banner'>
+    <h2 class='f2 lh-title'>Join Chuspace</h2>
+      <p class='intro f5 lh-copy'>
+        Create an account to personalize your homepage, follow your favorite
+        authors and publications, applaud stories you love, and more.
+      </p>
+
+      <%= react_component 'get-started/index',
+        {
+          registrations_path: users_path,
+          login_path: login_path,
+          check_nicknames_path: check_nicknames_path
+        }, { prerender: true }
+      %>
+    </div>
   </div>
 </div>

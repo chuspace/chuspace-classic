@@ -6,7 +6,7 @@ class ReposController < ApplicationController
   def new
     @repo = Repo.new(user: Current.user)
     @owners = Current.user.github_orgs
-    render component: 'new-repo/index',
+    render component: 'repos/new',
            props: { owners: @owners, repos_path: repos_path },
            prerender: false
   end

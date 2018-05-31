@@ -6,21 +6,15 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.all.order(id: :desc)
-    render component: 'posts/index', props: { posts: @posts }
   end
 
   def show
     @post = Post.find_by(slug: params[:id])
-    render component: 'posts/show', props: { body: @post.body }
+    render component: 'posts/show', props: { body: @post.body }, prerender: true
   end
 
   def new
-    render component: 'posts/new', props: { user: {
-        name: Current.user.name,
-        avatar: url_for(Current.user.avatar),
-        company: Current.user.company,
-        bio: Current.user.bio
-    } }, prerender: false
+    @user = Current.user
   end
 
   def create

@@ -1,9 +1,12 @@
-import React, { PureComponent } from 'react'
-import { State } from 'markup-it'
-import markdown from 'markup-it/lib/markdown'
-import html from 'markup-it/lib/html'
-
 import 'github-markdown-css'
+import 'prismjs/themes/prism'
+import 'prismjs'
+
+import React, { PureComponent } from 'react'
+
+import { State } from 'markup-it'
+import html from 'markup-it/lib/html'
+import markdown from 'markup-it/lib/markdown'
 
 export default class PostsShow extends PureComponent {
   render () {
@@ -14,7 +17,7 @@ export default class PostsShow extends PureComponent {
 
     return (
       <div
-        className='w-75 center pv5 markdown-body'
+        className='mw7 center pv5 markdown-body'
         dangerouslySetInnerHTML={{ __html: htmlStr }}
       />
     )

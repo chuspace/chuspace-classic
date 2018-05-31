@@ -34,7 +34,7 @@ export default class Card extends Component<Props> {
         <div className='modal-body tc w-70 center'>
           <div
             className='modal-close absolute top-1 right-1 pointer'
-            onClick={this.props.hide}
+            onClick={this.hide.bind(this)}
             dangerouslySetInnerHTML={{
               __html: octicons.x.toSVG()
             }}

@@ -9,8 +9,8 @@ import LinkButton from 'components/link-button'
 type Props = {
   signup: boolean,
   login: boolean,
-  Registration?: ComponentType<{}>,
-  Login?: ComponentType<{}>,
+  Registration: ComponentType<{}>,
+  Login: ComponentType<{}>,
   showSignup?: (*) => void,
   hideSignup?: (*) => void,
   showLogin?: (*) => void,
@@ -23,10 +23,7 @@ export default class GetStarted extends Component<Props> {
     const {
       Registration,
       Login,
-      showSignup,
-      hideSignup,
-      showLogin,
-      hideLogin
+      showSignup
     } = this.props
 
     return (
@@ -37,23 +34,8 @@ export default class GetStarted extends Component<Props> {
           className='center mv4 bg-white hover-bg-white-80'
         />
 
-        {this.props.signup && (
-          <Registration
-            {...this.props}
-            hide={hideSignup}
-            hideSignup={hideSignup}
-            showLogin={showLogin}
-          />
-        )}
-
-        {this.props.login && (
-          <Login
-            {...this.props}
-            hide={hideLogin}
-            hideLogin={hideLogin}
-            showSignup={showSignup}
-          />
-        )}
+        {this.props.signup && <Registration {...this.props} />}
+        {this.props.login && <Login {...this.props} />}
       </Fragment>
     )
   }
