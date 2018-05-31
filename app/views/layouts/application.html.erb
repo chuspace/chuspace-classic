@@ -8,13 +8,11 @@
   </head>
 
   <body class="application">
-    <div class="mw8 center">
-      <%= render 'layouts/header' %>
-      <section class="content">
-        <%= yield %>
-      </section>
-      <%= render 'layouts/footer' %>
-    </div>
+    <%= render 'layouts/header' %>
+    <section class="content">
+      <%= yield %>
+    </section>
+    <%= render 'layouts/footer' %>
     <div id="modal-root" />
   </body>
 </html>
