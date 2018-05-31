@@ -1,9 +1,11 @@
 // @flow
 
-import React from 'react'
 import GetStartedButton from 'components/get-started'
+import React from 'react'
 
-export default (props) => (
+type Props = {}
+
+export default (props: Props) => (
   <div className='banner'>
     <h2 className='f2 lh-title'>Join Chuspace</h2>
     <p className='intro f5 lh-copy'>
@@ -11,6 +13,6 @@ export default (props) => (
       authors and publications, applaud stories you love, and more.
     </p>
 
-    <GetStartedButton {...props} />
+    <GetStartedButton {...props} login={false} signup />
   </div>
 )

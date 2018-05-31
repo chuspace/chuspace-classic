@@ -9,12 +9,12 @@ import LinkButton from 'components/link-button'
 type Props = {
   signup: boolean,
   login: boolean,
-  Registration: ComponentType<{}>,
-  Login: ComponentType<{}>,
-  showSignup: (*) => void,
-  hideSignup: (*) => void,
-  showLogin: (*) => void,
-  hideLogin: (*) => void
+  Registration?: ComponentType<{}>,
+  Login?: ComponentType<{}>,
+  showSignup?: (*) => void,
+  hideSignup?: (*) => void,
+  showLogin?: (*) => void,
+  hideLogin?: (*) => void
 }
 
 @GettingStarted

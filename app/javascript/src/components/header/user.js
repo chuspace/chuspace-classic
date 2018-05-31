@@ -1,10 +1,11 @@
 // @flow
-import type { ComponentType } from 'react'
+
 import React, { PureComponent } from 'react'
-import octicons from 'octicons'
-import keydown from 'react-keydown'
+
 import Avatar from 'components/avatar'
+import type { ComponentType } from 'react'
 import Link from 'components/link'
+import keydown from 'react-keydown'
 
 type State = {
   dropdown: boolean
@@ -33,6 +34,7 @@ export default class UserNav extends PureComponent<Props, State> {
 
   handleDocumentClick = () =>
     window.addEventListener('click', (e: SyntheticEvent<Document>) => {
+      if (!this.dropdownNode) return
       /* $FlowFixMe */
       if (e.target.parentNode === this.dropdownNode.avatarNode) return
       this.hideDropdown()
@@ -52,13 +54,6 @@ export default class UserNav extends PureComponent<Props, State> {
 
     return (
       <div className='right-nav flex justify-between'>
-        <span
-          className='pointer mr3'
-          dangerouslySetInnerHTML={{
-            __html: octicons['kebab-horizontal'].toSVG({ height: 32 })
-          }}
-        />
-
         <Avatar
           ref={node => (this.dropdownNode = node)}
           onClick={this.toggleDropdown.bind(this)}

@@ -3,9 +3,9 @@ import React, { PureComponent } from 'react'
 export default class PostsIndex extends PureComponent {
   render () {
     return (
-      <section className='mw7 center'>
-        <h2 className='ph3 ph0-l mt0'>Latest</h2>
-        <article className='pv4 bt bb b--black-10 ph3 ph0-l'>
+      <section className='mw7 center mt5'>
+        <h2 className='ph3 ph0-l mt0 bb db b--black-10 pb3'>Latest</h2>
+        <article className='pv4 ph3 ph0-l'>
           <div className='flex flex-column flex-row-ns'>
             <div className='w-100 w-60-ns pr3-ns order-2 order-1-ns'>
               <h1 className='f4 mt0 lh-title'>
@@ -31,7 +31,7 @@ export default class PostsIndex extends PureComponent {
           </p>
           <time className='f6 db gray'>Nov. 21, 2016</time>
         </article>
-        <article className='pv4 bb b--black-10 ph3 ph0-l'>
+        <article className='pv4 ph3 ph0-l'>
           <div className='flex flex-column flex-row-ns'>
             <div className='w-100 w-60-ns pr3-ns order-2 order-1-ns'>
               <h1 className='f4 mt0 lh-title'>
@@ -56,7 +56,7 @@ export default class PostsIndex extends PureComponent {
           </p>
           <time className='f6 db gray'>Nov. 19, 2016</time>
         </article>
-        <article className='pv4 bb b--black-10 ph3 ph0-l'>
+        <article className='pv4 ph3 ph0-l'>
           <div className='flex flex-column flex-row-ns'>
             <div className='w-100 w-60-ns pr3-ns order-2 order-1-ns'>
               <h1 className='f4 mt0 lh-title'>

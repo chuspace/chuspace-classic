@@ -29,7 +29,7 @@ export default class UserProfile extends PureComponent<Props> {
     const { attributes: user } = this.props.data
 
     return (
-      <div className='profile mv5 w-70 center'>
+      <div className='mw7 profile mv5 center'>
         <div className='sidebar mb5 flex items-center'>
           <div className='flex'>
             <Avatar
