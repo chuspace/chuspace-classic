@@ -26,3 +26,6 @@ export { default as ImagePlugin } from './image'
 export { default as LinkPlugin } from './link'
 export { default as EmojiPlugin } from './emoji'
 export { default as EmbedPlugin } from './embed'
+
+// Tag plugin
+export { default as TagPlugin } from './tag'

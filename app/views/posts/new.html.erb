@@ -1,15 +1,9 @@
-<div class='editor w-75 center pv5'>
-  <div class='flex items-center w-100 mt2'>
-    <%= react_component 'avatar/index', {
-        src: url_for(@user.avatar.variant(resize_to_fit: [50, 50])),
-        name: @user.name
-      }
-    %>
-    <div class='pl3'>
-      <h1 class='f6 f5-ns fw6 lh-title black mv0'><%= @user.name %></h1>
-      <h2 class='f6 fw4 mt0 mb0 black-60'><%= @user.bio %></h2>
-      <h2 class='f6 fw4 mt0 mb0 black-60'><%= @user.company %></h2>
-    </div>
-  </div>
-  <%= react_component 'editor/index', { posts_path: posts_path } %>
-</div>
+<%= react_component 'posts/new', {
+  postsPath: posts_path,
+  user: {
+    name: @user.name,
+    avatarUrl: url_for(@user.avatar.variant(resize_to_fit: [50, 50])),
+    bio: @user.bio,
+    company: @user.company
+  }
+} %>

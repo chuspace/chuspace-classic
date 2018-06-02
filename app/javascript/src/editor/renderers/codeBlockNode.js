@@ -2,11 +2,18 @@
 import * as React from 'react'
 
 import loadLanguages from 'prismjs/components/index.js'
+import type { nodeProps } from 'editor/types'
 
 export const codeBlockNode = options => {
   const CodeBlockComponent = ({ attributes, children, node }: nodeProps) => {
-    const syntax = options.getSyntax(node)
-    if (syntax) loadLanguages([syntax])
+    let syntax = options.getSyntax(node) || 'TXT'
+
+    try {
+      if (syntax) loadLanguages([syntax])
+    } catch (e) {
+      syntax = 'TXT'
+      console.log(`${syntax} syntax is not currently supported`)
+    }
 
     return (
       <div className='relative'>
@@ -14,7 +21,7 @@ export const codeBlockNode = options => {
           className='absolute right-0 top-0 f6 pa1 ph2 bg-light-gray br2 mid-gray ttu'
           contentEditable={false}
         >
-          {syntax || 'TXT'}
+          {syntax}
         </div>
         <pre>
           <code {...attributes}>{children}</code>

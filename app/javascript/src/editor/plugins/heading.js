@@ -1,5 +1,6 @@
 // @flow
 
+import type { Change, Editor } from 'slate-react'
 import {
   HEADING_1,
   HEADING_2,
@@ -16,6 +17,7 @@ import { haveBlocks } from 'editor/utils/have'
 import isEmpty from 'lodash/isEmpty'
 import isHotkey from 'is-hotkey'
 import nodeAttrs from 'editor/attributes/node'
+import type { nodeProps } from 'editor/types'
 
 const applyChange = (change, type) => {
   const isActive = haveBlocks(change, type)
@@ -25,11 +27,18 @@ const applyChange = (change, type) => {
 
 const plugin = (type, tagName, hotkey) => {
   return {
-    renderNode: props => {
+    renderNode: (props: nodeProps) => {
       if (props.node.type === type) return commonNode(tagName, nodeAttrs)(props)
     },
 
-    onKeyDown: (e: any, change: Change) => {
+    onKeyDown: (e: any, change: Change, editor: Editor) => {
+      if (editor.props.name === 'title') {
+        if (e.key === 'Enter') {
+          e.preventDefault()
+          return false
+        }
+      }
+
       const { value } = change
       const { blocks, selection } = value
       const getCurrentblock = blocks.get(0)
@@ -54,15 +63,15 @@ const plugin = (type, tagName, hotkey) => {
   }
 }
 
-export const HeaderOnePlugin = (type = HEADING_1) =>
+export const HeaderOnePlugin = (type: string = HEADING_1) =>
   plugin(type, 'h1', 'ctrl+opt+1')
-export const HeaderTwoPlugin = (type = HEADING_2) =>
+export const HeaderTwoPlugin = (type: string = HEADING_2) =>
   plugin(type, 'h2', 'ctrl+opt+2')
-export const HeaderThreePlugin = (type = HEADING_3) =>
+export const HeaderThreePlugin = (type: string = HEADING_3) =>
   plugin(type, 'h3', 'ctrl+opt+3')
-export const HeaderFourPlugin = (type = HEADING_4) =>
+export const HeaderFourPlugin = (type: string = HEADING_4) =>
   plugin(type, 'h4', 'ctrl+opt+4')
-export const HeaderFivePlugin = (type = HEADING_5) =>
+export const HeaderFivePlugin = (type: string = HEADING_5) =>
   plugin(type, 'h5', 'ctrl+opt+5')
-export const HeaderSixPlugin = (type = HEADING_6) =>
+export const HeaderSixPlugin = (type: string = HEADING_6) =>
   plugin(type, 'h6', 'ctrl+opt+6')

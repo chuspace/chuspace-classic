@@ -1,6 +1,5 @@
 import { LIST_ITEM, OL_LIST, PARAGRAPH, UL_LIST } from 'editor/constants/blocks'
 
-/* eslint-disable new-cap */
 import EditList from 'slate-edit-list'
 
 export const DEFAULT = {

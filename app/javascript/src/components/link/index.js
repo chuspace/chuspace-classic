@@ -1,10 +1,11 @@
 // @flow
 
+import type { Element } from 'react'
 import React from 'react'
 import classNames from 'classnames'
 
 type Props = {
-  title: string,
+  title: string | Element<any>,
   className?: string,
   href?: string,
   method?: string,

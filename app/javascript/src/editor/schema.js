@@ -11,28 +11,52 @@ const schema = {
     header_five: { nodes: [{ objects: ['text'] }], marks: [''] },
     header_six: { nodes: [{ objects: ['text'] }], marks: [''] },
     blockquote: { marks: [''] },
+    tags: {
+      nodes: [{ types: ['tag'], min: 0, max: 5 }],
+      normalize: (
+        change: Change,
+        reason: string,
+        {
+          node,
+          child,
+          mark,
+          index
+        }: { node: Node, mark?: Mark, child: Node, index: number }
+      ) => {
+        console.log(reason, index)
+        switch (reason) {
+          case 'child_object_invalid':
+            change.wrapBlockByKey(child.key, 'tag')
+            return
+          case 'child_type_invalid':
+            const block = Block.create('tag')
+            change.insertNodeByKey(node.key, index, block)
+        }
+      }
+    },
+    tag: {
+      parent: { types: 'tags' },
+      nodes: [{ objects: ['text'] }]
+    },
     table: {
       nodes: [{ types: ['table_row', 'table_head', 'table_cell'] }]
     },
-    'horizontal-rule': {
-      isVoid: true
-    },
-    'block-toolbar': {
+    hr: {
       isVoid: true
     }
   },
   document: {
     nodes: [
-      { types: ['header_one'], min: 1, max: 1 },
+      {
+        types: ['header_one'],
+        min: 1,
+        max: 1
+      },
       {
         types: [
           'paragraph',
-          'header_one',
           'header_two',
           'header_three',
-          'header_four',
-          'header_five',
-          'header_six',
           'blockquote',
           'code_block',
           'code_line',
@@ -42,7 +66,12 @@ const schema = {
           'ordered_list',
           'table'
         ],
-        min: 0
+        min: 1
+      },
+      {
+        types: ['tags'],
+        min: 1,
+        max: 1
       }
     ],
     normalize: (
@@ -55,15 +84,45 @@ const schema = {
         index
       }: { node: Node, mark?: Mark, child: Node, index: number }
     ) => {
+      console.log(reason, index)
       switch (reason) {
         case 'child_type_invalid': {
-          return change.setNodeByKey(
-            child.key,
-            index === 0 ? 'header_one' : 'paragraph'
-          )
+          let type
+          switch (index) {
+            case 0:
+              type = 'header_one'
+              break
+            case 1:
+              type = 'paragraph'
+              break
+            case 2:
+              type = 'tags'
+              break
+            default:
+              break
+          }
+
+          console.log(type)
+          return change.setNodeByKey(child.key, type)
         }
         case 'child_required': {
-          const block = Block.create(index === 0 ? 'header_one' : 'paragraph')
+          let type
+          switch (index) {
+            case 0:
+              type = 'header_one'
+              break
+            case 1:
+              type = 'paragraph'
+              break
+            case 2:
+              type = 'tags'
+              break
+            default:
+              break
+          }
+
+          console.log(type)
+          const block = Block.create(type)
           return change.insertNodeByKey(node.key, index, block)
         }
         default:

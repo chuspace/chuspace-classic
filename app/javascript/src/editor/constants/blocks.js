@@ -1,7 +1,7 @@
 /**
  * Map of all block types. Blocks can contain inlines or blocks.
  * @type {Map}
-*/
+ */
 
 module.exports = {
   DOCUMENT: 'document',
@@ -11,6 +11,8 @@ module.exports = {
   CODE_LINE: 'code_line',
   BLOCKQUOTE: 'blockquote',
   PARAGRAPH: 'paragraph',
+  TAGS: 'tags',
+  TAG: 'tag',
   FOOTNOTE: 'footnote',
   HTML: 'html_block',
   HR: 'hr',
