@@ -22,7 +22,7 @@ class PostsController < ApplicationController
       body: params[:markdown],
       repo: Current.user.repo,
       commit: 'Add another example',
-      title: 'Isomorphic readme'
+      title: params[:title]
     )
 
     post.commit_to_github if post
