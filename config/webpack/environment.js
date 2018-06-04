@@ -16,4 +16,6 @@ environment.plugins.append(
   })
 )
 
+const nodeModulesLoader = environment.loaders.get('nodeModules').use[0]
+nodeModulesLoader.options.plugins = ['@babel/plugin-syntax-dynamic-import']
 module.exports = environment

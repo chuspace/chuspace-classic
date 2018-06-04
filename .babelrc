@@ -1,28 +1,49 @@
 {
   "presets": [
     [
-      "env",
+      "@babel/env",
       {
         "modules": false,
         "targets": {
-          "browsers": "> 1%",
-          "uglify": true
+          "forceAllTransforms": true
         },
+        "useBuiltIns": "entry"
+      }
+    ],
+    ["@babel/preset-flow"],
+    [
+      "@babel/preset-react",
+      {
+        "useBuiltIns": true
+      }
+    ]
+  ],
+  "plugins": [
+    [
+      "@babel/plugin-proposal-decorators",
+      { "legacy": true }
+    ],
+    "@babel/plugin-transform-destructuring",
+    "@babel/plugin-syntax-dynamic-import",
+    [
+      "@babel/plugin-proposal-object-rest-spread",
+      {
         "useBuiltIns": true
       }
     ],
-    "flow",
-    "react-app"
-  ],
-  "plugins": [
-    "transform-decorators-legacy",
-    "syntax-dynamic-import",
-    "transform-object-rest-spread",
+    [
+      "@babel/plugin-proposal-class-properties",
+      {
+        "loose": true
+      }
+    ],
     "lodash",
     [
       "module-resolver",
       {
-        "root": ["./app/javascript/src"],
+        "root": [
+          "./app/javascript/src"
+        ],
         "alias": {
           "types": "./app/javascript/flow-types",
           "styles": "./app/javascript/styles",
@@ -38,7 +59,10 @@
       {
         "preprocessCss": "./config/webpack/loaders/sass.js",
         "generateScopedName": "[name]__[local]___[hash:base64:5]",
-        "extensions": [".scss", ".sass"]
+        "extensions": [
+          ".scss",
+          ".sass"
+        ]
       }
     ]
   ]
