@@ -10,7 +10,7 @@
         "useBuiltIns": "entry"
       }
     ],
-    ["@babel/preset-flow"],
+    "@babel/preset-flow",
     [
       "@babel/preset-react",
       {
@@ -29,6 +29,20 @@
       "@babel/plugin-proposal-object-rest-spread",
       {
         "useBuiltIns": true
+      }
+    ],
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "helpers": false,
+        "polyfill": false,
+        "regenerator": true
+      }
+    ],
+    [
+      "@babel/plugin-transform-regenerator",
+      {
+        "async": false
       }
     ],
     [
