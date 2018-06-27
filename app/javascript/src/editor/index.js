@@ -31,19 +31,17 @@ const serializer = schema => {
 
 class Editor extends React.Component {
   componentWillMount () {
-    const parse = parser(editorSchema)
-    const serialize = serializer(editorSchema)
-
-    options.doc = parse('# hello')
-
-    this.onChange = debounce(
-      value => {
-        onChange(serialize(value))
-      },
-      1000,
-      { maxWait: 5000 }
-    )
+    this.parse = parser(editorSchema)
+    this.serialize = serializer(editorSchema)
   }
+
+  onChange = debounce(
+    value => {
+      console.log(this.serialize(value))
+    },
+    1000,
+    { maxWait: 5000 }
+  )
 
   constructor (props) {
     super(props)
@@ -74,7 +72,7 @@ class Editor extends React.Component {
     const state = this.view.state.apply(transaction)
     this.view.updateState(state)
     this.setState({ state })
-    this.props.onChange(state.doc.content)
+    this.onChange(state.doc.content)
   }
 
   render () {

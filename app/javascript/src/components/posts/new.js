@@ -3,6 +3,7 @@
 import React, { PureComponent } from 'react'
 
 import Avatar from 'components/avatar'
+import ChuEditor from 'components/editor'
 import Link from 'components/link'
 import octicons from 'octicons'
 
@@ -48,7 +49,7 @@ export default class NewPost extends PureComponent<Props> {
             />
           </div>
         </div>
-
+        <ChuEditor />
       </div>
     )
   }
