@@ -1,0 +1,28 @@
+language: ruby
+
+services:
+  - postgresql
+  - redis
+
+env:
+  - RAILS_ENV=test
+
+before_script:
+  - psql -c 'create database chuspace_test;' -U postgres
+  - bundle exec rails db:migrate
+
+script:
+  - bundle exec rspec
+
+before_deploy:
+  - npm install -g now
+
+deploy:
+  provider: script
+  script: now --token ${NOW_TOKEN} && now alias --token ${NOW_TOKEN}
+  skip_cleanup: true
+  on:
+    branch: master
+
+notifications:
+  email: false
