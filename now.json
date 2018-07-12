@@ -1,0 +1,10 @@
+{
+  "name": "chuspace",
+  "type": "docker",
+  "env": {
+    "RAILS_ENV": "production",
+    "DATABASE_URL": "@chuspace-database-url",
+    "REDIS_URL": "@chuspace-redis-url",
+    "SECRET_KEY_BASE": "@chuspace-secret-key-base"
+  }
+}
