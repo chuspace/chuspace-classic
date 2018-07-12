@@ -243,6 +243,7 @@ GEM
     ruby-vips (2.0.12)
       ffi (~> 1.9)
     ruby_dep (1.5.0)
+    rugged (0.27.2)
     sawyer (0.8.1)
       addressable (>= 2.3.5, < 2.6)
       faraday (~> 0.8, < 1.0)
@@ -333,6 +334,7 @@ DEPENDENCIES
   rouge
   rubocop
   ruby-vips
+  rugged
   searchkick
   shoulda-matchers
   sidekiq
@@ -347,4 +349,4 @@ RUBY VERSION
    ruby 2.5.1p57
 
 BUNDLED WITH
-   1.16.1
+   1.16.2

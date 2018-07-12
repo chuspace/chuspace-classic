@@ -7,51 +7,71 @@ ruby '2.5.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', github: 'rails/rails'
+
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.x'
+
 # Use Puma as the app server
 gem 'puma', '>= 3.11'
+
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '>= 4.x'
+
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '>= 4.0'
+
 # Use ActiveStorage variant
 gem 'ruby-vips'
 gem 'image_processing', '~> 1.2'
 gem 'aws-sdk-s3', require: false
+
 # caching
 gem 'readthis'
 gem 'hiredis'
+
 # Auth
 gem 'pundit'
+
 # State machine
 gem 'aasm'
+
 # Search
 gem 'searchkick'
 gem 'oj'
+
 # Jobs
 gem 'sidekiq'
+
 # ENV
 gem 'figaro'
+
 # Server side rendering
 gem 'react-rails'
 gem 'mini_racer'
-# Github
+
+# Git integrations
 gem 'octokit'
+gem 'rugged'
+
 # HTTP requests and caching
 gem 'faraday'
 gem 'typhoeus'
+
 # HTML to markdown
 gem 'reverse_markdown'
+
 # Markdown
 gem 'redcarpet'
 gem 'html-pipeline'
 gem 'rouge'
+
 # oAuth
 gem 'oauth2', '>= 1.4.0'
 gem 'omniauth-github', '>= 1.3.0'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
+
 # JSON serializers
 gem 'fast_jsonapi'
 
