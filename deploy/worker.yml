@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: chuspace-worker
+  labels:
+    app: chuspace
+    tier: worker
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: chuspace
+        tier: worker
+    spec:
+      containers:
+        - name: chuspace-worker
+          image: grc.io/maximal-relic-210021/chuspace-web:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: FORMATION
+              value: worker=1
