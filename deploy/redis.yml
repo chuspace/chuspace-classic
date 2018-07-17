@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: redis
+  labels:
+    app: chuspace
+    tier: backend
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: chuspace
+        tier: backend
+    spec:
+      containers:
+        - name: redis
+          image: redis:alpine
+          imagePullPolicy: IfNotPresent
