@@ -20,7 +20,7 @@ spec:
           env:
             - name: FORMATION
               value: web=1
-            - name: RAILS_SERVE_STATIC_ASSETS
+            - name: RAILS_SERVE_STATIC_FILES
               value: true
             - name: REDIS_URL
               valueFrom:
