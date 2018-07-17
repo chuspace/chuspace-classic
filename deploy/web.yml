@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: chuspace-web
+  labels:
+    app: chuspace
+    tier: frontend
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: chuspace
+        tier: frontend
+    spec:
+      containers:
+        - name: chuspace-web
+          image: grc.io/maximal-relic-210021/chuspace-web:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: FORMATION
+              value: web=1
+          ports:
+            - name: http-server
+              containerPort: 3000
+          
