@@ -1,0 +1,65 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: chuspace-ci
+  labels:
+    app: chuspace
+    tier: ci
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: chuspace
+        tier: ci
+    spec:
+      containers:
+        - name: chuspace-ci
+          image: drone/drone:0.8
+          imagePullPolicy: Always
+          env:
+            - name: DRONE_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: drone
+                  key: host
+            - name: DRONE_OPEN
+              valueFrom:
+                secretKeyRef:
+                  name: drone
+                  key: open
+            - name: DRONE_ORGS
+              valueFrom:
+                secretKeyRef:
+                  name: drone
+                  key: orgs
+            - name: DRONE_GITHUB
+              valueFrom:
+                secretKeyRef:
+                  name: drone
+                  key: github
+            - name: DRONE_GITHUB_CLIENT
+              valueFrom:
+                secretKeyRef:
+                  name: drone
+                  key: github_client
+            - name: DRONE_GITHUB_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: drone
+                  key: github_secret
+            - name: DRONE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: drone
+                  key: secret
+          ports:
+            - name: ci-server
+              containerPort: 8000
+          volumeMounts:
+            - mountPath: /var/lib/drone
+              name: drone-lib
+        volumes:
+          - name: drone-lib
+            hostPath:
+              path: /var/lib/drone
