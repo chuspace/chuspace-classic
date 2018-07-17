@@ -1,6 +1,7 @@
 FROM ruby:2.5
 
-RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs libgit2-dev git libvips libvips-dev
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev libgit2-dev git libvips libvips-dev nodejs
 
 RUN mkdir /src
 
@@ -13,10 +14,6 @@ COPY Gemfile.lock /src/Gemfile.lock
 RUN bundle install --jobs $(expr $(cat /proc/cpuinfo | grep -c "cpu cores") - 1) --retry 3 --deployment
 
 COPY . /src
-
-ENV RAILS_ENV=production \
-    RACK_ENV=production \
-    RAILS_SERVE_STATIC_FILES=true
 
 RUN bin/rails assets:precompile
 
