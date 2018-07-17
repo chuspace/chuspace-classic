@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.configure do
+  config.secret_key_base = ENV.fetch('SECRET_KEY_BASE')
+
   # Verifies that versions and hashed value of the package contents in the project's package.json
   config.webpacker.check_yarn_integrity = false
   # Verifies that versions and hashed value of the package contents in the project's package.json
