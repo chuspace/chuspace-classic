@@ -20,3 +20,18 @@ spec:
           env:
             - name: FORMATION
               value: worker=1
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: chuspace
+                  key: redis_url
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: chuspace
+                  key: secret_key_base
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: chuspace
+                  key: database_url
