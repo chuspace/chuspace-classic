@@ -4,6 +4,7 @@ import './style.sass'
 import { DOMParser, DOMSerializer } from 'prosemirror-model'
 import { editorPlugins, editorSchema } from 'editor/schema'
 
+import CodeBlockView from 'editor/views/code-block'
 import { EditorState } from 'prosemirror-state'
 import { EditorView } from 'prosemirror-view'
 import React from 'react'
@@ -59,6 +60,11 @@ class Editor extends React.Component {
       this.view = new EditorView(node, {
         state: this.state.state,
         dispatchTransaction: this.dispatchTransaction,
+        nodeViews: {
+          code_block (node, view, getPos) {
+            return new CodeBlockView(node, view, getPos)
+          }
+        },
         attributes: {
           placeholder: this.props.placeholder
         }
