@@ -19,14 +19,11 @@ spec:
           imagePullPolicy: Always
           env:
             - name: DRONE_GITHUB
-              value: true
-            - name: DRONE_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: drone
-                  key: host
+              value: 'true'
             - name: DRONE_OPEN
-              value: true
+              value: 'true'
+            - name: DRONE_HOST
+              value: ''
             - name: DRONE_ORGS
               valueFrom:
                 secretKeyRef:
@@ -47,13 +44,13 @@ spec:
                 secretKeyRef:
                   name: drone
                   key: secret
+          volumeMounts:
+            - name: drone-lib
+              mountPath: /var/lib/drone
           ports:
             - name: ci-server
               containerPort: 8000
-          volumeMounts:
-            - mountPath: /var/lib/drone
-              name: drone-lib
-        volumes:
-          - name: drone-lib
-            hostPath:
-              path: /var/lib/drone
+      volumes:
+        - name: drone-lib
+          hostPath:
+            path: /var/lib/drone
