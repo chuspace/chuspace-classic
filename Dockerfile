@@ -1,6 +1,6 @@
 FROM ruby:2.5
 
-RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs libgit2-dev git libvips
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs libgit2-dev git libvips libvips-dev
 
 RUN mkdir /src
 
