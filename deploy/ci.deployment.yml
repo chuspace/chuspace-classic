@@ -18,26 +18,20 @@ spec:
           image: drone/drone:0.8
           imagePullPolicy: Always
           env:
+            - name: DRONE_GITHUB
+              value: true
             - name: DRONE_HOST
               valueFrom:
                 secretKeyRef:
                   name: drone
                   key: host
             - name: DRONE_OPEN
-              valueFrom:
-                secretKeyRef:
-                  name: drone
-                  key: open
+              value: true
             - name: DRONE_ORGS
               valueFrom:
                 secretKeyRef:
                   name: drone
                   key: orgs
-            - name: DRONE_GITHUB
-              valueFrom:
-                secretKeyRef:
-                  name: drone
-                  key: github
             - name: DRONE_GITHUB_CLIENT
               valueFrom:
                 secretKeyRef:

@@ -22,7 +22,7 @@ spec:
             - agent
           env:
             - name: DRONE_SERVER
-              value: ws://$(SERVER_SERVICE_HOST):$(SERVER_SERVICE_PORT)
+              value: ws://$(CHUSPACE_CI_SERVICE_HOST):$(CHUSPACE_CI_SERVICE_PORT)
             - name: DRONE_SECRET
               valueFrom:
                 secretKeyRef:
