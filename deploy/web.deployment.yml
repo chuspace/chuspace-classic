@@ -4,14 +4,14 @@ metadata:
   name: chuspace-web
   labels:
     app: chuspace
-    tier: frontend
+    tier: web
 spec:
   replicas: 1
   template:
     metadata:
       labels:
         app: chuspace
-        tier: frontend
+        tier: web
     spec:
       containers:
         - name: chuspace-web
