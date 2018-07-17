@@ -10,11 +10,13 @@ RUN mkdir /src
 
 WORKDIR /src
 
-COPY Gemfile /src/Gemfile
-
-COPY Gemfile.lock /src/Gemfile.lock
+COPY Gemfile Gemfile.lock /src/
 
 RUN bundle install --jobs $(expr $(cat /proc/cpuinfo | grep -c "cpu cores") - 1) --retry 3 --deployment
+
+COPY package.json yarn.lock /src/
+
+RUN yarn install
 
 COPY . /src
 
