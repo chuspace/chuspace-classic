@@ -31,7 +31,7 @@ module Chuspace
       namespace: 'cache',
       compress: true,
       compression_threshold: 2.kilobytes,
-      redis: { url: ENV.fetch('REDIS_URL'), driver: :hiredis }
+      redis: { url: ENV.fetch('REDIS_URL', 'localhost:6739'), driver: :hiredis }
     }
 
     # Use Vips for processing variants.
