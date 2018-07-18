@@ -27,7 +27,7 @@ spec:
             - name: FORMATION
               value: web=1
             - name: RAILS_SERVE_STATIC_FILES
-              value: true
+              value: 'true'
             - name: RAILS_ENV
               value: production
             - name: NODE_ENV

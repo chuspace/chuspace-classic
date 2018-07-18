@@ -2,16 +2,12 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: chuspace-ci-agent
-  labels:
-    app: chuspace-ci-agent
-    tier: deploy
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: chuspace-ci-agent
-        tier: deploy
+        name: chuspace-ci-agent
     spec:
       containers:
         - name: ci-agent
@@ -31,7 +27,7 @@ spec:
           volumeMounts:
             - mountPath: /var/run/docker.sock
               name: docker-socket
-        volumes:
-          - name: docker-socket
-            hostPath:
-              path: /var/run/docker.sock
+      volumes:
+        - name: docker-socket
+          hostPath:
+            path: /var/run/docker.sock
