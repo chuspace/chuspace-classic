@@ -46,7 +46,11 @@ spec:
           ports:
             - name: ci-server
               containerPort: 8000
+            - name: ci-agent
+              containerPort: 9000
       volumes:
         - name: drone-lib
           hostPath:
             path: /var/lib/drone
+      hostNetwork: true
+      restartPolicy: Always

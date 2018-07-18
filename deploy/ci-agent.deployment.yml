@@ -11,14 +11,11 @@ spec:
     spec:
       containers:
         - name: ci-agent
-          image: drone/drone:0.8
+          image: drone/agent:0.8
           imagePullPolicy: Always
-          command:
-            - /drone
-            - agent
           env:
             - name: DRONE_SERVER
-              value: ws://$(CHUSPACE_CI_SERVICE_HOST):$(CHUSPACE_CI_SERVICE_PORT)
+              value: chuspace-ci.default.svc.cluster.local:9000
             - name: DRONE_SECRET
               valueFrom:
                 secretKeyRef:
