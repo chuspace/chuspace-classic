@@ -1,3 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: chuspace-web
+  labels:
+    name: chuspace-web
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: http-server
+  selector:
+    name: chuspace-web
+
+---
+    
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -106,19 +122,3 @@ spec:
                 secretKeyRef:
                   name: chuspace-web
                   key: db_password
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: chuspace-web
-  labels:
-    name: chuspace-web
-spec:
-  type: LoadBalancer
-  ports:
-    - port: 80
-      targetPort: http-server
-  selector:
-    name: chuspace-web

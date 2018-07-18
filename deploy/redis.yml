@@ -1,3 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  labels:
+    name: redis
+spec:
+  ports:
+    - port: 6739
+      targetPort: redis-server
+  selector:
+    name: redis
+
+---
+
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -18,20 +33,4 @@ spec:
               containerPort: 6739
       restartPolicy: Always
 
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: redis
-  labels:
-    name: redis
-spec:
-  type: LoadBalancer
-  ports:
-    - port: 6739
-      targetPort: redis-server
-  selector:
-    name: redis
-      
 
