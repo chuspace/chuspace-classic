@@ -20,7 +20,7 @@ RUN yarn install
 
 COPY . /src
 
-RUN bin/rails assets:precompile
+RUN bin/webpack --progress --color
 
 RUN bin/rails db:migrate
 
