@@ -9,6 +9,7 @@ spec:
   ports:
     - port: 80
       targetPort: web-server
+      protocol: TCP
   selector:
     name: chuspace-web
 
@@ -31,6 +32,9 @@ spec:
           command: ['bin/rails', 'db:migrate']
           env:
             - name: RAILS_ENV
+              value: staging
+            - name: RAILS_LOG_TO_STDOUT
+              value: 'true'
               value: staging
             - name: REDIS_URL
               value: redis://$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
@@ -55,7 +59,11 @@ spec:
           env:
             - name: FORMATION
               value: web=1
+            - name: PORT
+              value: '3000'
             - name: RAILS_SERVE_STATIC_FILES
+              value: 'true'
+            - name: RAILS_LOG_TO_STDOUT
               value: 'true'
             - name: RAILS_ENV
               value: staging
@@ -105,6 +113,8 @@ spec:
               value: worker=1
             - name: RAILS_ENV
               value: staging
+            - name: RAILS_LOG_TO_STDOUT
+              value: 'true'
             - name: REDIS_URL
               value: redis://$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
             - name: SECRET_KEY_BASE
