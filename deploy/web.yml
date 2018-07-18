@@ -8,7 +8,7 @@ spec:
   type: LoadBalancer
   ports:
     - port: 80
-      targetPort: http-server
+      targetPort: web-server
   selector:
     name: chuspace-web
 
@@ -31,7 +31,7 @@ spec:
           command: ['bin/rails', 'db:migrate']
           env:
             - name: RAILS_ENV
-              value: production
+              value: staging
             - name: REDIS_URL
               value: redis://$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
             - name: SECRET_KEY_BASE
@@ -58,9 +58,9 @@ spec:
             - name: RAILS_SERVE_STATIC_FILES
               value: 'true'
             - name: RAILS_ENV
-              value: production
+              value: staging
             - name: NODE_ENV
-              value: production
+              value: staging
             - name: REDIS_URL
               value: redis://$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
             - name: SECRET_KEY_BASE
@@ -79,7 +79,7 @@ spec:
                   name: chuspace-web
                   key: db_password
           ports:
-            - name: http-server
+            - name: web-server
               containerPort: 3000
 
 ---
@@ -104,7 +104,7 @@ spec:
             - name: FORMATION
               value: worker=1
             - name: RAILS_ENV
-              value: production
+              value: staging
             - name: REDIS_URL
               value: redis://$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
             - name: SECRET_KEY_BASE
