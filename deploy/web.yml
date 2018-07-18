@@ -17,7 +17,7 @@ spec:
             - name: RAILS_ENV
               value: production
             - name: REDIS_URL
-              value: redis.default.svc.cluster.local:6379
+              value: redis://redis.default.svc.cluster.local:6379
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
@@ -43,7 +43,7 @@ spec:
             - name: NODE_ENV
               value: production
             - name: REDIS_URL
-              value: redis.default.svc.cluster.local:6379
+              value: redis://redis.default.svc.cluster.local:6379
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
@@ -83,7 +83,7 @@ spec:
             - name: RAILS_ENV
               value: production
             - name: REDIS_URL
-              value: redis.default.svc.cluster.local:6379
+              value: redis://redis.default.svc.cluster.local:6379
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
