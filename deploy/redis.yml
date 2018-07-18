@@ -18,3 +18,21 @@ spec:
               containerPort: 6739
       hostNetwork: true
       restartPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  labels:
+    name: redis
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 6739
+      targetPort: redis-server
+  selector:
+    name: redis
+      
+

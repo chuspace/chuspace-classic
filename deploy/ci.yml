@@ -54,3 +54,56 @@ spec:
             path: /var/lib/drone
       hostNetwork: true
       restartPolicy: Always
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: chuspace-ci-agent
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: chuspace-ci-agent
+    spec:
+      containers:
+        - name: ci-agent
+          image: drone/agent:0.8
+          imagePullPolicy: Always
+          env:
+            - name: DRONE_SERVER
+              value: chuspace-ci.default.svc.cluster.local:9000
+            - name: DRONE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: drone
+                  key: secret
+          volumeMounts:
+            - mountPath: /var/run/docker.sock
+              name: docker-socket
+      volumes:
+        - name: docker-socket
+          hostPath:
+            path: /var/run/docker.sock
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: chuspace-ci
+  labels:
+    name: chuspace-ci
+spec:
+  type: LoadBalancer
+  ports:
+    - name: ci-server
+      port: 80
+      targetPort: ci-server
+    - name: ci-agent
+      port: 9000
+      targetPort: ci-agent
+  selector:
+    name: chuspace-ci
