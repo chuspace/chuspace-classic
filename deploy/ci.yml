@@ -40,6 +40,14 @@ spec:
                 secretKeyRef:
                   name: drone
                   key: secret
+            - name: DRONE_DATABASE_DRIVER
+              value: postgres
+            - name: DRONE_DATABASE_DATASOURCE
+              valueFrom:
+                secretKeyRef:
+                  name: drone
+                  key: database_url
+
           volumeMounts:
             - name: drone-lib
               mountPath: /var/lib/drone
