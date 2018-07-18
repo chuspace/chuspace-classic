@@ -19,7 +19,7 @@ spec:
             - name: DRONE_OPEN
               value: 'true'
             - name: DRONE_HOST
-              value: http://35.189.79.20
+              value: http://35.197.205.22
             - name: DRONE_ORGS
               valueFrom:
                 secretKeyRef:
