@@ -1,4 +1,10 @@
 pipeline:
+  test:
+    image: grc.io/chuspace-210609/ci:latest
+    commands:
+      - bundle install
+      - yarn install
+      - bin/rspec
   deploy:
     image: plugins/gcr
     repo: chuspace-210609/chuspace-web
