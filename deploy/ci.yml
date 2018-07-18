@@ -7,26 +7,14 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 80
-      targetPort: ci-server
+    - name: ci-http
+      port: 80
+      targetPort: ci-http
+    - name: ci-grpc
+      port: 9000
+      targetPort: ci-grpc
   selector:
     name: ci-server
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: ci-agent
-  labels:
-    name: ci-agent
-spec:
-  type: LoadBalancer
-  ports:
-    - port: 9000
-      targetPort: ci-agent
-  selector:
-    name: ci
 
 ---
 
@@ -84,10 +72,12 @@ spec:
             - name: drone-lib
               mountPath: /var/lib/drone
           ports:
-            - name: ci-server
+            - name: ci-http
               containerPort: 8000
-            - name: ci-agent
+              protocol: TCP
+            - name: ci-grpc
               containerPort: 9000
+              protocol: TCP
       volumes:
         - name: drone-lib
           hostPath:
@@ -120,6 +110,8 @@ spec:
                 secretKeyRef:
                   name: drone
                   key: secret
+          securityContext:
+            privileged: true
           volumeMounts:
             - mountPath: /var/run/docker.sock
               name: docker-socket
