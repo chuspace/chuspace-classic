@@ -20,7 +20,6 @@ RUN yarn install
 
 COPY . /src
 
-
 RUN bin/webpack --env prod
 
 EXPOSE 3000
