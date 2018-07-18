@@ -3,14 +3,12 @@ kind: Service
 metadata:
   name: redis
   labels:
-    app: chuspace
-    tier: backend
+    name: redis
 spec:
   type: LoadBalancer
   ports:
     - port: 6739
       targetPort: redis-server
   selector:
-    app: chuspace
-    tier: backend
+    name: redis
       

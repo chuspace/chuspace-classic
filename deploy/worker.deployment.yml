@@ -3,15 +3,13 @@ kind: Deployment
 metadata:
   name: chuspace-worker
   labels:
-    app: chuspace
-    tier: worker
+    name: chuspace-worker
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: chuspace
-        tier: worker
+        name: chuspace-worker
     spec:
       containers:
         - name: chuspace-worker

@@ -2,16 +2,12 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: chuspace-ci
-  labels:
-    app: chuspace
-    tier: ci
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: chuspace
-        tier: ci
+        name: chuspace-ci
     spec:
       containers:
         - name: chuspace-ci
@@ -23,7 +19,7 @@ spec:
             - name: DRONE_OPEN
               value: 'true'
             - name: DRONE_HOST
-              value: ''
+              value: http://35.189.79.20
             - name: DRONE_ORGS
               valueFrom:
                 secretKeyRef:

@@ -3,8 +3,7 @@ kind: Service
 metadata:
   name: chuspace-ci
   labels:
-    app: chuspace-ci
-    tier: deploy
+    name: chuspace-ci
 spec:
   type: LoadBalancer
   ports:
@@ -12,5 +11,4 @@ spec:
       port: 80
       targetPort: ci-server
   selector:
-    app: chuspace-ci
-    tier: ci
+    name: chuspace-ci

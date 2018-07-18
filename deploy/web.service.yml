@@ -3,14 +3,12 @@ kind: Service
 metadata:
   name: chuspace-web
   labels:
-    app: chuspace
-    tier: web
+    name: chuspace-web
 spec:
   type: LoadBalancer
   ports:
     - port: 80
       targetPort: http-server
   selector:
-    app: chuspace
-    tier: web
+    name: chuspace-web
       
