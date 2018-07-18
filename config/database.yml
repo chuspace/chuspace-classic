@@ -19,5 +19,5 @@ production:
   <<: *default
   username: <%= ENV['DB_USER'] %>
   password: <%= ENV['DB_PASSWORD'] %>
-  host: localhost
+  host: cloud-sql-proxy-web
   port: 5432

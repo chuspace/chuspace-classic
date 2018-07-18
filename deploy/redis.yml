@@ -16,7 +16,6 @@ spec:
           ports:
             - name: redis-server
               containerPort: 6739
-      hostNetwork: true
       restartPolicy: Always
 
 ---

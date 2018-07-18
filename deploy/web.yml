@@ -17,7 +17,7 @@ spec:
             - name: RAILS_ENV
               value: production
             - name: REDIS_URL
-              value: 'redis://redis.default.svc.cluster.local:6379'
+              value: redis:6379
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
@@ -46,7 +46,7 @@ spec:
             - name: NODE_ENV
               value: production
             - name: REDIS_URL
-              value: 'redis://redis.default.svc.cluster.local:6379'
+              value: redis:6379
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
@@ -65,6 +65,23 @@ spec:
           ports:
             - name: http-server
               containerPort: 3000
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: chuspace-worker
+  labels:
+    name: chuspace-worker
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: chuspace-worker
+    spec:
+      containers:
         - name: chuspace-worker
           image: gcr.io/chuspace-210609/chuspace-web:latest
           env:
@@ -73,7 +90,7 @@ spec:
             - name: RAILS_ENV
               value: production
             - name: REDIS_URL
-              value: 'redis://redis.default.svc.cluster.local:6379'
+              value: redis:6379
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
@@ -89,20 +106,6 @@ spec:
                 secretKeyRef:
                   name: chuspace-web
                   key: db_password
-        - name: cloudsql-proxy
-          image: gcr.io/cloudsql-docker/gce-proxy:1.11
-          command:
-            - '/cloud_sql_proxy'
-            - '-instances=chuspace-210609:europe-west2:chuspace-staging=tcp:5432'
-            - '-credential_file=/secrets/cloudsql/credentials.json'
-          volumeMounts:
-            - name: cloudsql-instance-credentials
-              mountPath: /secrets/cloudsql
-              readOnly: true
-      volumes:
-        - name: cloudsql-instance-credentials
-          secret:
-            secretName: cloudsql-instance-credentials
 
 ---
 
