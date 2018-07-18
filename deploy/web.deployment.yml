@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: chuspace-web
-          image: grc.io/maximal-relic-210021/chuspace-web:latest
+          image: grc.io/chuspace-210609/chuspace-web:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: FORMATION
