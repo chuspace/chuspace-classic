@@ -12,27 +12,30 @@ spec:
       initContainers:
         - name: db-migrate
           image: gcr.io/chuspace-210609/chuspace-web:latest
-          command: ["bin/rails", "db:migrate"]
+          command: ['bin/rails', 'db:migrate']
           env:
             - name: RAILS_ENV
               value: production
             - name: REDIS_URL
-              value: redis://redis.default.svc.cluster.local:6379
+              value: 'redis://redis.default.svc.cluster.local:6379'
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
                   name: chuspace-web
                   key: secret_key_base
-            - name: DATABASE_URL
+            - name: DB_USER
               valueFrom:
                 secretKeyRef:
                   name: chuspace-web
-                  key: database_url
-
+                  key: db_user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: chuspace-web
+                  key: db_password
       containers:
         - name: chuspace-web
           image: gcr.io/chuspace-210609/chuspace-web:latest
-          imagePullPolicy: IfNotPresent
           env:
             - name: FORMATION
               value: web=1
@@ -43,21 +46,39 @@ spec:
             - name: NODE_ENV
               value: production
             - name: REDIS_URL
-              value: redis://redis.default.svc.cluster.local:6379
+              value: 'redis://redis.default.svc.cluster.local:6379'
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
                   name: chuspace-web
                   key: secret_key_base
-            - name: DATABASE_URL
+            - name: DB_USER
               valueFrom:
                 secretKeyRef:
                   name: chuspace-web
-                  key: database_url
+                  key: db_user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: chuspace-web
+                  key: db_password
           ports:
             - name: http-server
               containerPort: 3000
-
+        - name: cloudsql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          command:
+            - '/cloud_sql_proxy'
+            - '-instances=chuspace-210609:europe-west2:chuspace-staging=tcp:5432'
+            - '-credential_file=/secrets/cloudsql/credentials.json'
+          volumeMounts:
+            - name: cloudsql-instance-credentials
+              mountPath: /secrets/cloudsql
+              readOnly: true
+      volumes:
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: cloudsql-instance-credentials
 ---
 
 apiVersion: extensions/v1beta1
@@ -76,24 +97,42 @@ spec:
       containers:
         - name: chuspace-worker
           image: gcr.io/chuspace-210609/chuspace-web:latest
-          imagePullPolicy: IfNotPresent
           env:
             - name: FORMATION
               value: worker=1
             - name: RAILS_ENV
               value: production
             - name: REDIS_URL
-              value: redis://redis.default.svc.cluster.local:6379
+              value: 'redis://redis.default.svc.cluster.local:6379'
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
                   name: chuspace-web
                   key: secret_key_base
-            - name: DATABASE_URL
+            - name: DB_USER
               valueFrom:
                 secretKeyRef:
                   name: chuspace-web
-                  key: database_url
+                  key: db_user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: chuspace-web
+                  key: db_password
+        - name: cloudsql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          command:
+            - '/cloud_sql_proxy'
+            - '-instances=chuspace-210609:europe-west2:chuspace-staging=tcp:5432'
+            - '-credential_file=/secrets/cloudsql/credentials.json'
+          volumeMounts:
+            - name: cloudsql-instance-credentials
+              mountPath: /secrets/cloudsql
+              readOnly: true
+      volumes:
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: cloudsql-instance-credentials
 
 ---
 
