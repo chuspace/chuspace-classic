@@ -1,42 +1,42 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: cloud-sql-proxy-web
+  name: postgres-web
 spec:
   ports:
     - port: 3306
       targetPort: web-db
   selector:
-    name: cloud-sql-proxy
+    name: postgres-proxy
 
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: cloud-sql-proxy-ci
+  name: postgres-ci
 spec:
   ports:
     - port: 3306
       targetPort: ci-db
   selector:
-    name: cloud-sql-proxy
+    name: postgres-proxy
 
 ---
 
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: cloud-sql-proxy
+  name: postgres-proxy
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: cloud-sql-proxy
+        name: postgres-proxy
     spec:
       containers:
-        - name: cloud-sql-proxy
+        - name: postgres-proxy
           image: gcr.io/cloudsql-docker/gce-proxy:1.11
           command:
             - '/cloud_sql_proxy'

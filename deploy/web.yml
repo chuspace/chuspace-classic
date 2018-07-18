@@ -33,7 +33,7 @@ spec:
             - name: RAILS_ENV
               value: production
             - name: REDIS_URL
-              value: redis:6379
+              value: redis://$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
@@ -62,7 +62,7 @@ spec:
             - name: NODE_ENV
               value: production
             - name: REDIS_URL
-              value: redis:6379
+              value: redis://$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
@@ -106,7 +106,7 @@ spec:
             - name: RAILS_ENV
               value: production
             - name: REDIS_URL
-              value: redis:6379
+              value: redis://$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:

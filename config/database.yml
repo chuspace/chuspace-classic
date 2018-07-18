@@ -19,5 +19,5 @@ production:
   <<: *default
   username: <%= ENV['DB_USER'] %>
   password: <%= ENV['DB_PASSWORD'] %>
-  host: cloud-sql-proxy-web
-  port: 5432
+  host: <%= ENV['POSTGRES_WEB_SERVICE_HOST'] %>
+  port: <%= ENV['POSTGRES_WEB_SERVICE_PORT'] %>
