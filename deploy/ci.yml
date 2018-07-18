@@ -10,11 +10,13 @@ spec:
     - name: ci-http
       port: 80
       targetPort: ci-http
+      protocol: TCP
     - name: ci-grpc
       port: 9000
       targetPort: ci-grpc
+      protocol: TCP
   selector:
-    name: ci-server
+    name: ci
 
 ---
 
@@ -60,14 +62,6 @@ spec:
                 secretKeyRef:
                   name: drone
                   key: secret
-            - name: DRONE_DATABASE_DRIVER
-              value: postgres
-            - name: DRONE_DATABASE_DATASOURCE
-              valueFrom:
-                secretKeyRef:
-                  name: drone
-                  key: database_url
-
           volumeMounts:
             - name: drone-lib
               mountPath: /var/lib/drone
@@ -104,7 +98,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: DRONE_SERVER
-              value: $(CI_SERVER_SERVICE_HOST):$(CI_AGENT_SERVICE_PORT)
+              value: 35.197.205.22:9000
             - name: DRONE_SECRET
               valueFrom:
                 secretKeyRef:
