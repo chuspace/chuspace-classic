@@ -4,13 +4,11 @@ import 'codemirror/lib/codemirror.css'
 import 'codemirror/mode/javascript/javascript'
 import 'codemirror-github-light/lib/codemirror-github-light-theme.css'
 
-import {
-  EditorState,
-  Selection,
-  TextSelection,
-  Transaction
-} from 'prosemirror-state'
 import { Node as ProsemirrorNode, Schema } from 'prosemirror-model'
+import {
+  Selection,
+  TextSelection
+} from 'prosemirror-state'
 import { redo, undo } from 'prosemirror-history'
 
 import CodeMirror from 'codemirror'
