@@ -1,0 +1,15 @@
+pipeline:
+  deploy:
+    image: plugins/gcr
+    repo: chuspace-210609/chuspace-web
+    tags: latest
+    secrets: [google_credentials]
+
+service:
+  postgres:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=chuspace_test
+  redis:
+    image: redis:alpine
