@@ -1,4 +1,19 @@
-// An example setup, adapted from prosemirror-example-setup
+import { Schema } from 'prosemirror-model'
+import marks from './marks'
+import nodes from './nodes'
 
-export { default as editorSchema } from './schema'
-export { default as editorPlugins } from './plugins'
+const baseSchema = new Schema({
+  nodes: nodes,
+  marks: marks,
+  topNode: 'doc'
+})
+
+const schemaNodes = baseSchema.spec.nodes
+
+export default (addonNodes, addonMarks) => {
+  return new Schema({
+    nodes: schemaNodes.append(addonNodes),
+    marks: { ...marks, ...addonMarks },
+    topNode: 'doc'
+  })
+}

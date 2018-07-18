@@ -8,6 +8,6 @@ type Props = {}
 
 export default class Editor extends PureComponent<Props> {
   render () {
-    return <ChuEditor />
+    return <ChuEditor placeholder='Start Writing...' />
   }
 }

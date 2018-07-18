@@ -162,9 +162,9 @@ export default class CodeBlockView {
     let pos = this.cm.getCursor()
     if (
       this.cm.somethingSelected() ||
-      pos.line != (dir < 0 ? this.cm.firstLine() : this.cm.lastLine()) ||
-      (unit == 'char' &&
-        pos.ch != (dir < 0 ? 0 : this.cm.getLine(pos.line).length))
+      pos.line !== (dir < 0 ? this.cm.firstLine() : this.cm.lastLine()) ||
+      (unit === 'char' &&
+        pos.ch !== (dir < 0 ? 0 : this.cm.getLine(pos.line).length))
     ) {
       return CodeMirror.Pass
     }
@@ -209,7 +209,7 @@ export default class CodeBlockView {
 }
 
 function computeChange (oldVal: string, newVal: string) {
-  if (oldVal == newVal) return null
+  if (oldVal === newVal) return null
   let start = 0
 
   let oldEnd = oldVal.length
@@ -217,14 +217,14 @@ function computeChange (oldVal: string, newVal: string) {
   let newEnd = newVal.length
   while (
     start < oldEnd &&
-    oldVal.charCodeAt(start) == newVal.charCodeAt(start)
+    oldVal.charCodeAt(start) === newVal.charCodeAt(start)
   ) {
     ++start
   }
   while (
     oldEnd > start &&
     newEnd > start &&
-    oldVal.charCodeAt(oldEnd - 1) == newVal.charCodeAt(newEnd - 1)
+    oldVal.charCodeAt(oldEnd - 1) === newVal.charCodeAt(newEnd - 1)
   ) {
     oldEnd--
     newEnd--

@@ -1,0 +1,96 @@
+@import "prosemirror-view/style/prosemirror.css";
+@import "prosemirror-gapcursor/style/gapcursor.css";
+
+.ProseMirror-gapcursor:after {
+	width: 1px;
+	height: 1.2em;
+	top: 0px;
+	border-left: 1px solid black;
+}
+.prosemirror-placeholder {
+	opacity: 0.5;
+	width: 0;
+	display: inline-block;
+	overflow: visible;
+	white-space: nowrap;
+	position: absolute;
+	pointer-events: none;
+	user-select: none;
+}
+.prosemirror-link-url {
+	position: absolute;
+	transform: translateY(1.5em);
+	background-color: white;
+	padding: 2px 5px;
+	box-shadow: 0px 2px 4px rgba(50, 50, 50, 0.2);
+	border-radius: 1px;
+	border: 1px solid #CCC;
+	z-index: 2;
+	word-break: break-all;
+	&:after {
+		font-family: 'Courier', monospace;
+		font-size: 14px;
+		color: rgba(51, 51, 51, 0.75);
+	}
+
+}
+
+.ProseMirror:focus {
+	outline: 0px;
+}
+
+/* Weird bug with blueprint editable text empty on default*/
+.pt-editable-text:not(.pt-editable-editing) .pt-editable-content {
+  height: auto !important;
+}
+
+.ProseMirror-selectednode hr {
+	outline: rgb(187, 189, 192) solid 3px;
+}
+
+.pubpub-editor {
+	h1, h2, h3, h4, h5, h6 {
+		position: relative;
+		.header-link {
+			position: absolute;
+			display: none;
+			opacity: 0;
+			transition: .1s linear opacity;
+			height: 1em;
+			width: 1em;
+			right: 100%;
+			top: 0;
+		}
+		&:hover {
+			.header-link {
+				opacity: 0.5;
+				&:hover {
+					opacity: 1;
+					background-color: transparent;
+				}
+			}
+		}
+	}
+	&.show-header-links {
+		h1, h2, h3, h4, h5, h6 {
+			.header-link {
+				display: inline;
+			}
+		}
+	}
+}
+
+.editor-loading-bars {
+	width: 100%;
+	display: none;
+	position: absolute;
+}
+
+.editor-loading {
+	.pubpub-editor {
+		opacity: 0;
+	}
+	.editor-loading-bars {
+		display: block;
+	}
+}
