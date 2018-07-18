@@ -6,7 +6,7 @@ metadata:
     name: redis
 spec:
   ports:
-    - port: 6739
+    - port: 6379
       targetPort: redis-server
   selector:
     name: redis
@@ -30,7 +30,7 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - name: redis-server
-              containerPort: 6739
+              containerPort: 6379
       restartPolicy: Always
 
 

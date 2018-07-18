@@ -21,6 +21,7 @@ metadata:
   labels:
     name: ci-agent
 spec:
+  type: LoadBalancer
   ports:
     - port: 9000
       targetPort: ci-agent
@@ -113,7 +114,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: DRONE_SERVER
-              value: $(CI_SERVER_HOST):$(CI_AGENT_PORT)
+              value: $(CI_SERVER_SERVICE_HOST):$(CI_AGENT_SERVICE_PORT)
             - name: DRONE_SECRET
               valueFrom:
                 secretKeyRef:
