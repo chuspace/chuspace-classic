@@ -11,7 +11,7 @@ spec:
     spec:
       initContainers:
         - name: db-migrate
-          image: grc.io/chuspace-210609/chuspace-web:latest
+          image: gcr.io/chuspace-210609/chuspace-web:latest
           command: ["bin/rails", "db:migrate"]
           env:
             - name: RAILS_ENV
@@ -31,7 +31,7 @@ spec:
 
       containers:
         - name: chuspace-web
-          image: grc.io/chuspace-210609/chuspace-web:latest
+          image: gcr.io/chuspace-210609/chuspace-web:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: FORMATION
@@ -75,7 +75,7 @@ spec:
     spec:
       containers:
         - name: chuspace-worker
-          image: grc.io/chuspace-210609/chuspace-web:latest
+          image: gcr.io/chuspace-210609/chuspace-web:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: FORMATION
