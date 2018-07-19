@@ -1,19 +1,47 @@
 pipeline:
-  test:
+  restore-cache:
+    image: drillster/drone-volume-cache
+    restore: true
+    mount:
+      - ./vendor/bundle
+      - ./node_modules
+    volumes:
+      - /tmp/cache:/cache
+
+  bundle-install:
     image: gcr.io/chuspace-210609/ci:latest
     environment:
       - RAILS_ENV=test
     commands:
-      - bundle install
+      - bundle install --path vendor/bundle --jobs 3 --retry 3
+
+
+  yarn-install:
+    image: gcr.io/chuspace-210609/ci:latest
+    commands:
       - yarn install
-      - bin/rspec
+
+  test:
+    image: gcr.io/chuspace-210609/ci:latest
+    commands:
+      - bundle exec rspec
+
   push:
     image: plugins/gcr
     repo: chuspace-210609/chuspace-web
-    tags: ${DRONE_PULL_REQUEST}
+    tags: ${DRONE_COMMIT}
     secrets: [google_credentials]
     when:
       branch: master
+
+  deploy:
+    image: quay.io/honestbee/drone-kubernetes
+    kubernetes_server: ${KUBERNETES_SERVER}
+    kubernetes_token: ${KUBERNETES_TOKEN}
+    deployment: chuspace-web
+    repo: gcr.io/chuspace-210609/chuspace-web
+    container: chuspace-web
+    tag: ${DRONE_COMMIT}
 
 
 service:
