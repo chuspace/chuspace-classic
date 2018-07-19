@@ -42,9 +42,9 @@ spec:
               value: 'true'
             - name: DRONE_HOST
               value: http://ci.chuspace.com
-            - name: DRONE_ORGS
+            - name: DRONE_ORG
               value: chuspace
-            - name: DRONE_ADMINS
+            - name: DRONE_ADMIN
               value: leemachin,gauravtiwari
             - name: DRONE_GITHUB_CLIENT
               valueFrom:
