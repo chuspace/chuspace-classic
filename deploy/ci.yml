@@ -75,7 +75,7 @@ spec:
             - name: DRONE_DATABASE_DRIVER
               value: postgres
             - name: DRONE_DATABASE_DATASOURCE
-              value: postgres://$(DB_USER):$(DB_PASSWORD)@$(POSTGRES_CI_SERVICE_HOST):$(POSTGRES_CI_SERVICE_PORT)/drone
+              value: postgres://$(DB_USER):$(DB_PASSWORD)@$(POSTGRES_CI_SERVICE_HOST):$(POSTGRES_CI_SERVICE_PORT)/drone?sslmode=disable
           volumeMounts:
             - name: drone-lib
               mountPath: /var/lib/drone
