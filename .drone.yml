@@ -10,6 +10,7 @@ pipeline:
 
   bundle-install:
     image: gcr.io/chuspace-210609/ci:latest
+    group: deps
     environment:
       - RAILS_ENV=test
     commands:
@@ -18,6 +19,7 @@ pipeline:
 
   yarn-install:
     image: gcr.io/chuspace-210609/ci:latest
+    group: deps
     commands:
       - yarn install
 
