@@ -1,9 +1,13 @@
-cache:
-  mount:
-    - node_modules
-    - vendor/bundle
-
 pipeline:
+  restore-cache:
+    image: drillster/drone-volume-cache
+    restore: true
+    mount:
+      - ./vendor/bundle
+      - ./node_modules
+    volumes:
+      - /tmp/cache:/cache
+
   bundle-install:
     image: gcr.io/chuspace-210609/ci:latest
     group: deps
@@ -12,11 +16,21 @@ pipeline:
     commands:
       - bundle check --path vendor/bundle || bundle install --path vendor/bundle --jobs 3 --retry 3
 
+
   yarn-install:
     image: gcr.io/chuspace-210609/ci:latest
     group: deps
     commands:
       - yarn install
+
+  rebuild-cache:
+    image: drillster/drone-volume-cache
+    rebuild: true
+    mount:
+      - ./vendor/bundle
+      - ./node_modules
+    volumes:
+      - /tmp/cache:/cache
 
   test:
     image: gcr.io/chuspace-210609/ci:latest
@@ -39,6 +53,7 @@ pipeline:
     repo: gcr.io/chuspace-210609/chuspace-web
     container: chuspace-web
     tag: ${DRONE_COMMIT}
+
 
 service:
   postgres:
