@@ -58,6 +58,8 @@ pipeline:
     repo: gcr.io/chuspace-210609/chuspace-web
     container: chuspace-web
     tag: ${DRONE_COMMIT}
+    when:
+      branch: master
 
 
 services:
