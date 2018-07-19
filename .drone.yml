@@ -15,7 +15,7 @@ pipeline:
       - BUNDLE_PATH=./vendor/bundle
       - BUNDLE_DISABLE_SHARED_GEMS=true
     commands:
-      - bundle install --jobs 3 --retry 3 --without development,production
+      - bundle check || bundle install --jobs 3 --retry 3 --without development,production
 
   yarn-install:
     image: gcr.io/chuspace-210609/ci:latest
