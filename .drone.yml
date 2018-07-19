@@ -36,7 +36,7 @@ pipeline:
     image: gcr.io/chuspace-210609/ci:latest
     environment:
       - BUNDLE_PATH=./vendor/bundle
-      - DATABASE_URL=postgres://postgres@postgres:5432/chuspace_test
+      - DATABASE_URL=postgres://postgres:password@postgres:5432/chuspace_test
       - REDIS_URL=redis://redis:6379
     commands:
       - bin/rails test
@@ -59,11 +59,12 @@ pipeline:
     tag: ${DRONE_COMMIT}
 
 
-service:
+services:
   postgres:
     image: postgres:alpine
     environment:
       - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
       - POSTGRES_DB=chuspace_test
   redis:
     image: redis:alpine
