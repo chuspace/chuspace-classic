@@ -43,10 +43,9 @@ spec:
             - name: DRONE_HOST
               value: http://35.197.205.22
             - name: DRONE_ORGS
-              valueFrom:
-                secretKeyRef:
-                  name: drone
-                  key: orgs
+              value: chuspace
+            - name: DRONE_ADMINS
+              value: leemachin,gauravtiwari
             - name: DRONE_GITHUB_CLIENT
               valueFrom:
                 secretKeyRef:
