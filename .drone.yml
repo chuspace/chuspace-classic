@@ -1,6 +1,6 @@
 pipeline:
   test:
-    image: grc.io/chuspace-210609/ci:latest
+    image: gcr.io/chuspace-210609/ci:latest
     commands:
       - bundle install
       - yarn install
