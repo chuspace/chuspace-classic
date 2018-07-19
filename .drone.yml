@@ -11,10 +11,11 @@ pipeline:
   bundle-install:
     image: gcr.io/chuspace-210609/ci:latest
     group: deps
+    environment:
+      - BUNDLE_PATH=./vendor/bundle
+      - BUNDLE_DISABLE_SHARED_GEMS=true
     commands:
-      - bundle config --global disable_shared_gems true
-      - bundle install --path vendor/bundle --jobs 3 --retry 3 --without development,production
-      - cat .bundle/config ~/.bundle/config
+      - bundle install --jobs 3 --retry 3 --without development,production
 
 
   yarn-install:
