@@ -38,6 +38,7 @@ pipeline:
       - BUNDLE_PATH=./vendor/bundle
       - DATABASE_URL=postgres://postgres:password@postgres:5432/chuspace_test
       - REDIS_URL=redis://redis:6379
+      - DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true
     commands:
       - bin/rails test
 
