@@ -24,7 +24,7 @@ pipeline:
   test:
     image: gcr.io/chuspace-210609/ci:latest
     commands:
-      - bundle exec rspec
+      - bin/rails test
 
   push:
     image: plugins/gcr
