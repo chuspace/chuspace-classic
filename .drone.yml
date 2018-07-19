@@ -13,7 +13,7 @@ pipeline:
     group: deps
     commands:
       - bundle install --path vendor/bundle --jobs 3 --retry 3 --without development,production
-      - ls vendor/bundle
+      - ls ./vendor/bundle
 
 
   yarn-install:
