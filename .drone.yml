@@ -23,6 +23,16 @@ pipeline:
     commands:
       - yarn install
 
+  rebuild-cache:
+    image: drillster/drone-volume-cache
+    rebuild: true
+    mount:
+      - ./vendor/bundle
+      - ./node_modules
+    volumes:
+      - /tmp/cache:/cache
+
+
   test:
     image: gcr.io/chuspace-210609/ci:latest
     commands:
