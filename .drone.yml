@@ -1,15 +1,20 @@
 pipeline:
   test:
     image: gcr.io/chuspace-210609/ci:latest
+    environment:
+      - RAILS_ENV=test
     commands:
       - bundle install
       - yarn install
       - bin/rspec
-  deploy:
+  push:
     image: plugins/gcr
     repo: chuspace-210609/chuspace-web
-    tags: latest
+    tags: ${DRONE_PULL_REQUEST}
     secrets: [google_credentials]
+    when:
+      branch: master
+
 
 service:
   postgres:
