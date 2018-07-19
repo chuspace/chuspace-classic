@@ -1,13 +1,8 @@
+cache:
+  mount:
+    - node_modules
+    - vendor/bundle
 pipeline:
-  restore-cache:
-    image: drillster/drone-volume-cache
-    restore: true
-    mount:
-      - ./vendor/bundle
-      - ./node_modules
-    volumes:
-      - /tmp/cache:/cache
-
   bundle-install:
     image: gcr.io/chuspace-210609/ci:latest
     group: deps
@@ -23,20 +18,9 @@ pipeline:
     commands:
       - yarn install
 
-  rebuild-cache:
-    image: drillster/drone-volume-cache
-    rebuild: true
-    mount:
-      - ./vendor/bundle
-      - ./node_modules
-    volumes:
-      - /tmp/cache:/cache
-
-
   test:
     image: gcr.io/chuspace-210609/ci:latest
     commands:
-      - ls node_modules vendor/bundle
       - bin/rails test
 
   push:
