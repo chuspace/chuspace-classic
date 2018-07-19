@@ -36,6 +36,8 @@ pipeline:
     image: gcr.io/chuspace-210609/ci:latest
     environment:
       - BUNDLE_PATH=./vendor/bundle
+      - DATABASE_URL=postgres://postgres@postgres:5432/chuspace_test
+      - REDIS_URL=redis://redis:6379
     commands:
       - bin/rails test
 
