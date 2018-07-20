@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', github: 'rails/rails', ref: 'e6ef1fe056d7da084a4e8d3b817223e9a28e6200'
+gem 'rails', github: 'rails/rails'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.x'
 # Use Puma as the app server
@@ -83,6 +83,6 @@ end
 
 group :test do
   gem 'simplecov', require: false
-  gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers'
+  gem 'shoulda-matchers', github: 'chuspace/shoulda-matchers', branch: 'rails-6-compat'
   gem 'rails-controller-testing'
 end
