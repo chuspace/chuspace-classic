@@ -1,7 +1,19 @@
 # frozen_string_literal: true
 
 require_relative 'boot'
-require 'rails/all'
+require 'rails'
+# Pick the frameworks you want:
+require 'active_model/railtie'
+require 'active_job/railtie'
+require 'active_record/railtie'
+require 'active_storage/engine'
+require 'action_controller/railtie'
+require 'action_mailer/railtie'
+require 'action_view/railtie'
+require 'action_cable/engine'
+require 'active_support/core_ext/numeric/bytes'
+# require "sprockets/railtie"
+require 'rails/test_unit/railtie'
 
 Bundler.require(*Rails.groups)
 
@@ -31,10 +43,12 @@ module Chuspace
       namespace: 'cache',
       compress: true,
       compression_threshold: 2.kilobytes,
-      redis: { url: ENV.fetch('REDIS_URL'), driver: :hiredis }
+      redis: { url: ENV.fetch('REDIS_URL', 'localhost:6739'), driver: :hiredis }
     }
 
     # Use Vips for processing variants.
     config.active_storage.variant_processor = :vips
+
+    config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
   end
 end

@@ -6,13 +6,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', github: 'rails/rails'
+gem 'rails', github: 'rails/rails', ref: 'e6ef1fe056d7da084a4e8d3b817223e9a28e6200'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.x'
 # Use Puma as the app server
 gem 'puma', '>= 3.11'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '>= 4.x'
+gem 'webpacker', github: 'rails/webpacker'
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '>= 4.0'
 # Use ActiveStorage variant
@@ -41,25 +41,27 @@ gem 'octokit'
 # HTTP requests and caching
 gem 'faraday'
 gem 'typhoeus'
-# HTML to markdown
-gem 'reverse_markdown'
-# Markdown
-gem 'redcarpet'
-gem 'html-pipeline'
-gem 'rouge'
 # oAuth
 gem 'oauth2', '>= 1.4.0'
 gem 'omniauth-github', '>= 1.3.0'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
-# JSON serializers
+# API
 gem 'fast_jsonapi'
+
+group :production do
+  gem 'foreman'
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Testing
   gem 'database_cleaner'
+  gem 'factory_bot_rails'
+  %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
+    gem lib, github: "rspec/#{lib}"
+  end
 end
 
 group :development do
@@ -81,7 +83,6 @@ end
 
 group :test do
   gem 'simplecov', require: false
-  gem 'shoulda-matchers'
-  gem 'minitest-matchers_vaccine'
+  gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers'
   gem 'rails-controller-testing'
 end
