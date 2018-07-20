@@ -1,3 +1,6 @@
+// @flow
+
+import { NodeType, Schema } from 'prosemirror-model'
 import {
   ellipsis,
   emDash,
@@ -7,17 +10,11 @@ import {
   wrappingInputRule
 } from 'prosemirror-inputrules'
 
-// : (NodeType) → InputRule
-// Given a blockquote node type, returns an input rule that turns `"> "`
-// at the start of a textblock into a blockquote.
-export function blockQuoteRule (nodeType) {
+export function blockQuoteRule (nodeType: NodeType) {
   return wrappingInputRule(/^\s*>\s$/, nodeType)
 }
 
-// : (NodeType) → InputRule
-// Given a list node type, returns an input rule that turns a number
-// followed by a dot at the start of a textblock into an ordered list.
-export function orderedListRule (nodeType) {
+export function orderedListRule (nodeType: NodeType) {
   return wrappingInputRule(
     /^(\d+)\.\s$/,
     nodeType,
@@ -26,27 +23,15 @@ export function orderedListRule (nodeType) {
   )
 }
 
-// : (NodeType) → InputRule
-// Given a list node type, returns an input rule that turns a bullet
-// (dash, plush, or asterisk) at the start of a textblock into a
-// bullet list.
-export function bulletListRule (nodeType) {
+export function bulletListRule (nodeType: NodeType) {
   return wrappingInputRule(/^\s*([-+*])\s$/, nodeType)
 }
 
-// : (NodeType) → InputRule
-// Given a code block node type, returns an input rule that turns a
-// textblock starting with three backticks into a code block.
-export function codeBlockRule (nodeType) {
+export function codeBlockRule (nodeType: NodeType) {
   return textblockTypeInputRule(/^```$/, nodeType)
 }
 
-// : (NodeType, number) → InputRule
-// Given a node type and a maximum level, creates an input rule that
-// turns up to that number of `#` characters followed by a space at
-// the start of a textblock into a heading whose level corresponds to
-// the number of `#` signs.
-export function headingRule (nodeType, maxLevel) {
+export function headingRule (nodeType: NodeType, maxLevel: number) {
   return textblockTypeInputRule(
     new RegExp(`^(#{1,${maxLevel}})\\s$`),
     nodeType,
@@ -54,10 +39,7 @@ export function headingRule (nodeType, maxLevel) {
   )
 }
 
-// : (Schema) → Plugin
-// A set of input rules for creating the basic block quotes, lists,
-// code blocks, and heading.
-export function buildInputRules (schema) {
+export function buildInputRules (schema: Schema) {
   const rules = smartQuotes.concat(ellipsis, emDash)
   let type
   if ((type = schema.nodes.blockquote)) rules.push(blockQuoteRule(type))

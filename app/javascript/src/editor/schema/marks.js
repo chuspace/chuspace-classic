@@ -1,7 +1,9 @@
-/* eslint-disable react/prop-types */
+// @flow
+
+import { MarkType } from 'prosemirror-model'
 import React from 'react'
 
-const marks = {
+const marks: MarkType = {
   em: {
     parseDOM: [
       { tag: 'i' },

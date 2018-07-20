@@ -1,3 +1,5 @@
+// @flow
+
 import * as plugins from 'editor/plugins'
 
 import { baseKeymap } from 'prosemirror-commands'
@@ -8,7 +10,7 @@ import { keymap } from 'prosemirror-keymap'
 
 export { buildKeymap } from './keymaps'
 
-export const getBasePlugins = options => {
+export const getBasePlugins = (options: any) => {
   const deps = [
     buildInputRules(options.schema),
     keymap(buildKeymap(options.schema, options.mapKeys)),

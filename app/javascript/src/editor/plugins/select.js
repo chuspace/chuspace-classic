@@ -1,8 +1,10 @@
+// @flow
+
 import { Decoration, DecorationSet } from 'prosemirror-view'
 
 import { Plugin } from 'prosemirror-state'
 
-const SelectPlugin = new Plugin({
+const SelectPlugin: Plugin = new Plugin({
   state: {
     init () {
       return { deco: DecorationSet.empty }

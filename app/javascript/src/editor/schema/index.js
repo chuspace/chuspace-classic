@@ -1,8 +1,11 @@
-import { Schema } from 'prosemirror-model'
+// @flow
+
+import { MarkType, NodeType, Schema } from 'prosemirror-model'
+
 import marks from './marks'
 import nodes from './nodes'
 
-const baseSchema = new Schema({
+export const baseSchema: Schema = new Schema({
   nodes: nodes,
   marks: marks,
   topNode: 'doc'
@@ -10,7 +13,7 @@ const baseSchema = new Schema({
 
 const schemaNodes = baseSchema.spec.nodes
 
-export default (addonNodes, addonMarks) => {
+export default (addonNodes: NodeType, addonMarks: MarkType): Schema => {
   return new Schema({
     nodes: schemaNodes.append(addonNodes),
     marks: { ...marks, ...addonMarks },

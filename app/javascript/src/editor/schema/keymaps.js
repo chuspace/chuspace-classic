@@ -1,3 +1,6 @@
+// @flow
+
+import { EditorState, Transaction } from 'prosemirror-state'
 import {
   chainCommands,
   exitCode,
@@ -17,6 +20,7 @@ import {
 } from 'prosemirror-schema-list'
 import { redo, undo } from 'prosemirror-history'
 
+import { Schema } from 'prosemirror-model'
 import { undoInputRule } from 'prosemirror-inputrules'
 
 const mac =
@@ -50,7 +54,7 @@ const mac =
 // You can suppress or map these bindings by passing a `mapKeys`
 // argument, which maps key names (say `'Mod-B'` to either `false`, to
 // remove the binding, or a new key name string.
-export function buildKeymap (schema, mapKeys) {
+export function buildKeymap (schema: Schema, mapKeys: any) {
   const keys = {}
   function bind (key, cmd) {
     if (mapKeys) {
@@ -129,7 +133,7 @@ export function buildKeymap (schema, mapKeys) {
     }
   }
   if (schema.nodes.horizontal_rule) {
-    bind('Mod-_', (state, dispatch) => {
+    bind('Mod-_', (state: EditorState, dispatch: (tr: Transaction) => void) => {
       dispatch(
         state.tr
           .replaceSelectionWith(schema.nodes.horizontal_rule.create())

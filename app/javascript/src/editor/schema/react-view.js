@@ -60,7 +60,6 @@ export default class ReactView {
     this.view.dispatch(transaction)
   }
 
-  // Needs to be override by child classes
   renderElement = (domChild: HTMLElement) =>
     ReactDOM.render(
       <ReactViewWrapper

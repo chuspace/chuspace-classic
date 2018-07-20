@@ -14,7 +14,7 @@ import { redo, undo } from 'prosemirror-history'
 import CodeMirror from 'codemirror'
 import { EditorView } from 'prosemirror-view'
 import { exitCode } from 'prosemirror-commands'
-import { editorSchema as schema } from 'editor/schema'
+import { baseSchema as schema } from 'editor/schema'
 
 export default class CodeBlockView {
   cm: typeof CodeMirror.defaults
@@ -22,10 +22,10 @@ export default class CodeBlockView {
   dom: Element
   view: EditorView
   getPos: () => number
-  node: ProsemirrorNode<Schema>
+  node: ProsemirrorNode
 
   constructor (
-    node: ProsemirrorNode<Schema>,
+    node: ProsemirrorNode,
     view: EditorView,
     getPos: () => number
   ) {

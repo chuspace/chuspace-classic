@@ -1,47 +1,58 @@
+// @flow
+
+import { Decoration, EditorView } from 'prosemirror-view'
 import React, { Component } from 'react'
 
-import PropTypes from 'prop-types'
+import { NodeType } from 'prosemirror-model'
 
-const propTypes = {
-  node: PropTypes.object.isRequired,
-  view: PropTypes.object.isRequired,
-  decorations: PropTypes.array.isRequired,
-  forceSelection: PropTypes.func.isRequired,
-  updateAttrs: PropTypes.func.isRequired,
-  updateContent: PropTypes.func.isRequired,
-  changeNode: PropTypes.func.isRequired,
-  getPos: PropTypes.func.isRequired,
-  renderComponent: PropTypes.func.isRequired
+type Props = {
+  node: NodeType,
+  view: EditorView,
+  decorations: Decoration,
+  forceSelection: () => void,
+  updateAttrs: () => void,
+  updateContent: () => void,
+  changeNode: () => void,
+  getPos: () => void,
+  renderComponent: (
+    node: NodeType,
+    view: EditorView,
+    decorations: Decoration,
+    isSelected: boolean,
+    helperFunctions: any
+  ) => void
 }
 
-class ReactViewWrapper extends Component {
-  constructor (props) {
+type State = {
+  isSelected: boolean
+}
+
+class ReactViewWrapper extends Component<Props, State> {
+  rootElem: ?HTMLElement
+
+  constructor (props: Props) {
     super(props)
     this.state = {
       isSelected: false
     }
-    this.forceSelection = this.forceSelection.bind(this)
-    this.setSelected = this.setSelected.bind(this)
   }
 
-  setSelected = isSelected => {
+  setSelected = (isSelected: boolean) => {
     this.setState({ isSelected })
   }
 
-  forceSelection = evt => {
+  forceSelection = (evt: SyntheticEvent<any>) => {
     if (!this.state.isSelected) {
       this.setState({ isSelected: true })
       this.props.forceSelection()
     }
-    /* I commented this out because file inputs werent' working. */
-    /* If we get weird behavior elsewhere, we can revisit */
-    // evt.preventDefault();
+
     evt.stopPropagation()
   }
 
   focusAndSelect = () => {
     this.setState({ isSelected: true })
-    this.rootElem.focus()
+    this.rootElem && this.rootElem.focus()
   }
 
   render () {
@@ -54,14 +65,9 @@ class ReactViewWrapper extends Component {
     }
     return (
       <span
-        ref={elem => {
-          this.rootElem = elem
-        }}
+        ref={elem => (this.rootElem = elem)}
         draggable='false'
         onClick={this.forceSelection}
-        /* These following parameters mess with the cursor behavior over nodeviews */
-        // role={'textbox'}
-        // tabIndex={-1}
       >
         {renderComponent(
           node,
@@ -75,5 +81,4 @@ class ReactViewWrapper extends Component {
   }
 }
 
-ReactViewWrapper.propTypes = propTypes
 export default ReactViewWrapper

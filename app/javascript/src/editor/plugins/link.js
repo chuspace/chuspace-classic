@@ -1,18 +1,18 @@
+// @flow
+
 import { Decoration, DecorationSet } from 'prosemirror-view'
 
 import { Plugin } from 'prosemirror-state'
 
-const linkPlugin = new Plugin({
+const linkPlugin: Plugin = new Plugin({
   props: {
     decorations (state) {
       const type = state.schema.marks.link
-      // const { from, $from, to, empty } = state.selection;
       const { from, $from, empty } = state.selection
       let isLink = false
       if (empty) {
         isLink = type.isInSet(state.storedMarks || $from.marks())
       }
-      // isLink = state.doc.rangeHasMark(from, to, type);
 
       if (isLink) {
         let startPos = from - 1

@@ -1,7 +1,9 @@
-/* eslint-disable react/prop-types */
+// @flow
+
+import { NodeType } from 'prosemirror-model'
 import React from 'react'
 
-const nodes = {
+const nodes: NodeType = {
   doc: {
     content: 'block+',
     attrs: {

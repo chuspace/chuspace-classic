@@ -1,8 +1,10 @@
+// @flow
+
 import { Decoration, DecorationSet } from 'prosemirror-view'
 
 import { Plugin } from 'prosemirror-state'
 
-const placeholderPlugin = text => {
+const placeholderPlugin = (text: string): Plugin => {
   return new Plugin({
     props: {
       decorations (state) {
