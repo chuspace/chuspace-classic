@@ -1,7 +1,14 @@
 GIT
+  remote: https://github.com/chuspace/shoulda-matchers.git
+  revision: 0972ec34e622294746f85f735e9d0419b12a3584
+  branch: rails-6-compat
+  specs:
+    shoulda-matchers (3.1.2)
+      activesupport (>= 4.2.0)
+
+GIT
   remote: https://github.com/rails/rails.git
-  revision: e6ef1fe056d7da084a4e8d3b817223e9a28e6200
-  ref: e6ef1fe056d7da084a4e8d3b817223e9a28e6200
+  revision: 1a0bcc3b49e05eba852912f609a20c36a9656857
   specs:
     actioncable (6.0.0.alpha)
       actionpack (= 6.0.0.alpha)
@@ -113,13 +120,6 @@ GIT
   revision: 5a1c6756a9d8322fc18639b982e00196f452974d
   specs:
     rspec-support (3.8.pre)
-
-GIT
-  remote: https://github.com/thoughtbot/shoulda-matchers.git
-  revision: c0960bd72dd41c4e9bd8b4375254f539776bfe95
-  specs:
-    shoulda-matchers (3.1.2)
-      activesupport (>= 4.2.0)
 
 GEM
   remote: https://rubygems.org/

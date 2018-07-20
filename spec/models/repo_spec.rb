@@ -6,8 +6,8 @@ RSpec.describe Repo, type: :model do
   let!(:user) { create(:user) }
   subject { create(:repo, slug: 'foo-bar', user: user) }
 
-  it { should validate_presence_of(:name) }
-  it { should belong_to(:user) }
+  it { is_expected.to validate_presence_of(:name) }
+  it { is_expected.to belong_to(:user) }
 
   it 'should validate uniqueness and presence of slug' do
     described_class.skip_callback(:validation, :before, :assign_slug)
