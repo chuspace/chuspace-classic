@@ -48,7 +48,7 @@ module Chuspace
 
     # Use Vips for processing variants.
     config.active_storage.variant_processor = :vips
-
+    config.active_storage.service = :google
     config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
   end
 end
