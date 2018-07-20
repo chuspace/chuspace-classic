@@ -5,13 +5,26 @@ metadata:
   labels:
     name: chuspace-web
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
     - port: 80
       targetPort: web-server
       protocol: TCP
   selector:
     name: chuspace-web
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: chuspace-web
+  labels:
+    name: chuspace-web
+spec:
+  backend:
+    serviceName: chuspace-web
+    servicePort: 80
 
 ---
     
