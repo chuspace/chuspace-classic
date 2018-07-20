@@ -28,7 +28,7 @@ spec:
         - name: redis
           image: redis:alpine
           command: ['redis-server']
-          args: ['/etc/redis.conf', '--requirepass', '$(REDIS_PASSWORD)']
+          args: ['--requirepass', '$(REDIS_PASSWORD)']
           env:
             - name: REDIS_PASSWORD
               valueFrom:
