@@ -40,7 +40,7 @@ pipeline:
       - REDIS_URL=redis://redis:6379
       - DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true
     commands:
-      - bin/rails test
+      - bin/rspec
 
   push:
     image: plugins/gcr

@@ -43,6 +43,7 @@ yarn-error.log*
 /node_modules
 yarn-debug.log*
 .yarn-integrity
+rspec_failures.txt
 
 # Relay
 **/__generated__/**/*

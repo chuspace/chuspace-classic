@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', github: 'rails/rails'
+gem 'rails', github: 'rails/rails', ref: 'e6ef1fe056d7da084a4e8d3b817223e9a28e6200'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.x'
 # Use Puma as the app server
@@ -17,6 +17,7 @@ gem 'webpacker', github: 'rails/webpacker'
 gem 'redis', '>= 4.0'
 # Use ActiveStorage variant
 gem 'ruby-vips'
+gem 'bcrypt'
 gem 'image_processing', '~> 1.2'
 gem 'aws-sdk-s3', require: false
 # caching
@@ -56,6 +57,10 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Testing
   gem 'database_cleaner'
+  gem 'factory_bot_rails'
+  %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
+    gem lib, github: "rspec/#{lib}"
+  end
 end
 
 group :development do
@@ -78,6 +83,5 @@ end
 group :test do
   gem 'simplecov', require: false
   gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers'
-  gem 'minitest-matchers_vaccine'
   gem 'rails-controller-testing'
 end
