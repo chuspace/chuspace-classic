@@ -17,7 +17,6 @@ gem 'webpacker', github: 'rails/webpacker'
 gem 'redis', '>= 4.0'
 # Use ActiveStorage variant
 gem 'ruby-vips'
-gem 'bcrypt'
 gem 'image_processing', '~> 1.2'
 gem 'aws-sdk-s3', require: false
 # caching
