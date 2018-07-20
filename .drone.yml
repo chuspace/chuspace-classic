@@ -41,6 +41,7 @@ pipeline:
       - DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true
     commands:
       - bin/rspec
+      - bundle exec rubocop
 
   push:
     image: plugins/gcr

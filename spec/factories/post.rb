@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :post do |f|
     f.sequence(:title) { |n| "Welcome to Chuspace #{n}" }
