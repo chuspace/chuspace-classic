@@ -41,19 +41,11 @@ gem 'octokit'
 # HTTP requests and caching
 gem 'faraday'
 gem 'typhoeus'
-# HTML to markdown
-gem 'reverse_markdown'
-# Markdown
-gem 'redcarpet'
-gem 'html-pipeline'
-gem 'rouge'
 # oAuth
 gem 'oauth2', '>= 1.4.0'
 gem 'omniauth-github', '>= 1.3.0'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
-# JSON serializers
-gem 'fast_jsonapi'
 
 group :production do
   gem 'foreman'
@@ -85,7 +77,7 @@ end
 
 group :test do
   gem 'simplecov', require: false
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers'
   gem 'minitest-matchers_vaccine'
   gem 'rails-controller-testing'
 end
