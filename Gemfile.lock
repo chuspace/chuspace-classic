@@ -1,6 +1,7 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 05bef140519fe3410fd8d352f5ea84fd1a278063
+  revision: e6ef1fe056d7da084a4e8d3b817223e9a28e6200
+  ref: e6ef1fe056d7da084a4e8d3b817223e9a28e6200
   specs:
     actioncable (6.0.0.alpha)
       actionpack (= 6.0.0.alpha)
@@ -71,6 +72,55 @@ GIT
       rack-proxy (>= 0.6.1)
       railties (>= 4.2)
 
+GIT
+  remote: https://github.com/rspec/rspec-core.git
+  revision: 7b6b9c3f2e2878213f97d6fc9e9eb23c323cfe1c
+  specs:
+    rspec-core (3.8.pre)
+      rspec-support (= 3.8.pre)
+
+GIT
+  remote: https://github.com/rspec/rspec-expectations.git
+  revision: a132fa41bdd588f9abe9444f6f1fb152f52e9531
+  specs:
+    rspec-expectations (3.8.pre)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (= 3.8.pre)
+
+GIT
+  remote: https://github.com/rspec/rspec-mocks.git
+  revision: 5b09361a12f5abc8e89f6f16a14d854bda378ead
+  specs:
+    rspec-mocks (3.8.pre)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (= 3.8.pre)
+
+GIT
+  remote: https://github.com/rspec/rspec-rails.git
+  revision: 814b377f6ab9cb4288ab3cb3f2f0e6262cfbe89e
+  specs:
+    rspec-rails (3.8.pre)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (= 3.8.pre)
+      rspec-expectations (= 3.8.pre)
+      rspec-mocks (= 3.8.pre)
+      rspec-support (= 3.8.pre)
+
+GIT
+  remote: https://github.com/rspec/rspec-support.git
+  revision: 5a1c6756a9d8322fc18639b982e00196f452974d
+  specs:
+    rspec-support (3.8.pre)
+
+GIT
+  remote: https://github.com/thoughtbot/shoulda-matchers.git
+  revision: c0960bd72dd41c4e9bd8b4375254f539776bfe95
+  specs:
+    shoulda-matchers (3.1.2)
+      activesupport (>= 4.2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -110,8 +160,8 @@ GEM
     connection_pool (2.2.2)
     crass (1.0.4)
     database_cleaner (1.7.0)
+    diff-lcs (1.3)
     docile (1.3.1)
-    dotenv (0.7.0)
     elasticsearch (6.1.0)
       elasticsearch-api (= 6.1.0)
       elasticsearch-transport (= 6.1.0)
@@ -124,23 +174,24 @@ GEM
     ethon (0.11.0)
       ffi (>= 1.3.0)
     execjs (2.7.0)
+    factory_bot (4.10.0)
+      activesupport (>= 3.0.0)
+    factory_bot_rails (4.10.0)
+      factory_bot (~> 4.10.0)
+      railties (>= 3.0.0)
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
-    fast_jsonapi (1.2)
+    fast_jsonapi (1.3)
       activesupport (>= 4.2)
     ffi (1.9.25)
     figaro (1.1.1)
       thor (~> 0.14)
-    foreman (0.64.0)
-      dotenv (~> 0.7.0)
-      thor (>= 0.13.6)
+    foreman (0.85.0)
+      thor (~> 0.19.1)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     hashie (3.5.7)
     hiredis (0.6.1)
-    html-pipeline (2.8.3)
-      activesupport (>= 2)
-      nokogiri (>= 1.4)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
     image_processing (1.6.0)
@@ -170,8 +221,6 @@ GEM
     mini_racer (0.2.0)
       libv8 (>= 6.3)
     minitest (5.11.3)
-    minitest-matchers_vaccine (1.0.4)
-      minitest (~> 5.0)
     msgpack (1.2.4)
     multi_json (1.13.1)
     multi_xml (0.6.0)
@@ -239,11 +288,7 @@ GEM
     readthis (2.2.0)
       connection_pool (~> 2.1)
       redis (>= 3.0, < 5.0)
-    redcarpet (3.4.0)
     redis (4.0.1)
-    reverse_markdown (1.1.0)
-      nokogiri
-    rouge (3.1.1)
     rubocop (0.58.1)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
@@ -263,8 +308,6 @@ GEM
       activemodel (>= 4.2)
       elasticsearch (>= 5)
       hashie
-    shoulda-matchers (3.1.2)
-      activesupport (>= 4.0.0)
     sidekiq (5.1.3)
       concurrent-ruby (~> 1.0)
       connection_pool (~> 2.2, >= 2.2.0)
@@ -287,7 +330,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    thor (0.20.0)
+    thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.8)
     typhoeus (1.3.0)
@@ -315,16 +358,15 @@ DEPENDENCIES
   brakeman
   byebug
   database_cleaner
+  factory_bot_rails
   faraday
   fast_jsonapi
   figaro
   foreman
   hiredis
-  html-pipeline
   image_processing (~> 1.2)
   listen (>= 3.0.5)
   mini_racer
-  minitest-matchers_vaccine
   oauth2 (>= 1.4.0)
   octokit
   oj
@@ -337,14 +379,16 @@ DEPENDENCIES
   rails-controller-testing
   react-rails
   readthis
-  redcarpet
   redis (>= 4.0)
-  reverse_markdown
-  rouge
+  rspec-core!
+  rspec-expectations!
+  rspec-mocks!
+  rspec-rails!
+  rspec-support!
   rubocop
   ruby-vips
   searchkick
-  shoulda-matchers
+  shoulda-matchers!
   sidekiq
   simplecov
   spring

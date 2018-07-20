@@ -54,11 +54,11 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   ActionMailer::Base.smtp_settings = {
-    :domain => 'staging.chuspace.com',
-    :address => ENV['EMAIL_SERVICE_HOST'],
-    :port => ENV['EMAIL_SERVICE_PORT'],
-    :authentication => :plain,
-    :enable_starttls_auto => false
+    domain: 'staging.chuspace.com',
+    address: ENV['EMAIL_SERVICE_HOST'],
+    port: ENV['EMAIL_SERVICE_PORT'],
+    authentication: :plain,
+    enable_starttls_auto: false
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.
