@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-web
+spec:
+  ports:
+    - port: 3306
+      targetPort: web-db
+  selector:
+    name: postgres-proxy
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-ci
+spec:
+  ports:
+    - port: 3306
+      targetPort: ci-db
+  selector:
+    name: postgres-proxy
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: postgres-proxy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: postgres-proxy
+    spec:
+      containers:
+        - name: postgres-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          command:
+            - '/cloud_sql_proxy'
+            - '-dir=/cloudsql'
+            - '-instances=chuspace-210609:europe-west2:chuspace-staging=tcp:0.0.0.0:5433,chuspace-210609:europe-west2:chuspace-ci=tcp:0.0.0.0:5434'
+            - '-credential_file=/secrets/cloudsql/credentials.json'
+          ports:
+            - name: web-db
+              containerPort: 5433
+            - name: ci-db
+              containerPort: 5434
+          volumeMounts:
+            - name: cloudsql-instance-credentials
+              mountPath: /secrets/cloudsql
+              readOnly: true
+      volumes:
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: dbproxy

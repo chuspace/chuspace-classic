@@ -62,6 +62,15 @@ GIT
       rake (>= 0.8.7)
       thor (>= 0.19.0, < 2.0)
 
+GIT
+  remote: https://github.com/rails/webpacker.git
+  revision: 87c527dc33d1b693cfce7bf2bb08fa74f1bf0f85
+  specs:
+    webpacker (4.0.0.pre.pre.2)
+      activesupport (>= 4.2)
+      rack-proxy (>= 0.6.1)
+      railties (>= 4.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -102,6 +111,7 @@ GEM
     crass (1.0.4)
     database_cleaner (1.7.0)
     docile (1.3.1)
+    dotenv (0.7.0)
     elasticsearch (6.1.0)
       elasticsearch-api (= 6.1.0)
       elasticsearch-transport (= 6.1.0)
@@ -121,6 +131,9 @@ GEM
     ffi (1.9.25)
     figaro (1.1.1)
       thor (~> 0.14)
+    foreman (0.64.0)
+      dotenv (~> 0.7.0)
+      thor (>= 0.13.6)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     hashie (3.5.7)
@@ -287,10 +300,6 @@ GEM
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
       railties (>= 5.0)
-    webpacker (4.0.0.pre.pre.2)
-      activesupport (>= 4.2)
-      rack-proxy (>= 0.6.1)
-      railties (>= 4.2)
     websocket-driver (0.7.0)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.3)
@@ -309,6 +318,7 @@ DEPENDENCIES
   faraday
   fast_jsonapi
   figaro
+  foreman
   hiredis
   html-pipeline
   image_processing (~> 1.2)
@@ -341,10 +351,10 @@ DEPENDENCIES
   spring-watcher-listen
   typhoeus
   web-console (>= 3.3.0)
-  webpacker (>= 4.x)
+  webpacker!
 
 RUBY VERSION
    ruby 2.5.1p57
 
 BUNDLED WITH
-   1.16.1
+   1.16.2

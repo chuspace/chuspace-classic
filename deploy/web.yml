@@ -1,0 +1,151 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: chuspace-web
+  labels:
+    name: chuspace-web
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: web-server
+      protocol: TCP
+  selector:
+    name: chuspace-web
+
+---
+    
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: chuspace-web
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: chuspace-web
+    spec:
+      initContainers:
+        - name: db-migrate
+          image: gcr.io/chuspace-210609/chuspace-web:latest
+          command: ['bin/rails']
+          args: ['db:migrate']
+          env:
+            - name: RAILS_ENV
+              value: staging
+            - name: RAILS_LOG_TO_STDOUT
+              value: 'true'
+              value: staging
+            - name: REDIS_URL
+              value: redis://$(REDIS_PASSWORD)@$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: chuspace-web
+                  key: secret_key_base
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: chuspace-web
+                  key: db_user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: chuspace-web
+                  key: db_password
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis
+                  key: password
+      containers:
+        - name: chuspace-web
+          image: gcr.io/chuspace-210609/chuspace-web:latest
+          env:
+            - name: FORMATION
+              value: web=1
+            - name: PORT
+              value: '3000'
+            - name: RAILS_SERVE_STATIC_FILES
+              value: 'true'
+            - name: RAILS_LOG_TO_STDOUT
+              value: 'true'
+            - name: RAILS_ENV
+              value: staging
+            - name: NODE_ENV
+              value: staging
+            - name: REDIS_URL
+              value: redis://$(REDIS_PASSWORD)@$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: chuspace-web
+                  key: secret_key_base
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: chuspace-web
+                  key: db_user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: chuspace-web
+                  key: db_password
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis
+                  key: password
+
+          ports:
+            - name: web-server
+              containerPort: 3000
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: chuspace-worker
+  labels:
+    name: chuspace-worker
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: chuspace-worker
+    spec:
+      containers:
+        - name: chuspace-worker
+          image: gcr.io/chuspace-210609/chuspace-web:latest
+          env:
+            - name: FORMATION
+              value: worker=1
+            - name: RAILS_ENV
+              value: staging
+            - name: RAILS_LOG_TO_STDOUT
+              value: 'true'
+            - name: REDIS_URL
+              value: redis://$(REDIS_PASSWORD)@$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: chuspace-web
+                  key: secret_key_base
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: chuspace-web
+                  key: db_user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: chuspace-web
+                  key: db_password
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis
+                  key: password
