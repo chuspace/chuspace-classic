@@ -27,6 +27,14 @@ spec:
       containers:
         - name: redis
           image: redis:alpine
+          command: ['redis-server']
+          args: ['/etc/redis.conf', '--requirepass', '$(REDIS_PASSWORD)']
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis
+                  key: password
           ports:
             - name: redis-server
               containerPort: 6379

@@ -29,7 +29,8 @@ spec:
       initContainers:
         - name: db-migrate
           image: gcr.io/chuspace-210609/chuspace-web:latest
-          command: ['bin/rails', 'db:migrate']
+          command: ['bin/rails']
+          args: ['db:migrate']
           env:
             - name: RAILS_ENV
               value: staging
@@ -37,7 +38,7 @@ spec:
               value: 'true'
               value: staging
             - name: REDIS_URL
-              value: redis://$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
+              value: redis://$(REDIS_PASSWORD)@$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
@@ -53,6 +54,11 @@ spec:
                 secretKeyRef:
                   name: chuspace-web
                   key: db_password
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis
+                  key: password
       containers:
         - name: chuspace-web
           image: gcr.io/chuspace-210609/chuspace-web:latest
@@ -70,7 +76,7 @@ spec:
             - name: NODE_ENV
               value: staging
             - name: REDIS_URL
-              value: redis://$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
+              value: redis://$(REDIS_PASSWORD)@$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
@@ -86,6 +92,12 @@ spec:
                 secretKeyRef:
                   name: chuspace-web
                   key: db_password
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis
+                  key: password
+
           ports:
             - name: web-server
               containerPort: 3000
@@ -116,7 +128,7 @@ spec:
             - name: RAILS_LOG_TO_STDOUT
               value: 'true'
             - name: REDIS_URL
-              value: redis://$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
+              value: redis://$(REDIS_PASSWORD)@$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
@@ -132,3 +144,8 @@ spec:
                 secretKeyRef:
                   name: chuspace-web
                   key: db_password
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis
+                  key: password
