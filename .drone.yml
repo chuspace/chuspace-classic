@@ -47,7 +47,7 @@ pipeline:
     image: plugins/gcr
     repo: chuspace-210609/chuspace-web
     tags: ${DRONE_COMMIT}
-    secrets: [token]
+    secrets: [gcr_json_key]
     when:
       branch: master
 
