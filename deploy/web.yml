@@ -118,6 +118,10 @@ spec:
           volumeMounts:
             - name: cloud-storage-credentials
               mountPath: /secrets/cloud-storage
+      volumes:
+        - name: cloud-storage-credentials
+          secret:
+            secretName: cloud-storage-credentials
 
 ---
 
