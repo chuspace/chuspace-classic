@@ -110,10 +110,14 @@ spec:
                 secretKeyRef:
                   name: redis
                   key: password
-
+            - name: STORAGE_KEYFILE
+              value: /secrets/cloud-storage/credentials.json
           ports:
             - name: web-server
               containerPort: 3000
+          volumeMounts:
+            - name: cloud-storage-credentials
+              mountPath: /secrets/cloud-storage
 
 ---
 
