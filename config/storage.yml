@@ -9,3 +9,4 @@ local:
 google:
   service: GCS
   credentials: <%= ENV['STORAGE_KEYFILE'] %>
+  bucket: staging.chuspace.com

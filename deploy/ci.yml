@@ -5,7 +5,7 @@ metadata:
   labels:
     name: ci-server
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
     - name: ci-http
       port: 80
