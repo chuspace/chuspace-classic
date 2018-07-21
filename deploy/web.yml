@@ -16,19 +16,6 @@ spec:
 ---
 
 apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: chuspace-web
-  labels:
-    name: chuspace-web
-spec:
-  backend:
-    serviceName: chuspace-web
-    servicePort: 80
-
----
-    
-apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: chuspace-web
