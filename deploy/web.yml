@@ -39,7 +39,7 @@ spec:
               value: 'true'
               value: staging
             - name: REDIS_URL
-              value: redis://:$(REDIS_PASSWORD)@$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
+              value: redis://$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
@@ -55,11 +55,6 @@ spec:
                 secretKeyRef:
                   name: chuspace-web
                   key: db_password
-            - name: REDIS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: redis
-                  key: password
             - name: STORAGE_KEYFILE
               value: /secrets/cloud-storage/credentials.json
           volumeMounts:
@@ -82,7 +77,7 @@ spec:
             - name: NODE_ENV
               value: staging
             - name: REDIS_URL
-              value: redis://:$(REDIS_PASSWORD)@$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
+              value: redis://$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
@@ -98,11 +93,6 @@ spec:
                 secretKeyRef:
                   name: chuspace-web
                   key: db_password
-            - name: REDIS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: redis
-                  key: password
             - name: GITHUB_CLIENT_ID
               valueFrom:
                 secretKeyRef:
@@ -152,7 +142,7 @@ spec:
             - name: RAILS_LOG_TO_STDOUT
               value: 'true'
             - name: REDIS_URL
-              value: redis://:$(REDIS_PASSWORD)@$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
+              value: redis://$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
@@ -168,11 +158,6 @@ spec:
                 secretKeyRef:
                   name: chuspace-web
                   key: db_password
-            - name: REDIS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: redis
-                  key: password
             - name: STORAGE_KEYFILE
               value: /secrets/cloud-storage/credentials.json
           volumeMounts:
