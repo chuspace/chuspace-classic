@@ -60,7 +60,9 @@ pipeline:
     deployment: chuspace-web
     repo: gcr.io/chuspace-210609/chuspace-web
     container: chuspace-web
-    tag: ${DRONE_COMMIT}
+    tag:
+      - ${DRONE_COMMIT}
+      - latest
     secrets: [kubernetes_server, kubernetes_token, kubernetes_cert]
     when:
       branch: master
@@ -74,7 +76,9 @@ pipeline:
     deployment: chuspace-worker
     repo: gcr.io/chuspace-210609/chuspace-web
     container: chuspace-worker
-    tag: ${DRONE_COMMIT}
+    tag:
+      - ${DRONE_COMMIT}
+      - latest
     secrets: [kubernetes_server, kubernetes_token, kubernetes_cert]
     when:
       branch: master
