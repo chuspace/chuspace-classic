@@ -79,14 +79,6 @@ pipeline:
     when:
       branch: master
 
-  apply-config-changes:
-    image: vallard/drone-kube
-    group: config
-    template: deploy/web.yml
-    secrets: [kube_server]
-    when:
-      branch: master
-
 
 services:
   postgres:
