@@ -28,9 +28,10 @@ spec:
     spec:
       initContainers:
         - name: db-migrate
-          image: gcr.io/chuspace-210609/chuspace-web:latest
+          image: gcr.io/chuspace-210609/chuspace-web
           command: ['bin/rails']
           args: ['db:migrate']
+          imagePullPolicy: Always
           env:
             - name: RAILS_ENV
               value: staging
@@ -59,6 +60,11 @@ spec:
                 secretKeyRef:
                   name: redis
                   key: password
+            - name: STORAGE_KEYFILE
+              value: /secrets/cloud-storage/credentials.json
+          volumeMounts:
+            - name: cloud-storage-credentials
+              mountPath: /secrets/cloud-storage
       containers:
         - name: chuspace-web
           image: gcr.io/chuspace-210609/chuspace-web:latest
@@ -167,3 +173,12 @@ spec:
                 secretKeyRef:
                   name: redis
                   key: password
+            - name: STORAGE_KEYFILE
+              value: /secrets/cloud-storage/credentials.json
+          volumeMounts:
+            - name: cloud-storage-credentials
+              mountPath: /secrets/cloud-storage
+      volumes:
+        - name: cloud-storage-credentials
+          secret:
+            secretName: cloud-storage-credentials
