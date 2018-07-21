@@ -83,8 +83,7 @@ pipeline:
     image: vallard/drone-kube
     group: config
     template: deploy/web.yml
-    server: ${KUBERNETES_SERVER}
-    secrets: [kubernetes_server]
+    secrets: [kube_server]
     when:
       branch: master
 
