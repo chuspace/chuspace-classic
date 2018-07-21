@@ -2,7 +2,7 @@
 
 Rails.application.configure do
 
-  config.force_ssl = true
+  config.force_ssl = false
 
   config.secret_key_base = ENV.fetch('SECRET_KEY_BASE')
 
