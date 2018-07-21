@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.configure do
+  config.force_ssl = true
+
   config.secret_key_base = ENV.fetch('SECRET_KEY_BASE')
 
   # Verifies that versions and hashed value of the package contents in the project's package.json
