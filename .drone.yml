@@ -79,6 +79,15 @@ pipeline:
     when:
       branch: master
 
+  apply-config-changes:
+    image: vallard/drone-kube
+    group: config
+    template: deploy/web.yml
+    server: ${KUBERNETES_SERVER}
+    secrets: [kubernetes_server]
+    when:
+      branch: master
+
 
 services:
   postgres:

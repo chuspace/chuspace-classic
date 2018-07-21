@@ -18,7 +18,7 @@ gem 'redis', '>= 4.0'
 # Use ActiveStorage variant
 gem 'ruby-vips'
 gem 'image_processing', '~> 1.2'
-gem 'aws-sdk-s3', require: false
+gem 'google-cloud-storage', require: false
 # caching
 gem 'readthis'
 gem 'hiredis'

@@ -110,10 +110,28 @@ spec:
                 secretKeyRef:
                   name: redis
                   key: password
-
+            - name: GITHUB_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: github
+                  key: client_id
+            - name: GITHUB_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: github
+                  key: client_secret
+            - name: STORAGE_KEYFILE
+              value: /secrets/cloud-storage/credentials.json
           ports:
             - name: web-server
               containerPort: 3000
+          volumeMounts:
+            - name: cloud-storage-credentials
+              mountPath: /secrets/cloud-storage
+      volumes:
+        - name: cloud-storage-credentials
+          secret:
+            secretName: cloud-storage-credentials
 
 ---
 
