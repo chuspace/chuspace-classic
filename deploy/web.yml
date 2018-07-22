@@ -37,7 +37,6 @@ spec:
               value: staging
             - name: RAILS_LOG_TO_STDOUT
               value: 'true'
-              value: staging
             - name: REDIS_URL
               value: redis://$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
             - name: SECRET_KEY_BASE

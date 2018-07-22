@@ -32,6 +32,16 @@ pipeline:
     volumes:
       - /tmp/cache:/cache
 
+  lint-ruby:
+    image: gcr.io/chuspace-210609/ci:latest
+    environment:
+      - BUNDLE_PATH=./vendor/bundle
+      - DATABASE_URL=postgres://postgres:password@postgres:5432/chuspace_test
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true
+    commands:
+      - bundle exec rubocop
+
   test:
     image: gcr.io/chuspace-210609/ci:latest
     environment:
@@ -41,7 +51,6 @@ pipeline:
       - DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true
     commands:
       - bin/rspec
-      - bundle exec rubocop
 
   push:
     image: plugins/gcr
