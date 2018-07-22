@@ -34,7 +34,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: RAILS_ENV
-              value: staging
+              value: production
             - name: RAILS_LOG_TO_STDOUT
               value: 'true'
             - name: RAILS_GROUPS
@@ -76,9 +76,9 @@ spec:
             - name: RAILS_GROUPS
               value: default,production
             - name: RAILS_ENV
-              value: staging
+              value: production
             - name: NODE_ENV
-              value: staging
+              value: production
             - name: REDIS_URL
               value: redis://$(REDIS_SERVICE_HOST):$(REDIS_SERVICE_PORT)
             - name: SECRET_KEY_BASE
@@ -141,7 +141,7 @@ spec:
             - name: FORMATION
               value: worker=1
             - name: RAILS_ENV
-              value: staging
+              value: production
             - name: RAILS_LOG_TO_STDOUT
               value: 'true'
             - name: RAILS_GROUPS
