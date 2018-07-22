@@ -46,13 +46,6 @@ module Chuspace
       redis: { url: ENV.fetch('REDIS_URL', 'localhost:6739'), driver: :hiredis }
     }
 
-    if ENV['RAILS_LOG_TO_STDOUT'].present?
-      logger           = ActiveSupport::Logger.new(STDOUT)
-      logger.formatter = config.log_formatter
-      config.logger    = ActiveSupport::TaggedLogging.new(logger)
-      config.lograge.enabled = true
-    end
-
     # Use Vips for processing variants.
     config.active_storage.variant_processor = :vips
 
