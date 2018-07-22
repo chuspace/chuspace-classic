@@ -69,6 +69,7 @@ gem 'fast_jsonapi'
 group :production do
   gem 'foreman'
   gem 'lograge'
+  gem 'sentry-raven'
 end
 
 group :development, :test do
