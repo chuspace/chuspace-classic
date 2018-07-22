@@ -20,7 +20,7 @@ export default class PostsIndex extends PureComponent {
             </div>
             <div className='pl3-ns order-1 order-2-ns mb4 mb0-ns w-100 w-40-ns'>
               <img
-                src='http://mrmrs.github.io/photos/cpu.jpg'
+                src='//mrmrs.github.io/photos/cpu.jpg'
                 className='db'
                 alt='Photo of a dimly lit room with a computer interface terminal.'
               />
@@ -45,7 +45,7 @@ export default class PostsIndex extends PureComponent {
             </div>
             <div className='pl3-ns order-1 order-2-ns mb4 mb0-ns w-100 w-40-ns'>
               <img
-                src='http://mrmrs.github.io/photos/whale.jpg'
+                src='//mrmrs.github.io/photos/cpu.jpg'
                 className='db'
                 alt="Photo of a whale's tale coming crashing out of the water."
               />
@@ -70,7 +70,7 @@ export default class PostsIndex extends PureComponent {
             </div>
             <div className='pl3-ns order-1 order-2-ns mb4 mb0-ns w-100 w-40-ns'>
               <img
-                src='http://mrmrs.github.io/photos/warehouse.jpg'
+                src='//mrmrs.github.io/photos/cpu.jpg'
                 className='db'
                 alt='Photo of a warehouse with stacked shelves.'
               />
