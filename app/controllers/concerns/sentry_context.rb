@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SentryContext
-  extends ActiveSupport::Concern
+  extend ActiveSupport::Concern
 
   included do
     private def set_raven_context
