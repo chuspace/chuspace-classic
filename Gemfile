@@ -66,10 +66,11 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # API
 gem 'fast_jsonapi'
 
+gem 'lograge'
+gem 'sentry-raven'
+
 group :production do
   gem 'foreman'
-  gem 'lograge'
-  gem 'sentry-raven'
 end
 
 group :development, :test do

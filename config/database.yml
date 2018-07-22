@@ -10,6 +10,13 @@ development:
 test:
   <<: *default
 
+staging:
+  <<: *default
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  host: <%= ENV['POSTGRES_WEB_SERVICE_HOST'] %>
+  port: <%= ENV['POSTGRES_WEB_SERVICE_PORT'] %>
+
 production:
   <<: *default
   username: <%= ENV['DB_USER'] %>
