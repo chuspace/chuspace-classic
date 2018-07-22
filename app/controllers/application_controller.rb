@@ -3,10 +3,14 @@
 class ApplicationController < ActionController::Base
   include Authentication
   include SetCurrentRequestDetails
+  include SentryContext
+
   per_request_react_rails_prerenderer
+
   before_action :sanitize_params!
 
   private
+
     def parse_api_errors(errors)
       errors.each_with_object({}) do |error, hash|
         hash[error[:field]] = error[:message]
