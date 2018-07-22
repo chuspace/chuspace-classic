@@ -49,6 +49,9 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # API
 gem 'fast_jsonapi'
 
+gem 'rugged'
+gem 'graphql'
+
 group :production do
   gem 'foreman'
 end
@@ -86,3 +89,5 @@ group :test do
   gem 'shoulda-matchers', github: 'chuspace/shoulda-matchers', branch: 'rails-6-compat'
   gem 'rails-controller-testing'
 end
+
+gem 'graphiql-rails', group: :development
