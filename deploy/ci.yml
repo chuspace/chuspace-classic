@@ -143,7 +143,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: DRONE_SERVER
-              value: https://ci.chuspace.com:9000
+              value: ci.chuspace.com:9000
             - name: DRONE_SECRET
               valueFrom:
                 secretKeyRef:
