@@ -31,7 +31,7 @@ spec:
           image: gcr.io/chuspace-210609/chuspace-web
           command: ['bin/rails']
           args: ['db:migrate']
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           env:
             - name: RAILS_ENV
               value: staging
@@ -61,7 +61,8 @@ spec:
               mountPath: /secrets/cloud-storage
       containers:
         - name: chuspace-web
-          image: gcr.io/chuspace-210609/chuspace-web:latest
+          image: gcr.io/chuspace-210609/chuspace-web
+          imagePullPolicy: IfNotPresent
           env:
             - name: FORMATION
               value: web=1
@@ -132,7 +133,8 @@ spec:
     spec:
       containers:
         - name: chuspace-worker
-          image: gcr.io/chuspace-210609/chuspace-web:latest
+          image: gcr.io/chuspace-210609/chuspace-web
+          imagePullPolicy: IfNotPresent
           env:
             - name: FORMATION
               value: worker=1
