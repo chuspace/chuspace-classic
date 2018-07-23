@@ -11,6 +11,20 @@ spec:
       port: 80
       targetPort: ci-http
       protocol: TCP
+  selector:
+    name: ci
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ci-agent
+  labels:
+    name: ci-agent
+spec:
+  type: NodePort
+  ports:
     - name: ci-grpc
       port: 9000
       targetPort: ci-grpc

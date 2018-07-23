@@ -21,6 +21,10 @@ spec:
           - backend:
               serviceName: ci-server
               servicePort: 80
+          - backend:
+              serviceName: ci-agent
+              servicePort: 9000
+
     - host: staging.chuspace.com
       http:
         paths:
