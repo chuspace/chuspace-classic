@@ -23,7 +23,7 @@ metadata:
   labels:
     name: ci-agent
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
     - name: ci-grpc
       port: 9000
@@ -157,7 +157,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: DRONE_SERVER
-              value: ci.chuspace.com:9000
+              value: $(CI_AGENT_SERVICE):$(CI_AGENT_SERVICE_PORT)
             - name: DRONE_SECRET
               valueFrom:
                 secretKeyRef:
