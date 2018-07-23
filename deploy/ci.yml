@@ -73,7 +73,7 @@ spec:
             - name: DRONE_OPEN
               value: 'true'
             - name: DRONE_HOST
-              value: http://ci.chuspace.com
+              value: https://ci.chuspace.com
             - name: DRONE_ORG
               value: chuspace
             - name: DRONE_ADMIN
@@ -143,7 +143,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: DRONE_SERVER
-              value: ci.chuspace.com:9000
+              value: https://ci.chuspace.com:9000
             - name: DRONE_SECRET
               valueFrom:
                 secretKeyRef:
