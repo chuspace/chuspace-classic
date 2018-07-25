@@ -11,6 +11,20 @@ spec:
       port: 80
       targetPort: ci-http
       protocol: TCP
+  selector:
+    name: ci
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ci-agent
+  labels:
+    name: ci-agent
+spec:
+  type: LoadBalancer
+  ports:
     - name: ci-grpc
       port: 9000
       targetPort: ci-grpc
@@ -73,7 +87,7 @@ spec:
             - name: DRONE_OPEN
               value: 'true'
             - name: DRONE_HOST
-              value: http://ci.chuspace.com
+              value: https://ci.chuspace.com
             - name: DRONE_ORG
               value: chuspace
             - name: DRONE_ADMIN
@@ -143,7 +157,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: DRONE_SERVER
-              value: ci.chuspace.com:9000
+              value: $(CI_AGENT_SERVICE_HOST):$(CI_AGENT_SERVICE_PORT)
             - name: DRONE_SECRET
               valueFrom:
                 secretKeyRef:
