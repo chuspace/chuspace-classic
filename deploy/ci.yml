@@ -157,7 +157,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: DRONE_SERVER
-              value: $(CI_AGENT_SERVICE):$(CI_AGENT_SERVICE_PORT)
+              value: $(CI_AGENT_SERVICE_HOST):$(CI_AGENT_SERVICE_PORT)
             - name: DRONE_SECRET
               valueFrom:
                 secretKeyRef:
