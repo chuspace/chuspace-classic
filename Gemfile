@@ -66,6 +66,11 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # API
 gem 'fast_jsonapi'
 
+# GraphQL
+gem 'rugged'
+gem 'graphql'
+
+# Logging
 gem 'lograge'
 gem 'sentry-raven'
 
@@ -106,3 +111,5 @@ group :test do
   gem 'shoulda-matchers', github: 'chuspace/shoulda-matchers', branch: 'rails-6-compat'
   gem 'rails-controller-testing'
 end
+
+gem 'graphiql-rails', group: :development
