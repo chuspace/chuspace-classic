@@ -1,26 +1,31 @@
-import 'prosemirror-tables/style/tables.css'
-import 'prosemirror-gapcursor/style/gapcursor.css'
+// @flow
 
-import { columnResizing, tableEditing } from 'prosemirror-tables'
+import * as plugins from 'editor/plugins'
 
-import { dropCursor } from 'prosemirror-dropcursor'
-import { gapCursor } from 'prosemirror-gapcursor'
+import { baseKeymap } from 'prosemirror-commands'
+import { buildInputRules } from './input-rules'
+import { buildKeymap } from './keymaps'
 import { history } from 'prosemirror-history'
-import keys from './keys'
-import placeholder from 'editor/plugins/placeholder'
-import rules from './rules'
+import { keymap } from 'prosemirror-keymap'
 
-export default [
-  rules,
-  keys,
-  placeholder(),
-  dropCursor(),
-  gapCursor(),
-  history(),
-  columnResizing(),
-  tableEditing()
-]
+export { buildKeymap } from './keymaps'
 
-// for tables
-document.execCommand('enableObjectResizing', false, false)
-document.execCommand('enableInlineTableEditing', false, false)
+export const getBasePlugins = (options: any) => {
+  const deps = [
+    buildInputRules(options.schema),
+    keymap(buildKeymap(options.schema, options.mapKeys)),
+    keymap(baseKeymap)
+  ]
+  if (!options.isReadOnly) {
+    deps.push(plugins.SelectPlugin)
+    deps.push(plugins.LinkPlugin)
+  }
+  if (options.placeholder) {
+    deps.push(plugins.PlaceholderPlugin(options.placeholder))
+  }
+  if (options.history !== false) {
+    deps.push(history())
+  }
+
+  return deps
+}

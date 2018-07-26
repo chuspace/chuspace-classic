@@ -1,48 +1,117 @@
-import { marks } from 'prosemirror-schema-basic'
+// @flow
 
-const subscript = {
-  excludes: 'superscript',
-  parseDOM: [
-    { tag: 'sub' },
-    { style: 'vertical-align=sub' }
-  ],
-  toDOM: () => ['sub']
+import { MarkType } from 'prosemirror-model'
+import React from 'react'
+
+const marks: MarkType = {
+  em: {
+    parseDOM: [
+      { tag: 'i' },
+      { tag: 'em' },
+      {
+        style: 'font-style',
+        getAttrs: value => value === 'italic' && null
+      }
+    ],
+    toDOM () {
+      return ['em']
+    },
+    toStatic (mark, children) {
+      return <em>{children}</em>
+    }
+  },
+
+  strong: {
+    parseDOM: [
+      { tag: 'strong' },
+      // This works around a Google Docs misbehavior where
+      // pasted content will be inexplicably wrapped in `<b>`
+      // tags with a font-weight normal.
+      {
+        tag: 'b',
+        getAttrs: node => node.style.fontWeight !== 'normal' && null
+      },
+      {
+        style: 'font-weight',
+        getAttrs: value => /^(bold(er)?|[5-9]\d{2,})$/.test(value) && null
+      }
+    ],
+    toDOM () {
+      return ['strong']
+    },
+    toStatic (mark, children) {
+      return <strong>{children}</strong>
+    }
+  },
+  link: {
+    attrs: {
+      href: { default: '' },
+      title: { default: null },
+      target: { default: null }
+    },
+    parseDOM: [
+      {
+        tag: 'a[href]',
+        getAttrs (dom) {
+          return {
+            href: dom.getAttribute('href'),
+            title: dom.getAttribute('title'),
+            target: dom.getAttribute('target')
+          }
+        }
+      }
+    ],
+    toDOM (node) {
+      return ['a', node.attrs]
+    },
+    toStatic (mark, children) {
+      return (
+        <a
+          href={mark.attrs.href}
+          title={mark.attrs.title}
+          target={mark.attrs.target}
+        >
+          {children}
+        </a>
+      )
+    }
+  },
+  sub: {
+    parseDOM: [{ tag: 'sub' }],
+    toDOM () {
+      return ['sub']
+    },
+    toStatic (mark, children) {
+      return <sub>{children}</sub>
+    }
+  },
+  sup: {
+    parseDOM: [{ tag: 'sup' }],
+    toDOM () {
+      return ['sup']
+    },
+    toStatic (mark, children) {
+      return <sup>{children}</sup>
+    }
+  },
+  strike: {
+    parseDOM: [{ tag: 's' }],
+    toDOM () {
+      return ['s']
+    },
+    toStatic (mark, children) {
+      return <s>{children}</s>
+    }
+  },
+  code: {
+    parseDOM: [{ tag: 'code' }],
+    toDOM () {
+      return ['code']
+    },
+    toStatic (mark, children) {
+      return <code>{children}</code>
+    }
+  }
 }
 
-const superscript = {
-  excludes: 'subscript',
-  parseDOM: [
-    { tag: 'sup' },
-    { style: 'vertical-align=super' }
-  ],
-  toDOM: () => ['sup']
-}
-
-const strikethrough = {
-  parseDOM: [
-    { tag: 'strike' },
-    { style: 'text-decoration:line-through' },
-    { style: 'text-decoration-line:line-through' }
-  ],
-  toDOM: () => ['span', {
-    style: 'text-decoration-line:line-through'
-  }]
-}
-
-const underline = {
-  parseDOM: [
-    { tag: 'u' },
-    { style: 'text-decoration:underline' }
-  ],
-  toDOM: () => ['span', {
-    style: 'text-decoration:underline'
-  }]
-}
-
-export default {
-  ...marks,
-  subscript,
-  superscript,
-  strikethrough,
-  underline
-}
+export default marks
