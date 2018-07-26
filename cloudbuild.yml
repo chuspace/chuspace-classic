@@ -1,0 +1,18 @@
+steps:
+  - name: gcr.io/chuspace-210609/ci
+    args: [bundle, install]
+  - name: gcr.io/chuspace-210609/ci
+    args: [yarn, install]
+  - name: gcr.io/chuspace-210609/ci
+    args: [bin, rails, db:test:prepare]
+  - name: gcr.io/chuspace-210609/ci
+    args: [bundle, exec, rspec]
+  - name: gcr.io/cloud-builders/docker
+    args: [build, -t, , gcr.io/chuspace-210609/chuspace-web, .]
+  - name: gcr.io/cloud-builders/kubectl
+    args: [push, gcr.io/chuspace-210609/chuspace-web]
+  - name: gcr.io/cloud-builders/kubectl
+    args: [set, image, deployment/chuspace-web, chuspace-web=chuspace-210609/chuspace-web]
+
+images:
+  - grc.io/chuspace-210609/chuspace-web
