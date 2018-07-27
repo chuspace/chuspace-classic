@@ -1,4 +1,5 @@
 steps:
+  # Try copying bundler cache
   - name: gcr.io/cloud-builders/gsutil
     args: ['cp', 'gs://chuspace-ci/bundler_cache.zip', 'bundler_cache.zip']
 
@@ -17,6 +18,7 @@ steps:
   - name: gcr.io/cloud-builders/gsutil
     args: ['cp', 'bundler_cache.zip', 'gs://chuspace-ci/bundler_cache.zip']
 
+  # Try copying node modules cache
   - name: gcr.io/cloud-builders/gsutil
     args: ['cp', 'gs://chuspace-ci/node_modules_cache.zip', 'node_modules_cache.zip']
 
