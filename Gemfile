@@ -66,8 +66,12 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # API
 gem 'fast_jsonapi'
 
+# Logging
 gem 'lograge'
 gem 'sentry-raven'
+
+# Git
+gem 'rugged'
 
 group :production do
   gem 'foreman'
