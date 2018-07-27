@@ -1,13 +1,15 @@
 steps:
-  # - name: gcr.io/cloud-builders/gsutil
-  #   args: ['cp', 'gs://artifacts.chuspace-210609.appspot.com/bundler_cache', './vendor/cache']
+  - name: gcr.io/cloud-builders/gsutil
+    args: ['cp', 'gs://artifacts.chuspace-210609.appspot.com/bundler_cache', './vendor/cache']
+  
   - name: gcr.io/chuspace-210609/ci
     args: ['bundle', 'install', '--jobs', '3', '--retry', '3', '--without', 'development,production']
     env:
     - 'BUNDLE_PATH=./vendor/cache'
     - 'BUNDLE_DISABLE_SHARED_GEMS=true'
-  # - name: gcr.io/cloud-builders/gsutil
-  #   args: ['cp', './vendor/cache', 'gs://artifacts.chuspace-210609.appspot.com/bundler_cache']
+  
+  - name: gcr.io/cloud-builders/gsutil
+    args: ['cp', './vendor/cache', 'gs://artifacts.chuspace-210609.appspot.com/bundler_cache']
 
   - name: gcr.io/chuspace-210609/ci
     args: ['yarn', 'install']
@@ -19,24 +21,29 @@ steps:
     - 'DATABASE_URL=postgres://postgres:password@postgres:5432/chuspace_test'
     - 'REDIS_URL=redis://redis:6379'
     - 'DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true'
-  - name: gcr.io/chuspace-210609/ci
+ 
+ - name: gcr.io/chuspace-210609/ci
     args: ['bundle', 'exec', 'rspec']
     env:
     - 'BUNDLE_PATH=./vendor/cache'
     - 'DATABASE_URL=postgres://postgres:password@postgres:5432/chuspace_test'
     - 'REDIS_URL=redis://redis:6379'
     - 'DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true'
-  - name: gcr.io/chuspace-210609/ci
+ 
+ - name: gcr.io/chuspace-210609/ci
     args: ['bundle', 'exec', 'rubocop']
     env:
     - 'BUNDLE_PATH=./vendor/cache'
     - 'DATABASE_URL=postgres://postgres:password@postgres:5432/chuspace_test'
     - 'REDIS_URL=redis://redis:6379'
     - 'DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true'
+  
   - name: gcr.io/cloud-builders/docker
     args: ['build', '-t', 'gcr.io/chuspace-210609/chuspace-web', '.', '--cache-from', 'gcr.io/chuspace-210609/chuspace-web:latest',]
+  
   - name: gcr.io/cloud-builders/kubectl
     args: ['push', 'gcr.io/chuspace-210609/chuspace-web']
+  
   - name: gcr.io/cloud-builders/kubectl
     args: ['set', 'image', 'deployment/chuspace-web', 'chuspace-web=chuspace-210609/chuspace-web']
 
