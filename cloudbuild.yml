@@ -1,6 +1,6 @@
 steps:
   - name: gcr.io/cloud-builders/gsutil
-    args: ['cp', 'gs://chuspace-storage/bundler_cache', './vendor/cache']
+    args: ['cp', 'gs://chuspace-storage', './vendor/cache']
 
   - name: gcr.io/chuspace-210609/ci
     args: ['bundle', 'install', '--jobs', '3', '--retry', '3', '--without', 'development,production']
@@ -9,7 +9,7 @@ steps:
       - 'BUNDLE_DISABLE_SHARED_GEMS=true'
 
   - name: gcr.io/cloud-builders/gsutil
-    args: ['cp', './vendor/cache', 'gs://chuspace-storage/bundler_cache']
+    args: ['cp', './vendor/cache', 'gs://chuspace-storage']
 
 
   - name: gcr.io/chuspace-210609/ci
