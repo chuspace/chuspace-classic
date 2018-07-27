@@ -2,6 +2,9 @@ steps:
   - name: gcr.io/cloud-builders/gsutil
     args: ['cp', 'gs://chuspace-ci/bundler_cache.zip', 'bundler_cache.zip']
 
+  - name: gcr.io/cloud-builders/gsutil
+    args: ['unzip', 'bundler_cache.zip', '-d', './vendor/cache']
+
   - name: gcr.io/chuspace-210609/ci
     args: ['bundle', 'install', '--jobs', '3', '--retry', '3', '--without', 'development,production']
     env:
