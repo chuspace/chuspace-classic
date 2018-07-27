@@ -1,6 +1,6 @@
 steps:
   - name: gcr.io/cloud-builders/gsutil
-    args: ['cp', '-r', 'gs://chuspace-storage', './vendor/cache']
+    args: ['cp', '-r', 'gs://chuspace-storage', '.']
 
   - name: gcr.io/chuspace-210609/ci
     args: ['bundle', 'install', '--jobs', '3', '--retry', '3', '--without', 'development,production']
