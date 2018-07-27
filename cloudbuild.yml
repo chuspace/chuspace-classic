@@ -11,8 +11,9 @@ steps:
   #- name: gcr.io/cloud-builders/gsutil
   #  args: ['cp', './vendor/cache', 'gs://artifacts.chuspace-210609.appspot.com/bundler_cache']
 
-  - name: gcr.io/cloud-builders/yarn
-    args: ['install']
+
+  - name: gcr.io/chuspace-210609/ci
+    args: ['yarn', 'install']
 
   - name: gcr.io/chuspace-210609/ci
     args: ['bundle', 'exec', 'rails', 'db:test:prepare']
