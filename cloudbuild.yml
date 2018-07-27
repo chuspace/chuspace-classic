@@ -1,6 +1,6 @@
 steps:
-  - name: gcr.io/cloud-builders/gsutil
-    args: ['cp', 'gs://chuspace-storage/bundler_cache.zip', 'bundler_cache.zip']
+  # - name: gcr.io/cloud-builders/gsutil
+  #   args: ['cp', 'gs://chuspace-ci/bundler_cache.zip', 'bundler_cache.zip']
 
   - name: gcr.io/chuspace-210609/ci
     args: ['bundle', 'install', '--jobs', '3', '--retry', '3', '--without', 'development,production']
@@ -12,19 +12,19 @@ steps:
     args: ['zip', '-r', 'bundler_cache.zip', './vendor/cache']
 
   - name: gcr.io/cloud-builders/gsutil
-    args: ['cp', 'bundler_cache.zip', 'gs://chuspace-storage/bundler_cache.zip']
+    args: ['cp', 'bundler_cache.zip', 'gs://chuspace-ci/bundler_cache.zip']
 
   - name: gcr.io/chuspace-210609/ci
     args: ['yarn', 'install']
 
-  - name: gcr.io/cloud-builders/gsutil
-    args: ['cp', 'gs://chuspace-storage/node_modules_cache.zip', 'node_modules_cache.zip']
-
-  - name: gcr.io/cloud-builders/gsutil
-    args: ['cp', './node_modules', 'gs://chuspace-storage']
+  # - name: gcr.io/cloud-builders/gsutil
+  #   args: ['cp', 'gs://chuspace-ci/node_modules_cache.zip', 'node_modules_cache.zip']
 
   - name: gcr.io/chuspace-210609/ci
     args: ['zip', '-r', 'node_modules_cache.zip', './node_modules']
+
+  - name: gcr.io/cloud-builders/gsutil
+    args: ['cp', 'node_modules_cache.zip', 'gs://chuspace-storage/node_modules_cache.zip']
 
   - name: gcr.io/chuspace-210609/ci
     args: ['bundle', 'exec', 'rails', 'db:migrate']
