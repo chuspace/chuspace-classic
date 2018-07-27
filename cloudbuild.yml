@@ -23,20 +23,20 @@ steps:
       - 'DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true'
 
   - name: gcr.io/chuspace-210609/ci
-      args: ['bundle', 'exec', 'rspec']
-      env:
-        - 'BUNDLE_PATH=./vendor/cache'
-        - 'DATABASE_URL=$_DATABASE_URL'
-        - 'REDIS_URL=redis://redis:6379'
-        - 'DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true'
+    args: ['bundle', 'exec', 'rspec']
+    env:
+      - 'BUNDLE_PATH=./vendor/cache'
+      - 'DATABASE_URL=$_DATABASE_URL'
+      - 'REDIS_URL=redis://redis:6379'
+      - 'DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true'
 
   - name: gcr.io/chuspace-210609/ci
-      args: ['bundle', 'exec', 'rubocop']
-      env:
-        - 'BUNDLE_PATH=./vendor/cache'
-        - 'DATABASE_URL=$_DATABASE_URL'
-        - 'REDIS_URL=redis://redis:6379'
-        - 'DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true'
+    args: ['bundle', 'exec', 'rubocop']
+    env:
+      - 'BUNDLE_PATH=./vendor/cache'
+      - 'DATABASE_URL=$_DATABASE_URL'
+      - 'REDIS_URL=redis://redis:6379'
+      - 'DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true'
 
   - name: gcr.io/cloud-builders/docker
     args: ['build', '-t', 'gcr.io/chuspace-210609/chuspace-web', '.', '--cache-from', 'gcr.io/chuspace-210609/chuspace-web:latest']
