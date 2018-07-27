@@ -48,10 +48,7 @@ steps:
     entrypoint: bash
     args:
       - '-c'
-      - >-
-        [[ $BRANCH_NAME == master ]]
-          && kubectl set image deployment/chuspace-web chuspace-web=chuspace-210609/chuspace-web
-          || true
+      - '[[ "$BRANCH_NAME" == "master" ]] && kubectl set image deployment/chuspace-web chuspace-web=chuspace-210609/chuspace-web || true'
     env:
       - 'cloudsdk_compute_zone=europe-west2'
       - 'cloudsdk_container_cluster=chuspace'
@@ -60,10 +57,7 @@ steps:
     entrypoint: bash
     args:
       - '-c'
-      - >-
-        [[ $BRANCH_NAME == master ]]
-          && kubectl set image deployment/chuspace-worker chuspace-worker=chuspace-210609/chuspace-web
-          || true
+      - '[[ "$BRANCH_NAME" == "master" ]] && kubectl set image deployment/chuspace-worker chuspace-worker=chuspace-210609/chuspace-web || true'
     env:
       - 'cloudsdk_compute_zone=europe-west2'
       - 'cloudsdk_container_cluster=chuspace'
