@@ -2,9 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: postgres-web
+  labels:
+    name: postgres
+    db: chuspace-staging
 spec:
   ports:
-    - port: 3306
+    - port: 5432
       targetPort: web-db
   selector:
     name: postgres-proxy
@@ -15,9 +18,13 @@ apiVersion: v1
 kind: Service
 metadata:
   name: postgres-ci
+  labels:
+    name: postgres
+    db: chuspace-test
 spec:
+  type: LoadBalancer
   ports:
-    - port: 3306
+    - port: 5432
       targetPort: ci-db
   selector:
     name: postgres-proxy

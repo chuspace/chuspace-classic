@@ -49,7 +49,7 @@ steps:
     args: ['set', 'image', 'deployment/chuspace-web', 'chuspace-web=chuspace-210609/chuspace-web']
 
 substitutions:
-  _DATABASE_URL: 'postgres://proxyuser:gauravrocket@10.47.243.255:5432/chuspace_test'
+  _DATABASE_URL: 'postgres://proxyuser:gauravrocket@35.230.130.2:5432/chuspace_test'
 
 images:
   - grc.io/chuspace-210609/chuspace-web
