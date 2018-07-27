@@ -17,11 +17,14 @@ steps:
   - name: gcr.io/cloud-builders/gsutil
     args: ['cp', 'bundler_cache.zip', 'gs://chuspace-ci/bundler_cache.zip']
 
+  - name: gcr.io/cloud-builders/gsutil
+    args: ['cp', 'gs://chuspace-ci/node_modules_cache.zip', 'node_modules_cache.zip']
+
+  - name: gcr.io/chuspace-210609/ci
+    args: ['unzip', '-qq', 'node_modules_cache.zip', '-d', '.']
+
   - name: gcr.io/chuspace-210609/ci
     args: ['yarn', 'install']
-
-  # - name: gcr.io/cloud-builders/gsutil
-  #   args: ['cp', 'gs://chuspace-ci/node_modules_cache.zip', 'node_modules_cache.zip']
 
   - name: gcr.io/chuspace-210609/ci
     args: ['zip', '-r', 'node_modules_cache.zip', './node_modules', '-qq']
