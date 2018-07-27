@@ -41,7 +41,7 @@ spec:
           command:
             - '/cloud_sql_proxy'
             - '-dir=/cloudsql'
-            - '-instances=chuspace-210609:europe-west2:chuspace-staging=tcp:0.0.0.0:5433,chuspace-210609:europe-west2:chuspace-ci=tcp:0.0.0.0:5434'
+            - '-instances=chuspace-210609:europe-west2:chuspace-staging=tcp:0.0.0.0:5433,chuspace-210609:europe-west2:chuspace-test=tcp:0.0.0.0:5434'
             - '-credential_file=/secrets/cloudsql/credentials.json'
           ports:
             - name: web-db
