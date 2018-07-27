@@ -7,9 +7,6 @@ default: &default
 development:
   <<: *default
 
-test:
-  <<: *default
-
 staging:
   <<: *default
   username: <%= ENV['DB_USER'] %>
