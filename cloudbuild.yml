@@ -42,6 +42,7 @@ steps:
 
   - name: gcr.io/cloud-builders/docker
     args: ['build', '-t', 'gcr.io/chuspace-210609/chuspace-web', '.', '--cache-from', 'gcr.io/chuspace-210609/chuspace-web:latest']
+    timeout: 600s
 
   - name: gcr.io/cloud-builders/kubectl
     args: ['push', 'gcr.io/chuspace-210609/chuspace-web']
@@ -57,3 +58,5 @@ images:
 
 options:
   substitution_option: 'ALLOW_LOOSE'
+
+timeout: 1200s
