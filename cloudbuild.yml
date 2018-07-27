@@ -45,13 +45,23 @@ steps:
     timeout: 600s
 
   - name: gcr.io/cloud-builders/kubectl
-    args: ['set', 'image', 'deployment/chuspace-web', 'chuspace-web=chuspace-210609/chuspace-web']
+    entrypoint: bash
+    args:
+      - '-c'
+      - >-
+        [[ $BRANCH_NAME == "master" ]] &&
+          kubectl set image deployment/chuspace-web chuspace-web=chuspace-210609/chuspace-web
     env:
       - 'cloudsdk_compute_zone=europe-west2'
       - 'cloudsdk_container_cluster=chuspace'
 
   - name: gcr.io/cloud-builders/kubectl
-    args: ['set', 'image', 'deployment/chuspace-worker', 'chuspace-worker=chuspace-210609/chuspace-web']
+    entrypoint: bash
+    args:
+      - '-c'
+      - >-
+        [[ $BRANCH_NAME == "master" ]] &&
+          kubectl set image deployment/chuspace-worker chuspace-worker=chuspace-210609/chuspace-web
     env:
       - 'cloudsdk_compute_zone=europe-west2'
       - 'cloudsdk_container_cluster=chuspace'
