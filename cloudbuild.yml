@@ -61,6 +61,7 @@ steps:
       - 'REDIS_URL=redis://redis:6379'
       - 'DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true'
 
+  # Build image
   - name: gcr.io/cloud-builders/docker
     args: [
       'build',
