@@ -35,6 +35,7 @@ steps:
   - name: gcr.io/cloud-builders/gsutil
     args: ['cp', 'node_modules_cache.zip', 'gs://chuspace-ci/node_modules_cache.zip']
 
+  # Run rails stuff
   - name: gcr.io/chuspace-210609/ci
     args: ['bundle', 'exec', 'rails', 'db:migrate']
     env:
