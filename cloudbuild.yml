@@ -61,7 +61,12 @@ steps:
       - 'DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true'
 
   - name: gcr.io/cloud-builders/docker
-    args: ['build', '-t', 'gcr.io/chuspace-210609/chuspace-web:latest', '.', '--cache-from', 'gcr.io/chuspace-210609/chuspace-web:latest']
+    args: [
+      'build',
+      '-t', 'gcr.io/chuspace-210609/chuspace-web:latest',
+      '--cache-from', 'gcr.io/chuspace-210609/chuspace-web:latest',
+      '.'
+    ]
     timeout: 600s
 
   - name: gcr.io/cloud-builders/kubectl
