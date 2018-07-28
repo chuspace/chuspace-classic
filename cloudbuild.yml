@@ -45,6 +45,7 @@ steps:
       - 'REDIS_URL=redis://redis:6379'
       - 'DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true'
 
+  # Run tests
   - name: gcr.io/chuspace-210609/ci
     args: ['bundle', 'exec', 'rspec']
     env:
