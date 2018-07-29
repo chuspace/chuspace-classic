@@ -4,7 +4,7 @@ module Repos::Github
   extend ActiveSupport::Concern
 
   included do
-    validates :github_repo_id, :github_repo_full_name, presence: true, uniqueness: true
+    validates :github_repo_id, :github_repo_full_name, uniqueness: true
     after_destroy_commit :purge_github_repo!
 
     delegate :github_client, to: :user

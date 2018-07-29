@@ -12,13 +12,13 @@ module Git
 
     def call
       return unless repo.nil?
-      create_git_repo
+      init_git_repo
       user.create_repo!(name: user.name, git_repo: user_repo_dir)
     end
 
     private
 
-    def create_git_repo
+    def init_git_repo
       Rugged::Repository.init_at(user_repo_dir.to_s, :bare)
     end
     
