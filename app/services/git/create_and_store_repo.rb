@@ -13,7 +13,7 @@ module Git
     def call
       return unless repo.nil?
       create_git_repo
-      user.create_repo!(name: user.nickname, git_repo: user_repo_dir)
+      user.create_repo!(name: user.name, git_repo: user_repo_dir)
     end
 
     private
