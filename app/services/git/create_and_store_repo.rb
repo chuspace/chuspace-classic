@@ -6,27 +6,25 @@ module Git
 
     attr_reader :repo, :user
 
-    def initialize(user:)
+    def initialize(user:, repo:)
       @user = user
+      @repo = repo
     end
 
     def call
-      init_repo
-      push_to_bucket
+      return unless repo.nil?
+      create_git_repo
+      repo.update!(git_repo: user_repo_dir)
     end
 
     private
 
-    def init_repo
-      return unless repo.nil?
-      
-      Dir.mktmpdir(['chuspace-git', user.id]) do |temp_dir|
-        @repo ||= Rugged::Repository.init_at(temp_dir, :bare)
-      end
+    def create_git_repo
+      Rugged::Repository.init_at(user_repo_dir.to_s, :bare)
     end
-
-    def push_to_bucket
-      user.repo.attach(repo)
+    
+    def user_repo_dir
+      @git_dir ||= Pathname.new('/volumes/git').join(user.id, repo.id).tap(&:mkpath)
     end
   end
 end
