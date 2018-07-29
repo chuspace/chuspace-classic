@@ -2,9 +2,9 @@
 
 module Git
   class CreateAndStoreRepo
-    includes Service
+    include Service
 
-    attr_reader :repo
+    attr_reader :repo, :user
 
     def initialize(user:)
       @user = user

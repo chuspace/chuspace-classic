@@ -20,8 +20,6 @@ class User < ApplicationRecord
 
   before_validation :normalize_email_and_nickname
 
-  after_create :init_git_repo
-
   def to_param
     nickname
   end
