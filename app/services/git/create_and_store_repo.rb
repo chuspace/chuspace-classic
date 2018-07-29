@@ -27,7 +27,7 @@ module Git
     end
 
     def git_storage_dir
-      @git_storage_dir ||= ENV.fetch('GIT_STORAGE_DIR') { Dir.mktmpdir }
+      @git_storage_dir ||= Pathname.new(ENV.fetch('GIT_STORAGE_DIR') { Dir.mktmpdir })
     end
   end
 end
