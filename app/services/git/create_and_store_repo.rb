@@ -23,7 +23,7 @@ module Git
     end
     
     def user_repo_dir
-      @user_repo_dir ||= git_storage_dir.join(user.id).tap(&:mkpath)
+      @user_repo_dir ||= git_storage_dir.join("#{user.id}.git").tap(&:mkpath)
     end
 
     def git_storage_dir
