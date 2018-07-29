@@ -32,8 +32,4 @@ class User < ApplicationRecord
       self.email = self.email&.downcase&.strip
       self.nickname = self.nickname&.downcase&.strip
     end
-
-    def init_git_repo
-      Git::CreateAndStoreRepo.call(user: self)
-    end
 end
