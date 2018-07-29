@@ -12,7 +12,6 @@ class User < ApplicationRecord
             format: { with: /\A[a-z\d][a-z\d-]*[a-z\d]\z/i }
 
   has_one_attached :avatar
-  has_one_attached :repo
   has_secure_token :auth_token
 
   has_one :repo, dependent: :destroy

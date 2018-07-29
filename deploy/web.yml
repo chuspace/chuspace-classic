@@ -59,6 +59,8 @@ spec:
           volumeMounts:
             - name: cloud-storage-credentials
               mountPath: /secrets/cloud-storage
+            - name: git-storage
+              mountPath: /volumes/git
       containers:
         - name: chuspace-web
           image: gcr.io/chuspace-210609/chuspace-web
@@ -111,10 +113,16 @@ spec:
           volumeMounts:
             - name: cloud-storage-credentials
               mountPath: /secrets/cloud-storage
+            - name: git-storage
+              mountPath: /volumes/git
       volumes:
         - name: cloud-storage-credentials
           secret:
             secretName: cloud-storage-credentials
+        - name: git-storage
+          persistentVolumeClaim:
+            claimName: git-storage
+
 
 ---
 
@@ -164,7 +172,12 @@ spec:
           volumeMounts:
             - name: cloud-storage-credentials
               mountPath: /secrets/cloud-storage
+            - name: git-storage
+              mountPath: /volumes/git
       volumes:
         - name: cloud-storage-credentials
           secret:
             secretName: cloud-storage-credentials
+        - name: git-storage
+          persistentVolumeClaim:
+            claimName: git-storage
