@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if Rails.env.staging? || Rails.env.production?
   if ENV['RAILS_LOG_TO_STDOUT'].present?
     config.lograge.enabled = true

@@ -15,12 +15,6 @@ spec:
       secretName: ssl-certs
 
   rules:
-    - host: ci.chuspace.com
-      http:
-        paths:
-          - backend:
-              serviceName: ci-server
-              servicePort: 80
     - host: staging.chuspace.com
       http:
         paths:
