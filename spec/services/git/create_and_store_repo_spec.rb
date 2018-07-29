@@ -5,7 +5,7 @@ RSpec.describe Git::CreateAndStoreRepo do
   subject { described_class.call(user: user) }
 
   it 'should create a bare git repo in a temporary location' do
-    expect(subject.repo).to be_nil
+    expect(subject.repo.git_repo).to match(user.id)
   end
 
   it 'should attach that repo to the user' do

@@ -6,15 +6,14 @@ module Git
 
     attr_reader :repo, :user
 
-    def initialize(user:, repo:)
+    def initialize(user:)
       @user = user
-      @repo = repo
     end
 
     def call
       return unless repo.nil?
       create_git_repo
-      repo.update!(git_repo: user_repo_dir)
+      user.create_repo!(name: user.nickname, git_repo: user_repo_dir)
     end
 
     private
@@ -24,7 +23,11 @@ module Git
     end
     
     def user_repo_dir
-      @git_dir ||= Pathname.new('/volumes/git').join(user.id, repo.id).tap(&:mkpath)
+      @user_repo_dir ||= git_storage_dir.join(user.id).tap(&:mkpath)
+    end
+
+    def git_storage_dir
+      @git_storage_dir ||= ENV.fetch('GIT_STORAGE_DIR') { Dir.mktmpdir }
     end
   end
 end
