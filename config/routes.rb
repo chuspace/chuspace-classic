@@ -14,4 +14,11 @@ Rails.application.routes.draw do
   resources :posts
 
   get '/:nickname', to: 'users#show', as: :profile
+
+  namespace 'graphql' do
+    post '/', to: 'graphql#execute'
+    if Rails.env.development?
+      mount GraphiQL::Rails::Engine, at: '/editor', graphql_path: '/graphql'
+    end
+  end
 end
