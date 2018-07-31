@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-class Types::Base::BaseEnum < GraphQL::Schema::Enum
+class Types::Base::Enum < GraphQL::Schema::Enum
 end
