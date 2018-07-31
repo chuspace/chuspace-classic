@@ -16,9 +16,10 @@ Rails.application.routes.draw do
   get '/:nickname', to: 'users#show', as: :profile
 
   namespace 'graphql' do
-    post '/', to: 'graphql#execute'
+    post '/', to: 'query#execute'
     if Rails.env.development?
-      mount GraphiQL::Rails::Engine, at: '/editor', graphql_path: '/graphql'
+      get '/editor', to: 'editor#index'
+      get '/schema', to: 'query#schema'
     end
   end
 end
