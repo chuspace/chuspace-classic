@@ -18,16 +18,16 @@ module Git
 
     private
 
-    def init_git_repo
-      Rugged::Repository.init_at(user_repo_dir.to_s, :bare)
-    end
-    
-    def user_repo_dir
-      @user_repo_dir ||= git_storage_dir.join("#{user.id}.git").tap(&:mkpath)
-    end
+      def init_git_repo
+        Rugged::Repository.init_at(user_repo_dir.to_s, :bare)
+      end
 
-    def git_storage_dir
-      @git_storage_dir ||= Pathname.new(ENV.fetch('GIT_STORAGE_DIR') { Dir.mktmpdir })
-    end
+      def user_repo_dir
+        @user_repo_dir ||= git_storage_dir.join("#{user.id}.git").tap(&:mkpath)
+      end
+
+      def git_storage_dir
+        @git_storage_dir ||= Pathname.new(ENV.fetch('GIT_STORAGE_DIR') { Dir.mktmpdir })
+      end
   end
 end
