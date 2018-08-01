@@ -5,7 +5,7 @@ class Graphql::QueryController < Graphql::BaseController
     variables = ensure_hash(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
-    result = ChuspaceSchema.execute(query, variables: variables)
+    result = ApplicationSchema.execute(query, variables: variables)
     render json: result
   rescue => e
     raise e unless Rails.env.development?

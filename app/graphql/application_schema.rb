@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ChuspaceSchema < GraphQL::Schema
+class ApplicationSchema < GraphQL::Schema
   mutation(Types::MutationType)
   query(Types::QueryType)
 
@@ -16,10 +16,10 @@ class ChuspaceSchema < GraphQL::Schema
   def self.resolve_type(type, obj, ctx)
     class_name = obj.class.name
 
-    custom_resolved_type = ChuspaceSchema.types.values.find do |value|
+    custom_resolved_type = ApplicationSchema.types.values.find do |value|
       value.metadata[:resolves_to_class_names].try(:include?, class_name)
     end
 
-    custom_resolved_type || ChuspaceSchema.types.fetch(class_name)
+    custom_resolved_type || ApplicationSchema.types.fetch(class_name)
   end
 end
