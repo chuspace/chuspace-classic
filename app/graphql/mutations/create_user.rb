@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class Mutations::Users::Create < ApplicationMutation
-  return_field :user, Types::Api::UserType
+class Mutations::CreateUser < ApplicationMutation
+  field :user, Types::UserType, null: true
 
-  input_field :name, !types.String
-  input_field :nickname, !types.String
-  input_field :email, !types.String
+  argument :name, String, required: true
+  argument :nickname, String, required: true
+  argument :email, String, required: true
 
   def resolve(**inputs)
     user = User.new(inputs)

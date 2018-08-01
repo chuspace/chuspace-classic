@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class Types::Api::ViewerType < ApplicationObject
-  field :current_user, Types::Api::UserType, null: false
+class Types::ViewerType < ApplicationObject
+  field :current_user, Types::UserType, null: false
 
   def current_user
     Current.user.presence

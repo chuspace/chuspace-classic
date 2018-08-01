@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 class Types::MutationType < ApplicationObject
-  field :create_post, Mutations::Posts::Create.field
-  field :magic_login, Mutations::MagicLogins::Create.field
-  field :check_nickname, Mutations::Nicknames::Check.field
-  field :login, Mutations::Users::Login.field
-  field :create_user, Mutations::Users::Create.field
+  field :magic_login, mutation: Mutations::CreateMagicLogin
+  field :login, mutation: Mutations::CreateLogin
+
+  field :create_user, mutation: Mutations::CreateUser
+  field :create_post, mutation: Mutations::CreatePost
+
+  field :check_nickname, mutation: Mutations::CheckNickname
 end

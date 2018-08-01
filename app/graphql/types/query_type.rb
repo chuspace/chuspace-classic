@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Types::QueryType < ApplicationObject
-  field :viewer, Types::Api::ViewerType, 'Current viewer', null: true
+  field :viewer, Types::ViewerType, 'Current viewer', null: true
 
   def viewer
     Viewer::STATIC

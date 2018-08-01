@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class Mutations::Posts::Create < ApplicationMutation
-  return_field :post, Types::PostType
+class Mutations::CreatePost < ApplicationMutation
+  field :post, Types::PostType, null: true
 
-  input_field :body, !types.String
-  input_field :commit, !types.String
-  input_field :title, !types.String
+  argument :body, String, required: true
+  argument :commit, String, required: true
+  argument :title, String, required: true
 
   def resolve(**inputs)
     post = Current.user.posts.create(

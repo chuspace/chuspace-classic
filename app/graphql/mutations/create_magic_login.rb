@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class Mutations::MagicLogins::Create < ApplicationMutation
-  return_field :user, Types::Api::UserType
-  input_field :auth_token, !types.String
+class Mutations::CreateMagicLogin < ApplicationMutation
+  argument :auth_token, String, required: true
+  field :user, Types::UserType, null: true
 
   def resolve(**inputs)
     user = User.find_by(auth_token: params[:token])
@@ -11,5 +11,7 @@ class Mutations::MagicLogins::Create < ApplicationMutation
       user.regenerate_auth_token
       login(user) if user
     end
+
+    { user: user }
   end
 end

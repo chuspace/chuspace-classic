@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class Mutations::Nicknames::Check < ApplicationMutation
-  return_field :user, Types::Api::UserType
-  input_field :nickname, !types.String
+class Mutations::CheckNickname < ApplicationMutation
+  field :user, Types::UserType, null: false
+  argument :nickname, String, required: true
 
   def resolve(**inputs)
     user = User.find_by(nickname: inputs[:nickname])

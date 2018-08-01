@@ -23,3 +23,5 @@ class ApplicationSchema < GraphQL::Schema
     custom_resolved_type || ApplicationSchema.types.fetch(class_name)
   end
 end
+
+ApplicationSchema.graphql_definition
