@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe Git::CreateAndStoreRepo do
   let(:user) { create(:user) }
-  subject { described_class.call(user: user) }
 
-  it 'should create a bare git repo in a temporary location' do
-    expect(subject.repo.git_repo).to match(user.id)
+  before do
+    described_class.call(user: user)
+    user.repo.reload
   end
 
-  it 'should attach that repo to the user' do
-    expect(subject.user.repo).to be_attached
+  it 'should have a persistent repo that can be interacted with' do
+    expect(Rugged::Repository.new(user.repo.git_repo)).to be_empty
   end
 end
