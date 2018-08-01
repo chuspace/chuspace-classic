@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Types::Api::UserType < Types::Base::Object
+class Types::Api::UserType < ApplicationObject
   include Rails.application.routes.url_helpers
 
   field :name, String, null: false

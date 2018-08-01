@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Mutations::Users::Create < Mutations::Base::Mutation
+class Mutations::Users::Create < ApplicationMutation
   return_field :user, Types::Api::UserType
 
   input_field :name, !types.String

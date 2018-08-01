@@ -1,4 +1,6 @@
-class Mutations::Posts::Create < GraphQL::Schema::RelayClassicMutation
+# frozen_string_literal: true
+
+class Mutations::Posts::Create < ApplicationMutation
   return_field :post, Types::PostType
 
   input_field :body, !types.String

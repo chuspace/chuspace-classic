@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Graphql::BaseController < ActionController::API
   include AbstractController::Translation
   include ActionController::Cookies

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Mutations::Nicknames::Check < Mutations::Base::Mutation
+class Mutations::Nicknames::Check < ApplicationMutation
   return_field :user, Types::Api::UserType
   input_field :nickname, !types.String
 

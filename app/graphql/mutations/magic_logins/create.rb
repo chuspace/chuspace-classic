@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Mutations::MagicLogins::Create < Mutations::Base::Mutation
+class Mutations::MagicLogins::Create < ApplicationMutation
   return_field :user, Types::Api::UserType
   input_field :auth_token, !types.String
 
