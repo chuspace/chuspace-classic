@@ -1,4 +1,6 @@
-class Mutations::Users::Create < GraphQL::Schema::RelayClassicMutation
+# frozen_string_literal: true
+
+class Mutations::Users::Create < Mutations::Base::Mutation
   return_field :user, Types::Api::UserType
 
   input_field :name, !types.String
@@ -9,6 +11,7 @@ class Mutations::Users::Create < GraphQL::Schema::RelayClassicMutation
     user = User.new(inputs)
 
     if user.valid? && user.save
+      Git::CreateAndStoreRepo.call(user: user)
       UserMailer.with(user: user).send_magic_login.deliver_later
       { user: user }
     else
