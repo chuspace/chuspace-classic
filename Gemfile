@@ -49,11 +49,7 @@ gem 'figaro'
 gem 'react-rails'
 gem 'mini_racer'
 
-# Github
-gem 'octokit'
-
-# HTTP requests and caching
-gem 'faraday'
+# HTTP requests
 gem 'typhoeus'
 
 # oAuth
@@ -65,6 +61,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 # API
 gem 'graphql'
+
+# Error reporting and logging
 gem 'lograge'
 gem 'sentry-raven'
 

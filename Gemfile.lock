@@ -258,8 +258,6 @@ GEM
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
-    octokit (4.9.0)
-      sawyer (~> 0.8.0, >= 0.5.3)
     oj (3.6.4)
     omniauth (1.8.1)
       hashie (>= 3.4.6, < 3.6.0)
@@ -334,9 +332,6 @@ GEM
       ffi (~> 1.9)
     ruby_dep (1.5.0)
     rugged (0.27.2)
-    sawyer (0.8.1)
-      addressable (>= 2.3.5, < 2.6)
-      faraday (~> 0.8, < 1.0)
     searchkick (3.1.0)
       activemodel (>= 4.2)
       elasticsearch (>= 5)
@@ -399,7 +394,6 @@ DEPENDENCIES
   byebug
   database_cleaner
   factory_bot_rails
-  faraday
   figaro
   foreman
   google-cloud-storage
@@ -410,7 +404,6 @@ DEPENDENCIES
   lograge
   mini_racer
   oauth2 (>= 1.4.0)
-  octokit
   oj
   omniauth-github (>= 1.3.0)
   pg (>= 1.x)
