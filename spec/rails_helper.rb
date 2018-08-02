@@ -11,11 +11,13 @@ require 'rspec/rails'
 require 'shoulda/matchers'
 require 'database_cleaner'
 require 'simplecov'
+require 'simplecov-lcov'
+require 'undercover'
 
+SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
+SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
 SimpleCov.start 'rails' do
-  add_filter '/bin/'
-  add_filter '/db/'
-  add_filter '/spec/'
+  add_filter(/^\/spec|bin|db|config|views|javascript|lib\//)
 end
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
