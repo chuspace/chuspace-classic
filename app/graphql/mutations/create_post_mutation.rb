@@ -8,13 +8,17 @@ class Mutations::CreatePostMutation < ApplicationMutation
   argument :commit, String, 'The commit message', required: true
 
   def resolve(**inputs)
-    post = Current.user.posts.create(
-      body: params[:markdown],
+    post = Current.user.posts.build(
+      body: inputs[:markdown],
       repo: Current.user.repo,
       commit: 'Add another example',
-      title: params[:title]
+      title: inputs[:title]
     )
 
-    { post: post }
+    if post.save
+      { post: post }
+    else
+      { post: nil, errors: post.graphql_validation_errors }
+    end
   end
 end
