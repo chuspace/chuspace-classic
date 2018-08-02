@@ -7,6 +7,7 @@ class SessionsController < ApplicationController
   def github
     user = User.from_github(auth_hash)
     if user
+      Git::CreateAndStoreRepo.call(user: user)
       login(user) if user
       redirect_to root_path
     else
