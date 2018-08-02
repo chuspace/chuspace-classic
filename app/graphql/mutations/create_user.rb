@@ -15,7 +15,7 @@ class Mutations::CreateUser < ApplicationMutation
       UserMailer.with(user: user).send_magic_login.deliver_later
       { user: user }
     else
-      { errors: user.api_validation_errors, user: nil }
+      { errors: user.graphql_validation_errors, user: nil }
     end
   end
 end

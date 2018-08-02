@@ -3,11 +3,14 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
-  def api_validation_errors
-    errors.messages.each_with_object({}) do |error, hash|
-      key, messages = error
-      hash[key] = messages.to_sentence
+  def graphql_validation_errors
+    errors.messages.map do |field, errors|
+      OpenStruct.new(field: field.to_s, messages: errors.to_sentence)
     end
+  end
+
+  def errors_for(field, message)
+    [OpenStruct.new(field: field, messages: message)]
   end
 
   def valid_attributes?(*attributes)

@@ -2,4 +2,5 @@
 
 module ApplicationInterface
   include GraphQL::Schema::Interface
+  field :errors, [Types::ValidationErrorType], null: false
 end
