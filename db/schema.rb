@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_29_190100) do
+ActiveRecord::Schema.define(version: 2018_08_02_101410) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
@@ -39,7 +40,7 @@ ActiveRecord::Schema.define(version: 2018_07_29_190100) do
 
   create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
-    t.string "slug"
+    t.citext "slug"
     t.text "body"
     t.uuid "user_id"
     t.uuid "repo_id"
@@ -58,7 +59,7 @@ ActiveRecord::Schema.define(version: 2018_07_29_190100) do
 
   create_table "repos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
-    t.string "slug", null: false
+    t.citext "slug", null: false
     t.string "description"
     t.uuid "user_id", null: false
     t.datetime "created_at", null: false
@@ -70,14 +71,11 @@ ActiveRecord::Schema.define(version: 2018_07_29_190100) do
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
-    t.string "nickname", null: false
+    t.citext "nickname", null: false
     t.string "avatar"
     t.string "auth_token", null: false
     t.text "bio"
     t.string "company"
-    t.string "github_nickname"
-    t.bigint "github_uid"
-    t.string "github_access_token"
     t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
@@ -85,9 +83,10 @@ ActiveRecord::Schema.define(version: 2018_07_29_190100) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "github_info", default: "{}"
     t.index ["auth_token"], name: "index_users_on_auth_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["github_uid"], name: "index_users_on_github_uid", unique: true
+    t.index ["github_info"], name: "index_users_on_github_info", using: :gin
     t.index ["nickname"], name: "index_users_on_nickname", unique: true
   end
 

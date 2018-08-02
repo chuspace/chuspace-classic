@@ -10,7 +10,7 @@ module Users
       end
 
       def from_github(auth)
-        where(github_uid: auth.uid).first_or_initialize.tap do |user|
+        where(email: auth.info.email).first_or_initialize.tap do |user|
           # Required
           user.email = auth.info.email
           user.name = auth.info.name
@@ -19,6 +19,7 @@ module Users
           user.bio = auth.extra.raw_info.bio
           user.company = auth.extra.raw_info.company
           # Github
+          user.github_info = auth.info
           user.github_uid = auth.uid
           user.github_nickname = auth.info.nickname
           user.github_access_token = auth.credentials.token
