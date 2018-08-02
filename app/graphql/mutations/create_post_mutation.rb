@@ -8,12 +8,8 @@ class Mutations::CreatePostMutation < ApplicationMutation
   argument :commit, String, 'The commit message', required: true
 
   def resolve(**inputs)
-    post = Current.user.posts.build(
-      body: inputs[:markdown],
-      repo: Current.user.repo,
-      commit: 'Add another example',
-      title: inputs[:title]
-    )
+    post = Current.user.posts.build(inputs)
+    post.repo = Current.user.repo
 
     if post.save
       { post: post }

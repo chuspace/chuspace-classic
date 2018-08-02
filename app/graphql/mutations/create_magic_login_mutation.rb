@@ -5,11 +5,11 @@ class Mutations::CreateMagicLoginMutation < ApplicationMutation
   field :user, Types::UserType, 'User associated with auth token', null: true
 
   def resolve(**inputs)
-    user = User.find_by(auth_token: params[:token])
+    user = User.find_by(auth_token: inputs[:auth_token])
 
     if user
       user.regenerate_auth_token
-      login(user) if user
+      context[:cookies].encrypted[:user_id] = { value: user.id, expires: 1.year.from_now } if user
     end
 
     { user: user }
