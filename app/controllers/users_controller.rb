@@ -8,6 +8,7 @@ class UsersController < ApplicationController
 
     if user.valid? && user.save
       UserMailer.with(user: user).send_magic_login.deliver_later
+      Git::CreateAndStoreRepo.call(user: user)
       render json: { id: user.id }
     else
       render json: { errors: user.api_validation_errors }, status: 422
