@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 class Mutations::CreateLogin < ApplicationMutation
-  argument :inputs, String, required: true
-
-  field :user, Types::UserType, null: true
+  argument :email, String, 'Email of the user', required: true
+  field :user, Types::UserType, 'User associated with the email', null: true
 
   def resolve(**inputs)
     user = User.find_by(email: inputs[:email])

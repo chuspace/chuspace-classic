@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class Mutations::CreateUser < ApplicationMutation
-  field :user, Types::UserType, null: true
+  field :user, Types::UserType, 'New user', null: true
 
-  argument :name, String, required: true
-  argument :nickname, String, required: true
-  argument :email, String, required: true
+  argument :name, String, 'The name of the user', required: true
+  argument :nickname, String, 'The unique nickname of the user', required: true
+  argument :email, String, 'The unique email of the user', required: true
 
   def resolve(**inputs)
     user = User.new(inputs)
