@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Mutations::CreatePost < ApplicationMutation
+class Mutations::CreatePostMutation < ApplicationMutation
   field :post, Types::PostType, 'New post', null: true
 
   argument :title, String, 'The title of the post', required: true

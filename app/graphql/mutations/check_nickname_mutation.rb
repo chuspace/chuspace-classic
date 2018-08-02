@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Mutations::CheckNickname < ApplicationMutation
+class Mutations::CheckNicknameMutation < ApplicationMutation
   field :available, Boolean, 'Returns if the nickname is available', null: false
   argument :nickname, String, 'Nickname of the user',  required: true
 

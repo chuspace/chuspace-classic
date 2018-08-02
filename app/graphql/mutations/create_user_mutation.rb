@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Mutations::CreateUser < ApplicationMutation
+class Mutations::CreateUserMutation < ApplicationMutation
   field :user, Types::UserType, 'New user', null: true
 
   argument :name, String, 'The name of the user', required: true

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Mutations::CreateMagicLogin < ApplicationMutation
+class Mutations::CreateMagicLoginMutation < ApplicationMutation
   argument :auth_token, String, 'Auth token for a user', required: true
   field :user, Types::UserType, 'User associated with auth token', null: true
 

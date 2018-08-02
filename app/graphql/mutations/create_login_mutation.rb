@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Mutations::CreateLogin < ApplicationMutation
+class Mutations::CreateLoginMutation < ApplicationMutation
   argument :email, String, 'Email of the user', required: true
   field :user, Types::UserType, 'User associated with the email', null: true
 
