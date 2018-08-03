@@ -44,7 +44,7 @@ steps:
       - 'DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true'
 
   - name: gcr.io/chuspace-210609/ci
-    args: ['bundle', 'exec', 'undercover', '--compare', 'master']
+    args: ['bundle', 'exec', 'undercover']
     env:
       - 'BUNDLE_PATH=./vendor/cache'
       - 'DATABASE_URL=$_DATABASE_URL'
