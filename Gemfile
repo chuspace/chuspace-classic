@@ -97,6 +97,7 @@ group :development do
   gem 'spring-watcher-listen'
   # Code linting
   gem 'rubocop', require: false
+  gem 'undercover', require: false
   # Security
   gem 'brakeman', require: false
   # Better messages
@@ -107,6 +108,7 @@ end
 
 group :test do
   gem 'simplecov', require: false
+  gem 'simplecov-lcov', require: false
   gem 'shoulda-matchers', github: 'chuspace/shoulda-matchers', branch: 'rails-6-compat'
   gem 'rails-controller-testing'
 end
