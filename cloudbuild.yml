@@ -1,7 +1,4 @@
 steps:
-  - name: gcr.io/cloud-builders/git
-    args: ['fetch', '--unshallow']
-
   - name: gcr.io/chuspace-210609/ci
     args: ['bundle', 'install', '--jobs', '3', '--retry', '3', '--without', 'development,production']
     env:
@@ -40,15 +37,6 @@ steps:
   # Run tests
   - name: gcr.io/chuspace-210609/ci
     args: ['bundle', 'exec', 'rspec']
-    env:
-      - 'BUNDLE_PATH=./vendor/cache'
-      - 'DATABASE_URL=$_DATABASE_URL'
-      - 'REDIS_URL=redis://redis:6379'
-      - 'DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true'
-
-  # Check code coverage
-  - name: gcr.io/chuspace-210609/ci
-    args: ['bundle', 'exec', 'undercover']
     env:
       - 'BUNDLE_PATH=./vendor/cache'
       - 'DATABASE_URL=$_DATABASE_URL'
