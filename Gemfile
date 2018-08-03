@@ -49,11 +49,7 @@ gem 'figaro'
 gem 'react-rails'
 gem 'mini_racer'
 
-# Github
-gem 'octokit'
-
-# HTTP requests and caching
-gem 'faraday'
+# HTTP requests
 gem 'typhoeus'
 
 # oAuth
@@ -64,9 +60,9 @@ gem 'omniauth-github', '>= 1.3.0'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 # API
-gem 'fast_jsonapi'
+gem 'graphql'
 
-# Logging
+# Error reporting and logging
 gem 'lograge'
 gem 'sentry-raven'
 
@@ -83,6 +79,8 @@ group :development, :test do
   # Testing
   gem 'database_cleaner'
   gem 'factory_bot_rails'
+
+  # Rspec
   %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
     gem lib, github: "rspec/#{lib}"
   end

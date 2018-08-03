@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Post < ApplicationRecord
-  include Posts::Github, Sluggable
+  include Sluggable
   sluggable :title
 
   belongs_to :user

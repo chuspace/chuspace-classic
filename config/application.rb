@@ -22,8 +22,13 @@ module Chuspace
     config.load_defaults 6.0
     config.generators.system_tests = nil
 
+    # Autoloaded paths
+    config.autoload_paths << "#{config.root}/app/graphql/concerns"
+
+    # Background job adapter
     config.active_job.queue_adapter = :sidekiq
 
+    # Reduce generator noise
     config.generators do |generate|
       generate.orm :active_record, primary_key_type: :uuid
       generate.helper false

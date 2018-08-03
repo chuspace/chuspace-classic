@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  include Users::Registrable, Users::Github
+  include Users::Registrable
 
   validates :email, presence: true, uniqueness: true, email: true
   validates :name, presence: true
@@ -16,6 +16,8 @@ class User < ApplicationRecord
 
   has_one :repo, dependent: :destroy
   has_many :posts, dependent: :destroy
+
+  store_accessor :github_info, :github_nickname, :github_uid, :github_access_token
 
   before_validation :normalize_email_and_nickname
 
