@@ -1,4 +1,4 @@
 <div class='home'>
   <%= render 'banner' unless Current.user %>
-  <%= react_component 'posts/index', { posts: @posts }, { prerender: true } %>
+  <%= render 'posts/list' %>
 </div>

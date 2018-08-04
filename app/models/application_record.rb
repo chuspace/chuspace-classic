@@ -3,7 +3,7 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
-  def graphql_validation_errors
+  def api_validation_errors
     errors.messages.map do |field, errors|
       OpenStruct.new(field: field.to_s, messages: errors.to_sentence)
     end

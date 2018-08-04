@@ -2,7 +2,17 @@
 
 class SessionsController < ApplicationController
   before_action :failure, only: :github, if: :malformed_auth?
-  skip_before_action :authenticate, on: :github
+  skip_before_action :authenticate, on: %i[create github]
+
+  def create
+    user = User.find_by(email: inputs[:email])
+
+    if user
+      UserMailer.with(user: user).send_magic_login.deliver_later
+    else
+      render json: { errors: { email: I18n.t('.create_login.not_found') } }
+    end
+  end
 
   def github
     user = User.from_github(auth_hash)

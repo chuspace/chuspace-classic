@@ -1,17 +1,19 @@
 // Support component names relative to this directory:
 
+import { Application } from 'stimulus'
+import { definitionsFromContext } from 'stimulus/webpack-helpers'
+
 require('babel-polyfill')
 var Rails = require('rails-ujs')
-var componentRequireContext = require.context('src/components', true)
-var ReactRailsUJS = require('react_ujs')
 var Turbolinks = require('turbolinks')
 
-require('tachyons/css/tachyons')
-require('emoji-mart/css/emoji-mart.css')
+require('tachyons-sass/tachyons')
 require('styles/global')
 require('styles/application')
 
+const application = Application.start()
+const context = require.context('../src/controllers', true, /\.js$/)
+application.load(definitionsFromContext(context))
+
 Rails.start()
 Turbolinks.start()
-ReactRailsUJS.useContext(componentRequireContext)
-ReactRailsUJS.detectEvents()

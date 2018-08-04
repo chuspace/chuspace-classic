@@ -5,9 +5,9 @@
     </div>
 
     <% if Current.user.present? %>
-      <%= react_component 'header/user', { name: Current.user.name, avatar: url_for(Current.user.avatar.variant(resize_to_fit: [32, 32])), logout_path: logout_path, user_path: profile_path(Current.user) }, { prerender: true }  %>
+      <%= render 'header/user'  %>
     <% else %>
-      <%= react_component 'header/guest', { registrations_path: users_path, login_path: login_path, check_nicknames_path: check_nicknames_path }, { prerender: true } %>
+      <%= render 'header/guest'  %>
     <% end %>
   </nav>
 </header>

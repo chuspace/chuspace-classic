@@ -1,0 +1,6 @@
+<%= content_tag :dialog, class: "strong", id: id || 'modal' do -%>
+  <div class='modal-body tc w-70 center'>
+    <%= octicon "x", class: 'modal-close absolute top-1 right-1 pointer', "aria-label": "close" %>
+    <div><%= yield %></div>
+  </div>
+<% end %>
