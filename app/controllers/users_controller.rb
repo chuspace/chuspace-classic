@@ -14,7 +14,7 @@ class UsersController < ApplicationController
       UserMailer.with(user: user).send_magic_login.deliver_later
       redirect_to root_path
     else
-      render json: { errors: user.graphql_validation_errors, user: nil }
+      render json: { errors: user.api_validation_errors, user: nil }
     end
   end
 

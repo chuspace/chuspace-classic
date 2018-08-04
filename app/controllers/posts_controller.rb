@@ -18,7 +18,7 @@ class PostsController < ApplicationController
     if post.save
       redirect_to post_path(post)
     else
-      render json: { errors: post.graphql_validation_errors }
+      render json: { errors: post.api_validation_errors }
     end
   end
 
