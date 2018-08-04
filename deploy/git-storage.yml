@@ -16,7 +16,7 @@ spec:
   volumeMode: Filesystem
   storageClassName: ssd
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
     - ReadOnlyMany
   resources:
     requests:
