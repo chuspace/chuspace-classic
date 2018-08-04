@@ -58,7 +58,6 @@ gem 'octicons_helper'
 
 # Error reporting and logging
 gem 'lograge'
-gem 'sentry-raven'
 
 # Git
 gem 'rugged'
