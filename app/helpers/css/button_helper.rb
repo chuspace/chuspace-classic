@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Css
   module ButtonHelper
     def button_css_classes

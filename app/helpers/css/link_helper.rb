@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Css
   module LinkHelper
     def link_css_classes

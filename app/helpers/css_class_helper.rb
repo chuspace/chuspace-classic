@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CssClassHelper
   def class_for(tag, options = { type: nil, additional: '' })
     type = options[:type]&.to_sym
