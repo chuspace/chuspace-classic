@@ -64,7 +64,6 @@ gem 'graphql'
 
 # Error reporting and logging
 gem 'lograge'
-gem 'sentry-raven'
 
 # Git
 gem 'rugged'
