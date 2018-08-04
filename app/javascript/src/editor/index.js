@@ -6,7 +6,6 @@ import { editorPlugins, editorSchema } from 'editor/schema'
 
 import { EditorState } from 'prosemirror-state'
 import { EditorView } from 'prosemirror-view'
-import React from 'react'
 import debounce from 'lodash/debounce'
 
 const parser = schema => {
@@ -29,12 +28,7 @@ const serializer = schema => {
   }
 }
 
-class Editor extends React.Component {
-  componentWillMount () {
-    this.parse = parser(editorSchema)
-    this.serialize = serializer(editorSchema)
-  }
-
+class Editor {
   onChange = debounce(
     value => {
       console.log(this.serialize(value))
@@ -44,7 +38,8 @@ class Editor extends React.Component {
   )
 
   constructor (props) {
-    super(props)
+    this.parse = parser(editorSchema)
+    this.serialize = serializer(editorSchema)
 
     this.state = {
       state: EditorState.create({
@@ -73,10 +68,6 @@ class Editor extends React.Component {
     this.view.updateState(state)
     this.setState({ state })
     this.onChange(state.doc.content)
-  }
-
-  render () {
-    return <div ref={this.createEditorView} />
   }
 }
 

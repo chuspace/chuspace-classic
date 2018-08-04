@@ -18,7 +18,7 @@ default: &default
     - .js
     - .jsx
     - .sass
-    - .module.sass
+    - .scss
     - .css
     - .png
     - .svg

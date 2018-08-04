@@ -8,8 +8,27 @@ class PostsController < ApplicationController
     @posts = Post.all.order(id: :desc)
   end
 
+  def new
+  end
+
+  def create
+    post = Current.user.posts.build(post_params)
+    post.repo = Current.user.repo
+
+    if post.save
+      redirect_to post_path(post)
+    else
+      render json: { errors: post.graphql_validation_errors }
+    end
+  end
+
   def show
     @post = Post.find_by(slug: params[:id])
     render component: 'posts/show', props: { body: @post.body }, prerender: true
   end
+
+  private
+    def post_params
+      params.permit(:title, :body, :commit)
+    end
 end

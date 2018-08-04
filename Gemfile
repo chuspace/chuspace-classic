@@ -45,10 +45,6 @@ gem 'sidekiq'
 # ENV
 gem 'figaro'
 
-# Server side rendering
-gem 'react-rails'
-gem 'mini_racer'
-
 # HTTP requests
 gem 'typhoeus'
 
@@ -58,9 +54,7 @@ gem 'omniauth-github', '>= 1.3.0'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
-
-# API
-gem 'graphql'
+gem 'octicons_helper'
 
 # Error reporting and logging
 gem 'lograge'

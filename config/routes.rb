@@ -14,12 +14,4 @@ Rails.application.routes.draw do
   resources :posts
 
   get '/:nickname', to: 'users#show', as: :profile
-
-  namespace 'graphql' do
-    post '/', to: 'query#execute'
-    if Rails.env.development?
-      get '/editor', to: 'editor#index'
-      get '/schema', to: 'query#schema'
-    end
-  end
 end

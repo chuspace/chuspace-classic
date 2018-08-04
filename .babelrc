@@ -8,13 +8,7 @@
         "useBuiltIns": "entry"
       }
     ],
-    "@babel/preset-flow",
-    [
-      "@babel/preset-react",
-      {
-        "useBuiltIns": true
-      }
-    ]
+    "@babel/preset-flow"
   ],
   "plugins": [
     [
@@ -33,7 +27,6 @@
       "@babel/plugin-transform-runtime",
       {
         "helpers": false,
-        "polyfill": false,
         "regenerator": true
       }
     ],

@@ -7,12 +7,10 @@
         authors and publications, applaud stories you love, and more.
       </p>
 
-      <%= react_component 'get-started/index',
-        {
-          registrations_path: users_path,
-          login_path: login_path,
-          check_nicknames_path: check_nicknames_path
-        }, { prerender: true }
+      <%= button_tag(
+          'Get Started',
+          class: class_for(:button, type: :green, additional: 'db hover-bg-white-80')
+        )
       %>
     </div>
   </div>

@@ -1,0 +1,28 @@
+<div className='login-actions'>
+  <h2 className='f2 lh-title'>Welcome back</h2>
+  <p className='intro f5 lh-copy'>
+    Sign in to access your personalized homepage, follow authors and topics
+    you love, and clap for stories that matter to you.
+  </p>
+  <div className='actions mt4'>
+    <LinkButton
+      className='center mb2 bg-white black'
+      title='Sign in with github'
+      href='/auth/github'
+    />
+    <LinkButton
+      className='center mb2 bg-white black'
+      title='Sign in with email'
+      href='#'
+      onClick={this.showForm}
+    />
+  </div>
+  <p className='mt4'>
+    No account?{' '}
+    <Link
+      className='dib dark-green bb b--dark-green pb1'
+      title='Join'
+      onClick={this.showRegistration}
+    />
+  </p>
+</div>
