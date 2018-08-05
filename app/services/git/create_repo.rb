@@ -8,6 +8,7 @@ module Git
 
     def initialize(user:)
       @user = user
+      @repo = user.repo
     end
 
     def call
