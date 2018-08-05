@@ -11,12 +11,12 @@
       autocomplete: 'email'
       placeholder: 'Enter email'
       autofocus: true
-      class:"input f6 ba b--light-green pa2 w-100 br2 db mb2 input-reset"
+      class: class_for(:input, type: :green, additional: 'db w-100')
     ) %>
 
     <%= submit_tag(
         'Submit',
-        class: 'pointer ba b--light-green pa2 br2 db mw5 no-underline outline-0 center bg-black white bn mt3'
+        class: class_for(:button, type: :bg_black, additional: 'w-100 db mw5 mt3')
       )
     %>
   <% end %>

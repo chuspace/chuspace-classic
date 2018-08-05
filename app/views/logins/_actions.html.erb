@@ -5,24 +5,11 @@
     you love, and clap for stories that matter to you.
   </p>
   <div className='actions mt4'>
-    <LinkButton
-      className='center mb2 bg-white black'
-      title='Sign in with github'
-      href='/auth/github'
-    />
-    <LinkButton
-      className='center mb2 bg-white black'
-      title='Sign in with email'
-      href='#'
-      onClick={this.showForm}
-    />
+    <%= link_to('Sign in with github', '/auth/github', class: class_for(:button, type: :bg_white)) %>
+    <%= link_to('Sign in with email', '/auth/github', class: class_for(:button, type: :bg_white, additional: 'mb2')) %>
   </div>
   <p className='mt4'>
     No account?{' '}
-    <Link
-      className='dib dark-green bb b--dark-green pb1'
-      title='Join'
-      onClick={this.showRegistration}
-    />
+    <%= link_to('Join', '#', class: class_for(:link, type: :green)) %>
   </p>
 </div>

@@ -5,41 +5,35 @@
     magic link to your inbox.
   </p>
 
-   <%= form_tag, class: 'form measure center w-60' do %>
-      <%= text_field_tag(
-        'name',
-        autocomplete: 'name'
-        placeholder: 'Full name'
-        autofocus: true
-        class:"input f6 ba b--light-green pa2 w-100 br2 db mb2 input-reset"
-      ) %>
+  <%= form_tag, class: 'form measure center w-60' do %>
+    <%= text_field_tag(
+      'name',
+      autocomplete: 'name'
+      placeholder: 'Full name'
+      autofocus: true
+      class: class_for(:input, type: :green, additional: 'db w-100')
+    ) %>
 
-      <%= text_field_tag(
-        'nickname',
-        autocomplete: 'nickname'
-        placeholder: 'Username'
-        class:"input f6 ba b--light-green pa2 w-100 br2 db mb2 input-reset"
-      ) %>
+    <%= text_field_tag(
+      'nickname',
+      autocomplete: 'nickname'
+      placeholder: 'Username'
+      class: class_for(:input, type: :green, additional: 'db w-100')
+    ) %>
 
-      <%= text_field_tag(
-        'email',
-        autocomplete: 'email'
-        placeholder: 'Email'
-        class:"input f6 ba b--light-green pa2 w-100 br2 db mb2 input-reset"
-        type: 'email'
-      ) %>
+    <%= text_field_tag(
+      'email',
+      autocomplete: 'email'
+      placeholder: 'Email'
+      class: class_for(:input, type: :green, additional: 'db w-100')
+      type: 'email'
+    ) %>
 
-      <%= submit_tag(
-          'Submit',
-          class: 'pointer ba b--light-green pa2 br2 db mw5 no-underline outline-0 center bg-black white bn mt3'
-        )
-      %>
-    <% end %>
-
-  <a
-    class='black-90 center mt3 db no-underline f6 lh-copy'
-    href='#'
-  >
-    ← Go back
-  </a>
+    <%= submit_tag(
+        'Submit',
+        class: class_for(:button, type: :bg_black, additional: 'w-100 db mw5 mt3')
+      )
+    %>
+  <% end %>
+  <%= link_to ('← Go back', '#', class: class_for(:link, additional: 'db center')) %>
 </div>

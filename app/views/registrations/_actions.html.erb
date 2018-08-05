@@ -5,11 +5,11 @@
     authors and publications, applaud stories you love, and more.
   </p>
   <div class='actions mt4'>
-    <%= link_to('Sign up with github', '/auth/github', class: 'ba b--light-green pointer pa2 br2 db mw5 no-underline outline-0 center mb2 bg-white black') %>
-    <%= link_to('Sign up with email', '/auth/github', class: 'ba b--light-green pointer pa2 br2 db mw5 no-underline outline-0 center bg-white black') %>
+    <%= link_to('Sign up with github', '/auth/github', class: class_for(:button, type: :green)) %>
+    <%= link_to('Sign up with email', '/auth/github', class: class_for(:button, type: :green)) %>
   </div>
   <p class='mt4'>
     Already have an account?
-    <%= link_to('Sign in', '/auth/github', class: 'black-90 no-underline pointer dib dark-green bb b--dark-green pb1') %>
+    <%= link_to('Sign in', '/auth/github', class: class_for(:link, type: :green)) %>
   </p>
 </div>

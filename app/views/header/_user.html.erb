@@ -1,27 +1,27 @@
-<div class='right-nav flex justify-between'>
+<%= flex_container styles: [:between] do %>
   <%= render partial: 'shared/avatar', locals: {
       url: url_for(Current.user.avatar.variant(resize_to_fit: [50, 50])),
       name: Current.user.name
     }
   %>
 
-   <ul class='nav-links ma0 top-arrow b--light-gray ba list pa4 pl0 pl4 shadow-5 br2'>
-      <li class='pb2'>
-        <%= link_to(
-            'Profile',
-            profile_path(Current.user),
-            class: 'black-90 no-underline pointer mb2 db dark-gray hover-mid-gray'
-          )
-        %>
-      </li>
-      <li>
-        <%= link_to(
-            'Sign out',
-            logout_path,
-            method: :patch,
-            class: 'black-90 no-underline pointer db dark-gray hover-mid-gray'
-          )
-        %>
-      </li>
-    </ul>
-</div>
+  <ul class='nav-links ma0 top-arrow b--light-gray ba list pa4 pl0 pl4 shadow-5 br2'>
+    <li class='pb2'>
+      <%= link_to(
+          'Profile',
+          profile_path(Current.user),
+          class: class_for(:link, type: :gray, additional: 'db mb2')
+        )
+      %>
+    </li>
+    <li>
+      <%= link_to(
+          'Sign out',
+          logout_path,
+          method: :patch,
+          class: class_for(:link, type: :gray, additional: 'db')
+        )
+      %>
+    </li>
+  </ul>
+<% end %>
