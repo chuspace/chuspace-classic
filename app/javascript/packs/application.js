@@ -7,7 +7,6 @@ require('babel-polyfill')
 var Rails = require('rails-ujs')
 var Turbolinks = require('turbolinks')
 
-require('tachyons-sass/tachyons')
 require('styles/global')
 require('styles/application')
 

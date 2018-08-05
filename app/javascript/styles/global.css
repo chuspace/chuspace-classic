@@ -19,7 +19,6 @@ html, body {
 
 h1, h2, h3, h4, h5, h6, strong {
   font-family: "Open Sans", sans-serif;
-  font-weight: 600;
 }
 
 .markdown-body {
@@ -47,8 +46,7 @@ dialog::backdrop, dialog + .backdrop {
 
 input {
   font-family: inherit;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  appearance: none;
 }
 
 button {
@@ -79,5 +77,5 @@ select:-webkit-autofill,
 textarea:-webkit-autofill,
 input:-webkit-autofill,
 a:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 30px white inset;
+  box-shadow: 0 0 0 30px white inset;
 }

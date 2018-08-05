@@ -11,29 +11,26 @@
       autocomplete: 'name'
       placeholder: 'Full name'
       autofocus: true
-      class: class_for(:input, type: :green, additional: 'db w-100')
+      class: 'primary-input db w-100'
     ) %>
 
     <%= text_field_tag(
       'nickname',
       autocomplete: 'nickname'
       placeholder: 'Username'
-      class: class_for(:input, type: :green, additional: 'db w-100')
+      class: 'primary-input db w-100'
     ) %>
 
     <%= text_field_tag(
       'email',
       autocomplete: 'email'
       placeholder: 'Email'
-      class: class_for(:input, type: :green, additional: 'db w-100')
+      class: 'primary-input db w-100'
       type: 'email'
     ) %>
 
-    <%= submit_tag(
-        'Submit',
-        class: class_for(:button, type: :bg_black, additional: 'w-100 db mw5 mt3')
-      )
-    %>
+    <%= submit_tag('Submit', class: 'black-bg-btn w-100 db mw5 mt3') %>
   <% end %>
-  <%= link_to ('← Go back', '#', class: class_for(:link, additional: 'db center')) %>
+
+  <%= link_to ('← Go back', '#', class: 'primary-link db center') %>
 </div>

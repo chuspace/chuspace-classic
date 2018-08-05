@@ -11,20 +11,10 @@
       autocomplete: 'email'
       placeholder: 'Enter email'
       autofocus: true
-      class: class_for(:input, type: :green, additional: 'db w-100')
+      class: 'valid-input db w-100'
     ) %>
 
-    <%= submit_tag(
-        'Submit',
-        class: class_for(:button, type: :bg_black, additional: 'w-100 db mw5 mt3')
-      )
-    %>
+    <%= submit_tag('Submit', class: 'black-bg-btn w-100 db mw5 mt3') %>
   <% end %>
-
-  <a
-    class='black-90 center mt3 db no-underline f6 lh-copy'
-    href='#'
-  >
-    ← Go back
-  </a>
+  <%= link_to('← Go back', '#', class: 'primary-link center mt3 db') %>
 </div>
