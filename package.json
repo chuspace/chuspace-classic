@@ -27,7 +27,6 @@
     "flow-bin": "^0.78.0",
     "lodash": "^4.17.10",
     "lodash-webpack-plugin": "^0.11.5",
-    "node-sass": "^4.9.2",
     "normalize.css": "^8.0.0",
     "null-loader": "^0.1.1",
     "octicons": "^8.0.0",
