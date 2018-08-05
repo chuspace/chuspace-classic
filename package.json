@@ -46,7 +46,6 @@
     "prosemirror-view": "^1.4.2",
     "rails-ujs": "^5.2.0",
     "stimulus": "^1.0.1",
-    "tachyons-sass": "^4.9.3",
     "tailwindcss": "^0.6.4",
     "tether-drop": "^1.4.2",
     "turbolinks": "^5.1.1",

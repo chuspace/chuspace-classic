@@ -7018,16 +7018,6 @@ table@^4.0.2, table@^4.0.3:
     slice-ansi "1.0.0"
     string-width "^2.1.1"
 
-tachyons-custom@^4.9.2:
-  version "4.9.5"
-  resolved "https://registry.yarnpkg.com/tachyons-custom/-/tachyons-custom-4.9.5.tgz#59b3378ea154850bc199fa970bbc928b68ad1363"
-
-tachyons-sass@^4.9.3:
-  version "4.9.3"
-  resolved "https://registry.yarnpkg.com/tachyons-sass/-/tachyons-sass-4.9.3.tgz#a411a6416f1dfa88efb16ba498ace108eefe4aa3"
-  dependencies:
-    tachyons-custom "^4.9.2"
-
 tailwindcss@^0.6.4:
   version "0.6.4"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-0.6.4.tgz#b0aa8a10c34d3fed7a5f32482ef92d5d416353ee"
