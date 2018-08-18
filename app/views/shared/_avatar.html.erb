@@ -1,3 +1,1 @@
-<span class='br2'>
-  <%= url ? image_tag(url) : name %>
-</span>
+<%= url ? image_tag(url, class: "avatar") : content_tag(:span, name, class: "avatar") %>
