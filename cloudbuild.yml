@@ -73,7 +73,7 @@ steps:
 
 
 substitutions:
-  _DATABASE_URL: 'postgres://proxyuser:gauravrocket@35.226.88.109:5432/chuspace_test'
+  _DATABASE_URL: 'postgres://proxyuser:gauravrocket@35.233.13.79:5432/chuspace_test'
 
 images:
   - gcr.io/chuspace-210609/chuspace-web:latest
