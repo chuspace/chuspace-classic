@@ -56,10 +56,10 @@ spec:
             - name: ci-db
               containerPort: 5434
           volumeMounts:
-            - name: cloudsql-instance-credentials
+            - name: cloudsql-credentials
               mountPath: /secrets/cloudsql
               readOnly: true
       volumes:
-        - name: cloudsql-instance-credentials
+        - name: cloudsql-credentials
           secret:
-            secretName: dbproxy
+            secretName: cloudsql-credentials
