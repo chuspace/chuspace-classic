@@ -7,12 +7,19 @@
     <%= stylesheet_pack_tag 'application', media: 'all' %>
   </head>
 
-  <body class="application container mx-auto">
-    <%= render 'layouts/header' %>
+  <body class="application">
+    <div class='container mx-auto'>
+      <%= render 'layouts/header' %>
+    </div>
+
     <section class="content">
       <%= yield %>
     </section>
-    <%= render 'layouts/footer' %>
+
+    <div class='container mx-auto'>
+      <%= render 'layouts/footer' %>
+    </div>
+
     <div id="modal-root" />
   </body>
 </html>

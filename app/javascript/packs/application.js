@@ -6,8 +6,6 @@ import { definitionsFromContext } from 'stimulus/webpack-helpers'
 require('babel-polyfill')
 var Rails = require('rails-ujs')
 var Turbolinks = require('turbolinks')
-
-require('styles/global')
 require('styles/application')
 
 const application = Application.start()
