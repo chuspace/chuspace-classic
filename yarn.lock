@@ -14,7 +14,7 @@
   dependencies:
     "@babel/highlight" "7.0.0-beta.56"
 
-"@babel/core@7.0.0-beta.56", "@babel/core@^7.0.0-beta.49", "@babel/core@^7.0.0-beta.52":
+"@babel/core@7.0.0-beta.56", "@babel/core@^7.0.0-beta.52":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.0.0-beta.56.tgz#cc03ffbb62564fef58fd1cefcbb3e32011c21df9"
   dependencies:
@@ -247,7 +247,7 @@
     "@babel/helper-remap-async-to-generator" "7.0.0-beta.56"
     "@babel/plugin-syntax-async-generators" "7.0.0-beta.56"
 
-"@babel/plugin-proposal-class-properties@^7.0.0-beta.49", "@babel/plugin-proposal-class-properties@^7.0.0-beta.52":
+"@babel/plugin-proposal-class-properties@^7.0.0-beta.52":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-class-properties/-/plugin-proposal-class-properties-7.0.0-beta.56.tgz#cfa5adf4aef4480ef3de3e8896f1524804cdf3d0"
   dependencies:
@@ -265,7 +265,7 @@
     "@babel/helper-plugin-utils" "7.0.0-beta.56"
     "@babel/plugin-syntax-decorators" "7.0.0-beta.56"
 
-"@babel/plugin-proposal-object-rest-spread@7.0.0-beta.56", "@babel/plugin-proposal-object-rest-spread@^7.0.0-beta.49", "@babel/plugin-proposal-object-rest-spread@^7.0.0-beta.52":
+"@babel/plugin-proposal-object-rest-spread@7.0.0-beta.56", "@babel/plugin-proposal-object-rest-spread@^7.0.0-beta.52":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-object-rest-spread/-/plugin-proposal-object-rest-spread-7.0.0-beta.56.tgz#5a8b8c89e94155d766baacdf8e50ea7dead96741"
   dependencies:
@@ -305,7 +305,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "7.0.0-beta.56"
 
-"@babel/plugin-syntax-dynamic-import@^7.0.0-beta.49", "@babel/plugin-syntax-dynamic-import@^7.0.0-beta.52":
+"@babel/plugin-syntax-dynamic-import@^7.0.0-beta.52":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-dynamic-import/-/plugin-syntax-dynamic-import-7.0.0-beta.56.tgz#598a311ffc8821b4f4683c4e52b62b896e2d943c"
   dependencies:
@@ -375,7 +375,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "7.0.0-beta.56"
 
-"@babel/plugin-transform-destructuring@7.0.0-beta.56", "@babel/plugin-transform-destructuring@^7.0.0-beta.49", "@babel/plugin-transform-destructuring@^7.0.0-beta.52":
+"@babel/plugin-transform-destructuring@7.0.0-beta.56", "@babel/plugin-transform-destructuring@^7.0.0-beta.52":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-destructuring/-/plugin-transform-destructuring-7.0.0-beta.56.tgz#41ab43ad5a885b73cc44192948109076a95c2bf0"
   dependencies:
@@ -478,13 +478,13 @@
     "@babel/helper-get-function-arity" "7.0.0-beta.56"
     "@babel/helper-plugin-utils" "7.0.0-beta.56"
 
-"@babel/plugin-transform-regenerator@7.0.0-beta.56", "@babel/plugin-transform-regenerator@^7.0.0-beta.49", "@babel/plugin-transform-regenerator@^7.0.0-beta.52":
+"@babel/plugin-transform-regenerator@7.0.0-beta.56", "@babel/plugin-transform-regenerator@^7.0.0-beta.52":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-regenerator/-/plugin-transform-regenerator-7.0.0-beta.56.tgz#03999df0a27e5cc38686d90e83be0190660f3960"
   dependencies:
     regenerator-transform "^0.13.3"
 
-"@babel/plugin-transform-runtime@^7.0.0-beta.49", "@babel/plugin-transform-runtime@^7.0.0-beta.52", "@babel/plugin-transform-runtime@^7.0.0-beta.56":
+"@babel/plugin-transform-runtime@^7.0.0-beta.52", "@babel/plugin-transform-runtime@^7.0.0-beta.56":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-runtime/-/plugin-transform-runtime-7.0.0-beta.56.tgz#2630211980979b582ffd2351b18c1737824b3ea9"
   dependencies:
@@ -531,14 +531,14 @@
     "@babel/helper-regex" "7.0.0-beta.56"
     regexpu-core "^4.1.3"
 
-"@babel/polyfill@^7.0.0-beta.49", "@babel/polyfill@^7.0.0-beta.52":
+"@babel/polyfill@^7.0.0-beta.52":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/polyfill/-/polyfill-7.0.0-beta.56.tgz#6942d474d0e9cee7124477df11e97ba192764919"
   dependencies:
     core-js "^2.5.7"
     regenerator-runtime "^0.11.1"
 
-"@babel/preset-env@^7.0.0-beta.49", "@babel/preset-env@^7.0.0-beta.52":
+"@babel/preset-env@^7.0.0-beta.52":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/preset-env/-/preset-env-7.0.0-beta.56.tgz#1d00bb1768c422b363be214c12f3b99dc5e4cc0c"
   dependencies:
@@ -590,7 +590,7 @@
     "@babel/helper-plugin-utils" "7.0.0-beta.56"
     "@babel/plugin-transform-flow-strip-types" "7.0.0-beta.56"
 
-"@babel/runtime@^7.0.0-beta.49", "@babel/runtime@^7.0.0-beta.52", "@babel/runtime@^7.0.0-beta.56":
+"@babel/runtime@^7.0.0-beta.52", "@babel/runtime@^7.0.0-beta.56":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.56.tgz#cda612dffd5b1719a7b8e91e3040bd6ae64de8b0"
   dependencies:
@@ -675,43 +675,6 @@
     lodash "^4.17.4"
     node-fetch "^2.1.1"
     url-template "^2.0.8"
-
-"@rails/webpacker@https://github.com/rails/webpacker.git#master":
-  version "4.0.0-pre.2"
-  resolved "https://github.com/rails/webpacker.git#9c4612803a791eede4610eaf4ea458ebe4e493c9"
-  dependencies:
-    "@babel/core" "^7.0.0-beta.49"
-    "@babel/plugin-proposal-class-properties" "^7.0.0-beta.49"
-    "@babel/plugin-proposal-object-rest-spread" "^7.0.0-beta.49"
-    "@babel/plugin-syntax-dynamic-import" "^7.0.0-beta.49"
-    "@babel/plugin-transform-destructuring" "^7.0.0-beta.49"
-    "@babel/plugin-transform-regenerator" "^7.0.0-beta.49"
-    "@babel/plugin-transform-runtime" "^7.0.0-beta.49"
-    "@babel/polyfill" "^7.0.0-beta.49"
-    "@babel/preset-env" "^7.0.0-beta.49"
-    "@babel/runtime" "^7.0.0-beta.49"
-    babel-core "^7.0.0-bridge"
-    babel-loader "^8.0.0-beta"
-    case-sensitive-paths-webpack-plugin "^2.1.2"
-    compression-webpack-plugin "^1.1.11"
-    css-loader "^0.28.11"
-    file-loader "^1.1.11"
-    glob "^7.1.2"
-    js-yaml "^3.12.0"
-    mini-css-extract-plugin "^0.4.0"
-    node-sass "^4.9.0"
-    optimize-css-assets-webpack-plugin "^4.0.2"
-    path-complete-extname "^1.0.0"
-    postcss-import "^11.1.0"
-    postcss-loader "^2.1.5"
-    postcss-preset-env "^5.1.0"
-    sass-loader "^7.0.2"
-    style-loader "^0.21.0"
-    uglifyjs-webpack-plugin "^1.2.5"
-    webpack "^4.10.2"
-    webpack-assets-manifest "^3.0.1"
-    webpack-cli "^3.0.1"
-    webpack-sources "^1.1.0"
 
 "@rails/webpacker@https://github.com/rails/webpacker.git#webpack-config":
   version "4.0.0-pre.2"
@@ -1268,15 +1231,6 @@ babel-loader@^7.1.5:
     find-cache-dir "^1.0.0"
     loader-utils "^1.0.2"
     mkdirp "^0.5.1"
-
-babel-loader@^8.0.0-beta:
-  version "8.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-8.0.0-beta.4.tgz#c3fab00696c385c70c04dbe486391f0eb996f345"
-  dependencies:
-    find-cache-dir "^1.0.0"
-    loader-utils "^1.0.2"
-    mkdirp "^0.5.1"
-    util.promisify "^1.0.0"
 
 babel-messages@^6.23.0:
   version "6.23.0"
@@ -2221,25 +2175,6 @@ css-color-names@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/css-color-names/-/css-color-names-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
 
-css-loader@^0.28.11:
-  version "0.28.11"
-  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-0.28.11.tgz#c3f9864a700be2711bb5a2462b2389b1a392dab7"
-  dependencies:
-    babel-code-frame "^6.26.0"
-    css-selector-tokenizer "^0.7.0"
-    cssnano "^3.10.0"
-    icss-utils "^2.1.0"
-    loader-utils "^1.0.2"
-    lodash.camelcase "^4.3.0"
-    object-assign "^4.1.1"
-    postcss "^5.0.6"
-    postcss-modules-extract-imports "^1.2.0"
-    postcss-modules-local-by-default "^1.2.0"
-    postcss-modules-scope "^1.1.0"
-    postcss-modules-values "^1.3.0"
-    postcss-value-parser "^3.3.0"
-    source-list-map "^2.0.0"
-
 css-loader@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-1.0.0.tgz#9f46aaa5ca41dbe31860e3b62b8e23c42916bf56"
@@ -2645,7 +2580,7 @@ error-ex@^1.2.0, error-ex@^1.3.1:
   dependencies:
     is-arrayish "^0.2.1"
 
-es-abstract@^1.10.0, es-abstract@^1.5.1, es-abstract@^1.6.1, es-abstract@^1.7.0:
+es-abstract@^1.10.0, es-abstract@^1.6.1, es-abstract@^1.7.0:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.12.0.tgz#9dbbdd27c6856f0001421ca18782d786bf8a6165"
   dependencies:
@@ -4728,7 +4663,7 @@ mimic-response@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/mimic-response/-/mimic-response-1.0.1.tgz#4923538878eef42063cb8a3e3b0798781487ab1b"
 
-mini-css-extract-plugin@^0.4.0, mini-css-extract-plugin@^0.4.1:
+mini-css-extract-plugin@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/mini-css-extract-plugin/-/mini-css-extract-plugin-0.4.1.tgz#d2bcf77bb2596b8e4bd9257e43d3f9164c2e86cb"
   dependencies:
@@ -4959,7 +4894,7 @@ node-pre-gyp@^0.10.0:
     semver "^5.3.0"
     tar "^4"
 
-node-sass@^4.9.0, node-sass@^4.9.2:
+node-sass@^4.9.2:
   version "4.9.2"
   resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-4.9.2.tgz#5e63fe6bd0f2ae3ac9d6c14ede8620e2b8bdb437"
   dependencies:
@@ -5101,13 +5036,6 @@ object.assign@^4.1.0:
     has-symbols "^1.0.0"
     object-keys "^1.0.11"
 
-object.getownpropertydescriptors@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/object.getownpropertydescriptors/-/object.getownpropertydescriptors-2.0.3.tgz#8758c846f5b407adab0f236e0986f14b051caa16"
-  dependencies:
-    define-properties "^1.1.2"
-    es-abstract "^1.5.1"
-
 object.pick@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/object.pick/-/object.pick-1.3.0.tgz#87a10ac4c1694bd2e1cbf53591a66141fb5dd747"
@@ -5161,7 +5089,7 @@ opn@^5.1.0, opn@^5.3.0:
   dependencies:
     is-wsl "^1.1.0"
 
-optimize-css-assets-webpack-plugin@^4.0.2, optimize-css-assets-webpack-plugin@^4.0.3:
+optimize-css-assets-webpack-plugin@^4.0.3:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/optimize-css-assets-webpack-plugin/-/optimize-css-assets-webpack-plugin-4.0.3.tgz#4f714e276b279700892c4a6202b7e22812d6f683"
   dependencies:
@@ -5842,7 +5770,7 @@ postcss-place@^3.0.1:
     postcss "^6.0.22"
     postcss-values-parser "^1.5.0"
 
-postcss-preset-env@^5.1.0, postcss-preset-env@^5.2.1, postcss-preset-env@^5.3.0:
+postcss-preset-env@^5.2.1, postcss-preset-env@^5.3.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/postcss-preset-env/-/postcss-preset-env-5.3.0.tgz#568939a1c03e950ced2bdfe32822c316ac7d0b7f"
   dependencies:
@@ -5981,7 +5909,7 @@ postcss-zindex@^2.0.1:
     postcss "^5.0.4"
     uniqs "^2.0.0"
 
-postcss@^5.0.10, postcss@^5.0.11, postcss@^5.0.12, postcss@^5.0.13, postcss@^5.0.14, postcss@^5.0.16, postcss@^5.0.2, postcss@^5.0.4, postcss@^5.0.5, postcss@^5.0.6, postcss@^5.0.8, postcss@^5.2.16:
+postcss@^5.0.10, postcss@^5.0.11, postcss@^5.0.12, postcss@^5.0.13, postcss@^5.0.14, postcss@^5.0.16, postcss@^5.0.2, postcss@^5.0.4, postcss@^5.0.5, postcss@^5.0.8, postcss@^5.2.16:
   version "5.2.18"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-5.2.18.tgz#badfa1497d46244f6390f58b319830d9107853c5"
   dependencies:
@@ -6753,7 +6681,7 @@ sass-graph@^2.2.4:
     scss-tokenizer "^0.2.3"
     yargs "^7.0.0"
 
-sass-loader@^7.0.2, sass-loader@^7.0.3:
+sass-loader@^7.0.3:
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/sass-loader/-/sass-loader-7.1.0.tgz#16fd5138cb8b424bf8a759528a1972d72aad069d"
   dependencies:
@@ -7505,7 +7433,7 @@ uglify-es@^3.3.4:
     commander "~2.13.0"
     source-map "~0.6.1"
 
-uglifyjs-webpack-plugin@^1.2.4, uglifyjs-webpack-plugin@^1.2.5, uglifyjs-webpack-plugin@^1.2.7:
+uglifyjs-webpack-plugin@^1.2.4, uglifyjs-webpack-plugin@^1.2.7:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/uglifyjs-webpack-plugin/-/uglifyjs-webpack-plugin-1.2.7.tgz#57638dd99c853a1ebfe9d97b42160a8a507f9d00"
   dependencies:
@@ -7674,13 +7602,6 @@ util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
 
-util.promisify@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/util.promisify/-/util.promisify-1.0.0.tgz#440f7165a459c9a16dc145eb8e72f35687097030"
-  dependencies:
-    define-properties "^1.1.2"
-    object.getownpropertydescriptors "^2.0.3"
-
 util@0.10.3:
   version "0.10.3"
   resolved "https://registry.yarnpkg.com/util/-/util-0.10.3.tgz#7afb1afe50805246489e3db7fe0ed379336ac0f9"
@@ -7780,7 +7701,7 @@ webpack-assets-manifest@^3.0.1:
     schema-utils "^0.4.5"
     tapable "^1.0.0"
 
-webpack-cli@^3.0.1, webpack-cli@^3.0.8:
+webpack-cli@^3.0.8:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-3.1.0.tgz#d71a83687dcfeb758fdceeb0fe042f96bcf62994"
   dependencies:
@@ -7889,7 +7810,7 @@ webpack-sources@^1.0.1, webpack-sources@^1.1.0:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@^4.10.2, webpack@^4.15.1, webpack@^4.16.4:
+webpack@^4.15.1, webpack@^4.16.4:
   version "4.16.4"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.16.4.tgz#6b020f76483bc66339164c296d89978aa100d37a"
   dependencies:

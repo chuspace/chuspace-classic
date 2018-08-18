@@ -42,22 +42,22 @@ spec:
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
-                  name: chuspace-web
-                  key: secret_key_base
+                  name: rails
+                  key: secret-key-base
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: chuspace-web
-                  key: db_user
+                  name: postgres
+                  key: user
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: chuspace-web
-                  key: db_password
+                  name: postgres
+                  key: password
             - name: STORAGE_KEYFILE
               value: /secrets/cloud-storage/credentials.json
           volumeMounts:
-            - name: cloud-storage-credentials
+            - name: cloudstorage-credentials
               mountPath: /secrets/cloud-storage
             - name: git-storage
               mountPath: /volumes/git
@@ -83,42 +83,42 @@ spec:
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
-                  name: chuspace-web
-                  key: secret_key_base
+                  name: rails
+                  key: secret-key-base
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: chuspace-web
-                  key: db_user
+                  name: postgres
+                  key: user
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: chuspace-web
-                  key: db_password
+                  name: postgres
+                  key: password
             - name: GITHUB_CLIENT_ID
               valueFrom:
                 secretKeyRef:
                   name: github
-                  key: client_id
+                  key: client-id
             - name: GITHUB_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
                   name: github
-                  key: client_secret
+                  key: client-secret
             - name: STORAGE_KEYFILE
               value: /secrets/cloud-storage/credentials.json
           ports:
             - name: web-server
               containerPort: 3000
           volumeMounts:
-            - name: cloud-storage-credentials
+            - name: cloudstorage-credentials
               mountPath: /secrets/cloud-storage
             - name: git-storage
               mountPath: /volumes/git
       volumes:
-        - name: cloud-storage-credentials
+        - name: cloudstorage-credentials
           secret:
-            secretName: cloud-storage-credentials
+            secretName: cloudstorage-credentials
         - name: git-storage
           persistentVolumeClaim:
             claimName: git-storage
@@ -155,30 +155,30 @@ spec:
             - name: SECRET_KEY_BASE
               valueFrom:
                 secretKeyRef:
-                  name: chuspace-web
-                  key: secret_key_base
+                  name: rails
+                  key: secret-key-base
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: chuspace-web
-                  key: db_user
+                  name: postgres
+                  key: user
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: chuspace-web
-                  key: db_password
+                  name: postgres
+                  key: password
             - name: STORAGE_KEYFILE
               value: /secrets/cloud-storage/credentials.json
           volumeMounts:
-            - name: cloud-storage-credentials
+            - name: cloudstorage-credentials
               mountPath: /secrets/cloud-storage
             - name: git-storage
               mountPath: /volumes/git
               readOnly: true
       volumes:
-        - name: cloud-storage-credentials
+        - name: cloudstorage-credentials
           secret:
-            secretName: cloud-storage-credentials
+            secretName: cloudstorage-credentials
         - name: git-storage
           persistentVolumeClaim:
             claimName: git-storage
