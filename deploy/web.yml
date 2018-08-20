@@ -26,12 +26,13 @@ spec:
       labels:
         name: web
     spec:
+      terminationGracePeriodSeconds: 15
       initContainers:
         - name: db-migrate
           image: gcr.io/chuspace-210609/web
           command: ['bin/rails']
           args: ['db:migrate']
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: RAILS_ENV
               value: staging
@@ -62,7 +63,7 @@ spec:
       containers:
         - name: web
           image: gcr.io/chuspace-210609/web
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: FORMATION
               value: web=1
@@ -131,10 +132,11 @@ spec:
       labels:
         name: worker
     spec:
+      terminationGracePeriodSeconds: 15
       containers:
         - name: worker
           image: gcr.io/chuspace-210609/web
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: FORMATION
               value: worker=1
