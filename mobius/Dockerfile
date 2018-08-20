@@ -15,6 +15,10 @@ RUN dep ensure
 
 RUN go build -a -installsuffix cgo -o /go/bin/mobius .
 
+# The compiled outpoutt is completely self-contained, with all external libraries
+# statically linked into the final binary. This means that we can deploy it
+# without any underlying OS, resulting in tiny image sizes.
+
 FROM scratch
 
 WORKDIR /bin

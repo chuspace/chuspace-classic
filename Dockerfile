@@ -1,10 +1,6 @@
-FROM ruby:2.5 AS build
+FROM ruby:2.5-alpine AS build
 
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
-
-RUN apt-get update -qq && apt-get install -y build-essential libpq-dev libvips libvips-dev nodejs yarn
+RUN apk add -u build-base libc6-compat glib-dev libcurl ca-certificates git postgresql-dev yarn
 
 RUN mkdir /src
 
@@ -29,13 +25,17 @@ RUN NODE_ENV=production bin/webpack
 
 RUN rm -rf tmp/cache spec node_modules
 
+# Now all the dependencies are installed, create a fresh stage
+# with only the runtime libraries we need and none of the build-time
+# dependencies. The gems and the compiled javascript can be copied over.
+
 FROM ruby:2.5-alpine
 
 ENV EXECJS_RUNTIME disabled
 
 RUN apk --no-cache \
         add -u --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
-        postgresql-client libc6-compat glib-dev vips-dev
+        postgresql-client libc6-compat glib-dev vips-dev libcurl ca-certificates
 
 WORKDIR /app
 
