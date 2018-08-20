@@ -48,5 +48,5 @@ rspec_failures.txt
 # Relay
 **/__generated__/**/*
 
-# Vendored go deps
-git-server/vendor
+# Git service
+mobius/vendor

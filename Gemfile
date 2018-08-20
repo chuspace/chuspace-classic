@@ -59,9 +59,6 @@ gem 'octicons_helper'
 # Error reporting and logging
 gem 'lograge'
 
-# Git
-gem 'rugged'
-
 group :production do
   gem 'foreman'
 end
