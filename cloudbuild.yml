@@ -77,8 +77,8 @@ substitutions:
   _DATABASE_URL: 'postgres://proxyuser:gauravrocket@35.195.162.224:5432/chuspace_test'
 
 images:
-  - 'gcr.io/chuspace-210609/chuspace-web:latest'
-  - 'grc.io/chuspace-210609/chuspace-web:${SHORT_SHA}'
+  - 'gcr.io/chuspace-210609/web:latest'
+  - 'grc.io/chuspace-210609/web:${SHORT_SHA}'
 
 options:
   substitution_option: 'ALLOW_LOOSE'
