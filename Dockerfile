@@ -33,7 +33,9 @@ FROM ruby:2.5-alpine
 
 ENV EXECJS_RUNTIME disabled
 
-RUN apk add -u postgresql-client
+RUN apk --no-cache \
+        add -u --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
+        postgresql-client libc6-compat glib-dev vips-dev
 
 WORKDIR /app
 
