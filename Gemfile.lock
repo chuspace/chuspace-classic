@@ -414,7 +414,6 @@ DEPENDENCIES
   rspec-support!
   rubocop
   ruby-vips
-  rugged
   searchkick
   shoulda-matchers!
   sidekiq
