@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: chuspace-web
+  name: web
   labels:
-    name: chuspace-web
+    name: web
 spec:
   type: NodePort
   ports:
@@ -11,20 +11,20 @@ spec:
       targetPort: web-server
       protocol: TCP
   selector:
-    name: chuspace-web
+    name: web
 
 ---
 
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: chuspace-web
+  name: web
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: chuspace-web
+        name: web
     spec:
       initContainers:
         - name: db-migrate
@@ -60,7 +60,7 @@ spec:
             - name: cloudstorage-credentials
               mountPath: /secrets/cloud-storage
       containers:
-        - name: chuspace-web
+        - name: web
           image: gcr.io/chuspace-210609/chuspace-web
           imagePullPolicy: IfNotPresent
           env:
@@ -121,18 +121,18 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: chuspace-worker
+  name: worker
   labels:
-    name: chuspace-worker
+    name: worker
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: chuspace-worker
+        name: worker
     spec:
       containers:
-        - name: chuspace-worker
+        - name: worker
           image: gcr.io/chuspace-210609/chuspace-web
           imagePullPolicy: IfNotPresent
           env:
