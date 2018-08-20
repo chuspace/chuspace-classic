@@ -1,11 +1,11 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: chuspace-lb
+  name: load-balancer
   labels:
-    name: chuspace-lb
+    name: load-balancer
   annotations:
-    kubernetes.io/ingres.global-static-ip-name: chuspace-lb
+    kubernetes.io/ingres.global-static-ip-name: load-balancer
 spec:
   tls:
     - hosts:
@@ -19,5 +19,5 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: chuspace-web
+              serviceName: web
               servicePort: 80

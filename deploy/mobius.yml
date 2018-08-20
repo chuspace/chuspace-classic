@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mobius
+  label:
+    name: mobius
+spec:
+  ports:
+    - port: 1006
+      targetPort: mobius-grpc
+  selector:
+    name: mobius
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mobius
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: mobius
+    spec:
+      containers:
+        - name: mobius
+          image: grc.io/chuspace-210609/mobius
+          ports:
+            - name: mobius-grpc
+              containerPort: 1006
+          volumeMounts:
+            - name: git-storage
+              mountPath: /mnt/git
+      volumes:
+        - name: git-storage
+          persistentVolumeClaim:
+            claimName: git-storage

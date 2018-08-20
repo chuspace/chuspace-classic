@@ -47,8 +47,9 @@ steps:
   - name: gcr.io/cloud-builders/docker
     args: [
       'build',
-      '-t', 'gcr.io/chuspace-210609/chuspace-web:latest',
-      '--cache-from', 'gcr.io/chuspace-210609/chuspace-web:latest',
+      '-t', 'gcr.io/chuspace-210609/web:latest',
+      '-t', 'gcr.io/chuspace-210609/web:${SHORT_SHA}',
+      '--cache-from', 'gcr.io/chuspace-210609/web:latest',
       '.'
     ]
     timeout: 600s
@@ -57,7 +58,7 @@ steps:
     entrypoint: bash
     args:
       - '-c'
-      - '[[ "$BRANCH_NAME" == "master" ]] && kubectl set image deployment/chuspace-web chuspace-web=chuspace-210609/chuspace-web:latest || true'
+      - '[[ "$BRANCH_NAME" == "master" ]] && kubectl set image deployment/web web=gcr.io/chuspace-210609/web:${SHORT_SHA} || true'
     env:
       - 'cloudsdk_compute_zone=europe-west2'
       - 'cloudsdk_container_cluster=chuspace'
@@ -66,17 +67,18 @@ steps:
     entrypoint: bash
     args:
       - '-c'
-      - '[[ "$BRANCH_NAME" == "master" ]] && kubectl set image deployment/chuspace-worker chuspace-worker=chuspace-210609/chuspace-web:latest || true'
+      - '[[ "$BRANCH_NAME" == "master" ]] && kubectl set image deployment/worker worker=gcr.io/chuspace-210609/web:${SHORT_SHA} || true'
     env:
       - 'cloudsdk_compute_zone=europe-west2'
       - 'cloudsdk_container_cluster=chuspace'
 
 
 substitutions:
-  _DATABASE_URL: 'postgres://proxyuser:gauravrocket@35.233.13.79:5432/chuspace_test'
+  _DATABASE_URL: 'postgres://proxyuser:gauravrocket@35.195.162.224:5432/chuspace_test'
 
 images:
-  - gcr.io/chuspace-210609/chuspace-web:latest
+  - 'gcr.io/chuspace-210609/web:latest'
+  - 'grc.io/chuspace-210609/web:${SHORT_SHA}'
 
 options:
   substitution_option: 'ALLOW_LOOSE'
