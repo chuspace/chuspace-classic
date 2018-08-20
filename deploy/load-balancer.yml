@@ -19,5 +19,5 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: chuspace-web
+              serviceName: web
               servicePort: 80
