@@ -15,12 +15,12 @@ staging:
   <<: *default
   username: <%= ENV['DB_USER'] %>
   password: <%= ENV['DB_PASSWORD'] %>
-  host: <%= ENV['CHUSPACE_STAGING_DB_SERVICE_HOST'] %>
-  port: <%= ENV['CHUSPACE_STAGING_DB_SERVICE_PORT'] %>
+  host: <%= ENV['STAGING_DB_SERVICE_HOST'] %>
+  port: <%= ENV['STAGING_DB_SERVICE_PORT'] %>
 
 production:
   <<: *default
   username: <%= ENV['DB_USER'] %>
   password: <%= ENV['DB_PASSWORD'] %>
-  host: <%= ENV['CHUSPACE_STAGING_DB_SERVICE_HOST'] %>
-  port: <%= ENV['CHUSPACE_STAGING_DB_SERVICE_PORT'] %>
+  host: <%= ENV['STAGING_DB_SERVICE_HOST'] %>
+  port: <%= ENV['STAGING_DB_SERVICE_PORT'] %>

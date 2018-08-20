@@ -58,7 +58,7 @@ steps:
     entrypoint: bash
     args:
       - '-c'
-      - '[[ "$BRANCH_NAME" == "master" ]] && kubectl set image deployment/web web=chuspace-210609/web:${SHORT_SHA} || true'
+      - '[[ "$BRANCH_NAME" == "master" ]] && kubectl set image deployment/web web=gcr.io/chuspace-210609/web:${SHORT_SHA} || true'
     env:
       - 'cloudsdk_compute_zone=europe-west2'
       - 'cloudsdk_container_cluster=chuspace'
@@ -67,7 +67,7 @@ steps:
     entrypoint: bash
     args:
       - '-c'
-      - '[[ "$BRANCH_NAME" == "master" ]] && kubectl set image deployment/worker worker=chuspace-210609/web:${SHORT_SHA} || true'
+      - '[[ "$BRANCH_NAME" == "master" ]] && kubectl set image deployment/worker worker=gcr.io/chuspace-210609/web:${SHORT_SHA} || true'
     env:
       - 'cloudsdk_compute_zone=europe-west2'
       - 'cloudsdk_container_cluster=chuspace'
