@@ -48,7 +48,7 @@ steps:
     args: [
       'build',
       '-t', 'gcr.io/chuspace-210609/web:latest',
-      '-t', 'gcr.io/chuspace-210609/web:${SHORT_SHA}'
+      '-t', 'gcr.io/chuspace-210609/web:${SHORT_SHA}',
       '--cache-from', 'gcr.io/chuspace-210609/web:latest',
       '.'
     ]
