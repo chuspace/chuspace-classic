@@ -12,7 +12,7 @@ require('styles/global')
 require('styles/application')
 
 const application = Application.start()
-const context = require.context('../src/controllers', true, /\.js$/)
+//const context = require.context('../src/controllers', true, /\.js$/)
 application.load(definitionsFromContext(context))
 
 Rails.start()
