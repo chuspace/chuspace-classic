@@ -28,7 +28,7 @@ spec:
     spec:
       initContainers:
         - name: db-migrate
-          image: gcr.io/chuspace-210609/chuspace-web
+          image: gcr.io/chuspace-210609/web
           command: ['bin/rails']
           args: ['db:migrate']
           imagePullPolicy: IfNotPresent
@@ -61,7 +61,7 @@ spec:
               mountPath: /secrets/cloud-storage
       containers:
         - name: web
-          image: gcr.io/chuspace-210609/chuspace-web
+          image: gcr.io/chuspace-210609/web
           imagePullPolicy: IfNotPresent
           env:
             - name: FORMATION
@@ -133,7 +133,7 @@ spec:
     spec:
       containers:
         - name: worker
-          image: gcr.io/chuspace-210609/chuspace-web
+          image: gcr.io/chuspace-210609/web
           imagePullPolicy: IfNotPresent
           env:
             - name: FORMATION

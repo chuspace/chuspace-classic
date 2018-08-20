@@ -47,8 +47,8 @@ steps:
   - name: gcr.io/cloud-builders/docker
     args: [
       'build',
-      '-t', 'gcr.io/chuspace-210609/chuspace-web:latest',
-      '--cache-from', 'gcr.io/chuspace-210609/chuspace-web:latest',
+      '-t', 'gcr.io/chuspace-210609/web:latest',
+      '--cache-from', 'gcr.io/chuspace-210609/web:latest',
       '.'
     ]
     timeout: 600s
@@ -57,7 +57,7 @@ steps:
     entrypoint: bash
     args:
       - '-c'
-      - '[[ "$BRANCH_NAME" == "master" ]] && kubectl set image deployment/chuspace-web chuspace-web=chuspace-210609/chuspace-web:latest || true'
+      - '[[ "$BRANCH_NAME" == "master" ]] && kubectl set image deployment/web web=chuspace-210609/web:latest || true'
     env:
       - 'cloudsdk_compute_zone=europe-west2'
       - 'cloudsdk_container_cluster=chuspace'
@@ -66,7 +66,7 @@ steps:
     entrypoint: bash
     args:
       - '-c'
-      - '[[ "$BRANCH_NAME" == "master" ]] && kubectl set image deployment/chuspace-worker chuspace-worker=chuspace-210609/chuspace-web:latest || true'
+      - '[[ "$BRANCH_NAME" == "master" ]] && kubectl set image deployment/worker worker=chuspace-210609/web:latest || true'
     env:
       - 'cloudsdk_compute_zone=europe-west2'
       - 'cloudsdk_container_cluster=chuspace'
