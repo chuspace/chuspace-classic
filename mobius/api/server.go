@@ -6,10 +6,11 @@ import (
 	"google.golang.org/grpc"
 	"net"
 	"os"
+	"sync"
 )
 
 type Server struct {
-	// Contextual items live here
+	mu sync.Mutex
 }
 
 func NewServer() *Server {
