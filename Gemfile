@@ -58,6 +58,7 @@ gem 'octicons_helper'
 
 # Error reporting and logging
 gem 'lograge'
+gem 'stackdriver'
 
 group :production do
   gem 'foreman'
