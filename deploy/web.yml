@@ -57,9 +57,13 @@ spec:
                   key: password
             - name: STORAGE_KEYFILE
               value: /secrets/cloud-storage/credentials.json
+            - name: STACKDRIVER_KEYFILE
+              value: /secrets/stackdriver/credentials.json
           volumeMounts:
             - name: cloudstorage-credentials
               mountPath: /secrets/cloud-storage
+            - name: stackdriver-credentials
+              mountPath: /secrets/stackdriver
       containers:
         - name: web
           image: gcr.io/chuspace-210609/web
@@ -106,16 +110,23 @@ spec:
                   key: client-secret
             - name: STORAGE_KEYFILE
               value: /secrets/cloud-storage/credentials.json
+            - name: STACKDRIVER_KEYFILE
+              value: /secrets/stackdriver/credentials.json
           ports:
             - name: web-server
               containerPort: 3000
           volumeMounts:
             - name: cloudstorage-credentials
               mountPath: /secrets/cloud-storage
+            - name: stackdriver-credentials
+              mountPath: /secrets/stackdriver
       volumes:
         - name: cloudstorage-credentials
           secret:
             secretName: cloudstorage-credentials
+        - name: stackdriver-credentials
+          secret:
+            secretName: stackdriver-credentials
 
 ---
 
@@ -163,10 +174,17 @@ spec:
                   key: password
             - name: STORAGE_KEYFILE
               value: /secrets/cloud-storage/credentials.json
+            - name: STACKDRIVER_KEYFILE
+              value: /secrets/stackdriver/credentials.json
           volumeMounts:
             - name: cloudstorage-credentials
               mountPath: /secrets/cloud-storage
+            - name: stackdriver-credentials
+              mountPath: /secrets/stackdriver
       volumes:
         - name: cloudstorage-credentials
           secret:
             secretName: cloudstorage-credentials
+        - name: stackdriver-credentials
+          secret:
+            secretName: stackdriver-credentials
