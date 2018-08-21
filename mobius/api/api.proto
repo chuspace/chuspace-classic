@@ -1,5 +1,6 @@
 syntax = "proto3";
-package mobius;
+
+package api;
 
 service Mobius {
   rpc InitBareRepo(User) returns (InitialRepo) {}
@@ -8,6 +9,11 @@ service Mobius {
 message User {
   string id = 1;
   string nickname = 2;
+  Repo repo = 3;
+}
+
+message Repo {
+  string name = 1;
 }
 
 message InitialRepo {

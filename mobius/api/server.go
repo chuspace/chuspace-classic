@@ -1,20 +1,21 @@
 package api
 
 import (
+	"github.com/gauravtiwari/chuspace/mobius/git"
+	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"net"
 	"os"
 )
 
-func Server() {
-	port := os.GetEnv("PORT")
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
-	if err != nil {
-		log.Fatalf("Could not start tcp server on port %d", port)
-	}
+type Server struct {
+	// Contextual items live here
+}
 
-	s := grpc.NewServer()
-
-	grpc.Serve(lis)
-
+func (s *Server) InitBareRepo(ctx context.Context, user *User) (*InitialRepo, error) {
+	repo := git.InitBareRepo(user.Nickname, user.Repo.Name)
+	return &InitialRepo{
+		user: User,
+		uri:  fmt.Sprintf("chuspace.com/%s/%s", user.Nickname, user.Repo.Name),
+	}, nil
 }
