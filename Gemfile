@@ -60,6 +60,11 @@ gem 'octicons_helper'
 gem 'lograge'
 gem 'stackdriver'
 
+# gRPC
+gem 'grpc'
+gem 'grpc-tools'
+gem 'gruf'
+
 group :production do
   gem 'foreman'
 end
