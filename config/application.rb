@@ -39,6 +39,17 @@ module Chuspace
     # Setup custom path for mailer previews
     config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
 
+    config.google_cloud.project_id = "chuspace-210609"
+    config.google_cloud.keyfile = ENV['STACKDRIVER_KEYFILE']
+
+    config.google_cloud.use_error_reporting = %w(staging production).include?(Rails.env)
+    config.google_cloud.use_trace = %w(staging production).include?(Rails.env)
+    config.google_cloud.use_debugger = false
+    config.google_cloud.use_logging = false
+
+    config.google_cloud.logging.log_name = "my-app-logname"
+    config.google_cloud.trace.capture_stack = true
+
     if Rails.env.test?
       config.cache_store = :memory_store
     else
