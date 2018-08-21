@@ -1,6 +1,7 @@
 syntax = "proto3";
+package mobius;
 
-service GitServer {
+service Mobius {
   rpc InitBareRepo(User) returns (InitialRepo) {}
 }
 
