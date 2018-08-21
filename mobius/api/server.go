@@ -12,6 +12,10 @@ type Server struct {
 	// Contextual items live here
 }
 
+func NewServer() *Server {
+	return &Server{}
+}
+
 func (s *Server) InitBareRepo(ctx context.Context, user *User) (*InitialRepo, error) {
 	repo := git.InitBareRepo(user.Nickname, user.Repo.Name)
 	return &InitialRepo{
