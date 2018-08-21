@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func main() {
+func startRpcServer() {
 	port := os.GetEnv("PORT")
 
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
@@ -20,4 +20,11 @@ func main() {
 	api.RegisterMobiusServer(s, api.NewServer())
 
 	s.Serve(lis)
+}
+
+func main() {
+	// Run asynchronously because we will also be running SSH/HTTPs servers too
+	go func() {
+		startRpcServer()
+	}()
 }
