@@ -61,7 +61,7 @@ steps:
       - 'deployment/web'
       - 'web=gcr.io/chuspace-210609/web:${SHORT_SHA}'
     env:
-      - 'CLOUDSDK_COMPUTE_ZONE=europe-west2'
+      - 'CLOUDSDK_COMPUTE_ZONE=europe-west1'
       - 'CLOUDSDK_CONTAINER_CLUSTER=chuspace-staging'
 
   - name: gcr.io/cloud-builders/kubectl
@@ -71,7 +71,7 @@ steps:
       - 'deployment/worker'
       - 'worker=gcr.io/chuspace-210609/web:${SHORT_SHA}'
     env:
-      - 'CLOUDSDK_COMPUTE_ZONE=europe-west2'
+      - 'CLOUDSDK_COMPUTE_ZONE=europe-west1'
       - 'CLOUDSDK_CONTAINER_CLUSTER=chuspace-staging'
 
 
