@@ -1,8 +1,8 @@
-FROM ruby:2.5-alpine AS build-gems
+FROM ruby:2.5-slim AS build-gems
 
-RUN apk --no-cache \
-      add -u --repository http://dl-cdn.alpinelinux.org/alpine/edge \
-      build-base libc6-compat glib-dev libcurl ca-certificates git postgresql-dev
+RUN apt update -qq && apt install -y \
+      build-essential libpq-dev libgit2-dev git libvips libvips-dev \
+      cmake libssl-dev
 
 WORKDIR /src
 
@@ -34,13 +34,11 @@ RUN NODE_ENV=production yarn run webpack --config config/webpack/production.js \
 # with only the runtime libraries we need and none of the build-time
 # dependencies. The gems and the compiled javascript can be copied over.
 
-FROM ruby:2.5-alpine
+FROM ruby:2.5-slim
 
 ENV EXECJS_RUNTIME disabled
 
-RUN apk --no-cache \
-        add -u --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
-        postgresql-client libc6-compat glib-dev vips-dev libcurl ca-certificates tzdata
+RUN apt update && apt-install -y libvips libvips-dev
 
 WORKDIR /app
 
