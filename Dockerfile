@@ -38,7 +38,7 @@ FROM ruby:2.5-slim
 
 ENV EXECJS_RUNTIME disabled
 
-RUN apt update && apt-install -y libvips libvips-dev
+RUN apt update && apt install -y libvips libvips-dev
 
 WORKDIR /app
 
