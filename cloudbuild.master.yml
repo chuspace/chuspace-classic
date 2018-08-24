@@ -55,6 +55,9 @@ steps:
     timeout: 600s
 
   - name: gcr.io/cloud-builders/kubectl
+    env:
+      - 'cloudsdk_compute_zone=europe-west2'
+      - 'cloudsdk_container_cluster=chuspace-staging'
     args:
       - 'set'
       - 'image'
@@ -72,7 +75,7 @@ steps:
       - 'worker=gcr.io/chuspace-210609/web:${SHORT_SHA}'
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=europe-west2'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=chuspace'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=chuspace-staging'
 
 
 substitutions:
