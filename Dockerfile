@@ -22,11 +22,7 @@ WORKDIR /src
 
 COPY Gemfile Gemfile.lock /src/
 
-RUN bundle install --jobs $(expr $(cat /proc/cpuinfo | grep -c "cpu cores") - 1) --retry 3 --deployment --without development,test \
-      && rm -rf vendor/bundle/cache/*.gem \
-      && find vendor/bundle/gems/ -name "*.c" -delete \
-      && find vendor/bundle/gems/ -name "*.o" -delete \
-      && rm -rf tmp/cache spec
+RUN bundle install --jobs $(expr $(cat /proc/cpuinfo | grep -c "cpu cores") - 1) --retry 3 --deployment --without development,test
 
 COPY package.json yarn.lock /src/
 
