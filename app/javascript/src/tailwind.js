@@ -48,6 +48,7 @@ let colors = {
   'grey-darkest': 'rgba(0,0,0,0.8)',
   grey: 'rgba(0,0,0,0.6)',
   'grey-light': 'rgba(0,0,0,0.4)',
+  'grey-lighter': 'rgba(0, 0, 0, 0.1)',
   white: '#ffffff',
 
   'red-darkest': '#3b0d0c',
