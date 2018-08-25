@@ -1,3 +1,6 @@
+
+// @flow
+
 import 'tether-drop/dist/css/drop-theme-arrows-bounce.css'
 
 import { Controller } from 'stimulus'
@@ -18,7 +21,5 @@ export default class extends Controller {
       constrainToScrollParent: false,
       openOn: 'click'
     })
-
-    console.log(this.dropInstance)
   }
 }
