@@ -9,7 +9,6 @@ metadata:
 spec:
   tls:
     - hosts:
-        - ci.chuspace.com
         - staging.chuspace.com
         - chuspace.com
       secretName: ssl-certs

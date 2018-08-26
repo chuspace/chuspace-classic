@@ -8,7 +8,7 @@ spec:
   type: NodePort
   ports:
     - port: 80
-      targetPort: web-server
+      targetPort: web-http
       protocol: TCP
   selector:
     name: web
@@ -113,7 +113,7 @@ spec:
             - name: STACKDRIVER_KEYFILE
               value: /secrets/stackdriver/credentials.json
           ports:
-            - name: web-server
+            - name: web-http
               containerPort: 3000
           volumeMounts:
             - name: cloudstorage-credentials
