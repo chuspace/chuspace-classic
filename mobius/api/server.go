@@ -26,6 +26,7 @@ func handleInitRepo(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 
 	w.WriteHeader(http.StatusOK)
@@ -35,6 +36,6 @@ func Run() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/init_repo", handleInitRepo)
 
-	port := fmt.Sprintf(":%", os.Getenv("PORT"))
-	log.Fatal(http.ListenAndServe(port, nil))
+	port := fmt.Sprintf(":%s", os.Getenv("PORT"))
+	log.Fatal(http.ListenAndServe(port, mux))
 }
