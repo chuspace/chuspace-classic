@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 module Mobius
   class Client
-
     def init_repo(user)
       conn.post('/init_repo') do |req|
         req.body = {
@@ -13,20 +14,20 @@ module Mobius
 
     private
 
-    def conn
-      Faraday.new(url: "http://#{host}:#{port}") do |f|
-        f.request :json
-        f.response :json
-        f.adapter :typhoeus
+      def conn
+        Faraday.new(url: "http://#{host}:#{port}") do |f|
+          f.request :json
+          f.response :json
+          f.adapter :typhoeus
+        end
       end
-    end
 
-    def host
-      ENV['MOBIUS_SERVICE_HOST']
-    end
+      def host
+        ENV['MOBIUS_SERVICE_HOST']
+      end
 
-    def port
-      ENV['MOBIUS_SERVICE_PORT']
-    end
+      def port
+        ENV['MOBIUS_SERVICE_PORT']
+      end
   end
 end
