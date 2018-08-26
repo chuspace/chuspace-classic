@@ -46,6 +46,8 @@ gem 'sidekiq'
 gem 'figaro'
 
 # HTTP requests
+gem 'faraday'
+gem 'faraday_middleware'
 gem 'typhoeus'
 
 # oAuth
@@ -102,4 +104,5 @@ group :test do
   gem 'simplecov-lcov', require: false
   gem 'shoulda-matchers', github: 'chuspace/shoulda-matchers', branch: 'rails-6-compat'
   gem 'rails-controller-testing'
+  gem 'vcr'
 end

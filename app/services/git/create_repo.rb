@@ -1,17 +1,23 @@
 # frozen_string_literal: true
 
 module Git
-  class CreateAndStoreRepo
+  class CreateRepo
     include Service
 
-    attr_reader :repo, :user
+    attr_reader :user
 
     def initialize(user:)
       @user = user
     end
 
     def call
-      # TODO: RPC call
+      mobius.init_repo(user)
+    end
+
+    private
+
+    def mobius
+      Mobius::Client.new
     end
   end
 end

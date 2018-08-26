@@ -167,6 +167,8 @@ GEM
       railties (>= 3.0.0)
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
+    faraday_middleware (0.12.2)
+      faraday (>= 0.7.4, < 1.0)
     ffi (1.9.25)
     figaro (1.1.1)
       thor (~> 0.14)
@@ -413,6 +415,7 @@ GEM
       rainbow (~> 3.0.0)
       rugged (~> 0.27.0)
     unicode-display_width (1.4.0)
+    vcr (4.0.0)
     web-console (3.6.2)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -433,6 +436,8 @@ DEPENDENCIES
   byebug
   database_cleaner
   factory_bot_rails
+  faraday
+  faraday_middleware
   figaro
   foreman
   google-cloud-storage
@@ -469,6 +474,7 @@ DEPENDENCIES
   stackdriver
   typhoeus
   undercover
+  vcr
   web-console (>= 3.3.0)
   webpacker!
 
