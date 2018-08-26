@@ -17,7 +17,7 @@ func main() {
 		wg.Done()
 	}()
 
-	wg.Add(2)
+	wg.Add(1)
 	go func() {
 		log.Println("Starting SSH server...")
 		log.Fatal(ssh.Run())
