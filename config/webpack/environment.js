@@ -3,6 +3,8 @@ const webpack = require('webpack')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const nullLoader = require('./loaders/null')
 const mjsLoader = require('./loaders/mjs')
+const globImporter = require('node-sass-glob-importer')
+const { resolve } = require('path')
 
 environment.config.merge({
   stats: 'minimal'
@@ -21,7 +23,10 @@ environment.plugins.append(
 environment.loaders.append('null', nullLoader)
 environment.loaders.append('mjs', mjsLoader)
 
-const nodeModulesLoader = environment.loaders.get('nodeModules').use[0]
-nodeModulesLoader.options.plugins = ['@babel/plugin-syntax-dynamic-import']
+const sassLoader = environment.loaders
+  .get('sass')
+  .use.find(loader => loader.loader === 'sass-loader')
+sassLoader.options.importer = globImporter()
+sassLoader.options.includePaths = [resolve('app/views')]
 
 module.exports = environment

@@ -1,4 +1,3 @@
-
 // @flow
 
 import 'tether-drop/dist/css/drop-theme-arrows-bounce.css'
@@ -11,7 +10,7 @@ export default class extends Controller {
 
   dropInstance = null
 
-  initialize () {
+  connect () {
     this.dropInstance = new Drop({
       target: this.openerTarget,
       content: this.contentTarget.innerHTML,
