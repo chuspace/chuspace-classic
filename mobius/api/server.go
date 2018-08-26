@@ -3,7 +3,7 @@ package api
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/gauravtiwari/chuspace/git"
+	"github.com/gauravtiwari/chuspace/mobius/git"
 	"log"
 	"net/http"
 	"os"

@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/gauravtiwari/chuspace/api"
+	"github.com/gauravtiwari/chuspace/mobius/api"
 )
 
 func main() {
