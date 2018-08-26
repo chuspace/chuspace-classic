@@ -60,9 +60,6 @@ gem 'octicons_helper'
 gem 'lograge'
 gem 'stackdriver'
 
-# gRPC
-gem 'gruf'
-
 group :production do
   gem 'foreman'
 end
@@ -81,7 +78,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'grpc-tools'
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5'
   gem 'spring'
