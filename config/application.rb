@@ -22,6 +22,8 @@ module Chuspace
     config.load_defaults 6.0
     config.generators.system_tests = nil
 
+    config.eager_load_paths << Rails.root.join('lib', 'mobius)
+
     # Background job adapter
     config.active_job.queue_adapter = :sidekiq
 
