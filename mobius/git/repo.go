@@ -11,6 +11,6 @@ func InitBareRepo(username string, reponame string) *git.Repository {
 
 	repo, err := git.PlainInit(path, true)
 	if err != nil {
-		panic(fmt.Sprintf("Could not clone repo at %s", path))
+		return nil, err
 	}
 }
