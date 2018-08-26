@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/gauravtiwari/chuspace/mobius/api"
+	"github.com/gauravtiwari/chuspace/rpc"
 	"google.golang.org/grpc"
 	"os"
 )
@@ -17,7 +17,7 @@ func startRpcServer() {
 
 	s := grpc.NewServer()
 
-	api.RegisterMobiusServer(s, api.NewServer())
+	api.RegisterMobiusServer(s, rpc.NewRpcServer())
 
 	s.Serve(lis)
 }

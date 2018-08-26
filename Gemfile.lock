@@ -443,7 +443,6 @@ DEPENDENCIES
   figaro
   foreman
   google-cloud-storage
-  grpc
   grpc-tools
   gruf
   hiredis

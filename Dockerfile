@@ -1,37 +1,32 @@
-FROM ruby:2.5
+FROM golang:alpine AS build
 
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
+ENV CGO_ENABLED=0 \
+    GOOS=linux
 
-RUN apt-get update -qq && apt-get install -y \
-      build-essential \
-      libpq-dev \
-      postgresql-client \
-      git  \
-      libvips \
-      libvips-dev \
-      nodejs \
-      yarn\
-      cmake \
-      libssl-dev
+WORKDIR /go/src/mobius
 
-RUN mkdir /src
+COPY . .
 
-WORKDIR /src
+RUN apk add -u git ca-certificates
 
-COPY Gemfile Gemfile.lock /src/
+RUN go get -u github.com/golang/dep/...
 
-RUN bundle install --jobs $(expr $(cat /proc/cpuinfo | grep -c "cpu cores") - 1) --retry 3 --deployment --without development,test
+RUN dep ensure
 
-COPY package.json yarn.lock /src/
+RUN go build -a -installsuffix cgo -o /go/bin/mobius .
 
-RUN yarn install
+# The compiled outpoutt is completely self-contained, with all external libraries
+# statically linked into the final binary. This means that we can deploy it
+# without any underlying OS, resulting in tiny image sizes.
 
-COPY . /src
+FROM scratch
 
-RUN NODE_ENV=production bin/webpack && rm -rf node_modules
+WORKDIR /bin
 
-EXPOSE 3000
+COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 
-CMD bundle exec foreman start --formation "$FORMATION"
+COPY --from=build /go/bin/mobius .
+
+EXPOSE 1006
+
+CMD ["mobius"]

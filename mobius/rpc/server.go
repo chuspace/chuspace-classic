@@ -1,4 +1,4 @@
-package api
+package main
 
 import (
 	"github.com/gauravtiwari/chuspace/mobius/git"
@@ -9,15 +9,15 @@ import (
 	"sync"
 )
 
-type Server struct {
+type RpcServer struct {
 	mu sync.Mutex
 }
 
-func NewServer() *Server {
-	return &Server{}
+func NewRpcServer() *RpcServer {
+	return &RpcServer{}
 }
 
-func (s *Server) InitBareRepo(ctx context.Context, user *User) (*InitialRepo, error) {
+func (s *RpcServer) InitBareRepo(ctx context.Context, user *User) (*InitialRepo, error) {
 	repo := git.InitBareRepo(user.Nickname, user.Repo.Name)
 	return &InitialRepo{
 		user: User,

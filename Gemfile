@@ -61,7 +61,6 @@ gem 'lograge'
 gem 'stackdriver'
 
 # gRPC
-gem 'grpc'
 gem 'gruf'
 
 group :production do
