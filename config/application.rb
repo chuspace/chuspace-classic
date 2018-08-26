@@ -33,6 +33,7 @@ module Chuspace
       generate.helper false
       generate.assets false
       generate.view_specs false
+      generate.channel assets: false
     end
 
     # Use Vips for processing variants.
