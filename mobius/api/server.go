@@ -9,22 +9,20 @@ import (
 	"os"
 )
 
-type handler struct{}
-
 type InitRepoParams struct {
 	Nickname string `json:"nickname"`
 	Reponame string `json:"reponame"`
 }
 
-func (*handler) InitRepo(w http.ResponseWriter, r *http.Request) {
+func handleInitRepo(w http.ResponseWriter, r *http.Request) {
 	p := &InitRepoParams{}
 
-	if err := json.NewDecoder(r).Decode(p); err != nil {
+	if err := json.NewDecoder(r.Body).Decode(p); err != nil {
 		http.Error(w, err.Error(), http.StatusUnprocessableEntity)
 		return
 	}
 
-	repo, err := git.InitBareRepo(p.nickname, p.reponame)
+	_, err := git.InitBareRepo(p.Nickname, p.Reponame)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -35,8 +33,8 @@ func (*handler) InitRepo(w http.ResponseWriter, r *http.Request) {
 
 func Run() {
 	mux := http.NewServeMux()
-	mux.Handle("/init_repo", handler.InitGitRepo)
+	mux.HandleFunc("/init_repo", handleInitRepo)
 
-	port := fmt.Sprintf(":%", os.GetEnv("PORT"))
+	port := fmt.Sprintf(":%", os.Getenv("PORT"))
 	log.Fatal(http.ListenAndServe(port, nil))
 }
