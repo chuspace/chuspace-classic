@@ -1,15 +1,17 @@
 package ssh
 
 import (
+	"fmt"
 	"github.com/gliderlabs/ssh"
 	"io"
-	"log"
+	"os"
 )
 
-func main() {
+func Run() error {
 	ssh.Handle(func(s ssh.Session) {
 		io.WriteString(s, "Yo dawg\n")
 	})
 
-	log.Fatal(ssh.ListenAndServe(":2222", nil))
+	port := fmt.Sprintf(":%s", os.Getenv("SSH_PORT"))
+	return ssh.ListenAndServe(port, nil)
 }

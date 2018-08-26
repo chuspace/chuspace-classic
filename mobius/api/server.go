@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gauravtiwari/chuspace/mobius/git"
-	"log"
 	"net/http"
 	"os"
 )
@@ -32,10 +31,10 @@ func handleInitRepo(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-func Run() {
+func Run() error {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/init_repo", handleInitRepo)
 
-	port := fmt.Sprintf(":%s", os.Getenv("PORT"))
-	log.Fatal(http.ListenAndServe(port, mux))
+	port := fmt.Sprintf(":%s", os.Getenv("API_PORT"))
+	return http.ListenAndServe(port, mux)
 }
