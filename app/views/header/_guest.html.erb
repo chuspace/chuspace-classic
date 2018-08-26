@@ -1,4 +1,9 @@
 <div class='nav-links flex items-center'>
-  <%= link_to('Sign in', '/auth/github', class: 'link link-default mr-6') %>
-  <%= button_tag('Get Started', class: 'btn btn-bordered btn-bordered-green') %>
+  <div data-controller="auth">
+    <%= link_to('Sign in', '#', class: 'link link-default mr-6', data: { action: 'click->auth#showLoginActions' }) %>
+    <%= render 'logins/modal' %>
+
+    <%= button_tag('Get Started', class: 'btn btn-bordered btn-bordered-green', data: { action: 'click->auth#showRegisterActions' }) %>
+    <%= render 'registrations/modal' %>
+  </div>
 </div>

@@ -15,7 +15,6 @@
     "@babel/preset-flow": "^7.0.0-rc.3",
     "@babel/runtime": "^7.0.0-rc.3",
     "@rails/webpacker": "https://github.com/rails/webpacker.git",
-    "@stimulus/webpack-helpers": "/Users/admin/stimulus/packages/@stimulus/webpack-helpers",
     "actioncable": "^5.2.1",
     "axios": "^0.18.0",
     "babel-plugin-lodash": "^3.3.4",

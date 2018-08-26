@@ -1,17 +1,19 @@
-<%= component "dropdown" do %>
+<%= render "components/dropdown" do %>
   <% content_for :target do %>
-    <%= image_tag(url_for(Current.user.avatar.variant(resize_to_fit: [50, 50])),
-      class: "user-nav-avatar", data: { target: "dropdown.opener" })
+    <%= avatar_for(
+      initials: Current.user.initials,
+      url: url_for(Current.user.avatar.variant(resize_to_fit: [50, 50]))
+    )
     %>
   <% end %>
 
   <% content_for :content do %>
     <ul class='list-reset dropdown'>
       <li class='pb-2'>
-        <%= link_to('Profile', profile_path(Current.user), class: 'link-gray db mb2 no-underline') %>
+        <%= link_to('Profile', profile_path(Current.user), class: 'link link-default db mb2') %>
       </li>
       <li>
-        <%= link_to('Sign out', logout_path, method: :patch, class: 'link-gray no-underline') %>
+        <%= link_to('Sign out', logout_path, method: :patch, class: 'link link-default') %>
       </li>
     </ul>
   <% end %>

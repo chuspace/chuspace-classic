@@ -753,8 +753,9 @@
   dependencies:
     "@stimulus/multimap" "^1.1.0"
 
-"@stimulus/webpack-helpers@^1.1.0", "@stimulus/webpack-helpers@file:../../stimulus/packages/@stimulus/webpack-helpers":
+"@stimulus/webpack-helpers@^1.1.0":
   version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@stimulus/webpack-helpers/-/webpack-helpers-1.1.0.tgz#17f00ea6eaa38b490ba84fec6f6c436c604a4a85"
 
 "@webassemblyjs/ast@1.5.13":
   version "1.5.13"

@@ -51,7 +51,7 @@
         ],
         "alias": {
           "types": "./app/javascript/flow-types",
-          "components": "./app/views/components",
+          "controllers": "./app/javascript/src/controllers",
           "helpers": "./app/javascript/src/helpers",
           "decorators": "./app/javascript/src/decorators",
           "editor": "./app/javascript/src/editor"

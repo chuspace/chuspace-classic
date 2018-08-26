@@ -1,30 +1,28 @@
+// @flow
+
+import 'dialog-polyfill/dialog-polyfill.css'
+
 import dialogPolyfill from 'dialog-polyfill'
 
 export default class Dialog {
-  constructor (props) {
-    this.domNodeId = props.domNodeId
-    this.dialog = this.register()
-  }
+  dialog: typeof window.HTMLDialogElement
 
-  register () {
-    const dialog = document.getElementById(this.domNodeId)
+  constructor (dialogElement: HTMLElement) {
+    this.dialog = dialogElement
     if (typeof HTMLDialogElement !== 'function') {
-      dialogPolyfill.registerDialog(dialog)
+      dialogPolyfill.registerDialog(this.dialog)
     }
-    return dialog
   }
 
   hide () {
     if (!this.dialog.open) return
     this.dialog.close()
-    document.body.classList.remove('dialog-open')
+    document.body && document.body.classList.remove('dialog-open')
   }
 
   show () {
-    if (this.dialog.open) {
-      return
-    }
+    if (this.dialog.open) return
     this.dialog.showModal()
-    document.body.classList.add('dialog-open')
+    document.body && document.body.classList.add('dialog-open')
   }
 }
