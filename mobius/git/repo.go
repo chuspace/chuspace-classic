@@ -9,8 +9,5 @@ import (
 func InitBareRepo(username string, reponame string) *git.Repository {
 	path := fmt.Sprintf("%s/%s/%s", os.GetEnv("GIT_STORAGE_PATH"), username, reponame)
 
-	repo, err := git.PlainInit(path, true)
-	if err != nil {
-		return nil, err
-	}
+	return git.PlainInit(path, true)
 }
