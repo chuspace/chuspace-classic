@@ -1,15 +1,21 @@
 steps:
+  # Setup fake GOPATH
+  - name: bash
+    args: [
+     '-c', 'mkdir -p gopath/src; ln -nsf mobius gopath/src/mobius'
+     ]
+
   - name: instrumentisto/dep
-    dir: mobius
+    dir: gopath/src/mobius
     args: ['ensure']
     env:
-      - 'GOPATH=/workspace/mobius'
+      - 'GOPATH=/workspace/gopath'
 
   - name: gcr.io/cloud-builders/go
-    dir: mobius
+    dir: gopath/src/mobius
     args: ['test', './...']
     env:
-      - 'GOPATH=/workspace/mobius'
+      - 'GOPATH=/workspace/gopath'
 
   - name: gcr.io/cloud-builders/docker
     dir: mobius
