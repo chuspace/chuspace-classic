@@ -27,20 +27,30 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: mobius-ssh
+  labels:
+    name: mobius-ssh
+spec:
+  type: NodePort
+  ports:
+    - port: 22
+      targetPort: mobius-ssh
+      protocol: TCP
+  selector:
+    name: mobius
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
   name: mobius
   labels:
     name: mobius
 spec:
-  type: NodePort
   ports:
     - port: 80
-      name: mobius-http
       targetPort: mobius-http
-      protocol: TCP
-    - port: 22
-      name: mobius-ssh
-      targetPort: mobius-ssh
-      protocol: TCP
   selector:
     name: mobius
 
@@ -70,26 +80,16 @@ spec:
               value: /mnt/git
             - name: SSL_CERT_DIR
               value: /secrets/ssl
-          ports:
-            - name: mobius-http
-              containerPort: 1006
-            - name: mobius-ssh
-              containerPort: 1007
-          readinessProbe:
-            httpGet:
-              path: /
-              port: mobius-http
-              scheme: HTTP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: mobius-http
-              scheme: HTTP
           volumeMounts:
             - name: git-storage
               mountPath: /mnt/git
             - name: ssl-certs
               mountPath: /secrets/ssl
+          ports:
+            - name: mobius-http
+              containerPort: 1006
+            - name: mobius-ssh
+              containerPort: 1007
       volumes:
         - name: git-storage
           persistentVolumeClaim:
