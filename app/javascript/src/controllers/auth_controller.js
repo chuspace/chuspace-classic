@@ -5,18 +5,46 @@ import Dialog from 'helpers/dialog'
 
 export default class extends Controller {
   static targets = [
-    'loginActions',
+    'loginActionsCard',
+    'loginFormCard',
     'loginForm',
-    'registerActions',
-    'registerForm'
+    'loginFormEmail',
+    'loginFormErrors',
+    'loginFormSuccess',
+    'registerActionsCard',
+    'registerFormCard',
+    'registerForm',
+    'registerFormName',
+    'registerFormNickname',
+    'registerFormEmail',
+    'registerFormErrors',
+    'registerFormSuccess'
   ]
 
   connect () {
-    this.loginActionsDialog = new Dialog(this.loginActionsTarget)
-    this.loginFormDialog = new Dialog(this.loginFormTarget)
+    this.loginActionsDialog = new Dialog(this.loginActionsCardTarget)
+    this.loginFormDialog = new Dialog(this.loginFormCardTarget)
 
     this.registerActionsDialog = new Dialog(this.registerActionsTarget)
     this.registerFormDialog = new Dialog(this.registerFormTarget)
+  }
+
+  onLoginSuccess (event: window.CustomEvent) {
+    let [data] = event.detail
+
+    if (data.errors) {
+      this.loginFormErrorsTarget.innerHTML = data.errors
+      return
+    }
+
+    if (data.success) {
+      this.loginFormSuccessTarget.innerHTML = data.success
+      this.loginFormTarget.classList.add('hidden')
+    }
+
+    this.loginFormErrorsTarget.innerHTML = ''
+    this.loginFormEmailTarget.value = ''
+    setTimeout(() => this._hideAll(), 1000)
   }
 
   showRegisterActions (e: Event) {
