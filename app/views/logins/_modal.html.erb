@@ -1,4 +1,4 @@
-<%= render "components/modal", options: { 'data-target': 'auth.loginActions', class: 'dialog-blue' }  do %>
+<%= render "components/modal", options: { 'data-target': 'auth.loginActionsCard', class: 'dialog-blue' }  do %>
   <%= content_for :header, flush: true do %>
     <h2>Welcome back</h2>
   <% end %>
@@ -22,7 +22,7 @@
   <% end %>
 <% end %>
 
-<%= render "components/modal", options: { 'data-target': 'auth.loginForm', class: 'dialog-blue' }  do %>
+<%= render "components/modal", options: { 'data-target': 'auth.loginFormCard', class: 'dialog-blue' }  do %>
   <%= content_for :header, flush: true do %>
     <h2>Sign in with email</h2>
   <% end %>

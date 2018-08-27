@@ -1,9 +1,4 @@
 <div class='nav-links flex items-center'>
-  <div data-controller="auth">
-    <%= link_to('Sign in', '#', class: 'link link-default mr-6', data: { action: 'click->auth#showLoginActions' }) %>
-    <%= render 'logins/modal' %>
-
-    <%= button_tag('Get Started', class: 'btn btn-bordered btn-bordered-green', data: { action: 'click->auth#showRegisterActions' }) %>
-    <%= render 'registrations/modal' %>
-  </div>
+  <%= link_to('Sign in', new_session_path, class: 'link link-default mr-6') %>
+  <%= link_to('Get Started', new_registeration_path, class: 'btn btn-bordered btn-bordered-green') %>
 </div>

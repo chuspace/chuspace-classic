@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   post '/sessions', to: 'sessions#create', as: :login
   patch '/logout', to: 'sessions#destroy', as: :logout
 
+  get '/register', to: 'registrations#new', as: :new_registeration
+  get '/login', to: 'sessions#new', as: :new_session
+
   resources :repos
   resources :check_nicknames, only: :create
   resources :magic_logins, only: :index
