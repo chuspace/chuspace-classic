@@ -11,6 +11,10 @@ RUN apk add -u git ca-certificates
 
 RUN go get -u github.com/golang/dep/...
 
+ARG github_token
+
+RUN git config --global url."https://${github_token}:@github.com/".insteadOf "https://github.com/"
+
 RUN dep ensure
 
 RUN go build -a -installsuffix cgo -o /go/bin/mobius .
