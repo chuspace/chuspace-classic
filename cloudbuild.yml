@@ -40,6 +40,8 @@ steps:
   - name: gcr.io/chuspace-210609/ci
     args: ['bundle', 'exec', 'rspec']
     env:
+      - 'MOBIUS_SERVICE_HOST=localhost'
+      - 'MOBIUS_SERVICE_PORT=3001'
       - 'BUNDLE_PATH=./vendor/cache'
       - 'DATABASE_URL=$_DATABASE_URL'
       - 'REDIS_URL=redis://redis:6379'
