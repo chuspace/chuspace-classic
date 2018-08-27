@@ -1,16 +1,18 @@
 steps:
-  - name: gcr.io/cloud-builders/go
-    args: ['dep', 'ensure']
+  - name: instrumentisto/dep
+    dir: mobius
+    args: ['ensure']
     env:
       - 'GOPATH=/workspace/mobius'
 
   - name: gcr.io/cloud-builders/go
+    dir: mobius
     args: ['test', './...']
     env:
       - 'GOPATH=/workspace/mobius'
 
   - name: gcr.io/cloud-builders/docker
-    dir: workspace/mobius
+    dir: mobius
     args: [
       'build',
       '-t', 'gcr.io/chuspace-210609/mobius:latest',
