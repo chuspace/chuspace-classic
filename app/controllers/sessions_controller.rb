@@ -5,10 +5,11 @@ class SessionsController < ApplicationController
   skip_before_action :authenticate, on: %i[create github]
 
   def create
-    user = User.find_by(email: inputs[:email])
+    user = User.find_by(email: params[:email])
 
     if user
       UserMailer.with(user: user).send_magic_login.deliver_later
+      render json: { success: true }
     else
       render json: { errors: { email: I18n.t('.create_login.not_found') } }
     end
