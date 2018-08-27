@@ -10,10 +10,10 @@ import (
 type Router struct{}
 
 func NewRouter() *gin.Engine {
-	h := Router{}
+	rh := Router{}
 	r := gin.Default()
 
-	r.POST("/init_repo", h.InitRepo)
+	r.POST("/init_repo", rh.InitRepo)
 
 	return r
 }
