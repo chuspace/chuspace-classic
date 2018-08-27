@@ -75,6 +75,16 @@ spec:
               containerPort: 1006
             - name: mobius-ssh
               containerPort: 1007
+          readinessProbe:
+            httpGet:
+              path: /
+              port: mobius-http
+              scheme: HTTP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: mobius-http
+              scheme: HTTP
           volumeMounts:
             - name: git-storage
               mountPath: /mnt/git
