@@ -31,8 +31,9 @@ metadata:
   labels:
     name: mobius
 spec:
+  type: NodePort
   ports:
-    - port: 1006
+    - port: 22
       targetPort: mobius-http
       protocol: TCP
   selector:
@@ -54,19 +55,26 @@ spec:
     spec:
       containers:
         - name: mobius
-          image: grc.io/chuspace-210609/mobius
+          image: gcr.io/chuspace-210609/mobius
           env:
+            - name: PORT
+              value: "1006"
             - name: GIT_STORAGE_PATH
               value: /mnt/git
-            - name: PORT
-              value: 1006
+            - name: SSL_CERT_DIR
+              value: /secrets/ssl
           ports:
             - name: mobius-http
               containerPort: 1006
           volumeMounts:
             - name: git-storage
               mountPath: /mnt/git
+            - name: ssl-certs
+              mountPath: /secrets/ssl
       volumes:
         - name: git-storage
           persistentVolumeClaim:
             claimName: mobius
+        - name: ssl-certs
+          secret:
+            secretName: ssl-certs
