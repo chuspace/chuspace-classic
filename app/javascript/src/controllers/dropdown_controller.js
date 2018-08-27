@@ -23,6 +23,6 @@ export default class extends Controller {
   }
 
   disconnect () {
-    this.dropInstance.remove()
+    this.dropInstance && this.dropInstance.remove()
   }
 }
