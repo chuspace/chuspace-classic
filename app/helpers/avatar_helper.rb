@@ -2,37 +2,37 @@
 
 module AvatarHelper
   def avatar_for(user:, **options)
-    options[:class] = "avatar #{options[:class]}".strip
-    size_props = sizes.dig(options[:size] || :xs)
-    options[:size] = size_props[:size]
+    variant = variants.dig(options[:size] || :xs)
+    options[:size] = variant[:size]
 
-    url = url_for(user.avatar.variant(resize_to_fit: [options[:size], options[:size]]))
+    url = url_for(user.avatar.variant(resize_to_fit: [variant[:size], variant[:size]]))
 
     if url.blank?
-      options[:class] += " avatar--initials #{size[:class]}"
+      options[:class] = "avatar avatar-initials #{variant[:class]} #{options[:class]}".strip
       content_tag(:div, user.initials, options.except(:size))
     else
-      image_tag(url, **options)
+      options[:class] = "avatar #{options[:class]}".strip
+      image_tag(url, options)
     end
   end
 
   private
-    def sizes
+    def variants
       {
         xs: {
-          size: 50,
+          size: 40,
           class: 'avatar-xs'
         },
         sm: {
-          size: 100,
+          size: 80,
           class: 'avatar-sm',
         },
         md: {
-          size: 150,
+          size: 120,
           class: 'avatar-md'
         },
         lg: {
-          size: 200,
+          size: 150,
           class: 'avatar-lg'
         }
       }.with_indifferent_access.freeze

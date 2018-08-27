@@ -1,6 +1,6 @@
 <%= render "components/dropdown" do %>
   <% content_for :target do %>
-    <%= avatar_for(user: Current.user, size: :xs) %>
+    <%= avatar_for(user: Current.user, size: :xs, class: 'foo') %>
   <% end %>
 
   <% content_for :content do %>
