@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
   describe 'POST create' do
     it 'renders the new template' do
-      get :new
+      post :create
       expect(response).to render_template('new')
     end
   end
