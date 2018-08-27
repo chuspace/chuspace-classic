@@ -9,6 +9,7 @@ export default class Dialog {
 
   constructor (dialogElement: HTMLElement) {
     this.dialog = dialogElement
+
     if (typeof HTMLDialogElement !== 'function') {
       dialogPolyfill.registerDialog(this.dialog)
     }
