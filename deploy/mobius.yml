@@ -33,8 +33,13 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 22
+    - port: 80
+      name: mobius-http
       targetPort: mobius-http
+      protocol: TCP
+    - port: 22
+      name: mobius-ssh
+      targetPort: mobius-ssh
       protocol: TCP
   selector:
     name: mobius
@@ -57,8 +62,10 @@ spec:
         - name: mobius
           image: gcr.io/chuspace-210609/mobius
           env:
-            - name: PORT
+            - name: API_PORT
               value: "1006"
+            - name: SSH_PORT
+              value: "1007"
             - name: GIT_STORAGE_PATH
               value: /mnt/git
             - name: SSL_CERT_DIR
@@ -66,6 +73,8 @@ spec:
           ports:
             - name: mobius-http
               containerPort: 1006
+            - name: mobius-ssh
+              containerPort: 1007
           volumeMounts:
             - name: git-storage
               mountPath: /mnt/git
