@@ -20,11 +20,11 @@ class UsersController < ApplicationController
   end
 
   private
-    def user_params
-      params.require(:user).permit(:email, :name, :nickname)
-    end
+  def user_params
+    params.require(:user).permit(:email, :name, :nickname)
+  end
 
-    def find_user
-      @user = User.find_by(nickname: params[:nickname])
-    end
+  def find_user
+    @user = User.find_by(nickname: params[:nickname])
+  end
 end

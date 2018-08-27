@@ -34,8 +34,8 @@ class User < ApplicationRecord
   end
 
   private
-    def normalize_email_and_nickname
-      self.email = self.email&.downcase&.strip
-      self.nickname = self.nickname&.downcase&.strip
-    end
+  def normalize_email_and_nickname
+    self.email = self.email&.downcase&.strip
+    self.nickname = self.nickname&.downcase&.strip
+  end
 end

@@ -16,20 +16,20 @@ module Mobius
 
     private
 
-      def conn
-        Faraday.new(url: "http://#{host}:#{port}") do |f|
-          f.request :json
-          f.response :json
-          f.adapter :typhoeus
-        end
+    def conn
+      Faraday.new(url: "http://#{host}:#{port}") do |f|
+        f.request :json
+        f.response :json
+        f.adapter :typhoeus
       end
+    end
 
-      def host
-        ENV['MOBIUS_SERVICE_HOST']
-      end
+    def host
+      ENV['MOBIUS_SERVICE_HOST']
+    end
 
-      def port
-        ENV['MOBIUS_SERVICE_PORT']
-      end
+    def port
+      ENV['MOBIUS_SERVICE_PORT']
+    end
   end
 end

@@ -17,24 +17,24 @@ module AvatarHelper
   end
 
   private
-    def variants
-      {
-        xs: {
-          size: 40,
-          class: 'avatar-xs'
-        },
-        sm: {
-          size: 80,
-          class: 'avatar-sm',
-        },
-        md: {
-          size: 120,
-          class: 'avatar-md'
-        },
-        lg: {
-          size: 150,
-          class: 'avatar-lg'
-        }
-      }.with_indifferent_access.freeze
-    end
+  def variants
+    {
+      xs: {
+        size: 40,
+        class: 'avatar-xs'
+      },
+      sm: {
+        size: 80,
+        class: 'avatar-sm',
+      },
+      md: {
+        size: 120,
+        class: 'avatar-md'
+      },
+      lg: {
+        size: 150,
+        class: 'avatar-lg'
+      }
+    }.with_indifferent_access.freeze
+  end
 end

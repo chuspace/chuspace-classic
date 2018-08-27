@@ -15,8 +15,8 @@ module Git
 
     private
 
-      def mobius
-        Mobius::Client.new
-      end
+    def mobius
+      Mobius::Client.new
+    end
   end
 end

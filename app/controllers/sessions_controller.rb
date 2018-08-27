@@ -39,13 +39,13 @@ class SessionsController < ApplicationController
   end
 
   private
-    def auth_hash
-      request.env['omniauth.auth']
-    end
+  def auth_hash
+    request.env['omniauth.auth']
+  end
 
-    def malformed_auth?
-      auth_hash.blank? ||
-        auth_hash.credentials.blank? ||
-        auth_hash.info.name.blank?
-    end
+  def malformed_auth?
+    auth_hash.blank? ||
+      auth_hash.credentials.blank? ||
+      auth_hash.info.name.blank?
+  end
 end

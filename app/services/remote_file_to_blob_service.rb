@@ -27,38 +27,38 @@ class RemoteFileToBlobService
   end
 
   private
-    def process_uri(uri)
-      URI.parse(uri)
-    rescue URI::InvalidURIError
-      uri_parts = uri.split('?')
-      encoded_uri = URI.encode(uri_parts.shift, /[^\-_.!~*'()a-zA-Z\d;\/?:@&=+$,]/)
-      encoded_uri << '?' << URI.encode(uri_parts.join('?')) if uri_parts.any?
-      URI.parse(encoded_uri) rescue fail URIError, "couldn't parse URL"
-    end
+  def process_uri(uri)
+    URI.parse(uri)
+  rescue URI::InvalidURIError
+    uri_parts = uri.split('?')
+    encoded_uri = URI.encode(uri_parts.shift, /[^\-_.!~*'()a-zA-Z\d;\/?:@&=+$,]/)
+    encoded_uri << '?' << URI.encode(uri_parts.join('?')) if uri_parts.any?
+    URI.parse(encoded_uri) rescue fail URIError, "couldn't parse URL"
+  end
 
-    def filename
-      filename = filename_from_header || filename_from_uri
-      "#{filename}.#{mime.extension}" unless File.extname(filename).present? || mime.blank?
-    end
+  def filename
+    filename = filename_from_header || filename_from_uri
+    "#{filename}.#{mime.extension}" unless File.extname(filename).present? || mime.blank?
+  end
 
-    def mime
-      mime = MiniMime.lookup_by_content_type(file.content_type)
-      fail ContentTypeError, 'Invalid content type' unless mime.content_type.match?('image')
-      mime
-    end
+  def mime
+    mime = MiniMime.lookup_by_content_type(file.content_type)
+    fail ContentTypeError, 'Invalid content type' unless mime.content_type.match?('image')
+    mime
+  end
 
-    def filename_from_header
-      if file.meta.include? 'content-disposition'
-        match = file.meta['content-disposition'].match(/filename="?([^"]+)/)
-        match[1] unless match.nil? || match[1].empty?
-      end
+  def filename_from_header
+    if file.meta.include? 'content-disposition'
+      match = file.meta['content-disposition'].match(/filename="?([^"]+)/)
+      match[1] unless match.nil? || match[1].empty?
     end
+  end
 
-    def filename_from_uri
-      URI.decode(File.basename(file.base_uri.path))
-    end
+  def filename_from_uri
+    URI.decode(File.basename(file.base_uri.path))
+  end
 
-    def http?
-      uri.scheme =~ /^https?$/
-    end
+  def http?
+    uri.scheme =~ /^https?$/
+  end
 end
