@@ -26,9 +26,7 @@ class User < ApplicationRecord
   end
 
   def initials
-    i = name.gsub(/([[:upper:]])[[:lower:]]+/, '\1')
-    i.gsub!(/\s+/, '')
-    i
+    name.gsub(/([[:upper:]])[[:lower:]]+/, '\1').tr(' ', '')
   end
 
   def self.chuspace
