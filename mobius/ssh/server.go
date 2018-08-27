@@ -2,9 +2,10 @@ package ssh
 
 import (
 	"fmt"
-	"github.com/gliderlabs/ssh"
 	"io"
 	"os"
+
+	"github.com/gliderlabs/ssh"
 )
 
 func Run() error {
