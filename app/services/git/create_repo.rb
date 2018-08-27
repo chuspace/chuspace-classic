@@ -3,7 +3,6 @@
 module Git
   class CreateRepo
     include Service
-
     attr_reader :user
 
     def initialize(user:)
@@ -16,8 +15,8 @@ module Git
 
     private
 
-      def mobius
-        Mobius::Client.new
-      end
+    def mobius
+      Mobius::Client.new
+    end
   end
 end

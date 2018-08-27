@@ -2300,14 +2300,16 @@ declare module 'lodash/fp' {
       collection: Array<T> | { [id: any]: T }
     ): boolean;
     sortBy<T>(
-      iteratees: | $ReadOnlyArray<Iteratee<T> | OIteratee<T>>
-      | Iteratee<T>
-      | OIteratee<T>
+      iteratees:
+        | $ReadOnlyArray<Iteratee<T> | OIteratee<T>>
+        | Iteratee<T>
+        | OIteratee<T>
     ): (collection: $ReadOnlyArray<T> | { [id: any]: T }) => Array<T>;
     sortBy<T>(
-      iteratees: | $ReadOnlyArray<Iteratee<T> | OIteratee<T>>
-      | Iteratee<T>
-      | OIteratee<T>,
+      iteratees:
+        | $ReadOnlyArray<Iteratee<T> | OIteratee<T>>
+        | Iteratee<T>
+        | OIteratee<T>,
       collection: $ReadOnlyArray<T> | { [id: any]: T }
     ): Array<T>;
 

@@ -20,7 +20,7 @@ module Sluggable
   end
 
   private
-    def assign_slug
-      self.slug = send(self.class.slug_attribute)&.parameterize&.downcase&.strip
-    end
+  def assign_slug
+    self.slug = send(self.class.slug_attribute)&.parameterize&.downcase&.strip
+  end
 end

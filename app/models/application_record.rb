@@ -5,12 +5,8 @@ class ApplicationRecord < ActiveRecord::Base
 
   def api_validation_errors
     errors.messages.map do |field, errors|
-      OpenStruct.new(field: field.to_s, messages: errors.to_sentence)
-    end
-  end
-
-  def errors_for(field, message)
-    [OpenStruct.new(field: field, messages: message)]
+      { field: field, errors: errors.to_sentence }
+    end.freeze
   end
 
   def valid_attributes?(*attributes)
