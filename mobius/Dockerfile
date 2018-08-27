@@ -7,7 +7,7 @@ WORKDIR /go/src/mobius
 
 COPY . .
 
-RUN apk add -u git ca-certificates ssh
+RUN apk add -u git ca-certificates openssh-client
 
 RUN go get -u github.com/golang/dep/...
 
