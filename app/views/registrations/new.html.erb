@@ -18,7 +18,7 @@
     </p>
   </div>
 
-  <div data-target='register.formCard' class='hidden'>
+  <div data-target='register.formCard' class='card card-center card-register hidden'>
     <h2 class='card-title'>Sign up with email</h2>
 
     <p class='card-intro'>
@@ -28,7 +28,7 @@
 
 
     <div class='card-body'>
-      <%= form_with url: users_path, data: { target: 'register.form' } do |form| %>
+      <%= form_with url: users_path, scope: :user, data: { target: 'register.form', action: 'ajax:success->register#onRegisterSuccess' } do |form| %>
         <%= form.text_field(
           'name',
           autocomplete: 'name',
@@ -38,7 +38,7 @@
           class: 'input input-bordered input-bordered-green block mx-auto mb-2'
         ) %>
 
-        <span class="alert alert-error" data-target='register.inputNameError'></span>
+        <span class="alert alert-error mb-2 max-w-xs mx-auto" data-target='register.inputNameError'></span>
 
         <%= form.text_field(
           'nickname',
@@ -48,7 +48,7 @@
           class: 'input input-bordered input-bordered-green block mx-auto mb-2'
         ) %>
 
-        <span class="alert alert-error" data-target='register.inputNicknameError'></span>
+        <span class="alert alert-error mb-2 max-w-xs mx-auto" data-target='register.inputNicknameError'></span>
 
         <%= form.text_field(
           'email',
@@ -59,7 +59,7 @@
           type: 'email'
         ) %>
 
-        <span class="alert alert-error" data-target='register.inputEmailError'></span>
+        <span class="alert alert-error mb-2 max-w-xs mx-auto" data-target='register.inputEmailError'></span>
 
         <%= form.submit('Submit', class: 'btn btn-black mt-4') %>
       <% end %>
@@ -67,7 +67,7 @@
     </div>
 
     <div class='card-footer'>
-      <%= link_to('← Go back', '#', class: 'link link-default db center', 'data-action': 'click->register#showActions') %>
+      <%= link_to('← Go back', '#', class: 'link link-default db center', 'data-action': 'click->register#toggleActions') %>
     </div>
   </div>
 </div>

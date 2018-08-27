@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root to: 'pages#index'
 
   get '/auth/:provider/callback', to: 'sessions#github', as: :omniauth_callback
-  post '/sessions', to: 'sessions#create', as: :login
+  post '/sessions', to: 'sessions#create', as: :sessions
   patch '/logout', to: 'sessions#destroy', as: :logout
 
   get '/register', to: 'registrations#new', as: :new_registeration

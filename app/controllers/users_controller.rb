@@ -7,18 +7,23 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.new(inputs)
+    user = User.new(user_params)
 
     if user.valid? && user.save
-      Git::CreateAndStoreRepo.call(user: user)
+      Git::CreateRepo.call(user: user)
       UserMailer.with(user: user).send_magic_login.deliver_later
-      redirect_to root_path
+
+      render json: { success: t('.registration.success') }
     else
-      render json: { errors: user.api_validation_errors, user: nil }
+      render json: { errors: user.api_validation_errors }
     end
   end
 
   private
+    def user_params
+      params.require(:user).permit(:email, :name, :nickname)
+    end
+
     def find_user
       @user = User.find_by(nickname: params[:nickname])
     end

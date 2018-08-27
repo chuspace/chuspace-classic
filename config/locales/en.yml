@@ -13,8 +13,11 @@ en:
       link_request: You don’t need a password to access your Chuspace account. Just click the secure link below.
       heading: Log in to Chuspace
 
-  create_login:
-    not_found: We couldn't find that email. Perhaps you mispelled it?
+  registration:
+    success: Welcome aboard! we have sent you an email with login link.
+
+  login:
+    email_not_found: We couldn't find that email. Perhaps you mispelled it?
     success: We have sent you an email with login link.
 
   check_nickname:
