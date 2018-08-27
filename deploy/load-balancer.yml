@@ -20,3 +20,6 @@ spec:
           - backend:
               serviceName: web
               servicePort: 80
+          - backend:
+              serviceName: mobius
+              servicePort: 22
