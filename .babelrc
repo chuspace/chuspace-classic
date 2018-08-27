@@ -47,13 +47,14 @@
       "module-resolver",
       {
         "root": [
-          "./app/javascript"
+          "./app/javascript/src"
         ],
         "alias": {
           "types": "./app/javascript/flow-types",
           "controllers": "./app/javascript/src/controllers",
           "helpers": "./app/javascript/src/helpers",
           "decorators": "./app/javascript/src/decorators",
+          "styles": "./app/javascript/src/styles",
           "editor": "./app/javascript/src/editor"
         }
       }
