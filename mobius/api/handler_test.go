@@ -10,21 +10,25 @@ import (
 	"github.com/gauravtiwari/chuspace/mobius/api"
 )
 
-var ah = api.Handler{}
+const storagePath = "/tmp/chuspace"
 
-var apiTests = []struct {
-	method  string
-	url     string
-	handler http.HandlerFunc
-	params  string
-	status  int
-	body    string
-}{
-	{"POST", "/init_repo", ah.InitRepo, `{"nickname":"turing","reponame":"turing.chuspace.com"}`, http.StatusNoContent, ""},
-}
+var (
+	ah = api.Handler{}
+
+	apiTests = []struct {
+		method  string
+		url     string
+		handler http.HandlerFunc
+		params  string
+		status  int
+		body    string
+	}{
+		{"POST", "/init_repo", ah.InitRepo, `{"nickname":"turing","reponame":"turing.chuspace.com"}`, http.StatusNoContent, ""},
+	}
+)
 
 func TestApiHandler(t *testing.T) {
-	os.Setenv("GIT_STORAGE_PATH", "/tmp/mobius")
+	os.Setenv("GIT_STORAGE_PATH", storagePath)
 
 	for _, tt := range apiTests {
 		t.Run(tt.url, func(t *testing.T) {
@@ -50,7 +54,7 @@ func TestApiHandler(t *testing.T) {
 				t.Errorf("Expected response '%s', got '%s'", rr.Body.String(), tt.body)
 			}
 
-			os.RemoveAll(os.Getenv("GIT_STORAGE_PATH"))
+			os.RemoveAll(storagePath)
 		})
 	}
 
