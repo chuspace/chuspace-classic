@@ -2,7 +2,7 @@
 
 module AvatarHelper
   def avatar_for(user:, **options)
-    variant = variants.dig(options[:size] || :xs)
+    variant = variants.dig(options[:size].to_sym || :xs)
     options[:size] = variant[:size]
 
     url = url_for(user.avatar.variant(resize_to_fit: [variant[:size], variant[:size]]))
@@ -35,6 +35,6 @@ module AvatarHelper
         size: 150,
         class: 'avatar-lg'
       }
-    }.with_indifferent_access.freeze
+    }.freeze
   end
 end
