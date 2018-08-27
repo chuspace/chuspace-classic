@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
   describe 'POST create' do
     it 'creates a user and repo' do
-      VCR.use_cassette 'http://localhost:3001/init_repo' do
+      VCR.use_cassette 'http://localhost:3001/init_repo', record: :new_episodes do
         post :create, params: { user: { name: 'Foo', email: 'foo@bar.com', nickname: 'foobar' } }, format: :json
 
         expect(json).to eq('success' => 'Welcome aboard! we have sent you an email with login link.')
@@ -13,7 +13,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     it 'returns errors for invalid user' do
-      VCR.use_cassette 'http://localhost:3001/init_repo' do
+      VCR.use_cassette 'http://localhost:3001/init_repo', record: :new_episodes  do
         post :create, params: { user: { name: 'Foo', email: 'foo@bar.com', nickname: 'foobar' } }, format: :json
         expect(response.body).to eq({ "success": 'Welcome aboard! we have sent you an email with login link.' }.to_json)
 

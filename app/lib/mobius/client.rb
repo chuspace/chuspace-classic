@@ -11,6 +11,8 @@ module Mobius
           reponame: "#{user.nickname}.chuspace.com"
         }
       end
+    rescue Faraday::ParsingError => e
+      false
     end
 
 
