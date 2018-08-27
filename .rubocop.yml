@@ -49,9 +49,6 @@ Layout/FirstParameterIndentation:
 Style/HashSyntax:
   Enabled: true
 
-# Method definitions after `private` or `protected` isolated calls need one
-# extra level of indentation.
-
 # Two spaces, no tabs (for indentation).
 Layout/IndentationWidth:
   Enabled: true
