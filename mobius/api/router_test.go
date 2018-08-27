@@ -13,22 +13,23 @@ import (
 const storagePath = "/tmp/chuspace"
 
 var (
-	ah = api.Handler{}
+	ah = api.Router{}
 
 	apiTests = []struct {
-		method  string
-		url     string
-		handler http.HandlerFunc
-		params  string
-		status  int
-		body    string
+		method string
+		url    string
+		params string
+		status int
+		body   interface{}
 	}{
-		{"POST", "/init_repo", ah.InitRepo, `{"nickname":"turing","reponame":"turing.chuspace.com"}`, http.StatusNoContent, ""},
+		{"POST", "/init_repo", `{"nickname":"turing","reponame":"turing.chuspace.com"}`, http.StatusNoContent, ""},
+		{"POST", "/init_repo", `{"invalid":"request"}`, http.StatusUnprocessableEntity, nil},
 	}
 )
 
-func TestApiHandler(t *testing.T) {
+func TestRouter(t *testing.T) {
 	os.Setenv("GIT_STORAGE_PATH", storagePath)
+	router := api.NewRouter()
 
 	for _, tt := range apiTests {
 		t.Run(tt.url, func(t *testing.T) {
@@ -38,11 +39,9 @@ func TestApiHandler(t *testing.T) {
 			}
 
 			rr := httptest.NewRecorder()
-			handler := http.HandlerFunc(tt.handler)
+			router.ServeHTTP(rr, req)
 
-			handler.ServeHTTP(rr, req)
-
-			if ct := rr.Header().Get("Content-Type"); ct != "application/json" {
+			if ct := rr.Header().Get("Content-Type"); strings.Contains("application/json", ct) {
 				t.Errorf("Expected content type '%s', got '%s'", "application/json", ct)
 			}
 
@@ -50,8 +49,10 @@ func TestApiHandler(t *testing.T) {
 				t.Errorf("Expected status '%d', got  '%d'", tt.status, status)
 			}
 
-			if rr.Body.String() != tt.body {
-				t.Errorf("Expected response '%s', got '%s'", rr.Body.String(), tt.body)
+			if body, ok := tt.body.(string); ok {
+				if rr.Body.String() != body {
+					t.Errorf("Expected response '%s', got '%s'", rr.Body.String(), tt.body)
+				}
 			}
 
 			os.RemoveAll(storagePath)
