@@ -1,13 +1,40 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ssd
+provisioner: kubernetes.io/gce-pd
+parameters:
+  type: pd-ssd
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mobius
+spec:
+  volumeMode: Filesystem
+  storageClassName: ssd
+  accessModes:
+    - ReadWriteOnce
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 30Gi
+
+---
+
 apiVersion: v1
 kind: Service
 metadata:
   name: mobius
-  label:
+  labels:
     name: mobius
 spec:
   ports:
     - port: 1006
-      targetPort: mobius-grpc
+      targetPort: mobius-http
+      protocol: TCP
   selector:
     name: mobius
 
@@ -22,12 +49,19 @@ spec:
   template:
     metadata:
       name: mobius
+      labels:
+        name: mobius
     spec:
       containers:
         - name: mobius
           image: grc.io/chuspace-210609/mobius
+          env:
+            - name: GIT_STORAGE_PATH
+              value: /mnt/git
+            - name: PORT
+              value: 1006
           ports:
-            - name: mobius-grpc
+            - name: mobius-http
               containerPort: 1006
           volumeMounts:
             - name: git-storage
@@ -35,4 +69,4 @@ spec:
       volumes:
         - name: git-storage
           persistentVolumeClaim:
-            claimName: git-storage
+            claimName: mobius

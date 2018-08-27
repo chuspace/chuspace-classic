@@ -1,0 +1,28 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args: [
+      'build',
+      '-t', 'gcr.io/chuspace-210609/mobius:latest',
+      '-t', 'gcr.io/chuspace-210609/mobius:${SHORT_SHA}',
+      '--cache-from', 'gcr.io/chuspace-210609/mobius:latest',
+      '.'
+    ]
+    timeout: 600s
+
+  - name: gcr.io/cloud-builders/kubectl
+    args:
+      - 'set'
+      - 'image'
+      - 'deployment/mobius'
+      - 'mobius=gcr.io/chuspace-210609/mobius:${SHORT_SHA}'
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=europe-west1'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=chuspace-staging'
+
+images:
+  - 'gcr.io/chuspace-210609/mobius'
+
+options:
+  substitution_option: 'ALLOW_LOOSE'
+
+timeout: 1200s

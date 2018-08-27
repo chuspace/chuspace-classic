@@ -1,20 +1,40 @@
 package api
 
 import (
-	"google.golang.org/grpc"
-	"net"
+	"encoding/json"
+	"fmt"
+	"github.com/gauravtiwari/chuspace/mobius/git"
+	"net/http"
 	"os"
 )
 
-func Server() {
-	port := os.GetEnv("PORT")
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
-	if err != nil {
-		log.Fatalf("Could not start tcp server on port %d", port)
+type InitRepoParams struct {
+	Nickname string `json:"nickname"`
+	Reponame string `json:"reponame"`
+}
+
+func handleInitRepo(w http.ResponseWriter, r *http.Request) {
+	p := &InitRepoParams{}
+
+	if err := json.NewDecoder(r.Body).Decode(p); err != nil {
+		http.Error(w, err.Error(), http.StatusUnprocessableEntity)
+		return
 	}
 
-	s := grpc.NewServer()
+	_, err := git.InitBareRepo(p.Nickname, p.Reponame)
 
-	grpc.Serve(lis)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
+	w.WriteHeader(http.StatusOK)
+}
+
+func Run() error {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/init_repo", handleInitRepo)
+
+	port := fmt.Sprintf(":%s", os.Getenv("API_PORT"))
+	return http.ListenAndServe(port, mux)
 }

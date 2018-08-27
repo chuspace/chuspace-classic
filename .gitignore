@@ -50,3 +50,4 @@ rspec_failures.txt
 
 # Git service
 mobius/vendor
+mobius/mobius
