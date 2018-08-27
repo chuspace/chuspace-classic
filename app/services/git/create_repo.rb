@@ -3,12 +3,10 @@
 module Git
   class CreateRepo
     include Service
-
     attr_reader :user
 
     def initialize(user:)
       @user = user
-      @repo = user.repo
     end
 
     def call

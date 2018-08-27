@@ -1,10 +1,6 @@
 <%= render "components/dropdown" do %>
   <% content_for :target do %>
-    <%= avatar_for(
-      initials: Current.user.initials,
-      url: url_for(Current.user.avatar.variant(resize_to_fit: [50, 50]))
-    )
-    %>
+    <%= avatar_for(user: Current.user, size: :xs) %>
   <% end %>
 
   <% content_for :content do %>
