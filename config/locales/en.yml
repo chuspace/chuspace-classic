@@ -15,6 +15,7 @@ en:
 
   create_login:
     not_found: We couldn't find that email. Perhaps you mispelled it?
+    success: We have sent you an email with login link.
 
   check_nickname:
     taken: Oops! %{nickname} is already taken.
