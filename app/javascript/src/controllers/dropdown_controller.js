@@ -21,4 +21,8 @@ export default class extends Controller {
       openOn: 'click'
     })
   }
+
+  disconnect () {
+    this.dropInstance.remove()
+  }
 }
