@@ -1,24 +1,22 @@
 <%= render "components/modal", options: { 'data-target': 'auth.loginActions', class: 'dialog-blue' }  do %>
   <%= content_for :header, flush: true do %>
-    <h2 className='f2 lh-title'>Welcome back</h2>
+    <h2>Welcome back</h2>
   <% end %>
 
   <%= content_for :intro, flush: true do %>
-    <p className='intro f5 lh-copy'>
+    <p>
       Sign in to access your personalized homepage, follow authors and topics
       you love, and clap for stories that matter to you.
     </p>
   <% end %>
 
   <%= content_for :body, flush: true do %>
-    <div className='actions mt4'>
-      <%= link_to('Sign in with github', '/auth/github', class: 'btn btn-bordered btn-bordered-green mb-2 block max-w-xxs mx-auto') %>
-      <%= link_to('Sign in with email', '#', class: 'btn btn-bordered btn-bordered-green block max-w-xxs mx-auto', 'data-action': 'click->auth#showLoginForm') %>
-    </div>
+    <%= link_to('Sign in with github', '/auth/github', class: 'btn btn-bordered btn-bordered-green mb-2 block max-w-xxs mx-auto') %>
+    <%= link_to('Sign in with email', '#', class: 'btn btn-bordered btn-bordered-green block max-w-xxs mx-auto', 'data-action': 'click->auth#showLoginForm') %>
   <% end %>
 
   <%= content_for :footer, flush: true do %>
-    <p className='mt4'>
+    <p>
       No account? <%= link_to('Join', '#', class: 'link link-green', 'data-action': 'click->auth#showRegisterActions') %>
     </p>
   <% end %>
@@ -26,11 +24,11 @@
 
 <%= render "components/modal", options: { 'data-target': 'auth.loginForm', class: 'dialog-blue' }  do %>
   <%= content_for :header, flush: true do %>
-    <h2 class='f2 lh-title'>Sign in with email</h2>
+    <h2>Sign in with email</h2>
   <% end %>
 
   <%= content_for :intro, flush: true do %>
-    <p class='intro f5 lh-copy'>
+    <p>
       Enter the email address associated with your account, and we’ll send a
       magic link to your inbox.
     </p>

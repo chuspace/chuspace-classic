@@ -1,25 +1,21 @@
-<div class='editor w-75 center pv5'>
-  <div class='flex items-center w-100 mt2'>
+<div class='editor w-1/2 mx-auto mt-8'>
+  <div class='flex items-center mt-2'>
     <div class='image'>
-      <%= render partial: 'shared/avatar', locals: {
-          url: url_for(Current.user.avatar.variant(resize_to_fit: [100, 100])),
-          name: Current.user.name
-        }
-      %>
+      <%= avatar_for(user: Current.user, size: :sm) %>
     </div>
 
-    <div class='pl3 w-60'>
-      <h1 class='f6 f5-ns fw6 lh-title black mv0'><%= Current.user.name %></h1>
-      <h2 class='f6 fw4 mt0 mb0 black-60'><%= Current.user.bio %></h2>
-      <h2 class='f6 fw4 mt0 mb0 black-60'><%= Current.user.company %></h2>
+    <div class='pl-3 flex-1'>
+      <h3><%= Current.user.name %></h3>
+      <h5><%= Current.user.bio %></h5>
+      <p><%= Current.user.company %></p>
     </div>
 
-    <div class='actions f5 w-30 flex items-center justify-between'>
-      <span class='black-80'>Draft</span>
-      <%= link_to('Publish', '#', class: 'black-90 no-underline pointer green') %>
-      <%= link_to('Delete', '#', class: 'black-90 no-underline pointer brand-primary-red') %>
+    <div class='flex items-center justify-between'>
+      <span class='mr-2'>Draft</span>
+      <%= link_to('Publish', '#', class: 'link link-green mr-2') %>
+      <%= link_to('Delete', '#', class: 'link link-red') %>
     </div>
   </div>
 
-  <div id='editor' />
+  <div id='editor'></div>
 </div>
