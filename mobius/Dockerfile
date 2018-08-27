@@ -1,4 +1,4 @@
-FROM golang:alpine AS build
+FROM gcr.io/cloud-builders/go:alpine AS build
 
 ENV CGO_ENABLED=0 \
     GOOS=linux
@@ -7,7 +7,7 @@ WORKDIR /go/src/mobius
 
 COPY . .
 
-RUN apk add -u git ca-certificates
+
 
 RUN go get -u github.com/golang/dep/...
 
