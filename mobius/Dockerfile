@@ -1,4 +1,4 @@
-FROM gcr.io/cloud-builders/go:alpine AS build
+FROM golang:alpine AS build
 
 ENV CGO_ENABLED=0 \
     GOOS=linux
@@ -7,9 +7,13 @@ WORKDIR /go/src/mobius
 
 COPY . .
 
-
+RUN apk add -u git ca-certificates
 
 RUN go get -u github.com/golang/dep/...
+
+ARG github_token
+
+RUN git config --global url."https://${github_token}:@github.com/".insteadOf "https://github.com/"
 
 RUN dep ensure
 
