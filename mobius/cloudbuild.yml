@@ -1,9 +1,13 @@
 steps:
   - name: gcr.io/cloud-builders/go
-    args: [
-      'test',
-      './...'
-    ]
+    args: ['dep', 'ensure']
+    env:
+      - 'GOPATH=/workspace/mobius'
+
+  - name: gcr.io/cloud-builders/go
+    args: ['test', './...']
+    env:
+      - 'GOPATH=/workspace/mobius'
 
   - name: gcr.io/cloud-builders/docker
     dir: workspace/mobius
