@@ -3,7 +3,7 @@ FROM golang:alpine AS build
 ENV CGO_ENABLED=0 \
     GOOS=linux
 
-WORKDIR /go/src/github.com/gauravtiwari/mobius
+WORKDIR /go/src/github.com/gauravtiwari/chuspace/mobius
 
 COPY . .
 
@@ -15,7 +15,7 @@ ARG github_token
 
 RUN git config --global url."https://${github_token}:@github.com/".insteadOf "https://github.com/"
 
-RUN dep ensure
+RUN dep ensure -vendor-only
 
 RUN go build -a -installsuffix cgo -o /go/bin/mobius .
 
