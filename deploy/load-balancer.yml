@@ -20,9 +20,6 @@ spec:
           - backend:
               serviceName: web
               servicePort: 80
-    - host: git.staging.chuspace.com
-      http:
-        paths:
           - backend:
               serviceName: mobius-ssh
               servicePort: 22
