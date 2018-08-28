@@ -3,7 +3,7 @@ FROM golang:alpine AS build
 ENV CGO_ENABLED=0 \
     GOOS=linux
 
-WORKDIR /go/src/mobius
+WORKDIR /go/src/github.com/gauravtiwari/mobius
 
 COPY . .
 
