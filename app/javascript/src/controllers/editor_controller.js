@@ -12,4 +12,8 @@ export default class extends Controller {
   }
 
   onChange = (content: any) => console.log(content)
+
+  disconnect = () => {
+    this.editor.view.destroy()
+  }
 }
