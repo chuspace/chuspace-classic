@@ -29,10 +29,9 @@ spec:
       terminationGracePeriodSeconds: 15
       initContainers:
         - name: db-migrate
-          image: gcr.io/chuspace-210609/web
           command: ['bin/rails']
           args: ['db:migrate']
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           env:
             - name: RAILS_ENV
               value: staging
@@ -66,8 +65,7 @@ spec:
               mountPath: /secrets/stackdriver
       containers:
         - name: web
-          image: gcr.io/chuspace-210609/web
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           env:
             - name: FORMATION
               value: web=1
@@ -146,8 +144,7 @@ spec:
       terminationGracePeriodSeconds: 15
       containers:
         - name: worker
-          image: gcr.io/chuspace-210609/web
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           env:
             - name: FORMATION
               value: worker=1
