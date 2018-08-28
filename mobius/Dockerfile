@@ -15,7 +15,7 @@ ARG github_token
 
 RUN git config --global url."https://${github_token}:@github.com/".insteadOf "https://github.com/"
 
-RUN dep ensure -vendor-only
+RUN dep ensure
 
 RUN go build -a -installsuffix cgo -o /go/bin/mobius .
 
