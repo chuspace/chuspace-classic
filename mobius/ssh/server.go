@@ -14,7 +14,7 @@ import (
 
 func Run() error {
 	ssh.Handle(func(s ssh.Session) {
-		io.WriteString(s, "Yo dawg\n")
+		io.WriteString(s, "Yo dawg, it's Chuspace\n")
 	})
 
 	port := fmt.Sprintf(":%s", os.Getenv("SSH_PORT"))
