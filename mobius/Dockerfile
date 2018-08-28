@@ -31,6 +31,6 @@ COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certifica
 
 COPY --from=build /go/bin/mobius .
 
-EXPOSE 1006
+EXPOSE 1006 1007
 
 CMD ["mobius"]
