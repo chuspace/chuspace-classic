@@ -73,6 +73,8 @@ spec:
           image: gcr.io/chuspace-210609/mobius
           imagePullPolicy: IfNotPresent
           env:
+            - name: GIN_MODE
+              value: release
             - name: API_PORT
               value: "1006"
             - name: SSH_PORT
