@@ -65,6 +65,18 @@ steps:
       - 'set'
       - 'image'
       - 'deployment/web'
+      - 'db-migrate=gcr.io/chuspace-210609/web:${SHORT_SHA}'
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=europe-west1'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=chuspace-staging'
+
+
+  - name: gcr.io/cloud-builders/kubectl
+    waitFor: [build-image]
+    args:
+      - 'set'
+      - 'image'
+      - 'deployment/web'
       - 'web=gcr.io/chuspace-210609/web:${SHORT_SHA}'
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=europe-west1'
