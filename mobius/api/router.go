@@ -20,7 +20,7 @@ func NewRouter() *gin.Engine {
 }
 
 func (r *Router) HealthCheck(c *gin.Context) {
-	c.JSON(http.StatusOK, nil)
+	c.JSON(http.StatusOK, gin.H{"status": "all goooood"})
 }
 
 func (r *Router) InitRepo(c *gin.Context) {
