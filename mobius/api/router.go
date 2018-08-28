@@ -13,8 +13,8 @@ func NewRouter() *gin.Engine {
 	rh := Router{}
 	r := gin.Default()
 
-	r.POST("/init_repo", rh.InitRepo)
 	r.GET("/", rh.HealthCheck)
+	r.POST("/init_repo", rh.InitRepo)
 
 	return r
 }
