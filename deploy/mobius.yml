@@ -92,11 +92,13 @@ spec:
             - name: mobius-ssh
               containerPort: 1007
           readinessProbe:
-            path: /
-            port: 1006
+            httpGet:
+              path: /
+              port: 1006
           livenessProbe:
-            path: /
-            port: 1006
+            httpGet:
+              path: /
+              port: 1006
       volumes:
         - name: git-storage
           persistentVolumeClaim:
