@@ -38,24 +38,23 @@ class Editor {
   )
 
   constructor (props) {
+    this.props = props
     this.parse = parser(editorSchema)
     this.serialize = serializer(editorSchema)
 
-    this.state = {
-      state: EditorState.create({
-        schema: editorSchema,
-        plugins: editorPlugins
-      })
-    }
+    this.createEditorView(props.element)
   }
 
   createEditorView = node => {
     if (!this.view) {
       this.view = new EditorView(node, {
-        state: this.state.state,
+        state: EditorState.create({
+          schema: editorSchema,
+          plugins: editorPlugins
+        }),
         dispatchTransaction: this.dispatchTransaction,
         attributes: {
-          placeholder: this.props.placeholder
+          placeholder: 'Write something...'
         }
       })
 
@@ -66,8 +65,7 @@ class Editor {
   dispatchTransaction = transaction => {
     const state = this.view.state.apply(transaction)
     this.view.updateState(state)
-    this.setState({ state })
-    this.onChange(state.doc.content)
+    this.props.onChange(state.doc.content)
   }
 }
 

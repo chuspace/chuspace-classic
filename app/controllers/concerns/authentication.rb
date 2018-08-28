@@ -16,12 +16,12 @@ module Authentication
   end
 
   private
-    def authenticate
-      authenticated_user = User.find_by(id: cookies.encrypted[:user_id])
-      Current.user = authenticated_user
-    end
+  def authenticate
+    authenticated_user = User.find_by(id: cookies.encrypted[:user_id])
+    Current.user = authenticated_user
+  end
 
-    def authenticate!
-      redirect_to root_url unless authenticate
-    end
+  def authenticate!
+    redirect_to root_url unless authenticate
+  end
 end

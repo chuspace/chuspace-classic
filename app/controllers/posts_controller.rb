@@ -28,7 +28,7 @@ class PostsController < ApplicationController
   end
 
   private
-    def post_params
-      params.permit(:title, :body, :commit)
-    end
+  def post_params
+    params.permit(:title, :body, :commit)
+  end
 end

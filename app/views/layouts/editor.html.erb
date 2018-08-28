@@ -7,13 +7,13 @@
     <%= stylesheet_pack_tag 'application', media: 'all' %>
   </head>
 
-  <body class="application">
-    <div class="mw8 center">
+  <body class="editor">
+    <div class='container mx-auto'>
       <%= render 'layouts/header' %>
-
-      <section class="content">
-        <%= yield %>
-      </section>
     </div>
+
+    <section class="content">
+      <%= yield %>
+    </section>
   </body>
 </html>

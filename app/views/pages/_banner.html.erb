@@ -1,17 +1,11 @@
-<div class='bg-yellow-pattern pa4 mv3'>
-  <div class='w-40 center tc'>
-    <div class='banner'>
-    <h2 class='f2 lh-title'>Join Chuspace</h2>
-      <p class='intro f5 lh-copy'>
-        Create an account to personalize your homepage, follow your favorite
-        authors and publications, applaud stories you love, and more.
-      </p>
+<div class='bg-yellow-pattern p-16 my-3 container mx-auto'>
+  <div class='w-1/2 container mx-auto tc text-center'>
+    <h2 class='mb-6'>Join Chuspace</h2>
+    <p class='mb-6'>
+      Create an account to personalize your homepage, follow your favorite
+      authors and publications, applaud stories you love, and more.
+    </p>
 
-      <%= button_tag(
-          'Get Started',
-          class: class_for(:button, type: :green, additional: 'db hover-bg-white-80')
-        )
-      %>
-    </div>
+    <%= link_to('Get Started', new_registration_path, class: 'btn btn-bordered btn-bordered-green') %>
   </div>
 </div>

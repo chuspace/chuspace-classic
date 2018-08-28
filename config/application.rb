@@ -22,25 +22,13 @@ module Chuspace
     config.load_defaults 6.0
     config.generators.system_tests = nil
 
-    config.eager_load_paths << Rails.root.join('lib', 'mobius')
-
-    # Background job adapter
-    config.active_job.queue_adapter = :sidekiq
-
-    # Reduce generator noise
-    config.generators do |generate|
-      generate.orm :active_record, primary_key_type: :uuid
-      generate.helper false
-      generate.assets false
-      generate.view_specs false
-    end
-
     # Use Vips for processing variants.
     config.active_storage.variant_processor = :vips
 
-    # Setup custom path for mailer previews
-    config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
+    # Configure sidekiq as background job adapter on staging and production
+    config.active_job.queue_adapter = :sidekiq
 
+    # Configure google cloud error reporting
     config.google_cloud.project_id = 'chuspace-210609'
     config.google_cloud.keyfile = ENV['STACKDRIVER_KEYFILE']
 
@@ -51,22 +39,9 @@ module Chuspace
 
     config.google_cloud.trace.capture_stack = true
 
-    if Rails.env.test?
-      config.cache_store = :memory_store
-    else
-      Readthis.serializers << Oj
-      Readthis.serializers.freeze!
-      Readthis::Cache.new(marshal: Oj)
-
-      Readthis.fault_tolerant = true
-
-      config.cache_store = :readthis_store, {
-        expires_in: 2.weeks.to_i,
-        namespace: 'cache',
-        compress: true,
-        compression_threshold: 2.kilobytes,
-        redis: { url: ENV.fetch('REDIS_URL', 'localhost:6739'), driver: :hiredis }
-      }
-    end
+    # Load additional paths
+    config.eager_load_paths << config.root.join('lib', 'mobius')
+    # Setup custom path for mailer previews
+    config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
   end
 end

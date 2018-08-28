@@ -1,4 +1,6 @@
 <div class='home'>
   <%= render 'banner' unless Current.user %>
-  <%= render 'posts/list' %>
+  <div class='mx-auto w-2/3'>
+    <%= render 'posts/list' %>
+  </div>
 </div>

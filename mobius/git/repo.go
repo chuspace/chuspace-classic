@@ -2,8 +2,9 @@ package git
 
 import (
 	"fmt"
-	"gopkg.in/src-d/go-git.v4"
 	"os"
+
+	"gopkg.in/src-d/go-git.v4"
 )
 
 func InitBareRepo(username string, reponame string) (*git.Repository, error) {

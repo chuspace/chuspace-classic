@@ -1,0 +1,22 @@
+<%= dialog(options: options) do %>
+  <%= content_tag :div, data: { action: 'click->dialog#close' } do %>
+    <%= octicon "x", class: 'dialog-close', "aria-label": "close" %>
+  <% end %>
+  <%= yield %>
+
+  <div class="dialog-header">
+    <%= yield :header %>
+  </div>
+
+  <div class="dialog-intro">
+    <%= yield :intro %>
+  </div>
+
+  <div class="dialog-content">
+    <%= yield :body %>
+  </div>
+
+  <div class="dialog-footer">
+    <%= yield :footer %>
+  </div>
+<% end %>

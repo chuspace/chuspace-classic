@@ -1,7 +1,7 @@
 {
   "presets": [
     [
-      "@babel/env",
+      "@babel/preset-env",
       {
         "modules": false,
         "forceAllTransforms": true,
@@ -51,23 +51,12 @@
         ],
         "alias": {
           "types": "./app/javascript/flow-types",
-          "styles": "./app/javascript/styles",
-          "components": "./app/javascript/src/components",
+          "controllers": "./app/javascript/src/controllers",
           "helpers": "./app/javascript/src/helpers",
           "decorators": "./app/javascript/src/decorators",
+          "styles": "./app/javascript/src/styles",
           "editor": "./app/javascript/src/editor"
         }
-      }
-    ],
-    [
-      "css-modules-transform",
-      {
-        "preprocessCss": "./config/webpack/loaders/sass.js",
-        "generateScopedName": "[name]__[local]___[hash:base64:5]",
-        "extensions": [
-          ".scss",
-          ".sass"
-        ]
       }
     ]
   ]

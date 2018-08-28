@@ -1,17 +1,27 @@
+/* global Document */
+
+// @flow
+
+import 'dialog-polyfill/dialog-polyfill.css'
+
 import dialogPolyfill from 'dialog-polyfill'
 
-export default class Dialog {
-  constructor (props) {
-    this.domNodeId = props.domNodeId
-    this.dialog = this.register()
-  }
+class DocumentWithBody extends Document {
+  // $FlowFixMe
+  body: HTMLBodyElement
+}
 
-  register () {
-    const dialog = document.getElementById(this.domNodeId)
+declare var document: DocumentWithBody
+
+export default class Dialog {
+  dialog: typeof window.HTMLDialogElement
+
+  constructor (dialogElement: HTMLElement) {
+    this.dialog = dialogElement
+
     if (typeof HTMLDialogElement !== 'function') {
-      dialogPolyfill.registerDialog(dialog)
+      dialogPolyfill.registerDialog(this.dialog)
     }
-    return dialog
   }
 
   hide () {
@@ -21,9 +31,7 @@ export default class Dialog {
   }
 
   show () {
-    if (this.dialog.open) {
-      return
-    }
+    if (this.dialog.open) return
     this.dialog.showModal()
     document.body.classList.add('dialog-open')
   }
