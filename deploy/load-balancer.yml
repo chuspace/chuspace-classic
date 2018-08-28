@@ -20,6 +20,3 @@ spec:
           - backend:
               serviceName: web
               servicePort: 80
-          - backend:
-              serviceName: mobius-ssh
-              servicePort: 22
