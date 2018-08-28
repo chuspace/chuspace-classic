@@ -71,6 +71,7 @@ spec:
       containers:
         - name: mobius
           image: gcr.io/chuspace-210609/mobius
+          imagePullPolicy: IfNotPresent
           env:
             - name: API_PORT
               value: "1006"
@@ -90,6 +91,12 @@ spec:
               containerPort: 1006
             - name: mobius-ssh
               containerPort: 1007
+          readinessProbe:
+            path: /
+            port: 1006
+          livenessProbe:
+            path: /
+            port: 1006
       volumes:
         - name: git-storage
           persistentVolumeClaim:
