@@ -81,14 +81,13 @@ steps:
       - 'CLOUDSDK_COMPUTE_ZONE=europe-west1'
       - 'CLOUDSDK_CONTAINER_CLUSTER=chuspace-staging'
 
-
 substitutions:
-  _DATABASE_URL: 'postgres://proxyuser:gauravrocket@35.195.162.224:5432/chuspace_test'
-
-images:
-  - 'gcr.io/chuspace-210609/web'
+  _DATABASE_URL: 'postgres://proxyuser:gauravrocket@104.155.65.21:5432/chuspace_test'
 
 options:
   substitution_option: 'ALLOW_LOOSE'
+
+images:
+  - 'gcr.io/chuspace-210609/web'
 
 timeout: 1200s

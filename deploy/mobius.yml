@@ -31,7 +31,7 @@ metadata:
   labels:
     name: mobius-ssh
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
     - port: 22
       targetPort: mobius-ssh
