@@ -3,7 +3,7 @@ FROM golang:alpine AS build
 ENV CGO_ENABLED=0 \
     GOOS=linux
 
-WORKDIR /go/src/mobius
+WORKDIR /go/src/github.com/gauravtiwari/chuspace/mobius
 
 COPY . .
 
@@ -19,7 +19,7 @@ RUN dep ensure
 
 RUN go build -a -installsuffix cgo -o /go/bin/mobius .
 
-# The compiled outpoutt is completely self-contained, with all external libraries
+# The compiled output is completely self-contained, with all external libraries
 # statically linked into the final binary. This means that we can deploy it
 # without any underlying OS, resulting in tiny image sizes.
 
@@ -31,6 +31,6 @@ COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certifica
 
 COPY --from=build /go/bin/mobius .
 
-EXPOSE 1006
+EXPOSE 1006 1007
 
 CMD ["mobius"]

@@ -27,14 +27,30 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: mobius-ssh
+  labels:
+    name: mobius-ssh
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 22
+      targetPort: mobius-ssh
+      protocol: TCP
+  selector:
+    name: mobius
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
   name: mobius
   labels:
     name: mobius
 spec:
   ports:
-    - port: 1006
+    - port: 80
       targetPort: mobius-http
-      protocol: TCP
   selector:
     name: mobius
 
@@ -54,19 +70,41 @@ spec:
     spec:
       containers:
         - name: mobius
+          image: gcr.io/chuspace-210609/mobius
           imagePullPolicy: IfNotPresent
           env:
+            - name: GIN_MODE
+              value: release
+            - name: API_PORT
+              value: "1006"
+            - name: SSH_PORT
+              value: "1007"
             - name: GIT_STORAGE_PATH
               value: /mnt/git
-            - name: PORT
-              value: 1006
-          ports:
-            - name: mobius-http
-              containerPort: 1006
+            - name: SSL_CERT_DIR
+              value: /secrets/ssl
           volumeMounts:
             - name: git-storage
               mountPath: /mnt/git
+            - name: ssl-certs
+              mountPath: /secrets/ssl
+          ports:
+            - name: mobius-http
+              containerPort: 1006
+            - name: mobius-ssh
+              containerPort: 1007
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 1006
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 1006
       volumes:
         - name: git-storage
           persistentVolumeClaim:
             claimName: mobius
+        - name: ssl-certs
+          secret:
+            secretName: ssl-certs

@@ -13,9 +13,14 @@ func NewRouter() *gin.Engine {
 	rh := Router{}
 	r := gin.Default()
 
+	r.GET("/", rh.HealthCheck)
 	r.POST("/init_repo", rh.InitRepo)
 
 	return r
+}
+
+func (r *Router) HealthCheck(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"status": "all goooood"})
 }
 
 func (r *Router) InitRepo(c *gin.Context) {

@@ -47,9 +47,8 @@ steps:
       - 'REDIS_URL=redis://redis:6379'
       - 'DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true'
 
-
 substitutions:
-  _DATABASE_URL: 'postgres://proxyuser:gauravrocket@35.195.162.224:5432/chuspace_test'
+  _DATABASE_URL: 'postgres://proxyuser:gauravrocket@104.155.65.21:5432/chuspace_test'
 
 options:
   substitution_option: 'ALLOW_LOOSE'

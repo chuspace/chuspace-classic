@@ -35,8 +35,8 @@ steps:
       - 'CLOUDSDK_COMPUTE_ZONE=europe-west1'
       - 'CLOUDSDK_CONTAINER_CLUSTER=chuspace-staging'
 
-images:
-  - 'gcr.io/chuspace-210609/mobius'
+substitutions:
+  _DATABASE_URL: 'postgres://proxyuser:gauravrocket@104.155.65.21:5432/chuspace_test'
 
 options:
   substitution_option: 'ALLOW_LOOSE'
@@ -45,5 +45,8 @@ secrets:
   - kmsKeyName: projects/chuspace-210609/locations/global/keyRings/ci/cryptoKeys/github-token
     secretEnv:
       GITHUB_TOKEN: CiQA1qDtXke8tW1njt26Db+2MwFRKzK7dThzGuykSsOkTD/VGusSUQC1oDemRTinUqYwF8vzgNgfBBPhECdmZ02Xf6kPLsGO/UR4hnWSh7+i+dIDN5BWkue1M42/0A9vvQqxC98FZgAVQAo+UWlgLhajtBKc1DQyMg==
+
+images:
+  - 'gcr.io/chuspace-210609/mobius'
 
 timeout: 1200s
