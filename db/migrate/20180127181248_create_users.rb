@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       ## Database authenticatable
       t.string :name, null: false
       t.string :email, null: false
-      t.string :nickname, null: false
+      t.citext :nickname, null: false
       t.string :avatar
 
       # Passwordless login
@@ -17,9 +17,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :company
 
       # Github
-      t.string :github_nickname
-      t.bigint :github_uid
-      t.string :github_access_token
+      t.jsonb  :github_info, default: '{}'
 
       ## Trackable
       t.integer  :sign_in_count, default: 0, null: false
@@ -33,7 +31,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
 
     add_index :users, :email, unique: true
     add_index :users, :nickname, unique: true
-    add_index :users, :github_uid, unique: true
     add_index :users, :auth_token, unique: true
+    add_index  :users, :github_info, using: :gin
   end
 end
