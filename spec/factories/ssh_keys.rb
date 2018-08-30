@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :ssh_key do
-    user nil
-    name 'MyString'
-    key 'MyText'
+    user
+    name 'My ssh key'
+    key SSHKey.generate.ssh_public_key
   end
 end

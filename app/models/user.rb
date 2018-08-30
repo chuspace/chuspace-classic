@@ -14,7 +14,6 @@ class User < ApplicationRecord
   has_one_attached :avatar
   has_secure_token :auth_token
 
-  has_one :repo, dependent: :destroy
   has_many :ssh_keys, dependent: :destroy
   has_many :posts, dependent: :destroy
 
