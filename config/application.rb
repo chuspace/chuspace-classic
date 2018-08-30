@@ -22,9 +22,6 @@ module Chuspace
     config.load_defaults 6.0
     config.generators.system_tests = nil
 
-    # Use Vips for processing variants.
-    config.active_storage.variant_processor = :vips
-
     # Configure sidekiq as background job adapter on staging and production
     config.active_job.queue_adapter = :sidekiq
 
