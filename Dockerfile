@@ -10,8 +10,8 @@ RUN apt-get update -qq && apt-get install -y \
       libpq-dev \
       postgresql-client \
       git  \
-      libvips \
-      libvips-dev \
+      libmagickwand-dev \
+      imagemagick \
       nodejs \
       yarn\
       cmake \
