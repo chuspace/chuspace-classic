@@ -5,7 +5,6 @@ FactoryBot.define do
     f.sequence(:title) { |n| "Welcome to Chuspace #{n}" }
     body 'Welcome to Chuspace blogging'
     user
-    repo
     f.sequence(:commit) { |n| 'commit #{n}' }
     f.sequence(:version) { |n| n }
     tags ['foo', 'bar']

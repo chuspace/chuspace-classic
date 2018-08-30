@@ -43,7 +43,6 @@ ActiveRecord::Schema.define(version: 2018_08_30_110849) do
     t.citext "slug"
     t.text "body"
     t.uuid "user_id"
-    t.uuid "repo_id"
     t.string "commit"
     t.integer "version"
     t.string "tags", default: [], array: true
@@ -54,15 +53,6 @@ ActiveRecord::Schema.define(version: 2018_08_30_110849) do
     t.index ["published_at"], name: "index_posts_on_published_at"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
     t.index ["state"], name: "index_posts_on_state"
-  end
-
-  create_table "repos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name", null: false
-    t.string "description"
-    t.string "url", null: false
-    t.uuid "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "ssh_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

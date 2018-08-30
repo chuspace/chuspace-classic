@@ -5,7 +5,6 @@ class Post < ApplicationRecord
   sluggable :title
 
   belongs_to :user
-  belongs_to :repo
 
   validates :title, presence: true
   validates :slug, presence: true, uniqueness: true

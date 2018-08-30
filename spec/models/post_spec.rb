@@ -6,13 +6,12 @@ RSpec.describe Post, type: :model do
   subject { create(:post, slug: 'foo-bar') }
 
   it { is_expected.to belong_to(:user) }
-  it { is_expected.to belong_to(:repo) }
 
   it 'should validate uniqueness and presence of slug' do
     described_class.skip_callback(:validation, :before, :assign_slug)
 
     subject.slug = nil
-    expect(subject.save).to be_falsy
+    expect(subject).to be_invalid
     expect { create(:post, slug: 'foo-bar') }.to raise_error(
       ActiveRecord::RecordInvalid, 'Validation failed: Slug has already been taken'
     )

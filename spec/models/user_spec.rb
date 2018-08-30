@@ -11,6 +11,5 @@ RSpec.describe User, type: :model do
   it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
   it { is_expected.to validate_uniqueness_of(:nickname).case_insensitive }
 
-  it { is_expected.to have_one(:repo) }
   it { is_expected.to have_many(:posts) }
 end

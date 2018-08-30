@@ -5,7 +5,6 @@ class CreatePosts < ActiveRecord::Migration[5.2]
       t.citext :slug
       t.text :body
       t.uuid :user_id, foreign_key: true
-      t.uuid :repo_id, foreign_key: true
       t.string :commit
       t.integer :version
       t.string :tags, array: true, default: []

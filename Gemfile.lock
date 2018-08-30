@@ -396,6 +396,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    sshkey (1.9.0)
     stackdriver (0.15.0)
       google-cloud-debugger (~> 0.32)
       google-cloud-error_reporting (~> 0.30)
@@ -471,6 +472,7 @@ DEPENDENCIES
   simplecov-lcov
   spring
   spring-watcher-listen
+  sshkey
   stackdriver
   typhoeus
   undercover
