@@ -29,11 +29,8 @@ class User < ApplicationRecord
     name.gsub(/([[:upper:]])[[:lower:]]+/, '\1').tr(' ', '')
   end
 
-  def self.chuspace
-    find_by(email: 'gaurav@gauravtiwari.co.uk') || first
-  end
-
   private
+
   def normalize_email_and_nickname
     self.email = self.email&.downcase&.strip
     self.nickname = self.nickname&.downcase&.strip
