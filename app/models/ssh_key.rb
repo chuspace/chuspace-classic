@@ -2,7 +2,8 @@
 
 class SshKey < ApplicationRecord
   belongs_to :user
-  validates :name, :key, presence: true
+  validates :name, presence: true
+  validates :key, presence: true, uniqueness: { case_sensitive: false }
 
   validate :public_ssh_key_type
   validate :public_ssh_key
