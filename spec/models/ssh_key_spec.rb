@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe SshKey, type: :model do
   it { is_expected.to belong_to(:user) }
+  it { is_expected.to validate_uniqueness_of(:key).case_insensitive }
 
   describe 'with a valid key and type' do
     subject { create(:ssh_key) }
