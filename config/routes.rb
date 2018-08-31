@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   resources :users, except: :show
   resources :posts
 
+  resource :settings, only: :index
+
   namespace :settings do
     resources :ssh_keys, only: %i[index new create destroy]
   end
