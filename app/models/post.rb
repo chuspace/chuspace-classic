@@ -6,8 +6,14 @@ class Post < ApplicationRecord
 
   belongs_to :user
 
-  validates :title, presence: true
+  validates :title, :body, :status, presence: true
   validates :slug, presence: true, uniqueness: true
+
+  enum status: {
+    draft: 0,
+    published: 1,
+    archived: 2
+  }
 
   before_validation :assign_slug
 end
