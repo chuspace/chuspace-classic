@@ -7,7 +7,7 @@ FactoryBot.define do
     f.sequence(:nickname) { |n| "foo#{n}" }
     auth_token { SecureRandom.hex(11) }
 
-    bio 'Developer'
-    company 'Chuspace'
+    bio { 'Developer' }
+    company { 'Chuspace' }
   end
 end
