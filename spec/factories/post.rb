@@ -8,7 +8,7 @@ FactoryBot.define do
     f.sequence(:commit) { |n| 'commit #{n}' }
     f.sequence(:version) { |n| n }
     tags { ['foo', 'bar'] }
-    state { false }
+    status { 0 }
     published_at { Time.now }
   end
 end
