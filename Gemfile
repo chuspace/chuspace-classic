@@ -62,6 +62,9 @@ gem 'octicons_helper'
 gem 'lograge'
 gem 'stackdriver'
 
+# SSH
+gem 'sshkey'
+
 group :production do
   gem 'foreman'
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_02_101410) do
+ActiveRecord::Schema.define(version: 2018_08_30_110849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -39,33 +39,29 @@ ActiveRecord::Schema.define(version: 2018_08_02_101410) do
   end
 
   create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "title"
-    t.citext "slug"
-    t.text "body"
+    t.string "title", null: false
+    t.citext "slug", null: false
+    t.text "body", null: false
     t.uuid "user_id"
-    t.uuid "repo_id"
     t.string "commit"
     t.integer "version"
     t.string "tags", default: [], array: true
-    t.boolean "state"
+    t.integer "status", default: 0, null: false
     t.datetime "published_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["published_at"], name: "index_posts_on_published_at"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
-    t.index ["state"], name: "index_posts_on_state"
-    t.index ["user_id"], name: "index_posts_on_user_id"
+    t.index ["status"], name: "index_posts_on_status"
   end
 
-  create_table "repos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name", null: false
-    t.citext "slug", null: false
-    t.string "description"
-    t.uuid "user_id", null: false
+  create_table "ssh_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.string "name"
+    t.text "key", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "git_repo"
-    t.index ["slug"], name: "index_repos_on_slug", unique: true
+    t.index ["key"], name: "index_ssh_keys_on_key", unique: true
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -76,6 +72,7 @@ ActiveRecord::Schema.define(version: 2018_08_02_101410) do
     t.string "auth_token", null: false
     t.text "bio"
     t.string "company"
+    t.jsonb "github_info", default: "{}"
     t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
@@ -83,7 +80,6 @@ ActiveRecord::Schema.define(version: 2018_08_02_101410) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "github_info", default: "{}"
     t.index ["auth_token"], name: "index_users_on_auth_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["github_info"], name: "index_users_on_github_info", using: :gin

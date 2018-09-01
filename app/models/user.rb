@@ -14,7 +14,7 @@ class User < ApplicationRecord
   has_one_attached :avatar
   has_secure_token :auth_token
 
-  has_one :repo, dependent: :destroy
+  has_many :ssh_keys, dependent: :destroy
   has_many :posts, dependent: :destroy
 
   store_accessor :github_info, :github_nickname, :github_uid, :github_access_token
@@ -29,11 +29,8 @@ class User < ApplicationRecord
     name.gsub(/([[:upper:]])[[:lower:]]+/, '\1').tr(' ', '')
   end
 
-  def self.chuspace
-    find_by(email: 'gaurav@gauravtiwari.co.uk') || first
-  end
-
   private
+
   def normalize_email_and_nickname
     self.email = self.email&.downcase&.strip
     self.nickname = self.nickname&.downcase&.strip
