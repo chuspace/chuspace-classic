@@ -19,8 +19,15 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: web
+  labels:
+    name: web
+    keel.sh/policy: all
+    keel.sh/approvals: "0"
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      name: web
   template:
     metadata:
       labels:
@@ -108,6 +115,16 @@ spec:
                 secretKeyRef:
                   name: github
                   key: client-secret
+            - name: SENDGRID_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: email
+                  key: username
+            - name: SENDGRID_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: email
+                  key: password
             - name: STORAGE_KEYFILE
               value: /secrets/cloud-storage/credentials.json
             - name: STACKDRIVER_KEYFILE
@@ -136,8 +153,13 @@ metadata:
   name: worker
   labels:
     name: worker
+    keel.sh/policy: all
+    keel.sh/approvals: "0"
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      name: worker
   template:
     metadata:
       labels:
@@ -171,6 +193,16 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: postgres
+                  key: password
+            - name: SENDGRID_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: email
+                  key: username
+            - name: SENDGRID_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: email
                   key: password
             - name: STORAGE_KEYFILE
               value: /secrets/cloud-storage/credentials.json

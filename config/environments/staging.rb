@@ -58,12 +58,14 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  ActionMailer::Base.smtp_settings = {
+  config.action_mailer.smtp_settings = {
     domain: 'staging.chuspace.com',
-    address: ENV['EMAIL_SERVICE_HOST'],
-    port: ENV['EMAIL_SERVICE_PORT'],
+    username: ENV['SENDGRID_USERNAME'],
+    password: ENV['SENDGRID_PASSWORD'],
+    address: 'smtp.sendgrid.net',
+    port: 587,
     authentication: :plain,
-    enable_starttls_auto: false
+    enable_starttls_auto: true
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.

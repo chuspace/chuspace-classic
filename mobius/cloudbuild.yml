@@ -25,16 +25,6 @@ steps:
     timeout: 600s
     secretEnv: ['GITHUB_TOKEN']
 
-  - name: gcr.io/cloud-builders/kubectl
-    args:
-      - 'set'
-      - 'image'
-      - 'deployment/mobius'
-      - 'mobius=gcr.io/chuspace-210609/mobius:${SHORT_SHA}'
-    env:
-      - 'CLOUDSDK_COMPUTE_ZONE=europe-west1'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=chuspace-staging'
-
 images:
   - 'gcr.io/chuspace-210609/mobius'
 

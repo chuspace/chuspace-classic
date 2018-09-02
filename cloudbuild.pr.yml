@@ -49,7 +49,7 @@ steps:
 
 
 substitutions:
-  _DATABASE_URL: 'postgres://proxyuser:gauravrocket@104.155.65.21:5432/chuspace_test'
+  _DATABASE_URL: 'postgres://proxyuser:gauravrocket@35.240.126.48:5432/chuspace_test'
 
 options:
   substitution_option: 'ALLOW_LOOSE'

@@ -44,8 +44,15 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: mobius
+  labels:
+    name: mobius
+    keel.sh/policy: all
+    keel.sh/approvals: "0"
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      name: mobius
   template:
     metadata:
       name: mobius
@@ -54,12 +61,13 @@ spec:
     spec:
       containers:
         - name: mobius
+          image: gcr.io/chuspace-210609/mobius
           imagePullPolicy: IfNotPresent
           env:
             - name: GIT_STORAGE_PATH
               value: /mnt/git
             - name: PORT
-              value: 1006
+              value: "1006"
           ports:
             - name: mobius-http
               containerPort: 1006
