@@ -21,8 +21,6 @@ metadata:
   name: web
   labels:
     name: web
-    keel.sh/policy: all
-    keel.sh/approvals: "0"
 spec:
   replicas: 1
   selector:
@@ -153,8 +151,6 @@ metadata:
   name: worker
   labels:
     name: worker
-    keel.sh/policy: all
-    keel.sh/approvals: "0"
 spec:
   replicas: 1
   selector:
