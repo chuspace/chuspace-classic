@@ -46,8 +46,6 @@ metadata:
   name: mobius
   labels:
     name: mobius
-    keel.sh/policy: all
-    keel.sh/approvals: "0"
 spec:
   replicas: 1
   selector:
