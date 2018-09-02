@@ -4,6 +4,7 @@ class Settings::SshKeysController < ApplicationController
   before_action :authenticate!
 
   def index
+    @keys = SshKey.all
   end
 
   def new
