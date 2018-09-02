@@ -9,6 +9,10 @@ class SshKey < ApplicationRecord
   validate :public_ssh_key_type
   validate :public_ssh_key
 
+  def fingerprint
+    SSHKey.md5_fingerprint(key)
+  end
+
   private
 
   def public_ssh_key_type
