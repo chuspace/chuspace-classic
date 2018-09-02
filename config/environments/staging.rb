@@ -58,7 +58,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  ActionMailer::Base.smtp_settings = {
+  config.action_mailer.smtp_settings = {
     domain: 'staging.chuspace.com',
     username: ENV['SENDGRID_USERNAME'],
     password: ENV['SENDGRID_PASSWORD'],
