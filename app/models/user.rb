@@ -14,7 +14,6 @@ class User < ApplicationRecord
   has_one_attached :avatar
   has_secure_token :auth_token
 
-  has_many :ssh_keys, dependent: :destroy
   has_many :posts, dependent: :destroy
 
   store_accessor :github_info, :github_nickname, :github_uid, :github_access_token

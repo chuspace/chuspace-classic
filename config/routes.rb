@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   resources :settings, only: :index
 
   namespace :settings do
-    resources :ssh_keys, only: %i[index new create destroy]
+    resources :profiles, path: 'profile', only: %i[index]
   end
 
   get '/:nickname', to: 'users#show', as: :profile

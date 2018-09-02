@@ -7,10 +7,6 @@ en:
             nickname:
               invalid: Username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen
 
-        ssh_key:
-          invalid_ssh_key_type: is invalid. It must begin with ssh-rsa, ssh-dss, ssh-ed25519, ecdsa-sha2-nistp256, ecdsa-sha2-nistp384, or ecdsa-sha2-nistp521. Ensure you've copied correctly
-          invalid_ssh_key: is invalid. Ensure you've copied correctly
-
   user_mailer:
     send_magic_login:
       subject: Log in to Chuspace
