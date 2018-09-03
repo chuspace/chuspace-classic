@@ -1,0 +1,15 @@
+{
+  "name": "schonfinkel",
+  "version": "1.0.0",
+  "description": " Partially apply Kubernetes config changes (e.g. deployed images)",
+  "main": "index.js",
+  "repository": "https://github.com/gauravtiwari/chuspace",
+  "author": "Lee Machin, Gaurav Tiwari",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "async": "^2.6.1",
+    "googleapis": "^33.0.0",
+    "kubernetes-client": "^6.0.0"
+  }
+}

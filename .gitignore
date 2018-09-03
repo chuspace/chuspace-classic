@@ -51,3 +51,6 @@ rspec_failures.txt
 # Git service
 mobius/vendor
 mobius/mobius
+
+# K8s deploy
+schonfinkel/node_modules
