@@ -10,62 +10,7 @@
     </div>
 
     <div class="form">
-      <%= form_with model: @user, local: true, data: { target: 'profile.form', action: 'ajax:success->profile#onUpdateSuccess' } do |f| %>
-        <div class='input-container'>
-          <%= f.label :name, class: 'input-label block' %>
-          <%= f.text_field(
-            :name,
-            autocomplete: 'name',
-            placeholder: 'Full name',
-            autofocus: true,
-            data: { target: 'profile.inputName' },
-            class: 'input block'
-          ) %>
-        </div>
-
-        <div class='input-container'>
-          <%= f.label :bio, class: 'input-label block' %>
-          <%= f.text_area(
-            :bio,
-            placeholder: 'Bio',
-            rows: 4,
-            data: { target: 'profile.inputBio', gramm: false },
-            class: 'input block'
-          ) %>
-        </div>
-
-        <div class='input-container'>
-          <%= f.label :url, class: 'input-label block' %>
-          <%= f.text_field(
-            :url,
-            placeholder: 'Blog or websie url',
-            data: { target: 'profile.inputUrl' },
-            class: 'input block'
-          ) %>
-        </div>
-
-        <div class='input-container'>
-          <%= f.label :location, class: 'input-label block' %>
-          <%= f.text_field(
-            :location,
-            placeholder: 'Your location',
-            data: { target: 'profile.inputLocation' },
-            class: 'input block'
-          ) %>
-        </div>
-
-        <div class='input-container'>
-          <%= f.label :company, class: 'input-label block' %>
-          <%= f.text_field(
-            :company,
-            placeholder: 'Company',
-            data: { target: 'profile.inputCompany' },
-            class: 'input block'
-          ) %>
-        </div>
-
-        <%= f.submit('Submit', class: 'btn btn-black mt-4') %>
-      <% end %>
+      <%= render 'form', user: @user %>
       <div class="alert alert-success" data-target='profile.formSuccess'></div>
     </div>
   </div>
