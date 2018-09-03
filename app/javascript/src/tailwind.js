@@ -49,6 +49,7 @@ let colors = {
   grey: 'rgba(0,0,0,0.6)',
   'grey-light': 'rgba(0,0,0,0.4)',
   'grey-lighter': 'rgba(0, 0, 0, 0.1)',
+  'grey-lightest': 'rgba(0, 0, 0, 0.03)',
   white: '#ffffff',
 
   'red-darkest': '#3b0d0c',
@@ -58,6 +59,9 @@ let colors = {
   'red-light': '#ef5753',
   'red-lighter': '#f9acaa',
   'red-lightest': '#fcebea',
+
+  blue: '#3490DC',
+  'blue-lighter': '#BCDEFA',
 
   'green-darkest': '#0f2f21',
   'green-darker': '#1a4731',

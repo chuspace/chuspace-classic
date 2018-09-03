@@ -1,12 +1,12 @@
+.input-container
+  @apply mb-4
+
+.input-label
+  @apply mb-4 text-sm font-bold
+
 .input
-  @apply py-2 px-4 rounded
-  min-width: 15rem
+  @apply py-3 px-4 rounded border bg-grey-lightest border-grey-lighter
+  min-width: 30rem
 
-.input-bordered
-  @apply border bg-white
-
-.input-bordered-grey
-  @apply border-grey
-
-.input-bordered-green
-  @apply border-green-light
+  &:focus, &:hover
+    @apply outline-none appearance-none border-green-light bg-white

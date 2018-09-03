@@ -15,6 +15,8 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       # Profile
       t.text :bio
       t.string :company
+      t.string :location
+      t.string :url
 
       # Github
       t.jsonb  :github_info, default: '{}'
@@ -32,6 +34,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
     add_index :users, :email, unique: true
     add_index :users, :nickname, unique: true
     add_index :users, :auth_token, unique: true
+    add_index :users, :location
     add_index  :users, :github_info, using: :gin
   end
 end
