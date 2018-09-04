@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/chuspace/shoulda-matchers.git
-  revision: 0972ec34e622294746f85f735e9d0419b12a3584
+  revision: 6f73f8b76318e44f835f77bb9aca2505d283cde2
   branch: rails-6-compat
   specs:
     shoulda-matchers (3.1.2)
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 1a0bcc3b49e05eba852912f609a20c36a9656857
+  revision: fb3642b0caf42b0554a8fd0672943f4da1643b2c
   specs:
     actioncable (6.0.0.alpha)
       actionpack (= 6.0.0.alpha)
@@ -72,7 +72,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/webpacker.git
-  revision: 87c527dc33d1b693cfce7bf2bb08fa74f1bf0f85
+  revision: 1142702edafde67e2b8947cfeaa32e0a66ec8965
   specs:
     webpacker (4.0.0.pre.pre.2)
       activesupport (>= 4.2)
@@ -81,50 +81,50 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-core.git
-  revision: 7b6b9c3f2e2878213f97d6fc9e9eb23c323cfe1c
+  revision: 96450f8468baf601b9e5c00c08bcac18013426ff
   specs:
-    rspec-core (3.8.pre)
-      rspec-support (= 3.8.pre)
+    rspec-core (3.9.0.pre)
+      rspec-support (= 3.9.0.pre)
 
 GIT
   remote: https://github.com/rspec/rspec-expectations.git
-  revision: a132fa41bdd588f9abe9444f6f1fb152f52e9531
+  revision: 31f108eae68e31ee65f0622c9ef4a488a1602943
   specs:
-    rspec-expectations (3.8.pre)
+    rspec-expectations (3.9.0.pre)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (= 3.8.pre)
+      rspec-support (= 3.9.0.pre)
 
 GIT
   remote: https://github.com/rspec/rspec-mocks.git
-  revision: 5b09361a12f5abc8e89f6f16a14d854bda378ead
+  revision: 8ee8d692885ea2d4713c01d0ee6ba3ef2a3251c9
   specs:
-    rspec-mocks (3.8.pre)
+    rspec-mocks (3.9.0.pre)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (= 3.8.pre)
+      rspec-support (= 3.9.0.pre)
 
 GIT
   remote: https://github.com/rspec/rspec-rails.git
-  revision: 814b377f6ab9cb4288ab3cb3f2f0e6262cfbe89e
+  revision: c0fdfb8c1d276b090c22ab20bdf48fffe7450274
   specs:
-    rspec-rails (3.8.pre)
+    rspec-rails (3.9.0.pre)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
-      rspec-core (= 3.8.pre)
-      rspec-expectations (= 3.8.pre)
-      rspec-mocks (= 3.8.pre)
-      rspec-support (= 3.8.pre)
+      rspec-core (= 3.9.0.pre)
+      rspec-expectations (= 3.9.0.pre)
+      rspec-mocks (= 3.9.0.pre)
+      rspec-support (= 3.9.0.pre)
 
 GIT
   remote: https://github.com/rspec/rspec-support.git
-  revision: 5a1c6756a9d8322fc18639b982e00196f452974d
+  revision: 9940a8656071655b807f772f36101b4d27f1b67d
   specs:
-    rspec-support (3.8.pre)
+    rspec-support (3.9.0.pre)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    aasm (4.12.3)
+    aasm (5.0.0)
       concurrent-ruby (~> 1.0)
     ast (2.4.0)
     awesome_print (1.8.0)
@@ -167,10 +167,10 @@ GEM
     erubi (1.7.1)
     ethon (0.11.0)
       ffi (>= 1.3.0)
-    factory_bot (4.10.0)
+    factory_bot (4.11.0)
       activesupport (>= 3.0.0)
-    factory_bot_rails (4.10.0)
-      factory_bot (~> 4.10.0)
+    factory_bot_rails (4.11.0)
+      factory_bot (~> 4.11.0)
       railties (>= 3.0.0)
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
@@ -185,12 +185,12 @@ GEM
       activesupport (>= 4.2.0)
     hashie (3.5.7)
     hiredis (0.6.1)
-    i18n (1.0.1)
+    i18n (1.1.0)
       concurrent-ruby (~> 1.0)
     image_processing (1.6.0)
       mini_magick (~> 4.0)
       ruby-vips (>= 2.0.11, < 3)
-    imagen (0.1.3)
+    imagen (0.1.5)
       parser (>= 2.5, != 2.5.1.1)
     jaro_winkler (1.5.1)
     jmespath (1.4.0)
@@ -210,7 +210,7 @@ GEM
     method_source (0.9.0)
     mimemagic (0.3.2)
     mini_magick (4.8.0)
-    mini_mime (1.0.0)
+    mini_mime (1.0.1)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
     msgpack (1.2.4)
@@ -226,12 +226,12 @@ GEM
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
-    octicons (5.3.0)
+    octicons (8.1.0)
       nokogiri (>= 1.6.3.1)
-    octicons_helper (4.3.0)
-      octicons (= 5.3.0)
+    octicons_helper (8.1.0)
+      octicons (= 8.1.0)
       rails
-    oj (3.6.4)
+    oj (3.6.7)
     omniauth (1.8.1)
       hashie (>= 3.4.6, < 3.6.0)
       rack (>= 1.6.2, < 3)
@@ -244,7 +244,7 @@ GEM
     parallel (1.12.1)
     parser (2.5.1.2)
       ast (~> 2.4.0)
-    pg (1.0.0)
+    pg (1.1.2)
     powerpack (0.1.2)
     pry (0.11.3)
       coderay (~> 1.1.0)
@@ -259,7 +259,7 @@ GEM
       rack
     rack-proxy (0.6.4)
       rack
-    rack-test (1.0.0)
+    rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails-controller-testing (0.0.3)
       rails (>= 4.2)
@@ -268,7 +268,8 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.0.4)
       loofah (~> 2.2, >= 2.2.2)
-    rainbow (3.0.0)
+    rainbow (2.2.2)
+      rake
     rake (12.3.1)
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
@@ -276,8 +277,8 @@ GEM
     readthis (2.2.0)
       connection_pool (~> 2.1)
       redis (>= 3.0, < 5.0)
-    redis (4.0.1)
-    rubocop (0.58.1)
+    redis (4.0.2)
+    rubocop (0.58.2)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.5, != 2.5.1.1)
@@ -285,18 +286,17 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
-    ruby-progressbar (1.9.0)
-    ruby-vips (2.0.12)
+    ruby-progressbar (1.10.0)
+    ruby-vips (2.0.13)
       ffi (~> 1.9)
     ruby_dep (1.5.0)
-    rugged (0.27.2)
-    searchkick (3.1.0)
+    rugged (0.27.4)
+    searchkick (3.1.1)
       activemodel (>= 4.2)
       elasticsearch (>= 5)
       hashie
-    sidekiq (5.1.3)
-      concurrent-ruby (~> 1.0)
-      connection_pool (~> 2.2, >= 2.2.0)
+    sidekiq (5.2.1)
+      connection_pool (~> 2.2, >= 2.2.2)
       rack-protection (>= 1.5.0)
       redis (>= 3.3.5, < 5)
     simplecov (0.16.1)
@@ -323,13 +323,13 @@ GEM
       ethon (>= 0.9.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    undercover (0.1.4)
-      imagen (~> 0.1.2)
-      rainbow (~> 3.0.0)
+    undercover (0.2.0)
+      imagen (~> 0.1.5)
+      rainbow (~> 2.1)
       rugged (~> 0.27.0)
     unicode-display_width (1.4.0)
     vcr (4.0.0)
-    web-console (3.6.2)
+    web-console (3.7.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
@@ -357,7 +357,6 @@ DEPENDENCIES
   hiredis
   image_processing (~> 1.2)
   listen (>= 3.0.5)
-  mini_magick
   oauth2 (>= 1.4.0)
   octicons_helper
   oj
@@ -376,6 +375,7 @@ DEPENDENCIES
   rspec-rails!
   rspec-support!
   rubocop
+  ruby-vips
   searchkick
   shoulda-matchers!
   sidekiq
