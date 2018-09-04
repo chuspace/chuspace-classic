@@ -52,5 +52,5 @@ rspec_failures.txt
 mobius/vendor
 mobius/mobius
 
-# K8s deploy
-schonfinkel/node_modules
+# K8s deploy / Cloud functions
+mozart/node_modules

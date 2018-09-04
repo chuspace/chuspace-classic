@@ -2,7 +2,7 @@ const async = require('async');
 const google = require('googleapis');
 const k8s = require('kubernetes-client');
 
-const container = google.container('v2');
+const container = google.container('v1');
 
 const PROJECT_ID = 'chuspace-210609';
 const ZONE = 'europe-west1';
