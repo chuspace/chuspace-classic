@@ -23,6 +23,7 @@ gem 'redis', '>= 4.0'
 # Use ActiveStorage variant
 gem 'mini_magick'
 gem 'image_processing', '~> 1.2'
+gem 'aws-sdk-s3'
 
 # caching
 gem 'readthis'
