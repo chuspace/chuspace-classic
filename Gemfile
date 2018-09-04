@@ -23,7 +23,6 @@ gem 'redis', '>= 4.0'
 # Use ActiveStorage variant
 gem 'mini_magick'
 gem 'image_processing', '~> 1.2'
-gem 'google-cloud-storage', require: false
 
 # caching
 gem 'readthis'
@@ -58,13 +57,8 @@ gem 'omniauth-github', '>= 1.3.0'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'octicons_helper'
 
-# Error reporting and logging
-gem 'lograge'
-gem 'stackdriver'
-
-group :production do
-  gem 'foreman'
-end
+# Running Procfile
+gem 'foreman'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
