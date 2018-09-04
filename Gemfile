@@ -40,7 +40,7 @@ gem 'searchkick'
 gem 'oj'
 
 # Jobs
-gem 'activejob-google_cloud_pubsub'
+gem 'sidekiq'
 
 # ENV
 gem 'figaro'

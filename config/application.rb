@@ -22,6 +22,9 @@ module Chuspace
     config.load_defaults 6.0
     config.generators.system_tests = nil
 
+    # Configure sidekiq as background job adapter on staging and production
+    config.active_job.queue_adapter = :sidekiq
+
     # Configure google cloud error reporting
     config.google_cloud.project_id = 'chuspace-210609'
     config.google_cloud.keyfile = ENV['STACKDRIVER_KEYFILE']
