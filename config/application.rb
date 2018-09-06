@@ -22,19 +22,12 @@ module Chuspace
     config.load_defaults 6.0
     config.generators.system_tests = nil
 
-    # Configure google cloud error reporting
-    config.google_cloud.project_id = 'chuspace-210609'
-    config.google_cloud.keyfile = ENV['STACKDRIVER_KEYFILE']
+    # Configure sidekiq as background job adapter on staging and production
+    config.active_job.queue_adapter = :sidekiq
 
-    config.google_cloud.use_error_reporting = %w(staging production).include?(Rails.env)
-    config.google_cloud.use_trace = %w(staging production).include?(Rails.env)
-    config.google_cloud.use_debugger = false
-    config.google_cloud.use_logging = false
+    # Use Vips for processing images faster.
+    config.active_storage.variant_processor = :vips
 
-    config.google_cloud.trace.capture_stack = true
-
-    # Load additional paths
-    config.eager_load_paths << config.root.join('lib', 'mobius')
     # Setup custom path for mailer previews
     config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
   end

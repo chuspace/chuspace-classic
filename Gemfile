@@ -21,9 +21,9 @@ gem 'webpacker', github: 'rails/webpacker'
 gem 'redis', '>= 4.0'
 
 # Use ActiveStorage variant
-gem 'mini_magick'
+gem 'ruby-vips'
 gem 'image_processing', '~> 1.2'
-gem 'google-cloud-storage', require: false
+gem 'aws-sdk-s3'
 
 # caching
 gem 'readthis'
@@ -40,7 +40,7 @@ gem 'searchkick'
 gem 'oj'
 
 # Jobs
-gem 'activejob-google_cloud_pubsub'
+gem 'sidekiq'
 
 # ENV
 gem 'figaro'
@@ -58,13 +58,8 @@ gem 'omniauth-github', '>= 1.3.0'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'octicons_helper'
 
-# Error reporting and logging
-gem 'lograge'
-gem 'stackdriver'
-
-group :production do
-  gem 'foreman'
-end
+# Running Procfile
+gem 'foreman'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
