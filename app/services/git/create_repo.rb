@@ -10,13 +10,7 @@ module Git
     end
 
     def call
-      mobius.init_repo(user)
-    end
-
-    private
-
-    def mobius
-      Mobius::Client.new
+      # TODO
     end
   end
 end

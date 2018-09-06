@@ -21,7 +21,7 @@ gem 'webpacker', github: 'rails/webpacker'
 gem 'redis', '>= 4.0'
 
 # Use ActiveStorage variant
-gem 'ruby-vips'
+gem 'mini_magick'
 gem 'image_processing', '~> 1.2'
 gem 'aws-sdk-s3'
 
@@ -58,8 +58,8 @@ gem 'omniauth-github', '>= 1.3.0'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'octicons_helper'
 
-# Running Procfile
-gem 'foreman'
+# 12 factor app
+gem 'rails_12factor', group: :production
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -76,20 +76,13 @@ end
 
 group :development do
   gem 'web-console', '>= 3.3.0'
-  gem 'listen', '>= 3.0.5'
-  gem 'spring'
-  gem 'spring-watcher-listen'
-
   # Code linting
   gem 'rubocop', require: false
   gem 'undercover', require: false
-
   # Security
   gem 'brakeman', require: false
-
   # Better messages
   gem 'awesome_print'
-
   # Pry
   gem 'pry-rails'
 end

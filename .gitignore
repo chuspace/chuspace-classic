@@ -47,7 +47,3 @@ rspec_failures.txt
 
 # Relay
 **/__generated__/**/*
-
-# Git service
-mobius/vendor
-mobius/mobius

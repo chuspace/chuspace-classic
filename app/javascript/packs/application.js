@@ -1,6 +1,6 @@
 // Bootstrap app
 
-import 'babel-polyfill'
+import '@babel/polyfill'
 import 'styles/application'
 
 import * as Rails from 'rails-ujs'

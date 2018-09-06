@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Git::CreateRepo do
   let(:user) { create(:user) }
 
-  it 'should create a repo in mobius' do
+  it 'should create a repo' do
 
   end
 end

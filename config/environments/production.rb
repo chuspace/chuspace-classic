@@ -3,10 +3,6 @@
 Rails.application.configure do
   config.secret_key_base = ENV.fetch('SECRET_KEY_BASE')
 
-  # Verifies that versions and hashed value of the package contents in the project's package.json
-  config.webpacker.check_yarn_integrity = false
-  # Verifies that versions and hashed value of the package contents in the project's package.json
-
   # Code is not reloaded between requests.
   config.cache_classes = true
 
@@ -32,7 +28,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
   # Store uploaded files on the local file system (see config/storage.yml for options)
-  config.active_storage.service = :google
+  config.active_storage.service = :amazon
 
   # Mount Action Cable outside main process or domain
   # config.action_cable.mount_path = nil
