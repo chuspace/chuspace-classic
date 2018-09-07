@@ -10,7 +10,6 @@ class UsersController < ApplicationController
     user = User.new(create_params)
 
     if user.valid? && user.save
-      Git::CreateRepo.call(user: user)
       UserMailer.with(user: user).send_magic_login.deliver_later
 
       render json: { success: t('.registration.success') }
