@@ -10,11 +10,16 @@ Rails.application.routes.draw do
   get '/register', to: 'registrations#new', as: :new_registration
   get '/login', to: 'sessions#new', as: :new_session
 
-  resources :repos
   resources :check_nicknames, only: :create
   resources :magic_logins, only: :index
   resources :users, except: :show
   resources :posts
+
+  resources :settings, only: :index
+
+  namespace :settings do
+    resources :profiles, path: 'profile', only: %i[index]
+  end
 
   get '/:nickname', to: 'users#show', as: :profile
 end

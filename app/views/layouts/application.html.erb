@@ -13,6 +13,15 @@
     </div>
 
     <section class="content">
+      <div class="flash-message-container">
+        <% flash.each do |key, value| %>
+          <div class="<%= flash_message_class(key) %>">
+            <div class="mx-auto container py-4">
+              <%= value %>
+            </div>
+          </div>
+        <% end %>
+      </div>
       <%= yield %>
     </section>
 

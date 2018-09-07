@@ -17,6 +17,8 @@ module Users
           user.nickname = auth.info.nickname
           # Profile
           user.bio = auth.extra.raw_info.bio
+          user.location = auth.extra.raw_info.location
+          user.url = auth.extra.raw_info.html_url
           user.company = auth.extra.raw_info.company
           # Github
           user.github_info = auth.info

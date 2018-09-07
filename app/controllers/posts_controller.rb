@@ -13,7 +13,6 @@ class PostsController < ApplicationController
 
   def create
     post = Current.user.posts.build(post_params)
-    post.repo = Current.user.repo
 
     if post.save
       redirect_to post_path(post)

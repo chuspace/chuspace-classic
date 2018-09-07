@@ -1,0 +1,52 @@
+<%= form_with model: user, local: true do |f| %>
+  <div class='input-container'>
+    <%= f.label :name, class: 'input-label block' %>
+    <%= f.text_field(
+      :name,
+      autocomplete: 'name',
+      placeholder: 'Full name',
+      autofocus: true,
+      class: 'input block'
+    ) %>
+  </div>
+
+  <div class='input-container'>
+    <%= f.label :bio, class: 'input-label block' %>
+    <%= f.text_area(
+      :bio,
+      placeholder: 'Bio',
+      rows: 4,
+      data: { gramm: false },
+      class: 'input block'
+    ) %>
+  </div>
+
+  <div class='input-container'>
+    <%= f.label :url, class: 'input-label block' %>
+    <%= f.text_field(
+      :url,
+      placeholder: 'Blog or websie url',
+      class: 'input block'
+    ) %>
+  </div>
+
+  <div class='input-container'>
+    <%= f.label :location, class: 'input-label block' %>
+    <%= f.text_field(
+      :location,
+      placeholder: 'Your location',
+      class: 'input block'
+    ) %>
+  </div>
+
+  <div class='input-container'>
+    <%= f.label :company, class: 'input-label block' %>
+    <%= f.text_field(
+      :company,
+      placeholder: 'Company',
+      class: 'input block'
+    ) %>
+  </div>
+
+  <%= f.submit('Submit', class: 'btn btn-black mt-4') %>
+<% end %>
