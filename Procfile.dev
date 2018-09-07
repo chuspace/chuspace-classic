@@ -1,3 +1,2 @@
 chuspace: bundle exec rails s -p $PORT
 webpacker: ./bin/webpack-dev-server
-mobius: API_PORT=3001 SSH_PORT=3002 GIT_STORAGE_PATH=/tmp go run mobius/main.go
