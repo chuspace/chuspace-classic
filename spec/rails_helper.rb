@@ -12,7 +12,6 @@ require 'shoulda/matchers'
 require 'database_cleaner'
 require 'simplecov'
 require 'simplecov-lcov'
-require 'undercover'
 
 SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
 SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter

@@ -1,0 +1,72 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/ruby:2.5.1-node
+        environment:
+          PGHOST: localhost
+          PGUSER: postgres
+          RAILS_ENV: test
+      - image: postgres:10.5-alpine
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: postgres_test
+          POSTGRES_PASSWORD: ""
+      - image: redis:4.0.11-alpine
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          - v2-node-dependencies-{{ checksum "package.json" }}
+          - v2-node-dependencies-
+
+      - run: yarn install
+
+      - save_cache:
+          paths:
+            - node_modules
+            - node_modules/.cache/**/*
+          key: v2-node-dependencies-{{ checksum "package.json" }}
+
+      - restore_cache:
+          keys:
+          - v2-rails-dependencies-{{ checksum "Gemfile.lock" }}
+          - v2-rails-dependencies-
+
+      - run:
+          name: install dependencies
+          command: |
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      - run: bundle exec rake db:create
+      - run: bundle exec rake db:schema:load
+      - run: CI=yes bundle exec rails assets:precompile
+
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+            - ./tmp/cache/webpacker/*
+            - ./public/packs-test/**/*
+            - ./public/assets/**/*
+          key: v2-rails-dependencies-{{ checksum "Gemfile.lock" }}
+
+      - run:
+          name: run tests
+          command: |
+            mkdir /tmp/test-results
+            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
+
+            bundle exec rspec --format progress \
+                            --format RspecJunitFormatter \
+                            --out /tmp/test-results/rspec.xml \
+                            --format progress \
+                            $TEST_FILES
+
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results

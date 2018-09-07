@@ -2,7 +2,7 @@
   "name": "chuspace",
   "private": true,
   "engines": {
-    "node": "10"
+    "node": "8.11.4"
   },
   "scripts": {
     "format": "yarn run prettier-standard '{app,config,bin}/**/*.{js,jsx}'",
@@ -42,7 +42,7 @@
     "prosemirror-schema-list": "^1.0.1",
     "prosemirror-state": "^1.2.2",
     "prosemirror-tables": "^0.7.6",
-    "prosemirror-view": "^1.5.1",
+    "prosemirror-view": "^1.5.2",
     "rails-ujs": "^5.2.1",
     "stimulus": "^1.1.0",
     "tailwindcss": "^0.6.5",
@@ -58,11 +58,11 @@
     "eslint-plugin-flowtype": "^2.50.0",
     "eslint-plugin-import": "~2.14.0",
     "eslint-plugin-node": "~7.0.1",
-    "eslint-plugin-promise": "^4.0.0",
+    "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "flow-typed": "^2.4.0",
     "prettier": "~1.14.2",
     "prettier-standard": "^8.0.1",
-    "webpack-dev-server": "^3.1.7"
+    "webpack-dev-server": "^3.1.8"
   }
 }

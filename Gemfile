@@ -70,7 +70,7 @@ group :development, :test do
   # Testing
   gem 'database_cleaner'
   gem 'factory_bot_rails'
-
+  gem 'rspec_junit_formatter'
   # Rspec
   %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
     gem lib, github: "rspec/#{lib}"
@@ -81,7 +81,6 @@ group :development do
   gem 'web-console', '>= 3.3.0'
   # Code linting
   gem 'rubocop', require: false
-  gem 'undercover', require: false
   # Security
   gem 'brakeman', require: false
   # Better messages
