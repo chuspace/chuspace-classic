@@ -7,18 +7,18 @@ module Authentication
     before_action :authenticate
   end
 
-  def login(user)
-    cookies.encrypted[:user_id] = { value: user.id, expires: 1.year.from_now }
+  def login(person)
+    cookies.encrypted[:person_id] = { value: person.id, expires: 1.year.from_now }
   end
 
   def logout
-    cookies.encrypted[:user_id] = nil
+    cookies.encrypted[:person_id] = nil
   end
 
   private
   def authenticate
-    authenticated_user = User.find_by(id: cookies.encrypted[:user_id])
-    Current.user = authenticated_user
+    authenticated_person = Person.find_by(id: cookies.encrypted[:person_id])
+    Current.person = authenticated_person
   end
 
   def authenticate!

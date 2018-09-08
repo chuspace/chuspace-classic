@@ -8,10 +8,10 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by(email: params[:email])
+    person = Person.find_by(email: params[:email])
 
-    if user
-      UserMailer.with(user: user).send_magic_login.deliver_later
+    if person
+      PersonMailer.with(person: person).send_magic_login.deliver_later
       render json: { success: t('.login.success') }
     else
       render json: { errors: errors_for(:email, t('.login.email_not_found')) }
@@ -19,9 +19,9 @@ class SessionsController < ApplicationController
   end
 
   def github
-    user = User.from_github(auth_hash)
-    if user
-      login(user) if user
+    person = Person.from_github(auth_hash)
+    if person
+      login(person) if person
       redirect_to root_path
     else
       failure

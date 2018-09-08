@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Post, type: :model do
   subject { create(:post, slug: 'foo-bar') }
 
-  it { is_expected.to belong_to(:user) }
+  it { is_expected.to belong_to(:person) }
 
   it 'should validate uniqueness and presence of slug' do
     described_class.skip_callback(:validation, :before, :assign_slug)

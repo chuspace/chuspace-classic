@@ -4,8 +4,8 @@
       <%= link_to 'chuspace', root_path, class: 'link link-default' %>
     </div>
 
-    <% if Current.user.present? %>
-      <%= render 'header/user'  %>
+    <% if Current.person.present? %>
+      <%= render 'header/person'  %>
     <% else %>
       <%= render 'header/guest'  %>
     <% end %>

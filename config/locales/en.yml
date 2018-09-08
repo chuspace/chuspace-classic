@@ -2,12 +2,12 @@ en:
   activerecord:
     errors:
       models:
-        user:
+        person:
           attributes:
             nickname:
-              invalid: Username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen
+              invalid: Nickname may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen
 
-  user_mailer:
+  login_mailer:
     send_magic_login:
       subject: Log in to Chuspace
       link_request: You don’t need a password to access your Chuspace account. Just click the secure link below.

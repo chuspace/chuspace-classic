@@ -8,19 +8,21 @@ module Sluggable
   end
 
   class_methods do
-    attr_reader :slug_attribute
+    attr_reader :slug_attribute, :slug_source
 
-    def sluggable(attribute = :name)
+    def sluggable(attribute: :slug, source: :name)
       @slug_attribute = attribute
+      @slug_source = source
     end
   end
 
   def to_param
-    send(self.class.slug_attribute).parameterize
+    send(self.class.slug_source).parameterize
   end
 
   private
+
   def assign_slug
-    self.slug = send(self.class.slug_attribute)&.parameterize&.downcase&.strip
+    send("#{self.class.slug_attribute}=", send(self.class.slug_source)&.parameterize&.downcase&.strip)
   end
 end

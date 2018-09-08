@@ -38,28 +38,13 @@ ActiveRecord::Schema.define(version: 2018_04_15_183817) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "title", null: false
-    t.citext "slug", null: false
-    t.text "body", null: false
-    t.uuid "user_id"
-    t.string "commit"
-    t.integer "version"
-    t.string "tags", default: [], array: true
-    t.integer "status", default: 0, null: false
-    t.datetime "published_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["published_at"], name: "index_posts_on_published_at"
-    t.index ["slug"], name: "index_posts_on_slug", unique: true
-    t.index ["status"], name: "index_posts_on_status"
-  end
-
-  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
     t.citext "nickname", null: false
     t.string "avatar"
+    t.integer "git_repo_id"
+    t.integer "git_repo_owner_id"
     t.string "auth_token", null: false
     t.text "bio"
     t.string "company"
@@ -73,11 +58,30 @@ ActiveRecord::Schema.define(version: 2018_04_15_183817) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["auth_token"], name: "index_users_on_auth_token", unique: true
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["github_info"], name: "index_users_on_github_info", using: :gin
-    t.index ["location"], name: "index_users_on_location"
-    t.index ["nickname"], name: "index_users_on_nickname", unique: true
+    t.index ["auth_token"], name: "index_people_on_auth_token", unique: true
+    t.index ["email"], name: "index_people_on_email", unique: true
+    t.index ["git_repo_id"], name: "index_people_on_git_repo_id", unique: true
+    t.index ["git_repo_owner_id"], name: "index_people_on_git_repo_owner_id", unique: true
+    t.index ["github_info"], name: "index_people_on_github_info", using: :gin
+    t.index ["location"], name: "index_people_on_location"
+    t.index ["nickname"], name: "index_people_on_nickname", unique: true
+  end
+
+  create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title"
+    t.citext "slug", null: false
+    t.text "body"
+    t.uuid "person_id"
+    t.string "commit"
+    t.float "version"
+    t.string "tags", default: [], array: true
+    t.integer "status", default: 0, null: false
+    t.datetime "published_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["published_at"], name: "index_posts_on_published_at"
+    t.index ["slug"], name: "index_posts_on_slug", unique: true
+    t.index ["status"], name: "index_posts_on_status"
   end
 
 end

@@ -2,11 +2,11 @@
 
 class Post < ApplicationRecord
   include Sluggable
-  sluggable :title
+  sluggable source: :title
 
-  belongs_to :user
+  belongs_to :person
 
-  validates :title, :body, :status, presence: true
+  validates :status, presence: true
   validates :slug, presence: true, uniqueness: true
 
   enum status: {

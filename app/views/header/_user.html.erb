@@ -1,12 +1,12 @@
 <%= render "components/dropdown" do %>
   <% content_for :target do %>
-    <%= avatar_for(user: Current.user, size: :xs) %>
+    <%= avatar_for(person: Current.person, size: :xs) %>
   <% end %>
 
   <% content_for :content do %>
     <ul class='list-reset dropdown'>
       <li class='pb-2'>
-        <%= link_to('Profile', profile_path(Current.user), class: 'link link-default db mb2') %>
+        <%= link_to('Profile', profile_path(Current.person), class: 'link link-default db mb2') %>
       </li>
       <li class='pb-2'>
         <%= link_to('Settings', settings_path, class: 'link link-default db mb2') %>

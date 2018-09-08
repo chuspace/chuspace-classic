@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :check_nicknames, only: :create
   resources :magic_logins, only: :index
-  resources :users, except: :show
+  resources :people, except: :show
   resources :posts
 
   resources :settings, only: :index
@@ -21,5 +21,5 @@ Rails.application.routes.draw do
     resources :profiles, path: 'profile', only: %i[index]
   end
 
-  get '/:nickname', to: 'users#show', as: :profile
+  get '/:nickname', to: 'people#show', as: :profile
 end

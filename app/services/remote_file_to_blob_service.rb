@@ -9,7 +9,7 @@ class RemoteFileToBlobService
   class ContentTypeError < StandardError; end
 
   attr_reader :uri, :file
-  HEADERS = { 'User-Agent' => 'chuspace.com' }.freeze
+  HEADERS = { 'Person-Agent' => 'chuspace.com' }.freeze
 
   def initialize(remote_url)
     @uri = process_uri(remote_url)

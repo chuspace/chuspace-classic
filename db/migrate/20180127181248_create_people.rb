@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 
-class CreateUsers < ActiveRecord::Migration[5.2]
+class CreatePeople < ActiveRecord::Migration[5.2]
   def change
-    create_table :users, id: :uuid, force: :cascade do |t|
+    create_table :people, id: :uuid, force: :cascade do |t|
       ## Database authenticatable
       t.string :name, null: false
       t.string :email, null: false
       t.citext :nickname, null: false
       t.string :avatar
+
+      # Git info
+      t.integer :git_repo_id
+      t.integer :git_repo_owner_id
 
       # Passwordless login
       t.string :auth_token, null: false
@@ -31,10 +35,14 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.timestamps null: false
     end
 
-    add_index :users, :email, unique: true
-    add_index :users, :nickname, unique: true
-    add_index :users, :auth_token, unique: true
-    add_index :users, :location
-    add_index  :users, :github_info, using: :gin
+    add_index :people, :email, unique: true
+    add_index :people, :nickname, unique: true
+    add_index :people, :auth_token, unique: true
+    add_index :people, :location
+
+    add_index :people, :git_repo_id, unique: true
+    add_index :people, :git_repo_owner_id, unique: true
+
+    add_index :people, :github_info, using: :gin
   end
 end

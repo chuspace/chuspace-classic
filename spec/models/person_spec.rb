@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
-  subject { create(:user) }
+RSpec.describe Person, type: :model do
+  subject { create(:person) }
 
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_presence_of(:email) }

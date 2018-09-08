@@ -1,13 +1,13 @@
 <div class='editor w-1/2 mx-auto mt-8'>
   <div class='flex items-center mt-2'>
     <div class='image'>
-      <%= avatar_for(user: Current.user, size: :sm) %>
+      <%= avatar_for(person: Current.person, size: :sm) %>
     </div>
 
     <div class='pl-3 flex-1'>
-      <h3><%= Current.user.name %></h3>
-      <h5><%= Current.user.bio %></h5>
-      <p><%= Current.user.company %></p>
+      <h3><%= Current.person.name %></h3>
+      <h5><%= Current.person.bio %></h5>
+      <p><%= Current.person.company %></p>
     </div>
 
     <div class='flex items-center justify-between'>

@@ -2,19 +2,19 @@
 
 require 'rails_helper'
 
-RSpec.describe UsersController, type: :controller do
+RSpec.describe PeopleController, type: :controller do
   describe 'POST create' do
-    it 'creates a user' do
-      post :create, params: { user: { name: 'Foo', email: 'foo@bar.com', nickname: 'foobar' } }, format: :json
+    it 'creates a person' do
+      post :create, params: { person: { name: 'Foo', email: 'foo@bar.com', nickname: 'foobar' } }, format: :json
 
       expect(json).to eq('success' => 'Welcome aboard! we have sent you an email with login link.')
     end
 
-    it 'returns errors for invalid user' do
-      post :create, params: { user: { name: 'Foo', email: 'foo@bar.com', nickname: 'foobar' } }, format: :json
+    it 'returns errors for invalid person' do
+      post :create, params: { person: { name: 'Foo', email: 'foo@bar.com', nickname: 'foobar' } }, format: :json
       expect(response.body).to eq({ "success": 'Welcome aboard! we have sent you an email with login link.' }.to_json)
 
-      post :create, params: { user: { name: 'Foo', email: 'foo@bar.com', nickname: 'foobar' } }, format: :json
+      post :create, params: { person: { name: 'Foo', email: 'foo@bar.com', nickname: 'foobar' } }, format: :json
 
       expect(json).to have_key('errors')
       expect(json).to be_an_instance_of(Hash)
