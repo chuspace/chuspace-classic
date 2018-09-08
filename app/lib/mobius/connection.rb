@@ -64,7 +64,7 @@ module Mobius
       API_ENDPOINT
     end
 
-    def person_agent
+    def user_agent
       USER_AGENT
     end
 
@@ -102,7 +102,7 @@ module Mobius
       {
         headers: {
           accept: media_type,
-          person_agent: person_agent,
+          user_agent: user_agent,
           content_type: 'application/json',
           'Private-token': @access_token
         }

@@ -3,7 +3,7 @@
 module Mobius
   class Client
     include Mobius::Connection
-    include Mobius::Client::Persons
+    include Mobius::Client::Users
     include Mobius::Client::Repos
 
     attr_accessor :access_token

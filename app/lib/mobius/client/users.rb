@@ -4,9 +4,9 @@ require 'sawyer'
 
 module Mobius
   class Client
-    module Persons
-      def person(opts = {})
-        get 'person', opts
+    module Users
+      def user(opts = {})
+        get 'user', opts
       end
     end
   end
