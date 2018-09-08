@@ -46,8 +46,6 @@ gem 'sidekiq'
 gem 'figaro'
 
 # HTTP requests
-gem 'faraday'
-gem 'faraday_middleware'
 gem 'typhoeus'
 
 # oAuth
@@ -63,6 +61,10 @@ gem 'rails_12factor', group: :production
 
 # Turblinks
 gem 'turbolinks'
+
+# HTTP API
+gem 'sawyer'
+gem 'faraday-http-cache'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

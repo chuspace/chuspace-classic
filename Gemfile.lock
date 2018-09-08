@@ -126,6 +126,8 @@ GEM
   specs:
     aasm (5.0.1)
       concurrent-ruby (~> 1.0)
+    addressable (2.5.2)
+      public_suffix (>= 2.0.2, < 4.0)
     ast (2.4.0)
     awesome_print (1.8.0)
     aws-eventstream (1.0.1)
@@ -174,8 +176,8 @@ GEM
       railties (>= 3.0.0)
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
-    faraday_middleware (0.12.2)
-      faraday (>= 0.7.4, < 1.0)
+    faraday-http-cache (2.0.0)
+      faraday (~> 0.8)
     ffi (1.9.25)
     figaro (1.1.1)
       thor (~> 0.14)
@@ -243,6 +245,7 @@ GEM
       method_source (~> 0.9.0)
     pry-rails (0.3.6)
       pry (>= 0.10.4)
+    public_suffix (3.0.3)
     puma (3.12.0)
     pundit (2.0.0)
       activesupport (>= 3.0.0)
@@ -285,6 +288,9 @@ GEM
     ruby-progressbar (1.10.0)
     ruby-vips (2.0.13)
       ffi (~> 1.9)
+    sawyer (0.8.1)
+      addressable (>= 2.3.5, < 2.6)
+      faraday (~> 0.8, < 1.0)
     searchkick (3.1.1)
       activemodel (>= 4.2)
       elasticsearch (>= 5)
@@ -338,8 +344,7 @@ DEPENDENCIES
   byebug
   database_cleaner
   factory_bot_rails
-  faraday
-  faraday_middleware
+  faraday-http-cache
   figaro
   hiredis
   image_processing (~> 1.2)
@@ -364,6 +369,7 @@ DEPENDENCIES
   rspec-support!
   rspec_junit_formatter
   rubocop
+  sawyer
   searchkick
   shoulda-matchers!
   sidekiq
