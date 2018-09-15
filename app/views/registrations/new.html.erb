@@ -28,7 +28,7 @@
 
 
     <div class='card-body'>
-      <%= form_with url: persons_path, scope: :person, data: { target: 'register.form', action: 'ajax:success->register#onRegisterSuccess' } do |form| %>
+      <%= form_with url: people_path, scope: :person, data: { target: 'register.form', action: 'ajax:success->register#onRegisterSuccess' } do |form| %>
         <%= form.text_field(
           'name',
           autocomplete: 'name',
