@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/gauravtiwari/chuspace/tree/master.svg?style=svg)](https://circleci.com/gh/gauravtiwari/chuspace/tree/master)
+[![CircleCI](https://circleci.com/gh/gauravtiwari/chuspace.svg?style=svg&circle-token=c90086977cb25c8464d970ab0e1f5747bd2c2a3f)](https://circleci.com/gh/gauravtiwari/chuspace)
 
 # Chuspace
 
