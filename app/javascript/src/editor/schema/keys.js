@@ -1,27 +1,27 @@
-import { keymap } from 'prosemirror-keymap'
-import { undoInputRule } from 'prosemirror-inputrules'
-import { undo, redo } from 'prosemirror-history'
-import {
-  wrapInList,
-  splitListItem,
-  liftListItem,
-  sinkListItem
-} from 'prosemirror-schema-list'
-import { goToNextCell } from 'prosemirror-tables'
 import {
   baseKeymap,
-  toggleMark,
-  wrapIn,
-  setBlockType,
   chainCommands,
   exitCode,
-  joinUp,
   joinDown,
+  joinUp,
   lift,
-  selectParentNode
+  selectParentNode,
+  setBlockType,
+  toggleMark,
+  wrapIn
 } from 'prosemirror-commands'
+import {
+  liftListItem,
+  sinkListItem,
+  splitListItem,
+  wrapInList
+} from 'prosemirror-schema-list'
+import { redo, undo } from 'prosemirror-history'
 
+import { goToNextCell } from 'prosemirror-tables'
+import { keymap } from 'prosemirror-keymap'
 import schema from './schema'
+import { undoInputRule } from 'prosemirror-inputrules'
 
 const insertBreak = (state, dispatch) => {
   const br = schema.nodes.hard_break.create()

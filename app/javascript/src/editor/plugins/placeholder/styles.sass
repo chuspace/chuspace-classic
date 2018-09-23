@@ -1,9 +1,15 @@
-.ProseMirror .empty-node::before
-  float: left
-  color: #aaa
-  pointer-events: none
-  height: 0
-  font-style: italic
+.ProseMirror
+  .empty-node::before
+    float: left
+    color: #aaa
+    pointer-events: none
+    height: 0
 
-.ProseMirror p.empty-node:first-child::before
-  content: 'Start typing…'
+  .title.empty-node::before
+    content: 'Enter title'
+  .subtitle.empty-node::before
+    content: 'Enter sub title'
+  .empty-node::before
+    content: 'Start typing…'
+  .tags.empty-node::before
+    content: 'Enter tags…'

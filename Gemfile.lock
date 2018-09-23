@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails.git
-  revision: d7445bc56f4eec8e19033f79be77aceb496fc31c
+  revision: f818eb558b6b3546705c754fe7c7beb64df3b425
   specs:
     actioncable (6.0.0.alpha)
       actionpack (= 6.0.0.alpha)
@@ -88,7 +88,7 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-expectations.git
-  revision: 31f108eae68e31ee65f0622c9ef4a488a1602943
+  revision: 5c37bd9a14a5133820250c16beeed36c15389a59
   specs:
     rspec-expectations (3.9.0.pre)
       diff-lcs (>= 1.2.0, < 2.0)
@@ -104,7 +104,7 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-rails.git
-  revision: 2d94bbeaf9f9221a3778c2d7ec938510a24a8a23
+  revision: a89eee761659d197e5c9df93b2f339f919795237
   specs:
     rspec-rails (3.9.0.pre)
       actionpack (>= 3.0)
@@ -140,7 +140,7 @@ GEM
     aws-sdk-kms (1.9.0)
       aws-sdk-core (~> 3, >= 3.26.0)
       aws-sigv4 (~> 1.0)
-    aws-sdk-s3 (1.19.0)
+    aws-sdk-s3 (1.20.0)
       aws-sdk-core (~> 3, >= 3.26.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.0)
@@ -187,9 +187,9 @@ GEM
     hiredis (0.6.1)
     i18n (1.1.0)
       concurrent-ruby (~> 1.0)
-    image_processing (1.6.0)
+    image_processing (1.7.0)
       mini_magick (~> 4.0)
-      ruby-vips (>= 2.0.11, < 3)
+      ruby-vips (>= 2.0.13, < 3)
     jaro_winkler (1.5.1)
     jmespath (1.4.0)
     json (2.1.0)
@@ -252,7 +252,7 @@ GEM
     rack (2.0.5)
     rack-protection (2.0.4)
       rack
-    rack-proxy (0.6.4)
+    rack-proxy (0.6.5)
       rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -294,7 +294,7 @@ GEM
       activemodel (>= 4.2)
       elasticsearch (>= 5)
       hashie
-    sidekiq (5.2.1)
+    sidekiq (5.2.2)
       connection_pool (~> 2.2, >= 2.2.2)
       rack-protection (>= 1.5.0)
       redis (>= 3.3.5, < 5)

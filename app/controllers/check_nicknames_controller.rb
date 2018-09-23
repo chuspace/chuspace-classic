@@ -5,7 +5,7 @@ class CheckNicknamesController < ApplicationController
     person = Person.find_by(nickname: inputs[:nickname])
 
     if person
-      { available: false, errors: person.errors_for(:nickname, I18n.t('.check_nickname.taken', nickname: inputs[:nickname])) }
+      { available: false, errors: person.errors_for(:nickname, t('.check_nickname.taken', nickname: inputs[:nickname])) }
     else
       new_person = Person.new(nickname: inputs[:nickname])
 
