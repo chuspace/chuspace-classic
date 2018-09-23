@@ -23,6 +23,68 @@ const listNodes = {
 
 export default {
   ...nodes,
+  title: {
+    attrs: { class: { default: 'title' } },
+    content: 'inline*',
+    group: 'block',
+    defining: true,
+    parseDOM: [
+      {
+        tag: 'h1',
+        getAttrs: node => {
+          return {
+            class: node.getAttribute('class')
+          }
+        }
+      }
+    ],
+    toDOM (node) {
+      return ['h1', node.attrs, 0]
+    }
+  },
+
+  subtitle: {
+    attrs: { class: { default: 'subtitle' } },
+    content: 'inline*',
+    group: 'block',
+    defining: true,
+    parseDOM: [
+      {
+        tag: 'h2',
+        getAttrs: node => {
+          return {
+            class: node.getAttribute('class')
+          }
+        }
+      }
+    ],
+    toDOM (node) {
+      return ['h2', node.attrs, 0]
+    }
+  },
+
+  tags: {
+    attrs: { class: { default: 'tags' } },
+    content: 'inline*',
+    group: 'block',
+    defining: true,
+    parseDOM: [
+      {
+        tag: 'div',
+        getAttrs: node => {
+          return {
+            class: node.getAttribute('class')
+          }
+        }
+      }
+    ],
+    toDOM (node) {
+      return ['div', node.attrs, 0]
+    }
+  },
+  doc: {
+    content: 'title (subtitle? | block+) tags'
+  },
   ...listNodes,
   ...tableNodes({
     tableGroup: 'block',

@@ -1,32 +1,13 @@
 import 'prosemirror-view/style/prosemirror.css'
 import './style.sass'
 
-import { DOMParser, DOMSerializer } from 'prosemirror-model'
 import { editorPlugins, editorSchema } from 'editor/schema'
 
 import { EditorState } from 'prosemirror-state'
 import { EditorView } from 'prosemirror-view'
 import debounce from 'lodash/debounce'
 
-const parser = schema => {
-  const parser = DOMParser.fromSchema(schema)
-
-  return content => {
-    const container = document.createElement('article')
-    container.innerHTML = content
-    return parser.parse(container)
-  }
-}
-
-const serializer = schema => {
-  const serializer = DOMSerializer.fromSchema(schema)
-
-  return content => {
-    const container = document.createElement('article')
-    container.appendChild(serializer.serializeFragment(content))
-    return container.innerHTML
-  }
-}
+// import serializer from 'editor/markdown/serializer'
 
 class Editor {
   onChange = debounce(
@@ -39,9 +20,6 @@ class Editor {
 
   constructor (props) {
     this.props = props
-    this.parse = parser(editorSchema)
-    this.serialize = serializer(editorSchema)
-
     this.createEditorView(props.element)
   }
 
@@ -65,7 +43,7 @@ class Editor {
   dispatchTransaction = transaction => {
     const state = this.view.state.apply(transaction)
     this.view.updateState(state)
-    this.props.onChange(state.doc.content)
+    console.log(this.view.state.doc)
   }
 }
 

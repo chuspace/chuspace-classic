@@ -21,7 +21,6 @@ export default () => {
         }
 
         state.doc.descendants(decorate)
-
         return DecorationSet.create(state.doc, decorations)
       }
     }
