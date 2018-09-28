@@ -7,10 +7,10 @@ require 'typhoeus/adapters/faraday'
 module Mobius
   module Connection
     CONVENIENCE_HEADERS = Set.new([:accept, :content_type])
-    API_ENDPOINT = 'https://git.problemwall.com/api/v4'.freeze
-    USER_AGENT   = "Chuspace #{Mobius::VERSION}".freeze
-    MEDIA_TYPE   = 'application/vnd.github.v3+json'.freeze
-    RACK_BUILDER_CLASS = defined?(Faraday::RackBuilder) ? Faraday::RackBuilder : Faraday::Builder
+    API_ENDPOINT        = ENV.fetch('GIT_API_URL').freeze
+    USER_AGENT          = "Chuspace #{Mobius::VERSION}".freeze
+    MEDIA_TYPE          = 'application/vnd.github.v3+json'.freeze
+    RACK_BUILDER_CLASS  = defined?(Faraday::RackBuilder) ? Faraday::RackBuilder : Faraday::Builder
 
     MIDDLEWARE = RACK_BUILDER_CLASS.new do |builder|
       builder.use Faraday::Request::Retry
@@ -104,7 +104,7 @@ module Mobius
           accept: media_type,
           user_agent: user_agent,
           content_type: 'application/json',
-          'Private-token': @access_token
+          'Private-token': ENV['GIT_API_TOKEN']
         }
       }
     end
