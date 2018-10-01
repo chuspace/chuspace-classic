@@ -616,9 +616,9 @@
     universal-user-agent "^2.0.0"
     url-template "^2.0.8"
 
-"@rails/webpacker@https://github.com/rails/webpacker.git":
-  version "4.0.0-pre.2"
-  resolved "https://github.com/rails/webpacker.git#48d9fd52c3e9637dbb21e551b48c84c0f2dbb2ed"
+"@rails/webpacker@^4.0.0-pre.3":
+  version "4.0.0-pre.3"
+  resolved "https://registry.yarnpkg.com/@rails/webpacker/-/webpacker-4.0.0-pre.3.tgz#8974c98ba6f2fbe4e67e6d2b7812ee5d817d29e8"
   dependencies:
     "@babel/core" "^7.0.0"
     "@babel/plugin-proposal-class-properties" "^7.0.0"
