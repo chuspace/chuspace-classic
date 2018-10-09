@@ -11,7 +11,7 @@ require_relative 'reference_counter'
 
 module Mobius
   class Projects
-    GLOBAL_HOOKS_DIRECTORY ||= File.join(MOBIUS_PATH, 'hooks')
+    GLOBAL_HOOKS_DIRECTORY ||= File.join(MOBIUS_ROOT, 'hooks')
 
     # Project name is a directory name for repository with .git at the end
     # It may be namespaced or not. Like repo.git or mobius/repo.git
