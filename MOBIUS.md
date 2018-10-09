@@ -68,65 +68,65 @@ sudo make install
 
 ## Setup
 
-    ./bin/install
+    ./bin/mobius_install
 
 ## Check
 
-    ./bin/check
+    ./bin/mobius_check
 
 ## Repos
 
 Add repo:
 
-    ./bin/gitlab-projects add-project gitlab/gitlab-ci.git
+    ./bin/mobius_projects add-project gitlab/gitlab-ci.git
 
 Remove repo:
 
-    ./bin/gitlab-projects rm-project gitlab/gitlab-ci.git
+    ./bin/mobius_projects rm-project gitlab/gitlab-ci.git
 
 List repos:
 
-    ./bin/gitlab-projects list-projects
+    ./bin/mobius_projects list-projects
 
 Import repo:
 
     # Default timeout is 2 minutes
-    ./bin/gitlab-projects import-project randx/six.git https://github.com/randx/six.git
+    ./bin/mobius_projects import-project randx/six.git https://github.com/randx/six.git
 
     # Override timeout in seconds
-    ./bin/gitlab-projects import-project randx/six.git https://github.com/randx/six.git 90
+    ./bin/mobius_projects import-project randx/six.git https://github.com/randx/six.git 90
 
 Fork repo:
 
-    ./bin/gitlab-projects fork-project gitlab/gitlab-ci.git randx
+    ./bin/mobius_projects fork-project gitlab/gitlab-ci.git randx
 
 Create tag (lightweight & annotated):
 
-    ./bin/gitlab-projects create-tag gitlab/gitlab-ci.git v3.0.0 3-0-stable
-    ./bin/gitlab-projects create-tag gitlab/gitlab-ci.git v3.0.0 3-0-stable 'annotated message goes here'
+    ./bin/mobius_projects create-tag gitlab/gitlab-ci.git v3.0.0 3-0-stable
+    ./bin/mobius_projects create-tag gitlab/gitlab-ci.git v3.0.0 3-0-stable 'annotated message goes here'
 
 Gc repo:
 
-    ./bin/gitlab-projects gc gitlab/gitlab-ci.git
+    ./bin/mobius_projects gc gitlab/gitlab-ci.git
 
 ## Keys
 
 Add key:
 
-    ./bin/gitlab-keys add-key key-782 "ssh-rsa AAAAx321..."
+    ./bin/mobius_keys add-key key-782 "ssh-rsa AAAAx321..."
 
 Remove key:
 
-    ./bin/gitlab-keys rm-key key-23 "ssh-rsa AAAAx321..."
+    ./bin/mobius_keys rm-key key-23 "ssh-rsa AAAAx321..."
 
 List all keys:
 
-    ./bin/gitlab-keys list-keys
+    ./bin/mobius_keys list-keys
 
 
 Remove all keys from authorized_keys file:
 
-    ./bin/gitlab-keys clear
+    ./bin/mobius_keys clear
 
 ## Git LFS remark
 

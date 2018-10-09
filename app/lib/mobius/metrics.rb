@@ -22,7 +22,7 @@ module Mobius
 
       # Returns the current monotonic clock time in a given precision.
       #
-      # Returns the time as a Fixnum.
+      # Returns the time as a Integer.
       def self.monotonic_time
         Process.clock_gettime(Process::CLOCK_MONOTONIC, :millisecond)
       end

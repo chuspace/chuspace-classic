@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
-require File.expand_path('../config/environment', File.dirname(__FILE__))
+
+require_relative '../app/lib/mobius/init'
+require File.join(MOBIUS_ROOT, 'net')
 
 print "Check GitLab API access: "
 begin
@@ -18,7 +20,7 @@ abort("ERROR: missing option in config.yml") unless config.auth_file
 
 print "\nAccess to #{config.auth_file}: "
 
-if system(File.dirname(__FILE__) + '/mobius-keys', 'check-permissions')
+if system(File.dirname(__FILE__) + '/mobius_keys', 'check-permissions')
   print 'OK'
 else
   abort "FAILED"

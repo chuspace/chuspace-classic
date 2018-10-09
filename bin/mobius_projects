@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
-require File.expand_path('../config/environment', File.dirname(__FILE__))
+require_relative '../app/lib/mobius/init'
+require File.join(MOBIUS_ROOT, 'projects')
 
 # Return non-zero if command execution was not successful
 if Mobius::Projects.new.exec

@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require File.expand_path('../config/environment', File.dirname(__FILE__))
+require_relative '../app/lib/mobius/init'
 
 config = Mobius::Config.new
 key_dir = File.dirname("#{config.auth_file}")
