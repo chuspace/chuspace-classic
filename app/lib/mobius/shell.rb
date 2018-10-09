@@ -30,7 +30,7 @@ module Mobius
     # 'evil command'.
     def exec(origin_cmd)
       unless origin_cmd
-        puts "Welcome to GitLab, #{username}!"
+        puts "Welcome to Mobius, #{username}!"
         return true
       end
 
@@ -45,22 +45,22 @@ module Mobius
 
       true
     rescue Mobius::Net::ApiUnreachableError => ex
-      $stderr.puts 'GitLab: Failed to authorize your Git request: internal API unreachable'
+      $stderr.puts 'Mobius: Failed to authorize your Git request: internal API unreachable'
       false
     rescue AccessDeniedError => ex
       message = "mobius_shell: Access denied for git command <#{origin_cmd}> by #{log_username}."
       $logger.warn message
 
-      $stderr.puts "GitLab: #{ex.message}"
+      $stderr.puts "Mobius: #{ex.message}"
       false
     rescue DisallowedCommandError => ex
       message = "mobius_shell: Attempt to execute disallowed command <#{origin_cmd}> by #{log_username}."
       $logger.warn message
 
-      $stderr.puts 'GitLab: Disallowed command'
+      $stderr.puts 'Mobius: Disallowed command'
       false
     rescue InvalidRepositoryPathError => ex
-      $stderr.puts 'GitLab: Invalid repository path'
+      $stderr.puts 'Mobius: Invalid repository path'
       false
     end
 
@@ -227,7 +227,7 @@ module Mobius
     end
 
     def repo_path=(repo_path)
-      raise ArgumentError, "Repository path not provided. Please make sure you're using GitLab v8.10 or later." unless repo_path
+      raise ArgumentError, "Repository path not provided. Please make sure you're using Mobius v8.10 or later." unless repo_path
       raise InvalidRepositoryPathError if File.absolute_path(repo_path) != repo_path
 
       @repo_path = repo_path

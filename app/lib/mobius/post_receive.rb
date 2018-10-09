@@ -122,7 +122,7 @@ module Mobius
         Mobius::Net.new.redis_client.rpush(queue, msg)
         true
       rescue => e
-        $stderr.puts "GitLab: An unexpected error occurred in writing to Redis: #{e}"
+        $stderr.puts "Mobius: An unexpected error occurred in writing to Redis: #{e}"
         false
       end
     end

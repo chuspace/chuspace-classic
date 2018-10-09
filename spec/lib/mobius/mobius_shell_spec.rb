@@ -288,7 +288,7 @@ describe MobiusShell do
         end
 
         it 'refuses to assign the path' do
-          $stderr.should_receive(:puts).with('GitLab: Invalid repository path')
+          $stderr.should_receive(:puts).with('Mobius: Invalid repository path')
           expect(subject.exec(ssh_cmd)).to be_false
         end
       end

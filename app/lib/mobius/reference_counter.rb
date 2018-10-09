@@ -46,7 +46,7 @@ module Mobius
         yield
         true
       rescue => e
-        message = "GitLab: An unexpected error occurred in writing to Redis: #{e}"
+        message = "Mobius: An unexpected error occurred in writing to Redis: #{e}"
         $stderr.puts message
         $logger.error message
         false
