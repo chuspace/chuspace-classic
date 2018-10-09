@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+require File.expand_path('../config/environment', File.dirname(__FILE__))
+
+print "Check GitLab API access: "
+begin
+  resp = Mobius::Net.new.check
+  if resp.code == "200"
+    print 'OK'
+  else
+    abort "FAILED. code: #{resp.code}"
+  end
+rescue Mobius::Net::ApiUnreachableError
+  abort "FAILED: Failed to connect to internal API"
+end
+
+config = Mobius::Config.new
+abort("ERROR: missing option in config.yml") unless config.auth_file
+
+print "\nAccess to #{config.auth_file}: "
+
+if system(File.dirname(__FILE__) + '/mobius-keys', 'check-permissions')
+  print 'OK'
+else
+  abort "FAILED"
+end
+puts "\n"
+
+print "Send ping to redis server: "
+if Mobius::Net.new.redis_client.ping
+  print 'OK'
+else
+  abort 'FAILED'
+end
+
+puts "\n"

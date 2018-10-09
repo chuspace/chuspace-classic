@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+require File.expand_path('../config/environment', File.dirname(__FILE__))
+
+# Return non-zero if command execution was not successful
+if Mobius::Projects.new.exec
+  exit 0
+else
+  exit 1
+end

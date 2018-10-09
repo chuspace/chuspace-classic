@@ -1,2 +1,3 @@
 chuspace: bundle exec rails s -p $PORT
 webpacker: ./bin/webpack-dev-server
+sshd: /usr/sbin/sshd -e -D -f /Users/admin/chuspace/chuspace/openssh/sshd_config

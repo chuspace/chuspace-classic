@@ -3,6 +3,11 @@
 Rails.application.routes.draw do
   root to: 'pages#index'
 
+  namespace :mobius do
+    get :check
+    post :allowed
+  end
+
   get '/auth/:provider/callback', to: 'sessions#github', as: :omniauth_callback
   post '/sessions', to: 'sessions#create', as: :sessions
   patch '/logout', to: 'sessions#destroy', as: :logout

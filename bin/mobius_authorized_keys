@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+require File.expand_path('../config/environment', File.dirname(__FILE__))
+
+key = ARGV[0]
+abort "# No key provided" if key.nil? || key.empty?
+
+authorized_key = Mobius::Net.new.authorized_key(key)
+if authorized_key.nil?
+  puts "# No key was found for #{key}"
+else
+  puts Mobius::Keys.key_line("key-#{authorized_key['id']}", authorized_key["key"])
+end

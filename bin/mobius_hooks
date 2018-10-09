@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+require File.expand_path('../config/environment', File.dirname(__FILE__))
+
+repository_storage_paths = ARGV
+
+repository_storage_paths.each do |repo_path|
+  Dir["#{repo_path.chomp('/')}/*/*.git"].each do |repo|
+    begin
+      Mobius::Metrics.measure('command-create-hooks') do
+        Mobius::Projects.create_hooks(repo)
+      end
+    rescue Errno::ENOENT
+      # The user must have deleted their repository. Ignore.
+    end
+  end
+end

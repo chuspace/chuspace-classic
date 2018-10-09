@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+require_relative '../app/lib/mobius/init'
+require File.join(MOBIUS_ROOT, 'keys')
+
+# Return non-zero if command execution was not successful
+if Mobius::Keys.new.exec
+  exit 0
+else
+  exit 1
+end
