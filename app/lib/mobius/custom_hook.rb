@@ -11,11 +11,11 @@ module Mobius
     def initialize(repo_path, key_id)
       @repo_path = repo_path
       @vars = { 'GL_ID' => key_id }
-      @config = MobiusConfig.new
+      @config = Mobius::Config.new
     end
 
     def pre_receive(changes)
-      MobiusMetrics.measure('pre-receive-hook') do
+      Mobius::Metrics.measure('pre-receive-hook') do
         find_hooks('pre-receive').all? do |hook|
           call_receive_hook(hook, changes)
         end
@@ -23,7 +23,7 @@ module Mobius
     end
 
     def post_receive(changes)
-      MobiusMetrics.measure('post-receive-hook') do
+      Mobius::Metrics.measure('post-receive-hook') do
         find_hooks('post-receive').all? do |hook|
           call_receive_hook(hook, changes)
         end
@@ -31,7 +31,7 @@ module Mobius
     end
 
     def update(ref_name, old_value, new_value)
-      MobiusMetrics.measure('update-hook') do
+      Mobius::Metrics.measure('update-hook') do
         find_hooks('update').all? do |hook|
           system(vars, hook, ref_name, old_value, new_value)
         end
