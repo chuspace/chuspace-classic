@@ -9,9 +9,8 @@ class PeopleController < ApplicationController
   def create
     person = Person.new(create_params)
 
-    if person.valid? && person.save
+    if person.valid?
       LoginMailer.with(person: person).send_magic_login.deliver_later
-
       render json: { success: t('.registration.success') }
     else
       render json: { errors: person.api_validation_errors }

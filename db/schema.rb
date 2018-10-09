@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_15_183817) do
+ActiveRecord::Schema.define(version: 2018_10_02_123946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -38,14 +38,23 @@ ActiveRecord::Schema.define(version: 2018_04_15_183817) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "blogs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", default: "blog", null: false
+    t.citext "repo_name", default: "", null: false
+    t.string "repo_path", null: false
+    t.uuid "person_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["repo_name"], name: "index_blogs_on_repo_name", unique: true
+    t.index ["repo_path"], name: "index_blogs_on_repo_path", unique: true
+  end
+
   create_table "people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name", null: false
-    t.string "email", null: false
-    t.citext "nickname", null: false
+    t.string "name", default: "", null: false
+    t.string "email", default: "", null: false
+    t.citext "nickname", default: "", null: false
     t.string "avatar"
-    t.integer "git_repo_id"
-    t.integer "git_repo_owner_id"
-    t.string "auth_token", null: false
+    t.string "auth_token", default: "", null: false
     t.text "bio"
     t.string "company"
     t.string "location"
@@ -60,8 +69,6 @@ ActiveRecord::Schema.define(version: 2018_04_15_183817) do
     t.datetime "updated_at", null: false
     t.index ["auth_token"], name: "index_people_on_auth_token", unique: true
     t.index ["email"], name: "index_people_on_email", unique: true
-    t.index ["git_repo_id"], name: "index_people_on_git_repo_id", unique: true
-    t.index ["git_repo_owner_id"], name: "index_people_on_git_repo_owner_id", unique: true
     t.index ["github_info"], name: "index_people_on_github_info", using: :gin
     t.index ["location"], name: "index_people_on_location"
     t.index ["nickname"], name: "index_people_on_nickname", unique: true
@@ -72,8 +79,6 @@ ActiveRecord::Schema.define(version: 2018_04_15_183817) do
     t.citext "slug", null: false
     t.text "body"
     t.uuid "person_id"
-    t.string "commit"
-    t.float "version"
     t.string "tags", default: [], array: true
     t.integer "status", default: 0, null: false
     t.datetime "published_at"

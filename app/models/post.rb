@@ -16,4 +16,6 @@ class Post < ApplicationRecord
   }
 
   before_validation :assign_slug
+
+  delegate :blog, to: :person
 end

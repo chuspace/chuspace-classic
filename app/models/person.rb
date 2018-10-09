@@ -15,6 +15,7 @@ class Person < ApplicationRecord
   has_secure_token :auth_token
 
   has_many :posts, dependent: :destroy
+  has_one :blog, required: true
 
   store_accessor :github_info, :github_nickname, :github_uid, :github_access_token
 

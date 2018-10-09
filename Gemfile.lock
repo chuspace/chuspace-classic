@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails.git
-  revision: f818eb558b6b3546705c754fe7c7beb64df3b425
+  revision: 5c7c3fe0d7059ba62e14bf6ac4ddfbdcabd905a6
   specs:
     actioncable (6.0.0.alpha)
       actionpack (= 6.0.0.alpha)
@@ -72,7 +72,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/webpacker.git
-  revision: 26e5a5f181333a8cdf3fb2ad3be0e3108d596b53
+  revision: 96144bae327909800263e9ace6329c4cc38987ec
   specs:
     webpacker (4.0.0.pre.3)
       activesupport (>= 4.2)
@@ -81,14 +81,14 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-core.git
-  revision: f855006f750ac6d03cda50c3f3701e3827e724c9
+  revision: 4f8abda8984c340b47ac3f9dcfeb1b5f1a0cdfec
   specs:
     rspec-core (3.9.0.pre)
       rspec-support (= 3.9.0.pre)
 
 GIT
   remote: https://github.com/rspec/rspec-expectations.git
-  revision: 5c37bd9a14a5133820250c16beeed36c15389a59
+  revision: 88c4382d7bf4dc8acdd312ba192bc5137a03b119
   specs:
     rspec-expectations (3.9.0.pre)
       diff-lcs (>= 1.2.0, < 2.0)
@@ -96,7 +96,7 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-mocks.git
-  revision: 8ee8d692885ea2d4713c01d0ee6ba3ef2a3251c9
+  revision: 1900c5ae858287eaadf70d59b0ed6e03e61653d6
   specs:
     rspec-mocks (3.9.0.pre)
       diff-lcs (>= 1.2.0, < 2.0)
@@ -117,7 +117,7 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-support.git
-  revision: 9940a8656071655b807f772f36101b4d27f1b67d
+  revision: 93c5d240e535b8ac58c636dea4cd22ea2c47444b
   specs:
     rspec-support (3.9.0.pre)
 
@@ -131,8 +131,8 @@ GEM
     ast (2.4.0)
     awesome_print (1.8.0)
     aws-eventstream (1.0.1)
-    aws-partitions (1.104.0)
-    aws-sdk-core (3.27.0)
+    aws-partitions (1.105.0)
+    aws-sdk-core (3.29.0)
       aws-eventstream (~> 1.0)
       aws-partitions (~> 1.0)
       aws-sigv4 (~> 1.0)
@@ -187,7 +187,7 @@ GEM
     hiredis (0.6.1)
     i18n (1.1.0)
       concurrent-ruby (~> 1.0)
-    image_processing (1.7.0)
+    image_processing (1.7.1)
       mini_magick (~> 4.0)
       ruby-vips (>= 2.0.13, < 3)
     jaro_winkler (1.5.1)
@@ -203,7 +203,7 @@ GEM
       mimemagic (~> 0.3.2)
     method_source (0.9.0)
     mimemagic (0.3.2)
-    mini_magick (4.8.0)
+    mini_magick (4.9.2)
     mini_mime (1.0.1)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
@@ -225,7 +225,7 @@ GEM
     octicons_helper (8.1.0)
       octicons (= 8.1.0)
       rails
-    oj (3.6.10)
+    oj (3.6.11)
     omniauth (1.8.1)
       hashie (>= 3.4.6, < 3.6.0)
       rack (>= 1.6.2, < 3)
@@ -276,7 +276,7 @@ GEM
     redis (4.0.2)
     rspec_junit_formatter (0.4.1)
       rspec-core (>= 2, < 4, != 2.12.0)
-    rubocop (0.59.1)
+    rubocop (0.59.2)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.5, != 2.5.1.1)
@@ -287,10 +287,11 @@ GEM
     ruby-progressbar (1.10.0)
     ruby-vips (2.0.13)
       ffi (~> 1.9)
+    rugged (0.27.4)
     sawyer (0.8.1)
       addressable (>= 2.3.5, < 2.6)
       faraday (~> 0.8, < 1.0)
-    searchkick (3.1.1)
+    searchkick (3.1.2)
       activemodel (>= 4.2)
       elasticsearch (>= 5)
       hashie
@@ -311,6 +312,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    sshkey (1.9.0)
     thor (0.20.0)
     thread_safe (0.3.6)
     turbolinks (5.2.0)
@@ -368,12 +370,14 @@ DEPENDENCIES
   rspec-support!
   rspec_junit_formatter
   rubocop
+  rugged
   sawyer
   searchkick
   shoulda-matchers!
   sidekiq
   simplecov
   simplecov-lcov
+  sshkey
   turbolinks
   typhoeus
   vcr
