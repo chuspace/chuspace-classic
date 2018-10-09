@@ -59,7 +59,7 @@ hooks/*.d
 mobius.yml
 
 # git
-git
+git-storage
 
 # Openssh
 openssh/ssh_host*

@@ -9,17 +9,17 @@ key_id = ENV.delete('GL_ID')
 protocol = ENV.delete('GL_PROTOCOL')
 repo_path = Dir.pwd
 
-require_relative '../lib/mobius_custom_hook'
-require_relative '../lib/mobius_reference_counter'
-require_relative '../lib/mobius_access'
+require_relative '../custom_hook'
+require_relative '../reference_counter'
+require_relative '../access'
 
 # It's important that on pre-receive `increase_reference_counter` gets executed
 # last so that it only runs if everything else succeeded. On post-receive on the
 # other hand, we run MobiusPostReceive first because the push is already done
 # and we don't want to skip it if the custom hook fails.
-if MobiusAccess.new(repo_path, key_id, refs, protocol).exec &&
-    MobiusCustomHook.new(repo_path, key_id).pre_receive(refs) &&
-    MobiusReferenceCounter.new(repo_path).increase
+if Mobius::Access.new(repo_path, key_id, refs, protocol).exec &&
+    Mobius::CustomHook.new(repo_path, key_id).pre_receive(refs) &&
+    Mobius::ReferenceCounter.new(repo_path).increase
   exit 0
 else
   exit 1

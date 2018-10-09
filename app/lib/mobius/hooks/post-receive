@@ -8,11 +8,11 @@ refs = $stdin.read
 key_id = ENV.delete('GL_ID')
 repo_path = Dir.pwd
 
-require_relative '../lib/mobius_custom_hook'
-require_relative '../lib/mobius_post_receive'
+require_relative '../custom_hook'
+require_relative '../post_receive'
 
-if MobiusPostReceive.new(repo_path, key_id, refs).exec &&
-    MobiusCustomHook.new(repo_path, key_id).post_receive(refs)
+if Mobius::PostReceive.new(repo_path, key_id, refs).exec &&
+    Mobius::CustomHook.new(repo_path, key_id).post_receive(refs)
   exit 0
 else
   exit 1
