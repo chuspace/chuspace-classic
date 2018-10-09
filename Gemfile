@@ -62,10 +62,6 @@ gem 'rails_12factor', group: :production
 # Turblinks
 gem 'turbolinks'
 
-# HTTP API
-gem 'sawyer'
-gem 'faraday-http-cache'
-
 # Git API
 gem 'rugged'
 
@@ -79,11 +75,15 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'rspec_junit_formatter'
+  gem 'coveralls', require: false
+  gem 'webmock'
+
   # Rspec
   %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
     gem lib, github: "rspec/#{lib}"
   end
 end
+
 
 group :development do
   gem 'web-console', '>= 3.3.0'
