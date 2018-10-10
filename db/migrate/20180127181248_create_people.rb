@@ -2,7 +2,7 @@
 
 class CreatePeople < ActiveRecord::Migration[5.2]
   def change
-    create_table :people, id: :uuid, force: :cascade do |t|
+    create_table :people, force: :cascade do |t|
       ## Database authentication
       t.string :name, null: false, default: ''
       t.string :email, null: false, default: ''

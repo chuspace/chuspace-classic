@@ -3,7 +3,7 @@
 # Reduce generator noise
 Rails.application.configure do
   config.generators do |generate|
-    generate.orm :active_record, primary_key_type: :uuid
+    generate.orm :active_record
     generate.helper false
     generate.assets false
     generate.view_specs false

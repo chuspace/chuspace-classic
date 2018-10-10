@@ -19,7 +19,7 @@ class MobiusController < ApplicationController
     puts params.inspect
     render json: {
       status: true,
-      repository_path: '/Users/admin/chuspace/chuspace/git-storage/gaurav/foo'
+      repository_path: "/Users/admin/chuspace/chuspace/git-storage#{params[:project]}"
     }
   end
 

@@ -5,6 +5,7 @@ class Post < ApplicationRecord
   sluggable source: :title
 
   belongs_to :person
+  belongs_to :blog
 
   validates :status, presence: true
   validates :slug, presence: true, uniqueness: true

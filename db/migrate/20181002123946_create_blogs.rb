@@ -1,10 +1,10 @@
 class CreateBlogs < ActiveRecord::Migration[6.0]
   def change
-    create_table :blogs, id: :uuid do |t|
+    create_table :blogs do |t|
       t.string :name, null: false, default: 'blog'
       t.citext :repo_name, null: false, default: ''
       t.string :repo_path, null: false
-      t.uuid :person_id, foreign_key: true
+      t.references :person, foreign_key: true
 
       t.timestamps
     end

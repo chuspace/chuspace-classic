@@ -14,20 +14,18 @@ ActiveRecord::Schema.define(version: 2018_10_02_123946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
-  enable_extension "pgcrypto"
   enable_extension "plpgsql"
-  enable_extension "uuid-ossp"
 
-  create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
-    t.uuid "record_id", null: false
+    t.integer "record_id", null: false
     t.string "record_type", null: false
-    t.uuid "blob_id", null: false
+    t.integer "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "active_storage_blobs", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -38,18 +36,19 @@ ActiveRecord::Schema.define(version: 2018_10_02_123946) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "blogs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "blogs", force: :cascade do |t|
     t.string "name", default: "blog", null: false
     t.citext "repo_name", default: "", null: false
     t.string "repo_path", null: false
-    t.uuid "person_id"
+    t.bigint "person_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_blogs_on_person_id"
     t.index ["repo_name"], name: "index_blogs_on_repo_name", unique: true
     t.index ["repo_path"], name: "index_blogs_on_repo_path", unique: true
   end
 
-  create_table "people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "people", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "email", default: "", null: false
     t.citext "nickname", default: "", null: false
@@ -74,19 +73,22 @@ ActiveRecord::Schema.define(version: 2018_10_02_123946) do
     t.index ["nickname"], name: "index_people_on_nickname", unique: true
   end
 
-  create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "posts", force: :cascade do |t|
     t.string "title"
     t.citext "slug", null: false
     t.text "body"
-    t.uuid "person_id"
+    t.bigint "person_id"
     t.string "tags", default: [], array: true
     t.integer "status", default: 0, null: false
     t.datetime "published_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_posts_on_person_id"
     t.index ["published_at"], name: "index_posts_on_published_at"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
     t.index ["status"], name: "index_posts_on_status"
   end
 
+  add_foreign_key "blogs", "people"
+  add_foreign_key "posts", "people"
 end
