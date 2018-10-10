@@ -7,7 +7,6 @@ require 'json'
 require_relative 'config'
 require_relative 'logger'
 require_relative 'access'
-require_relative 'redis'
 require_relative 'lfs_authentication'
 require_relative '../httpunix'
 
@@ -102,30 +101,6 @@ module Mobius
       resp.code == '200'
     rescue
       false
-    end
-
-    def redis_client
-      redis_config = config.redis
-      database = redis_config['database'] || 0
-      params = {
-        host: redis_config['host'] || '127.0.0.1',
-        port: redis_config['port'] || 6379,
-        db: database
-      }
-
-      if redis_config.has_key?('sentinels')
-        params[:sentinels] = redis_config['sentinels']
-                            .select { |s| s['host'] && s['port'] }
-                            .map { |s| { host: s['host'], port: s['port'] } }
-      end
-
-      if redis_config.has_key?('socket')
-        params = { path: redis_config['socket'], db: database }
-      elsif redis_config.has_key?('pass')
-        params[:password] = redis_config['pass']
-      end
-
-      Redis.new(params)
     end
 
     protected

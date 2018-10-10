@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   namespace :mobius do
     get :check
+    get :discover
     post :allowed
   end
 

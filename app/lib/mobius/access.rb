@@ -37,10 +37,10 @@ module Mobius
 
       true
     rescue Mobius::Net::ApiUnreachableError
-      $stderr.puts 'Mobius: Failed to authorize your Git request: internal API unreachable'
+      $stderr.puts 'Failed to authorize your Git request: internal API unreachable'
       false
     rescue AccessDeniedError => ex
-      $stderr.puts "Mobius: #{ex.message}"
+      $stderr.puts "#{ex.message}"
       false
     end
 

@@ -26,12 +26,3 @@ else
   abort "FAILED"
 end
 puts "\n"
-
-print "Send ping to redis server: "
-if Mobius::Net.new.redis_client.ping
-  print 'OK'
-else
-  abort 'FAILED'
-end
-
-puts "\n"

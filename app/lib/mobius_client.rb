@@ -26,63 +26,63 @@ class MobiusClient
 
   # Init new repository
   #
-  # name - project path with namespace
+  # name - repository path with namespace
   #
   # Ex.
   #   add_repository("gitlab/gitlab-ci")
   #
   def add_repository(name)
-    MobiusUtils.system_silent([mobius_shell_projects_path,
-                                  'add-project', STORAGE_PATH, "#{name}.git"])
+    MobiusUtils.system_silent([mobius_shell_repositories_path,
+                                  'add-repository', STORAGE_PATH, "#{name}.git"])
   end
 
   # Import repository
   #
-  # name - project path with namespace
+  # name - repository path with namespace
   #
   # Ex.
   #   import_repository("gitlab/gitlab-ci", "https://github.com/randx/six.git")
   #
   def import_repository(name, url)
-    output, status = MobiusPopen::popen([mobius_shell_projects_path, 'import-project',
+    output, status = MobiusPopen::popen([mobius_shell_repositories_path, 'import-repository',
                                     STORAGE_PATH, "#{name}.git", url, '900'])
     raise Error, output unless status.zero?
     true
   end
 
   # Move repository
-  # path - project path with namespace
-  # new_path - new project path with namespace
+  # path - repository path with namespace
+  # new_path - new repository path with namespace
   #
   # Ex.
   #   mv_repository("gitlab/gitlab-ci", "randx/gitlab-ci-new")
   #
   def mv_repository(path, new_path)
-    MobiusUtils.system_silent([mobius_shell_projects_path, 'mv-project',
+    MobiusUtils.system_silent([mobius_shell_repositories_path, 'mv-repository',
                                   STORAGE_PATH, "#{path}.git", "#{new_path}.git"])
   end
 
   # Remove repository from file system
   #
-  # name - project path with namespace
+  # name - repository path with namespace
   #
   # Ex.
   #   remove_repository("gitlab/gitlab-ci")
   #
   def remove_repository(name)
-    MobiusUtils.system_silent([mobius_shell_projects_path,
-                                  'rm-project', STORAGE_PATH, "#{name}.git"])
+    MobiusUtils.system_silent([mobius_shell_repositories_path,
+                                  'rm-repository', STORAGE_PATH, "#{name}.git"])
   end
 
   # Gc repository
   #
-  # path - project path with namespace
+  # path - repository path with namespace
   #
   # Ex.
   #   gc("gitlab/gitlab-ci")
   #
   def gc(path)
-    MobiusUtils.system_silent([mobius_shell_projects_path, 'gc',
+    MobiusUtils.system_silent([mobius_shell_repositories_path, 'gc',
                                   STORAGE_PATH, "#{path}.git"])
   end
 
@@ -155,10 +155,10 @@ class MobiusClient
   end
 
   def url_to_repo(path)
-    Gitlab.config.mobius_shell.ssh_path_prefix + "#{path}.git"
+    Mobius.config.mobius_shell.ssh_path_prefix + "#{path}.git"
   end
 
-  # Return GitLab shell version
+  # Return Mobius shell version
   def version
     mobius_shell_version_file = "#{mobius_shell_path}/VERSION"
 
@@ -178,7 +178,7 @@ class MobiusClient
 
   # Create (if necessary) and link the secret token file
   def generate_and_link_secret_token
-    secret_file = Gitlab.config.mobius_shell.secret_file
+    secret_file = Mobius.config.mobius_shell.secret_file
     unless File.size?(secret_file)
       # Generate a new token of 16 random hexadecimal characters and store it in secret_file.
       token = SecureRandom.hex(16)
@@ -198,7 +198,7 @@ class MobiusClient
   end
 
   def mobius_shell_user_home
-    File.expand_path("~#{Gitlab.config.mobius_shell.ssh_user}")
+    File.expand_path("~#{Mobius.config.mobius_shell.ssh_user}")
   end
 
   def full_path(dir_name)
@@ -207,8 +207,8 @@ class MobiusClient
     File.join(STORAGE_PATH, dir_name)
   end
 
-  def mobius_shell_projects_path
-    mobius_shell_path.join('bin', 'mobius_projects').to_s
+  def mobius_shell_repositories_path
+    mobius_shell_path.join('bin', 'mobius_repositories').to_s
   end
 
   def mobius_shell_keys_path

@@ -6,7 +6,7 @@ unless ENV['SSH_CONNECTION']
   exit
 end
 
-key_id = /key-[0-9]+/.match(ARGV.join).to_s
+key_id = ARGV.first
 original_cmd = ENV.delete('SSH_ORIGINAL_COMMAND')
 
 require File.join(MOBIUS_ROOT, 'shell')

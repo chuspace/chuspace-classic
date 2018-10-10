@@ -2,7 +2,6 @@
 
 require_relative 'init'
 require_relative 'net'
-require_relative 'reference_counter'
 require_relative 'metrics'
 require 'json'
 require 'base64'
@@ -22,29 +21,23 @@ module Mobius
     end
 
     def exec
-      result = update_redis
-
+      # We could hook some events here to do and print some sort of processing here
+      # after recieving a push
       begin
+        # Here we can make an internal API call like what to do after push
         broadcast_message = Mobius::Metrics.measure('broadcast-message') do
-          api.broadcast_message
+          print_broadcast_message('Successfully pushed to remote')
         end
 
-        if broadcast_message.has_key?('message')
-          puts
-          print_broadcast_message(broadcast_message['message'])
-        end
-
-        merge_request_urls = Mobius::Metrics.measure('merge-request-urls') do
-          api.merge_request_urls(@repo_path, @changes)
-        end
-        print_merge_request_links(merge_request_urls)
-
-        api.notify_post_receive(repo_path)
+        links = [{
+          'new_merge_request' => true,
+          'branch_name' => 'develop',
+          'url' => 'http://chuspace.test/p/foo'
+        }]
+        print_merge_request_links(links)
       rescue Mobius::Net::ApiUnreachableError
         nil
       end
-
-      result && Mobius::ReferenceCounter.new(repo_path).decrease
     end
 
     protected
@@ -104,27 +97,6 @@ module Mobius
 
       puts
       puts '=' * total_width
-    end
-
-    def update_redis
-      # Encode changes as base64 so we don't run into trouble with non-UTF-8 input.
-      changes = Base64.encode64(@changes)
-
-      queue = "#{config.redis_namespace}:queue:post_receive"
-      msg = JSON.dump(
-        'class' => 'PostReceive',
-        'args' => [@repo_path, @actor, changes],
-        'jid' => @jid,
-        'enqueued_at' => Time.now.to_f
-      )
-
-      begin
-        Mobius::Net.new.redis_client.rpush(queue, msg)
-        true
-      rescue => e
-        $stderr.puts "Mobius: An unexpected error occurred in writing to Redis: #{e}"
-        false
-      end
     end
   end
 end

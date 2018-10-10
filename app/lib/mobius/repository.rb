@@ -7,15 +7,14 @@ require 'open3'
 require_relative 'config'
 require_relative 'logger'
 require_relative 'metrics'
-require_relative 'reference_counter'
 
 module Mobius
-  class Projects
+  class Repository
     GLOBAL_HOOKS_DIRECTORY ||= File.join(MOBIUS_ROOT, 'hooks')
 
-    # Project name is a directory name for repository with .git at the end
+    # Repository name is a directory name for repository with .git at the end
     # It may be namespaced or not. Like repo.git or mobius/repo.git
-    attr_reader :project_name
+    attr_reader :repository_name
 
     # Absolute path to directory where repositories stored
     # By default it is /home/git/repositories
@@ -49,8 +48,8 @@ module Mobius
     def initialize
       @command = ARGV.shift
       @repos_path = ARGV.shift
-      @project_name = ARGV.shift
-      @full_path = File.join(@repos_path, @project_name) unless @project_name.nil?
+      @repository_name = ARGV.shift
+      @full_path = File.join(@repos_path, @repository_name) unless @repository_name.nil?
     end
 
     def exec
@@ -58,20 +57,20 @@ module Mobius
         case @command
         when 'create-tag'
           create_tag
-        when 'add-project'
-          add_project
-        when 'list-projects'
-          puts list_projects
-        when 'rm-project'
-          rm_project
-        when 'mv-project'
-          mv_project
+        when 'add-repository'
+          add_repository
+        when 'list-repositories'
+          puts list_repositories
+        when 'rm-repository'
+          rm_repository
+        when 'mv-repository'
+          mv_repository
         when 'mv-storage'
           mv_storage
-        when 'import-project'
-          import_project
-        when 'fork-project'
-          fork_project
+        when 'import-repository'
+          import_repository
+        when 'fork-repository'
+          fork_repository
         when 'fetch-remote'
           fetch_remote
         when 'push-branches'
@@ -83,7 +82,7 @@ module Mobius
         when 'gc'
           gc
         else
-          $logger.warn "Attempt to execute invalid mobius-projects command #{@command.inspect}."
+          $logger.warn "Attempt to execute invalid mobius-repositories command #{@command.inspect}."
           puts 'not allowed'
           false
         end
@@ -166,22 +165,22 @@ module Mobius
       system(*cmd)
     end
 
-    def add_project
-      $logger.info "Adding project #{@project_name} at <#{full_path}>."
+    def add_repository
+      $logger.info "Adding repository #{@repository_name} at <#{full_path}>."
       FileUtils.mkdir_p(full_path, mode: 0770)
       cmd = %W(git --git-dir=#{full_path} init --bare)
       system(*cmd) && self.class.create_hooks(full_path)
     end
 
-    def list_projects
-      $logger.info 'Listing projects'
+    def list_repositories
+      $logger.info 'Listing repositories'
       Dir.chdir(repos_path) do
         next Dir.glob('**/*.git')
       end
     end
 
-    def rm_project
-      $logger.info "Removing project #{@project_name} from <#{full_path}>."
+    def rm_repository
+      $logger.info "Removing repository #{@repository_name} from <#{full_path}>."
       FileUtils.rm_rf(full_path)
     end
 
@@ -206,7 +205,7 @@ module Mobius
       # fetch with --tags or --no-tags
       tags_option = ARGV.include?('--no-tags') ? '--no-tags' : '--tags'
 
-      $logger.info "Fetching remote #{@name} for project #{@project_name}."
+      $logger.info "Fetching remote #{@name} for repository #{@repository_name}."
       cmd = %W(git --git-dir=#{full_path} fetch #{@name})
       cmd << '--prune'
       cmd << '--force' if forced
@@ -220,7 +219,7 @@ module Mobius
 
         $?.exitstatus.zero?
       rescue Timeout::Error
-        $logger.error "Fetching remote #{@name} for project #{@project_name} failed due to timeout."
+        $logger.error "Fetching remote #{@name} for repository #{@repository_name} failed due to timeout."
 
         Process.kill('KILL', pid)
         Process.wait
@@ -234,9 +233,9 @@ module Mobius
       Process.wait(pid)
     end
 
-    # Import project via git clone --bare
+    # Import repository via git clone --bare
     # URL must be publicly cloneable
-    def import_project
+    def import_repository
       # Skip import if repo already exists
       return false if File.exists?(full_path)
 
@@ -245,7 +244,7 @@ module Mobius
 
       # timeout for clone
       timeout = (ARGV.shift || 120).to_i
-      $logger.info "Importing project #{@project_name} from <#{masked_source}> to <#{full_path}>."
+      $logger.info "Importing repository #{@repository_name} from <#{masked_source}> to <#{full_path}>."
       cmd = %W(git clone --bare -- #{@source} #{full_path})
 
       pid = Process.spawn(*cmd)
@@ -257,7 +256,7 @@ module Mobius
 
         return false unless $?.exitstatus.zero?
       rescue Timeout::Error
-        $logger.error "Importing project #{@project_name} from <#{masked_source}> failed due to timeout."
+        $logger.error "Importing repository #{@repository_name} from <#{masked_source}> failed due to timeout."
 
         Process.kill('KILL', pid)
         Process.wait
@@ -266,7 +265,7 @@ module Mobius
       end
 
       self.class.create_hooks(full_path)
-      # The project was imported successfully.
+      # The repository was imported successfully.
       # Remove the origin URL since it may contain password.
       remove_origin_in_repo
 
@@ -281,11 +280,11 @@ module Mobius
     #
     # Wont work if target namespace directory does not exist
     #
-    def mv_project
+    def mv_repository
       new_path = ARGV.shift
 
       unless new_path
-        $logger.error 'mv-project failed: no destination path provided.'
+        $logger.error 'mv-repository failed: no destination path provided.'
         return false
       end
 
@@ -293,17 +292,17 @@ module Mobius
 
       # verify that the source repo exists
       unless File.exists?(full_path)
-        $logger.error "mv-project failed: source path <#{full_path}> does not exist."
+        $logger.error "mv-repository failed: source path <#{full_path}> does not exist."
         return false
       end
 
       # ...and that the target repo does not exist
       if File.exists?(new_full_path)
-        $logger.error "mv-project failed: destination path <#{new_full_path}> already exists."
+        $logger.error "mv-repository failed: destination path <#{new_full_path}> already exists."
         return false
       end
 
-      $logger.info "Moving project #{@project_name} from <#{full_path}> to <#{new_full_path}>."
+      $logger.info "Moving repository #{@repository_name} from <#{full_path}> to <#{new_full_path}>."
       FileUtils.mv(full_path, new_full_path)
     end
 
@@ -319,7 +318,7 @@ module Mobius
         return false
       end
 
-      new_full_path = File.join(new_storage, project_name)
+      new_full_path = File.join(new_storage, repository_name)
 
       # verify that the source repo exists
       unless File.exists?(full_path)
@@ -335,7 +334,7 @@ module Mobius
       source_path = File.join(full_path, '')
 
       if wait_for_pushes
-        $logger.info "Syncing project #{@project_name} from <#{full_path}> to <#{new_full_path}>."
+        $logger.info "Syncing repository #{@repository_name} from <#{full_path}> to <#{new_full_path}>."
 
         # Set a low IO priority with ionice to not choke the server on moves
         if rsync(source_path, new_full_path, 'ionice -c2 -n7 rsync')
@@ -351,11 +350,11 @@ module Mobius
       end
     end
 
-    def fork_project
+    def fork_repository
       destination_repos_path = ARGV.shift
 
       unless destination_repos_path
-        $logger.error 'fork-project failed: no destination repository path provided.'
+        $logger.error 'fork-repository failed: no destination repository path provided.'
         return false
       end
 
@@ -363,25 +362,25 @@ module Mobius
 
       # destination namespace must be provided
       unless new_namespace
-        $logger.error 'fork-project failed: no destination namespace provided.'
+        $logger.error 'fork-repository failed: no destination namespace provided.'
         return false
       end
 
       # destination namespace must exist
       namespaced_path = File.join(destination_repos_path, new_namespace)
       unless File.exists?(namespaced_path)
-        $logger.error "fork-project failed: destination namespace <#{namespaced_path}> does not exist."
+        $logger.error "fork-repository failed: destination namespace <#{namespaced_path}> does not exist."
         return false
       end
 
-      # a project of the same name cannot already be within the destination namespace
-      full_destination_path = File.join(namespaced_path, project_name.split('/')[-1])
+      # a repository of the same name cannot already be within the destination namespace
+      full_destination_path = File.join(namespaced_path, repository_name.split('/')[-1])
       if File.exists?(full_destination_path)
-        $logger.error "fork-project failed: destination repository <#{full_destination_path}> already exists."
+        $logger.error "fork-repository failed: destination repository <#{full_destination_path}> already exists."
         return false
       end
 
-      $logger.info "Forking project from <#{full_path}> to <#{full_destination_path}>."
+      $logger.info "Forking repository from <#{full_path}> to <#{full_destination_path}>."
       cmd = %W(git clone --bare -- #{full_path} #{full_destination_path})
       system(*cmd) && self.class.create_hooks(full_destination_path)
     end
@@ -404,10 +403,6 @@ module Mobius
       end
 
       false
-    end
-
-    def reference_counter
-      @reference_counter ||= Mobius::ReferenceCounter.new(full_path)
     end
 
     def rsync(src, dest, rsync_path = 'rsync')

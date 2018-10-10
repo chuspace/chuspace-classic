@@ -30,7 +30,7 @@ module Mobius
     # 'evil command'.
     def exec(origin_cmd)
       unless origin_cmd
-        puts "Welcome to Mobius, #{username}!"
+        puts "Welcome to Chuspace, #{username}!"
         return true
       end
 
@@ -45,22 +45,22 @@ module Mobius
 
       true
     rescue Mobius::Net::ApiUnreachableError => ex
-      $stderr.puts 'Mobius: Failed to authorize your Git request: internal API unreachable'
+      $stderr.puts 'Failed to authorize your Git request: internal API unreachable'
       false
     rescue AccessDeniedError => ex
-      message = "mobius_shell: Access denied for git command <#{origin_cmd}> by #{log_username}."
+      message = "Access denied for git command <#{origin_cmd}> by #{log_username}."
       $logger.warn message
 
-      $stderr.puts "Mobius: #{ex.message}"
+      $stderr.puts ex.message
       false
     rescue DisallowedCommandError => ex
-      message = "mobius_shell: Attempt to execute disallowed command <#{origin_cmd}> by #{log_username}."
+      message = "Attempt to execute disallowed command <#{origin_cmd}> by #{log_username}."
       $logger.warn message
 
-      $stderr.puts 'Mobius: Disallowed command'
+      $stderr.puts 'Disallowed command'
       false
     rescue InvalidRepositoryPathError => ex
-      $stderr.puts 'Mobius: Invalid repository path'
+      $stderr.puts 'Invalid repository path'
       false
     end
 

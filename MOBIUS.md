@@ -78,36 +78,36 @@ sudo make install
 
 Add repo:
 
-    ./bin/mobius_projects add-project gitlab/gitlab-ci.git
+    ./bin/mobius_repositories add-repository gitlab/gitlab-ci.git
 
 Remove repo:
 
-    ./bin/mobius_projects rm-project gitlab/gitlab-ci.git
+    ./bin/mobius_repositories rm-repository gitlab/gitlab-ci.git
 
 List repos:
 
-    ./bin/mobius_projects list-projects
+    ./bin/mobius_repositories list-repositories
 
 Import repo:
 
     # Default timeout is 2 minutes
-    ./bin/mobius_projects import-project randx/six.git https://github.com/randx/six.git
+    ./bin/mobius_repositories import-repository randx/six.git https://github.com/randx/six.git
 
     # Override timeout in seconds
-    ./bin/mobius_projects import-project randx/six.git https://github.com/randx/six.git 90
+    ./bin/mobius_repositories import-repository randx/six.git https://github.com/randx/six.git 90
 
 Fork repo:
 
-    ./bin/mobius_projects fork-project gitlab/gitlab-ci.git randx
+    ./bin/mobius_repositories fork-repository gitlab/gitlab-ci.git randx
 
 Create tag (lightweight & annotated):
 
-    ./bin/mobius_projects create-tag gitlab/gitlab-ci.git v3.0.0 3-0-stable
-    ./bin/mobius_projects create-tag gitlab/gitlab-ci.git v3.0.0 3-0-stable 'annotated message goes here'
+    ./bin/mobius_repositories create-tag gitlab/gitlab-ci.git v3.0.0 3-0-stable
+    ./bin/mobius_repositories create-tag gitlab/gitlab-ci.git v3.0.0 3-0-stable 'annotated message goes here'
 
 Gc repo:
 
-    ./bin/mobius_projects gc gitlab/gitlab-ci.git
+    ./bin/mobius_repositories gc gitlab/gitlab-ci.git
 
 ## Keys
 

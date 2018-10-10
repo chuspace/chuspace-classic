@@ -3,6 +3,14 @@
 class MobiusController < ApplicationController
   skip_before_action :verify_authenticity_token
 
+  def discover
+    # Find the user using key_id
+    person = Person.find_by(id: mobius_params[:key_id])
+    render json: {
+      name: person.name
+    }
+  end
+
   def check
     render plain: 'okay', layout: false
   end
@@ -13,5 +21,11 @@ class MobiusController < ApplicationController
       status: true,
       repository_path: '/Users/admin/chuspace/chuspace/git-storage/gaurav/foo'
     }
+  end
+
+  private
+
+  def mobius_params
+    params.permit(:key_id, :secret_token)
   end
 end
