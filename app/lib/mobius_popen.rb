@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 require 'fileutils'
 require 'open3'
@@ -12,8 +12,8 @@ module MobiusPopen
     end
 
     path ||= Dir.pwd
-    vars = { 'PWD' => path }
-    options = { chdir: path }
+    vars = { 'PWD' => path }.freeze
+    options = { chdir: path }.freeze
 
     unless File.directory?(path)
       FileUtils.mkdir_p(path)
