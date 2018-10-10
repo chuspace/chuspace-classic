@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'securerandom'
 
 class MobiusClient
@@ -149,7 +151,7 @@ class MobiusClient
   def mv_namespace(old_name, new_name)
     return false if exists?(new_name) || !exists?(old_name)
 
-    FileUtils.mv(full_path(old_name), full_path( new_name))
+    FileUtils.mv(full_path(old_name), full_path(new_name))
   end
 
   def url_to_repo(path)

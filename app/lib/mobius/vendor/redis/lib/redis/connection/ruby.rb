@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 require 'redis/connection/registry'
 require 'redis/connection/command_helper'
 require 'redis/errors'

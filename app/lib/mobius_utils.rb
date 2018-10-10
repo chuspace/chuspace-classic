@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MobiusUtils
   extend self
   # Run system command without outputting to stdout.
