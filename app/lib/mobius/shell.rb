@@ -105,11 +105,11 @@ module Mobius
 
       if @command == 'git-lfs-authenticate'
         Mobius::Metrics.measure('lfs-authenticate') do
-          $logger.info "mobius_shell: Processing LFS authentication for #{log_username}."
+          $logger.info "Processing LFS authentication for #{log_username}."
           lfs_authenticate
         end
       else
-        $logger.info "mobius_shell: executing git command <#{@command} #{repo_path}> for #{log_username}."
+        $logger.info "executing git command <#{@command} #{repo_path}> for #{log_username}."
         exec_cmd(@command, repo_path)
       end
     end
@@ -213,7 +213,7 @@ module Mobius
       return false unless @config.git_trace_log_file
 
       if Pathname(@config.git_trace_log_file).relative?
-        $logger.warn "mobius_shell: is configured to trace git commands with #{@config.git_trace_log_file.inspect} but an absolute path needs to be provided"
+        $logger.warn "is configured to trace git commands with #{@config.git_trace_log_file.inspect} but an absolute path needs to be provided"
         return false
       end
 
@@ -221,7 +221,7 @@ module Mobius
         File.open(@config.git_trace_log_file, 'a') { nil }
         return true
       rescue => ex
-        $logger.warn "mobius_shell: is configured to trace git commands with #{@config.git_trace_log_file.inspect} but it's not possible to write in that path #{ex.message}"
+        $logger.warn "is configured to trace git commands with #{@config.git_trace_log_file.inspect} but it's not possible to write in that path #{ex.message}"
         return false
       end
     end
