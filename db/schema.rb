@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_02_123946) do
+ActiveRecord::Schema.define(version: 2018_12_15_183817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -18,10 +18,11 @@ ActiveRecord::Schema.define(version: 2018_10_02_123946) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
-    t.integer "record_id", null: false
     t.string "record_type", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
@@ -78,17 +79,21 @@ ActiveRecord::Schema.define(version: 2018_10_02_123946) do
     t.citext "slug", null: false
     t.text "body"
     t.bigint "person_id"
+    t.bigint "blog_id"
     t.string "tags", default: [], array: true
     t.integer "status", default: 0, null: false
     t.datetime "published_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["blog_id"], name: "index_posts_on_blog_id"
     t.index ["person_id"], name: "index_posts_on_person_id"
     t.index ["published_at"], name: "index_posts_on_published_at"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
     t.index ["status"], name: "index_posts_on_status"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "blogs", "people"
+  add_foreign_key "posts", "blogs"
   add_foreign_key "posts", "people"
 end

@@ -2,12 +2,12 @@
 
 class MobiusController < ApplicationController
   skip_before_action :verify_authenticity_token
+  before_action :find_person, except: :check
 
   def discover
     # Find the user using key_id
-    person = Person.find_by(id: mobius_params[:key_id])
     render json: {
-      name: person.name
+      name: @person.name
     }
   end
 
@@ -16,14 +16,22 @@ class MobiusController < ApplicationController
   end
 
   def allowed
-    puts params.inspect
+    has_blog = params[:project] == "/#{@person.blog.repo_name}"
+    repository_path = has_blog ? @person.blog.repo_path : nil
+
+    puts repository_path
     render json: {
-      status: true,
-      repository_path: "/Users/admin/chuspace/chuspace/git-storage#{params[:project]}"
+      status: has_blog,
+      message: has_blog ? nil : 'Repository not found',
+      repository_path: repository_path&.chomp!('/')
     }
   end
 
   private
+
+  def find_person
+    @person = Person.find_by(id: mobius_params[:key_id])
+  end
 
   def mobius_params
     params.permit(:key_id, :secret_token)

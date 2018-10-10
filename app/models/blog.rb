@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Blog < ApplicationRecord
-  STORAGE_DIR = Pathname.new(Rails.root.join('git/repositories'))
+  STORAGE_DIR = Pathname.new(Rails.root.join('git-storage'))
 
   validates :name, :repo_name, :repo_path, presence: true
   validates :repo_name, uniqueness: true

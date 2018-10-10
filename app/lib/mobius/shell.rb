@@ -45,22 +45,22 @@ module Mobius
 
       true
     rescue Mobius::Net::ApiUnreachableError => ex
-      $stderr.puts 'Failed to authorize your Git request: internal API unreachable'
+      $stderr.puts 'remote: Failed to authorize your Git request: internal API unreachable'
       false
     rescue AccessDeniedError => ex
-      message = "Access denied for git command <#{origin_cmd}> by #{log_username}."
+      message = "remote: Access denied for git command <#{origin_cmd}> by #{log_username}."
       $logger.warn message
 
       $stderr.puts ex.message
       false
     rescue DisallowedCommandError => ex
-      message = "Attempt to execute disallowed command <#{origin_cmd}> by #{log_username}."
+      message = "remote: Attempt to execute disallowed command <#{origin_cmd}> by #{log_username}."
       $logger.warn message
 
-      $stderr.puts 'Disallowed command'
+      $stderr.puts 'remote: Disallowed command'
       false
     rescue InvalidRepositoryPathError => ex
-      $stderr.puts 'Invalid repository path'
+      $stderr.puts 'remote: Invalid repository path'
       false
     end
 
@@ -182,31 +182,6 @@ module Mobius
       continue = STDIN.gets.chomp
       puts '' # Add a buffer in the output
       continue == 'yes'
-    end
-
-    def api_2fa_recovery_codes
-      continue = continue?(
-        "Are you sure you want to generate new two-factor recovery codes?\n" \
-        'Any existing recovery codes you saved will be invalidated.'
-      )
-
-      unless continue
-        puts 'New recovery codes have *not* been generated. Existing codes will remain valid.'
-        return
-      end
-
-      resp = api.two_factor_recovery_codes(key_id)
-      if resp['success']
-        codes = resp['recovery_codes'].join("\n")
-        puts "Your two-factor authentication recovery codes are:\n\n" \
-            "#{codes}\n\n" \
-            "During sign in, use one of the codes above when prompted for\n" \
-            "your two-factor code. Then, visit your Profile Settings and add\n" \
-            'a new device so you do not lose access to your account again.'
-      else
-        puts "An error occurred while trying to generate new recovery codes.\n" \
-            "#{resp['message']}"
-      end
     end
 
     def git_trace_available?
