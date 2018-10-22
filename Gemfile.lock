@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails.git
-  revision: f818eb558b6b3546705c754fe7c7beb64df3b425
+  revision: 9e04563ae0c488d056861965400874f6102e14f1
   specs:
     actioncable (6.0.0.alpha)
       actionpack (= 6.0.0.alpha)
@@ -72,7 +72,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/webpacker.git
-  revision: 26e5a5f181333a8cdf3fb2ad3be0e3108d596b53
+  revision: aa7869b5edfa4421a5ebd47d0624e5ce96052e8a
   specs:
     webpacker (4.0.0.pre.3)
       activesupport (>= 4.2)
@@ -81,14 +81,14 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-core.git
-  revision: f855006f750ac6d03cda50c3f3701e3827e724c9
+  revision: 9d1d0d6aeb8dc87ff4e584cdcf9e8b1a234da2ae
   specs:
     rspec-core (3.9.0.pre)
       rspec-support (= 3.9.0.pre)
 
 GIT
   remote: https://github.com/rspec/rspec-expectations.git
-  revision: 5c37bd9a14a5133820250c16beeed36c15389a59
+  revision: 52295726b563241af8a8be64921fc35e3a18fdce
   specs:
     rspec-expectations (3.9.0.pre)
       diff-lcs (>= 1.2.0, < 2.0)
@@ -96,7 +96,7 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-mocks.git
-  revision: 8ee8d692885ea2d4713c01d0ee6ba3ef2a3251c9
+  revision: 675ab723d671a720855bf0bbdf32aa908611d0a2
   specs:
     rspec-mocks (3.9.0.pre)
       diff-lcs (>= 1.2.0, < 2.0)
@@ -104,7 +104,7 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-rails.git
-  revision: a89eee761659d197e5c9df93b2f339f919795237
+  revision: afd1a59c37a3c0663c172dcd12fd2ad5fdc0fe54
   specs:
     rspec-rails (3.9.0.pre)
       actionpack (>= 3.0)
@@ -117,7 +117,7 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-support.git
-  revision: 9940a8656071655b807f772f36101b4d27f1b67d
+  revision: e126bdcc4d470105eb24183ecd486442ccd2d313
   specs:
     rspec-support (3.9.0.pre)
 
@@ -131,8 +131,8 @@ GEM
     ast (2.4.0)
     awesome_print (1.8.0)
     aws-eventstream (1.0.1)
-    aws-partitions (1.104.0)
-    aws-sdk-core (3.27.0)
+    aws-partitions (1.105.0)
+    aws-sdk-core (3.32.0)
       aws-eventstream (~> 1.0)
       aws-partitions (~> 1.0)
       aws-sigv4 (~> 1.0)
@@ -140,7 +140,7 @@ GEM
     aws-sdk-kms (1.9.0)
       aws-sdk-core (~> 3, >= 3.26.0)
       aws-sigv4 (~> 1.0)
-    aws-sdk-s3 (1.20.0)
+    aws-sdk-s3 (1.21.0)
       aws-sdk-core (~> 3, >= 3.26.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.0)
@@ -174,7 +174,7 @@ GEM
     factory_bot_rails (4.11.1)
       factory_bot (~> 4.11.1)
       railties (>= 3.0.0)
-    faraday (0.12.2)
+    faraday (0.15.3)
       multipart-post (>= 1.2, < 3)
     faraday-http-cache (2.0.0)
       faraday (~> 0.8)
@@ -185,25 +185,25 @@ GEM
       activesupport (>= 4.2.0)
     hashie (3.5.7)
     hiredis (0.6.1)
-    i18n (1.1.0)
+    i18n (1.1.1)
       concurrent-ruby (~> 1.0)
-    image_processing (1.7.0)
+    image_processing (1.7.1)
       mini_magick (~> 4.0)
       ruby-vips (>= 2.0.13, < 3)
     jaro_winkler (1.5.1)
     jmespath (1.4.0)
     json (2.1.0)
-    jwt (1.5.6)
+    jwt (2.1.0)
     loofah (2.2.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
-    mail (2.7.0)
+    mail (2.7.1)
       mini_mime (>= 0.1.1)
     marcel (0.3.3)
       mimemagic (~> 0.3.2)
     method_source (0.9.0)
     mimemagic (0.3.2)
-    mini_magick (4.8.0)
+    mini_magick (4.9.2)
     mini_mime (1.0.1)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
@@ -212,11 +212,11 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.0.0)
     nio4r (2.3.1)
-    nokogiri (1.8.4)
+    nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
-    oauth2 (1.4.0)
-      faraday (>= 0.8, < 0.13)
-      jwt (~> 1.0)
+    oauth2 (1.4.1)
+      faraday (>= 0.8, < 0.16.0)
+      jwt (>= 1.0, < 3.0)
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
@@ -225,7 +225,7 @@ GEM
     octicons_helper (8.1.0)
       octicons (= 8.1.0)
       rails
-    oj (3.6.10)
+    oj (3.6.12)
     omniauth (1.8.1)
       hashie (>= 3.4.6, < 3.6.0)
       rack (>= 1.6.2, < 3)
@@ -276,7 +276,7 @@ GEM
     redis (4.0.2)
     rspec_junit_formatter (0.4.1)
       rspec-core (>= 2, < 4, != 2.12.0)
-    rubocop (0.59.1)
+    rubocop (0.59.2)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.5, != 2.5.1.1)
@@ -290,7 +290,7 @@ GEM
     sawyer (0.8.1)
       addressable (>= 2.3.5, < 2.6)
       faraday (~> 0.8, < 1.0)
-    searchkick (3.1.1)
+    searchkick (3.1.2)
       activemodel (>= 4.2)
       elasticsearch (>= 5)
       hashie
