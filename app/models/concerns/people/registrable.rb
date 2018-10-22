@@ -48,7 +48,6 @@ module People
 
         blog = person.build_blog(name: 'blog')
         blog.repo_name = "#{person.nickname}/#{blog.name}".freeze
-        blog.repo_path = Rugged::Repository.init_at(blog.repo_dir.to_s, :bare).path
         blog
       end
     end

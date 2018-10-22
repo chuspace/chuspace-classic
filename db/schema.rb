@@ -40,13 +40,11 @@ ActiveRecord::Schema.define(version: 2018_12_15_183817) do
   create_table "blogs", force: :cascade do |t|
     t.string "name", default: "blog", null: false
     t.citext "repo_name", default: "", null: false
-    t.string "repo_path", null: false
     t.bigint "person_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["person_id"], name: "index_blogs_on_person_id"
     t.index ["repo_name"], name: "index_blogs_on_repo_name", unique: true
-    t.index ["repo_path"], name: "index_blogs_on_repo_path", unique: true
   end
 
   create_table "people", force: :cascade do |t|
