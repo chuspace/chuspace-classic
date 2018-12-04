@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2018_12_15_183817) do
     t.bigint "person_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name", "person_id"], name: "index_blogs_on_name_and_person_id", unique: true
     t.index ["person_id"], name: "index_blogs_on_person_id"
     t.index ["repo_name"], name: "index_blogs_on_repo_name", unique: true
   end

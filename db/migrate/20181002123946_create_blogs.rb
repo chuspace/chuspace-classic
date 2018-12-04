@@ -8,6 +8,7 @@ class CreateBlogs < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
+    add_index :blogs, %i[name person_id], unique: true
     add_index :blogs, :repo_name, unique: true
   end
 end

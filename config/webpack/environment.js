@@ -1,8 +1,8 @@
 const { environment } = require('@rails/webpacker')
+
 const webpack = require('webpack')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const nullLoader = require('./loaders/null')
-const mjsLoader = require('./loaders/mjs')
 const globImporter = require('node-sass-glob-importer')
 
 environment.config.merge({
@@ -20,7 +20,6 @@ environment.plugins.append(
 )
 
 environment.loaders.append('null', nullLoader)
-environment.loaders.append('mjs', mjsLoader)
 
 const sassLoader = environment.loaders
   .get('sass')
