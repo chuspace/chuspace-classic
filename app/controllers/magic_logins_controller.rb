@@ -5,8 +5,8 @@ class MagicLoginsController < ApplicationController
     person = Person.find_by(auth_token: inputs[:auth_token])
 
     if person
-      person.regenerate_auth_token
       login
+      person.regenerate_auth_token
     end
 
     redirect_to root_path

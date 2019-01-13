@@ -16,6 +16,7 @@ module Authentication
   end
 
   private
+
   def authenticate
     authenticated_person = Person.find_by(id: cookies.encrypted[:person_id])
     Current.person = authenticated_person

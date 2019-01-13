@@ -28,26 +28,12 @@
 /config/master.key
 /public/packs
 /public/packs-test
-/node_modules
 
 # Ignore application configuration
 /config/application.yml
-/public/packs
-/public/packs-test
-/node_modules
-yarn-debug.log*
-yarn-error.log*
-.yarn-integrity
-/public/packs
-/public/packs-test
-/node_modules
 yarn-debug.log*
 .yarn-integrity
 rspec_failures.txt
-
-# Relay
-**/__generated__/**/*
-
 
 # Mobius
 app/lib/mobius/config.yml
@@ -57,6 +43,7 @@ tags
 custom_hooks
 hooks/*.d
 mobius.yml
+app/lib/mobius/hooks/*.sample
 
 # git
 git-storage
@@ -65,9 +52,3 @@ git-storage
 openssh/ssh_host*
 openssh/sshd_config
 .ssh
-/public/packs
-/public/packs-test
-/node_modules
-/yarn-error.log
-yarn-debug.log*
-.yarn-integrity

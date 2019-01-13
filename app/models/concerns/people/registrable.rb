@@ -32,7 +32,7 @@ module People
 
           # Avatar
           remote_file = RemoteFileToBlobService.new(auth.info.image)
-          person.avatar.attach(remote_file.blob)
+          person.avatar.attach(remote_file.to_blob)
 
           # Blog
           person.blog = build_blog_for(person)

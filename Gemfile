@@ -24,6 +24,8 @@ gem 'redis', '>= 4.0'
 gem 'mini_magick'
 gem 'image_processing', '~> 1.2'
 gem 'aws-sdk-s3'
+gem 'down'
+gem 'http'
 
 # caching
 gem 'readthis'
