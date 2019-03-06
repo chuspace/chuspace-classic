@@ -52,3 +52,10 @@ git-storage
 openssh/ssh_host*
 openssh/sshd_config
 .ssh
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
