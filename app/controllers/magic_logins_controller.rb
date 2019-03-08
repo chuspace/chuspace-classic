@@ -2,10 +2,10 @@
 
 class MagicLoginsController < ApplicationController
   def index
-    person = Person.find_by(auth_token: inputs[:auth_token])
+    person = Person.find_by(auth_token: params[:token])
 
     if person
-      login
+      login(person)
       person.regenerate_auth_token
     end
 

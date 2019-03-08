@@ -17,7 +17,7 @@ module Mobius
     BINARY = 'mobius_shell'
     GL_PROTOCOL = 'ssh'.freeze
 
-    attr_accessor :key_id, :repo_name, :command, :git_access
+    attr_accessor :key_id, :slug, :command, :git_access
     attr_reader :repo_path
 
     def initialize(key_id)
@@ -77,7 +77,7 @@ module Mobius
       case @command
       when 'git-lfs-authenticate'
         raise DisallowedCommandError unless args.count >= 2
-        @repo_name = args[1]
+        @slug = args[1]
         case args[2]
         when 'download'
           @git_access = 'git-upload-pack'
@@ -88,12 +88,12 @@ module Mobius
         end
       else
         raise DisallowedCommandError unless args.count == 2
-        @repo_name = args.last
+        @slug = args.last
       end
     end
 
     def verify_access
-      status = api.check_access(@git_access, @repo_name, @key_id, '_any', GL_PROTOCOL)
+      status = api.check_access(@git_access, @slug, @key_id, '_any', GL_PROTOCOL)
 
       raise AccessDeniedError, status.message unless status.allowed?
 
@@ -167,7 +167,7 @@ module Mobius
     end
 
     def lfs_authenticate
-      lfs_access = api.lfs_authenticate(@key_id, @repo_name)
+      lfs_access = api.lfs_authenticate(@key_id, @slug)
 
       return unless lfs_access
 

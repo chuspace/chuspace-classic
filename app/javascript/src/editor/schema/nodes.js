@@ -83,7 +83,7 @@ export default {
     }
   },
   doc: {
-    content: 'title (subtitle? | block+) tags'
+    content: 'title subtitle? block+ tags'
   },
   ...listNodes,
   ...tableNodes({

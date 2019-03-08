@@ -1,0 +1,31 @@
+<div data-controller='login' class='centered mt-10'>
+  <div class='card max-w-sm text-center'>
+    <h2 class='card-title'>Sign in with email</h2>
+
+    <p class='card-intro'>
+      Enter the email address associated with your account, and we’ll send a
+      magic link to your inbox.
+    </p>
+
+    <div class='card-body'>
+      <%= form_with url: sessions_path, data: { target: 'login.form', action: 'ajax:success->login#onLoginSuccess' } do |form| %>
+        <%= form.text_field(
+          'email',
+          autocomplete: 'email',
+          placeholder: 'Enter email',
+          autofocus: true,
+          'data-target': 'login.inputEmail',
+          class: 'input input-bordered input-bordered-green block mx-auto mb-2'
+        ) %>
+        <span class="alert alert-error text-left" data-target='login.inputEmailError'></span>
+        <%= form.submit 'Submit', class: 'btn btn-black mt-4' %>
+      <% end %>
+
+      <span class="alert alert-success" data-target='login.formSuccess'></span>
+    </div>
+
+    <div class='card-footer'>
+      <%= link_to('← Go back', new_session_path, class: 'link link-default', 'data-action': 'click->login#toggleActions') %>
+    </div>
+  </div>
+</div>

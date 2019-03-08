@@ -13,8 +13,15 @@ Rails.application.routes.draw do
   post '/sessions', to: 'sessions#create', as: :sessions
   patch '/logout', to: 'sessions#destroy', as: :logout
 
-  get '/register', to: 'registrations#new', as: :new_registration
-  get '/login', to: 'sessions#new', as: :new_session
+  scope :register do
+    get '/', to: 'registrations#new', as: :new_registration
+    get '/email', to: 'registrations#email', as: :email_registration
+  end
+
+  scope :login do
+    get '/', to: 'sessions#new', as: :new_session
+    get '/email', to: 'sessions#email', as: :email_session
+  end
 
   resources :check_nicknames, only: :create
   resources :magic_logins, only: :index

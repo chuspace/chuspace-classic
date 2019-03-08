@@ -6,9 +6,9 @@ module People
 
     class_methods do
       def from_email(params)
-        person = build(params)
+        person = new(params)
         person.blog = build_blog_for(person)
-        person.save!
+        person
       end
 
       def from_github(auth)
@@ -35,9 +35,9 @@ module People
           person.avatar.attach(remote_file.to_blob)
 
           # Blog
-          person.blog = build_blog_for(person)
+          build_blog_for(person)
 
-          person.save!
+          person
         end
       end
 
@@ -45,10 +45,7 @@ module People
 
       def build_blog_for(person)
         return person.blog if person.blog&.persisted?
-
-        blog = person.build_blog(name: 'blog')
-        blog.repo_name = "#{person.nickname}/#{blog.name}".freeze
-        blog
+        person.blog = person.build_blog(name: 'Blog')
       end
     end
   end

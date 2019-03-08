@@ -11,6 +11,7 @@ export default () => {
         const decorations = []
 
         const decorate = (node, pos) => {
+          console.log(node.childCount)
           if (node.type.isBlock && node.childCount === 0) {
             decorations.push(
               Decoration.node(pos, pos + node.nodeSize, {

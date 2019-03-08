@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
 class Blog < ApplicationRecord
+  include Sluggable
+  sluggable source: :name
+
   STORAGE_DIR = Pathname.new(Rails.root.join('git-storage'))
 
-  validates :name, :repo_name, presence: true
-  validates :repo_name, uniqueness: true
+  validates :name, :slug, presence: true
+  validates :slug, uniqueness: { scope: :person_id }
 
   before_create :create_blog_repository
 
@@ -12,12 +15,12 @@ class Blog < ApplicationRecord
   has_many :posts
 
   def repo_path
-    STORAGE_DIR.join(repo_name).tap(&:mkpath).to_s
+    STORAGE_DIR.join(slug).tap(&:mkpath).to_s
   end
 
   private
 
   def create_blog_repository
-    MobiusClient.new.add_repository(repo_name)
+    MobiusClient.new.add_repository(slug)
   end
 end

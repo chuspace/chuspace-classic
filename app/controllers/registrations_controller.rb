@@ -3,4 +3,7 @@
 class RegistrationsController < ApplicationController
   def new
   end
+
+  def email
+  end
 end

@@ -16,7 +16,7 @@ class MobiusController < ApplicationController
   end
 
   def allowed
-    has_blog = params[:project] == "/#{@person.blog.repo_name}"
+    has_blog = params[:project] == "/#{@person.blog.slug}"
     render json: {
       status: has_blog,
       message: has_blog ? nil : 'Repository not found',

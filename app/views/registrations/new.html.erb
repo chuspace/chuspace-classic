@@ -1,75 +1,20 @@
-<div data-controller='register' class='centered'>
+<div class='centered mt-10'>
   <div class='card max-w-sm text-center'>
-    <div data-target='register.actionsCard'>
-      <h2 class='card-title'>Join Chuspace</h2>
+    <h2 class='card-title'>Join Chuspace</h2>
 
-      <p class='card-intro'>
-        Create an account to personalize your homepage, follow your favorite
-        authors and publications, applaud stories you love, and more.
-      </p>
+    <p class='card-intro'>
+      Create an account to personalize your homepage, follow your favorite
+      authors and publications, applaud stories you love, and more.
+    </p>
 
-      <div class='card-body'>
-        <%= link_to('Sign up with github', '/auth/github', class: 'btn btn-bordered btn-bordered-green mb-2 block max-w-xxs mx-auto') %>
-        <%= link_to('Sign up with email', '#', class: 'btn btn-bordered btn-bordered-green block max-w-xxs mx-auto', 'data-action': 'click->register#toggleForm') %>
-      </div>
-
-      <p class='card-footer'>
-        Already have an account?
-        <%= link_to('Sign in', new_session_path, class: 'link link-green') %>
-      </p>
+    <div class='card-body'>
+      <%= link_to('Sign up with github', '/auth/github', class: 'btn btn-bordered btn-bordered-green mb-2 block max-w-xxs mx-auto') %>
+      <%= link_to('Sign up with email', email_registration_path, class: 'btn btn-bordered btn-bordered-green block max-w-xxs mx-auto') %>
     </div>
 
-
-    <div data-target='register.formCard' class='hidden'>
-      <h2 class='card-title'>Sign up with email</h2>
-
-      <p class='card-intro'>
-        Enter the email address associated with your account, and we’ll send a
-        magic link to your inbox.
-      </p>
-
-      <div class='card-body'>
-        <%= form_with url: people_path, scope: :person, data: { target: 'register.form', action: 'ajax:success->register#onRegisterSuccess' } do |form| %>
-          <%= form.text_field(
-            'name',
-            autocomplete: 'name',
-            placeholder: 'Full name',
-            autofocus: true,
-            data: { target: 'register.inputName' },
-            class: 'input input-bordered input-bordered-green block mb-2 mx-auto'
-          ) %>
-
-          <span class="alert alert-error mb-2" data-target='register.inputNameError'></span>
-
-          <%= form.text_field(
-            'nickname',
-            autocomplete: 'nickname',
-            placeholder: 'Nickname',
-            data: { target: 'register.inputNickname' },
-            class: 'input input-bordered input-bordered-green block mb-2 mx-auto'
-          ) %>
-
-          <span class="alert alert-error mb-2" data-target='register.inputNicknameError'></span>
-
-          <%= form.text_field(
-            'email',
-            autocomplete: 'email',
-            placeholder: 'Email',
-            data: { target: 'register.inputEmail' },
-            class: 'input input-bordered input-bordered-green block mb-2 mx-auto',
-            type: 'email'
-          ) %>
-
-          <span class="alert alert-error mb-2" data-target='register.inputEmailError'></span>
-
-          <%= form.submit('Submit', class: 'btn btn-black mt-4 mx-auto') %>
-        <% end %>
-        <div class="alert alert-success" data-target='register.formSuccess'></div>
-      </div>
-
-      <div class='card-footer'>
-        <%= link_to('← Go back', '#', class: 'link link-default db', 'data-action': 'click->register#toggleActions') %>
-      </div>
-    </div>
+    <p class='card-footer'>
+      Already have an account?
+      <%= link_to('Sign in', new_session_path, class: 'link link-green') %>
+    </p>
   </div>
 </div>

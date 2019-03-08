@@ -38,14 +38,13 @@ ActiveRecord::Schema.define(version: 2018_12_15_183817) do
   end
 
   create_table "blogs", force: :cascade do |t|
-    t.string "name", default: "blog", null: false
-    t.citext "repo_name", default: "", null: false
+    t.string "name", default: "Blog", null: false
+    t.string "slug", default: "blog", null: false
     t.bigint "person_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["name", "person_id"], name: "index_blogs_on_name_and_person_id", unique: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["person_id"], name: "index_blogs_on_person_id"
-    t.index ["repo_name"], name: "index_blogs_on_repo_name", unique: true
+    t.index ["slug", "person_id"], name: "index_blogs_on_slug_and_person_id", unique: true
   end
 
   create_table "people", force: :cascade do |t|

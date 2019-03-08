@@ -10,33 +10,20 @@ type Error = {
 
 export default class Register extends Controller {
   static inputs = ['inputName', 'inputNickname', 'inputEmail']
-  static errors = ['inputNameError', 'inputNicknameError', 'inputEmailError']
+  static errors = [
+    'inputNameError',
+    'inputNicknameError',
+    'inputEmailError'
+  ]
 
   static targets = [
-    'actionsCard',
-    'formCard',
     'form',
     'formSuccess',
     ...Register.inputs,
     ...Register.errors
   ]
 
-  toggleForm = (e: Event) => {
-    e.preventDefault()
-    this.reset()
-    this.formCardTarget.classList.remove('hidden')
-    this.actionsCardTarget.classList.add('hidden')
-  }
-
-  toggleSuccess = () =>
-    this.formTarget.classList.add('hidden')
-
-  toggleActions = (e: Event) => {
-    e.preventDefault()
-    this.reset()
-    this.formCardTarget.classList.add('hidden')
-    this.actionsCardTarget.classList.remove('hidden')
-  }
+  toggleSuccess = () => this.formTarget.classList.add('hidden')
 
   onRegisterSuccess (event: window.CustomEvent) {
     const [data] = event.detail

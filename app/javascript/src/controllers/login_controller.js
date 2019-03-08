@@ -12,30 +12,9 @@ export default class Login extends Controller {
   static inputs = ['inputEmail']
   static errors = ['inputEmailError']
 
-  static targets = [
-    'actionsCard',
-    'formCard',
-    'form',
-    'formSuccess',
-    ...Login.inputs,
-    ...Login.errors
-  ]
-
-  toggleForm = (e: Event) => {
-    e.preventDefault()
-    this.reset()
-    this.formCardTarget.classList.remove('hidden')
-    this.actionsCardTarget.classList.add('hidden')
-  }
+  static targets = ['form', 'formSuccess', ...Login.inputs, ...Login.errors]
 
   toggleSuccess = () => this.formTarget.classList.add('hidden')
-
-  toggleActions = (e: Event) => {
-    e.preventDefault()
-    this.reset()
-    this.formCardTarget.classList.add('hidden')
-    this.actionsCardTarget.classList.remove('hidden')
-  }
 
   onLoginSuccess (event: window.CustomEvent) {
     const [data] = event.detail
