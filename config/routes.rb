@@ -32,6 +32,7 @@ Rails.application.routes.draw do
 
   namespace :settings do
     resources :profiles, path: 'profile', only: %i[index]
+    resources :ssh_keys, path: 'ssh', except: %i[show update]
   end
 
   get '/:nickname', to: 'people#show', as: :profile

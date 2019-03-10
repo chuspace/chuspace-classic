@@ -1,6 +1,9 @@
 <ul class="list-reset tabs">
   <li class="tabs-tab">
-    <a class="tabs-tab-link tabs-tab-active" href="#">Profile</a>
+    <%= link_to 'Profile', settings_profiles_path, class: tabs_class('profiles') %>
+  </li>
+  <li class="tabs-tab">
+    <%= link_to 'Ssh keys', settings_ssh_keys_path, class: tabs_class('ssh_keys') %>
   </li>
   <li class="tabs-tab">
     <a class="tabs-tab-link" href="#">Integrations</a>

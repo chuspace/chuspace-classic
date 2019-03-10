@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_15_183817) do
+ActiveRecord::Schema.define(version: 2019_03_08_201406) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -90,8 +90,21 @@ ActiveRecord::Schema.define(version: 2018_12_15_183817) do
     t.index ["status"], name: "index_posts_on_status"
   end
 
+  create_table "ssh_keys", force: :cascade do |t|
+    t.string "title"
+    t.text "key", null: false
+    t.string "fingerprint", null: false
+    t.bigint "person_id"
+    t.datetime "last_used"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["key"], name: "index_ssh_keys_on_key", unique: true
+    t.index ["person_id"], name: "index_ssh_keys_on_person_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "blogs", "people"
   add_foreign_key "posts", "blogs"
   add_foreign_key "posts", "people"
+  add_foreign_key "ssh_keys", "people"
 end

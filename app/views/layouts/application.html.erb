@@ -13,20 +13,21 @@
     </div>
 
     <section class="content">
-      <div class="flash-message-container">
-        <% flash.each do |key, value| %>
-          <div class="<%= flash_message_class(key) %>">
-            <div class="mx-auto container py-4">
-              <%= value %>
-            </div>
-          </div>
-        <% end %>
-      </div>
       <%= yield %>
     </section>
 
     <div class='container mx-auto'>
       <%= render 'layouts/footer' %>
+    </div>
+
+    <div class="animated alert-container fast bounceInRight" data-controller="alerts">
+      <% flash.each do |key, value| %>
+        <div class="<%= flash_message_class(key) %>">
+          <div class="p-4 ">
+            <%= value %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </body>
 </html>
