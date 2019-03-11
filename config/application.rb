@@ -21,6 +21,7 @@ module Chuspace
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
     config.generators.system_tests = nil
+    config.autoloader == :zeitwerk
 
     # Configure sidekiq as background job adapter on staging and production
     config.active_job.queue_adapter = :sidekiq
