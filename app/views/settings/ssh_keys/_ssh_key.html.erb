@@ -1,0 +1,21 @@
+<div class="border-b pb-2 border-grey-lighter">
+  <div class="flex justify-between items-center my-4">
+    <div>
+      <strong><%= key.title %></strong>
+      <small class="block mt-2">
+        Added <%= key.created_at.to_formatted_s(:long) %> |
+        <%= key.last_used ? "Last used #{distance_of_time_in_words_to_now(key.last_used)} ago" : 'Never used'  %>
+      </small>
+    </div>
+    <code><%= key.fingerprint %></code>
+    <%= link_to(
+      'Delete',
+      settings_ssh_key_path(key),
+      method: :delete,
+      remote: true,
+      class: 'btn btn-bordered btn-bordered-red',
+      data: { confirm: 'Are you sure?' }
+    )
+    %>
+  </div>
+</div>
