@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
-require 'securerandom'
-
 class MobiusClient
   class Error < StandardError; end
-  STORAGE_PATH = Rails.root.join('git-storage').to_s
-
   KeyAdder = Struct.new(:io) do
     def add_key(id, key)
       key = MobiusClient.strip_key(key)
@@ -33,7 +29,7 @@ class MobiusClient
   #
   def add_repository(name)
     MobiusUtils.system_silent([mobius_shell_repositories_path,
-                                  'add-repository', STORAGE_PATH, "#{name}.git"])
+                                  'add-repository', Blog::GIT_STORAGE_DIR_PATH, "#{name}.git"])
   end
 
   # Import repository
@@ -45,7 +41,7 @@ class MobiusClient
   #
   def import_repository(name, url)
     output, status = MobiusPopen::popen([mobius_shell_repositories_path, 'import-repository',
-                                    STORAGE_PATH, "#{name}.git", url, '900'])
+                                    Blog::GIT_STORAGE_DIR_PATH, "#{name}.git", url, '900'])
     raise Error, output unless status.zero?
     true
   end
@@ -59,7 +55,7 @@ class MobiusClient
   #
   def mv_repository(path, new_path)
     MobiusUtils.system_silent([mobius_shell_repositories_path, 'mv-repository',
-                                  STORAGE_PATH, "#{path}.git", "#{new_path}.git"])
+                                  Blog::GIT_STORAGE_DIR_PATH, "#{path}.git", "#{new_path}.git"])
   end
 
   # Remove repository from file system
@@ -71,7 +67,7 @@ class MobiusClient
   #
   def remove_repository(name)
     MobiusUtils.system_silent([mobius_shell_repositories_path,
-                                  'rm-repository', STORAGE_PATH, "#{name}.git"])
+                                  'rm-repository', Blog::GIT_STORAGE_DIR_PATH, "#{name}.git"])
   end
 
   # Gc repository
@@ -83,7 +79,7 @@ class MobiusClient
   #
   def gc(path)
     MobiusUtils.system_silent([mobius_shell_repositories_path, 'gc',
-                                  STORAGE_PATH, "#{path}.git"])
+                                  Blog::GIT_STORAGE_DIR_PATH, "#{path}.git"])
   end
 
   # Add new key to gitlab-shell
@@ -178,7 +174,7 @@ class MobiusClient
 
   # Create (if necessary) and link the secret token file
   def generate_and_link_secret_token
-    secret_file = Mobius.config.mobius_shell.secret_file
+    secret_file = Mobius.config.secret_file
     unless File.size?(secret_file)
       # Generate a new token of 16 random hexadecimal characters and store it in secret_file.
       token = SecureRandom.hex(16)
@@ -198,13 +194,13 @@ class MobiusClient
   end
 
   def mobius_shell_user_home
-    File.expand_path("~#{Mobius.config.mobius_shell.ssh_user}")
+    File.expand_path("~#{Mobius.config.ssh_user}")
   end
 
   def full_path(dir_name)
     raise ArgumentError.new("Directory name can't be blank") if dir_name.blank?
 
-    File.join(STORAGE_PATH, dir_name)
+    File.join(Blog::GIT_STORAGE_DIR_PATH, dir_name)
   end
 
   def mobius_shell_repositories_path

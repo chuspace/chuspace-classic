@@ -18,6 +18,10 @@ module Mobius
       MOBIUS_ROOT
     end
 
+    def ssh_user
+      SSH_USER
+    end
+
     def auth_file
       @config['auth_file'] ||= File.join(app_root, '.ssh/authorized_keys')
     end
@@ -43,7 +47,7 @@ module Mobius
     end
 
     def redis_namespace
-      redis['namespace'] || 'resque:mobius'
+      redis['namespace'] || 'redis:mobius'
     end
 
     def log_file
