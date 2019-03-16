@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'logger'
-
 require_relative 'config'
 
 def convert_log_level(log_level)
@@ -12,7 +11,5 @@ rescue NameError
   Logger::INFO
 end
 
-config = Mobius::Config.new
-
-$logger = Logger.new(config.log_file)
-$logger.level = convert_log_level(config.log_level)
+$logger = Logger.new(Mobius.config.log_file)
+$logger.level = convert_log_level(Mobius.config.log_level)

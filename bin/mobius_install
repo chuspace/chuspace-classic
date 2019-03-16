@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
-require_relative '../app/lib/mobius/init'
+require_relative '../app/lib/mobius'
 
-config = Mobius::Config.new
-key_dir = File.dirname("#{config.auth_file}")
+key_dir = File.dirname(Mobius.config.ssh_auth_file)
 repository_storage_paths = ARGV
 
 commands = [

@@ -12,17 +12,17 @@ module Mobius
     class DisallowedCommandError < StandardError; end
     class InvalidRepositoryPathError < StandardError; end
 
-    GIT_COMMANDS = %w(git-upload-pack git-receive-pack git-upload-archive git-lfs-authenticate).freeze
-    API_COMMANDS = %w(2fa_recovery_codes)
+    GIT_COMMANDS = %w(git-upload-pack git-receive-pack git-upload-archive).freeze
     BINARY = 'mobius_shell'
-    GL_PROTOCOL = 'ssh'.freeze
+    MOBIUS_PROTOCOL = 'ssh'.freeze
 
     attr_accessor :key_id, :slug, :command, :git_access
     attr_reader :repo_path
 
+    delegate :config, to: :Mobius
+
     def initialize(key_id)
       @key_id = key_id
-      @config = Mobius::Config.new
     end
 
     # The origin_cmd variable contains UNTRUSTED input. If the user ran
@@ -70,30 +70,13 @@ module Mobius
       @command = args.first
       @git_access = @command
 
-      return if API_COMMANDS.include?(@command)
-
       raise DisallowedCommandError unless GIT_COMMANDS.include?(@command)
-
-      case @command
-      when 'git-lfs-authenticate'
-        raise DisallowedCommandError unless args.count >= 2
-        @slug = args[1]
-        case args[2]
-        when 'download'
-          @git_access = 'git-upload-pack'
-        when 'upload'
-          @git_access = 'git-receive-pack'
-        else
-          raise DisallowedCommandError
-        end
-      else
-        raise DisallowedCommandError unless args.count == 2
-        @slug = args.last
-      end
+      raise DisallowedCommandError unless args.count == 2
+      @slug = args.last
     end
 
     def verify_access
-      status = api.check_access(@git_access, @slug, @key_id, '_any', GL_PROTOCOL)
+      status = api.check_access(@git_access, @slug, @key_id, '_any', MOBIUS_PROTOCOL)
 
       raise AccessDeniedError, status.message unless status.allowed?
 
@@ -101,17 +84,8 @@ module Mobius
     end
 
     def process_cmd(args)
-      return self.send("api_#{@command}") if API_COMMANDS.include?(@command)
-
-      if @command == 'git-lfs-authenticate'
-        Mobius::Metrics.measure('lfs-authenticate') do
-          $logger.info "Processing LFS authentication for #{log_username}."
-          lfs_authenticate
-        end
-      else
-        $logger.info "executing git command <#{@command} #{repo_path}> for #{log_username}."
-        exec_cmd(@command, repo_path)
-      end
+      $logger.info "executing git command <#{@command} #{repo_path}> for #{log_username}."
+      exec_cmd(@command, repo_path)
     end
 
     # This method is not covered by Rspec because it ends the current Ruby process.
@@ -128,15 +102,15 @@ module Mobius
         'PATH' => ENV['PATH'],
         'LD_LIBRARY_PATH' => ENV['LD_LIBRARY_PATH'],
         'LANG' => ENV['LANG'],
-        'GL_ID' => @key_id,
-        'GL_PROTOCOL' => GL_PROTOCOL
+        'MOBIUS_ID' => @key_id,
+        'MOBIUS_PROTOCOL' => MOBIUS_PROTOCOL
       }
 
       if git_trace_available?
         env.merge!(
-          'GIT_TRACE' => @config.git_trace_log_file,
-          'GIT_TRACE_PACKET' => @config.git_trace_log_file,
-          'GIT_TRACE_PERFORMANCE' => @config.git_trace_log_file,
+          'GIT_TRACE' => config.git_trace_log_file,
+          'GIT_TRACE_PACKET' => config.git_trace_log_file,
+          'GIT_TRACE_PERFORMANCE' => config.git_trace_log_file,
         )
       end
 
@@ -161,9 +135,8 @@ module Mobius
       user && user['name'] || 'Anonymous'
     end
 
-    # User identifier to be used in log messages.
     def log_username
-      @config.audit_usernames ? username : "user with key #{@key_id}"
+      "user with key #{@key_id}"
     end
 
     def lfs_authenticate
@@ -185,18 +158,18 @@ module Mobius
     end
 
     def git_trace_available?
-      return false unless @config.git_trace_log_file
+      return false unless config.git_trace_log_file
 
-      if Pathname(@config.git_trace_log_file).relative?
-        $logger.warn "is configured to trace git commands with #{@config.git_trace_log_file.inspect} but an absolute path needs to be provided"
+      if Pathname(config.git_trace_log_file).relative?
+        $logger.warn "is configured to trace git commands with #{config.git_trace_log_file.inspect} but an absolute path needs to be provided"
         return false
       end
 
       begin
-        File.open(@config.git_trace_log_file, 'a') { nil }
+        File.open(config.git_trace_log_file, 'a') { nil }
         return true
       rescue => ex
-        $logger.warn "is configured to trace git commands with #{@config.git_trace_log_file.inspect} but it's not possible to write in that path #{ex.message}"
+        $logger.warn "is configured to trace git commands with #{config.git_trace_log_file.inspect} but it's not possible to write in that path #{ex.message}"
         return false
       end
     end

@@ -40,10 +40,7 @@ app/lib/mobius/config.yml
 authorized_keys.lock
 .mobius_shell_secret
 tags
-custom_hooks
-hooks/*.d
 mobius.yml
-app/lib/mobius/hooks/*.sample
 
 # git
 git-storage

@@ -17,6 +17,8 @@ module Mobius
     CHECK_TIMEOUT ||= 5
     READ_TIMEOUT ||= 300
 
+    delegate :config, to: :Mobius
+
     def check_access(cmd, repo, actor, changes, protocol, env: {})
       changes = changes.join("\n") unless changes.kind_of?(String)
 
@@ -34,7 +36,7 @@ module Mobius
         params.merge!(user_id: actor.gsub('user-', ''))
       end
 
-      url = "#{host_v3}/allowed"
+      url = "#{host}/allowed"
       resp = post(url, params)
 
       if resp.code == '200'
@@ -46,41 +48,28 @@ module Mobius
 
     def discover(key)
       key_id = key.gsub('key-', '')
-      resp = get("#{host_v3}/discover?key_id=#{key_id}")
+      resp = get("#{host}/discover?key_id=#{key_id}")
       JSON.parse(resp.body) rescue nil
     end
 
-    def lfs_authenticate(key, repo)
-      params = {
-        project: sanitize_path(repo),
-        key_id: key.gsub('key-', '')
-      }
-
-      resp = post("#{host_v3}/lfs_authenticate", params)
-
-      if resp.code == '200'
-        Mobius::LfsAuthentication.build_from_json(resp.body)
-      end
-    end
-
     def broadcast_message
-      resp = get("#{host_v3}/broadcast_message")
+      resp = get("#{host}/broadcast_message")
       JSON.parse(resp.body) rescue {}
     end
 
     def merge_request_urls(repo_path, changes)
       changes = changes.join("\n") unless changes.kind_of?(String)
       changes = changes.encode('UTF-8', 'ASCII', invalid: :replace, replace: '')
-      resp = get("#{host_v3}/merge_request_urls?project=#{URI.escape(repo_path)}&changes=#{URI.escape(changes)}")
+      resp = get("#{host}/merge_request_urls?project=#{URI.escape(repo_path)}&changes=#{URI.escape(changes)}")
       JSON.parse(resp.body) rescue []
     end
 
     def check
-      get("#{host_v3}/check", read_timeout: CHECK_TIMEOUT)
+      get("#{host}/check", read_timeout: CHECK_TIMEOUT)
     end
 
     def authorized_key(key)
-      resp = get("#{host_v3}/authorized_keys?key=#{URI.escape(key, '+/=')}")
+      resp = get("#{host}/authorized_keys?key=#{URI.escape(key, '+/=')}")
       JSON.parse(resp.body) if resp.code == '200'
     rescue
       nil
@@ -88,7 +77,7 @@ module Mobius
 
     def two_factor_recovery_codes(key)
       key_id = key.gsub('key-', '')
-      resp = post("#{host_v3}/two_factor_recovery_codes", key_id: key_id)
+      resp = post("#{host}/two_factor_recovery_codes", key_id: key_id)
 
       JSON.parse(resp.body) if resp.code == '200'
     rescue
@@ -109,52 +98,20 @@ module Mobius
       repo.gsub("'", '')
     end
 
-    def config
-      @config ||= Mobius::Config.new
-    end
-
-    def host_v3
-      "#{config.url}/mobius"
-    end
-
     def host
       "#{config.url}/mobius"
     end
 
     def http_client_for(uri, options = {})
-      if uri.is_a?(::URI::HTTPUNIX)
-        http = ::Net::HTTPUNIX.new(uri.hostname)
-      else
-        http = ::Net::HTTP.new(uri.host, uri.port)
-      end
-
+      http = ::Net::HTTP.new(uri.host, uri.port)
       http.read_timeout = options[:read_timeout] || read_timeout
-
-      if uri.is_a?(::URI::HTTPS)
-        http.use_ssl = true
-        http.cert_store = cert_store
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE if config.http_settings['self_signed_cert']
-      end
-
       http
     end
 
     def http_request_for(method, uri, params = {})
       request_klass = method == :get ? ::Net::HTTP::Get : ::Net::HTTP::Post
       request = request_klass.new(uri.request_uri)
-
-      user = config.http_settings['user']
-      password = config.http_settings['password']
-      request.basic_auth(user, password) if user && password
-
       request.set_form_data(params.merge(secret_token: secret_token))
-
-      if uri.is_a?(::URI::HTTPUNIX)
-        # The HTTPUNIX HTTP client does not set a correct Host header. This can
-        # lead to 400 Bad Request responses.
-        request['Host'] = 'localhost'
-      end
-
       request
     end
 
@@ -195,25 +152,8 @@ module Mobius
       request(:post, url, params)
     end
 
-    def cert_store
-      @cert_store ||= begin
-        store = OpenSSL::X509::Store.new
-        store.set_default_paths
-
-        if ca_file = config.http_settings['ca_file']
-          store.add_file(ca_file)
-        end
-
-        if ca_path = config.http_settings['ca_path']
-          store.add_path(ca_path)
-        end
-
-        store
-      end
-    end
-
     def secret_token
-      @secret_token ||= File.read config.secret_file
+      @secret_token ||= File.read config.api_secret_file
     end
 
     def read_timeout

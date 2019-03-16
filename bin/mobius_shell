@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require_relative '../app/lib/mobius/init'
+require_relative '../app/lib/mobius'
 
 unless ENV['SSH_CONNECTION']
   puts "Only ssh allowed"
@@ -9,7 +9,7 @@ end
 key_id = /key-[0-9]+/.match(ARGV.join).to_s
 original_cmd = ENV.delete('SSH_ORIGINAL_COMMAND')
 
-require File.join(MOBIUS_ROOT, 'shell')
+require File.join(Mobius::ROOT_PATH, 'shell')
 
 if Mobius::Shell.new(key_id).exec(original_cmd)
   exit 0

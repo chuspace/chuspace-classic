@@ -1,13 +1,14 @@
 #!/usr/bin/env ruby
 
-require_relative '../app/lib/mobius/init'
-require File.join(MOBIUS_ROOT, 'net')
-require File.join(MOBIUS_ROOT, 'keys')
+require_relative '../app/lib/mobius'
+require File.join(Mobius::ROOT_PATH, 'net')
+require File.join(Mobius::ROOT_PATH, 'keys')
 
 key = ARGV[0]
 abort "# No key provided" if key.nil? || key.empty?
 
 authorized_key = Mobius::Net.new.authorized_key(key)
+
 if authorized_key.nil?
   puts "# No key was found for #{key}"
 else

@@ -29,7 +29,7 @@ module Mobius
       @key_id = ARGV.shift
       key = ARGV.shift
       @key = key.dup if key
-      @auth_file = Mobius::Config.new.auth_file
+      @auth_file = Mobius.config.ssh_auth_file
     end
 
     def exec

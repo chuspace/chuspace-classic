@@ -4,14 +4,11 @@ require 'fileutils'
 require 'timeout'
 require 'open3'
 
-require_relative 'config'
 require_relative 'logger'
 require_relative 'metrics'
 
 module Mobius
   class Repository
-    GLOBAL_HOOKS_DIRECTORY ||= File.join(MOBIUS_ROOT, 'hooks')
-
     # Repository name is a directory name for repository with .git at the end
     # It may be namespaced or not. Like repo.git or mobius/repo.git
     attr_reader :repository_name
@@ -23,27 +20,6 @@ module Mobius
     # Full path is an absolute path to the repository
     # Ex /home/git/repositories/test.git
     attr_reader :full_path
-
-    def self.create_hooks(path)
-      local_hooks_directory = File.join(path, 'hooks')
-      real_local_hooks_directory = :not_found
-      begin
-        real_local_hooks_directory = File.realpath(local_hooks_directory)
-      rescue Errno::ENOENT
-        # real_local_hooks_directory == :not_found
-      end
-
-      if real_local_hooks_directory != File.realpath(GLOBAL_HOOKS_DIRECTORY)
-        if File.exist?(local_hooks_directory)
-          $logger.info "Moving existing hooks directory and symlinking global hooks directory for #{path}."
-          FileUtils.mv(local_hooks_directory, "#{local_hooks_directory}.old.#{Time.now.to_i}")
-        end
-        FileUtils.ln_sf(GLOBAL_HOOKS_DIRECTORY, local_hooks_directory)
-      else
-        $logger.info "Hooks already exist for #{path}."
-        true
-      end
-    end
 
     def initialize
       @command = ARGV.shift
@@ -169,7 +145,7 @@ module Mobius
       $logger.info "Adding repository #{@repository_name} at <#{full_path}>."
       FileUtils.mkdir_p(full_path, mode: 0770)
       cmd = %W(git --git-dir=#{full_path} init --bare)
-      system(*cmd) && self.class.create_hooks(full_path)
+      system(*cmd)
     end
 
     def list_repositories
@@ -264,7 +240,6 @@ module Mobius
         return false
       end
 
-      self.class.create_hooks(full_path)
       # The repository was imported successfully.
       # Remove the origin URL since it may contain password.
       remove_origin_in_repo
@@ -348,41 +323,6 @@ module Mobius
         $logger.error "mv-storage failed: source path <#{full_path}> is waiting for pushes to finish."
         false
       end
-    end
-
-    def fork_repository
-      destination_repos_path = ARGV.shift
-
-      unless destination_repos_path
-        $logger.error 'fork-repository failed: no destination repository path provided.'
-        return false
-      end
-
-      new_namespace = ARGV.shift
-
-      # destination namespace must be provided
-      unless new_namespace
-        $logger.error 'fork-repository failed: no destination namespace provided.'
-        return false
-      end
-
-      # destination namespace must exist
-      namespaced_path = File.join(destination_repos_path, new_namespace)
-      unless File.exists?(namespaced_path)
-        $logger.error "fork-repository failed: destination namespace <#{namespaced_path}> does not exist."
-        return false
-      end
-
-      # a repository of the same name cannot already be within the destination namespace
-      full_destination_path = File.join(namespaced_path, repository_name.split('/')[-1])
-      if File.exists?(full_destination_path)
-        $logger.error "fork-repository failed: destination repository <#{full_destination_path}> already exists."
-        return false
-      end
-
-      $logger.info "Forking repository from <#{full_path}> to <#{full_destination_path}>."
-      cmd = %W(git clone --bare -- #{full_path} #{full_destination_path})
-      system(*cmd) && self.class.create_hooks(full_destination_path)
     end
 
     def gc

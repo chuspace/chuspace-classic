@@ -4,10 +4,6 @@ class Blog < ApplicationRecord
   include Sluggable
   sluggable source: :name
 
-  GIT_STORAGE_DIR_NAME      = 'git-storage'
-  GIT_STORAGE_DIR_PATHNAME  = Pathname.new(Rails.root.join(GIT_STORAGE_DIR_NAME))
-  GIT_STORAGE_DIR_PATH      = GIT_STORAGE_DIR_PATHNAME.to_s
-
   validates :name, :slug, presence: true
   validates :slug, uniqueness: { scope: :person_id }
 
@@ -17,7 +13,7 @@ class Blog < ApplicationRecord
   has_many :posts
 
   def git_repo_full_path
-    GIT_STORAGE_DIR_PATHNAME.join(repo_path).tap(&:mkpath).to_s
+    Mobius.config.git_storage_pathname.join(repo_path).tap(&:mkpath).to_s
   end
 
   def git_repo_path

@@ -10,17 +10,17 @@ require 'json'
 module Mobius
   class Access
     class AccessDeniedError < StandardError; end
-
     include NamesHelper
 
-    attr_reader :config, :repo_path, :changes, :protocol
+    attr_reader :repo_path, :changes, :protocol, :api
+    delegate :config, to: :Mobius
 
     def initialize(repo_path, actor, changes, protocol)
-      @config = Mobius::Config.new
       @repo_path = repo_path.strip
       @actor = actor
       @changes = changes.lines
       @protocol = protocol
+      @api = Mobius::Net.new
     end
 
     def exec
@@ -42,12 +42,6 @@ module Mobius
     rescue AccessDeniedError => ex
       $stderr.puts "remote: #{ex.message}"
       false
-    end
-
-    protected
-
-    def api
-      Mobius::Net.new
     end
   end
 end

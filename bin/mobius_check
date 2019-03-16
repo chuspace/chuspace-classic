@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-require_relative '../app/lib/mobius/init'
-require File.join(MOBIUS_ROOT, 'net')
+require_relative '../app/lib/mobius'
+require File.join(Mobius::ROOT_PATH, 'net')
 
 print "Check GitLab API access: "
 begin
@@ -15,10 +15,9 @@ rescue Mobius::Net::ApiUnreachableError
   abort "FAILED: Failed to connect to internal API"
 end
 
-config = Mobius::Config.new
-abort("ERROR: missing option in config.yml") unless config.auth_file
+abort("ERROR: missing option in config.yml") unless Mobius.config.ssh_auth_file
 
-print "\nAccess to #{config.auth_file}: "
+print "\nAccess to #{config.ssh_auth_file}: "
 
 if system(File.dirname(__FILE__) + '/mobius_keys', 'check-permissions')
   print 'OK'

@@ -11,10 +11,9 @@ module Mobius
   class PostReceive
     include NamesHelper
 
-    attr_reader :config, :repo_path, :changes, :jid
+    attr_reader :repo_path, :changes, :jid
 
     def initialize(repo_path, actor, changes)
-      @config = Mobius::Config.new
       @repo_path, @actor = repo_path.strip, actor
       @changes = changes
       @jid = SecureRandom.hex(12)
