@@ -7,7 +7,7 @@ module Git
     attr_reader :config
 
     def initialize
-      @config = YAML.load_file(File.join(Git::APP_ROOT, 'config', 'git.yml'))
+      @config = YAML.load_file(Rails.root.join('config', 'git.yml'))
     end
 
     def ssh_user
@@ -27,7 +27,7 @@ module Git
     end
 
     def git_storage_path
-      File.join(Git::APP_ROOT, git_storage_dir_name)
+      Rails.root.join(git_storage_dir_name)
     end
 
     def git_storage_pathname
@@ -35,15 +35,15 @@ module Git
     end
 
     def ssh_auth_file
-      File.join(Git::SSH_ROOT, 'authorized_keys')
+      Git::SSH_ROOT.join('authorized_keys')
     end
 
     def api_secret_file
-      File.join(Git::APP_ROOT, 'config', @config['secret_file'])
+      Rails.root.join('config', @config['secret_file'])
     end
 
     def log_file
-      File.join(Git::APP_ROOT, @config['log_file'])
+      Rails.root.join(@config['log_file'])
     end
   end
 end

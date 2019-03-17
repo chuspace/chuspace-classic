@@ -8,7 +8,7 @@ class SshKey < ApplicationRecord
   validate :ssh_key_format, on: :create
 
   before_validation :assign_fingerprint
-  after_create_commit :write_key_to_auth_file
+  after_create :write_key_to_auth_file, unless: :command_exists_in_file?
   before_destroy :remove_key_from_auth_file
 
   def self.auth_file
@@ -16,7 +16,7 @@ class SshKey < ApplicationRecord
   end
 
   def self.auth_lock_file
-    @lock_file ||= self.class.auth_file + '.lock'
+    @lock_file ||= auth_file + '.lock'
   end
 
   def key_id
@@ -32,7 +32,9 @@ class SshKey < ApplicationRecord
   end
 
   def command_exists_in_file?
-    line.start_with?("command=\"#{command}\"")
+    open_auth_file('r+') do |f|
+      f.grep(/command=\"#{command}\"/).size > 0
+    end
   end
 
   private
@@ -68,7 +70,7 @@ class SshKey < ApplicationRecord
   end
 
   def lock(timeout = 10)
-    File.open(lock_file, 'w+') do |f|
+    File.open(self.class.auth_lock_file, 'w+') do |f|
       begin
         f.flock File::LOCK_EX
         Timeout::timeout(timeout) { yield }

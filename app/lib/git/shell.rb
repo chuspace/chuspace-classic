@@ -2,9 +2,13 @@
 
 require 'shellwords'
 require 'pathname'
+require 'logger'
+require 'forwardable'
 
 module Git
   class Shell
+    extend Forwardable
+
     class AccessDeniedError < StandardError; end
     class DisallowedCommandError < StandardError; end
     class InvalidRepositoryPathError < StandardError; end
@@ -16,7 +20,7 @@ module Git
     attr_accessor :key_id, :slug, :command, :git_access
     attr_reader :repo_path
 
-    delegate :config, to: :Git
+    def_delegators :Git, :config
 
     def initialize(key_id)
       @key_id = key_id
@@ -71,11 +75,11 @@ module Git
 
     def verify_access
       # TODO: Check if can access this repo her
-      self.repo_path = status.repository_path
+      self.repo_path = '/Users/gaurav/personal/chuspace/git-storage/gauravtiwari/blog.git'
     end
 
     def process_cmd(args)
-      $logger.info "executing git command <#{@command} #{repo_path}> for #{log_username}."
+      # $logger.info "executing git command <#{@command} #{repo_path}> for #{log_username}."
       exec_cmd(@command, repo_path)
     end
 
@@ -96,14 +100,6 @@ module Git
         'GIT_ID' => @key_id,
         'GIT_PROTOCOL' => GIT_PROTOCOL
       }
-
-      if git_trace_available?
-        env.merge!(
-          'GIT_TRACE' => config.git_trace_log_file,
-          'GIT_TRACE_PACKET' => config.git_trace_log_file,
-          'GIT_TRACE_PERFORMANCE' => config.git_trace_log_file,
-        )
-      end
 
       Kernel::exec(env, *args, unsetenv_others: true)
     end

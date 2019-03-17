@@ -14,11 +14,11 @@ class Blog < ApplicationRecord
   has_many :posts
 
   def git_repo_full_path
-    Git.config.git_storage_pathname.join(repo_path).tap(&:mkpath).to_s
+    Git.config.git_storage_pathname.join(git_repo_path).tap(&:mkpath).to_s
   end
 
   def git_repo_path
-    "#{person.nickname}/#{repo_name}".freeze
+    "#{person.nickname}/#{git_repo_name}".freeze
   end
 
   def git_repo_name
@@ -44,11 +44,6 @@ class Blog < ApplicationRecord
 
   private
 
-  def mv_git_repository(name, new_name)
-    $logger.info "Moving repository from #{repo_path(name)} to <#{repo_path(new_name)}>."
-    FileUtils.mv(repo_path(name), repo_path(new_name))
-  end
-
   def create_git_repository
     Rugged::Repository.init_at(git_repo_full_path, :bare)
   end
@@ -56,5 +51,10 @@ class Blog < ApplicationRecord
   def remove_git_repository
     Rails.logger.info "Removing repository from <#{git_repo_full_path}>."
     FileUtils.rm_rf(git_repo_full_path)
+  end
+
+  def mv_git_repository(name, new_name)
+    $logger.info "Moving repository from #{repo_path(name)} to <#{repo_path(new_name)}>."
+    FileUtils.mv(repo_path(name), repo_path(new_name))
   end
 end

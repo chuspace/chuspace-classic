@@ -5,7 +5,7 @@ unless ENV['SSH_CONNECTION']
   exit
 end
 
-require File.expand_path('../config/environment', File.dirname(__FILE__))
+require_relative '../app/lib/git'
 
 key_id = /key-[0-9]+/.match(ARGV.join).to_s
 original_cmd = ENV.delete('SSH_ORIGINAL_COMMAND')
