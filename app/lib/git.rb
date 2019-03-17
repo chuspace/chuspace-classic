@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require_relative 'mobius/config'
+require_relative 'git/config'
 
-module Mobius
+module Git
   APP_ROOT ||= File.expand_path(File.join(File.dirname(__FILE__), '../..'))
-  ROOT_PATH ||= File.join(APP_ROOT, 'app/lib/mobius')
+  ROOT_PATH ||= File.join(APP_ROOT, 'app/lib/git')
   SSH_ROOT ||= File.join(APP_ROOT, '.ssh')
 
   def self.config
-    @config ||= Mobius::Config.new
+    @config ||= Git::Config.new
   end
 end

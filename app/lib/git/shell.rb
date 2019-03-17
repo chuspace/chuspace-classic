@@ -3,30 +3,27 @@
 require 'shellwords'
 require 'pathname'
 
-require_relative 'net'
-require_relative 'metrics'
-
-module Mobius
+module Git
   class Shell
     class AccessDeniedError < StandardError; end
     class DisallowedCommandError < StandardError; end
     class InvalidRepositoryPathError < StandardError; end
 
     GIT_COMMANDS = %w(git-upload-pack git-receive-pack git-upload-archive).freeze
-    BINARY = 'mobius_shell'
-    MOBIUS_PROTOCOL = 'ssh'.freeze
+    BINARY = 'git_shell'
+    GIT_PROTOCOL = 'ssh'.freeze
 
     attr_accessor :key_id, :slug, :command, :git_access
     attr_reader :repo_path
 
-    delegate :config, to: :Mobius
+    delegate :config, to: :Git
 
     def initialize(key_id)
       @key_id = key_id
     end
 
     # The origin_cmd variable contains UNTRUSTED input. If the user ran
-    # ssh git@mobius.example.com 'evil command', then origin_cmd contains
+    # ssh git@git.example.com 'evil command', then origin_cmd contains
     # 'evil command'.
     def exec(origin_cmd)
       unless origin_cmd
@@ -38,15 +35,12 @@ module Mobius
       parse_cmd(args)
 
       if GIT_COMMANDS.include?(args.first)
-        Mobius::Metrics.measure('verify-access') { verify_access }
+        verify_access
       end
 
       process_cmd(args)
 
       true
-    rescue Mobius::Net::ApiUnreachableError => ex
-      $stderr.puts 'remote: Failed to authorize your Git request: internal API unreachable'
-      false
     rescue AccessDeniedError => ex
       message = "remote: Access denied for git command <#{origin_cmd}> by #{log_username}."
       $logger.warn message
@@ -76,10 +70,7 @@ module Mobius
     end
 
     def verify_access
-      status = api.check_access(@git_access, @slug, @key_id, '_any', MOBIUS_PROTOCOL)
-
-      raise AccessDeniedError, status.message unless status.allowed?
-
+      # TODO: Check if can access this repo her
       self.repo_path = status.repository_path
     end
 
@@ -102,8 +93,8 @@ module Mobius
         'PATH' => ENV['PATH'],
         'LD_LIBRARY_PATH' => ENV['LD_LIBRARY_PATH'],
         'LANG' => ENV['LANG'],
-        'MOBIUS_ID' => @key_id,
-        'MOBIUS_PROTOCOL' => MOBIUS_PROTOCOL
+        'GIT_ID' => @key_id,
+        'GIT_PROTOCOL' => GIT_PROTOCOL
       }
 
       if git_trace_available?
@@ -117,18 +108,8 @@ module Mobius
       Kernel::exec(env, *args, unsetenv_others: true)
     end
 
-    def api
-      Mobius::Net.new
-    end
-
     def user
-      return @user if defined?(@user)
-
-      begin
-        @user = api.discover(@key_id)
-      rescue Mobius::Net::ApiUnreachableError
-        @user = nil
-      end
+      # Find user
     end
 
     def username
@@ -139,43 +120,10 @@ module Mobius
       "user with key #{@key_id}"
     end
 
-    def lfs_authenticate
-      lfs_access = api.lfs_authenticate(@key_id, @slug)
-
-      return unless lfs_access
-
-      puts lfs_access.authentication_payload
-    end
-
     private
 
-    def continue?(question)
-      puts "#{question} (yes/no)"
-      STDOUT.flush # Make sure the question gets output before we wait for input
-      continue = STDIN.gets.chomp
-      puts '' # Add a buffer in the output
-      continue == 'yes'
-    end
-
-    def git_trace_available?
-      return false unless config.git_trace_log_file
-
-      if Pathname(config.git_trace_log_file).relative?
-        $logger.warn "is configured to trace git commands with #{config.git_trace_log_file.inspect} but an absolute path needs to be provided"
-        return false
-      end
-
-      begin
-        File.open(config.git_trace_log_file, 'a') { nil }
-        return true
-      rescue => ex
-        $logger.warn "is configured to trace git commands with #{config.git_trace_log_file.inspect} but it's not possible to write in that path #{ex.message}"
-        return false
-      end
-    end
-
     def repo_path=(repo_path)
-      raise ArgumentError, "Repository path not provided. Please make sure you're using Mobius v8.10 or later." unless repo_path
+      raise ArgumentError, "Repository path not provided. Please make sure you're using Git v8.10 or later." unless repo_path
       raise InvalidRepositoryPathError if File.absolute_path(repo_path) != repo_path
 
       @repo_path = repo_path

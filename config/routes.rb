@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   root to: 'pages#index'
 
-  namespace :mobius do
+  namespace :git do
     get :check
     get :discover
     post :allowed

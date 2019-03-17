@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.1'
+ruby '2.6.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', github: 'rails/rails'
@@ -69,6 +69,9 @@ gem 'rugged'
 
 # SSH host key support
 gem 'sshkey'
+
+# Instrumentation
+gem 'yabeda'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

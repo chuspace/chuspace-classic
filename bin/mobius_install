@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
-require_relative '../app/lib/mobius'
+require_relative '../app/lib/git'
 
-key_dir = File.dirname(Mobius.config.ssh_auth_file)
+key_dir = File.dirname(Git.config.ssh_auth_file)
 repository_storage_paths = ARGV
 
 commands = [
