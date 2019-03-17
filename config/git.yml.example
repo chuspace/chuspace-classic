@@ -1,0 +1,5 @@
+# git config settings
+
+user: git
+storage_dir_name: git-storage
+log_file: log/git-shell.log
