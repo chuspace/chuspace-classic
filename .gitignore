@@ -35,12 +35,10 @@ yarn-debug.log*
 .yarn-integrity
 rspec_failures.txt
 
-# Mobius
-app/lib/mobius/config.yml
+# Git
 authorized_keys.lock
-.mobius_shell_secret
 tags
-mobius.yml
+git.yml
 
 # git
 git-storage

@@ -1,8 +1,0 @@
-# Mobius config settings
-
-user: git
-storage_dir_name: git-storage
-log_file: log/mobius-shell.log
-secret_file: config/.mobius_shell_secret
-git_trace_log_file: log/mobius-git-trace-log.log
-mobius_shell_metrics_log_file: log/mobius-shell-metrics.log
