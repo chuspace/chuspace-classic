@@ -1,10 +1,11 @@
 #!/usr/bin/env ruby
-require_relative '../app/lib/git'
 
 unless ENV['SSH_CONNECTION']
   puts "Only ssh allowed"
   exit
 end
+
+require File.expand_path('../config/environment', File.dirname(__FILE__))
 
 key_id = /key-[0-9]+/.match(ARGV.join).to_s
 original_cmd = ENV.delete('SSH_ORIGINAL_COMMAND')
