@@ -16,7 +16,7 @@ class Person < ApplicationRecord
 
   has_many :posts, dependent: :destroy
   has_many :ssh_keys, dependent: :destroy
-  has_one :blog, required: true, autosave: true
+  has_one :blog, dependent: :destroy
 
   store_accessor :github_info, :github_nickname, :github_uid, :github_access_token
 

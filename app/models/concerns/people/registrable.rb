@@ -6,9 +6,7 @@ module People
 
     class_methods do
       def from_email(params)
-        person = new(params)
-        person.blog = build_blog_for(person)
-        person
+        new(params)
       end
 
       def from_github(auth)
@@ -34,18 +32,8 @@ module People
           remote_file = RemoteFileToBlobService.new(auth.info.image)
           person.avatar.attach(remote_file.to_blob)
 
-          # Blog
-          build_blog_for(person)
-
           person
         end
-      end
-
-      private
-
-      def build_blog_for(person)
-        return person.blog if person.blog&.persisted?
-        person.blog = person.build_blog(name: 'Blog')
       end
     end
   end

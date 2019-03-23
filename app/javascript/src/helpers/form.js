@@ -1,13 +1,13 @@
 // @flow
 
+import { Controller } from 'stimulus'
 import capitalize from 'lodash/capitalize'
-
 type Error = {
   field: string,
   errors: string
 }
 
-const withForm = BaseForm =>
+const withForm = (BaseForm: Controller) =>
   class extends BaseForm {
     static targets = [
       'form',
