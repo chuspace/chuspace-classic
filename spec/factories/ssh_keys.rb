@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :ssh_key do
     title { 'MyString' }
-    key { 'MyText' }
-    person { nil }
+    key { SSHKey.generate.ssh_public_key }
+    person
   end
 end

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 class GithubController < ApplicationController
   before_action :failure, only: :create, if: :malformed_auth?
   skip_before_action :authenticate, only: :create

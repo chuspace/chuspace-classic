@@ -5,8 +5,6 @@ FactoryBot.define do
     f.sequence(:title) { |n| "Welcome to Chuspace #{n}" }
     body { 'Welcome to Chuspace blogging' }
     person
-    f.sequence(:commit) { |n| 'commit #{n}' }
-    f.sequence(:version) { |n| n }
     tags { ['foo', 'bar'] }
     status { 0 }
     published_at { Time.now }

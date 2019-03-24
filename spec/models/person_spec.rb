@@ -12,4 +12,9 @@ RSpec.describe Person, type: :model do
   it { is_expected.to validate_uniqueness_of(:nickname).case_insensitive }
 
   it { is_expected.to have_many(:posts) }
+  it { is_expected.to have_many(:ssh_keys) }
+
+  it 'should have a git repo' do
+    expect(subject.repo_exists?).to be_truthy
+  end
 end

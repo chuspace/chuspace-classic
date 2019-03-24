@@ -7,7 +7,7 @@ module Git
     attr_reader :config
 
     def initialize
-      @config = YAML.load_file(Rails.root.join('config', 'git.yml'))
+      @config = YAML.load_file(Rails.root.join('config', 'git.yml'))[Rails.env]
     end
 
     def ssh_user

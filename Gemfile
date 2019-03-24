@@ -47,9 +47,6 @@ gem 'sidekiq'
 # ENV
 gem 'figaro'
 
-# HTTP requests
-gem 'typhoeus'
-
 # oAuth
 gem 'oauth2', '>= 1.4.0'
 gem 'omniauth-github', '>= 1.3.0'
@@ -66,6 +63,8 @@ gem 'turbolinks'
 
 # Git API
 gem 'rugged'
+gem 'charlock_holmes'
+gem 'github-linguist'
 
 # SSH host key support
 gem 'sshkey'
@@ -77,7 +76,6 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Testing
-  gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'rspec_junit_formatter'
   gem 'coveralls', require: false
@@ -107,5 +105,4 @@ group :test do
   gem 'simplecov-lcov', require: false
   gem 'shoulda-matchers', github: 'chuspace/shoulda-matchers', branch: 'rails-6-compat'
   gem 'rails-controller-testing'
-  gem 'vcr'
 end

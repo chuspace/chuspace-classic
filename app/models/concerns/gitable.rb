@@ -19,7 +19,7 @@ module Gitable
   end
 
   def git_repo
-    Rugged::Repository.discover(git_repo_full_path)
+    Rugged::Repository.new(git_repo_full_path)
   end
 
   def git_storage_path
