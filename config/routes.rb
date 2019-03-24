@@ -3,20 +3,10 @@
 Rails.application.routes.draw do
   root to: 'pages#index'
 
-  get '/auth/:provider/callback', to: 'sessions#github', as: :omniauth_callback
-  post '/sessions', to: 'sessions#create', as: :sessions
-  patch '/logout', to: 'sessions#destroy', as: :logout
+  get '/auth/:provider/callback', to: 'github#create', as: :omniauth_callback
 
-  scope :register do
-    get '/', to: 'registrations#new', as: :new_registration
-    get '/email', to: 'registrations#email', as: :email_registration
-  end
-
-  scope :login do
-    get '/', to: 'sessions#new', as: :new_session
-    get '/email', to: 'sessions#email', as: :email_session
-  end
-
+  resources :sessions, path: 'signin'
+  resources :registrations, path: 'signup'
   resources :check_nicknames, only: :create
   resources :magic_logins, only: :index
   resources :people, except: :show

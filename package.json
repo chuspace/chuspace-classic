@@ -2,7 +2,7 @@
   "name": "chuspace",
   "private": true,
   "engines": {
-    "node": "10.15.2"
+    "node": "11.12.0"
   },
   "scripts": {
     "format": "yarn run prettier-standard '{app,config,bin}/**/*.{js,jsx}'",

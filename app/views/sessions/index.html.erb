@@ -1,0 +1,19 @@
+<div class='centered mt-10'>
+  <div class='card max-w-sm text-center'>
+    <h2 class='card-title'>Welcome back</h2>
+
+    <p class='card-intro'>
+      Sign in to access your personalized homepage, follow authors and topics
+      you love, and clap for stories that matter to you.
+    </p>
+
+    <div class='card-body'>
+      <%= link_to('Sign in with github', '/auth/github', class: 'btn btn-bordered btn-bordered-green mb-2 block max-w-xxs mx-auto') %>
+      <%= link_to('Sign in with email', new_session_path, class: 'btn btn-bordered btn-bordered-green block max-w-xxs mx-auto') %>
+    </div>
+
+    <p class='card-footer'>
+      No account? <%= link_to('Join', registrations_path, class: 'link link-green') %>
+    </p>
+  </div>
+</div>

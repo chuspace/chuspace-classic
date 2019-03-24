@@ -1,3 +1,8 @@
+<div class='menu'>
+  <ul>
+    <li><%= link_to 'Write post', new_post_path %></li>
+  </ul>
+</div>
 <%= render "components/dropdown" do %>
   <% content_for :target do %>
     <%= avatar_for(person: Current.person, size: :xs) %>
@@ -12,7 +17,7 @@
         <%= link_to('Settings', settings_path, class: 'link link-default db mb2') %>
       </li>
       <li>
-        <%= link_to('Sign out', logout_path, method: :patch, class: 'link link-default') %>
+        <%= link_to('Sign out', session_path(Current.person), method: :delete, class: 'link link-default') %>
       </li>
     </ul>
   <% end %>

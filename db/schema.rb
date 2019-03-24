@@ -37,16 +37,6 @@ ActiveRecord::Schema.define(version: 2019_03_08_201406) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "blogs", force: :cascade do |t|
-    t.string "name", default: "Blog", null: false
-    t.string "slug", default: "blog", null: false
-    t.bigint "person_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["person_id"], name: "index_blogs_on_person_id"
-    t.index ["slug", "person_id"], name: "index_blogs_on_slug_and_person_id", unique: true
-  end
-
   create_table "people", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "email", default: "", null: false
@@ -77,13 +67,11 @@ ActiveRecord::Schema.define(version: 2019_03_08_201406) do
     t.citext "slug", null: false
     t.text "body"
     t.bigint "person_id"
-    t.bigint "blog_id"
     t.string "tags", default: [], array: true
     t.integer "status", default: 0, null: false
     t.datetime "published_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["blog_id"], name: "index_posts_on_blog_id"
     t.index ["person_id"], name: "index_posts_on_person_id"
     t.index ["published_at"], name: "index_posts_on_published_at"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
@@ -103,8 +91,6 @@ ActiveRecord::Schema.define(version: 2019_03_08_201406) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "blogs", "people"
-  add_foreign_key "posts", "blogs"
   add_foreign_key "posts", "people"
   add_foreign_key "ssh_keys", "people"
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Person < ApplicationRecord
-  include People::Registrable
+  include People::Registrable, Gitable
 
   validates :email, presence: true, uniqueness: true, email: true
   validates :name, presence: true
@@ -16,11 +16,10 @@ class Person < ApplicationRecord
 
   has_many :posts, dependent: :destroy
   has_many :ssh_keys, dependent: :destroy
-  has_one :blog, dependent: :destroy
-
-  store_accessor :github_info, :github_nickname, :github_uid, :github_access_token
 
   before_validation :normalize_email_and_nickname
+
+  store_accessor :github_info, :github_nickname, :github_uid, :github_access_token
 
   def to_param
     nickname

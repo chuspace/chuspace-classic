@@ -6,7 +6,6 @@ class CreatePosts < ActiveRecord::Migration[5.2]
       t.text :body
 
       t.references :person, foreign_key: true
-      t.references :blog, foreign_key: true
       t.string :tags, array: true, default: []
       t.integer :status, default: 0, null: false
 

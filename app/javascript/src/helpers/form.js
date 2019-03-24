@@ -38,7 +38,7 @@ const withForm = (BaseForm: Controller) =>
     setFormErrors = (errors: $ReadOnlyArray<Error>) =>
       errors.forEach(error => {
         const target = this[`input${capitalize(error.field)}ErrorTarget`]
-        target.innerHTML = error.errors
+        if (target) target.innerHTML = error.errors
       })
 
     setSuccessMessage = (message: string) => {

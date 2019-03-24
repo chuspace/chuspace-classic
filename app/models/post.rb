@@ -5,7 +5,6 @@ class Post < ApplicationRecord
   sluggable source: :title
 
   belongs_to :person
-  belongs_to :blog
 
   validates :status, presence: true
   validates :slug, presence: true, uniqueness: true
@@ -15,6 +14,4 @@ class Post < ApplicationRecord
     published: 1,
     archived: 2
   }
-
-  delegate :blog, to: :person
 end

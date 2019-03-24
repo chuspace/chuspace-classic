@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
-  before_action :failure, only: :github, if: :malformed_auth?
-  skip_before_action :authenticate, on: %i[create github]
+  before_action :redirect_if_signedin, except: :destroy
 
-  def new
+  def index
   end
 
-  def email
+  def new
   end
 
   def create
@@ -21,21 +20,6 @@ class SessionsController < ApplicationController
     end
   end
 
-  def github
-    person = Person.from_github(auth_hash)
-
-    if person.save
-      login(person)
-      redirect_to root_path
-    else
-      failure
-    end
-  end
-
-  def failure
-    redirect_to root_path
-  end
-
   def destroy
     logout
     redirect_to root_path
@@ -43,13 +27,7 @@ class SessionsController < ApplicationController
 
   private
 
-  def auth_hash
-    request.env['omniauth.auth']
-  end
-
-  def malformed_auth?
-    auth_hash.blank? ||
-      auth_hash.credentials.blank? ||
-      auth_hash.info.name.blank?
+  def redirect_if_signedin
+    redirect_back(fallback_location: root_path) if Current.person.present?
   end
 end
