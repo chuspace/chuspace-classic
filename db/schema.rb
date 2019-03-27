@@ -62,22 +62,6 @@ ActiveRecord::Schema.define(version: 2019_03_08_201406) do
     t.index ["nickname"], name: "index_people_on_nickname", unique: true
   end
 
-  create_table "posts", force: :cascade do |t|
-    t.string "title"
-    t.citext "slug", null: false
-    t.text "body"
-    t.bigint "person_id"
-    t.string "tags", default: [], array: true
-    t.integer "status", default: 0, null: false
-    t.datetime "published_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["person_id"], name: "index_posts_on_person_id"
-    t.index ["published_at"], name: "index_posts_on_published_at"
-    t.index ["slug"], name: "index_posts_on_slug", unique: true
-    t.index ["status"], name: "index_posts_on_status"
-  end
-
   create_table "ssh_keys", force: :cascade do |t|
     t.string "title"
     t.text "key", null: false
@@ -91,6 +75,5 @@ ActiveRecord::Schema.define(version: 2019_03_08_201406) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "posts", "people"
   add_foreign_key "ssh_keys", "people"
 end
