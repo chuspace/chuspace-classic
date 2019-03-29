@@ -28,5 +28,8 @@ module Chuspace
 
     # Setup custom path for mailer previews
     config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
+
+    # Use Vips for processing variants.
+    config.active_storage.variant_processor = :vips
   end
 end

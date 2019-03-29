@@ -75,7 +75,7 @@ module Git
 
     def verify_access
       # TODO: Check if can access this repo her
-      self.repo_path = '/Users/gaurav/personal/chuspace/git-storage/gauravtiwari/blog.git'
+      self.repo_path = '/Users/gauravtiwari/personal/chuspace/git-storage/gauravtiwari/blog.git'
     end
 
     def process_cmd(args)

@@ -35,7 +35,7 @@ module Git
     end
 
     def ssh_auth_file
-      Git::SSH_ROOT.join('authorized_keys')
+      File.join(Git::SSH_ROOT, 'authorized_keys')
     end
 
     def api_secret_file

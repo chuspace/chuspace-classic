@@ -413,8 +413,7 @@ DEPENDENCIES
   github-linguist
   hiredis
   http
-  image_processing (~> 1.2)
-  mini_magick
+  image_processing
   oauth2 (>= 1.4.0)
   octicons_helper
   oj

@@ -1,5 +1,20 @@
 # git config settings
 
-user: git
-storage_dir_name: git-storage
-log_file: log/git-shell.log
+default: &default
+  user: git
+  storage_dir_name: git-storage
+  log_file: log/git-shell.log
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  storage_dir_name: test-git-storage
+  log_file: log/test-git-shell.log
+
+staging:
+  <<: *default
+
+production:
+  <<: *default

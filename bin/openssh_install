@@ -4,6 +4,7 @@ require File.expand_path('../config/environment', File.dirname(__FILE__))
 
 key_dir = File.dirname(Git.config.ssh_auth_file)
 repository_storage_paths = ARGV
+FileUtils.touch(Git.config.ssh_auth_file)
 
 commands = [
   %W(mkdir -p #{key_dir}),

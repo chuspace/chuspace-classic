@@ -21,8 +21,7 @@ gem 'webpacker', github: 'rails/webpacker'
 gem 'redis', '>= 4.0'
 
 # Use ActiveStorage variant
-gem 'mini_magick'
-gem 'image_processing', '~> 1.2'
+gem 'image_processing'
 gem 'aws-sdk-s3'
 gem 'down'
 gem 'http'
