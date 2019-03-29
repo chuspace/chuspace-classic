@@ -13,7 +13,7 @@ module Commitable
     obj = if commit_id.is_a?(String)
       repository.rev_parse_target(commit_id)
     else
-      Branch.dereference_object(commit_id)
+      Git::Branch.dereference_object(commit_id)
     end
 
     return nil unless obj.is_a?(Rugged::Commit)
@@ -29,11 +29,11 @@ module Commitable
   # options should contain next structure:
   # options = {
   #   file: {
-  #     content: 'Lorem ipsum...',
-  #     path: 'readme.md'
+  #     content: 'This is webpacker',
+  #     path: 'welcome-to-webpacker.md'
   #   },
   #   commit: {
-  #     message: 'First commit!',
+  #     message: 'Added a post!',
   #     branch: 'master'
   #   }
   # }
