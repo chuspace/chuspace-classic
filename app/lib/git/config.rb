@@ -30,10 +30,6 @@ module Git
       Rails.root.join(git_storage_dir_name)
     end
 
-    def git_storage_pathname
-      Pathname.new(git_storage_path)
-    end
-
     def ssh_auth_file
       File.join(Git::SSH_ROOT, 'authorized_keys')
     end
