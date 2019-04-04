@@ -1,0 +1,20 @@
+<div class='centered mt-10'>
+  <div class='card max-w-sm text-center'>
+    <h2 class='card-title'>Join Chuspace</h2>
+
+    <p class='card-intro'>
+      Create an account to personalize your homepage, follow your favorite
+      authors and publications, applaud stories you love, and more.
+    </p>
+
+    <div class='card-body'>
+      <%= link_to('Sign up with github', '/auth/github', class: 'btn btn-bordered btn-bordered-green mb-2 block max-w-xxs mx-auto') %>
+      <%= link_to('Sign up with email', new_registration_path, class: 'btn btn-bordered btn-bordered-green block max-w-xxs mx-auto') %>
+    </div>
+
+    <p class='card-footer'>
+      Already have an account?
+      <%= link_to('Sign in', sessions_path, class: 'link link-green') %>
+    </p>
+  </div>
+</div>

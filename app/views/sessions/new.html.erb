@@ -1,23 +1,5 @@
-<div data-controller='login' class='centered'>
-  <div data-target='login.actionsCard' class='card card-center card-login'>
-    <h2 class='card-title'>Welcome back</h2>
-
-    <p class='card-intro'>
-      Sign in to access your personalized homepage, follow authors and topics
-      you love, and clap for stories that matter to you.
-    </p>
-
-    <div class='card-body'>
-      <%= link_to('Sign in with github', '/auth/github', class: 'btn btn-bordered btn-bordered-green mb-2 block max-w-xxs mx-auto') %>
-      <%= link_to('Sign in with email', '#', class: 'btn btn-bordered btn-bordered-green block max-w-xxs mx-auto', 'data-action': 'click->login#toggleForm') %>
-    </div>
-
-    <p class='card-footer'>
-      No account? <%= link_to('Join', new_registration_path, class: 'link link-green') %>
-    </p>
-  </div>
-
-  <div data-target='login.formCard' class='card card-center card-login hidden'>
+<div data-controller='login' class='centered mt-10'>
+  <div class='card max-w-sm text-center'>
     <h2 class='card-title'>Sign in with email</h2>
 
     <p class='card-intro'>
@@ -26,7 +8,7 @@
     </p>
 
     <div class='card-body'>
-      <%= form_with url: sessions_path, data: { target: 'login.form', action: 'ajax:success->login#onLoginSuccess' } do |form| %>
+      <%= form_with url: sessions_path, data: { target: 'login.form', action: 'ajax:success->login#onFormSubmit' } do |form| %>
         <%= form.text_field(
           'email',
           autocomplete: 'email',
@@ -35,7 +17,7 @@
           'data-target': 'login.inputEmail',
           class: 'input input-bordered input-bordered-green block mx-auto mb-2'
         ) %>
-        <span class="alert alert-error" data-target='login.inputEmailError'></span>
+        <span class="alert alert-error text-left" data-target='login.inputEmailError'></span>
         <%= form.submit 'Submit', class: 'btn btn-black mt-4' %>
       <% end %>
 
@@ -43,7 +25,7 @@
     </div>
 
     <div class='card-footer'>
-      <%= link_to('← Go back', '#', class: 'link link-default', 'data-action': 'click->login#toggleActions') %>
+      <%= link_to('← Go back', sessions_path, class: 'link link-default') %>
     </div>
   </div>
 </div>

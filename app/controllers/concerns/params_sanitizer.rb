@@ -8,6 +8,7 @@ module ParamsSanitizer
   end
 
   private
+
   def sanitize_params!
     strip_whitespace!(params)
   end

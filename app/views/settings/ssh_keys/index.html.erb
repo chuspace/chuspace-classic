@@ -1,0 +1,47 @@
+<div class="w-3/5 mx-auto mt-16">
+  <%= render 'settings/navigation' %>
+
+  <div class="ssh">
+    <div class="my-8 flex justify-between items-center">
+      <div class="header">
+        <h4>Ssh keys</h4>
+        <p class="mt-2 text-secondary">
+          All ssh keys added to your account
+        </p>
+      </div>
+      <div>
+        <%= link_to 'Add new key', new_settings_ssh_key_path, class: 'btn btn-green block' %>
+      </div>
+    </div>
+
+    <div class="mt-16 border-t border-grey-lighter">
+      <% if @person.ssh_keys.any? %>
+        <% @person.ssh_keys.each do |key| %>
+          <div class="border-b pb-2 border-grey-lighter">
+            <div class="flex justify-between items-center my-4">
+              <div>
+                <strong><%= key.title %></strong>
+                <small class="block mt-2">
+                  Added <%= key.created_at.to_formatted_s(:long) %> |
+                  <%= key.last_used ? "Last used #{distance_of_time_in_words_to_now(key.last_used)} ago" : 'Never used'  %>
+                </small>
+              </div>
+              <code><%= key.fingerprint %></code>
+              <%= link_to(
+                'Delete',
+                settings_ssh_key_path(key),
+                method: :delete,
+                remote: true,
+                class: 'btn btn-bordered btn-bordered-red',
+                data: { confirm: 'Are you sure?' }
+              )
+              %>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <%= render 'components/placeholder', text: "No ssh keys added" %>
+      <% end %>
+    </div>
+  </div>
+</div>

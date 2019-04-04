@@ -9,7 +9,6 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 
 require 'rspec/rails'
 require 'shoulda/matchers'
-require 'database_cleaner'
 require 'simplecov'
 require 'simplecov-lcov'
 
@@ -50,25 +49,18 @@ RSpec.configure do |config|
     mocks.allow_message_expectations_on_nil = true
   end
 
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.start
-  end
-
-  config.after(:each) do
-    DatabaseCleaner.clean
-  end
-
   config.before(:each, type: :system) do
     driven_by :rack_test
   end
 
   config.before(:each, type: :system, js: true) do
     driven_by :selenium_chrome_headless
+  end
+
+  config.after(:all) do
+    FileUtils.rm_rf(Git.config.git_storage_path)
+    FileUtils.rm_rf(Git.config.ssh_auth_file_path)
+    FileUtils.rm_rf(Git.config.ssh_auth_lock_file_path)
   end
 
   config.order = 'random'

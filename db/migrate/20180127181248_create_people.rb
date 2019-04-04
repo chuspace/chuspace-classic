@@ -2,19 +2,15 @@
 
 class CreatePeople < ActiveRecord::Migration[5.2]
   def change
-    create_table :people, id: :uuid, force: :cascade do |t|
-      ## Database authenticatable
-      t.string :name, null: false
-      t.string :email, null: false
-      t.citext :nickname, null: false
+    create_table :people, force: :cascade do |t|
+      ## Database authentication
+      t.string :name, null: false, default: ''
+      t.string :email, null: false, default: ''
+      t.citext :nickname, null: false, default: ''
       t.string :avatar
 
-      # Git info
-      t.integer :git_repo_id
-      t.integer :git_repo_owner_id
-
       # Passwordless login
-      t.string :auth_token, null: false
+      t.string :auth_token, null: false, default: ''
 
       # Profile
       t.text :bio
@@ -25,7 +21,7 @@ class CreatePeople < ActiveRecord::Migration[5.2]
       # Github
       t.jsonb  :github_info, default: '{}'
 
-      ## Trackable
+      ## Tracking and security
       t.integer  :sign_in_count, default: 0, null: false
       t.datetime :current_sign_in_at
       t.datetime :last_sign_in_at
@@ -35,14 +31,12 @@ class CreatePeople < ActiveRecord::Migration[5.2]
       t.timestamps null: false
     end
 
+    # Add necessary indexes
     add_index :people, :email, unique: true
     add_index :people, :nickname, unique: true
     add_index :people, :auth_token, unique: true
+
     add_index :people, :location
-
-    add_index :people, :git_repo_id, unique: true
-    add_index :people, :git_repo_owner_id, unique: true
-
     add_index :people, :github_info, using: :gin
   end
 end

@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
 class CheckNicknamesController < ApplicationController
-  def index
-    person = Person.find_by(nickname: inputs[:nickname])
+  def create
+    person = Person.find_by(nickname: params[:nickname])
 
     if person
-      { available: false, errors: person.errors_for(:nickname, t('.check_nickname.taken', nickname: inputs[:nickname])) }
+      render json: { available: false, errors: errors_for(:nickname, t('.check_nickname.taken', nickname: params[:nickname])) }
     else
-      new_person = Person.new(nickname: inputs[:nickname])
+      new_person = Person.new(nickname: params[:nickname])
 
       if new_person.valid_attributes?(:nickname)
-        { available: true }
+        render json: { available: true }
       else
-        { available: false, errors: new_person.api_errors }
+        render json: { available: false, errors: new_person.api_validation_errors }
       end
     end
   end

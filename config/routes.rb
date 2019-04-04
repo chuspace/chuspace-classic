@@ -3,13 +3,10 @@
 Rails.application.routes.draw do
   root to: 'pages#index'
 
-  get '/auth/:provider/callback', to: 'sessions#github', as: :omniauth_callback
-  post '/sessions', to: 'sessions#create', as: :sessions
-  patch '/logout', to: 'sessions#destroy', as: :logout
+  get '/auth/:provider/callback', to: 'github#create', as: :omniauth_callback
 
-  get '/register', to: 'registrations#new', as: :new_registration
-  get '/login', to: 'sessions#new', as: :new_session
-
+  resources :sessions, path: 'signin'
+  resources :registrations, path: 'signup'
   resources :check_nicknames, only: :create
   resources :magic_logins, only: :index
   resources :people, except: :show
@@ -19,6 +16,7 @@ Rails.application.routes.draw do
 
   namespace :settings do
     resources :profiles, path: 'profile', only: %i[index]
+    resources :ssh_keys, path: 'ssh', except: %i[show update]
   end
 
   get '/:nickname', to: 'people#show', as: :profile

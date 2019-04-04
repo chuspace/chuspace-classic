@@ -46,6 +46,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = { host: 'chuspace.test', port: 1025 }
   config.action_mailer.asset_host = 'http://chuspace.test'
+  config.hosts << 'chuspace.test'
 
   # Set default urls
   config.action_mailer.default_url_options = { host: 'chuspace.test' }

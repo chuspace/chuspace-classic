@@ -1,0 +1,21 @@
+#!/Users/gaurav/.rbenv/shims/ruby
+
+require File.expand_path('../config/environment', File.dirname(__FILE__))
+
+unless ENV['SSH_CONNECTION']
+  puts "Only ssh allowed"
+  exit
+end
+
+require_relative '../app/lib/git'
+
+key_id = /key-[0-9]+/.match(ARGV.join).to_s
+original_cmd = ENV.delete('SSH_ORIGINAL_COMMAND')
+
+require File.join(Git::ROOT_PATH, 'shell')
+
+if Git::Shell.new(key_id).exec(original_cmd)
+  exit 0
+else
+  exit 1
+end

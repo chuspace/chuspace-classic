@@ -6,18 +6,6 @@ class PeopleController < ApplicationController
   def show
   end
 
-  def create
-    person = Person.new(create_params)
-
-    if person.valid? && person.save
-      LoginMailer.with(person: person).send_magic_login.deliver_later
-
-      render json: { success: t('.registration.success') }
-    else
-      render json: { errors: person.api_validation_errors }
-    end
-  end
-
   def update
     if Current.person.update(update_params)
       flash[:notice] = 'Profile successfully updated'
@@ -29,10 +17,6 @@ class PeopleController < ApplicationController
   end
 
   private
-
-  def create_params
-    params.require(:person).permit(:email, :name, :nickname)
-  end
 
   def update_params
     params.require(:person).permit(:email, :name, :bio, :url, :location, :company)

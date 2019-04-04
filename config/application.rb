@@ -21,11 +21,15 @@ module Chuspace
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
     config.generators.system_tests = nil
+    config.autoloader == :zeitwerk
 
     # Configure sidekiq as background job adapter on staging and production
     config.active_job.queue_adapter = :sidekiq
 
     # Setup custom path for mailer previews
     config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
+
+    # Use Vips for processing variants.
+    config.active_storage.variant_processor = :vips
   end
 end
