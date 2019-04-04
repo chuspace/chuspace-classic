@@ -8,12 +8,12 @@ jobs:
           PGHOST: localhost
           PGUSER: postgres
           RAILS_ENV: test
-      - image: postgres:10.5-alpine
+      - image: postgres:11.2-alpine
         environment:
           POSTGRES_USER: postgres
           POSTGRES_DB: postgres_test
           POSTGRES_PASSWORD: ""
-      - image: redis:4.0.11-alpine
+      - image: redis:5.0.4-alpine
 
     steps:
       - checkout
@@ -56,6 +56,9 @@ jobs:
             - ./public/packs-test/**/*
             - ./public/assets/**/*
           key: v2-rails-dependencies-{{ checksum "Gemfile.lock" }}
+
+      - run: cp config/git.yml.example config/git.yml
+      - run: ./bin/openssh_install
 
       - run:
           name: run tests
