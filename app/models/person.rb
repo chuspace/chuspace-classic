@@ -22,6 +22,8 @@ class Person < ApplicationRecord
 
   store_accessor :github_info, :github_nickname, :github_uid, :github_access_token
 
+  delegate :repo_exists?, to: :repo
+
   def to_param
     nickname
   end

@@ -12,11 +12,11 @@ class SshKey < ApplicationRecord
   before_destroy :remove_key_from_auth_file
 
   def self.auth_file
-    @auth_file ||= Git.config.ssh_auth_file
+    @auth_file ||= Git.config.ssh_auth_file_path
   end
 
   def self.auth_lock_file
-    @lock_file ||= auth_file + '.lock'
+    @lock_file ||= Git.config.ssh_auth_lock_file_path
   end
 
   def key_id
@@ -40,7 +40,7 @@ class SshKey < ApplicationRecord
   private
 
   def assign_fingerprint
-    self.fingerprint = SSHKey.fingerprint(key)
+    self.fingerprint = SSHKey.fingerprint(key) if key
   end
 
   def ssh_key_format

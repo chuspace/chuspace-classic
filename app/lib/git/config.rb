@@ -30,12 +30,20 @@ module Git
       Rails.root.join(git_storage_dir_name)
     end
 
-    def ssh_auth_file
-      File.join(Git::SSH_ROOT, 'authorized_keys')
+    def ssh_auth_file_name
+      config['auth_key_file'] || 'authorized_keys'
     end
 
-    def api_secret_file
-      Rails.root.join('config', @config['secret_file'])
+    def ssh_auth_file_path
+      @ssh_auth_file_path ||= Rails.root.join(Git::SSH_ROOT, ssh_auth_file_name)
+      FileUtils.touch(@ssh_auth_file_path) unless File.exists?(@ssh_auth_file_path)
+      @ssh_auth_file_path
+    end
+
+    def ssh_auth_lock_file_path
+      @ssh_auth_lock_file_path ||= Rails.root.join(Git::SSH_ROOT, ssh_auth_file_name + '.lock')
+      FileUtils.touch(@ssh_auth_lock_file_path) unless File.exists?(@ssh_auth_lock_file_path)
+      @ssh_auth_lock_file_path
     end
 
     def log_file

@@ -7,7 +7,6 @@ Rails.application.configure do
     generate.helper false
     generate.assets false
     generate.view_specs false
-    generate.controller_specs false
     generate.channel assets: false
   end
 end

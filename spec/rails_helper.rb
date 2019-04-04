@@ -59,6 +59,8 @@ RSpec.configure do |config|
 
   config.after(:all) do
     FileUtils.rm_rf(Git.config.git_storage_path)
+    FileUtils.rm_rf(Git.config.ssh_auth_file_path)
+    FileUtils.rm_rf(Git.config.ssh_auth_lock_file_path)
   end
 
   config.order = 'random'
