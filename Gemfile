@@ -88,15 +88,16 @@ end
 
 
 group :development do
-  gem 'web-console', '>= 3.3.0'
+  gem 'web-console', '>= 3.3.0', require: false
   # Code linting
   gem 'rubocop', require: false
+  gem 'rubocop-performance', require: false
   # Security
   gem 'brakeman', require: false
   # Better messages
-  gem 'awesome_print'
+  gem 'awesome_print', require: false
   # Pry
-  gem 'pry-rails'
+  gem 'pry-rails', require: false
 end
 
 group :test do
