@@ -35,6 +35,7 @@ module Git
     end
 
     def ssh_auth_file_path
+      Pathname.new(Git::SSH_ROOT).tap(&:mkpath)
       @ssh_auth_file_path ||= Rails.root.join(Git::SSH_ROOT, ssh_auth_file_name)
       FileUtils.touch(@ssh_auth_file_path) unless File.exists?(@ssh_auth_file_path)
       @ssh_auth_file_path

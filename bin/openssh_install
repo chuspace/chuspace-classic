@@ -4,7 +4,6 @@ require File.expand_path('../config/environment', File.dirname(__FILE__))
 
 key_dir = File.dirname(Git.config.ssh_auth_file_path)
 repository_storage_paths = ARGV
-FileUtils.touch(Git.config.ssh_auth_file_path)
 
 commands = [
   %W(mkdir -p #{key_dir}),
@@ -15,6 +14,9 @@ repository_storage_paths.each do |repository_storage_path|
   commands << %W(mkdir -p #{repository_storage_path})
   commands << %W(chmod ug+rwX,o-rwx #{repository_storage_path})
 end
+
+FileUtils.touch(Git.config.ssh_auth_file_path)
+FileUtils.touch(Git.config.ssh_auth_lock_file_path)
 
 commands.each do |cmd|
   print "#{cmd.join(' ')}: "
