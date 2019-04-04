@@ -30,6 +30,10 @@ class Person < ApplicationRecord
     name.gsub(/([[:upper:]])[[:lower:]]+/, '\1').tr(' ', '')
   end
 
+  def repo
+    Git::Repository.new(author_nickname: nickname)
+  end
+
   private
 
   def normalize_email_and_nickname

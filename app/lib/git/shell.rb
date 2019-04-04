@@ -2,7 +2,6 @@
 
 require 'shellwords'
 require 'pathname'
-require 'logger'
 require 'forwardable'
 
 module Git
@@ -47,13 +46,13 @@ module Git
       true
     rescue AccessDeniedError => ex
       message = "remote: Access denied for git command <#{origin_cmd}> by #{log_username}."
-      $logger.warn message
+      Rails.logger.warn message
 
       $stderr.puts ex.message
       false
     rescue DisallowedCommandError => ex
       message = "remote: Attempt to execute disallowed command <#{origin_cmd}> by #{log_username}."
-      $logger.warn message
+      Rails.logger.warn message
 
       $stderr.puts 'remote: Disallowed command'
       false
@@ -74,12 +73,11 @@ module Git
     end
 
     def verify_access
-      # TODO: Check if can access this repo her
-      self.repo_path = '/Users/gauravtiwari/personal/chuspace/git-storage/gauravtiwari/blog.git'
+      self.repo_path = user.repo.path
     end
 
     def process_cmd(args)
-      # $logger.info "executing git command <#{@command} #{repo_path}> for #{log_username}."
+      Rails.logger.info "executing git command <#{@command} #{repo_path}> for #{log_username}."
       exec_cmd(@command, repo_path)
     end
 
@@ -105,11 +103,11 @@ module Git
     end
 
     def user
-      # Find user
+      @user ||= SshKey.find(key_id.split('-').last).person
     end
 
     def username
-      user && user['name'] || 'Anonymous'
+      user && user.name || 'Anonymous'
     end
 
     def log_username
