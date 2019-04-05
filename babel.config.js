@@ -30,6 +30,7 @@ module.exports = function (api) {
         {
           forceAllTransforms: true,
           useBuiltIns: 'entry',
+          corejs: 3,
           modules: false,
           exclude: ['transform-typeof-symbol']
         }
@@ -70,14 +71,14 @@ module.exports = function (api) {
       [
         require('babel-plugin-module-resolver').default,
         {
-          root: ['./app/javascript/src'],
+          root: ['./app/javascript'],
           alias: {
             types: './app/javascript/flow-types',
-            controllers: './app/javascript/src/controllers',
-            helpers: './app/javascript/src/helpers',
-            decorators: './app/javascript/src/decorators',
-            styles: './app/javascript/src/styles',
-            editor: './app/javascript/src/editor'
+            controllers: './app/javascript/controllers',
+            helpers: './app/javascript/helpers',
+            decorators: './app/javascript/decorators',
+            styles: './app/javascript/styles',
+            editor: './app/javascript/editor'
           }
         }
       ]
