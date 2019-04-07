@@ -1,11 +1,9 @@
 // @flow
 
-import Node from 'editor/utils'
+import { Node } from 'editor/utils'
 
 export default class Doc extends Node {
-  get name (): string {
-    return 'doc'
-  }
+  name = 'doc'
 
   get schema () {
     return {

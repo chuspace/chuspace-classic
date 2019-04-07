@@ -5,9 +5,7 @@ import { Mark } from 'editor/utils'
 import { getMarkRange } from 'editor/helpers'
 
 export default class Link extends Mark {
-  get name () {
-    return 'link'
-  }
+  name = 'link'
 
   get schema () {
     return {

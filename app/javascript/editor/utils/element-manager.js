@@ -1,11 +1,15 @@
+// @flow
+
 import { keymap } from 'prosemirror-keymap'
 
-export default class ExtensionManager {
-  constructor (extensions = []) {
+export default class ElementManager {
+  extensions: []
+
+  constructor (extensions: [] = []) {
     this.extensions = extensions
   }
 
-  get nodes () {
+  get nodes (): {} {
     return this.extensions
       .filter(extension => extension.type === 'node')
       .reduce(
@@ -40,7 +44,7 @@ export default class ExtensionManager {
     )
   }
 
-  get marks () {
+  get marks (): {} {
     return this.extensions
       .filter(extension => extension.type === 'mark')
       .reduce(
@@ -52,13 +56,13 @@ export default class ExtensionManager {
       )
   }
 
-  get plugins () {
+  get plugins (): Array<any> {
     return this.extensions
       .filter(extension => extension.plugins)
       .reduce((allPlugins, { plugins }) => [...allPlugins, ...plugins], [])
   }
 
-  keymaps ({ schema }) {
+  keymaps ({ schema }: any): Array<any> {
     const extensionKeymaps = this.extensions
       .filter(extension => ['extension'].includes(extension.type))
       .filter(extension => extension.keys)
@@ -77,7 +81,7 @@ export default class ExtensionManager {
     return [...extensionKeymaps, ...nodeMarkKeymaps].map(keys => keymap(keys))
   }
 
-  inputRules ({ schema }) {
+  inputRules ({ schema }: any) {
     const extensionInputRules = this.extensions
       .filter(extension => ['extension'].includes(extension.type))
       .filter(extension => extension.inputRules)
@@ -99,7 +103,7 @@ export default class ExtensionManager {
     )
   }
 
-  pasteRules ({ schema }) {
+  pasteRules ({ schema }: any) {
     const extensionPasteRules = this.extensions
       .filter(extension => ['extension'].includes(extension.type))
       .filter(extension => extension.pasteRules)
@@ -121,7 +125,7 @@ export default class ExtensionManager {
     )
   }
 
-  commands ({ schema, view, editable }) {
+  commands ({ schema, view, editable }: any): any {
     return this.extensions
       .filter(extension => extension.commands)
       .reduce((allCommands, extension) => {

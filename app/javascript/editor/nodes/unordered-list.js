@@ -3,12 +3,9 @@
 import { Node } from 'editor/utils'
 import type { NodeType } from 'editor/utils'
 import { toggleList } from 'editor/commands'
-import { wrappingInputRule } from 'prosemirror-commands'
-
+import { wrappingInputRule } from 'prosemirror-inputrules'
 export default class UnorderedList extends Node {
-  get name () {
-    return 'unordered_list'
-  }
+  name = 'unordered_list'
 
   get schema () {
     return {

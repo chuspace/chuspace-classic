@@ -4,17 +4,14 @@ import { setBlockType, toggleBlockType } from 'editor/commands'
 
 import { Node } from 'editor/utils'
 import type { NodeType } from 'editor/utils'
+import { Node as ProsemirrorNode } from 'prosemirror-model'
 import { textblockTypeInputRule } from 'prosemirror-inputrules'
 
 export default class Heading extends Node {
-  get name (): string {
-    return 'heading'
-  }
+  name = 'heading'
 
-  get defaultOptions () {
-    return {
-      levels: [1, 2, 3, 4, 5, 6]
-    }
+  options = {
+    levels: [1, 2, 3, 4, 5, 6]
   }
 
   get schema () {
@@ -32,7 +29,7 @@ export default class Heading extends Node {
         tag: `h${level}`,
         attrs: { level }
       })),
-      toDOM: (node: Node) => [`h${node.attrs.level}`, 0]
+      toDOM: (node: ProsemirrorNode) => [`h${node.attrs.level}`, 0]
     }
   }
 

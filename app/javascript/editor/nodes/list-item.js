@@ -10,9 +10,7 @@ import { Node } from 'editor/utils'
 import type { NodeType } from 'editor/utils'
 
 export default class ListItem extends Node {
-  get name () {
-    return 'list_item'
-  }
+  name = 'list_item'
 
   get schema () {
     return {

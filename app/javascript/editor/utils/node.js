@@ -1,7 +1,9 @@
-import Extension from './extension'
+// @flow
 
-export default class Node extends Extension {
-  constructor (options = {}) {
+import Element from './element'
+
+export default class Node extends Element {
+  constructor (options: {} = {}) {
     super(options)
   }
 
@@ -10,11 +12,11 @@ export default class Node extends Extension {
   }
 
   get view () {
-    return null
+    return {}
   }
 
   get schema () {
-    return null
+    return {}
   }
 
   command () {

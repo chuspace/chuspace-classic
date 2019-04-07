@@ -1,9 +1,11 @@
-import { Schema } from 'prosemirror-model'
+// @flow
 
-export type MarkType = { type: string }
-export type NodeType = { type: string, schema: Schema }
+import { Mark, Node, Schema } from 'prosemirror-model'
 
-export { default as ExtensionManager } from './extension-manager'
-export { default as Extension } from './extension'
+export type MarkType = { type: Mark }
+export type NodeType = { type: Node, schema: Schema }
+
+export { default as ElementManager } from './element-manager'
+export { default as Element } from './element'
 export { default as Mark } from './mark'
 export { default as Node } from './node'

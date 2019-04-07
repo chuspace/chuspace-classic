@@ -7,9 +7,7 @@ import { textblockTypeInputRule } from 'prosemirror-inputrules'
 import { toggleBlockType } from 'editor/commands'
 
 export default class CodeBlock extends Node {
-  get name (): string {
-    return 'code_block'
-  }
+  name = 'code_block'
 
   get schema () {
     return {

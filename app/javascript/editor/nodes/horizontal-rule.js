@@ -7,9 +7,7 @@ import type { NodeType } from 'editor/utils'
 import { nodeInputRule } from 'editor/commands'
 
 export default class HorizontalRule extends Node {
-  get name (): string {
-    return 'horizontal_rule'
-  }
+  name = 'horizontal_rule'
 
   get schema () {
     return {

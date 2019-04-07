@@ -1,13 +1,11 @@
 // @flow
 
-import Node from 'editor/utils'
+import { Node } from 'editor/utils'
 import type { NodeType } from 'editor/utils'
 import { setBlockType } from 'editor/commands'
 
 export default class Paragraph extends Node {
-  get name (): string {
-    return 'paragraph'
-  }
+  name = 'paragraph'
 
   get schema () {
     return {

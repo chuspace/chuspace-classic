@@ -1,14 +1,13 @@
 // @flow
 
-import { markInputRule, markPasteRule, toggleMark } from 'editor/commands'
+import { markInputRule, markPasteRule } from 'editor/commands'
 
 import { Mark } from 'editor/utils'
 import type { MarkType } from 'editor/utils'
+import { toggleMark } from 'prosemirror-commands'
 
-export default class Strike extends Mark {
-  get name () {
-    return 'strike_through'
-  }
+export default class StrikeThrough extends Mark {
+  name = 'strike_through'
 
   get schema () {
     return {

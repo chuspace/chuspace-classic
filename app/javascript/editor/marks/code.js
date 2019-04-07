@@ -7,9 +7,7 @@ import type { MarkType } from 'editor/utils'
 import { toggleMark } from 'prosemirror-commands'
 
 export default class Code extends Mark {
-  get name (): string {
-    return 'code'
-  }
+  name = 'code'
 
   get schema () {
     return {

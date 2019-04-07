@@ -7,9 +7,7 @@ import type { MarkType } from 'editor/utils'
 import { toggleMark } from 'prosemirror-commands'
 
 export default class Italic extends Mark {
-  get name (): string {
-    return 'italic'
-  }
+  name = 'italic'
 
   get schema () {
     return {

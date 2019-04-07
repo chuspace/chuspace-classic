@@ -6,11 +6,10 @@ import { EditorState, Plugin, Transaction } from 'prosemirror-state'
 
 import { Node } from 'editor/utils'
 import type { NodeType } from 'editor/utils'
+import { Node as ProsemirrorNode } from 'prosemirror-model'
 
 export default class Image extends Node {
-  get name (): string {
-    return 'image'
-  }
+  name = 'image'
 
   get schema () {
     return {
@@ -29,14 +28,14 @@ export default class Image extends Node {
       parseDOM: [
         {
           tag: 'img[src]',
-          getAttrs: (dom: Node) => ({
+          getAttrs: (dom: ProsemirrorNode) => ({
             src: dom.getAttribute('src'),
             title: dom.getAttribute('title'),
             alt: dom.getAttribute('alt')
           })
         }
       ],
-      toDOM: (node: Node) => ['img', node.attrs]
+      toDOM: (node: ProsemirrorNode) => ['img', node.attrs]
     }
   }
 

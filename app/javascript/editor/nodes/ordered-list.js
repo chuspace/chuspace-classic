@@ -2,13 +2,12 @@
 
 import { Node } from 'editor/utils'
 import type { NodeType } from 'editor/utils'
+import { Node as ProsemirrorNode } from 'prosemirror-model'
 import { toggleList } from 'editor/commands'
-import { wrappingInputRule } from 'prosemirror-commands'
+import { wrappingInputRule } from 'prosemirror-inputrules'
 
 export default class OrderedList extends Node {
-  get name () {
-    return 'ordered_list'
-  }
+  name = 'ordered_list'
 
   get schema () {
     return {
@@ -22,12 +21,12 @@ export default class OrderedList extends Node {
       parseDOM: [
         {
           tag: 'ol',
-          getAttrs: (dom: Node) => ({
+          getAttrs: (dom: ProsemirrorNode) => ({
             order: dom.hasAttribute('start') ? +dom.getAttribute('start') : 1
           })
         }
       ],
-      toDOM: (node: Node) =>
+      toDOM: (node: ProsemirrorNode) =>
         node.attrs.order === 1
           ? ['ol', 0]
           : ['ol', { start: node.attrs.order }, 0]

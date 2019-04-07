@@ -6,9 +6,7 @@ import { Node } from 'editor/utils'
 import type { NodeType } from 'editor/utils'
 
 export default class HardBreak extends Node {
-  get name () {
-    return 'hard_break'
-  }
+  name = 'hard_break'
 
   get schema () {
     return {

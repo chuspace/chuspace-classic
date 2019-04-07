@@ -6,9 +6,7 @@ import { toggleWrap } from 'editor/commands'
 import { wrappingInputRule } from 'prosemirror-inputrules'
 
 export default class Blockquote extends Node {
-  get name (): string {
-    return 'blockquote'
-  }
+  name = 'blockquote'
 
   get schema () {
     return {
