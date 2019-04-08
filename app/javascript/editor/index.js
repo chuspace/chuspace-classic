@@ -1,5 +1,6 @@
 import * as marks from 'editor/marks'
 import * as nodes from 'editor/nodes'
+import * as plugins from 'editor/plugins'
 
 import { DOMSerializer, Schema } from 'prosemirror-model'
 import { EditorState, Plugin, PluginKey } from 'prosemirror-state'
@@ -40,6 +41,7 @@ export default class Editor {
   createExtensions () {
     return new ElementManager([
       ...toArray(marks).map(Mark => new Mark()),
+      ...toArray(plugins).map(Plugin => new Plugin()),
       ...toArray(nodes).map(Node => new Node())
     ])
   }
@@ -93,7 +95,7 @@ export default class Editor {
   createState () {
     return EditorState.create({
       schema: this.schema,
-      doc: this.createDocument('hello there is world'),
+      doc: this.createDocument(''),
       plugins: [
         ...this.plugins,
         inputRules({
@@ -169,7 +171,7 @@ export default class Editor {
         },
         code_inline: { mark: 'code' }
       }
-    ).parse('hello')
+    ).parse(content)
   }
 
   createView () {

@@ -20,7 +20,7 @@ export default class Blockquote extends Node {
   }
 
   commands ({ type, schema }: NodeType) {
-    return () => toggleWrap(type, schema.nodes.paragraph)
+    return () => toggleWrap(type)
   }
 
   keys ({ type }: NodeType) {

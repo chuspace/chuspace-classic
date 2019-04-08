@@ -2,7 +2,7 @@
 
 import { Node } from 'editor/utils'
 import type { NodeType } from 'editor/utils'
-import { setBlockType } from 'editor/commands'
+import { setBlockType } from 'prosemirror-commands'
 
 export default class Paragraph extends Node {
   name = 'paragraph'
