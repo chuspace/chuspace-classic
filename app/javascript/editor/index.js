@@ -5,15 +5,16 @@ import * as plugins from 'editor/plugins'
 import { DOMSerializer, Schema } from 'prosemirror-model'
 import { EditorState, Plugin, PluginKey } from 'prosemirror-state'
 import { baseKeymap, selectParentNode } from 'prosemirror-commands'
+import { getMarkAttrs, isMarkActive, isNodeActive } from 'editor/helpers'
 import { inputRules, undoInputRule } from 'prosemirror-inputrules'
 
+import CodeBlockView from 'editor/nodeviews/code-block'
 import { EditorView } from 'prosemirror-view'
 import { ElementManager } from 'editor/utils'
-import { MarkdownParser } from 'prosemirror-markdown'
 import { dropCursor } from 'prosemirror-dropcursor'
 import { gapCursor } from 'prosemirror-gapcursor'
 import { keymap } from 'prosemirror-keymap'
-import markdownit from 'markdown-it'
+import { markdownParser } from 'editor/markdown'
 import toArray from 'lodash/toArray'
 
 export default class Editor {
@@ -31,7 +32,7 @@ export default class Editor {
     this.state = this.createState()
     this.view = this.createView()
     this.commands = this.createCommands()
-
+    this.setActiveNodesAndMarks()
     this.focus()
 
     // give extension manager access to our view
@@ -95,7 +96,7 @@ export default class Editor {
   createState () {
     return EditorState.create({
       schema: this.schema,
-      doc: this.createDocument(''),
+      doc: markdownParser(this.schema).parse(''),
       plugins: [
         ...this.plugins,
         inputRules({
@@ -127,61 +128,27 @@ export default class Editor {
     })
   }
 
-  createDocument (content) {
-    return new MarkdownParser(
-      this.schema,
-      markdownit('commonmark', { html: false }),
-      {
-        blockquote: { block: 'blockquote' },
-        paragraph: { block: 'paragraph' },
-        list_item: { block: 'list_item' },
-        unordered_list: { block: 'unordered_list' },
-        ordered_list: {
-          block: 'ordered_list',
-          getAttrs: tok => ({ order: +tok.attrGet('order') || 1 })
-        },
-        heading: {
-          block: 'heading',
-          getAttrs: tok => ({ level: +tok.tag.slice(1) })
-        },
-        code_block: { block: 'code_block' },
-        fence: {
-          block: 'code_block',
-          getAttrs: tok => ({ params: tok.info || '' })
-        },
-        horizontal_rule: { node: 'horizontal_rule' },
-        image: {
-          node: 'image',
-          getAttrs: tok => ({
-            src: tok.attrGet('src'),
-            title: tok.attrGet('title') || null,
-            alt: (tok.children[0] && tok.children[0].content) || null
-          })
-        },
-        hardbreak: { node: 'hard_break' },
-
-        em: { mark: 'em' },
-        strong: { mark: 'strong' },
-        link: {
-          mark: 'link',
-          getAttrs: tok => ({
-            href: tok.attrGet('href'),
-            title: tok.attrGet('title') || null
-          })
-        },
-        code_inline: { mark: 'code' }
-      }
-    ).parse(content)
-  }
-
   createView () {
     const view = new EditorView(this.element, {
       state: this.state,
-      dispatchTransaction: this.dispatchTransaction.bind(this)
+      dispatchTransaction: this.dispatchTransaction.bind(this),
+      nodeViews: {
+        code_block: (node, view, getPos) =>
+          new CodeBlockView(node, view, this.schema, getPos)
+      }
     })
 
     view.dom.style.whiteSpace = 'pre-wrap'
+    view.dom.classList = ''
+    view.dom.classList.add('chu-editor')
 
+    view.dom.addEventListener('focus', event =>
+      view.dom.classList.add('focused')
+    )
+
+    view.dom.addEventListener('blur', event =>
+      view.dom.classList.remove('focused')
+    )
     return view
   }
 
@@ -206,6 +173,49 @@ export default class Editor {
 
   blur () {
     this.view.dom.blur()
+  }
+
+  setActiveNodesAndMarks () {
+    this.activeMarks = Object.entries(this.schema.marks).reduce(
+      (marks, [name, mark]) => ({
+        ...marks,
+        [name]: (attrs = {}) => isMarkActive(this.state, mark, attrs)
+      }),
+      {}
+    )
+
+    this.activeMarkAttrs = Object.entries(this.schema.marks).reduce(
+      (marks, [name, mark]) => ({
+        ...marks,
+        [name]: getMarkAttrs(this.state, mark)
+      }),
+      {}
+    )
+
+    this.activeNodes = Object.entries(this.schema.nodes).reduce(
+      (nodes, [name, node]) => ({
+        ...nodes,
+        [name]: (attrs = {}) => isNodeActive(this.state, node, attrs)
+      }),
+      {}
+    )
+  }
+
+  getMarkAttrs (type = null) {
+    return this.activeMarkAttrs[type]
+  }
+
+  get isActive () {
+    return Object.entries({
+      ...this.activeMarks,
+      ...this.activeNodes
+    }).reduce(
+      (types, [name, value]) => ({
+        ...types,
+        [name]: (attrs = {}) => value(attrs)
+      }),
+      {}
+    )
   }
 
   getHTML () {

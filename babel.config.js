@@ -39,6 +39,13 @@ module.exports = function (api) {
     ].filter(Boolean),
     plugins: [
       require('babel-plugin-macros'),
+      require('babel-plugin-transform-redom-jsx').default,
+      [
+        require('@babel/plugin-transform-react-jsx').default,
+        {
+          pragma: 'el'
+        }
+      ],
       require('@babel/plugin-syntax-dynamic-import').default,
       isTestEnv && require('babel-plugin-dynamic-import-node'),
       [require('@babel/plugin-proposal-decorators').default, { legacy: true }],
