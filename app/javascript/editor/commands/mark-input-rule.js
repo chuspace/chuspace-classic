@@ -1,7 +1,7 @@
 // @flow
 
 import { InputRule } from 'prosemirror-inputrules'
-import { Mark } from 'editor/utils'
+import { Mark } from 'prosemirror-model'
 
 export default function (
   regexp: RegExp,

@@ -3,7 +3,6 @@
 import { Node } from 'editor/utils'
 import type { NodeType } from 'editor/utils'
 import { setBlockType } from 'prosemirror-commands'
-import { textblockTypeInputRule } from 'prosemirror-inputrules'
 import { toggleBlockType } from 'editor/commands'
 
 export default class CodeBlock extends Node {
@@ -12,6 +11,7 @@ export default class CodeBlock extends Node {
   get schema () {
     return {
       content: 'text*',
+      attrs: { language: { default: 'javascript' } },
       marks: '',
       group: 'block',
       code: true,
@@ -30,9 +30,5 @@ export default class CodeBlock extends Node {
     return {
       'Shift-Ctrl-\\': setBlockType(type)
     }
-  }
-
-  inputRules ({ type }: NodeType) {
-    return [textblockTypeInputRule(/^```$/, type)]
   }
 }

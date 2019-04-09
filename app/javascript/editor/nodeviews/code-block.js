@@ -18,14 +18,17 @@ import { exitCode } from 'prosemirror-commands'
 import languages from 'editor/languages'
 
 class LanguageSwitcher {
+  cm: CodeMirror
+
   handleLanguageChange = e => {
     const name = e.target.value
 
+    /* $FlowFixMe */
     import(`codemirror/mode/${name}/${name}.js`).then(() =>
       this.cm.setOption('mode', name)
     )
   }
-  constructor (cm) {
+  constructor (cm, language): el {
     this.cm = cm
     return (
       <select
@@ -34,7 +37,9 @@ class LanguageSwitcher {
       >
         <option selected>Select language</option>
         {languages.map(({ name }) => (
-          <option value={name}>{name}</option>
+          <option value={name} selected={language === name}>
+            {name}
+          </option>
         ))}
       </select>
     )
@@ -42,11 +47,13 @@ class LanguageSwitcher {
 }
 
 class Header {
+  view: EditorView
   clipboard: ?ClipboardJS
   switcher: ?HTMLElement
 
-  constructor (cm, node) {
-    this.switcher = new LanguageSwitcher(cm)
+  constructor (props) {
+    this.view = props.view
+    this.switcher = new LanguageSwitcher(props.cm, props.language)
     this.clipboard = new ClipboardJS('#foo')
 
     return (
@@ -57,6 +64,7 @@ class Header {
             Copy to clipboard
           </div>
           {this.switcher}
+          <div onclick={props.view.destroy}>remove</div>
         </div>
       </div>
     )
@@ -69,6 +77,8 @@ export default class CodeBlockView {
   dom: Element
   view: EditorView
   schema: Schema
+  language: string
+  header: HTMLElement
   getPos: () => number
   incomingChanges: boolean
   node: ProsemirrorNode
@@ -85,11 +95,12 @@ export default class CodeBlockView {
     this.schema = schema
     this.getPos = getPos
     this.incomingChanges = false
+    this.language = this.node.attrs.language || 'javascript'
 
     // Create a CodeMirror instance
     this.cm = new CodeMirror(null, {
       value: this.node.textContent,
-      mode: 'javascript',
+      lineNumbers: true,
       smartIndent: true,
       indentWithTabs: true,
       theme: 'material',
@@ -98,9 +109,11 @@ export default class CodeBlockView {
       extraKeys: this.codeMirrorKeymap()
     })
 
-    const header = new Header(this.cm, this.cm.getWrapperElement())
+    this.handleLanguageChange()
 
-    this.cm.getWrapperElement().appendChild(header)
+    this.header = new Header(this)
+
+    this.cm.getWrapperElement().appendChild(this.header)
 
     // The editor's outer node is our DOM representation
     this.dom = this.cm.getWrapperElement()
@@ -126,7 +139,15 @@ export default class CodeBlockView {
       }
       this.incomingChanges = false
     })
+
     this.cm.on('focus', () => this.forwardSelection())
+  }
+
+  handleLanguageChange = () => {
+    /* $FlowFixMe */
+    import(`codemirror/mode/${this.language}/${this.language}.js`).then(() => {
+      this.cm.setOption('mode', this.language)
+    })
   }
 
   /**
