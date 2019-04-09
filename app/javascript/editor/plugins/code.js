@@ -38,16 +38,13 @@ export default class Code extends Element {
                 const to = pos
                 const text = matches[0]
 
-                const node = schema.nodes.code_block.create({ language })
-
                 if (matches[0]) {
+                  const node = schema.nodes.code_block.create({ language })
                   tr.replaceWith(pos - matches[0].length - 1, pos, node)
 
                   view.dispatch(
                     tr.setMeta(this, { transform: tr, from, to, text })
                   )
-
-                  console.log(node)
 
                   return true
                 }
