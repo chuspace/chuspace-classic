@@ -3,15 +3,15 @@
 import { keymap } from 'prosemirror-keymap'
 
 export default class ElementManager {
-  extensions: []
+  elements: []
 
-  constructor (extensions: [] = []) {
-    this.extensions = extensions
+  constructor (elements: [] = []) {
+    this.elements = elements
   }
 
   get nodes (): {} {
-    return this.extensions
-      .filter(extension => extension.type === 'node')
+    return this.elements
+      .filter(element => element.type === 'node')
       .reduce(
         (nodes, { name, schema }) => ({
           ...nodes,
@@ -23,17 +23,17 @@ export default class ElementManager {
 
   get options () {
     const { view } = this
-    return this.extensions.reduce(
-      (nodes, extension) => ({
+    return this.elements.reduce(
+      (nodes, element) => ({
         ...nodes,
-        [extension.name]: new Proxy(extension.options, {
+        [element.name]: new Proxy(element.options, {
           set (obj, prop, value) {
             const changed = obj[prop] !== value
 
             Object.assign(obj, { [prop]: value })
 
             if (changed) {
-              extension.update(view)
+              element.update(view)
             }
 
             return true
@@ -45,8 +45,8 @@ export default class ElementManager {
   }
 
   get marks (): {} {
-    return this.extensions
-      .filter(extension => extension.type === 'mark')
+    return this.elements
+      .filter(element => element.type === 'mark')
       .reduce(
         (marks, { name, schema }) => ({
           ...marks,
@@ -57,81 +57,81 @@ export default class ElementManager {
   }
 
   get plugins (): Array<any> {
-    return this.extensions
-      .filter(extension => extension.plugins)
+    return this.elements
+      .filter(element => element.plugins)
       .reduce((allPlugins, { plugins }) => [...allPlugins, ...plugins], [])
   }
 
   keymaps ({ schema }: any): Array<any> {
-    const extensionKeymaps = this.extensions
-      .filter(extension => ['extension'].includes(extension.type))
-      .filter(extension => extension.keys)
-      .map(extension => extension.keys({ schema }))
+    const elementKeymaps = this.elements
+      .filter(element => ['element'].includes(element.type))
+      .filter(element => element.keys)
+      .map(element => element.keys({ schema }))
 
-    const nodeMarkKeymaps = this.extensions
-      .filter(extension => ['node', 'mark'].includes(extension.type))
-      .filter(extension => extension.keys)
-      .map(extension =>
-        extension.keys({
-          type: schema[`${extension.type}s`][extension.name],
+    const nodeMarkKeymaps = this.elements
+      .filter(element => ['node', 'mark'].includes(element.type))
+      .filter(element => element.keys)
+      .map(element =>
+        element.keys({
+          type: schema[`${element.type}s`][element.name],
           schema
         })
       )
 
-    return [...extensionKeymaps, ...nodeMarkKeymaps].map(keys => keymap(keys))
+    return [...elementKeymaps, ...nodeMarkKeymaps].map(keys => keymap(keys))
   }
 
   inputRules ({ schema }: any) {
-    const extensionInputRules = this.extensions
-      .filter(extension => ['extension'].includes(extension.type))
-      .filter(extension => extension.inputRules)
-      .map(extension => extension.inputRules({ schema }))
+    const elementInputRules = this.elements
+      .filter(element => ['element'].includes(element.type))
+      .filter(element => element.inputRules)
+      .map(element => element.inputRules({ schema }))
 
-    const nodeMarkInputRules = this.extensions
-      .filter(extension => ['node', 'mark'].includes(extension.type))
-      .filter(extension => extension.inputRules)
-      .map(extension =>
-        extension.inputRules({
-          type: schema[`${extension.type}s`][extension.name],
+    const nodeMarkInputRules = this.elements
+      .filter(element => ['node', 'mark'].includes(element.type))
+      .filter(element => element.inputRules)
+      .map(element =>
+        element.inputRules({
+          type: schema[`${element.type}s`][element.name],
           schema
         })
       )
 
-    return [...extensionInputRules, ...nodeMarkInputRules].reduce(
+    return [...elementInputRules, ...nodeMarkInputRules].reduce(
       (allInputRules, inputRules) => [...allInputRules, ...inputRules],
       []
     )
   }
 
   pasteRules ({ schema }: any) {
-    const extensionPasteRules = this.extensions
-      .filter(extension => ['extension'].includes(extension.type))
-      .filter(extension => extension.pasteRules)
-      .map(extension => extension.pasteRules({ schema }))
+    const elementPasteRules = this.elements
+      .filter(element => ['element'].includes(element.type))
+      .filter(element => element.pasteRules)
+      .map(element => element.pasteRules({ schema }))
 
-    const nodeMarkPasteRules = this.extensions
-      .filter(extension => ['node', 'mark'].includes(extension.type))
-      .filter(extension => extension.pasteRules)
-      .map(extension =>
-        extension.pasteRules({
-          type: schema[`${extension.type}s`][extension.name],
+    const nodeMarkPasteRules = this.elements
+      .filter(element => ['node', 'mark'].includes(element.type))
+      .filter(element => element.pasteRules)
+      .map(element =>
+        element.pasteRules({
+          type: schema[`${element.type}s`][element.name],
           schema
         })
       )
 
-    return [...extensionPasteRules, ...nodeMarkPasteRules].reduce(
+    return [...elementPasteRules, ...nodeMarkPasteRules].reduce(
       (allPasteRules, pasteRules) => [...allPasteRules, ...pasteRules],
       []
     )
   }
 
   commands ({ schema, view, editable }: any): any {
-    return this.extensions
-      .filter(extension => extension.commands)
-      .reduce((allCommands, extension) => {
-        const { name, type } = extension
+    return this.elements
+      .filter(element => element.commands)
+      .reduce((allCommands, element) => {
+        const { name, type } = element
         const commands = {}
-        const value = extension.commands({
+        const value = element.commands({
           schema,
           ...(['node', 'mark'].includes(type)
             ? {

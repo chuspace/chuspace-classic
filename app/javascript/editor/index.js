@@ -21,7 +21,7 @@ export default class Editor {
   constructor (options = {}) {
     this.options = options
     this.element = options.element
-    this.extensions = this.createExtensions()
+    this.elements = this.createElements()
     this.nodes = this.createNodes()
     this.marks = this.createMarks()
     this.schema = this.createSchema()
@@ -35,11 +35,11 @@ export default class Editor {
     this.setActiveNodesAndMarks()
     this.focus()
 
-    // give extension manager access to our view
-    this.extensions.view = this.view
+    // give element manager access to our view
+    this.elements.view = this.view
   }
 
-  createExtensions () {
+  createElements () {
     return new ElementManager([
       ...toArray(marks).map(Mark => new Mark()),
       ...toArray(plugins).map(Plugin => new Plugin()),
@@ -48,29 +48,29 @@ export default class Editor {
   }
 
   createPlugins () {
-    return this.extensions.plugins
+    return this.elements.plugins
   }
 
   createKeymaps () {
-    return this.extensions.keymaps({
+    return this.elements.keymaps({
       schema: this.schema
     })
   }
 
   createInputRules () {
-    return this.extensions.inputRules({
+    return this.elements.inputRules({
       schema: this.schema
     })
   }
 
   createPasteRules () {
-    return this.extensions.pasteRules({
+    return this.elements.pasteRules({
       schema: this.schema
     })
   }
 
   createCommands () {
-    return this.extensions.commands({
+    return this.elements.commands({
       schema: this.schema,
       view: this.view,
       editable: true
@@ -78,12 +78,11 @@ export default class Editor {
   }
 
   createNodes () {
-    console.log(this.extensions)
-    return this.extensions.nodes
+    return this.elements.nodes
   }
 
   createMarks () {
-    return this.extensions.marks
+    return this.elements.marks
   }
 
   createSchema () {
