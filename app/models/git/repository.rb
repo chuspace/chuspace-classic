@@ -11,6 +11,7 @@ module Git
 
     DEFAULT_NAME = 'blog.git'
     START_REF = 'HEAD'
+    CONTRIBUTIONS_REF = 'refs/heads/contributions'
 
     attr_reader :author_nickname, :author, :name, :full_name,
                 :path, :repository, :namespace_path
@@ -57,11 +58,11 @@ module Git
     end
 
     def blobs(branch = nil)
-      branch ||= repository_head.target
+      branch = repository_head.target
+      sha = sha_from_ref(root_branch)
 
       branch.tree.map do |item|
         blob = repository.lookup(item[:oid])
-        sha = sha_from_ref(root_branch)
 
         Blob.new(
           id: blob.oid,
@@ -74,6 +75,10 @@ module Git
           binary: blob.binary?
         )
       end
+    end
+
+    def contributions?
+      sha_from_ref(CONTRIBUTIONS_REF).present?
     end
 
     def repository_head
@@ -106,11 +111,14 @@ module Git
     def find_file(path, ref = nil)
       ref ||= root_branch
       sha = sha_from_ref(ref)
-      Blob.find(self, sha, path)
+
+      Blob.find(self, sha, path) if sha.present?
     end
 
     def sha_from_ref(ref)
       rev_parse_target(ref).oid
+    rescue Rugged::ReferenceError
+      nil
     end
 
     def rev_parse_target(revspec)

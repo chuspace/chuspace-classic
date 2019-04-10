@@ -59,7 +59,6 @@ gem 'turbolinks'
 # Git API
 gem 'rugged'
 gem 'charlock_holmes'
-gem 'github-linguist'
 
 # SSH host key support
 gem 'sshkey'
@@ -94,9 +93,9 @@ group :development do
   # Security
   gem 'brakeman', require: false
   # Better messages
-  gem 'awesome_print', require: false
+  gem 'awesome_print'
   # Pry
-  gem 'pry-rails', require: false
+  gem 'pry-rails'
 end
 
 group :test do

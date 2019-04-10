@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
-require 'linguist'
-
 module Git
   class Blob
-    include Linguist::BlobHelper
     include EncodingHelper
 
     MAX_DATA_DISPLAY_SIZE = 10485760
@@ -71,14 +68,6 @@ module Git
 
     def empty?
       !content || content == ''
-    end
-
-    def content
-      encode! @content
-    end
-
-    def name
-      encode! @name
     end
   end
 end
