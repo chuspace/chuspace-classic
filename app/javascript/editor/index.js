@@ -148,6 +148,7 @@ export default class Editor {
     view.dom.addEventListener('blur', event =>
       view.dom.classList.remove('focused')
     )
+
     return view
   }
 

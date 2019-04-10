@@ -1,24 +1,39 @@
-<div class='menu'>
-  <ul>
-    <li><%= link_to 'Write post', new_post_path %></li>
-  </ul>
-</div>
-<%= render "components/dropdown" do %>
-  <% content_for :target do %>
-    <%= avatar_for(person: Current.person, size: :xs) %>
-  <% end %>
+<div class='right-nav flex items-center'>
+  <div data-controller="dropdown">
+    <%= octicon "kebab-horizontal", height: 32, class: 'mr-12', 'data-target': "dropdown.opener" %>
+    <div data-target="dropdown.content" class="hidden">
+      <ul class='list-reset dropdown'>
+        <li class='pb-2'>
+          <%= link_to('Publish', '#', class: 'link link-default db mb2 text-base text-grey') %>
+        </li>
 
-  <% content_for :content do %>
-    <ul class='list-reset dropdown'>
-      <li class='pb-2'>
-        <%= link_to('Profile', profile_path(Current.person), class: 'link link-default db mb2') %>
-      </li>
-      <li class='pb-2'>
-        <%= link_to('Settings', settings_path, class: 'link link-default db mb2') %>
-      </li>
-      <li>
-        <%= link_to('Sign out', session_path(Current.person), method: :delete, class: 'link link-default') %>
-      </li>
-    </ul>
+        <li class='pb-2'>
+          <%= link_to('Delete', '#', class: 'link link-default db mb2 text-base text-grey') %>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <%= render "components/dropdown" do %>
+    <% content_for :target do %>
+      <%= avatar_for(person: Current.person, size: :xs) %>
+    <% end %>
+
+    <% content_for :content do %>
+      <ul class='list-reset dropdown'>
+        <li class='pb-2'>
+          <%= link_to('Profile', profile_path(Current.person), class: 'link link-default db mb2 text-base text-grey') %>
+        </li>
+        <li class='pb-2'>
+          <%= link_to('Write post', new_post_path, class: 'link link-default db mb2 text-base text-grey') %>
+        </li>
+        <li class='pb-2'>
+          <%= link_to('Settings', settings_path, class: 'link link-default db mb2 text-base text-grey') %>
+        </li>
+        <li>
+          <%= link_to('Sign out', session_path(Current.person), method: :delete, class: 'link link-default db mb2 text-base text-grey') %>
+        </li>
+      </ul>
+    <% end %>
   <% end %>
-<% end %>
+</div>
