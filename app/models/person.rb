@@ -32,11 +32,15 @@ class Person < ApplicationRecord
     Git::Repository.new(author_nickname: nickname)
   end
 
+  def posts(status: 'published')
+    all_posts.select { |post| post.status == status }
+  end
+
   def all_posts
     blog.blobs.map do |blob|
       next if blob.binary?
 
-      Post.initialize_from_markdown(blob.content)
+      Post.initialize_from_blob(blob.content)
     end.compact
   end
 
