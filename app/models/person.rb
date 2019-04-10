@@ -18,7 +18,7 @@ class Person < ApplicationRecord
   before_save :mv_blog_repository, if: -> { !new_record? && nickname_changed? }
   before_destroy :remove_blog_repository
 
-  delegate :repo_exists?, to: :repo
+  delegate :repo_exists?, to: :blog
 
   def to_param
     nickname
@@ -28,8 +28,16 @@ class Person < ApplicationRecord
     name.gsub(/([[:upper:]])[[:lower:]]+/, '\1').tr(' ', '')
   end
 
-  def blog_repo
+  def blog
     Git::Repository.new(author_nickname: nickname)
+  end
+
+  def all_posts
+    blog.blobs.map do |blob|
+      next if blob.binary?
+
+      Post.initialize_from_markdown(blob.content)
+    end.compact
   end
 
   private

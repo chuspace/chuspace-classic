@@ -102,8 +102,16 @@ module Git
       Kernel::exec(env, *args, unsetenv_others: true)
     end
 
+    def ssh_key
+      @ssh_key ||= SshKey.find_by(id: key_id.split('-').last)
+      raise AccessDeniedError, 'remote: Ssh key not found on server' if @ssh_key.blank?
+      @ssh_key
+    end
+
     def user
-      @user ||= SshKey.find(key_id.split('-').last).person
+      @user ||= ssh_key&.person
+      raise AccessDeniedError, 'remote: User not found for your ssh key' if @user.blank?
+      @user
     end
 
     def username
