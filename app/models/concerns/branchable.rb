@@ -5,7 +5,6 @@ module Branchable
 
   included do
     DEFAULT_BRANCH = 'master'
-    DEFAUL_BRANCHES = %w[drafts archives contributions]
   end
 
   def create_branch(ref, start_point = Git::Repository::START_REF)
@@ -66,12 +65,6 @@ module Branchable
 
   def checkout(branch, start_point = Git::Repository::START_REF)
     repository.checkout(branch)
-  end
-
-  def create_default_branches
-    DEFAUL_BRANCHES.map do |name|
-      create_branch(name)
-    end
   end
 
   private

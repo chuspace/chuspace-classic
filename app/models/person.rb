@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Person < ApplicationRecord
-  include People::Registrable
-
   validates :email, presence: true, uniqueness: true, email: true
   validates :name, presence: true
   validates :nickname,
@@ -16,11 +14,9 @@ class Person < ApplicationRecord
   has_many :ssh_keys, dependent: :destroy
 
   before_validation :normalize_email_and_nickname
-  before_create :create_git_repository
-  before_save :mv_git_repository, if: -> { !new_record? && nickname_changed? }
-  before_destroy :remove_git_repository
-
-  store_accessor :github_info, :github_nickname, :github_uid, :github_access_token
+  before_create :create_blog_repository
+  before_save :mv_blog_repository, if: -> { !new_record? && nickname_changed? }
+  before_destroy :remove_blog_repository
 
   delegate :repo_exists?, to: :repo
 
@@ -32,7 +28,7 @@ class Person < ApplicationRecord
     name.gsub(/([[:upper:]])[[:lower:]]+/, '\1').tr(' ', '')
   end
 
-  def repo
+  def blog_repo
     Git::Repository.new(author_nickname: nickname)
   end
 
@@ -43,16 +39,16 @@ class Person < ApplicationRecord
     self.nickname = self.nickname&.downcase&.strip
   end
 
-  def create_git_repository
+  def create_blog_repository
     Git::Repository.new(author_nickname: nickname).create
   end
 
-  def rename_git_repository
+  def rename_blog_repository
     new_path = Git::Repository.new(author_nickname: nickname).path
     Git::Repository.new(author_nickname: nickname_was).rename(new_path)
   end
 
-  def destroy_git_repository
+  def destroy_blog_repository
     Git::Repository.new(author_nickname: nickname).destroy
   end
 end

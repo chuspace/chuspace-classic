@@ -6,11 +6,8 @@ class RegistrationsController < ApplicationController
   def index
   end
 
-  def new
-  end
-
   def create
-    person = Person.from_email(create_params)
+    person = Person.new(create_params)
 
     if person.save
       LoginMailer.with(person: person).send_magic_login.deliver_later

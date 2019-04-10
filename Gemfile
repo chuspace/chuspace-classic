@@ -46,10 +46,6 @@ gem 'sidekiq'
 # ENV
 gem 'figaro'
 
-# oAuth
-gem 'oauth2', '>= 1.4.0'
-gem 'omniauth-github', '>= 1.3.0'
-
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'octicons_helper'

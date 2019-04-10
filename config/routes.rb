@@ -3,10 +3,8 @@
 Rails.application.routes.draw do
   root to: 'pages#index'
 
-  get '/auth/:provider/callback', to: 'github#create', as: :omniauth_callback
-
-  resources :sessions, path: 'signin'
-  resources :registrations, path: 'signup'
+  resources :sessions, path: 'signin', only: %i[index create destroy]
+  resources :registrations, path: 'signup', only: %i[index create]
   resources :check_nicknames, only: :create
   resources :magic_logins, only: :index
   resources :people, except: :show

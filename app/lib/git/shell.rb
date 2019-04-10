@@ -73,7 +73,7 @@ module Git
     end
 
     def verify_access
-      self.repo_path = user.repo.path
+      self.repo_path = user.blog.path
     end
 
     def process_cmd(args)

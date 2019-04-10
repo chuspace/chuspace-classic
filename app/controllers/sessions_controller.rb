@@ -6,9 +6,6 @@ class SessionsController < ApplicationController
   def index
   end
 
-  def new
-  end
-
   def create
     person = Person.find_by(email: params[:email])
 

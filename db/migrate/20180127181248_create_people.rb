@@ -18,9 +18,6 @@ class CreatePeople < ActiveRecord::Migration[5.2]
       t.string :location
       t.string :url
 
-      # Github
-      t.jsonb  :github_info, default: '{}'
-
       ## Tracking and security
       t.integer  :sign_in_count, default: 0, null: false
       t.datetime :current_sign_in_at
@@ -37,6 +34,5 @@ class CreatePeople < ActiveRecord::Migration[5.2]
     add_index :people, :auth_token, unique: true
 
     add_index :people, :location
-    add_index :people, :github_info, using: :gin
   end
 end

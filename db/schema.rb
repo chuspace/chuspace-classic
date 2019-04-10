@@ -47,7 +47,6 @@ ActiveRecord::Schema.define(version: 2019_03_08_201406) do
     t.string "company"
     t.string "location"
     t.string "url"
-    t.jsonb "github_info", default: "{}"
     t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
@@ -57,7 +56,6 @@ ActiveRecord::Schema.define(version: 2019_03_08_201406) do
     t.datetime "updated_at", null: false
     t.index ["auth_token"], name: "index_people_on_auth_token", unique: true
     t.index ["email"], name: "index_people_on_email", unique: true
-    t.index ["github_info"], name: "index_people_on_github_info", using: :gin
     t.index ["location"], name: "index_people_on_location"
     t.index ["nickname"], name: "index_people_on_nickname", unique: true
   end

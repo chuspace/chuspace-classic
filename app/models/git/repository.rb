@@ -12,8 +12,8 @@ module Git
     DEFAULT_NAME = 'blog.git'
     START_REF = 'HEAD'
 
-    attr_reader :author_nickname, :author, :name, :full_name, :namespace_path,
-    :path, :repository
+    attr_reader :author_nickname, :author, :name, :full_name,
+                :path, :repository, :namespace_path
 
     def initialize(author_nickname:, name: DEFAULT_NAME)
       @author_nickname = author_nickname
@@ -54,6 +54,26 @@ module Git
 
     def root_branch
       @root_branch ||= discover_default_branch
+    end
+
+    def blobs(branch = nil)
+      branch ||= repository_head.target
+
+      branch.tree.map do |item|
+        blob = repository.lookup(item[:oid])
+        sha = sha_from_ref(root_branch)
+
+        Blob.new(
+          id: blob.oid,
+          name: item[:name],
+          size: blob.size,
+          content: blob.content(Git::Blob::MAX_DATA_DISPLAY_SIZE),
+          mode: item[:filemode].to_s(8),
+          path: item[:name],
+          commit_id: sha,
+          binary: blob.binary?
+        )
+      end
     end
 
     def repository_head

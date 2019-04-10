@@ -1,19 +1,31 @@
-<div class='centered mt-10'>
+<div data-controller='login' class='centered mt-10'>
   <div class='card max-w-sm text-center'>
-    <h2 class='card-title'>Welcome back</h2>
+    <h2 class='card-title'>Sign in</h2>
 
     <p class='card-intro'>
-      Sign in to access your personalized homepage, follow authors and topics
-      you love, and clap for stories that matter to you.
+      Enter the email address associated with your account, and we’ll send a
+      magic link to your inbox.
     </p>
 
     <div class='card-body'>
-      <%= link_to('Sign in with github', '/auth/github', class: 'btn btn-bordered btn-bordered-green mb-2 block max-w-xxs mx-auto') %>
-      <%= link_to('Sign in with email', new_session_path, class: 'btn btn-bordered btn-bordered-green block max-w-xxs mx-auto') %>
+      <%= form_with url: sessions_path, data: { target: 'login.form', action: 'ajax:success->login#onFormSubmit' } do |form| %>
+        <%= form.text_field(
+          'email',
+          autocomplete: 'email',
+          placeholder: 'Enter email',
+          autofocus: true,
+          'data-target': 'login.inputEmail',
+          class: 'input input-bordered input-bordered-green block mx-auto mb-2'
+        ) %>
+        <span class="alert alert-error text-left" data-target='login.inputEmailError'></span>
+        <%= form.submit 'Submit', class: 'btn btn-black mt-4' %>
+      <% end %>
+
+      <span class="alert alert-success" data-target='login.formSuccess'></span>
     </div>
 
-    <p class='card-footer'>
-      No account? <%= link_to('Join', registrations_path, class: 'link link-green') %>
-    </p>
+    <div class='card-footer'>
+      <%= link_to('← Go back', sessions_path, class: 'link link-default') %>
+    </div>
   </div>
 </div>
