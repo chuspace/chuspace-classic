@@ -5,18 +5,21 @@ module Git
     include EncodingHelper
 
     MAX_DATA_DISPLAY_SIZE = 10485760
-    attr_accessor :name, :path, :size, :content, :mode, :id, :commit_id, :loaded_size, :binary
+    attr_accessor :name, :path, :size, :content, :mode, :id, :commit,
+                  :loaded_size, :binary, :author_email, :contributors
 
     class << self
       def find(repository, sha, path)
-        commit = repository.lookup(sha)
-        root_tree = commit.tree
-
-        blob_entry = find_entry_by_path(repository, root_tree.oid, path)
+        rugged_repo = repository.rugged
+        commit      = repository.lookup(sha)
+        root_tree   = commit.tree
+        blob_entry  = find_entry_by_path(repository, root_tree.oid, path)
 
         return nil unless blob_entry
 
-        blob = repository.lookup(blob_entry[:oid])
+        blob         = repository.lookup(blob_entry[:oid])
+        author_email = repository.author.email
+        contributors = Rugged::Blame.new(rugged_repo, path)&.map { |hunk| hunk.dig(:orig_signature, :email) }&.uniq || []
 
         if blob
           Blob.new(
@@ -26,7 +29,9 @@ module Git
             content: blob.content(MAX_DATA_DISPLAY_SIZE),
             mode: blob_entry[:filemode].to_s(8),
             path: path,
-            commit_id: sha,
+            commit: Git::Commit.new(commit),
+            author_email: author_email,
+            contributors: contributors - [author_email],
             binary: blob.binary?
           )
         end
@@ -57,7 +62,7 @@ module Git
     end
 
     def initialize(options)
-      %w(id name path size content mode commit_id binary).each do |key|
+      %w(id name path size content mode commit author_email contributors binary).each do |key|
         self.send("#{key}=", options[key.to_sym])
       end
     end

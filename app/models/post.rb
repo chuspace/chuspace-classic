@@ -4,21 +4,16 @@ class Post
   include ActiveModel::Model
   include ActiveModel::Validations
   include ActiveModel::Validations::Callbacks
-  extend ActiveModel::Naming
-  include ActiveModel::Serialization
-  include ActiveModel::Conversion
 
   STATUSES       = %w[draft published archieved]
   DEFAULT_STATUS = 'draft'
 
   attr_reader   :errors
   attr_accessor :id, :title, :slug, :excerpt, :content, :tags, :raw_content,
-                :status, :published_at, :frontmatter, :author
+                :status, :published_at, :frontmatter, :author, :contributors
 
   before_validation     :assign_slug
-  validates_presence_of :title, :slug, :status
-
-  searchkick
+  validates_presence_of :title, :slug, :status, :author
 
   delegate :blog, to: :author
 
@@ -27,12 +22,17 @@ class Post
     @errors = ActiveModel::Errors.new(self)
   end
 
-  def self.initialize_from_blob(raw_content)
+  def self.initialize_from_blob(blob)
+    raw_content       = blob.content
     frontmatter       = YAML.load(raw_content)
     post              = new(frontmatter)
+
+    post.id           = blob.id
     post.content      = raw_content.gsub(/---(.|\n)*---/, '').strip!
     post.frontmatter  = frontmatter
     post.raw_content  = raw_content
+    post.author       = Person.find_by(email: blob.author_email)
+    post.contributors = Person.find_by(email: blob.contributors)
     post
   end
 
@@ -69,19 +69,6 @@ class Post
     @frontmatter = "---\n" + %w[title slug excerpt tags status published_at].map do |attribute|
       "#{attribute}: #{send(attribute)}"
     end.join("\n") + "\n---"
-  end
-
-  def attributes
-    {
-      title: nil,
-      slug: nil,
-      excerpt: nil,
-      content: nil,
-      tags: [],
-      status: nil,
-      published_at: nil,
-      author: nil
-    }
   end
 
   private

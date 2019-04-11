@@ -5,8 +5,8 @@ module Git
     include EncodingHelper
     attr_accessor :raw_commit, :head, :refs
 
-    attr_accessor :id, :message, :parent_ids, :authored_date, :author_name,
-    :author_email, :created_at, :committer_name, :committer_email
+    attr_accessor :id, :message, :parent_ids, :authored_date, :author_nickname,
+                  :author_email, :created_at, :committer_name, :committer_email
 
     def initialize(raw_commit, head = nil)
       raise 'Nil as raw commit passed' unless raw_commit
@@ -53,20 +53,20 @@ module Git
     end
 
     def init_from_rugged(commit)
-      author = commit.author
+      author    = commit.author
       committer = commit.committer
 
-      @raw_commit = commit
-      @id = commit.oid
-      @sha = commit.oid
-      @message = encode!(commit.message)
-      @authored_date = author[:time]
-      @created_at = committer[:time]
-      @author_name = encode!(author[:name])
-      @author_email = encode!(author[:email])
-      @committer_name = encode!(committer[:name])
-      @committer_email = encode!(committer[:email])
-      @parent_ids = commit.parents.map(&:oid)
+      @raw_commit       = commit
+      @id               = commit.oid
+      @sha              = commit.oid
+      @message          = encode!(commit.message)
+      @authored_date    = author[:time]
+      @created_at       = committer[:time]
+      @author_nickname  = encode!(author[:name])
+      @author_email     = encode!(author[:email])
+      @committer_name   = encode!(committer[:name])
+      @committer_email  = encode!(committer[:email])
+      @parent_ids       = commit.parents.map(&:oid)
     end
   end
 end

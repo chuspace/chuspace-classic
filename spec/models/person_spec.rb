@@ -17,6 +17,6 @@ RSpec.describe Person, type: :model do
   end
 
   it 'should have a git repo' do
-    expect(subject.repo_exists?).to be_truthy
+    expect(subject.blog.exists?).to be_truthy
   end
 end

@@ -8,7 +8,7 @@ module Branchable
   end
 
   def create_branch(ref, start_point = Git::Repository::START_REF)
-    branch = repository.branches.create(ref, start_point)
+    branch = rugged.branches.create(ref, start_point)
     Git::Branch.new(self, branch.name, branch.target)
   rescue Rugged::ReferenceError => e
     raise InvalidRef.new("Git::Branch #{ref} already exists") if e.to_s =~ /'refs\/heads\/#{ref}'/
@@ -16,11 +16,11 @@ module Branchable
   end
 
   def delete_branch(branch_name)
-    repository.branches.delete(branch_name)
+    rugged.branches.delete(branch_name)
   end
 
   def branch_exists?(name)
-    repository.branches.exists?(name)
+    rugged.branches.exists?(name)
   rescue Rugged::ReferenceError
     false
   end
@@ -28,18 +28,18 @@ module Branchable
   def find_branch(name, force_reload = false)
     reload if force_reload
 
-    branch = repository.branches[name]
+    branch = rugged.branches[name]
     Git::Branch.new(self, branch.name, branch.target) if branch
   end
 
   def local_branches
-    repository.branches.each(:local).map do |branch|
+    rugged.branches.each(:local).map do |branch|
       Git::Branch.new(self, branch.name, branch.target)
     end
   end
 
   def branch_count
-    repository.branches.count do |branch|
+    rugged.branches.count do |branch|
       begin
         branch.name && branch.target
 
@@ -55,16 +55,12 @@ module Branchable
   end
 
   def branches
-    repository.branches.map do |branch|
+    rugged.branches.map do |branch|
       begin
         Git::Branch.new(self, branch.name, branch.target)
       rescue Rugged::ReferenceError
       end
     end.compact.sort_by(&:name)
-  end
-
-  def checkout(branch, start_point = Git::Repository::START_REF)
-    repository.checkout(branch)
   end
 
   private
@@ -76,8 +72,8 @@ module Branchable
 
     return names[0] if names.length == 1
 
-    if repository_head
-      extracted_name = Git::Branch.extract_branch_name(repository_head.name)
+    if head
+      extracted_name = Git::Branch.extract_branch_name(head.name)
       return extracted_name if names.include?(extracted_name)
     end
 

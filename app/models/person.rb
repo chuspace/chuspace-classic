@@ -11,14 +11,12 @@ class Person < ApplicationRecord
 
   has_one_attached :avatar
   has_secure_token :auth_token
-  has_many :ssh_keys, dependent: :destroy
+  has_many         :ssh_keys, dependent: :destroy
 
   before_validation :normalize_email_and_nickname
-  before_create :create_blog_repository
-  before_save :mv_blog_repository, if: -> { !new_record? && nickname_changed? }
-  before_destroy :remove_blog_repository
-
-  delegate :repo_exists?, to: :blog
+  before_create     :create_blog_repository
+  before_save       :mv_blog_repository, if: -> { !new_record? && nickname_changed? }
+  before_destroy    :remove_blog_repository
 
   def to_param
     nickname
@@ -40,14 +38,14 @@ class Person < ApplicationRecord
     blog.blobs.map do |blob|
       next if blob.binary?
 
-      Post.initialize_from_blob(blob.content)
+      Post.initialize_from_blob(blob)
     end.compact
   end
 
   private
 
   def normalize_email_and_nickname
-    self.email = self.email&.downcase&.strip
+    self.email    = self.email&.downcase&.strip
     self.nickname = self.nickname&.downcase&.strip
   end
 

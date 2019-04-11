@@ -14,32 +14,27 @@ module Git
     CONTRIBUTIONS_REF = 'refs/heads/contributions'
 
     attr_reader :author_nickname, :author, :name, :full_name,
-                :path, :repository, :namespace_path
+                :path, :rugged, :namespace_path
+
+    delegate :lookup, :checkout, :empty?, :bare?, to: :rugged
 
     def initialize(author_nickname:, name: DEFAULT_NAME)
       @author_nickname = author_nickname
-      @name = name
+      @name            = name
+
       @author ||= Person.find_by_nickname(author_nickname)
 
-      @full_name = "#{author_nickname}/#{name}"
-      @namespace_path = Git.config.git_storage_path.join(author_nickname).tap(&:mkpath).to_s
-      @path = Git.config.git_storage_path.join(full_name).tap(&:mkpath).to_s
+      @full_name       = "#{author_nickname}/#{name}"
+      @namespace_path  = Git.config.git_storage_path.join(author_nickname).tap(&:mkpath).to_s
+      @path            = Git.config.git_storage_path.join(full_name).tap(&:mkpath).to_s
     end
 
     def reload
-      @repository = nil
+      @rugged = nil
     end
 
-    def empty?
-      repository.empty?
-    end
-
-    def bare?
-      repository.bare?
-    end
-
-    def repo_exists?
-      !!repository
+    def exists?
+      !!rugged
     end
 
     def size
@@ -47,8 +42,8 @@ module Git
       (size.to_f / 1024).round(2)
     end
 
-    def repository
-      @repository ||= Rugged::Repository.new(path)
+    def rugged
+      @rugged ||= Rugged::Repository.new(path)
     rescue Rugged::RepositoryError, Rugged::OSError
       raise NoRepository.new('no repository for such path')
     end
@@ -58,22 +53,11 @@ module Git
     end
 
     def blobs(branch = nil)
-      branch = repository_head.target
-      sha = sha_from_ref(root_branch)
+      branch = head.target
+      sha    = sha_from_ref(root_branch)
 
       branch.tree.map do |item|
-        blob = repository.lookup(item[:oid])
-
-        Blob.new(
-          id: blob.oid,
-          name: item[:name],
-          size: blob.size,
-          content: blob.content(Git::Blob::MAX_DATA_DISPLAY_SIZE),
-          mode: item[:filemode].to_s(8),
-          path: item[:name],
-          commit_id: sha,
-          binary: blob.binary?
-        )
+        Blob.find(self, sha, item[:name])
       end
     end
 
@@ -81,14 +65,14 @@ module Git
       sha_from_ref(CONTRIBUTIONS_REF).present?
     end
 
-    def repository_head
-      repository.head
+    def head
+      rugged.head
     rescue Rugged::ReferenceError
       nil
     end
 
-    def repository_index
-      repository.index
+    def index
+      rugged.index
     end
 
     def create
@@ -122,12 +106,8 @@ module Git
     end
 
     def rev_parse_target(revspec)
-      obj = repository.rev_parse(revspec)
+      obj = rugged.rev_parse(revspec)
       Branch.dereference_object(obj)
-    end
-
-    def lookup(oid_or_ref_name)
-      repository.rev_parse(oid_or_ref_name)
     end
   end
 end

@@ -37,7 +37,7 @@ gem 'pundit'
 gem 'aasm'
 
 # Search
-gem 'searchkick'
+gem 'elasticsearch-persistence', git: 'https://github.com/elastic/elasticsearch-rails.git', branch: '6.x'
 gem 'oj'
 
 # Jobs

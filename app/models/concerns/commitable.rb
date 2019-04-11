@@ -11,7 +11,7 @@ module Commitable
     return Git::Commit.new(commit_id) if commit_id.is_a?(Rugged::Commit)
 
     obj = if commit_id.is_a?(String)
-      repository.rev_parse_target(commit_id)
+      rugged.rev_parse_target(commit_id)
     else
       Git::Branch.dereference_object(commit_id)
     end
@@ -50,10 +50,9 @@ module Commitable
     end
 
     filename = file[:path].to_s
-    index = repository.index
 
-    unless repository.empty?
-      rugged_ref = repository.references[branch]
+    unless empty?
+      rugged_ref = rugged.references[branch]
       raise Repository::InvalidRef.new('Invalid branch name') unless rugged_ref
       last_commit = rugged_ref.target
       index.read_tree(last_commit.tree)
@@ -74,7 +73,7 @@ module Commitable
 
       mode = file_entry[:mode] if file_entry && file_entry[:mode]
       content = file[:content]
-      oid = repository.write(content, :blob)
+      oid = rugged.write(content, :blob)
       index.add(path: filename, oid: oid, mode: mode)
     end
 
