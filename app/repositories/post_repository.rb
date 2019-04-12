@@ -12,13 +12,14 @@ class PostRepository
     mapping do
       indexes :id, type: :keyword
       indexes :slug, type: :keyword
+      indexes :filename, type: :keyword
       indexes :title
       indexes :excerpt
       indexes :content
       indexes :tags, type: :keyword
       indexes :status, type: :keyword
       indexes :published_at, type: :date
-      indexes :author_email, type: :keyword
+      indexes :author_nickname, type: :keyword
       indexes :contributors_email, type: :keyword
     end
   end

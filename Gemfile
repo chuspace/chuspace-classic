@@ -96,6 +96,11 @@ group :development do
   gem 'awesome_print'
   # Pry
   gem 'pry-rails'
+  # Fake data
+  gem 'faker'
+  # Profiler
+  gem 'rack-mini-profiler', require: false
+  gem 'memory_profiler', require: false
 end
 
 group :test do

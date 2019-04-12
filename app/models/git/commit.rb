@@ -3,7 +3,7 @@
 module Git
   class Commit
     include EncodingHelper
-    attr_accessor :raw_commit, :head, :refs
+    attr_accessor :head, :refs
 
     attr_accessor :id, :message, :parent_ids, :authored_date, :author_nickname,
                   :author_email, :created_at, :committer_name, :committer_email
@@ -34,14 +34,6 @@ module Git
       parent_ids.first
     end
 
-    def parents
-      raw_commit.parents.map { |commit| Commit.new(commit) }
-    end
-
-    def tree
-      raw_commit.tree
-    end
-
     private
 
     def init_from_hash(hash)
@@ -56,7 +48,6 @@ module Git
       author    = commit.author
       committer = commit.committer
 
-      @raw_commit       = commit
       @id               = commit.oid
       @sha              = commit.oid
       @message          = encode!(commit.message)

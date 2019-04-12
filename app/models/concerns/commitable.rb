@@ -85,7 +85,14 @@ module Commitable
     opts[:parents] = parents
     opts[:update_ref] = branch
 
-    Rugged::Commit.create(rugged, opts)
+    commit_sha = Rugged::Commit.create(rugged, opts)
+
+    case action
+    when :add, :update, :rename
+      Git::Blob.find(self, commit_sha, filename)
+    else
+      true
+    end
   end
 
   private

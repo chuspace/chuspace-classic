@@ -16,7 +16,7 @@ class Person < ApplicationRecord
   before_validation :normalize_email_and_nickname
   before_create     :create_blog_repository
   before_save       :mv_blog_repository, if: -> { !new_record? && nickname_changed? }
-  before_destroy    :remove_blog_repository
+  before_destroy    :destroy_blog_repository
 
   def to_param
     nickname
@@ -35,7 +35,7 @@ class Person < ApplicationRecord
   end
 
   def all_posts
-    blog.blobs.map do |blob|
+    blog.blobs.flat_map do |blob|
       next if blob.binary?
 
       Post.initialize_from_blob(blob)

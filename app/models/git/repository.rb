@@ -59,12 +59,9 @@ module Git
     end
 
     def blobs(branch = nil)
-      branch = head.target
-      sha    = sha_from_ref(root_branch)
+      return [] if empty?
 
-      branch.tree.map do |item|
-        Blob.find(self, sha, item[:name])
-      end
+      Blob.all(self)
     end
 
     def contributions?
