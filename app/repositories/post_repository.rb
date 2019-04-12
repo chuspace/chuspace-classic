@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PostRepository
   include Elasticsearch::Persistence::Repository
   include Elasticsearch::Persistence::Repository::DSL
@@ -8,13 +10,16 @@ class PostRepository
 
   settings number_of_shards: 1 do
     mapping do
-      indexes :title, analyzer: 'english'
-      indexes :excerpt, analyzer: 'english'
-      indexes :content, analyzer: 'english'
-      indexes :tags, analyzer: 'english', type: :array
-      indexes :status, analyzer: 'english'
-      indexes :published_at, type: :long
-      indexes :author_nickname, analyzer: 'english'
+      indexes :id, type: :keyword
+      indexes :slug, type: :keyword
+      indexes :title
+      indexes :excerpt
+      indexes :content
+      indexes :tags, type: :keyword
+      indexes :status, type: :keyword
+      indexes :published_at, type: :date
+      indexes :author_email, type: :keyword
+      indexes :contributors_email, type: :keyword
     end
   end
 

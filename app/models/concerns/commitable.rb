@@ -78,14 +78,14 @@ module Commitable
     end
 
     opts = {}
-    opts[:tree] = index.write_tree(repository)
+    opts[:tree] = index.write_tree(rugged)
     opts[:author] = committer_hash
     opts[:committer] = committer_hash
     opts[:message] = commit[:message]
     opts[:parents] = parents
     opts[:update_ref] = branch
 
-    Rugged::Commit.create(repository, opts)
+    Rugged::Commit.create(rugged, opts)
   end
 
   private

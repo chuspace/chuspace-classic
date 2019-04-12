@@ -27,7 +27,7 @@ class Person < ApplicationRecord
   end
 
   def blog
-    Git::Repository.new(author_nickname: nickname)
+    Git::Repository.new(author: self)
   end
 
   def posts(status: 'published')
@@ -50,15 +50,15 @@ class Person < ApplicationRecord
   end
 
   def create_blog_repository
-    Git::Repository.new(author_nickname: nickname).create
+    Git::Repository.new(author: self).create
   end
 
   def rename_blog_repository
-    new_path = Git::Repository.new(author_nickname: nickname).path
-    Git::Repository.new(author_nickname: nickname_was).rename(new_path)
+    new_path = Git::Repository.new(author: self).path
+    Git::Repository.new(author: self).rename(new_path)
   end
 
   def destroy_blog_repository
-    Git::Repository.new(author_nickname: nickname).destroy
+    Git::Repository.new(author: self).destroy
   end
 end

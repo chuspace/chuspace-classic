@@ -5,27 +5,33 @@ module Git
   class Repository
     include Branchable, Commitable
 
-    class NoRepository < StandardError; end
+    class NoRepository    < StandardError; end
     class InvalidBlobName < StandardError; end
-    class InvalidRef < StandardError; end
+    class InvalidRef      < StandardError; end
+    class InvalidAuthor   < StandardError; end
 
-    DEFAULT_NAME = 'blog.git'
-    START_REF = 'HEAD'
+    DEFAULT_NAME      = 'blog.git'
+    START_REF         = 'HEAD'
     CONTRIBUTIONS_REF = 'refs/heads/contributions'
 
-    attr_reader :author_nickname, :author, :name, :full_name,
-                :path, :rugged, :namespace_path
+    attr_reader :author, :name, :full_name, :path, :rugged, :namespace_path
+    delegate    :lookup, :checkout, :empty?, :bare?, :index, to: :rugged
 
-    delegate :lookup, :checkout, :empty?, :bare?, to: :rugged
+    def initialize(author: Current.person, name: DEFAULT_NAME)
+      @author = case author
+                when Person
+                  author
+                when String
+                  Person.find_by_nickname(author_nickname)
+                when Integer
+                  Person.find_by(id: author)
+      end
 
-    def initialize(author_nickname:, name: DEFAULT_NAME)
-      @author_nickname = author_nickname
+      fail InvalidAuthor, 'Author not found' if @author.blank?
+
       @name            = name
-
-      @author ||= Person.find_by_nickname(author_nickname)
-
-      @full_name       = "#{author_nickname}/#{name}"
-      @namespace_path  = Git.config.git_storage_path.join(author_nickname).tap(&:mkpath).to_s
+      @full_name       = "#{@author.nickname}/#{name}"
+      @namespace_path  = Git.config.git_storage_path.join(@author.nickname).tap(&:mkpath).to_s
       @path            = Git.config.git_storage_path.join(full_name).tap(&:mkpath).to_s
     end
 
@@ -69,10 +75,6 @@ module Git
       rugged.head
     rescue Rugged::ReferenceError
       nil
-    end
-
-    def index
-      rugged.index
     end
 
     def create
