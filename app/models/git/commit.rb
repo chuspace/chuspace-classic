@@ -34,6 +34,85 @@ module Git
       parent_ids.first
     end
 
+    class << self
+      # Commit file in repository and return commit sha
+      # options should contain next structure:
+      # options = {
+      #   file: {
+      #     content: 'This is webpacker',
+      #     path: 'welcome-to-webpacker.md'
+      #   },
+      #   commit: {
+      #     message: 'Added a post!',
+      #     branch: 'master'
+      #   }
+      # }
+
+      def create(repository:, author:, committer: nil, options:, action: :add)
+        rugged         = repository.rugged
+        file           = options[:file]
+        commit         = options[:commit]
+        branch         = 'master'
+        parents        = []
+        mode           = 0o100644
+
+        author_hash = {
+          name: author.name,
+          email: author.email,
+          time: Time.now
+        }
+
+        committer_hash = committer.blank? ? author_hash : {
+          name: committer.name,
+          email: committer.email,
+          time: Time.now
+        }
+
+        unless branch.start_with?('refs/')
+          branch = 'refs/heads/' + branch
+        end
+
+        filename = file[:path].to_s
+
+        unless repository.empty?
+          rugged_ref = rugged.references[branch]
+          raise Repository::InvalidRef.new('Invalid branch name') unless rugged_ref
+          last_commit = rugged_ref.target
+          repository.index.read_tree(last_commit.tree)
+          parents = [last_commit]
+        end
+
+        if action == :remove
+          repository.index.remove(filename)
+        else
+          file_entry = repository.index.get(filename)
+
+          if action == :rename
+            old_path_name = file[:previous_path].to_s
+            old_filename = old_path_name.to_s
+            file_entry = repository.index.get(old_filename)
+            repository.index.remove(old_filename) unless file_entry.blank?
+          end
+
+          mode = file_entry[:mode] if file_entry && file_entry[:mode]
+          content = file[:content]
+          oid = rugged.write(content, :blob)
+          repository.index.add(path: filename, oid: oid, mode: mode)
+        end
+
+        opts = {}
+        opts[:tree] = repository.index.write_tree(rugged)
+        opts[:author] = author_hash
+        opts[:committer] = committer_hash
+        opts[:message] = commit[:message]
+        opts[:parents] = parents
+        opts[:update_ref] = branch
+
+        sha = Rugged::Commit.create(rugged, opts)
+        Git::Blob.find(repository, sha, filename)
+      end
+    end
+
     private
 
     def init_from_hash(hash)

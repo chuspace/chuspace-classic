@@ -6,19 +6,22 @@ module Git
 
     MAX_DATA_DISPLAY_SIZE = 10485760
 
-    attr_accessor :name, :path, :size, :content, :mode, :id, :commit,
-                  :loaded_size, :binary, :author
+    attr_accessor :name, :path, :size, :content, :mode, :id, :commit_sha,
+                  :binary, :author_nickname
 
     class << self
-      def find(repository, sha, path)
-        rugged_repo = repository.rugged
-        commit      = repository.lookup(sha)
+      def find(repository, commit_sha, name)
+        rugged      = repository.rugged
+        commit      = rugged.lookup(commit_sha)
         root_tree   = commit.tree
-        blob_entry  = find_entry_by_path(repository, root_tree.oid, path)
+
+        blob_entry  = root_tree.find do |entry|
+          entry[:name] == name
+        end
 
         return nil unless blob_entry
 
-        blob = repository.lookup(blob_entry[:oid])
+        blob = rugged.lookup(blob_entry[:oid])
 
         if blob
           Blob.new(
@@ -27,60 +30,38 @@ module Git
             size: blob.size,
             content: blob.content(MAX_DATA_DISPLAY_SIZE),
             mode: blob_entry[:filemode].to_s(8),
-            path: path,
-            commit: Git::Commit.new(commit),
-            author: repository.author,
+            path: blob_entry[:name],
+            commit_sha: commit_sha,
+            author_nickname: repository.author_nickname,
             binary: blob.binary?
           )
         end
       end
 
-      def all(repository)
-        commit = repository.lookup(repository.head.target.oid)
+      def all(repository, commit_sha)
+        rugged = repository.rugged
+        commit = rugged.lookup(commit_sha)
 
-        repository.head.target.tree.map do |item|
-          blob = repository.lookup(item[:oid])
+        commit.tree.map do |blob_entry|
+          blob = rugged.lookup(blob_entry[:oid])
 
           Blob.new(
             id: blob.oid,
-            name: item[:name],
+            name: blob_entry[:name],
             size: blob.size,
             content: blob.content(MAX_DATA_DISPLAY_SIZE),
-            mode: item[:filemode].to_s(8),
-            path: item[:name],
-            commit: Git::Commit.new(commit),
-            author: repository.author,
+            mode: blob_entry[:filemode].to_s(8),
+            path: blob_entry[:name],
+            commit_sha: commit_sha,
+            author_nickname: repository.author_nickname,
             binary: blob.binary?
           )
-        end
-      end
-
-      # Recursive search of blob id by path
-      # Blob.find_entry_by_path(repo, '1a', 'something.md') # => '4a'
-      def find_entry_by_path(repository, root_id, path)
-        root_tree = repository.lookup(root_id)
-        # Strip leading slashes
-        path[/^\/*/] = ''
-        path_arr = path.split('/')
-
-        entry = root_tree.find do |entry|
-          entry[:name] == path_arr[0]
-        end
-
-        return nil unless entry
-
-        if path_arr.size > 1
-          return nil unless entry[:type] == :tree
-          path_arr.shift
-          find_entry_by_path(repository, entry[:oid], path_arr.join('/'))
-        else
-          [:blob, :commit].include?(entry[:type]) ? entry : nil
         end
       end
     end
 
     def initialize(options)
-      %w(id name path size content mode commit author binary).each do |key|
+      %w(id name path size content mode commit_sha author_nickname binary).each do |key|
         self.send("#{key}=", options[key.to_sym])
       end
     end

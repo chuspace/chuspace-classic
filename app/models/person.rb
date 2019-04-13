@@ -15,7 +15,7 @@ class Person < ApplicationRecord
 
   before_validation :normalize_email_and_nickname
   before_create     :create_blog_repository
-  before_save       :mv_blog_repository, if: -> { !new_record? && nickname_changed? }
+  before_save       :rename_blog_repository, if: -> { !new_record? && nickname_changed? }
   before_destroy    :destroy_blog_repository
 
   def to_param
@@ -27,7 +27,7 @@ class Person < ApplicationRecord
   end
 
   def blog
-    Git::Repository.new(author: self)
+    Git::Repository.new(author_nickname: nickname)
   end
 
   def posts(status: 'published')
@@ -50,15 +50,15 @@ class Person < ApplicationRecord
   end
 
   def create_blog_repository
-    Git::Repository.new(author: self).create
+    blog.create
   end
 
-  def rename_blog_repository
-    new_path = Git::Repository.new(author: self).path
-    Git::Repository.new(author: self).rename(new_path)
+  def rename_blog_repository(record)
+    new_path = Git::Repository.new(author_nickname: record.nickname).path
+    blog.rename(new_path)
   end
 
   def destroy_blog_repository
-    Git::Repository.new(author: self).destroy
+    blog.destroy
   end
 end

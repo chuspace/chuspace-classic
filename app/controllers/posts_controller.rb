@@ -5,21 +5,20 @@ class PostsController < ApplicationController
   layout 'editor', only: :new
 
   def create
-    post = Post.new(post_params)
-    post.author = Current.person
-
-    if post.valid?
-      post.commit_to_blog(commit_message: params[:commit_message])
-      redirect_to post_path(post)
-    else
-      render json: { errors: post.api_validation_errors }
-    end
+    Posts::Create.call(author: author, params: params)
   end
 
+  def update
+    Posts::Update.call(author: author, params: params, committer: Current.person)
+  end
+
+  def destroy
+    Posts::Destroy.call(params[:id])
+  end
 
   private
 
-  def post_params
-    params.require(:post).permit(:title, :excerpt, :content, :tags, :published_at)
+  def author
+    @author = Person.find_by_nickname(params[:author])
   end
 end

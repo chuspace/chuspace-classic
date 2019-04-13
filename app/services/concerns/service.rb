@@ -11,7 +11,7 @@ module Service
 
   class_methods do
     def call(**args)
-      new(**args).call
+      new.call(**args)
     end
   end
 end

@@ -3,7 +3,7 @@
 
 module Git
   class Repository
-    include Branchable, Commitable
+    include Branchable
 
     class NoRepository    < StandardError; end
     class InvalidBlobName < StandardError; end
@@ -12,35 +12,22 @@ module Git
 
     DEFAULT_NAME      = 'blog.git'
     START_REF         = 'HEAD'
+    DEFAULT_REF       = 'refs/heads/master'
     CONTRIBUTIONS_REF = 'refs/heads/contributions'
 
-    attr_reader :author, :name, :full_name, :path, :rugged, :namespace_path
+    attr_reader :author_nickname, :name, :full_name, :path, :rugged, :namespace_path
     delegate    :lookup, :checkout, :empty?, :bare?, :index, to: :rugged
 
-    def initialize(author: Current.person, name: DEFAULT_NAME)
-      @author = case author
-                when Person
-                  author
-                when String
-                  Person.find_by_nickname(author_nickname)
-                when Integer
-                  Person.find_by(id: author)
-      end
-
-      fail InvalidAuthor, 'Author not found' if @author.blank?
-
+    def initialize(author_nickname:, name: DEFAULT_NAME)
+      @author_nickname = author_nickname
       @name            = name
-      @full_name       = "#{@author.nickname}/#{name}"
-      @namespace_path  = Git.config.git_storage_path.join(@author.nickname).tap(&:mkpath).to_s
+      @full_name       = "#{author_nickname}/#{name}"
+      @namespace_path  = Git.config.git_storage_path.join(author_nickname).tap(&:mkpath).to_s
       @path            = Git.config.git_storage_path.join(full_name).tap(&:mkpath).to_s
     end
 
     def reload
       @rugged = nil
-    end
-
-    def exists?
-      !!rugged
     end
 
     def size
@@ -58,20 +45,40 @@ module Git
       @root_branch ||= discover_default_branch
     end
 
-    def blobs(branch = nil)
-      return [] if empty?
-
-      Blob.all(self)
-    end
-
-    def contributions?
-      sha_from_ref(CONTRIBUTIONS_REF).present?
-    end
-
     def head
       rugged.head
     rescue Rugged::ReferenceError
       nil
+    end
+
+    def blobs(ref = DEFAULT_REF)
+      return [] if empty?
+
+      sha = sha_from_ref(ref)
+
+      Blob.all(self, sha)
+    end
+
+    def find_blob(name, ref = DEFAULT_REF)
+      ref ||= root_branch
+      sha = sha_from_ref(ref)
+
+      Blob.find(self, sha, name) if sha.present?
+    end
+
+    def sha_from_ref(ref)
+      rev_parse_target(ref).oid
+    rescue Rugged::ReferenceError
+      nil
+    end
+
+    def rev_parse_target(revspec)
+      obj = rugged.rev_parse(revspec)
+      Branch.dereference_object(obj)
+    end
+
+    def has_commits?
+      !empty?
     end
 
     def create
@@ -89,24 +96,6 @@ module Git
     def rename(new_path)
       Rails.logger.info "Moving repository from #{path} to <#{new_path}>."
       FileUtils.mv(path, new_path)
-    end
-
-    def find_file(path, ref = nil)
-      ref ||= root_branch
-      sha = sha_from_ref(ref)
-
-      Blob.find(self, sha, path) if sha.present?
-    end
-
-    def sha_from_ref(ref)
-      rev_parse_target(ref).oid
-    rescue Rugged::ReferenceError
-      nil
-    end
-
-    def rev_parse_target(revspec)
-      obj = rugged.rev_parse(revspec)
-      Branch.dereference_object(obj)
     end
   end
 end
