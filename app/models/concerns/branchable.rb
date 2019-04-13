@@ -62,25 +62,4 @@ module Branchable
       end
     end.compact.sort_by(&:name)
   end
-
-  private
-
-  def discover_default_branch
-    names = branch_names
-
-    return if names.empty?
-
-    return names[0] if names.length == 1
-
-    if head
-      extracted_name = Git::Branch.extract_branch_name(head.name)
-      return extracted_name if names.include?(extracted_name)
-    end
-
-    if names.include?(DEFAULT_BRANCH)
-      DEFAULT_BRANCH
-    else
-      names[0]
-    end
-  end
 end
