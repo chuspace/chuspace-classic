@@ -89,7 +89,7 @@ module Git
       return names[0] if names.length == 1
 
       if head
-        extracted_name = Git::Branch.extract_branch_name(head.name)
+        extracted_name = Branch.extract_branch_name(head.name)
         return extracted_name if names.include?(extracted_name)
       end
 

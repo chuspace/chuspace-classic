@@ -35,6 +35,26 @@ module Git
     end
 
     class << self
+      def find(repo, commit_id = "HEAD")
+        return Commit.new(commit_id) if commit_id.is_a?(Rugged::Commit)
+
+        obj = if commit_id.is_a?(String)
+          repo.rev_parse_target(commit_id)
+        else
+          Branch.dereference_object(commit_id)
+        end
+
+        return nil unless obj.is_a?(Rugged::Commit)
+
+        Commit.new(obj)
+      rescue Rugged::ReferenceError, Rugged::InvalidError, Rugged::ObjectError
+        nil
+      end
+
+      def last(repo)
+        find(repo)
+      end
+
       # Commit file in repository and return commit sha
       # options should contain next structure:
       # options = {
@@ -110,6 +130,21 @@ module Git
 
         sha = Rugged::Commit.create(rugged, opts)
         Git::Blob.find(repository, sha, filename)
+      end
+
+      def diff_from_parent(rugged_commit, options = {})
+        options ||= {}
+        break_rewrites = options[:break_rewrites]
+        actual_options = Diff.filter_diff_options(options)
+
+        diff = if rugged_commit.parents.empty?
+          rugged_commit.diff(actual_options.merge(reverse: true))
+        else
+          rugged_commit.parents[0].diff(rugged_commit, actual_options)
+        end
+
+        diff.find_similar!(break_rewrites: break_rewrites)
+        diff
       end
     end
 

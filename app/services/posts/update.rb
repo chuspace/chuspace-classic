@@ -10,7 +10,8 @@ module Posts
       @author = author
       @params = ActionController::Parameters.new(params)
 
-      post = author.blog.find_blob(params[:id])
+      blob = author.blog.find_blob(params[:id])
+      post = Post.initialize_from_blob(blob)
       post.assign_attributes(post_params)
 
       if post.valid?

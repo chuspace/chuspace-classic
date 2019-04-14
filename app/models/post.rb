@@ -80,4 +80,20 @@ class Post
   def persisted?
     id.present?
   end
+
+  def attributes
+    {
+      id: nil,
+      title: nil,
+      slug: nil,
+      filename: nil,
+      excerpt: nil,
+      content: nil,
+      tags: nil,
+      status: nil,
+      published_at: nil,
+      author_nickname: nil,
+      commit_sha: nil
+    }
+  end
 end
