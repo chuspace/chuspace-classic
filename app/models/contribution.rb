@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Contribution < ApplicationRecord
   belongs_to :contributor, class_name: 'User'
   belongs_to :post

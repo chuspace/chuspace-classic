@@ -11,7 +11,7 @@ gem 'rails', github: 'rails/rails'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.x'
 
-# Nested tree
+#  Nested tree
 gem 'ancestry'
 
 # Use Puma as the app server
