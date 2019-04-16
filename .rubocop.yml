@@ -12,6 +12,10 @@ AllCops:
     - 'openssh/**/*'
     - 'ssh/**/*'
     - 'circleci/**/*'
+    - 'storage/**/*'
+    - 'log/**/*'
+    - 'tmp/**/*'
+    - 'coverage/**/*'
 
 # Prefer &&/|| over and/or.
 Style/AndOr:
