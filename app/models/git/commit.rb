@@ -35,7 +35,7 @@ module Git
     end
 
     class << self
-      def find(repo, commit_id = "HEAD")
+      def find(repo, commit_id = 'HEAD')
         return Commit.new(commit_id) if commit_id.is_a?(Rugged::Commit)
 
         obj = if commit_id.is_a?(String)

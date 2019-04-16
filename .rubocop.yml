@@ -1,4 +1,4 @@
-require: rubocop-performance
+
 AllCops:
   TargetRubyVersion: 2.5
   # RuboCop has a bunch of cops enabled by default. This setting tells RuboCop
@@ -6,9 +6,12 @@ AllCops:
   DisabledByDefault: true
   Exclude:
     - 'node_modules/**/*'
+    - 'git-storage/**/*'
     - 'db/**/*'
     - 'vendor/**/*'
-    - 'bin/**/*'
+    - 'openssh/**/*'
+    - 'ssh/**/*'
+    - 'circleci/**/*'
 
 # Prefer &&/|| over and/or.
 Style/AndOr:

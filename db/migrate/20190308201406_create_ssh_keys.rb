@@ -11,5 +11,7 @@ class CreateSshKeys < ActiveRecord::Migration[6.0]
     end
 
     add_index :ssh_keys, :key, unique: true
+    add_index :ssh_keys, :user_id
+    add_index :ssh_keys, :last_used
   end
 end

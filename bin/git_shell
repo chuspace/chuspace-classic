@@ -1,9 +1,10 @@
 #!/Users/gaurav/.rbenv/shims/ruby
+# frozen_string_literal: true
 
 require File.expand_path('../config/environment', File.dirname(__FILE__))
 
 unless ENV['SSH_CONNECTION']
-  puts "Only ssh allowed"
+  puts 'Only ssh allowed'
   exit
 end
 

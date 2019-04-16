@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Gitlab::Git::Diff is a wrapper around native Rugged::Diff object
 
 module Git
@@ -24,10 +26,10 @@ module Git
         straight = options.delete(:straight) || false
 
         common_commit = if straight
-                          base
-                        else
-                          repo.merge_base_commit(head, base)
-                        end
+          base
+        else
+          repo.merge_base_commit(head, base)
+        end
 
         options ||= {}
         actual_options = filter_diff_options(options)
@@ -173,7 +175,7 @@ module Git
       when Rugged::Patch, Rugged::Diff::Delta, Rugged::Diff
         init_from_rugged(raw_diff, collapse: collapse)
       when nil
-        raise "Nil as raw diff passed"
+        raise 'Nil as raw diff passed'
       else
         raise "Invalid raw diff type: #{raw_diff.class}"
       end

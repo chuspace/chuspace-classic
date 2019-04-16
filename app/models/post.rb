@@ -1,9 +1,14 @@
+# frozen_string_literal: true
+
 class Post < ApplicationRecord
   belongs_to :author, class_name: 'User'
+
   has_many :comments
   has_many :recommends
   has_many :taggings
+  has_many :bookmarks
   has_many :tags, through: :taggings
+
   has_many_attached :images
 
   enum status: { draft: 0, published: 0, archived: 1 }
