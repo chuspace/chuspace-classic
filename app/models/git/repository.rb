@@ -41,6 +41,10 @@ module Git
       raise NoRepository.new('no repository for such path')
     end
 
+    def exists?
+      !!rugged
+    end
+
     def root_branch
       @root_branch ||= discover_default_branch
     end
