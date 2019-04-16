@@ -10,6 +10,9 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.bigint :author_id, foreign_key: true, null: false
       t.datetime :published_at
 
+      # Tree
+      t.string :ancestry
+
       # Flags
       t.integer :status, default: 0, null: false
       t.boolean :premium, default: false, null: false
@@ -29,6 +32,7 @@ class CreatePosts < ActiveRecord::Migration[6.0]
     add_index :posts, :author_id
     add_index :posts, :published_at
     add_index :posts, :status
+    add_index :posts, :ancestry
     add_index :posts, :premium
     add_index :posts, :blob_id
     add_index :posts, :commit_sha

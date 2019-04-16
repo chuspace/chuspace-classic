@@ -4,10 +4,13 @@ class Post < ApplicationRecord
   belongs_to :author, class_name: 'User'
 
   has_many :comments
-  has_many :recommends
+  has_many :likes
   has_many :taggings
   has_many :bookmarks
   has_many :tags, through: :taggings
+  has_many :contributions
+  has_many :contributors, through: :contributions, source: :contributor
+  has_ancestry
 
   has_many_attached :images
 

@@ -4,20 +4,12 @@ class SshKey < ApplicationRecord
   belongs_to :user
 
   validates_presence_of :title, :fingerprint
-  validates :key, presence: true, uniqueness: { message: :nonunique_key }
-  validate :ssh_key_format, on: :create
+  validates             :key, presence: true, uniqueness: { message: :nonunique_key }
+  validate              :ssh_key_format, on: :create
 
   before_validation :assign_fingerprint
-  after_create :write_key_to_auth_file, unless: :command_exists_in_file?
-  before_destroy :remove_key_from_auth_file
-
-  def self.auth_file
-    @auth_file ||= Git.config.ssh_auth_file_path
-  end
-
-  def self.auth_lock_file
-    @lock_file ||= Git.config.ssh_auth_lock_file_path
-  end
+  after_create      :write_key_to_auth_file, unless: :command_exists_in_file?
+  before_destroy    :remove_key_from_auth_file
 
   def key_id
     "key-#{id}"
@@ -70,7 +62,7 @@ class SshKey < ApplicationRecord
   end
 
   def lock(timeout = 10)
-    File.open(self.class.auth_lock_file, 'w+') do |f|
+    File.open(Git.config.ssh_auth_lock_file_path, 'w+') do |f|
       begin
         f.flock File::LOCK_EX
         Timeout::timeout(timeout) { yield }
@@ -81,7 +73,7 @@ class SshKey < ApplicationRecord
   end
 
   def open_auth_file(mode)
-    open(self.class.auth_file, mode, 0600) do |file|
+    open(Git.config.ssh_auth_file_path, mode, 0600) do |file|
       file.chmod(0600)
       yield file
     end

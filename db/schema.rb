@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_16_150053) do
+ActiveRecord::Schema.define(version: 2019_04_16_191517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -37,6 +37,26 @@ ActiveRecord::Schema.define(version: 2019_04_16_150053) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "blogs", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "slug", null: false
+    t.text "introduction"
+    t.bigint "author_id"
+    t.integer "status", default: 0, null: false
+    t.boolean "premium", default: false, null: false
+    t.string "version"
+    t.string "repo_name", null: false
+    t.string "repo_path", null: false
+    t.string "commit_sha", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_id"], name: "index_blogs_on_author_id"
+    t.index ["commit_sha"], name: "index_blogs_on_commit_sha"
+    t.index ["repo_name"], name: "index_blogs_on_repo_name"
+    t.index ["repo_path"], name: "index_blogs_on_repo_path"
+    t.index ["slug"], name: "index_blogs_on_slug", unique: true
+  end
+
   create_table "bookmarks", force: :cascade do |t|
     t.bigint "owner_id", null: false
     t.bigint "post_id", null: false
@@ -58,6 +78,28 @@ ActiveRecord::Schema.define(version: 2019_04_16_150053) do
     t.index ["post_id"], name: "index_comments_on_post_id"
   end
 
+  create_table "contributions", force: :cascade do |t|
+    t.bigint "contributor_id", null: false
+    t.bigint "post_id", null: false
+    t.text "raw_content"
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["contributor_id"], name: "index_contributions_on_contributor_id"
+    t.index ["post_id"], name: "index_contributions_on_post_id"
+    t.index ["status"], name: "index_contributions_on_status"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.bigint "post_id", null: false
+    t.bigint "owner_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["owner_id", "post_id"], name: "index_likes_on_owner_id_and_post_id", unique: true
+    t.index ["owner_id"], name: "index_likes_on_owner_id"
+    t.index ["post_id"], name: "index_likes_on_post_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string "title", null: false
     t.string "slug", null: false
@@ -65,6 +107,7 @@ ActiveRecord::Schema.define(version: 2019_04_16_150053) do
     t.text "body"
     t.bigint "author_id", null: false
     t.datetime "published_at"
+    t.string "ancestry"
     t.integer "status", default: 0, null: false
     t.boolean "premium", default: false, null: false
     t.string "blob_id", null: false
@@ -74,6 +117,7 @@ ActiveRecord::Schema.define(version: 2019_04_16_150053) do
     t.bigint "bookmarks_count", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["ancestry"], name: "index_posts_on_ancestry"
     t.index ["author_id"], name: "index_posts_on_author_id"
     t.index ["blob_id"], name: "index_posts_on_blob_id"
     t.index ["commit_sha"], name: "index_posts_on_commit_sha"
@@ -93,26 +137,6 @@ ActiveRecord::Schema.define(version: 2019_04_16_150053) do
     t.index ["comment_id"], name: "index_reactions_on_comment_id"
   end
 
-  create_table "recommends", force: :cascade do |t|
-    t.string "text", null: false
-    t.bigint "post_id", null: false
-    t.bigint "owner_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["owner_id"], name: "index_recommends_on_owner_id"
-    t.index ["post_id"], name: "index_recommends_on_post_id"
-  end
-
-  create_table "relationships", force: :cascade do |t|
-    t.bigint "follower_id"
-    t.bigint "followed_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["followed_id"], name: "index_relationships_on_followed_id"
-    t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
-    t.index ["follower_id"], name: "index_relationships_on_follower_id"
-  end
-
   create_table "ssh_keys", force: :cascade do |t|
     t.string "title"
     t.text "key", null: false
@@ -124,6 +148,16 @@ ActiveRecord::Schema.define(version: 2019_04_16_150053) do
     t.index ["key"], name: "index_ssh_keys_on_key", unique: true
     t.index ["last_used"], name: "index_ssh_keys_on_last_used"
     t.index ["user_id"], name: "index_ssh_keys_on_user_id"
+  end
+
+  create_table "tag_relationships", force: :cascade do |t|
+    t.bigint "follower_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["follower_id", "tag_id"], name: "index_tag_relationships_on_follower_id_and_tag_id", unique: true
+    t.index ["follower_id"], name: "index_tag_relationships_on_follower_id"
+    t.index ["tag_id"], name: "index_tag_relationships_on_tag_id"
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -143,6 +177,16 @@ ActiveRecord::Schema.define(version: 2019_04_16_150053) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_tags_on_name", unique: true
     t.index ["slug"], name: "index_tags_on_slug", unique: true
+  end
+
+  create_table "user_relationships", force: :cascade do |t|
+    t.bigint "follower_id", null: false
+    t.bigint "followed_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["followed_id"], name: "index_user_relationships_on_followed_id"
+    t.index ["follower_id", "followed_id"], name: "index_user_relationships_on_follower_id_and_followed_id", unique: true
+    t.index ["follower_id"], name: "index_user_relationships_on_follower_id"
   end
 
   create_table "users", force: :cascade do |t|
