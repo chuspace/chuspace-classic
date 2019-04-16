@@ -7,22 +7,6 @@ GIT
       activesupport (>= 4.2.0)
 
 GIT
-  remote: https://github.com/elastic/elasticsearch-rails.git
-  revision: c73c5a468aa475b898e82409442debd6f3ff1d3a
-  branch: 6.x
-  specs:
-    elasticsearch-model (6.0.0)
-      activesupport (> 3)
-      elasticsearch (> 1)
-      hashie
-    elasticsearch-persistence (6.0.0)
-      activemodel (> 4)
-      activesupport (> 4)
-      elasticsearch (~> 6)
-      elasticsearch-model (>= 5)
-      hashie
-
-GIT
   remote: https://github.com/rails/rails.git
   revision: dd972f9efe832e882c559ebc92274e3e5ccc294d
   specs:
@@ -347,6 +331,10 @@ GEM
       ffi (~> 1.9)
     rugged (0.28.1)
     safe_yaml (1.0.5)
+    searchkick (3.1.2)
+      activemodel (>= 4.2)
+      elasticsearch (>= 5)
+      hashie
     sidekiq (5.2.5)
       connection_pool (~> 2.2, >= 2.2.2)
       rack (>= 1.5.0)
@@ -415,7 +403,6 @@ DEPENDENCIES
   charlock_holmes
   coveralls
   down
-  elasticsearch-persistence!
   factory_bot_rails
   faker
   faster_path
@@ -445,6 +432,7 @@ DEPENDENCIES
   rubocop
   rubocop-performance
   rugged
+  searchkick
   shoulda-matchers!
   sidekiq
   simplecov

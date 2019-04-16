@@ -5,14 +5,14 @@ class Settings::SshKeysController < ApplicationController
   before_action :find_ssh_key, only: %i[update destroy]
 
   def index
-    @person = Current.person
+    @user = Current.user
   end
 
   def new
   end
 
   def create
-    key = Current.person.ssh_keys.build(key_params)
+    key = Current.user.ssh_keys.build(key_params)
 
     if key.save
       redirect_to settings_ssh_keys_path, notice: t('.ssh_key.create.success')

@@ -4,8 +4,8 @@
       <%= link_to 'C', root_path, class: 'link link-white' %>
     </div>
 
-    <% if Current.person.present? %>
-      <%= render 'header/person'  %>
+    <% if Current.user.present? %>
+      <%= render 'header/user'  %>
     <% else %>
       <%= render 'header/guest'  %>
     <% end %>

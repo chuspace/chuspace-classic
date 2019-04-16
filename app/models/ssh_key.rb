@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SshKey < ApplicationRecord
-  belongs_to :person
+  belongs_to :user
 
   validates_presence_of :title, :fingerprint
   validates :key, presence: true, uniqueness: { message: :nonunique_key }

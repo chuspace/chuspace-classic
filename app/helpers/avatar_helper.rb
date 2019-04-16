@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 module AvatarHelper
-  def avatar_for(person:, **options)
+  def avatar_for(user:, **options)
     variant = variants.dig(options[:size].to_sym || :xs)
     options[:size] = variant[:size]
 
-    if person.avatar.blank?
+    if user.avatar.blank?
       options[:class] = "avatar avatar-initials #{variant[:class]} #{options[:class]}".strip
-      content_tag(:div, person.initials, options.except(:size))
+      content_tag(:div, user.initials, options.except(:size))
     else
-      url = url_for(person.avatar.variant(resize_to_fit: [variant[:size], variant[:size]]))
+      url = url_for(user.avatar.variant(resize_to_fit: [variant[:size], variant[:size]]))
       options[:class] = "avatar #{options[:class]}".strip
       image_tag(url, options)
     end

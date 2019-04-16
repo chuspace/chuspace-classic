@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class Current < ActiveSupport::CurrentAttributes
-  attribute :person
+  attribute :user
   attribute :request_id, :user_agent, :ip_address
 
-  def person=(person)
+  def user=(user)
     super
   end
 end

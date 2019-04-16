@@ -7,7 +7,7 @@ RSpec.describe SshKey, type: :model do
 
   it { is_expected.to validate_presence_of(:title) }
   it { is_expected.to validate_presence_of(:key) }
-  it { is_expected.to belong_to(:person) }
+  it { is_expected.to belong_to(:user) }
 
   it 'should have a title' do
     expect(subject.title).to eq('Key 1')

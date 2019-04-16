@@ -3,7 +3,7 @@ return unless Rails.env.development?
 
 ActiveRecord::Base.transaction do
   10.times do
-    p = Person.create(
+    p = User.create(
       name: Faker::Name.unique.name,
       nickname: Faker::Internet.unique.username(8, %w(-)),
       email: Faker::Internet.unique.email

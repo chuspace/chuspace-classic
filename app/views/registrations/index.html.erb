@@ -8,7 +8,7 @@
     </p>
 
     <div class='card-body'>
-      <%= form_with url: registrations_path, scope: :person, data: { target: 'register.form', action: 'ajax:success->register#onFormSubmit' } do |form| %>
+      <%= form_with url: registrations_path, scope: :user, data: { target: 'register.form', action: 'ajax:success->register#onFormSubmit' } do |form| %>
         <%= form.text_field(
           'name',
           autocomplete: 'name',

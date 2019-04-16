@@ -1,11 +1,11 @@
 <div class='w-1/2 mx-auto mt-12'>
   <div class='sidebar flex justify-between items-center mb-5'>
-    <%= avatar_for(person: Current.person, size: :sm) %>
+    <%= avatar_for(user: Current.user, size: :sm) %>
 
-    <div class='personal flex-1 pl-4 w-75'>
-      <h1 class='f4 lh-solid mb0 black-80'><%= @person.name %></h1>
-      <p class='lh-copy mv1 gray f5'><%= @person.company %></p>
-      <p class='lh-copy mt1 black-70 mb0'><%= @person.bio %></p>
+    <div class='useral flex-1 pl-4 w-75'>
+      <h1 class='f4 lh-solid mb0 black-80'><%= @user.name %></h1>
+      <p class='lh-copy mv1 gray f5'><%= @user.company %></p>
+      <p class='lh-copy mt1 black-70 mb0'><%= @user.bio %></p>
     </div>
 
     <div class='actions'>

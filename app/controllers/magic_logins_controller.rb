@@ -2,11 +2,11 @@
 
 class MagicLoginsController < ApplicationController
   def index
-    person = Person.find_by(auth_token: params[:token])
+    user = User.find_by(auth_token: params[:token])
 
-    if person
-      login(person)
-      person.regenerate_auth_token
+    if user
+      login(user)
+      user.regenerate_auth_token
     end
 
     redirect_to root_path

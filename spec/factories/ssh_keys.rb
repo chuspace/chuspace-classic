@@ -5,6 +5,6 @@ FactoryBot.define do
     title { 'MyString' }
     key { SSHKey.generate.ssh_public_key }
 
-    person
+    user
   end
 end

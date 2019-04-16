@@ -10,7 +10,7 @@ RSpec.describe CheckNicknamesController, type: :controller do
     end
 
     it 'should return false if nickname is unavailable with errors' do
-      create(:person, name: 'John Doe', nickname: 'doe')
+      create(:user, name: 'John Doe', nickname: 'doe')
       post :create, params: { nickname: 'doe' }, format: :json
 
       expect(JSON.parse(response.body)['available']).to be_falsy

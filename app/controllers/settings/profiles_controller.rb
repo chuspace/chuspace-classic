@@ -4,6 +4,6 @@ class Settings::ProfilesController < ApplicationController
   before_action :authenticate!
 
   def index
-    @person = Current.person
+    @user = Current.user
   end
 end

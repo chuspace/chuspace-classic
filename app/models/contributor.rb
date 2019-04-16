@@ -24,6 +24,6 @@ class Contributor
       email
     end.compact.uniq
 
-    @contributors ||= Person.where(email: emails)
+    @contributors ||= User.where(email: emails)
   end
 end

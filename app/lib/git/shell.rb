@@ -109,7 +109,7 @@ module Git
     end
 
     def user
-      @user ||= ssh_key&.person
+      @user ||= ssh_key&.user
       raise AccessDeniedError, 'remote: User not found for your ssh key' if @user.blank?
       @user
     end

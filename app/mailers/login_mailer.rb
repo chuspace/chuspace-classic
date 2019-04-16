@@ -2,7 +2,7 @@
 
 class LoginMailer < ApplicationMailer
   def send_magic_login
-    @person = params[:person]
-    mail(to: @person.email, subject: t('.subject'))
+    @user = params[:user]
+    mail(to: @user.email, subject: t('.subject'))
   end
 end

@@ -9,7 +9,7 @@ class PostsController < ApplicationController
   end
 
   def update
-    Posts::Update.call(author: author, params: params, committer: Current.person)
+    Posts::Update.call(author: author, params: params, committer: Current.user)
   end
 
   def destroy
@@ -19,6 +19,6 @@ class PostsController < ApplicationController
   private
 
   def author
-    @author = Person.find_by_nickname(params[:author])
+    @author = User.find_by_nickname(params[:author])
   end
 end

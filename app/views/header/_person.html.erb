@@ -16,13 +16,13 @@
 
   <%= render "components/dropdown" do %>
     <% content_for :target do %>
-      <%= avatar_for(person: Current.person, size: :xs) %>
+      <%= avatar_for(user: Current.user, size: :xs) %>
     <% end %>
 
     <% content_for :content do %>
       <ul class='list-reset dropdown'>
         <li class='pb-2'>
-          <%= link_to('Profile', profile_path(Current.person), class: 'link link-default db mb2 text-base text-grey') %>
+          <%= link_to('Profile', profile_path(Current.user), class: 'link link-default db mb2 text-base text-grey') %>
         </li>
         <li class='pb-2'>
           <%= link_to('Write post', new_post_path, class: 'link link-default db mb2 text-base text-grey') %>
@@ -31,7 +31,7 @@
           <%= link_to('Settings', settings_path, class: 'link link-default db mb2 text-base text-grey') %>
         </li>
         <li>
-          <%= link_to('Sign out', session_path(Current.person), method: :delete, class: 'link link-default db mb2 text-base text-grey') %>
+          <%= link_to('Sign out', session_path(Current.user), method: :delete, class: 'link link-default db mb2 text-base text-grey') %>
         </li>
       </ul>
     <% end %>
