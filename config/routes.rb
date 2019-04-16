@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :registrations, path: 'signup', only: %i[index create]
   resources :check_nicknames, only: :create
   resources :magic_logins, only: :index
-  resources :people, except: :show
+  resources :users, except: :show
   resources :posts
 
   resources :settings, only: :index
