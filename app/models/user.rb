@@ -14,15 +14,20 @@ class User < ApplicationRecord
 
   has_many :ssh_keys, dependent: :destroy
   has_many :posts, dependent: :destroy
-  has_many :blogs, dependent: :destroy
+  has_many :blogs, foreign_key: 'author_id', dependent: :destroy
   has_many :user_relationships, foreign_key: 'follower_id', dependent: :destroy
   has_many :followers, through: :user_relationships, source: :follower
   has_many :followings, through: :user_relationships, source: :followed
   has_many :tag_relationships, foreign_key: 'follower_id', dependent: :destroy
   has_many :taggings, through: :tag_relationships, source: :follower
   has_many :contributions, foreign_key: 'contributor_id'
+  has_many :collaborations, class_name: 'Collaborator'
 
   before_validation :normalize_email_and_nickname
+
+  def blog
+    blogs.first
+  end
 
   def to_param
     nickname

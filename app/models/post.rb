@@ -9,6 +9,7 @@ class Post < ApplicationRecord
   has_many :bookmarks
   has_many :tags, through: :taggings
   has_many :contributions
+  has_many :collaborators
   has_many :contributors, through: :contributions, source: :contributor
   has_ancestry
 

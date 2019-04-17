@@ -11,6 +11,7 @@ RSpec.describe User, type: :model do
   it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
   it { is_expected.to validate_uniqueness_of(:nickname).case_insensitive }
   it { is_expected.to have_many(:ssh_keys) }
+  it { is_expected.to have_many(:blogs) }
 
   it 'should have initials' do
     expect(subject.initials).to eq('FB')

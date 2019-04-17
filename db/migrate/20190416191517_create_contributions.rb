@@ -3,7 +3,7 @@ class CreateContributions < ActiveRecord::Migration[6.0]
     create_table :contributions do |t|
       t.bigint :contributor_id, foreign_key: true, null: false
       t.bigint :post_id, foreign_key: true, null: false
-      t.text :raw_content
+      t.string :raw_changes, array: true, default: []
       t.integer :status, default: 0, null: false
 
       t.timestamps
