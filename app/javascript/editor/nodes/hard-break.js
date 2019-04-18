@@ -8,7 +8,7 @@ import type { NodeType } from 'editor/utils'
 export default class HardBreak extends Node {
   name = 'hard_break'
 
-  get schema () {
+  get schema() {
     return {
       inline: true,
       group: 'inline',
@@ -18,7 +18,7 @@ export default class HardBreak extends Node {
     }
   }
 
-  keys ({ type }: NodeType) {
+  keys({ type }: NodeType) {
     const command = chainCommands(exitCode, (state, dispatch) => {
       dispatch(state.tr.replaceSelectionWith(type.create()).scrollIntoView())
       return true

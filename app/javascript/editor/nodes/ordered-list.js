@@ -9,7 +9,7 @@ import { wrappingInputRule } from 'prosemirror-inputrules'
 export default class OrderedList extends Node {
   name = 'ordered_list'
 
-  get schema () {
+  get schema() {
     return {
       attrs: {
         order: {
@@ -33,17 +33,17 @@ export default class OrderedList extends Node {
     }
   }
 
-  commands ({ type, schema }: NodeType) {
+  commands({ type, schema }: NodeType) {
     return () => toggleList(type, schema.nodes.list_item)
   }
 
-  keys ({ type, schema }: NodeType) {
+  keys({ type, schema }: NodeType) {
     return {
       'Shift-Ctrl-9': toggleList(type, schema.nodes.list_item)
     }
   }
 
-  inputRules ({ type }: NodeType) {
+  inputRules({ type }: NodeType) {
     return [
       wrappingInputRule(
         /^(\d+)\.\s$/,

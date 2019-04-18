@@ -5,7 +5,7 @@ import { Fragment, Slice } from 'prosemirror-model'
 import { Mark } from 'editor/utils'
 import { Plugin } from 'prosemirror-state'
 
-export default function (
+export default function(
   regexp: RegExp,
   markType: Mark,
   getAttrs: Function | {}

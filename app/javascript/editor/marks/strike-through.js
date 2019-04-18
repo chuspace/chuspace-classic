@@ -9,7 +9,7 @@ import { toggleMark } from 'prosemirror-commands'
 export default class StrikeThrough extends Mark {
   name = 'strike_through'
 
-  get schema () {
+  get schema() {
     return {
       parseDOM: [
         {
@@ -30,21 +30,21 @@ export default class StrikeThrough extends Mark {
     }
   }
 
-  keys ({ type }: MarkType) {
+  keys({ type }: MarkType) {
     return {
       'Mod-d': toggleMark(type)
     }
   }
 
-  commands ({ type }: MarkType) {
+  commands({ type }: MarkType) {
     return () => toggleMark(type)
   }
 
-  inputRules ({ type }: MarkType) {
+  inputRules({ type }: MarkType) {
     return [markInputRule(/~([^~]+)~$/, type)]
   }
 
-  pasteRules ({ type }: MarkType) {
+  pasteRules({ type }: MarkType) {
     return [markPasteRule(/~([^~]+)~/g, type)]
   }
 }

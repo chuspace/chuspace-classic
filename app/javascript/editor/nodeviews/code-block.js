@@ -28,11 +28,11 @@ class LanguageSwitcher {
       this.cm.setOption('mode', name)
     )
   }
-  constructor (cm, language): el {
+  constructor(cm, language): el {
     this.cm = cm
     return (
       <select
-        class='codemirror-language-switcher'
+        class="codemirror-language-switcher"
         onchange={this.handleLanguageChange}
       >
         <option selected>Select language</option>
@@ -51,16 +51,16 @@ class Header {
   clipboard: ?ClipboardJS
   switcher: ?HTMLElement
 
-  constructor (props) {
+  constructor(props) {
     this.view = props.view
     this.switcher = new LanguageSwitcher(props.cm, props.language)
     this.clipboard = new ClipboardJS('#foo')
 
     return (
-      <div class='codemirror-header'>
-        <div class='codemirror-header-heading'>CODE</div>
-        <div class='codemirror-header-menu'>
-          <div id='foo' data-clipboard-target='.CodeMirror-code'>
+      <div class="codemirror-header">
+        <div class="codemirror-header-heading">CODE</div>
+        <div class="codemirror-header-menu">
+          <div id="foo" data-clipboard-target=".CodeMirror-code">
             Copy to clipboard
           </div>
           {this.switcher}
@@ -83,7 +83,7 @@ export default class CodeBlockView {
   incomingChanges: boolean
   node: ProsemirrorNode
 
-  constructor (
+  constructor(
     node: ProsemirrorNode,
     view: EditorView,
     schema: Schema,
@@ -155,7 +155,7 @@ export default class CodeBlockView {
    * the outer editor synchronized with the inner one,so that any
    * commands executed on the outer editor see an accurate selection
    */
-  forwardSelection () {
+  forwardSelection() {
     if (!this.cm.hasFocus()) return
     let state = this.view.state
     let selection = this.asProseMirrorSelection(state.doc)
@@ -170,7 +170,7 @@ export default class CodeBlockView {
    * the code block node's current value to the value in the editor,and dispatch
    * a transaction if there is a difference.
    */
-  valueChanged (): void {
+  valueChanged(): void {
     let change = computeChange(this.node.textContent, this.cm.getValue())
     if (change) {
       let start = this.getPos() + 1
@@ -191,7 +191,7 @@ export default class CodeBlockView {
    * index.
    * @param doc
    */
-  asProseMirrorSelection (doc: ProsemirrorNode<Schema>) {
+  asProseMirrorSelection(doc: ProsemirrorNode<Schema>) {
     let offset = this.getPos() + 1
     // @ts-ignore
     let anchor = this.cm.indexFromPos(this.cm.getCursor('anchor')) + offset
@@ -206,7 +206,7 @@ export default class CodeBlockView {
    * @param anchor
    * @param head
    */
-  setSelection (anchor: string, head: string): void {
+  setSelection(anchor: string, head: string): void {
     this.cm.focus()
     this.updating = true
     this.cm.setSelection(
@@ -221,7 +221,7 @@ export default class CodeBlockView {
    * handle, and for ctrl-enter, which, in ProseMirror's base keymap, createds
    * a new paragraph after a code block.
    */
-  codeMirrorKeymap () {
+  codeMirrorKeymap() {
     let view = this.view
     let mod = /Mac/.test(navigator.platform) ? 'Cmd' : 'Ctrl'
     // @ts-ignore
@@ -246,7 +246,7 @@ export default class CodeBlockView {
    * @param unit
    * @param dir
    */
-  maybeEscape (unit: string, dir: number) {
+  maybeEscape(unit: string, dir: number) {
     let pos = this.cm.getCursor()
     if (
       this.cm.somethingSelected() ||
@@ -271,7 +271,7 @@ export default class CodeBlockView {
    * and if present, propagate then from the outer to inner editor.
    * @param node
    */
-  update (node: ProsemirrorNode<Schema>) {
+  update(node: ProsemirrorNode<Schema>) {
     if (node.type !== this.node.type) return false
     this.node = node
     let change = computeChange(this.cm.getValue(), node.textContent)
@@ -287,16 +287,16 @@ export default class CodeBlockView {
     return true
   }
 
-  selectNode () {
+  selectNode() {
     this.cm.focus()
   }
 
-  stopEvent () {
+  stopEvent() {
     return true
   }
 }
 
-function computeChange (oldVal: string, newVal: string) {
+function computeChange(oldVal: string, newVal: string) {
   if (oldVal === newVal) return null
   let start = 0
 

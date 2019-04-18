@@ -5,11 +5,11 @@ import { keymap } from 'prosemirror-keymap'
 export default class ElementManager {
   elements: []
 
-  constructor (elements: [] = []) {
+  constructor(elements: [] = []) {
     this.elements = elements
   }
 
-  get nodes (): {} {
+  get nodes(): {} {
     return this.elements
       .filter(element => element.type === 'node')
       .reduce(
@@ -21,13 +21,13 @@ export default class ElementManager {
       )
   }
 
-  get options () {
+  get options() {
     const { view } = this
     return this.elements.reduce(
       (nodes, element) => ({
         ...nodes,
         [element.name]: new Proxy(element.options, {
-          set (obj, prop, value) {
+          set(obj, prop, value) {
             const changed = obj[prop] !== value
 
             Object.assign(obj, { [prop]: value })
@@ -44,7 +44,7 @@ export default class ElementManager {
     )
   }
 
-  get marks (): {} {
+  get marks(): {} {
     return this.elements
       .filter(element => element.type === 'mark')
       .reduce(
@@ -56,13 +56,13 @@ export default class ElementManager {
       )
   }
 
-  get plugins (): Array<any> {
+  get plugins(): Array<any> {
     return this.elements
       .filter(element => element.plugins)
       .reduce((allPlugins, { plugins }) => [...allPlugins, ...plugins], [])
   }
 
-  keymaps ({ schema }: any): Array<any> {
+  keymaps({ schema }: any): Array<any> {
     const elementKeymaps = this.elements
       .filter(element => ['element'].includes(element.type))
       .filter(element => element.keys)
@@ -81,7 +81,7 @@ export default class ElementManager {
     return [...elementKeymaps, ...nodeMarkKeymaps].map(keys => keymap(keys))
   }
 
-  inputRules ({ schema }: any) {
+  inputRules({ schema }: any) {
     const elementInputRules = this.elements
       .filter(element => ['element'].includes(element.type))
       .filter(element => element.inputRules)
@@ -103,7 +103,7 @@ export default class ElementManager {
     )
   }
 
-  pasteRules ({ schema }: any) {
+  pasteRules({ schema }: any) {
     const elementPasteRules = this.elements
       .filter(element => ['element'].includes(element.type))
       .filter(element => element.pasteRules)
@@ -125,7 +125,7 @@ export default class ElementManager {
     )
   }
 
-  commands ({ schema, view, editable }: any): any {
+  commands({ schema, view, editable }: any): any {
     return this.elements
       .filter(element => element.commands)
       .reduce((allCommands, element) => {

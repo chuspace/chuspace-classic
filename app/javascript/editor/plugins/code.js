@@ -7,11 +7,11 @@ import { nodeInputRule } from 'editor/commands'
 export default class Code extends Element {
   name = 'code'
 
-  get plugins () {
+  get plugins() {
     return [
       new Plugin({
         props: {
-          handleKeyDown (view, event) {
+          handleKeyDown(view, event) {
             if (event.keyCode === 13) {
               const { state } = view
               const { schema, tr } = state

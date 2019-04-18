@@ -8,7 +8,7 @@ import { wrappingInputRule } from 'prosemirror-inputrules'
 export default class Blockquote extends Node {
   name = 'blockquote'
 
-  get schema () {
+  get schema() {
     return {
       content: 'block*',
       group: 'block',
@@ -19,17 +19,17 @@ export default class Blockquote extends Node {
     }
   }
 
-  commands ({ type, schema }: NodeType) {
+  commands({ type, schema }: NodeType) {
     return () => toggleWrap(type)
   }
 
-  keys ({ type }: NodeType) {
+  keys({ type }: NodeType) {
     return {
       'Ctrl->': toggleWrap(type)
     }
   }
 
-  inputRules ({ type }: NodeType) {
+  inputRules({ type }: NodeType) {
     return [wrappingInputRule(/^\s*>\s$/, type)]
   }
 }

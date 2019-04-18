@@ -2,7 +2,7 @@
 
 import { ResolvedPos } from 'prosemirror-model'
 
-export default function (pos: ?ResolvedPos = null, type: ?ResolvedPos = null) {
+export default function(pos: ?ResolvedPos = null, type: ?ResolvedPos = null) {
   if (!pos || !type) {
     return false
   }

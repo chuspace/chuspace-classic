@@ -7,7 +7,7 @@ import { getMarkRange } from 'editor/helpers'
 export default class Link extends Mark {
   name = 'link'
 
-  get schema () {
+  get schema() {
     return {
       attrs: {
         href: {
@@ -34,7 +34,7 @@ export default class Link extends Mark {
     }
   }
 
-  commands ({ type }) {
+  commands({ type }) {
     return attrs => {
       if (attrs.href) {
         return updateMark(type, attrs)
@@ -44,7 +44,7 @@ export default class Link extends Mark {
     }
   }
 
-  pasteRules ({ type }) {
+  pasteRules({ type }) {
     return [
       pasteRule(
         /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g,
@@ -54,11 +54,11 @@ export default class Link extends Mark {
     ]
   }
 
-  get plugins () {
+  get plugins() {
     return [
       new Plugin({
         props: {
-          handleClick (view, pos) {
+          handleClick(view, pos) {
             const { schema, doc, tr } = view.state
             const range = getMarkRange(doc.resolve(pos), schema.marks.link)
 

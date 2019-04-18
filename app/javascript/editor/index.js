@@ -18,7 +18,7 @@ import { markdownParser } from 'editor/markdown'
 import toArray from 'lodash/toArray'
 
 export default class Editor {
-  constructor (options = {}) {
+  constructor(options = {}) {
     this.options = options
     this.element = options.element
     this.elements = this.createElements()
@@ -39,7 +39,7 @@ export default class Editor {
     this.elements.view = this.view
   }
 
-  createElements () {
+  createElements() {
     return new ElementManager([
       ...toArray(marks).map(Mark => new Mark()),
       ...toArray(plugins).map(Plugin => new Plugin()),
@@ -47,29 +47,29 @@ export default class Editor {
     ])
   }
 
-  createPlugins () {
+  createPlugins() {
     return this.elements.plugins
   }
 
-  createKeymaps () {
+  createKeymaps() {
     return this.elements.keymaps({
       schema: this.schema
     })
   }
 
-  createInputRules () {
+  createInputRules() {
     return this.elements.inputRules({
       schema: this.schema
     })
   }
 
-  createPasteRules () {
+  createPasteRules() {
     return this.elements.pasteRules({
       schema: this.schema
     })
   }
 
-  createCommands () {
+  createCommands() {
     return this.elements.commands({
       schema: this.schema,
       view: this.view,
@@ -77,22 +77,22 @@ export default class Editor {
     })
   }
 
-  createNodes () {
+  createNodes() {
     return this.elements.nodes
   }
 
-  createMarks () {
+  createMarks() {
     return this.elements.marks
   }
 
-  createSchema () {
+  createSchema() {
     return new Schema({
       nodes: this.nodes,
       marks: this.marks
     })
   }
 
-  createState () {
+  createState() {
     return EditorState.create({
       schema: this.schema,
       doc: markdownParser(this.schema).parse(''),
@@ -127,7 +127,7 @@ export default class Editor {
     })
   }
 
-  createView () {
+  createView() {
     const view = new EditorView(this.element, {
       state: this.state,
       dispatchTransaction: this.dispatchTransaction.bind(this),
@@ -152,7 +152,7 @@ export default class Editor {
     return view
   }
 
-  dispatchTransaction (transaction) {
+  dispatchTransaction(transaction) {
     this.state = this.state.apply(transaction)
     this.view.updateState(this.state)
 
@@ -163,19 +163,19 @@ export default class Editor {
     this.emitUpdate(transaction)
   }
 
-  emitUpdate (transaction) {
+  emitUpdate(transaction) {
     console.log(this.getHTML())
   }
 
-  focus () {
+  focus() {
     this.view.focus()
   }
 
-  blur () {
+  blur() {
     this.view.dom.blur()
   }
 
-  setActiveNodesAndMarks () {
+  setActiveNodesAndMarks() {
     this.activeMarks = Object.entries(this.schema.marks).reduce(
       (marks, [name, mark]) => ({
         ...marks,
@@ -201,11 +201,11 @@ export default class Editor {
     )
   }
 
-  getMarkAttrs (type = null) {
+  getMarkAttrs(type = null) {
     return this.activeMarkAttrs[type]
   }
 
-  get isActive () {
+  get isActive() {
     return Object.entries({
       ...this.activeMarks,
       ...this.activeNodes
@@ -218,7 +218,7 @@ export default class Editor {
     )
   }
 
-  getHTML () {
+  getHTML() {
     const div = document.createElement('div')
     const fragment = DOMSerializer.fromSchema(this.schema).serializeFragment(
       this.state.doc.content
@@ -229,11 +229,11 @@ export default class Editor {
     return div.innerHTML
   }
 
-  getJSON () {
+  getJSON() {
     return this.state.doc.toJSON()
   }
 
-  destroy () {
+  destroy() {
     if (!this.view) {
       return
     }

@@ -3,23 +3,23 @@
 import Element from './element'
 
 export default class Mark extends Element {
-  constructor (options: {} = {}) {
+  constructor(options: {} = {}) {
     super(options)
   }
 
-  get type () {
+  get type() {
     return 'mark'
   }
 
-  get view () {
+  get view() {
     return {}
   }
 
-  get schema () {
+  get schema() {
     return {}
   }
 
-  command () {
+  command() {
     return () => {}
   }
 }

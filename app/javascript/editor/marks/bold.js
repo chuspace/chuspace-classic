@@ -10,7 +10,7 @@ import { toggleMark } from 'prosemirror-commands'
 export default class Bold extends Mark {
   name = 'bold'
 
-  get schema () {
+  get schema() {
     return {
       parseDOM: [
         {
@@ -30,21 +30,21 @@ export default class Bold extends Mark {
     }
   }
 
-  keys ({ type }: MarkType) {
+  keys({ type }: MarkType) {
     return {
       'Mod-b': toggleMark(type)
     }
   }
 
-  commands ({ type }: MarkType) {
+  commands({ type }: MarkType) {
     return () => toggleMark(type)
   }
 
-  inputRules ({ type }: MarkType) {
+  inputRules({ type }: MarkType) {
     return [markInputRule(/(?:\*\*|__)([^*_]+)(?:\*\*|__)$/, type)]
   }
 
-  pasteRules ({ type }: MarkType) {
+  pasteRules({ type }: MarkType) {
     return [markPasteRule(/(?:\*\*|__)([^*_]+)(?:\*\*|__)/g, type)]
   }
 }

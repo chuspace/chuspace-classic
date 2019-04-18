@@ -6,31 +6,31 @@ export default class Element {
   options: any
   name: ?string
 
-  get type () {
+  get type() {
     return 'element'
   }
 
-  constructor (options: {} = {}) {
+  constructor(options: {} = {}) {
     this.options = options
   }
 
-  get update () {
+  get update() {
     return () => {}
   }
 
-  get plugins () {
+  get plugins() {
     return []
   }
 
-  inputRules (node: NodeType) {
+  inputRules(node: NodeType) {
     return []
   }
 
-  pasteRules (node: NodeType) {
+  pasteRules(node: NodeType) {
     return []
   }
 
-  keys (node: NodeType) {
+  keys(node: NodeType) {
     return {}
   }
 }

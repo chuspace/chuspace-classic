@@ -12,7 +12,7 @@ import type { NodeType } from 'editor/utils'
 export default class ListItem extends Node {
   name = 'list_item'
 
-  get schema () {
+  get schema() {
     return {
       content: 'paragraph block*',
       defining: true,
@@ -22,7 +22,7 @@ export default class ListItem extends Node {
     }
   }
 
-  keys ({ type }: NodeType) {
+  keys({ type }: NodeType) {
     return {
       Enter: splitListItem(type),
       Tab: sinkListItem(type),

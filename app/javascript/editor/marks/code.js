@@ -9,28 +9,28 @@ import { toggleMark } from 'prosemirror-commands'
 export default class Code extends Mark {
   name = 'code'
 
-  get schema () {
+  get schema() {
     return {
       parseDOM: [{ tag: 'code' }],
       toDOM: () => ['code', 0]
     }
   }
 
-  keys ({ type }: MarkType) {
+  keys({ type }: MarkType) {
     return {
       'Mod-`': toggleMark(type)
     }
   }
 
-  commands ({ type }: MarkType) {
+  commands({ type }: MarkType) {
     return () => toggleMark(type)
   }
 
-  inputRules ({ type }: MarkType) {
+  inputRules({ type }: MarkType) {
     return [markInputRule(/(?:`)([^`]+)(?:`)$/, type)]
   }
 
-  pasteRules ({ type }: MarkType) {
+  pasteRules({ type }: MarkType) {
     return [markPasteRule(/(?:`)([^`]+)(?:`)/g, type)]
   }
 }

@@ -16,13 +16,13 @@ export default class Placeholder extends Element {
     showOnlyWhenEditable: true
   }
 
-  get update () {
+  get update() {
     return (view: EditorView) => {
       view.updateState(view.state)
     }
   }
 
-  get plugins () {
+  get plugins() {
     return [
       new Plugin({
         props: {

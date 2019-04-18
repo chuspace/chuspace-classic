@@ -10,7 +10,7 @@ export default class extends Controller {
 
   dropInstance = null
 
-  connect () {
+  connect() {
     this.dropInstance = new Drop({
       target: this.openerTarget,
       content: this.contentTarget.innerHTML,
@@ -22,7 +22,7 @@ export default class extends Controller {
     })
   }
 
-  disconnect () {
+  disconnect() {
     this.dropInstance && this.dropInstance.remove()
   }
 }

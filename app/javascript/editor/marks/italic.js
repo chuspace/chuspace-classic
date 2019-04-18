@@ -9,28 +9,28 @@ import { toggleMark } from 'prosemirror-commands'
 export default class Italic extends Mark {
   name = 'italic'
 
-  get schema () {
+  get schema() {
     return {
       parseDOM: [{ tag: 'i' }, { tag: 'em' }, { style: 'font-style=italic' }],
       toDOM: () => ['em', 0]
     }
   }
 
-  keys ({ type }: MarkType) {
+  keys({ type }: MarkType) {
     return {
       'Mod-i': toggleMark(type)
     }
   }
 
-  commands ({ type }: MarkType) {
+  commands({ type }: MarkType) {
     return () => toggleMark(type)
   }
 
-  inputRules ({ type }: MarkType) {
+  inputRules({ type }: MarkType) {
     return [markInputRule(/(?:^|[^*_])(?:\*|_)([^*_]+)(?:\*|_)$/, type)]
   }
 
-  pasteRules ({ type }: MarkType) {
+  pasteRules({ type }: MarkType) {
     return [markPasteRule(/(?:^|[^*_])(?:\*|_)([^*_]+)(?:\*|_)/g, type)]
   }
 }

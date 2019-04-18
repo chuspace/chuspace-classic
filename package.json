@@ -5,8 +5,8 @@
     "node": "10.15.3"
   },
   "scripts": {
-    "format": "yarn run prettier-standard '{app,config,bin}/**/*.{js,jsx}'",
-    "format:ruby": "yarn run prettier --write '**/*.{rb,rake}'",
+    "format": "yarn run prettier --single-quote --no-semi --write '**/*.{js,jsx,rb,rake}'",
+    "format:pr": "git diff --name-only --diff-filter=ACMR master..HEAD | grep '**/*.{js,jsx,rb,rake}$' | xargs yarn run prettier --single-quote --no-semi --write",
     "flow-typed-install": "flow-typed install -s -o --libdefDir ./app/javascript/flow-types"
   },
   "dependencies": {

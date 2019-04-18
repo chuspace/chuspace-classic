@@ -8,7 +8,7 @@ import { toggleBlockType } from 'editor/commands'
 export default class CodeBlock extends Node {
   name = 'code_block'
 
-  get schema () {
+  get schema() {
     return {
       content: 'text*',
       attrs: { language: { default: 'javascript' } },
@@ -22,11 +22,11 @@ export default class CodeBlock extends Node {
     }
   }
 
-  commands ({ type, schema }: NodeType) {
+  commands({ type, schema }: NodeType) {
     return () => toggleBlockType(type, schema.nodes.paragraph)
   }
 
-  keys ({ type }: NodeType) {
+  keys({ type }: NodeType) {
     return {
       'Shift-Ctrl-\\': setBlockType(type)
     }

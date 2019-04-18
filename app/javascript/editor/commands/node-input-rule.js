@@ -3,7 +3,7 @@
 import { InputRule } from 'prosemirror-inputrules'
 import { Mark } from 'prosemirror-model'
 
-export default function (
+export default function(
   regexp: RegExp,
   nodeType: Mark,
   getAttrs: Function | {}

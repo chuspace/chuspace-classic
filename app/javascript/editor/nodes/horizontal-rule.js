@@ -9,7 +9,7 @@ import { nodeInputRule } from 'editor/commands'
 export default class HorizontalRule extends Node {
   name = 'horizontal_rule'
 
-  get schema () {
+  get schema() {
     return {
       group: 'block',
       parseDOM: [{ tag: 'hr' }],
@@ -17,12 +17,12 @@ export default class HorizontalRule extends Node {
     }
   }
 
-  commands ({ type }: NodeType) {
+  commands({ type }: NodeType) {
     return () => (state: EditorState, dispatch: Transaction) =>
       dispatch(state.tr.replaceSelectionWith(type.create()))
   }
 
-  inputRules ({ type }: NodeType) {
+  inputRules({ type }: NodeType) {
     return [nodeInputRule(/^(?:---|___\s|\*\*\*\s)$/, type)]
   }
 }

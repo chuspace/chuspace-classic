@@ -11,7 +11,7 @@ import { Node as ProsemirrorNode } from 'prosemirror-model'
 export default class Image extends Node {
   name = 'image'
 
-  get schema () {
+  get schema() {
     return {
       inline: true,
       attrs: {
@@ -39,7 +39,7 @@ export default class Image extends Node {
     }
   }
 
-  commands ({ type }: NodeType) {
+  commands({ type }: NodeType) {
     return (attrs: {}) => (state: EditorState, dispatch: Transaction) => {
       const { selection } = state
       const position = selection.$cursor
@@ -51,12 +51,12 @@ export default class Image extends Node {
     }
   }
 
-  get plugins () {
+  get plugins() {
     return [
       new Plugin({
         props: {
           handleDOMEvents: {
-            drop (view, event) {
+            drop(view, event) {
               const hasFiles =
                 event.dataTransfer &&
                 event.dataTransfer.files &&

@@ -4,15 +4,15 @@ import { Controller } from 'stimulus'
 import Dialog from 'helpers/dialog'
 
 export default class extends Controller {
-  connect () {
+  connect() {
     this.dialog = new Dialog(this.element)
   }
 
-  show () {
+  show() {
     this.dialog.show()
   }
 
-  close () {
+  close() {
     this.dialog.hide()
   }
 }

@@ -6,7 +6,7 @@ import { EditorView } from 'prosemirror-view'
 import { isNodeActive } from 'editor/helpers'
 import { setBlockType } from 'prosemirror-commands'
 
-export default function (type: string, toggletype: string, attrs: {} = {}) {
+export default function(type: string, toggletype: string, attrs: {} = {}) {
   return (state: EditorState, dispatch: Transaction, view: EditorView) => {
     const isActive = isNodeActive(state, type, attrs)
 

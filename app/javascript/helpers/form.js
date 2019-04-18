@@ -16,7 +16,7 @@ const withForm = (BaseForm: Controller) =>
       ...BaseForm.errors
     ]
 
-    onFormSubmit (event: window.CustomEvent) {
+    onFormSubmit(event: window.CustomEvent) {
       const [data] = event.detail
 
       if (data.errors && data.errors.length > 0) {

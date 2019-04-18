@@ -7,7 +7,7 @@ import { setBlockType } from 'prosemirror-commands'
 export default class Paragraph extends Node {
   name = 'paragraph'
 
-  get schema () {
+  get schema() {
     return {
       content: 'inline*',
       group: 'block',
@@ -21,7 +21,7 @@ export default class Paragraph extends Node {
     }
   }
 
-  commands ({ type }: NodeType) {
+  commands({ type }: NodeType) {
     return () => setBlockType(type)
   }
 }

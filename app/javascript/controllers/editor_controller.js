@@ -8,7 +8,7 @@ import Editor from 'editor'
 export default class extends Controller {
   editor: any
 
-  connect () {
+  connect() {
     this.editor = new Editor({
       element: this.element,
       autoFocus: true,

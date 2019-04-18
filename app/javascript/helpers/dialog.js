@@ -16,7 +16,7 @@ declare var document: DocumentWithBody
 export default class Dialog {
   dialog: typeof window.HTMLDialogElement
 
-  constructor (dialogElement: HTMLElement) {
+  constructor(dialogElement: HTMLElement) {
     this.dialog = dialogElement
 
     if (typeof HTMLDialogElement !== 'function') {
@@ -24,13 +24,13 @@ export default class Dialog {
     }
   }
 
-  hide () {
+  hide() {
     if (!this.dialog.open) return
     this.dialog.close()
     document.body.classList.remove('dialog-open')
   }
 
-  show () {
+  show() {
     if (this.dialog.open) return
     this.dialog.showModal()
     document.body.classList.add('dialog-open')

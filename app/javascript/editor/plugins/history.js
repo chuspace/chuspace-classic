@@ -12,7 +12,7 @@ export default class History extends Element {
     newGroupDelay: ''
   }
 
-  keys () {
+  keys() {
     const isMac =
       typeof navigator !== 'undefined' ? /Mac/.test(navigator.platform) : false
     const keymap = {
@@ -27,7 +27,7 @@ export default class History extends Element {
     return keymap
   }
 
-  get plugins () {
+  get plugins() {
     return [
       history({
         depth: this.options.depth,
@@ -36,7 +36,7 @@ export default class History extends Element {
     ]
   }
 
-  commands () {
+  commands() {
     return {
       undo: () => undo,
       redo: () => redo

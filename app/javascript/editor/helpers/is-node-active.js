@@ -3,7 +3,7 @@
 import { EditorState } from 'prosemirror-state'
 import { findParentNode } from 'prosemirror-utils'
 
-export default function (state: EditorState, type: string, attrs: {} = {}) {
+export default function(state: EditorState, type: string, attrs: {} = {}) {
   const predicate = node => node.type === type
   const parent = findParentNode(predicate)(state.selection)
 
