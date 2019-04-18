@@ -3,8 +3,7 @@
 class PeopleController < ApplicationController
   before_action :find_user, only: :show
 
-  def show
-  end
+  def show; end
 
   def update
     if Current.user.update(update_params)

@@ -8,8 +8,7 @@ class Settings::SshKeysController < ApplicationController
     @user = Current.user
   end
 
-  def new
-  end
+  def new; end
 
   def create
     key = Current.user.ssh_keys.build(key_params)

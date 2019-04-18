@@ -5,8 +5,15 @@ module Git
     include EncodingHelper
     attr_accessor :head, :refs
 
-    attr_accessor :id, :message, :parent_ids, :authored_date, :author_nickname,
-                  :author_email, :created_at, :committer_name, :committer_email
+    attr_accessor :id,
+                  :message,
+                  :parent_ids,
+                  :authored_date,
+                  :author_nickname,
+                  :author_email,
+                  :created_at,
+                  :committer_name,
+                  :committer_email
 
     def initialize(raw_commit, head = nil)
       raise 'Nil as raw commit passed' unless raw_commit
@@ -38,11 +45,12 @@ module Git
       def find(repo, commit_id = 'HEAD')
         return Commit.new(commit_id) if commit_id.is_a?(Rugged::Commit)
 
-        obj = if commit_id.is_a?(String)
-          repo.rev_parse_target(commit_id)
-        else
-          Branch.dereference_object(commit_id)
-        end
+        obj =
+          if commit_id.is_a?(String)
+            repo.rev_parse_target(commit_id)
+          else
+            Branch.dereference_object(commit_id)
+          end
 
         return nil unless obj.is_a?(Rugged::Commit)
 
@@ -69,34 +77,31 @@ module Git
       # }
 
       def create(repository:, author:, committer: nil, options:, action: :add)
-        rugged         = repository.rugged
-        file           = options[:file]
-        commit         = options[:commit]
-        branch         = 'master'
-        parents        = []
-        mode           = 0o100644
+        rugged = repository.rugged
+        file = options[:file]
+        commit = options[:commit]
+        branch = 'master'
+        parents = []
+        mode = 0o100644
 
-        author_hash = {
-          name: author.name,
-          email: author.email,
-          time: Time.now
-        }
+        author_hash = { name: author.name, email: author.email, time: Time.now }
 
-        committer_hash = committer.blank? ? author_hash : {
-          name: committer.name,
-          email: committer.email,
-          time: Time.now
-        }
+        committer_hash =
+          if committer.blank?
+            author_hash
+          else
+            { name: committer.name, email: committer.email, time: Time.now }
+          end
 
-        unless branch.start_with?('refs/')
-          branch = 'refs/heads/' + branch
-        end
+        branch = 'refs/heads/' + branch unless branch.start_with?('refs/')
 
         filename = file[:path].to_s
 
         unless repository.empty?
           rugged_ref = rugged.references[branch]
-          raise Repository::InvalidRef.new('Invalid branch name') unless rugged_ref
+          unless rugged_ref
+            raise Repository::InvalidRef.new('Invalid branch name')
+          end
           last_commit = rugged_ref.target
           repository.index.read_tree(last_commit.tree)
           parents = [last_commit]
@@ -137,11 +142,12 @@ module Git
         break_rewrites = options[:break_rewrites]
         actual_options = Diff.filter_diff_options(options)
 
-        diff = if rugged_commit.parents.empty?
-          rugged_commit.diff(actual_options.merge(reverse: true))
-        else
-          rugged_commit.parents[0].diff(rugged_commit, actual_options)
-        end
+        diff =
+          if rugged_commit.parents.empty?
+            rugged_commit.diff(actual_options.merge(reverse: true))
+          else
+            rugged_commit.parents[0].diff(rugged_commit, actual_options)
+          end
 
         diff.find_similar!(break_rewrites: break_rewrites)
         diff
@@ -153,25 +159,23 @@ module Git
     def init_from_hash(hash)
       raw_commit = hash.symbolize_keys
 
-      serialize_keys.each do |key|
-        send("#{key}=", raw_commit[key])
-      end
+      serialize_keys.each { |key| send("#{key}=", raw_commit[key]) }
     end
 
     def init_from_rugged(commit)
-      author    = commit.author
+      author = commit.author
       committer = commit.committer
 
-      @id               = commit.oid
-      @sha              = commit.oid
-      @message          = encode!(commit.message)
-      @authored_date    = author[:time]
-      @created_at       = committer[:time]
-      @author_nickname  = encode!(author[:name])
-      @author_email     = encode!(author[:email])
-      @committer_name   = encode!(committer[:name])
-      @committer_email  = encode!(committer[:email])
-      @parent_ids       = commit.parents.map(&:oid)
+      @id = commit.oid
+      @sha = commit.oid
+      @message = encode!(commit.message)
+      @authored_date = author[:time]
+      @created_at = committer[:time]
+      @author_nickname = encode!(author[:name])
+      @author_email = encode!(author[:email])
+      @committer_name = encode!(committer[:name])
+      @committer_email = encode!(committer[:email])
+      @parent_ids = commit.parents.map(&:oid)
     end
   end
 end

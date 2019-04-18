@@ -4,12 +4,12 @@ class SshKey < ApplicationRecord
   belongs_to :user
 
   validates_presence_of :title, :fingerprint
-  validates             :key, presence: true, uniqueness: { message: :nonunique_key }
-  validate              :ssh_key_format, on: :create
+  validates :key, presence: true, uniqueness: { message: :nonunique_key }
+  validate :ssh_key_format, on: :create
 
   before_validation :assign_fingerprint
-  after_create      :write_key_to_auth_file, unless: :command_exists_in_file?
-  before_destroy    :remove_key_from_auth_file
+  after_create :write_key_to_auth_file, unless: :command_exists_in_file?
+  before_destroy :remove_key_from_auth_file
 
   def key_id
     "key-#{id}"
@@ -24,15 +24,15 @@ class SshKey < ApplicationRecord
   end
 
   def command_exists_in_file?
-    open_auth_file('r+') do |f|
-      f.grep(/command=\"#{command}\"/).size > 0
-    end
+    open_auth_file('r+') { |f| f.grep(/command=\"#{command}\"/).size > 0 }
   end
 
   private
 
   def assign_fingerprint
-    self.fingerprint = SSHKey.fingerprint(key) if key && SSHKey.valid_ssh_public_key?(key)
+    if key && SSHKey.valid_ssh_public_key?(key)
+      self.fingerprint = SSHKey.fingerprint(key)
+    end
   end
 
   def ssh_key_format
@@ -51,7 +51,7 @@ class SshKey < ApplicationRecord
     lock do
       Rails.logger.info "Removing key #{id}"
       open_auth_file('r+') do |f|
-        while line = f.gets do
+        while line = f.gets
           next unless line.start_with?("command=\"#{command}\"")
           f.seek(-line.length, IO::SEEK_CUR)
           f.write('#' * (line.length - 1))
@@ -65,7 +65,7 @@ class SshKey < ApplicationRecord
     File.open(Git.config.ssh_auth_lock_file_path, 'w+') do |f|
       begin
         f.flock File::LOCK_EX
-        Timeout::timeout(timeout) { yield }
+        Timeout.timeout(timeout) { yield }
       ensure
         f.flock File::LOCK_UN
       end
@@ -73,8 +73,8 @@ class SshKey < ApplicationRecord
   end
 
   def open_auth_file(mode)
-    open(Git.config.ssh_auth_file_path, mode, 0600) do |file|
-      file.chmod(0600)
+    open(Git.config.ssh_auth_file_path, mode, 0o600) do |file|
+      file.chmod(0o600)
       yield file
     end
   end

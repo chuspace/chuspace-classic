@@ -22,11 +22,17 @@ RSpec.describe SshKey, type: :model do
   end
 
   it 'should have a command' do
-    expect(subject.command).to eq("#{Rails.root}/bin/git_shell key-#{subject.id}")
+    expect(subject.command).to eq(
+                "#{Rails.root}/bin/git_shell key-#{subject.id}"
+              )
   end
 
   it 'should have full ssh command' do
-    expect(subject.command_with_key).to eq("command=\"#{Rails.root}/bin/git_shell key-#{subject.id}\",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty #{subject.key}")
+    expect(subject.command_with_key).to eq(
+                "command=\"#{Rails.root}/bin/git_shell key-#{subject
+                  .id}\",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty #{subject
+                  .key}"
+              )
   end
 
   it 'should have command in file' do

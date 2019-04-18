@@ -135,8 +135,8 @@ export default class ElementManager {
           schema,
           ...(['node', 'mark'].includes(type)
             ? {
-              type: schema[`${type}s`][name]
-            }
+                type: schema[`${type}s`][name]
+              }
             : {})
         })
 

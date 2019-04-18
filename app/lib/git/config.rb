@@ -19,7 +19,7 @@ module Git
     end
 
     def url
-      ENV.fetch('GIT_URL',  'http://chuspace.test'.sub(%r{/*$}, ''))
+      ENV.fetch('GIT_URL', 'http://chuspace.test'.sub(%r{/*$}, ''))
     end
 
     def git_storage_dir_name
@@ -37,13 +37,18 @@ module Git
     def ssh_auth_file_path
       Pathname.new(Git::SSH_ROOT).tap(&:mkpath)
       @ssh_auth_file_path ||= Rails.root.join(Git::SSH_ROOT, ssh_auth_file_name)
-      FileUtils.touch(@ssh_auth_file_path) unless File.exists?(@ssh_auth_file_path)
+      unless File.exists?(@ssh_auth_file_path)
+        FileUtils.touch(@ssh_auth_file_path)
+      end
       @ssh_auth_file_path
     end
 
     def ssh_auth_lock_file_path
-      @ssh_auth_lock_file_path ||= Rails.root.join(Git::SSH_ROOT, ssh_auth_file_name + '.lock')
-      FileUtils.touch(@ssh_auth_lock_file_path) unless File.exists?(@ssh_auth_lock_file_path)
+      @ssh_auth_lock_file_path ||=
+        Rails.root.join(Git::SSH_ROOT, ssh_auth_file_name + '.lock')
+      unless File.exists?(@ssh_auth_lock_file_path)
+        FileUtils.touch(@ssh_auth_lock_file_path)
+      end
       @ssh_auth_lock_file_path
     end
 

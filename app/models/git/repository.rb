@@ -1,29 +1,34 @@
 # frozen_string_literal: true
 
-
 module Git
   class Repository
     include Branchable
 
-    class NoRepository    < StandardError; end
+    class NoRepository < StandardError; end
     class InvalidBlobName < StandardError; end
-    class InvalidRef      < StandardError; end
-    class InvalidAuthor   < StandardError; end
+    class InvalidRef < StandardError; end
+    class InvalidAuthor < StandardError; end
 
-    DEFAULT_NAME      = 'blog.git'
-    START_REF         = 'HEAD'
-    DEFAULT_REF       = 'refs/heads/master'
+    DEFAULT_NAME = 'blog.git'
+    START_REF = 'HEAD'
+    DEFAULT_REF = 'refs/heads/master'
     CONTRIBUTIONS_REF = 'refs/heads/contributions'
 
-    attr_reader :author_nickname, :name, :full_name, :path, :rugged, :namespace_path
-    delegate    :lookup, :checkout, :empty?, :bare?, :index, to: :rugged
+    attr_reader :author_nickname,
+                :name,
+                :full_name,
+                :path,
+                :rugged,
+                :namespace_path
+    delegate :lookup, :checkout, :empty?, :bare?, :index, to: :rugged
 
     def initialize(author_nickname:, name: DEFAULT_NAME)
       @author_nickname = author_nickname
-      @name            = name
-      @full_name       = "#{author_nickname}/#{name}"
-      @namespace_path  = Git.config.git_storage_path.join(author_nickname).tap(&:mkpath).to_s
-      @path            = Git.config.git_storage_path.join(full_name).tap(&:mkpath).to_s
+      @name = name
+      @full_name = "#{author_nickname}/#{name}"
+      @namespace_path =
+        Git.config.git_storage_path.join(author_nickname).tap(&:mkpath).to_s
+      @path = Git.config.git_storage_path.join(full_name).tap(&:mkpath).to_s
     end
 
     def reload
@@ -31,7 +36,7 @@ module Git
     end
 
     def size
-      size = popen(%w(du -sk), path).first.strip.to_i
+      size = popen(%w[du -sk], path).first.strip.to_i
       (size.to_f / 1024).round(2)
     end
 
@@ -109,11 +114,7 @@ module Git
         return extracted_name if names.include?(extracted_name)
       end
 
-      if names.include?(DEFAULT_BRANCH)
-        DEFAULT_BRANCH
-      else
-        names[0]
-      end
+      names.include?(DEFAULT_BRANCH) ? DEFAULT_BRANCH : names[0]
     end
 
     def create
@@ -123,7 +124,8 @@ module Git
     end
 
     def destroy
-      Rails.logger.info "Removing repository for <#{name}> from <#{namespace_path}>."
+      Rails
+        .logger.info "Removing repository for <#{name}> from <#{namespace_path}>."
       FileUtils.rm_rf(namespace_path)
       true
     end

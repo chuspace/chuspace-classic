@@ -12,12 +12,8 @@ module Posts
         author: author,
         action: :remove,
         options: {
-          commit: {
-            message: "Deleted #{post.filename}"
-          },
-          file: {
-            path: post.filename
-          }
+          commit: { message: "Deleted #{post.filename}" },
+          file: { path: post.filename }
         }
       )
     end

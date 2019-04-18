@@ -3,9 +3,9 @@
 class Blog < ApplicationRecord
   belongs_to :author, class_name: 'User'
 
-  before_create     :create_repository
-  before_save       :rename_repository, if: -> { !new_record? && slug_changed? }
-  before_destroy    :destroy_repository
+  before_create :create_repository
+  before_save :rename_repository, if: -> { !new_record? && slug_changed? }
+  before_destroy :destroy_repository
 
   def to_param
     slug

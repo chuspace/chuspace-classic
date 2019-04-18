@@ -4,7 +4,8 @@ class CreateUsers < ActiveRecord::Migration[5.2]
   def change
     create_table :users, force: :cascade do |t|
       ## Database authentication
-      t.string :name, null: false, default: ''
+      t.string :name,
+                                         null: false, default: ''
       t.string :email, null: false, default: ''
       t.citext :nickname, null: false, default: ''
       t.string :avatar
@@ -19,11 +20,11 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :url
 
       ## Tracking and security
-      t.integer  :sign_in_count, default: 0, null: false
+      t.integer :sign_in_count, default: 0, null: false
       t.datetime :current_sign_in_at
       t.datetime :last_sign_in_at
-      t.inet     :current_sign_in_ip
-      t.inet     :last_sign_in_ip
+      t.inet :current_sign_in_ip
+      t.inet :last_sign_in_ip
 
       t.timestamps null: false
     end

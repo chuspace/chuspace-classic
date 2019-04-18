@@ -25,11 +25,7 @@ module Git
       def between(repo, head, base, options = {}, *paths)
         straight = options.delete(:straight) || false
 
-        common_commit = if straight
-          base
-        else
-          repo.merge_base_commit(head, base)
-        end
+        common_commit = straight ? base : repo.merge_base_commit(head, base)
 
         options ||= {}
         actual_options = filter_diff_options(options)
@@ -133,32 +129,48 @@ module Git
       #    all files under ignored directories will be included in the diff,
       #    too.
       def filter_diff_options(options, default_options = {})
-        allowed_options = [:max_size, :context_lines, :interhunk_lines,
-                            :old_prefix, :new_prefix, :reverse, :force_text,
-                            :ignore_whitespace, :ignore_whitespace_change,
-                            :ignore_whitespace_eol, :ignore_submodules,
-                            :patience, :include_ignored, :include_untracked,
-                            :include_unmodified, :recurse_untracked_dirs,
-                            :disable_pathspec_match, :deltas_are_icase,
-                            :include_untracked_content, :skip_binary_check,
-                            :include_typechange, :include_typechange_trees,
-                            :ignore_filemode, :recurse_ignored_dirs, :paths,
-                            :max_files, :max_lines, :all_diffs, :no_collapse]
+        allowed_options = %i[
+          max_size
+          context_lines
+          interhunk_lines
+          old_prefix
+          new_prefix
+          reverse
+          force_text
+          ignore_whitespace
+          ignore_whitespace_change
+          ignore_whitespace_eol
+          ignore_submodules
+          patience
+          include_ignored
+          include_untracked
+          include_unmodified
+          recurse_untracked_dirs
+          disable_pathspec_match
+          deltas_are_icase
+          include_untracked_content
+          skip_binary_check
+          include_typechange
+          include_typechange_trees
+          ignore_filemode
+          recurse_ignored_dirs
+          paths
+          max_files
+          max_lines
+          all_diffs
+          no_collapse
+        ]
 
         if default_options
           actual_defaults = default_options.dup
-          actual_defaults.keep_if do |key|
-            allowed_options.include?(key)
-          end
+          actual_defaults.keep_if { |key| allowed_options.include?(key) }
         else
           actual_defaults = {}
         end
 
         if options
           filtered_opts = options.dup
-          filtered_opts.keep_if do |key|
-            allowed_options.include?(key)
-          end
+          filtered_opts.keep_if { |key| allowed_options.include?(key) }
           filtered_opts = actual_defaults.merge(filtered_opts)
         else
           filtered_opts = actual_defaults
@@ -182,7 +194,18 @@ module Git
     end
 
     def serialize_keys
-      @serialize_keys ||= %i(diff new_path old_path a_mode b_mode new_file renamed_file deleted_file too_large)
+      @serialize_keys ||=
+        %i[
+          diff
+          new_path
+          old_path
+          a_mode
+          b_mode
+          new_file
+          renamed_file
+          deleted_file
+          too_large
+        ]
     end
 
     def to_hash
@@ -190,9 +213,7 @@ module Git
 
       keys = serialize_keys
 
-      keys.each do |key|
-        hash[key] = send(key)
-      end
+      keys.each { |key| hash[key] = send(key) }
 
       hash
     end
@@ -264,9 +285,7 @@ module Git
     def init_from_hash(hash, collapse: false)
       raw_diff = hash.symbolize_keys
 
-      serialize_keys.each do |key|
-        send(:"#{key}=", raw_diff[key.to_sym])
-      end
+      serialize_keys.each { |key| send(:"#{key}=", raw_diff[key.to_sym]) }
 
       prune_large_diff! if too_large?
       prune_collapsed_diff! if collapse && collapsible?

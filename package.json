@@ -6,6 +6,7 @@
   },
   "scripts": {
     "format": "yarn run prettier-standard '{app,config,bin}/**/*.{js,jsx}'",
+    "format:ruby": "yarn run prettier --write '**/*.{rb,rake}'",
     "flow-typed-install": "flow-typed install -s -o --libdefDir ./app/javascript/flow-types"
   },
   "dependencies": {
@@ -63,6 +64,7 @@
     "webpack-cli": "^3.3.0"
   },
   "devDependencies": {
+    "@prettier/plugin-ruby": "^0.10.0",
     "babel-eslint": "~10.0.1",
     "eslint": "~5.16.0",
     "eslint-config-standard": "~12.0.0",

@@ -7,7 +7,7 @@ const packsPath = join(config.source_path, config.source_entry_path)
 module.exports =
   nodeEnv === 'production'
     ? {
-      test: resolve(`${packsPath}/graphiql`),
-      use: 'null-loader'
-    }
+        test: resolve(`${packsPath}/graphiql`),
+        use: 'null-loader'
+      }
     : {}

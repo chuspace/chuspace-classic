@@ -3,8 +3,7 @@
 class RegistrationsController < ApplicationController
   before_action :redirect_if_registered
 
-  def index
-  end
+  def index; end
 
   def create
     user = User.new(create_params)

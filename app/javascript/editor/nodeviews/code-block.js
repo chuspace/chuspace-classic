@@ -32,7 +32,7 @@ class LanguageSwitcher {
     this.cm = cm
     return (
       <select
-        class="codemirror-language-switcher"
+        class='codemirror-language-switcher'
         onchange={this.handleLanguageChange}
       >
         <option selected>Select language</option>
@@ -57,10 +57,10 @@ class Header {
     this.clipboard = new ClipboardJS('#foo')
 
     return (
-      <div class="codemirror-header">
-        <div class="codemirror-header-heading">CODE</div>
-        <div class="codemirror-header-menu">
-          <div id="foo" data-clipboard-target=".CodeMirror-code">
+      <div class='codemirror-header'>
+        <div class='codemirror-header-heading'>CODE</div>
+        <div class='codemirror-header-menu'>
+          <div id='foo' data-clipboard-target='.CodeMirror-code'>
             Copy to clipboard
           </div>
           {this.switcher}

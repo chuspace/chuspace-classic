@@ -10,30 +10,39 @@ module Posts
       @author = author
       @params = ActionController::Parameters.new(params)
 
-      post                 = Post.new(post_params)
+      post = Post.new(post_params)
       post.author_nickname = author.nickname
 
-        blob = Git::Commit.create(
+      blob =
+        Git::Commit.create(
           repository: author.blog,
           author: author,
           options: {
             commit: {
-              message: params[:commit_message] || "Created post #{post.filename}"
+              message:
+                params[:commit_message] || "Created post #{post.filename}"
             },
-            file: {
-              content: post.raw_content,
-              path: post.filename
-            }
+            file: { content: post.raw_content, path: post.filename }
           }
         )
 
-        Post.initialize_from_blob(blob)
+      Post.initialize_from_blob(blob)
     end
 
     private
 
     def post_params
-      params.permit(:title, :excerpt, :filename, :status, :tags, :slug, :content, :tags, :published_at)
+      params.permit(
+        :title,
+        :excerpt,
+        :filename,
+        :status,
+        :tags,
+        :slug,
+        :content,
+        :tags,
+        :published_at
+      )
     end
   end
 end

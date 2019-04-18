@@ -33,8 +33,10 @@ class Post < ApplicationRecord
   end
 
   def frontmatter
-    "---\n" + %w[title slug excerpt tags status published_at].map do |attribute|
-      "#{attribute}: #{send(attribute)}"
-    end.join("\n") + "\n---"
+    "---\n" +
+      %w[title slug excerpt tags status published_at].map do |attribute|
+        "#{attribute}: #{send(attribute)}"
+      end.join("\n") +
+      "\n---"
   end
 end

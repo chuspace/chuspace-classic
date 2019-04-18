@@ -3,15 +3,15 @@
 module Branchable
   extend ActiveSupport::Concern
 
-  included do
-    DEFAULT_BRANCH = 'master'
-  end
+  included { DEFAULT_BRANCH = 'master' }
 
   def create_branch(ref, start_point = Git::Repository::START_REF)
     branch = rugged.branches.create(ref, start_point)
     Git::Branch.new(self, branch.name, branch.target)
   rescue Rugged::ReferenceError => e
-    raise InvalidRef.new("Git::Branch #{ref} already exists") if e.to_s =~ /'refs\/heads\/#{ref}'/
+    if e.to_s =~ %r{'refs\/heads\/#{ref}'}
+      raise InvalidRef.new("Git::Branch #{ref} already exists")
+    end
     raise InvalidRef.new("Invalid reference #{start_point}")
   end
 
@@ -59,7 +59,9 @@ module Branchable
       begin
         Git::Branch.new(self, branch.name, branch.target)
       rescue Rugged::ReferenceError
+
       end
-    end.compact.sort_by(&:name)
+    end.compact
+      .sort_by(&:name)
   end
 end

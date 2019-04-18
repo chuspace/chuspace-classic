@@ -10,6 +10,6 @@ class ApplicationController < ActionController::Base
   private
 
   def errors_for(field, message)
-    [{ field: field.to_sym,  errors: message }]
+    [{ field: field.to_sym, errors: message }]
   end
 end

@@ -14,16 +14,19 @@ module EncodingHelper
 
     # return message if message type is binary
     detect = CharlockHolmes::EncodingDetector.detect(message)
-    return message.force_encoding('BINARY') if detect && detect[:type] == :binary
+    if detect && detect[:type] == :binary
+      return message.force_encoding('BINARY')
+    end
 
     # force detected encoding if we have sufficient confidence.
-    if detect && detect[:encoding] && detect[:confidence] > ENCODING_CONFIDENCE_THRESHOLD
+    if detect && detect[:encoding] &&
+       detect[:confidence] > ENCODING_CONFIDENCE_THRESHOLD
       message.force_encoding(detect[:encoding])
     end
 
     # encode and clean the bad chars
     message.replace clean(message)
-  rescue
+  rescue StandardError
     encoding = detect ? detect[:encoding] : 'unknown'
     "--broken encoding: #{encoding}"
   end
@@ -41,7 +44,7 @@ module EncodingHelper
 
   def clean(message)
     message.encode('UTF-16BE', undef: :replace, invalid: :replace, replace: '')
-           .encode('UTF-8')
-           .gsub("\0".encode('UTF-8'), '')
+      .encode('UTF-8')
+      .gsub("\0".encode('UTF-8'), '')
   end
 end

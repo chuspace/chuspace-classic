@@ -5,7 +5,9 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 
 # Prevent database truncation if the environment is production
-abort('The Rails environment is running in production mode!') if Rails.env.production?
+if Rails.env.production?
+  abort('The Rails environment is running in production mode!')
+end
 
 require 'rspec/rails'
 require 'shoulda/matchers'
@@ -15,7 +17,7 @@ require 'simplecov-lcov'
 SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
 SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
 SimpleCov.start 'rails' do
-  add_filter(/^\/spec|bin|db|config|views|javascript|lib\//)
+  add_filter(%r{^\/spec|bin|db|config|views|javascript|lib\/})
 end
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
@@ -49,9 +51,7 @@ RSpec.configure do |config|
     mocks.allow_message_expectations_on_nil = true
   end
 
-  config.before(:each, type: :system) do
-    driven_by :rack_test
-  end
+  config.before(:each, type: :system) { driven_by :rack_test }
 
   config.before(:each, type: :system, js: true) do
     driven_by :selenium_chrome_headless

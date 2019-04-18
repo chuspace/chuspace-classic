@@ -3,9 +3,7 @@
 module ParamsSanitizer
   extend ActiveSupport::Concern
 
-  included do
-    before_action :sanitize_params!
-  end
+  included { before_action :sanitize_params! }
 
   private
 
