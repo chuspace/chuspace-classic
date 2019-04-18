@@ -3,6 +3,8 @@
 class Blog < ApplicationRecord
   belongs_to :author, class_name: 'User'
 
+  enum visibility: { public: 0, private: 1, premium: 2 }
+
   before_create :create_repository
   before_save :rename_repository, if: -> { !new_record? && slug_changed? }
   before_destroy :destroy_repository

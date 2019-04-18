@@ -11,11 +11,13 @@ class Post < ApplicationRecord
   has_many :contributions
   has_many :collaborators
   has_many :contributors, through: :contributions, source: :contributor
+
   has_ancestry
 
   has_many_attached :images
 
-  enum status: { draft: 0, published: 0, archived: 1 }
+  enum status: { draft: 0, published: 1, archived: 2 }
+  enum visibility: { public: 0, private: 1, premium: 2 }
 
   validates_presence_of :title, :slug, :status
   validates_presence_of :blob_id, :commit_sha, on: :update

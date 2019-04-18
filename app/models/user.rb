@@ -23,6 +23,8 @@ class User < ApplicationRecord
   has_many :contributions, foreign_key: 'contributor_id'
   has_many :collaborations, class_name: 'Collaborator'
 
+  accepts_nested_attribute_for :blogs
+
   before_validation :normalize_email_and_nickname
 
   def blog
