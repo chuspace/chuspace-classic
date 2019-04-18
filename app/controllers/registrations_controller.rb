@@ -23,6 +23,6 @@ class RegistrationsController < ApplicationController
   end
 
   def create_params
-    params.require(:user).permit(:email, :name, :nickname)
+    params.require(:user).permit(:email, :name, :nickname, default_blog_attributes: %i[name])
   end
 end

@@ -2,7 +2,7 @@ class CreateBlogs < ActiveRecord::Migration[6.0]
   def change
     create_table :blogs do |t|
       # Content
-      t.string :title, null: false
+      t.string :name, null: false
       t.citext :slug, null: false
       t.text :introduction
 
@@ -10,13 +10,10 @@ class CreateBlogs < ActiveRecord::Migration[6.0]
       t.bigint :author_id, foreign_key: true
 
       # Flags
-      t.boolean :visibility, null: false, default: 0
+      t.string :visibility, default: 'public'
       t.boolean :default, null: false, default: false
 
       # Git
-      t.string :repo_name, null: false
-      t.string :repo_path, null: false
-      t.string :commit_sha, null: false
       t.string :version
 
       # Counters
@@ -29,7 +26,6 @@ class CreateBlogs < ActiveRecord::Migration[6.0]
     add_index :blogs, :author_id
     add_index :blogs, :repo_name
     add_index :blogs, :repo_path
-    add_index :blogs, :commit_sha
     add_index :blogs, :slug, unique: true
 
     # Counter indexes

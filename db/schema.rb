@@ -38,21 +38,19 @@ ActiveRecord::Schema.define(version: 2019_04_17_082803) do
   end
 
   create_table "blogs", force: :cascade do |t|
-    t.string "title", null: false
+    t.string "name", null: false
     t.citext "slug", null: false
     t.text "introduction"
     t.bigint "author_id"
-    t.boolean "visibility", default: false, null: false
+    t.string "visibility", default: "public"
     t.boolean "default", default: false, null: false
     t.string "repo_name", null: false
     t.string "repo_path", null: false
-    t.string "commit_sha", null: false
     t.string "version"
     t.bigint "posts_count", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["author_id"], name: "index_blogs_on_author_id"
-    t.index ["commit_sha"], name: "index_blogs_on_commit_sha"
     t.index ["posts_count"], name: "index_blogs_on_posts_count"
     t.index ["repo_name"], name: "index_blogs_on_repo_name"
     t.index ["repo_path"], name: "index_blogs_on_repo_path"
@@ -121,10 +119,9 @@ ActiveRecord::Schema.define(version: 2019_04_17_082803) do
     t.bigint "author_id", null: false
     t.datetime "published_at"
     t.string "ancestry"
-    t.boolean "visibility", default: false, null: false
+    t.string "visibility", default: "public"
     t.boolean "premium", default: false, null: false
     t.string "blob_id", null: false
-    t.string "commit_sha", null: false
     t.bigint "comments_count", default: 0
     t.bigint "recommends_count", default: 0
     t.bigint "bookmarks_count", default: 0
@@ -135,7 +132,6 @@ ActiveRecord::Schema.define(version: 2019_04_17_082803) do
     t.index ["blob_id"], name: "index_posts_on_blob_id"
     t.index ["bookmarks_count"], name: "index_posts_on_bookmarks_count"
     t.index ["comments_count"], name: "index_posts_on_comments_count"
-    t.index ["commit_sha"], name: "index_posts_on_commit_sha"
     t.index ["premium"], name: "index_posts_on_premium"
     t.index ["published_at"], name: "index_posts_on_published_at"
     t.index ["recommends_count"], name: "index_posts_on_recommends_count"

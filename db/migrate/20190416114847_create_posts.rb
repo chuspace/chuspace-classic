@@ -14,12 +14,11 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.string :ancestry
 
       # Flags
-      t.boolean :visibility, null: false, default: 0
+      t.string :visibility, default: 'public'
       t.boolean :premium, default: false, null: false
 
       # Git
       t.string :blob_id, null: false
-      t.string :commit_sha, null: false
 
       # Counters
       t.bigint :comments_count, default: 0
@@ -36,7 +35,6 @@ class CreatePosts < ActiveRecord::Migration[6.0]
     add_index :posts, :ancestry
     add_index :posts, :premium
     add_index :posts, :blob_id
-    add_index :posts, :commit_sha
     add_index :posts, :slug, unique: true
 
     # Counter indexes

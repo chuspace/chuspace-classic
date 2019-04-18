@@ -41,6 +41,18 @@
 
         <span class="alert alert-error mb-2 text-left" data-target='register.inputEmailError'></span>
 
+        <%= form.fields_for :default_blog do |blog| %>
+           <%= blog.text_field(
+            'name',
+            autocomplete: false,
+            placeholder: 'Blog name',
+            data: { target: 'register.inputBlogName' },
+            class: 'input input-bordered input-bordered-green block mb-2 mx-auto'
+          ) %>
+
+          <span class="alert alert-error mb-2 text-left" data-target='register.inputBlogNameError'></span>
+        <% end %>
+
         <%= form.submit('Submit', class: 'btn btn-black mt-4 mx-auto') %>
       <% end %>
 

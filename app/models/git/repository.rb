@@ -9,26 +9,29 @@ module Git
     class InvalidRef < StandardError; end
     class InvalidAuthor < StandardError; end
 
-    DEFAULT_NAME = 'blog.git'
     START_REF = 'HEAD'
     DEFAULT_REF = 'refs/heads/master'
     CONTRIBUTIONS_REF = 'refs/heads/contributions'
 
     attr_reader :author_nickname,
                 :name,
-                :full_name,
                 :path,
                 :rugged,
+                :storage_path,
                 :namespace_path
+
     delegate :lookup, :checkout, :empty?, :bare?, :index, to: :rugged
 
-    def initialize(author_nickname:, name: DEFAULT_NAME)
-      @author_nickname = author_nickname
+    def initialize(name:)
       @name = name
-      @full_name = "#{author_nickname}/#{name}"
-      @namespace_path =
-        Git.config.git_storage_path.join(author_nickname).tap(&:mkpath).to_s
-      @path = Git.config.git_storage_path.join(full_name).tap(&:mkpath).to_s
+      @author_nickname = name.split('/').first
+      @storage_path = Git.config.git_storage_path
+      @namespace_path = storage_path.join(author_nickname).tap(&:mkpath).to_s
+      @path = storage_path.join(name).tap(&:mkpath).to_s
+    end
+
+    def full_path_for(name:)
+      storage_path.join(name).tap(&:mkpath).to_s
     end
 
     def reload
@@ -117,8 +120,11 @@ module Git
       names.include?(DEFAULT_BRANCH) ? DEFAULT_BRANCH : names[0]
     end
 
-    def create
+    def create(author:)
       repo = Rugged::Repository.init_at(path, :bare)
+      repo.config['user.name'] = author.name
+      repo.config['user.email'] = author.email
+      repo.config['user.nickname'] = author.nickname
       repo.close
       true
     end
