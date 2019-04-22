@@ -15,9 +15,7 @@ class RemoteFileToBlobService
 
   def to_blob
     ActiveStorage::Blob.create_after_upload!(
-      io: file,
-      filename: file.original_filename,
-      content_type: file.content_type
+      io: file, filename: file.original_filename, content_type: file.content_type
     )
   end
 end

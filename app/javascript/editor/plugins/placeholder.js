@@ -27,9 +27,7 @@ export default class Placeholder extends Element {
       new Plugin({
         props: {
           decorations: ({ doc, plugins }) => {
-            const editablePlugin = plugins.find(plugin =>
-              plugin.key.startsWith('editable$')
-            )
+            const editablePlugin = plugins.find(plugin => plugin.key.startsWith('editable$'))
             const editable = editablePlugin.props.editable()
             const active = editable || !this.options.showOnlyWhenEditable
 
@@ -38,10 +36,7 @@ export default class Placeholder extends Element {
             }
 
             const decorations = []
-            const completelyEmpty =
-              doc.textContent === '' &&
-              doc.childCount <= 1 &&
-              doc.content.size <= 2
+            const completelyEmpty = doc.textContent === '' && doc.childCount <= 1 && doc.content.size <= 2
 
             doc.descendants((node, pos) => {
               if (!completelyEmpty) {

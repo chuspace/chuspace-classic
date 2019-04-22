@@ -42,9 +42,7 @@ export default class Image extends Node {
   commands({ type }: NodeType) {
     return (attrs: {}) => (state: EditorState, dispatch: Transaction) => {
       const { selection } = state
-      const position = selection.$cursor
-        ? selection.$cursor.pos
-        : selection.$to.pos
+      const position = selection.$cursor ? selection.$cursor.pos : selection.$to.pos
       const node = type.create(attrs)
       const transaction = state.tr.insert(position, node)
       dispatch(transaction)
@@ -57,18 +55,13 @@ export default class Image extends Node {
         props: {
           handleDOMEvents: {
             drop(view, event) {
-              const hasFiles =
-                event.dataTransfer &&
-                event.dataTransfer.files &&
-                event.dataTransfer.files.length
+              const hasFiles = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length
 
               if (!hasFiles) {
                 return
               }
 
-              const images = Array.from(event.dataTransfer.files).filter(file =>
-                /image/i.test(file.type)
-              )
+              const images = Array.from(event.dataTransfer.files).filter(file => /image/i.test(file.type))
 
               if (images.length === 0) {
                 return
@@ -89,10 +82,7 @@ export default class Image extends Node {
                   const node = schema.nodes.image.create({
                     src: readerEvent.target.result
                   })
-                  const transaction = view.state.tr.insert(
-                    coordinates.pos,
-                    node
-                  )
+                  const transaction = view.state.tr.insert(coordinates.pos, node)
                   view.dispatch(transaction)
                 }
                 reader.readAsDataURL(image)

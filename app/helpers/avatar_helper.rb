@@ -6,14 +6,10 @@ module AvatarHelper
     options[:size] = variant[:size]
 
     if user.avatar.blank?
-      options[:class] =
-        "avatar avatar-initials #{variant[:class]} #{options[:class]}".strip
+      options[:class] = "avatar avatar-initials #{variant[:class]} #{options[:class]}".strip
       content_tag(:div, user.initials, options.except(:size))
     else
-      url =
-        url_for(
-          user.avatar.variant(resize_to_fit: [variant[:size], variant[:size]])
-        )
+      url = url_for(user.avatar.variant(resize_to_fit: [variant[:size], variant[:size]]))
       options[:class] = "avatar #{options[:class]}".strip
       image_tag(url, options)
     end

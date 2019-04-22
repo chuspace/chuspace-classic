@@ -9,9 +9,7 @@ module Branchable
     branch = rugged.branches.create(ref, start_point)
     Git::Branch.new(self, branch.name, branch.target)
   rescue Rugged::ReferenceError => e
-    if e.to_s =~ %r{'refs\/heads\/#{ref}'}
-      raise InvalidRef.new("Git::Branch #{ref} already exists")
-    end
+    raise InvalidRef.new("Git::Branch #{ref} already exists") if e.to_s =~ %r{'refs\/heads\/#{ref}'}
     raise InvalidRef.new("Invalid reference #{start_point}")
   end
 
@@ -33,9 +31,7 @@ module Branchable
   end
 
   def local_branches
-    rugged.branches.each(:local).map do |branch|
-      Git::Branch.new(self, branch.name, branch.target)
-    end
+    rugged.branches.each(:local).map { |branch| Git::Branch.new(self, branch.name, branch.target) }
   end
 
   def branch_count

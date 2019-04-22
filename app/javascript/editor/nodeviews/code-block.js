@@ -24,17 +24,12 @@ class LanguageSwitcher {
     const name = e.target.value
 
     /* $FlowFixMe */
-    import(`codemirror/mode/${name}/${name}.js`).then(() =>
-      this.cm.setOption('mode', name)
-    )
+    import(`codemirror/mode/${name}/${name}.js`).then(() => this.cm.setOption('mode', name))
   }
   constructor(cm, language): el {
     this.cm = cm
     return (
-      <select
-        class="codemirror-language-switcher"
-        onchange={this.handleLanguageChange}
-      >
+      <select class="codemirror-language-switcher" onchange={this.handleLanguageChange}>
         <option selected>Select language</option>
         {languages.map(({ name }) => (
           <option value={name} selected={language === name}>
@@ -83,12 +78,7 @@ export default class CodeBlockView {
   incomingChanges: boolean
   node: ProsemirrorNode
 
-  constructor(
-    node: ProsemirrorNode,
-    view: EditorView,
-    schema: Schema,
-    getPos: () => number
-  ) {
+  constructor(node: ProsemirrorNode, view: EditorView, schema: Schema, getPos: () => number) {
     // Store for later
     this.node = node
     this.view = view
@@ -209,10 +199,7 @@ export default class CodeBlockView {
   setSelection(anchor: string, head: string): void {
     this.cm.focus()
     this.updating = true
-    this.cm.setSelection(
-      this.cm.posFromIndex(anchor),
-      this.cm.posFromIndex(head)
-    )
+    this.cm.setSelection(this.cm.posFromIndex(anchor), this.cm.posFromIndex(head))
     this.updating = false
   }
 
@@ -251,17 +238,14 @@ export default class CodeBlockView {
     if (
       this.cm.somethingSelected() ||
       pos.line !== (dir < 0 ? this.cm.firstLine() : this.cm.lastLine()) ||
-      (unit === 'char' &&
-        pos.ch !== (dir < 0 ? 0 : this.cm.getLine(pos.line).length))
+      (unit === 'char' && pos.ch !== (dir < 0 ? 0 : this.cm.getLine(pos.line).length))
     ) {
       return CodeMirror.Pass
     }
     this.view.focus()
     let targetPos = this.getPos() + (dir < 0 ? 0 : this.node.nodeSize)
     let selection = Selection.near(this.view.state.doc.resolve(targetPos), dir)
-    this.view.dispatch(
-      this.view.state.tr.setSelection(selection).scrollIntoView()
-    )
+    this.view.dispatch(this.view.state.tr.setSelection(selection).scrollIntoView())
     this.view.focus()
   }
 
@@ -277,11 +261,7 @@ export default class CodeBlockView {
     let change = computeChange(this.cm.getValue(), node.textContent)
     if (change) {
       this.updating = true
-      this.cm.replaceRange(
-        change.text,
-        this.cm.posFromIndex(change.from),
-        this.cm.posFromIndex(change.to)
-      )
+      this.cm.replaceRange(change.text, this.cm.posFromIndex(change.from), this.cm.posFromIndex(change.to))
       this.updating = false
     }
     return true
@@ -303,17 +283,10 @@ function computeChange(oldVal: string, newVal: string) {
   let oldEnd = oldVal.length
 
   let newEnd = newVal.length
-  while (
-    start < oldEnd &&
-    oldVal.charCodeAt(start) === newVal.charCodeAt(start)
-  ) {
+  while (start < oldEnd && oldVal.charCodeAt(start) === newVal.charCodeAt(start)) {
     ++start
   }
-  while (
-    oldEnd > start &&
-    newEnd > start &&
-    oldVal.charCodeAt(oldEnd - 1) === newVal.charCodeAt(newEnd - 1)
-  ) {
+  while (oldEnd > start && newEnd > start && oldVal.charCodeAt(oldEnd - 1) === newVal.charCodeAt(newEnd - 1)) {
     oldEnd--
     newEnd--
   }

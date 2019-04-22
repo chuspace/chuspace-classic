@@ -2,7 +2,8 @@ class CreateTags < ActiveRecord::Migration[6.0]
   def change
     create_table :tags do |t|
       # Content
-      t.string :name, null: false
+      t.string :name,
+                        null: false
       t.citext :slug, null: false
 
       t.timestamps

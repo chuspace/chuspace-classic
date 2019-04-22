@@ -22,15 +22,8 @@ module Posts
             committer: committer,
             action: post.filename_was.blank? ? :update : :rename,
             options: {
-              commit: {
-                message:
-                  params[:commit_message] || "Updated post #{post.filename}"
-              },
-              file: {
-                content: post.raw_content,
-                path: post.filename,
-                previous_path: post.filename_was
-              }
+              commit: { message: params[:commit_message] || "Updated post #{post.filename}" },
+              file: { content: post.raw_content, path: post.filename, previous_path: post.filename_was }
             }
           )
 
@@ -43,17 +36,7 @@ module Posts
     private
 
     def post_params
-      params.permit(
-        :title,
-        :excerpt,
-        :filename,
-        :status,
-        :tags,
-        :slug,
-        :content,
-        :tags,
-        :published_at
-      )
+      params.permit(:title, :excerpt, :filename, :status, :tags, :slug, :content, :tags, :published_at)
     end
   end
 end

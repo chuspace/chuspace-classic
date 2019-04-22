@@ -18,8 +18,7 @@ export default class HorizontalRule extends Node {
   }
 
   commands({ type }: NodeType) {
-    return () => (state: EditorState, dispatch: Transaction) =>
-      dispatch(state.tr.replaceSelectionWith(type.create()))
+    return () => (state: EditorState, dispatch: Transaction) => dispatch(state.tr.replaceSelectionWith(type.create()))
   }
 
   inputRules({ type }: NodeType) {

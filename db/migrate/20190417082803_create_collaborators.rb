@@ -2,7 +2,8 @@ class CreateCollaborators < ActiveRecord::Migration[6.0]
   def change
     create_table :collaborators do |t|
       # Post and user
-      t.bigint :post_id, foreign_key: true
+      t.bigint :post_id,
+                              foreign_key: true
       t.bigint :user_id, foreign_key: true
 
       t.timestamps

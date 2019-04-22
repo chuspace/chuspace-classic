@@ -45,12 +45,7 @@ module Git
       def find(repo, commit_id = 'HEAD')
         return Commit.new(commit_id) if commit_id.is_a?(Rugged::Commit)
 
-        obj =
-          if commit_id.is_a?(String)
-            repo.rev_parse_target(commit_id)
-          else
-            Branch.dereference_object(commit_id)
-          end
+        obj = commit_id.is_a?(String) ? repo.rev_parse_target(commit_id) : Branch.dereference_object(commit_id)
 
         return nil unless obj.is_a?(Rugged::Commit)
 
@@ -87,11 +82,7 @@ module Git
         author_hash = { name: author.name, email: author.email, time: Time.now }
 
         committer_hash =
-          if committer.blank?
-            author_hash
-          else
-            { name: committer.name, email: committer.email, time: Time.now }
-          end
+          committer.blank? ? author_hash : { name: committer.name, email: committer.email, time: Time.now }
 
         branch = 'refs/heads/' + branch unless branch.start_with?('refs/')
 
@@ -99,9 +90,7 @@ module Git
 
         unless repository.empty?
           rugged_ref = rugged.references[branch]
-          unless rugged_ref
-            raise Repository::InvalidRef.new('Invalid branch name')
-          end
+          raise Repository::InvalidRef.new('Invalid branch name') unless rugged_ref
           last_commit = rugged_ref.target
           repository.index.read_tree(last_commit.tree)
           parents = [last_commit]

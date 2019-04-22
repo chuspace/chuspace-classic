@@ -2,7 +2,8 @@ class CreateReactions < ActiveRecord::Migration[6.0]
   def change
     create_table :reactions do |t|
       # Content
-      t.text :text, null: false
+      t.text :text,
+                      null: false
 
       # Author and comment
       t.bigint :author_id, foreign_key: true, null: false

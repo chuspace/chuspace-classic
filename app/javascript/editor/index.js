@@ -132,8 +132,7 @@ export default class Editor {
       state: this.state,
       dispatchTransaction: this.dispatchTransaction.bind(this),
       nodeViews: {
-        code_block: (node, view, getPos) =>
-          new CodeBlockView(node, view, this.schema, getPos)
+        code_block: (node, view, getPos) => new CodeBlockView(node, view, this.schema, getPos)
       }
     })
 
@@ -141,13 +140,9 @@ export default class Editor {
     view.dom.classList = ''
     view.dom.classList.add('chu-editor')
 
-    view.dom.addEventListener('focus', event =>
-      view.dom.classList.add('focused')
-    )
+    view.dom.addEventListener('focus', event => view.dom.classList.add('focused'))
 
-    view.dom.addEventListener('blur', event =>
-      view.dom.classList.remove('focused')
-    )
+    view.dom.addEventListener('blur', event => view.dom.classList.remove('focused'))
 
     return view
   }
@@ -220,9 +215,7 @@ export default class Editor {
 
   getHTML() {
     const div = document.createElement('div')
-    const fragment = DOMSerializer.fromSchema(this.schema).serializeFragment(
-      this.state.doc.content
-    )
+    const fragment = DOMSerializer.fromSchema(this.schema).serializeFragment(this.state.doc.content)
 
     div.appendChild(fragment)
 

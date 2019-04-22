@@ -13,12 +13,7 @@ module Git
     DEFAULT_REF = 'refs/heads/master'
     CONTRIBUTIONS_REF = 'refs/heads/contributions'
 
-    attr_reader :author_nickname,
-                :name,
-                :path,
-                :rugged,
-                :storage_path,
-                :namespace_path
+    attr_reader :author_nickname, :name, :path, :rugged, :storage_path, :namespace_path
 
     delegate :lookup, :checkout, :empty?, :bare?, :index, to: :rugged
 
@@ -130,8 +125,7 @@ module Git
     end
 
     def destroy
-      Rails
-        .logger.info "Removing repository for <#{name}> from <#{namespace_path}>."
+      Rails.logger.info "Removing repository for <#{name}> from <#{namespace_path}>."
       FileUtils.rm_rf(namespace_path)
       true
     end

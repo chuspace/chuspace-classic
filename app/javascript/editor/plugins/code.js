@@ -42,9 +42,7 @@ export default class Code extends Element {
                   const node = schema.nodes.code_block.create({ language })
                   tr.replaceWith(pos - matches[0].length - 1, pos, node)
 
-                  view.dispatch(
-                    tr.setMeta(this, { transform: tr, from, to, text })
-                  )
+                  view.dispatch(tr.setMeta(this, { transform: tr, from, to, text }))
 
                   return true
                 }

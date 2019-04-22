@@ -194,18 +194,7 @@ module Git
     end
 
     def serialize_keys
-      @serialize_keys ||=
-        %i[
-          diff
-          new_path
-          old_path
-          a_mode
-          b_mode
-          new_file
-          renamed_file
-          deleted_file
-          too_large
-        ]
+      @serialize_keys ||= %i[diff new_path old_path a_mode b_mode new_file renamed_file deleted_file too_large]
     end
 
     def to_hash

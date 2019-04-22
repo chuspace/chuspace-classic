@@ -2,7 +2,8 @@ class CreateTagRelationships < ActiveRecord::Migration[6.0]
   def change
     create_table :tag_relationships do |t|
       # Follower and followed
-      t.bigint :follower_id, foreign_key: true, null: false
+      t.bigint :follower_id,
+                                      foreign_key: true, null: false
       t.bigint :tag_id, foreign_key: true, null: false
 
       t.timestamps

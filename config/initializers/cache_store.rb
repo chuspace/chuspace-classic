@@ -16,9 +16,7 @@ Rails.application.configure do
         namespace: 'cache',
         compress: true,
         compression_threshold: 2.kilobytes,
-        redis: {
-          url: ENV.fetch('REDIS_URL', 'localhost:6739'), driver: :hiredis
-        }
+        redis: { url: ENV.fetch('REDIS_URL', 'localhost:6739'), driver: :hiredis }
       }
   end
 end

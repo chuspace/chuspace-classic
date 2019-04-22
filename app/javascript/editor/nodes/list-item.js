@@ -1,10 +1,6 @@
 // @flow
 
-import {
-  liftListItem,
-  sinkListItem,
-  splitListItem
-} from 'prosemirror-schema-list'
+import { liftListItem, sinkListItem, splitListItem } from 'prosemirror-schema-list'
 
 import { Node } from 'editor/utils'
 import type { NodeType } from 'editor/utils'

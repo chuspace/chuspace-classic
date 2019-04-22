@@ -6,12 +6,7 @@ class CheckNicknamesController < ApplicationController
 
     if user
       render json: {
-               available: false,
-               errors:
-                 errors_for(
-                   :nickname,
-                   t('.check_nickname.taken', nickname: params[:nickname])
-                 )
+               available: false, errors: errors_for(:nickname, t('.check_nickname.taken', nickname: params[:nickname]))
              }
     else
       new_user = User.new(nickname: params[:nickname])
@@ -19,9 +14,7 @@ class CheckNicknamesController < ApplicationController
       if new_user.valid_attributes?(:nickname)
         render json: { available: true }
       else
-        render json: {
-                 available: false, errors: new_user.api_validation_errors
-               }
+        render json: { available: false, errors: new_user.api_validation_errors }
       end
     end
   end

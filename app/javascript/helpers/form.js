@@ -9,12 +9,7 @@ type Error = {
 
 const withForm = (BaseForm: Controller) =>
   class extends BaseForm {
-    static targets = [
-      'form',
-      'formSuccess',
-      ...BaseForm.inputs,
-      ...BaseForm.errors
-    ]
+    static targets = ['form', 'formSuccess', ...BaseForm.inputs, ...BaseForm.errors]
 
     onFormSubmit(event: window.CustomEvent) {
       const [data] = event.detail

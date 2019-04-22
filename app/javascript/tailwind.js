@@ -161,15 +161,7 @@ module.exports = {
       'Georgia',
       'sans-serif'
     ],
-    mono: [
-      'Fira Code',
-      'Menlo',
-      'Monaco',
-      'Consolas',
-      'Liberation Mono',
-      'Courier New',
-      'monospace'
-    ]
+    mono: ['Fira Code', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace']
   },
 
   /*

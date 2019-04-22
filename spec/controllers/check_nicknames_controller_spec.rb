@@ -15,12 +15,7 @@ RSpec.describe CheckNicknamesController, type: :controller do
 
       expect(JSON.parse(response.body)['available']).to be_falsy
       expect(JSON.parse(response.body)['errors']).to eq(
-        [
-          {
-            'errors' => 'Oops! doe is already taken.',
-            'field' => 'nickname'
-          }
-        ]
+                  [{ 'errors' => 'Oops! doe is already taken.', 'field' => 'nickname' }]
                 )
     end
 
@@ -29,13 +24,13 @@ RSpec.describe CheckNicknamesController, type: :controller do
 
       expect(JSON.parse(response.body)['available']).to be_falsy
       expect(JSON.parse(response.body)['errors']).to eq(
-        [
-          {
-            'errors' =>
-              'Nickname may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen',
-            'field' => 'nickname'
-          }
-        ]
+                  [
+                    {
+                      'errors' =>
+                        'Nickname may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen',
+                      'field' => 'nickname'
+                    }
+                  ]
                 )
     end
 
@@ -44,13 +39,13 @@ RSpec.describe CheckNicknamesController, type: :controller do
 
       expect(JSON.parse(response.body)['available']).to be_falsy
       expect(JSON.parse(response.body)['errors']).to eq(
-        [
-          {
-            'errors' =>
-              'Nickname may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen',
-            'field' => 'nickname'
-          }
-        ]
+                  [
+                    {
+                      'errors' =>
+                        'Nickname may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen',
+                      'field' => 'nickname'
+                    }
+                  ]
                 )
     end
 

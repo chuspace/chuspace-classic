@@ -11,10 +11,7 @@ module Posts
         repository: author.blog,
         author: author,
         action: :remove,
-        options: {
-          commit: { message: "Deleted #{post.filename}" },
-          file: { path: post.filename }
-        }
+        options: { commit: { message: "Deleted #{post.filename}" }, file: { path: post.filename } }
       )
     end
   end

@@ -12,11 +12,7 @@ module Git
     class DisallowedCommandError < StandardError; end
     class InvalidRepositoryPathError < StandardError; end
 
-    GIT_COMMANDS = %w[
-      git-upload-pack
-      git-receive-pack
-      git-upload-archive
-    ].freeze
+    GIT_COMMANDS = %w[git-upload-pack git-receive-pack git-upload-archive].freeze
     BINARY = 'git_shell'
     GIT_PROTOCOL = 'ssh'.freeze
 
@@ -47,15 +43,13 @@ module Git
 
       true
     rescue AccessDeniedError => ex
-      message =
-        "remote: Access denied for git command <#{origin_cmd}> by #{log_username}."
+      message = "remote: Access denied for git command <#{origin_cmd}> by #{log_username}."
       Rails.logger.warn message
 
       $stderr.puts ex.message
       false
     rescue DisallowedCommandError => ex
-      message =
-        "remote: Attempt to execute disallowed command <#{origin_cmd}> by #{log_username}."
+      message = "remote: Attempt to execute disallowed command <#{origin_cmd}> by #{log_username}."
       Rails.logger.warn message
 
       $stderr.puts 'remote: Disallowed command'
@@ -81,8 +75,7 @@ module Git
     end
 
     def process_cmd(args)
-      Rails
-        .logger.info "executing git command <#{@command} #{repo_path}> for #{log_username}."
+      Rails.logger.info "executing git command <#{@command} #{repo_path}> for #{log_username}."
       exec_cmd(@command, repo_path)
     end
 
@@ -91,9 +84,7 @@ module Git
       # If you want to call a command without arguments, use
       # exec_cmd(['my_command', 'my_command']) . Otherwise use
       # exec_cmd('my_command', 'my_argument', ...).
-      if args.count == 1 && !args.first.is_a?(Array)
-        raise DisallowedCommandError
-      end
+      raise DisallowedCommandError if args.count == 1 && !args.first.is_a?(Array)
 
       env = {
         'HOME' => ENV['HOME'],
@@ -109,17 +100,13 @@ module Git
 
     def ssh_key
       @ssh_key ||= SshKey.find_by(id: key_id.split('-').last)
-      if @ssh_key.blank?
-        raise AccessDeniedError, 'remote: Ssh key not found on server'
-      end
+      raise AccessDeniedError, 'remote: Ssh key not found on server' if @ssh_key.blank?
       @ssh_key
     end
 
     def user
       @user ||= ssh_key&.user
-      if @user.blank?
-        raise AccessDeniedError, 'remote: User not found for your ssh key'
-      end
+      raise AccessDeniedError, 'remote: User not found for your ssh key' if @user.blank?
       @user
     end
 
@@ -135,12 +122,9 @@ module Git
 
     def repo_path=(repo_path)
       unless repo_path
-        raise ArgumentError,
-              "Repository path not provided. Please make sure you're using Git v8.10 or later."
+        raise ArgumentError, "Repository path not provided. Please make sure you're using Git v8.10 or later."
       end
-      if File.absolute_path(repo_path) != repo_path
-        raise InvalidRepositoryPathError
-      end
+      raise InvalidRepositoryPathError if File.absolute_path(repo_path) != repo_path
 
       @repo_path = repo_path
     end

@@ -30,9 +30,7 @@ class SshKey < ApplicationRecord
   private
 
   def assign_fingerprint
-    if key && SSHKey.valid_ssh_public_key?(key)
-      self.fingerprint = SSHKey.fingerprint(key)
-    end
+    self.fingerprint = SSHKey.fingerprint(key) if key && SSHKey.valid_ssh_public_key?(key)
   end
 
   def ssh_key_format

@@ -6,15 +6,7 @@ module Git
 
     MAX_DATA_DISPLAY_SIZE = 10485760
 
-    attr_accessor :name,
-                  :path,
-                  :size,
-                  :content,
-                  :mode,
-                  :id,
-                  :commit_sha,
-                  :binary,
-                  :author_nickname
+    attr_accessor :name, :path, :size, :content, :mode, :id, :commit_sha, :binary, :author_nickname
 
     class << self
       def find(repository, commit_sha, name)
@@ -66,17 +58,9 @@ module Git
     end
 
     def initialize(options)
-      %w[
-        id
-        name
-        path
-        size
-        content
-        mode
-        commit_sha
-        author_nickname
-        binary
-      ].each { |key| self.send("#{key}=", options[key.to_sym]) }
+      %w[id name path size content mode commit_sha author_nickname binary].each do |key|
+        self.send("#{key}=", options[key.to_sym])
+      end
     end
 
     def binary?

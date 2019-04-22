@@ -18,10 +18,7 @@ module Posts
           repository: author.blog,
           author: author,
           options: {
-            commit: {
-              message:
-                params[:commit_message] || "Created post #{post.filename}"
-            },
+            commit: { message: params[:commit_message] || "Created post #{post.filename}" },
             file: { content: post.raw_content, path: post.filename }
           }
         )
@@ -32,17 +29,7 @@ module Posts
     private
 
     def post_params
-      params.permit(
-        :title,
-        :excerpt,
-        :filename,
-        :status,
-        :tags,
-        :slug,
-        :content,
-        :tags,
-        :published_at
-      )
+      params.permit(:title, :excerpt, :filename, :status, :tags, :slug, :content, :tags, :published_at)
     end
   end
 end

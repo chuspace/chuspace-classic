@@ -22,10 +22,7 @@ export default function(pos: ?ResolvedPos = null, type: ?ResolvedPos = null) {
   let startIndex = pos.index()
   let startPos = pos.start() + start.offset
 
-  while (
-    startIndex > 0 &&
-    link.isInSet(pos.parent.child(startIndex - 1).marks)
-  ) {
+  while (startIndex > 0 && link.isInSet(pos.parent.child(startIndex - 1).marks)) {
     startIndex -= 1
     startPos -= pos.parent.child(startIndex).nodeSize
   }

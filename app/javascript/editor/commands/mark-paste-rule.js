@@ -5,11 +5,7 @@ import { Fragment, Slice } from 'prosemirror-model'
 import { Mark } from 'editor/utils'
 import { Plugin } from 'prosemirror-state'
 
-export default function(
-  regexp: RegExp,
-  markType: Mark,
-  getAttrs: Function | {}
-) {
+export default function(regexp: RegExp, markType: Mark, getAttrs: Function | {}) {
   const handler = fragment => {
     const nodes = []
 
@@ -26,8 +22,7 @@ export default function(
             const end = start + match[0].length
             const textStart = start + match[0].indexOf(match[1])
             const textEnd = textStart + match[1].length
-            const attrs =
-              getAttrs instanceof Function ? getAttrs(match) : getAttrs
+            const attrs = getAttrs instanceof Function ? getAttrs(match) : getAttrs
 
             // adding text before markdown to nodes
             if (start > 0) {
@@ -35,11 +30,7 @@ export default function(
             }
 
             // adding the markdown part to nodes
-            nodes.push(
-              child
-                .cut(textStart, textEnd)
-                .mark(markType.create(attrs).addToSet(child.marks))
-            )
+            nodes.push(child.cut(textStart, textEnd).mark(markType.create(attrs).addToSet(child.marks)))
 
             pos = end
           }
@@ -59,8 +50,7 @@ export default function(
 
   return new Plugin({
     props: {
-      transformPasted: slice =>
-        new Slice(handler(slice.content), slice.openStart, slice.openEnd)
+      transformPasted: slice => new Slice(handler(slice.content), slice.openStart, slice.openEnd)
     }
   })
 }
