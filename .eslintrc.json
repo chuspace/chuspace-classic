@@ -4,7 +4,7 @@
     "es6": true,
     "jest": true
   },
-  "plugins": ["flowtype"],
+  "plugins": ["flowtype", "prettier"],
   "parser": "babel-eslint",
   "globals": {
     "URLSearchParams": true,

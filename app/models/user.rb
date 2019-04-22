@@ -11,7 +11,6 @@ class User < ApplicationRecord
 
   has_many :ssh_keys, dependent: :destroy
   has_many :posts, dependent: :destroy
-  has_one :default_blog, -> { where(default: true) }, foreign_key: 'author_id', class_name: 'Blog', required: true
   has_many :blogs, foreign_key: 'author_id', dependent: :destroy
   has_many :user_relationships, foreign_key: 'follower_id', dependent: :destroy
   has_many :followers, through: :user_relationships, source: :follower
@@ -20,14 +19,11 @@ class User < ApplicationRecord
   has_many :taggings, through: :tag_relationships, source: :follower
   has_many :contributions, foreign_key: 'contributor_id'
   has_many :collaborations, class_name: 'Collaborator'
+  has_one :default_blog, -> { where(default: true) }, foreign_key: 'author_id', class_name: 'Blog', required: true
 
   accepts_nested_attributes_for :default_blog
 
   before_validation :normalize_email_and_nickname
-
-  def blog
-    blogs.first
-  end
 
   def to_param
     nickname

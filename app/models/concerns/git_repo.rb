@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module GitRepo
   extend ActiveSupport::Concern
 
@@ -22,7 +24,7 @@ module GitRepo
   end
 
   def rename_repository(record)
-    repo.rename(record.repo_name)
+    repo.rename(new_name: record.repo_name)
   end
 
   def destroy_repository

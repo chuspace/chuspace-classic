@@ -32,3 +32,6 @@ en:
 
   check_nickname:
     taken: Oops! %{nickname} is already taken.
+
+  check_email:
+    taken: Oops! %{email} is already taken.

@@ -130,7 +130,8 @@ module Git
       true
     end
 
-    def rename(new_path)
+    def rename(new_name:)
+      new_path = full_path_for(name: new_name)
       Rails.logger.info "Moving repository from #{path} to <#{new_path}>."
       FileUtils.mv(path, new_path)
     end

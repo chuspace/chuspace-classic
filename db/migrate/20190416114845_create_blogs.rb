@@ -14,9 +14,6 @@ class CreateBlogs < ActiveRecord::Migration[6.0]
       t.string :visibility, default: 'public'
       t.boolean :default, null: false, default: false
 
-      # Git
-      t.string :version
-
       # Counters
       t.bigint :posts_count, null: false, default: 0
 
@@ -25,9 +22,7 @@ class CreateBlogs < ActiveRecord::Migration[6.0]
 
     # Indexes
     add_index :blogs, :author_id
-    add_index :blogs, :repo_name
-    add_index :blogs, :repo_path
-    add_index :blogs, :slug, unique: true
+    add_index :blogs, %i[slug author_id], unique: true
 
     # Counter indexes
     add_index :blogs, :posts_count

@@ -43,17 +43,12 @@ ActiveRecord::Schema.define(version: 2019_04_17_082803) do
     t.bigint 'author_id'
     t.string 'visibility', default: 'public'
     t.boolean 'default', default: false, null: false
-    t.string 'repo_name', null: false
-    t.string 'repo_path', null: false
-    t.string 'version'
     t.bigint 'posts_count', default: 0, null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
     t.index %w[author_id], name: 'index_blogs_on_author_id'
     t.index %w[posts_count], name: 'index_blogs_on_posts_count'
-    t.index %w[repo_name], name: 'index_blogs_on_repo_name'
-    t.index %w[repo_path], name: 'index_blogs_on_repo_path'
-    t.index %w[slug], name: 'index_blogs_on_slug', unique: true
+    t.index %w[slug author_id], name: 'index_blogs_on_slug_and_author_id', unique: true
   end
 
   create_table 'bookmarks', force: :cascade do |t|

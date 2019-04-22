@@ -3,10 +3,9 @@
 class RegistrationsController < ApplicationController
   before_action :redirect_if_registered
 
-  def index; end
-
   def create
     user = User.new(create_params)
+    user.build_default_blog(author: user, name: Blog::DEFAULT_NAME, default: true)
 
     if user.save
       LoginMailer.with(user: user).send_magic_login.deliver_later
@@ -23,6 +22,6 @@ class RegistrationsController < ApplicationController
   end
 
   def create_params
-    params.require(:user).permit(:email, :name, :nickname, default_blog_attributes: %i[name])
+    params.require(:user).permit(:email, :name, :nickname)
   end
 end

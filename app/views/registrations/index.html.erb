@@ -1,4 +1,4 @@
-<div data-controller='register' class='centered mt-10'>
+<div data-controller='register check-nicknames check-emails' class='centered mt-10'>
   <div class='card max-w-sm text-center'>
     <h2 class='card-title'>Sign up</h2>
 
@@ -24,34 +24,22 @@
           'nickname',
           autocomplete: 'nickname',
           placeholder: 'Nickname',
-          data: { target: 'register.inputNickname' },
+          data: { target: 'register.inputNickname check-nicknames.inputNickname', action: "input->check-nicknames#call", url: check_nicknames_path },
           class: 'input input-bordered input-bordered-green block mb-2 mx-auto'
         ) %>
 
-        <span class="alert alert-error mb-2 text-left" data-target='register.inputNicknameError'></span>
+        <span class="alert alert-error mb-2 text-left" data-target='register.inputNicknameError check-nicknames.inputNicknameError'></span>
 
         <%= form.text_field(
           'email',
           autocomplete: 'email',
           placeholder: 'Email',
-          data: { target: 'register.inputEmail' },
+          data: { target: 'register.inputEmail check-emails.inputEmail', action: "input->check-emails#call", url: check_emails_path },
           class: 'input input-bordered input-bordered-green block mb-2 mx-auto',
           type: 'email'
         ) %>
 
-        <span class="alert alert-error mb-2 text-left" data-target='register.inputEmailError'></span>
-
-        <%= form.fields_for :default_blog do |blog| %>
-           <%= blog.text_field(
-            'name',
-            autocomplete: false,
-            placeholder: 'Blog name',
-            data: { target: 'register.inputBlogName' },
-            class: 'input input-bordered input-bordered-green block mb-2 mx-auto'
-          ) %>
-
-          <span class="alert alert-error mb-2 text-left" data-target='register.inputBlogNameError'></span>
-        <% end %>
+        <span class="alert alert-error mb-2 text-left" data-target='register.inputEmailError check-emails.inputEmailError'></span>
 
         <%= form.submit('Submit', class: 'btn btn-black mt-4 mx-auto') %>
       <% end %>

@@ -3,8 +3,10 @@
 class Blog < ApplicationRecord
   include GitRepo
 
+  DEFAULT_NAME = 'Blog'
+
   validates :name, :slug, :repo_name, presence: true
-  validates_uniqueness_of :slug
+  validates_uniqueness_of :slug, scope: :author_id
 
   belongs_to :author, class_name: 'User'
 
