@@ -30,6 +30,9 @@ en:
     email_not_found: We couldn't find that email. Perhaps you mispelled it?
     success: We have sent you an email with login link.
 
+  magic_login:
+    expired: Login link expired! Please request a new one.
+
   check_nickname:
     taken: Oops! %{nickname} is already taken.
 

@@ -10,7 +10,7 @@ module GitRepo
   end
 
   def repo_name
-    "#{author.nickname}/#{name}.git".freeze
+    "#{author.nickname}/#{slug}.git".freeze
   end
 
   def repo

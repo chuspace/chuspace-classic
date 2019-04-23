@@ -18,7 +18,7 @@
           class: 'input input-bordered input-bordered-green block mb-2 mx-auto'
         ) %>
 
-        <span class="alert alert-error mb-2 text-left" data-target='register.inputNameError'></span>
+        <span class="alert alert-error mb-2 text-left text-xs" data-target='register.inputNameError'></span>
 
         <%= form.text_field(
           'nickname',
@@ -28,18 +28,18 @@
           class: 'input input-bordered input-bordered-green block mb-2 mx-auto'
         ) %>
 
-        <span class="alert alert-error mb-2 text-left" data-target='register.inputNicknameError check-nicknames.inputNicknameError'></span>
+        <span class="alert alert-error mb-2 text-left text-xs" data-target='register.inputNicknameError check-nicknames.inputNicknameError'></span>
 
         <%= form.text_field(
           'email',
           autocomplete: 'email',
           placeholder: 'Email',
-          data: { target: 'register.inputEmail check-emails.inputEmail', action: "input->check-emails#call", url: check_emails_path },
+          data: { target: 'register.inputEmail check-emails.inputEmail', action: "blur->check-emails#call", url: check_emails_path },
           class: 'input input-bordered input-bordered-green block mb-2 mx-auto',
           type: 'email'
         ) %>
 
-        <span class="alert alert-error mb-2 text-left" data-target='register.inputEmailError check-emails.inputEmailError'></span>
+        <span class="alert alert-error mb-2 text-left text-xs" data-target='register.inputEmailError check-emails.inputEmailError'></span>
 
         <%= form.submit('Submit', class: 'btn btn-black mt-4 mx-auto') %>
       <% end %>

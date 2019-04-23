@@ -6,6 +6,7 @@ class RegistrationsController < ApplicationController
   def create
     user = User.new(create_params)
     user.build_default_blog(author: user, name: Blog::DEFAULT_NAME, default: true)
+    user.update_tracked_fields(request)
 
     if user.save
       LoginMailer.with(user: user).send_magic_login.deliver_later
