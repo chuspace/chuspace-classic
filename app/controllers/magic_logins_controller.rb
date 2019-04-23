@@ -9,9 +9,9 @@ class MagicLoginsController < ApplicationController
       user.update_tracked_fields!(request)
       user.regenerate_auth_token
 
-      redirect_to_back_or_default
+      redirect_to root_url
     else
-      redirect_to sessions_path, notice: t('.magic_login.expired')
+      redirect_to sessions_url, notice: t('.magic_login.expired')
     end
   end
 end
