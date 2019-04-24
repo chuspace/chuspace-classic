@@ -5,7 +5,7 @@ class PostsController < ApplicationController
   layout 'editor', only: :new
 
   def create
-    Posts::Create.call(author: author, params: params)
+    Posts::Create.call(blog: Current.user.default_blog,  params: params)
   end
 
   def update

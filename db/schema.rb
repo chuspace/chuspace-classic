@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2019_04_17_082803) do
     t.citext "slug", null: false
     t.text "introduction"
     t.bigint "author_id"
+    t.integer "status", default: 0, null: false
     t.string "visibility", default: "public"
     t.boolean "default", default: false, null: false
     t.bigint "posts_count", default: 0, null: false
@@ -50,6 +51,7 @@ ActiveRecord::Schema.define(version: 2019_04_17_082803) do
     t.index ["author_id"], name: "index_blogs_on_author_id"
     t.index ["posts_count"], name: "index_blogs_on_posts_count"
     t.index ["slug", "author_id"], name: "index_blogs_on_slug_and_author_id", unique: true
+    t.index ["status"], name: "index_blogs_on_status"
   end
 
   create_table "bookmarks", force: :cascade do |t|
@@ -112,7 +114,9 @@ ActiveRecord::Schema.define(version: 2019_04_17_082803) do
     t.text "excerpt"
     t.text "body"
     t.bigint "author_id", null: false
+    t.bigint "blog_id", null: false
     t.datetime "published_at"
+    t.integer "status", default: 0, null: false
     t.string "ancestry"
     t.string "visibility", default: "public"
     t.boolean "premium", default: false, null: false
@@ -125,12 +129,14 @@ ActiveRecord::Schema.define(version: 2019_04_17_082803) do
     t.index ["ancestry"], name: "index_posts_on_ancestry"
     t.index ["author_id"], name: "index_posts_on_author_id"
     t.index ["blob_id"], name: "index_posts_on_blob_id"
+    t.index ["blog_id"], name: "index_posts_on_blog_id"
     t.index ["bookmarks_count"], name: "index_posts_on_bookmarks_count"
     t.index ["comments_count"], name: "index_posts_on_comments_count"
     t.index ["premium"], name: "index_posts_on_premium"
     t.index ["published_at"], name: "index_posts_on_published_at"
     t.index ["recommends_count"], name: "index_posts_on_recommends_count"
-    t.index ["slug"], name: "index_posts_on_slug", unique: true
+    t.index ["slug", "blog_id"], name: "index_posts_on_slug_and_blog_id", unique: true
+    t.index ["status"], name: "index_posts_on_status"
     t.index ["visibility"], name: "index_posts_on_visibility"
   end
 

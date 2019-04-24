@@ -1,8 +1,8 @@
 <header>
   <nav class='flex justify-between items-center py-6'>
-    <div class='logo icon'>
-      <%= link_to 'C', root_path, class: 'link link-white' %>
-    </div>
+    <%= link_to root_path, class: 'link link-white' do %>
+      <div class='logo icon'>C</div>
+    <% end %>
 
     <% if Current.user.present? %>
       <%= render 'header/user'  %>

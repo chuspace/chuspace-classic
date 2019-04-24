@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PeopleController < ApplicationController
+class UsersController < ApplicationController
   before_action :find_user, only: :show
 
   def show; end
@@ -18,7 +18,7 @@ class PeopleController < ApplicationController
   private
 
   def update_params
-    params.require(:user).permit(:email, :name, :bio, :url, :location, :company)
+    params.require(:user).permit(:email, :name, :bio, :url, :location, :company, :avatar)
   end
 
   def find_user

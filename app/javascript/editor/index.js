@@ -2,19 +2,19 @@ import * as marks from 'editor/marks'
 import * as nodes from 'editor/nodes'
 import * as plugins from 'editor/plugins'
 
-import { DOMSerializer, Schema } from 'prosemirror-model'
 import { EditorState, Plugin, PluginKey } from 'prosemirror-state'
 import { baseKeymap, selectParentNode } from 'prosemirror-commands'
 import { getMarkAttrs, isMarkActive, isNodeActive } from 'editor/helpers'
 import { inputRules, undoInputRule } from 'prosemirror-inputrules'
+import { markdownParser, markdownSerializer } from 'editor/markdown'
 
 import CodeBlockView from 'editor/nodeviews/code-block'
 import { EditorView } from 'prosemirror-view'
 import { ElementManager } from 'editor/utils'
+import { Schema } from 'prosemirror-model'
 import { dropCursor } from 'prosemirror-dropcursor'
 import { gapCursor } from 'prosemirror-gapcursor'
 import { keymap } from 'prosemirror-keymap'
-import { markdownParser } from 'editor/markdown'
 import toArray from 'lodash/toArray'
 
 export default class Editor {
@@ -159,7 +159,7 @@ export default class Editor {
   }
 
   emitUpdate(transaction) {
-    console.log(this.getHTML())
+    console.log(this.getMarkdown())
   }
 
   focus() {
@@ -213,17 +213,8 @@ export default class Editor {
     )
   }
 
-  getHTML() {
-    const div = document.createElement('div')
-    const fragment = DOMSerializer.fromSchema(this.schema).serializeFragment(this.state.doc.content)
-
-    div.appendChild(fragment)
-
-    return div.innerHTML
-  }
-
-  getJSON() {
-    return this.state.doc.toJSON()
+  getMarkdown() {
+    return markdownSerializer.serialize(this.state.doc)
   }
 
   destroy() {

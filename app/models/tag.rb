@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Tag < ApplicationRecord
+  include Sluggable
+
   has_many :taggings
   has_many :posts, through: :taggings
 

@@ -18,5 +18,5 @@ Rails.application.routes.draw do
     resources :ssh_keys, path: 'ssh', except: %i[show update]
   end
 
-  get '/:nickname', to: 'people#show', as: :profile
+  get '/:nickname', to: 'users#show', as: :profile
 end

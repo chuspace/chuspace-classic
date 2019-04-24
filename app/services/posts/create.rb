@@ -4,32 +4,33 @@ module Posts
   class Create
     include Service
 
-    attr_reader :author, :params
+    attr_reader :blog, :params
 
-    def call(author:, params:)
-      @author = author
-      @params = ActionController::Parameters.new(params)
+    def call(blog:, params:)
+      @blog = blog
+      @params = params
 
       post = Post.new(post_params)
-      post.author_nickname = author.nickname
+      post.blog = blog
+      post.author = blog.author
 
-      blob =
-        Git::Commit.create(
-          repository: author.blog,
-          author: author,
-          options: {
-            commit: { message: params[:commit_message] || "Created post #{post.filename}" },
-            file: { content: post.raw_content, path: post.filename }
-          }
-        )
-
-      Post.initialize_from_blob(blob)
+      if post.save
+        blob =
+          Git::Commit.create(
+            repository: blog.repo,
+            author: author,
+            options: {
+              commit: { message: params[:commit_message] || "Created post #{post.filename}" },
+              file: { content: post.blob_content, path: post.filename }
+            }
+          )
+      end
     end
 
     private
 
     def post_params
-      params.permit(:title, :excerpt, :filename, :status, :tags, :slug, :content, :tags, :published_at)
+      params.permit(:title, :excerpt, :filename, :status, :tags, :slug, :body, :tags, :published_at)
     end
   end
 end

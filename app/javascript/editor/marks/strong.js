@@ -7,8 +7,8 @@ import type { MarkType } from 'editor/utils'
 import { Node } from 'prosemirror-model'
 import { toggleMark } from 'prosemirror-commands'
 
-export default class Bold extends Mark {
-  name = 'bold'
+export default class Strong extends Mark {
+  name = 'strong'
 
   get schema() {
     return {

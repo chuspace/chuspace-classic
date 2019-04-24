@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class Post < ApplicationRecord
+  include Sluggable
+
   belongs_to :author, class_name: 'User'
+  belongs_to :blog
 
   has_many :comments
   has_many :likes
@@ -19,14 +22,10 @@ class Post < ApplicationRecord
   enum status: { draft: 0, published: 1, archived: 2 }
 
   validates_presence_of :title, :slug, :status
-  validates_presence_of :blob_id, :commit_sha, on: :update
+  validates_presence_of :blob_id, on: :update
 
   def blob
     author.blog.find_blob(blob_id)
-  end
-
-  def commit
-    author.blog.find_commit(commit_sha)
   end
 
   def blob_content

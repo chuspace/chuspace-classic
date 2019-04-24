@@ -7,9 +7,26 @@
     <%= stylesheet_pack_tag 'application', media: 'all' %>
   </head>
 
-  <body class="editor">
+  <body class="editor" data-controller='compose'>
     <div class='container mx-auto'>
-      <%= render 'layouts/header' %>
+      <header>
+        <nav class='flex justify-between items-center py-6'>
+          <%= link_to root_path, class: 'link link-white' do %>
+            <div class='logo icon'>C</div>
+          <% end %>
+
+          <div class='flex justify-end items-center flex-1 mr-8'>
+            <%= link_to 'Save as draft', '#', class: 'link link-default mr-4', data: { action: 'click->compose#saveDraft', url: posts_path } %>
+            <%= link_to 'Publish', '#', class: 'link link-green mr-4', data: { action: 'click->compose#publish'} %>
+          </div>
+
+          <% if Current.user.present? %>
+            <%= render 'header/user'  %>
+          <% else %>
+            <%= render 'header/guest'  %>
+          <% end %>
+        </nav>
+      </header>
     </div>
 
     <section class="content">

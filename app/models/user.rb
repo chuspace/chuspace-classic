@@ -6,7 +6,10 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true, email: true
   validates :name, presence: true
   validates :nickname,
-            presence: true, uniqueness: true, length: { in: 1..39 }, format: { with: /\A[a-z\d]+[-a-z\d]*[a-z\d]\z/i }
+            presence: true,
+            uniqueness: true,
+            length: { in: 1..39 },
+            format: { with: /\A[a-z\d]+[-a-z\d]*[a-z\d]\z/i }
 
   has_one_attached :avatar
   has_secure_token :auth_token
@@ -23,22 +26,11 @@ class User < ApplicationRecord
   has_many :collaborations, class_name: 'Collaborator'
   has_one :default_blog, -> { where(default: true) }, foreign_key: 'author_id', class_name: 'Blog', required: true
 
-  accepts_nested_attributes_for :default_blog
-
-  before_validation :normalize_email_and_nickname
-
   def to_param
     nickname
   end
 
   def initials
     name.gsub(/([[:upper:]])[[:lower:]]+/, '\1').tr(' ', '')
-  end
-
-  private
-
-  def normalize_email_and_nickname
-    self.email = self.email&.downcase&.strip
-    self.nickname = self.nickname&.downcase&.strip
   end
 end

@@ -2,8 +2,7 @@ class CreateLikes < ActiveRecord::Migration[6.0]
   def change
     create_table :likes do |t|
       # Post and owner
-      t.bigint :post_id,
-                               foreign_key: true, null: false
+      t.bigint :post_id, foreign_key: true, null: false
       t.bigint :owner_id, foreign_key: true, null: false
 
       t.timestamps

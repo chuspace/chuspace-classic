@@ -8,7 +8,9 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.text :excerpt
       t.text :body
       t.bigint :author_id, foreign_key: true, null: false
+      t.bigint :blog_id, foreign_key: true, null: false
       t.datetime :published_at
+      t.integer :status, default: 0, null: false
 
       # Tree
       t.string :ancestry
@@ -30,12 +32,14 @@ class CreatePosts < ActiveRecord::Migration[6.0]
 
     # Indexes
     add_index :posts, :author_id
+    add_index :posts, :blog_id
     add_index :posts, :published_at
     add_index :posts, :visibility
     add_index :posts, :ancestry
     add_index :posts, :premium
     add_index :posts, :blob_id
-    add_index :posts, :slug, unique: true
+    add_index :posts, :status
+    add_index :posts, [:slug, :blog_id], unique: true
 
     # Counter indexes
     add_index :posts, :comments_count
