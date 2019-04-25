@@ -71,7 +71,7 @@ module Git
       #   }
       # }
 
-      def create(repository:, author:, committer: nil, options:, action: :add)
+      def create(repository:, author:, committer:, options:, action: :add)
         rugged = repository.rugged
         file = options[:file]
         commit = options[:commit]
@@ -80,9 +80,7 @@ module Git
         mode = 0o100644
 
         author_hash = { name: author.name, email: author.email, time: Time.now }
-
-        committer_hash =
-          committer.blank? ? author_hash : { name: committer.name, email: committer.email, time: Time.now }
+        committer_hash = { name: committer.name, email: committer.email, time: Time.now }
 
         branch = 'refs/heads/' + branch unless branch.start_with?('refs/')
 
@@ -122,8 +120,8 @@ module Git
         opts[:parents] = parents
         opts[:update_ref] = branch
 
-        sha = Rugged::Commit.create(rugged, opts)
-        Git::Blob.find(repository, sha, filename)
+        Rugged::Commit.create(rugged, opts)
+        Git::Blob.find(repository, oid)
       end
 
       def diff_from_parent(rugged_commit, options = {})

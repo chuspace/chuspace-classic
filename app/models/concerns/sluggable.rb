@@ -10,7 +10,7 @@ module Sluggable
   class_methods do
     attr_reader :slug_attribute
 
-    def sluggable(attribute = :slug)
+    def sluggable(attribute = :title)
       @slug_attribute = attribute
     end
   end

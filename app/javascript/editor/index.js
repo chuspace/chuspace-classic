@@ -217,6 +217,10 @@ export default class Editor {
     return markdownSerializer.serialize(this.state.doc)
   }
 
+  getTitle() {
+    return this.state.doc.firstChild.textContent
+  }
+
   destroy() {
     if (!this.view) {
       return

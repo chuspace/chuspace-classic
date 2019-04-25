@@ -2,8 +2,7 @@
 
 class Blog < ApplicationRecord
   include GitRepo, Sluggable
-
-  DEFAULT_NAME = 'Blog'
+  sluggable :name
 
   validates :name, :slug, :repo_name, presence: true
   validates_uniqueness_of :slug, scope: :author_id
@@ -11,6 +10,7 @@ class Blog < ApplicationRecord
   enum status: { draft: 0, published: 1, archived: 2 }
 
   belongs_to :author, class_name: 'User'
+  has_many :posts
 
   before_validation :assign_slug
 

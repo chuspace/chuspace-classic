@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :check_emails, only: :create
   resources :magic_logins, only: :index
   resources :users, except: :show
-  resources :posts
+  resources :posts, except: :show
 
   resources :settings, only: :index
 
@@ -19,4 +19,5 @@ Rails.application.routes.draw do
   end
 
   get '/:nickname', to: 'users#show', as: :profile
+  get '/:blog/:slug', to: 'posts#show', as: :blog_post
 end

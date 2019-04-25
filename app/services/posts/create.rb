@@ -4,27 +4,34 @@ module Posts
   class Create
     include Service
 
-    attr_reader :blog, :params
+    attr_reader :blog, :user, :params
 
-    def call(blog:, params:)
+    def call(blog:, user:, params:)
       @blog = blog
+      @user = user
       @params = params
 
-      post = Post.new(post_params)
-      post.blog = blog
-      post.author = blog.author
+      post = blog.posts.build(post_params)
+      post.author = user
 
-      if post.save
+      if post.valid?
+        filename = "#{post.slug}.md"
+
         blob =
           Git::Commit.create(
             repository: blog.repo,
-            author: author,
+            author: blog.author,
+            committer: user,
             options: {
-              commit: { message: params[:commit_message] || "Created post #{post.filename}" },
-              file: { content: post.blob_content, path: post.filename }
+              commit: { message: params[:commit_message] || "Created post #{filename}" },
+              file: { content: post.blob_content, path: filename }
             }
           )
+
+        post.blob_id = blob.id
       end
+
+      post
     end
 
     private

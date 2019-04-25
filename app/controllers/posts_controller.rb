@@ -2,10 +2,25 @@
 
 class PostsController < ApplicationController
   before_action :authenticate!, only: %i[new create]
+  before_action :find_blog, except: :index
   layout 'editor', only: :new
 
+  def show
+    if @blog.present?
+      @post = @blog.posts.find_by(slug: params[:slug])
+    else
+      redirect_to root_path
+    end
+  end
+
   def create
-    Posts::Create.call(blog: Current.user.default_blog,  params: params)
+    post = Posts::Create.call(user: Current.user, blog: Current.user.default_blog, params: params)
+
+    if post.save
+      redirect_to blog_post_path(blog: @blog.slug, slug: post.slug)
+    else
+      render json: { errors: post.api_validation_errors }
+    end
   end
 
   def update
@@ -18,7 +33,7 @@ class PostsController < ApplicationController
 
   private
 
-  def author
-    @author = User.find_by_nickname(params[:author])
+  def find_blog
+    @blog = Blog.find_by_slug(params[:blog])
   end
 end

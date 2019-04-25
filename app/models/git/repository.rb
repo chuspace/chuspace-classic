@@ -58,6 +58,14 @@ module Git
       nil
     end
 
+    def author_hash
+      {
+        name: rugged.config['user.name'],
+        email: rugged.config['user.email'],
+        nickname: rugged.config['user.nickname']
+      }.freeze
+    end
+
     def blobs(ref = DEFAULT_REF)
       return [] if empty?
 
@@ -66,19 +74,10 @@ module Git
       Blob.all(self, sha)
     end
 
-    def find_blob_by_name(name, ref = DEFAULT_REF)
-      ref ||= root_branch
-      sha = sha_from_ref(ref)
-
-      Blob.find(self, sha, name) if sha.present?
-    end
-
     def find_blob(id, ref = DEFAULT_REF)
       ref ||= root_branch
-      sha = sha_from_ref(ref)
 
-      blob = repository.lookup(id)
-      Blob.find(self, sha, blob[:name]) if sha.present?
+      Blob.find(self, id, ref)
     end
 
     def find_commit(sha)

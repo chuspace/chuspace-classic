@@ -2,6 +2,7 @@
 
 class Post < ApplicationRecord
   include Sluggable
+  sluggable :title
 
   belongs_to :author, class_name: 'User'
   belongs_to :blog
@@ -23,9 +24,10 @@ class Post < ApplicationRecord
 
   validates_presence_of :title, :slug, :status
   validates_presence_of :blob_id, on: :update
+  validates_uniqueness_of :slug, scope: %i[blog_id author_id]
 
   def blob
-    author.blog.find_blob(blob_id)
+    blog.repo.find_blob(blob_id)
   end
 
   def blob_content

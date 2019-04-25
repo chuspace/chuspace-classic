@@ -21,18 +21,17 @@ export default class extends Controller {
   saveDraft(e) {
     e.preventDefault()
     const html = this.editor.getMarkdown()
-    console.log(this.data.get('url'))
-    Rails.ajax({
-      type: 'POST',
-      url: e.target.dataset.url,
-      data: `body=${html}&status=draft`,
-      success: data => this.resetErrors(),
-      error: data => {
-        if (data.errors && data.errors.length > 0) {
-          this.resetErrors()
-          this.setFormErrors(data.errors)
-          return
-        }
+    const title = this.editor.getTitle()
+
+    var data = new FormData()
+    data.append('title', title)
+    data.append('body', html)
+
+    fetch(e.target.dataset.url, {
+      method: 'POST',
+      body: data,
+      headers: {
+        'X-CSRF-TOKEN': Rails.csrfToken()
       }
     })
   }
