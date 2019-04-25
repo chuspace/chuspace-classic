@@ -96,6 +96,7 @@ export default class CodeBlockView {
       theme: 'material',
       autofocus: true,
       addModeClass: true,
+      lineWrapping: true,
       extraKeys: this.codeMirrorKeymap()
     })
 
@@ -164,10 +165,11 @@ export default class CodeBlockView {
     let change = computeChange(this.node.textContent, this.cm.getValue())
     if (change) {
       let start = this.getPos() + 1
+      console.log(this.node.textContent)
       let tr = this.view.state.tr.replaceWith(
         start + change.from,
         start + change.to,
-        // @ts-ignore
+
         change.text ? this.schema.text(change.text) : null
       )
       this.view.dispatch(tr)

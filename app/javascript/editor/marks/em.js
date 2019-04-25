@@ -31,6 +31,7 @@ export default class Em extends Mark {
   }
 
   pasteRules({ type }: MarkType) {
+    console.log(type)
     return [markPasteRule(/(?:^|[^*_])(?:\*|_)([^*_]+)(?:\*|_)/g, type)]
   }
 }

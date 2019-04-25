@@ -72,6 +72,9 @@ gem 'yabeda'
 # Faster pathname
 gem 'faster_path'
 
+# Type checking
+# gem 'sorbet-runtime'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -104,6 +107,8 @@ group :development do
   # Profiler
   gem 'rack-mini-profiler', require: false
   gem 'memory_profiler', require: false
+
+  # gem 'sorbet'
 end
 
 group :test do
