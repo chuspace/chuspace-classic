@@ -43,7 +43,7 @@ module.exports = function(api) {
       [
         require('@babel/plugin-transform-react-jsx').default,
         {
-          pragma: 'el'
+          pragma: 'h'
         }
       ],
       require('@babel/plugin-syntax-dynamic-import').default,

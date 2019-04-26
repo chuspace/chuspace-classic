@@ -40,9 +40,14 @@ export default class Code extends Element {
 
                 if (matches[0]) {
                   const node = schema.nodes.code_block.create({ language })
-                  tr.replaceWith(pos - matches[0].length - 1, pos, node)
+                  tr.replaceWith(pos - matches[0].length - 1, pos, node).setMeta(this, {
+                    transform: tr,
+                    from,
+                    to,
+                    text
+                  })
 
-                  view.dispatch(tr.setMeta(this, { transform: tr, from, to, text }))
+                  view.dispatch(tr)
 
                   return true
                 }

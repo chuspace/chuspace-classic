@@ -12,10 +12,27 @@ import CodeBlockView from 'editor/nodeviews/code-block'
 import { EditorView } from 'prosemirror-view'
 import { ElementManager } from 'editor/utils'
 import { Schema } from 'prosemirror-model'
+import { Selection } from 'prosemirror-state'
 import { dropCursor } from 'prosemirror-dropcursor'
 import { gapCursor } from 'prosemirror-gapcursor'
 import { keymap } from 'prosemirror-keymap'
+import modes from 'editor/modes'
 import toArray from 'lodash/toArray'
+
+function arrowHandler(dir) {
+  return (state, dispatch, view) => {
+    if (state.selection.empty && view.endOfTextblock(dir)) {
+      let side = dir == 'left' || dir == 'up' ? -1 : 1,
+        $head = state.selection.$head
+      let nextPos = Selection.near(state.doc.resolve(side > 0 ? $head.after() : $head.before()), side)
+      if (nextPos.$head && nextPos.$head.parent.type.name == 'code_block') {
+        dispatch(state.tr.setSelection(nextPos))
+        return true
+      }
+    }
+    return false
+  }
+}
 
 export default class Editor {
   constructor(options = {}) {
@@ -105,7 +122,11 @@ export default class Editor {
         ...this.keymaps,
         keymap({
           Backspace: undoInputRule,
-          Escape: selectParentNode
+          Escape: selectParentNode,
+          ArrowLeft: arrowHandler('left'),
+          ArrowRight: arrowHandler('right'),
+          ArrowUp: arrowHandler('up'),
+          ArrowDown: arrowHandler('down')
         }),
         keymap(baseKeymap),
         dropCursor(this.options.dropCursor),
@@ -139,10 +160,6 @@ export default class Editor {
     view.dom.style.whiteSpace = 'pre-wrap'
     view.dom.classList = ''
     view.dom.classList.add('chu-editor')
-
-    view.dom.addEventListener('focus', event => view.dom.classList.add('focused'))
-
-    view.dom.addEventListener('blur', event => view.dom.classList.remove('focused'))
 
     return view
   }

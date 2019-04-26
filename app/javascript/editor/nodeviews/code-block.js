@@ -1,70 +1,20 @@
 // @flow
-/** @jsx el */
+/** @jsx h */
 
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/mode/javascript/javascript'
-import 'codemirror/theme/material.css'
-import './styles.sass'
+import 'editor/themes/one-light.sass'
+import 'editor/themes/one-dark.sass'
 
 import { Node as ProsemirrorNode, Schema } from 'prosemirror-model'
 import { Selection, TextSelection } from 'prosemirror-state'
+import { h, render } from 'preact'
 import { redo, undo } from 'prosemirror-history'
 
-import ClipboardJS from 'clipboard'
+import CodeBlockComponent from 'editor/components/code-block'
 import CodeMirror from 'codemirror'
 import { EditorView } from 'prosemirror-view'
-import { el } from 'redom'
 import { exitCode } from 'prosemirror-commands'
-import languages from 'editor/languages'
-
-class LanguageSwitcher {
-  cm: CodeMirror
-
-  handleLanguageChange = e => {
-    const name = e.target.value
-
-    /* $FlowFixMe */
-    import(`codemirror/mode/${name}/${name}.js`).then(() => this.cm.setOption('mode', name))
-  }
-  constructor(cm, language): el {
-    this.cm = cm
-    return (
-      <select class="codemirror-language-switcher" onchange={this.handleLanguageChange}>
-        <option selected>Select language</option>
-        {languages.map(({ name }) => (
-          <option value={name} selected={language === name}>
-            {name}
-          </option>
-        ))}
-      </select>
-    )
-  }
-}
-
-class Header {
-  view: EditorView
-  clipboard: ?ClipboardJS
-  switcher: ?HTMLElement
-
-  constructor(props) {
-    this.view = props.view
-    this.switcher = new LanguageSwitcher(props.cm, props.language)
-    this.clipboard = new ClipboardJS('#foo')
-
-    return (
-      <div class="codemirror-header">
-        <div class="codemirror-header-heading">CODE</div>
-        <div class="codemirror-header-menu">
-          <div id="foo" data-clipboard-target=".CodeMirror-code">
-            Copy to clipboard
-          </div>
-          {this.switcher}
-          <div onclick={props.view.destroy}>remove</div>
-        </div>
-      </div>
-    )
-  }
-}
 
 export default class CodeBlockView {
   cm: typeof CodeMirror.defaults
@@ -72,7 +22,7 @@ export default class CodeBlockView {
   dom: Element
   view: EditorView
   schema: Schema
-  language: string
+  mode: string
   header: HTMLElement
   getPos: () => number
   incomingChanges: boolean
@@ -85,29 +35,16 @@ export default class CodeBlockView {
     this.schema = schema
     this.getPos = getPos
     this.incomingChanges = false
-    this.language = this.node.attrs.language || 'javascript'
+    this.mode = this.node.attrs.language || 'javascript'
 
-    // Create a CodeMirror instance
-    this.cm = new CodeMirror(null, {
-      value: this.node.textContent,
-      lineNumbers: true,
-      smartIndent: true,
-      indentWithTabs: true,
-      theme: 'material',
-      autofocus: true,
-      addModeClass: true,
-      lineWrapping: true,
-      extraKeys: this.codeMirrorKeymap()
-    })
+    const setCMInstance = instance => (this.cm = instance)
 
-    this.handleLanguageChange()
+    let html = render(
+      <CodeBlockComponent {...this} codeMirrorKeymap={this.codeMirrorKeymap} setCMInstance={setCMInstance} />,
+      document.createElement('span')
+    )
 
-    this.header = new Header(this)
-
-    this.cm.getWrapperElement().appendChild(this.header)
-
-    // The editor's outer node is our DOM representation
-    this.dom = this.cm.getWrapperElement()
+    this.dom = html
 
     // CodeMirror needs to be in the DOM to properly initialize, so
     // schedule it to update itself
@@ -128,17 +65,16 @@ export default class CodeBlockView {
         this.valueChanged()
         this.forwardSelection()
       }
+
       this.incomingChanges = false
     })
 
     this.cm.on('focus', () => this.forwardSelection())
   }
 
-  handleLanguageChange = () => {
-    /* $FlowFixMe */
-    import(`codemirror/mode/${this.language}/${this.language}.js`).then(() => {
-      this.cm.setOption('mode', this.language)
-    })
+  handleLanguageChange = (mode: string = this.mode) => {
+    this.cm.setOption('mode', mode)
+    this.node.attrs.language = mode
   }
 
   /**
@@ -146,7 +82,7 @@ export default class CodeBlockView {
    * the outer editor synchronized with the inner one,so that any
    * commands executed on the outer editor see an accurate selection
    */
-  forwardSelection() {
+  forwardSelection = () => {
     if (!this.cm.hasFocus()) return
     let state = this.view.state
     let selection = this.asProseMirrorSelection(state.doc)
@@ -161,15 +97,15 @@ export default class CodeBlockView {
    * the code block node's current value to the value in the editor,and dispatch
    * a transaction if there is a difference.
    */
-  valueChanged(): void {
+  valueChanged = (): void => {
     let change = computeChange(this.node.textContent, this.cm.getValue())
+
     if (change) {
       let start = this.getPos() + 1
-      console.log(this.node.textContent)
       let tr = this.view.state.tr.replaceWith(
         start + change.from,
         start + change.to,
-
+        // @ts-ignore
         change.text ? this.schema.text(change.text) : null
       )
       this.view.dispatch(tr)
@@ -183,7 +119,7 @@ export default class CodeBlockView {
    * index.
    * @param doc
    */
-  asProseMirrorSelection(doc: ProsemirrorNode<Schema>) {
+  asProseMirrorSelection = (doc: ProsemirrorNode<Schema>) => {
     let offset = this.getPos() + 1
     // @ts-ignore
     let anchor = this.cm.indexFromPos(this.cm.getCursor('anchor')) + offset
@@ -198,7 +134,7 @@ export default class CodeBlockView {
    * @param anchor
    * @param head
    */
-  setSelection(anchor: string, head: string): void {
+  setSelection = (anchor: string, head: string): void => {
     this.cm.focus()
     this.updating = true
     this.cm.setSelection(this.cm.posFromIndex(anchor), this.cm.posFromIndex(head))
@@ -210,7 +146,7 @@ export default class CodeBlockView {
    * handle, and for ctrl-enter, which, in ProseMirror's base keymap, createds
    * a new paragraph after a code block.
    */
-  codeMirrorKeymap() {
+  codeMirrorKeymap = () => {
     let view = this.view
     let mod = /Mac/.test(navigator.platform) ? 'Cmd' : 'Ctrl'
     // @ts-ignore
@@ -235,8 +171,9 @@ export default class CodeBlockView {
    * @param unit
    * @param dir
    */
-  maybeEscape(unit: string, dir: number) {
+  maybeEscape = (unit: string, dir: number) => {
     let pos = this.cm.getCursor()
+    console.log(pos)
     if (
       this.cm.somethingSelected() ||
       pos.line !== (dir < 0 ? this.cm.firstLine() : this.cm.lastLine()) ||
@@ -257,7 +194,7 @@ export default class CodeBlockView {
    * and if present, propagate then from the outer to inner editor.
    * @param node
    */
-  update(node: ProsemirrorNode<Schema>) {
+  update = (node: ProsemirrorNode<Schema>) => {
     if (node.type !== this.node.type) return false
     this.node = node
     let change = computeChange(this.cm.getValue(), node.textContent)
@@ -269,11 +206,11 @@ export default class CodeBlockView {
     return true
   }
 
-  selectNode() {
+  selectNode = () => {
     this.cm.focus()
   }
 
-  stopEvent() {
+  stopEvent = () => {
     return true
   }
 }
