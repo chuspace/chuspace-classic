@@ -4,13 +4,10 @@ module GitRepo
   extend ActiveSupport::Concern
 
   included do
+    before_validation :assign_repo_details
     before_create :create_repository
-    before_save :rename_repository, if: -> { !new_record? && slug_changed? }
+    before_save :rename_repository, if: -> { !new_record? && repo_name_changed? }
     before_destroy :destroy_repository
-  end
-
-  def repo_name
-    "#{author.nickname}/#{slug}.git".freeze
   end
 
   def repo
@@ -18,6 +15,12 @@ module GitRepo
   end
 
   private
+
+  def assign_repo_details
+    self.name_with_author = "#{author.nickname}/#{slug}"
+    self.repo_name = "#{name_with_author}.git"
+    self.repo_path = repo.path
+  end
 
   def create_repository
     repo.create(author: author)

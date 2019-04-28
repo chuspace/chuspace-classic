@@ -3,11 +3,20 @@
 import { LANGUAGES } from 'editor/constants'
 import type { LanguageType } from 'editor/constants'
 
-const modes = LANGUAGES.filter(
-  language => language.mode && language.mode !== 'auto' && language.mode !== 'text' && language.mode !== 'javascript'
-).forEach((language: LanguageType) =>
-  /* $FlowFixMe */
-  language.custom ? import(`./${language.mode}`) : import(`codemirror/mode/${language.mode}/${language.mode}`)
-)
+const loadMode = async (mode: string) => {
+  const language: ?LanguageType = LANGUAGES.filter(
+    language => language.mode && language.mode !== 'auto' && language.mode !== 'text' && language.mode !== 'javascript'
+  ).find((language: LanguageType) => language.mode === mode)
 
-export default modes
+  if (language) {
+    language.custom
+      ? /* $FlowFixMe */
+        await import(`./${language.mode}`)
+      : /* $FlowFixMe */
+        await import(`codemirror/mode/${language.mode}/${language.mode}`)
+  }
+
+  return language
+}
+
+export default loadMode

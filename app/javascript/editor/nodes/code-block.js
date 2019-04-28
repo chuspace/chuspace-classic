@@ -1,7 +1,10 @@
 // @flow
+/** @jsx h */
 
+import { Component, h, render } from 'preact'
 import { Fragment, NodeSpec, Node as PMNode, Schema } from 'prosemirror-model'
 
+import CodeBlockComponent from 'editor/components/code-block'
 import { Node } from 'editor/utils'
 import type { NodeType } from 'editor/utils'
 import { setBlockType } from 'prosemirror-commands'
@@ -20,7 +23,7 @@ export default class CodeBlock extends Node {
   get schema(): NodeSpec {
     return {
       content: 'text*',
-      attrs: { language: { default: 'javascript' } },
+      attrs: { language: { default: 'auto' } },
       marks: '',
       group: 'block',
       code: true,
@@ -89,6 +92,10 @@ export default class CodeBlock extends Node {
       ],
       toDOM(node: PMNode) {
         return ['pre', ['code', { 'data-language': node.attrs.language }, 0]]
+      },
+
+      toStatic: props => {
+        return <CodeBlockComponent key={props.node.currIndex} {...props} />
       }
     }
   }

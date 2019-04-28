@@ -3,13 +3,19 @@
 /** @jsx h */
 
 import './code-block.sass'
+import 'codemirror/lib/codemirror.css'
+import 'editor/themes/one-light.sass'
+import 'editor/themes/one-dark.sass'
+import 'codemirror/mode/javascript/javascript'
+
+import * as CodeMirror from 'codemirror'
 
 import { Component, h, render } from 'preact'
 
 import ClipboardJS from 'clipboard'
-import CodeMirror from 'codemirror'
 import { EditorView } from 'prosemirror-view'
 import { LANGUAGES } from 'editor/constants'
+import loadMode from 'editor/modes'
 
 const SVG_RATIO = 0.81
 
@@ -46,9 +52,9 @@ class LanguageSwitcher extends Component {
     this.mode = props.mode
   }
 
-  handleLanguageChange = e => {
+  handleLanguageChange = async e => {
     const name = e.target.value
-    this.props.handleLanguageChange(name)
+    this.props.setMode(name)
   }
 
   render(props) {
@@ -74,21 +80,21 @@ class Toolbar extends Component {
 
   constructor(props) {
     super(props)
-    this.clipboard = new ClipboardJS('#foo')
   }
+
+  initClipboardJS = node => new ClipboardJS(node)
 
   render() {
     return (
       <div class="codemirror-toolbar">
         <Controls />
-        <Copy />
-        <div class="codemirror-toolbar-heading">CODE</div>
         <div class="codemirror-toolbar-menu">
-          <div id="foo" data-clipboard-target=".CodeMirror-code">
-            Copy to clipboard
+          <div ref={this.initClipboardJS} data-clipboard-target=".CodeMirror-code">
+            <Copy />
           </div>
+
           <LanguageSwitcher {...this.props} />
-          <div onclick={this.props.view.destroy}>remove</div>
+          <div onClick={this.props.destroy}>remove</div>
         </div>
       </div>
     )
@@ -96,26 +102,37 @@ class Toolbar extends Component {
 }
 
 export default class Container extends Component {
-  createCM = node =>
-    this.props.setCMInstance(
-      new CodeMirror(node, {
-        value: this.props.node.textContent,
-        lineNumbers: true,
-        smartIndent: true,
-        mode: this.props.mode,
-        indentWithTabs: true,
-        theme: 'one-light',
-        autofocus: true,
-        addModeClass: true,
-        lineWrapping: true,
-        extraKeys: this.props.codeMirrorKeymap()
-      })
-    )
+  cm: ?CodeMirror
+
+  setMode = async (mode: string) => {
+    await loadMode(mode)
+    this.cm && this.cm.setOption('mode', mode)
+    this.props.handleLanguageChange && this.props.handleLanguageChange(mode)
+  }
+
+  createCM = (node: ?HTMLElement) => {
+    this.cm = new CodeMirror(node, {
+      value: this.props.content,
+      lineNumbers: true,
+      smartIndent: !this.props.readOnly,
+      readOnly: this.props.readOnly || false,
+      mode: this.props.mode,
+      indentWithTabs: !this.props.readOnly,
+      theme: 'one-light',
+      autofocus: !this.props.readOnly,
+      addModeClass: true,
+      lineWrapping: true,
+      extraKeys: this.props.codeMirrorKeymap && this.props.codeMirrorKeymap()
+    })
+
+    this.props.getCMInstance(this.cm)
+    this.setMode(this.props.mode)
+  }
 
   render = () => {
     return (
       <div class="codemirror-container" contentEditable={false}>
-        <Toolbar {...this.props} />
+        <Toolbar {...this.props} setMode={this.setMode} />
         <span ref={this.createCM} />
       </div>
     )

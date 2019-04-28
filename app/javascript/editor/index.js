@@ -16,7 +16,6 @@ import { Selection } from 'prosemirror-state'
 import { dropCursor } from 'prosemirror-dropcursor'
 import { gapCursor } from 'prosemirror-gapcursor'
 import { keymap } from 'prosemirror-keymap'
-import modes from 'editor/modes'
 import toArray from 'lodash/toArray'
 
 function arrowHandler(dir) {
@@ -25,6 +24,7 @@ function arrowHandler(dir) {
       let side = dir == 'left' || dir == 'up' ? -1 : 1,
         $head = state.selection.$head
       let nextPos = Selection.near(state.doc.resolve(side > 0 ? $head.after() : $head.before()), side)
+
       if (nextPos.$head && nextPos.$head.parent.type.name == 'code_block') {
         dispatch(state.tr.setSelection(nextPos))
         return true
@@ -153,7 +153,7 @@ export default class Editor {
       state: this.state,
       dispatchTransaction: this.dispatchTransaction.bind(this),
       nodeViews: {
-        code_block: (node, view, getPos) => new CodeBlockView(node, view, this.schema, getPos)
+        code_block: (node, view, getPos) => new CodeBlockView({ node, view, getPos })
       }
     })
 

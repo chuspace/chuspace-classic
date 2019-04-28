@@ -3,7 +3,9 @@
 class UsersController < ApplicationController
   before_action :find_user, only: :show
 
-  def show; end
+  def show
+    @posts = @user.posts.includes(:blog, :author).limit(20)
+  end
 
   def update
     if Current.user.update(update_params)

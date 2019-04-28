@@ -1,9 +1,9 @@
 // @flow
+/** @jsx h */
 
-import 'codemirror/lib/codemirror.css'
-import 'codemirror/mode/javascript/javascript'
+import { h, render } from 'preact'
 
-import CodeMirror from 'codemirror'
+import CodeEditor from 'editor/components/code-block'
 import { Controller } from 'stimulus'
 import markdownit from 'markdown-it'
 
@@ -13,30 +13,16 @@ export default class extends Controller {
     const md = markdownit('commonmark', { html: false })
 
     this.element.innerHTML = md.render(body)
-
     this.element.querySelectorAll('pre').forEach(codeNode => {
       const mode = codeNode.children[0].className.split('-')[1]
+      const getCMInstance = instance => (this.cm = instance)
+      const content = codeNode.textContent
 
-      import(`codemirror/mode/${mode}/${mode}.js`).then(module => {
-        console.log(module.default)
-        this.cm = new CodeMirror(element => codeNode.parentNode.replaceChild(element, codeNode), {
-          value: codeNode.textContent,
-          readOnly: 'noCursor',
-          scrollBarStyle: null,
-          viewportMargin: Infinity,
-          lineNumbers: true,
-          lineWrapping: true,
-          extraKeys: {
-            'Shift-Tab': 'indentLess'
-          },
-          // negative values removes the cursor, undefined means default (530)
-          cursorBlinkRate: -1,
-          // needs to be able to refresh every 16ms to hit 60 frames / second
-          pollInterval: 16
-        })
+      const div = document.createElement('div')
+      codeNode.parentNode.insertBefore(div, codeNode)
+      codeNode.remove()
 
-        this.cm.setOption('mode', mode)
-      })
+      render(<CodeEditor content={content} mode={mode} getCMInstance={getCMInstance} readOnly="noCursor" />, div)
     })
   }
 }

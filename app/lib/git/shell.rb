@@ -16,7 +16,7 @@ module Git
     BINARY = 'git_shell'
     GIT_PROTOCOL = 'ssh'.freeze
 
-    attr_accessor :key_id, :slug, :command, :git_access
+    attr_accessor :key_id, :full_repo_name, :command, :git_access
     attr_reader :repo_path
 
     def_delegators :Git, :config
@@ -67,11 +67,13 @@ module Git
 
       raise DisallowedCommandError unless GIT_COMMANDS.include?(@command)
       raise DisallowedCommandError unless args.count == 2
-      @slug = args.last
+
+      user.reload_posts if @command == 'git-receive-pack'
+      @full_repo_name = args.last[1..-1]
     end
 
     def verify_access
-      self.repo_path = user.blog.path
+      self.repo_path = user.blogs.find_by_repo_name(full_repo_name)&.repo_path
     end
 
     def process_cmd(args)

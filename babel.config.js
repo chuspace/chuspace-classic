@@ -39,7 +39,6 @@ module.exports = function(api) {
     ].filter(Boolean),
     plugins: [
       require('babel-plugin-macros'),
-      require('babel-plugin-transform-redom-jsx').default,
       [
         require('@babel/plugin-transform-react-jsx').default,
         {

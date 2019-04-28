@@ -2,6 +2,6 @@
 
 class PagesController < ApplicationController
   def index
-    @posts = Post.all.limit(10)
+    @posts = Post.all.includes(:blog, :author).limit(20)
   end
 end

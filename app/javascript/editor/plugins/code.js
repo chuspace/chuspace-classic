@@ -1,7 +1,8 @@
 // @flow
 
+import { Plugin, Selection } from 'prosemirror-state'
+
 import { Element } from 'editor/utils'
-import { Plugin } from 'prosemirror-state'
 import { nodeInputRule } from 'editor/commands'
 
 export default class Code extends Element {
@@ -40,12 +41,17 @@ export default class Code extends Element {
 
                 if (matches[0]) {
                   const node = schema.nodes.code_block.create({ language })
-                  tr.replaceWith(pos - matches[0].length - 1, pos, node).setMeta(this, {
-                    transform: tr,
-                    from,
-                    to,
-                    text
-                  })
+                  const selection = Selection.near(state.doc.resolve(from), to)
+
+                  tr.replaceWith(pos - matches[0].length - 1, pos, node)
+                    .setMeta(this, {
+                      transform: tr,
+                      from,
+                      to,
+                      text
+                    })
+                    .setSelection(selection)
+                    .scrollIntoView()
 
                   view.dispatch(tr)
 

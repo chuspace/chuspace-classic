@@ -31,12 +31,16 @@ class Post < ApplicationRecord
   end
 
   def blob_content
-    frontmatter + "\n" + body
+    blob_frontmatter + "\n" + body
   end
 
-  def frontmatter
+  def tag_names
+    tags.pluck(:slug)
+  end
+
+  def blob_frontmatter
     "---\n" +
-      %w[title slug excerpt tags status published_at].map { |attribute| "#{attribute}: #{send(attribute)}" }.join(
+      %w[title slug excerpt tag_names status published_at].map { |attribute| "#{attribute}: #{send(attribute)}" }.join(
         "\n"
       ) +
       "\n---"

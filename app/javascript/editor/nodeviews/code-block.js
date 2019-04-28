@@ -1,58 +1,39 @@
 // @flow
-/** @jsx h */
-
-import 'codemirror/lib/codemirror.css'
-import 'codemirror/mode/javascript/javascript'
-import 'editor/themes/one-light.sass'
-import 'editor/themes/one-dark.sass'
 
 import { Node as ProsemirrorNode, Schema } from 'prosemirror-model'
 import { Selection, TextSelection } from 'prosemirror-state'
-import { h, render } from 'preact'
 import { redo, undo } from 'prosemirror-history'
 
-import CodeBlockComponent from 'editor/components/code-block'
+import BaseView from './base'
+import type { BaseViewPropType } from './base'
 import CodeMirror from 'codemirror'
 import { EditorView } from 'prosemirror-view'
 import { exitCode } from 'prosemirror-commands'
 
-export default class CodeBlockView {
-  cm: typeof CodeMirror.defaults
-  updating: boolean
-  dom: Element
-  view: EditorView
-  schema: Schema
-  mode: string
-  header: HTMLElement
-  getPos: () => number
-  incomingChanges: boolean
-  node: ProsemirrorNode
+export default class CodeBlockView extends BaseView {
+  cm: typeof CodeMirror.defaults = null
+  updating: boolean = false
+  mode: string = 'auto'
+  content: string
+  incomingChanges: boolean = false
+  getCMInstance: () => CodeMirror
+  handleLanguageChange: (mode: string) => void
 
-  constructor(node: ProsemirrorNode, view: EditorView, schema: Schema, getPos: () => number) {
-    // Store for later
-    this.node = node
-    this.view = view
-    this.schema = schema
-    this.getPos = getPos
-    this.incomingChanges = false
-    this.mode = this.node.attrs.language || 'javascript'
+  constructor(props: BaseViewPropType) {
+    // Call super but don't render the view
+    super(props, false)
 
-    const setCMInstance = instance => (this.cm = instance)
+    // Custom attrs for code block node view
+    this.mode = this.node.attrs.language
+    this.content = this.node.textContent
 
-    let html = render(
-      <CodeBlockComponent {...this} codeMirrorKeymap={this.codeMirrorKeymap} setCMInstance={setCMInstance} />,
-      document.createElement('span')
-    )
-
-    this.dom = html
+    // Renders view component
+    this.renderElement()
 
     // CodeMirror needs to be in the DOM to properly initialize, so
     // schedule it to update itself
     setTimeout(() => this.cm.refresh(), 20)
 
-    // This flag is used to avoid an update loop between the outer and
-    // inner editor
-    this.updating = false
     // Propagate updates from the code editor to ProseMirror
     this.cm.on('beforeChange', () => (this.incomingChanges = true))
     // Propagate updates from the code editor to ProseMirror
@@ -72,10 +53,11 @@ export default class CodeBlockView {
     this.cm.on('focus', () => this.forwardSelection())
   }
 
-  handleLanguageChange = (mode: string = this.mode) => {
-    this.cm.setOption('mode', mode)
-    this.node.attrs.language = mode
-  }
+  /* Component calls to set cm instance after render */
+  getCMInstance = (instance: CodeMirror) => (this.cm = instance)
+
+  /* Component calls to set cm instance mode and node attrs */
+  handleLanguageChange = (mode: string = this.mode) => (this.node.attrs.language = mode)
 
   /**
    * when the code editor is focused,we can keep the selection of
@@ -105,7 +87,6 @@ export default class CodeBlockView {
       let tr = this.view.state.tr.replaceWith(
         start + change.from,
         start + change.to,
-        // @ts-ignore
         change.text ? this.schema.text(change.text) : null
       )
       this.view.dispatch(tr)
@@ -121,9 +102,7 @@ export default class CodeBlockView {
    */
   asProseMirrorSelection = (doc: ProsemirrorNode<Schema>) => {
     let offset = this.getPos() + 1
-    // @ts-ignore
     let anchor = this.cm.indexFromPos(this.cm.getCursor('anchor')) + offset
-    // @ts-ignore
     let head = this.cm.indexFromPos(this.cm.getCursor('head')) + offset
     return TextSelection.create(doc, anchor, head)
   }
@@ -149,7 +128,7 @@ export default class CodeBlockView {
   codeMirrorKeymap = () => {
     let view = this.view
     let mod = /Mac/.test(navigator.platform) ? 'Cmd' : 'Ctrl'
-    // @ts-ignore
+
     return CodeMirror.normalizeKeyMap({
       Up: () => this.maybeEscape('line', -1),
       Left: () => this.maybeEscape('char', -1),
@@ -173,7 +152,7 @@ export default class CodeBlockView {
    */
   maybeEscape = (unit: string, dir: number) => {
     let pos = this.cm.getCursor()
-    console.log(pos)
+
     if (
       this.cm.somethingSelected() ||
       pos.line !== (dir < 0 ? this.cm.firstLine() : this.cm.lastLine()) ||
@@ -210,8 +189,9 @@ export default class CodeBlockView {
     this.cm.focus()
   }
 
-  stopEvent = () => {
-    return true
+  destroy = () => {
+    this.containerNode.remove()
+    this.view.focus()
   }
 }
 
