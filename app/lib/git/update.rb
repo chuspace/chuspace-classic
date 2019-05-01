@@ -11,6 +11,7 @@ module Git
     end
 
     def update(ref_name, old_value, new_value)
+      $stderr.puts 'i run'
       # do something here before receive
     end
   end

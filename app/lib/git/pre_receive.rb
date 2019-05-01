@@ -12,6 +12,7 @@ module Git
     end
 
     def exec
+      $stderr.puts 'i run'
       # do something here before receive
     end
   end

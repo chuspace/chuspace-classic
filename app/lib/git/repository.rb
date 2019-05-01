@@ -2,8 +2,6 @@
 
 module Git
   class Repository
-    include Branchable
-
     class NoRepository < StandardError; end
     class InvalidBlobName < StandardError; end
     class InvalidRef < StandardError; end
@@ -137,12 +135,12 @@ module Git
 
       if real_local_hooks_directory != File.realpath(GLOBAL_HOOKS_DIRECTORY)
         if File.exist?(local_hooks_directory)
-          $logger.info "Moving existing hooks directory and symlinking global hooks directory for #{path}."
+          Rails.logger.info "Moving existing hooks directory and symlinking global hooks directory for #{path}."
           FileUtils.mv(local_hooks_directory, "#{local_hooks_directory}.old.#{Time.now.to_i}")
         end
         FileUtils.ln_sf(GLOBAL_HOOKS_DIRECTORY, local_hooks_directory)
       else
-        $logger.info "Hooks already exist for #{path}."
+        Rails.logger.info "Hooks already exist for #{path}."
         true
       end
     end
