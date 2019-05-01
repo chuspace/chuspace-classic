@@ -12,6 +12,7 @@ module Git
     START_REF = 'HEAD'
     DEFAULT_REF = 'refs/heads/master'
     CONTRIBUTIONS_REF = 'refs/heads/contributions'
+    GLOBAL_HOOKS_DIRECTORY = Rails.root.join('app', 'lib', 'git', 'hooks')
 
     attr_reader :author_nickname, :name, :path, :rugged, :storage_path, :namespace_path
 
@@ -120,7 +121,30 @@ module Git
       repo.config['user.email'] = author.email
       repo.config['user.nickname'] = author.nickname
       repo.close
+      create_hooks
       true
+    end
+
+    def create_hooks
+      local_hooks_directory = File.join(path, 'hooks')
+      real_local_hooks_directory = :not_found
+
+      begin
+        real_local_hooks_directory = File.realpath(local_hooks_directory)
+      rescue Errno::ENOENT
+        # real_local_hooks_directory == :not_found
+      end
+
+      if real_local_hooks_directory != File.realpath(GLOBAL_HOOKS_DIRECTORY)
+        if File.exist?(local_hooks_directory)
+          $logger.info "Moving existing hooks directory and symlinking global hooks directory for #{path}."
+          FileUtils.mv(local_hooks_directory, "#{local_hooks_directory}.old.#{Time.now.to_i}")
+        end
+        FileUtils.ln_sf(GLOBAL_HOOKS_DIRECTORY, local_hooks_directory)
+      else
+        $logger.info "Hooks already exist for #{path}."
+        true
+      end
     end
 
     def destroy
