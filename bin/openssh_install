@@ -1,23 +1,19 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require File.expand_path('../config/environment', File.dirname(__FILE__))
+require_relative '../app/lib/git'
 
-key_dir = File.dirname(Git.config.ssh_auth_file_path)
-repository_storage_paths = ARGV
+repository_storage_paths = ARGV.any? ? ARGV : [Git.config.repositories_path]
 
 commands = [
-  %W(mkdir -p #{key_dir}),
-  %W(chmod 700 #{key_dir}),
+  %W(mkdir -p #{Git::SSH_ROOT}),
+  %W(chmod 700 #{Git::SSH_ROOT}),
 ]
 
 repository_storage_paths.each do |repository_storage_path|
   commands << %W(mkdir -p #{repository_storage_path})
   commands << %W(chmod ug+rwX,o-rwx #{repository_storage_path})
 end
-
-FileUtils.touch(Git.config.ssh_auth_file_path)
-FileUtils.touch(Git.config.ssh_auth_lock_file_path)
 
 commands.each do |cmd|
   print "#{cmd.join(' ')}: "
@@ -28,5 +24,8 @@ commands.each do |cmd|
     abort "#{$PROGRAM_NAME} failed"
   end
 end
+
+FileUtils.touch(Git.config.ssh_auth_file_path)
+FileUtils.touch(Git.config.ssh_auth_lock_file_path)
 
 exit

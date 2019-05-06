@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  post 'git_shell/access'
+
   root to: 'pages#index'
 
   resources :sessions, path: 'signin', only: %i[index create destroy]

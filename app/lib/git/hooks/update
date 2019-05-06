@@ -7,7 +7,7 @@ ref_name  = ARGV[0]
 old_value = ARGV[1]
 new_value = ARGV[2]
 repo_path = Dir.pwd
-key_id    = ENV.delete('GL_ID')
+key_id    = ENV.delete('GIT_ID')
 
 require_relative '../update'
 

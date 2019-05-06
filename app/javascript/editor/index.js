@@ -1,22 +1,19 @@
-import * as marks from 'editor/marks'
-import * as nodes from 'editor/nodes'
-import * as plugins from 'editor/plugins'
+// @flow
 
-import { EditorState, Plugin, PluginKey } from 'prosemirror-state'
+import { EditorState, Plugin, PluginKey, Transaction } from 'prosemirror-state'
 import { baseKeymap, selectParentNode } from 'prosemirror-commands'
-import { getMarkAttrs, isMarkActive, isNodeActive } from 'editor/helpers'
+import { getMarkAttrs, isMarkActive, isNodeActive } from '@chuspace/editor-helpers'
 import { inputRules, undoInputRule } from 'prosemirror-inputrules'
-import { markdownParser, markdownSerializer } from 'editor/markdown'
+import { manager, schema } from '@chuspace/editor-schema'
+import { markdownParser, markdownSerializer } from '@chuspace/markdowner'
 
-import CodeBlockView from 'editor/nodeviews/code-block'
+import { CodeBlockView } from '@chuspace/editor-views'
 import { EditorView } from 'prosemirror-view'
-import { ElementManager } from 'editor/utils'
 import { Schema } from 'prosemirror-model'
 import { Selection } from 'prosemirror-state'
 import { dropCursor } from 'prosemirror-dropcursor'
 import { gapCursor } from 'prosemirror-gapcursor'
 import { keymap } from 'prosemirror-keymap'
-import toArray from 'lodash/toArray'
 
 function arrowHandler(dir) {
   return (state, dispatch, view) => {
@@ -35,14 +32,21 @@ function arrowHandler(dir) {
 }
 
 export default class Editor {
+  options = {}
+  element: HTMLElement
+  keymaps: any
+  inputRules: []
+  pasteRules: []
+  state: EditorState
+  view: EditorView
+  commands: []
+  activeMarks: {}
+  activeNodes: {}
+  activeMarkAttrs: {}
+
   constructor(options = {}) {
     this.options = options
     this.element = options.element
-    this.elements = this.createElements()
-    this.nodes = this.createNodes()
-    this.marks = this.createMarks()
-    this.schema = this.createSchema()
-    this.plugins = this.createPlugins()
     this.keymaps = this.createKeymaps()
     this.inputRules = this.createInputRules()
     this.pasteRules = this.createPasteRules()
@@ -51,70 +55,40 @@ export default class Editor {
     this.commands = this.createCommands()
     this.setActiveNodesAndMarks()
     this.focus()
-
-    // give element manager access to our view
-    this.elements.view = this.view
-  }
-
-  createElements() {
-    return new ElementManager([
-      ...toArray(marks).map(Mark => new Mark()),
-      ...toArray(plugins).map(Plugin => new Plugin()),
-      ...toArray(nodes).map(Node => new Node())
-    ])
-  }
-
-  createPlugins() {
-    return this.elements.plugins
   }
 
   createKeymaps() {
-    return this.elements.keymaps({
-      schema: this.schema
+    return manager.keymaps({
+      schema: schema
     })
   }
 
   createInputRules() {
-    return this.elements.inputRules({
-      schema: this.schema
+    return manager.inputRules({
+      schema: schema
     })
   }
 
   createPasteRules() {
-    return this.elements.pasteRules({
-      schema: this.schema
+    return manager.pasteRules({
+      schema: schema
     })
   }
 
   createCommands() {
-    return this.elements.commands({
-      schema: this.schema,
+    return manager.commands({
+      schema: schema,
       view: this.view,
       editable: true
     })
   }
 
-  createNodes() {
-    return this.elements.nodes
-  }
-
-  createMarks() {
-    return this.elements.marks
-  }
-
-  createSchema() {
-    return new Schema({
-      nodes: this.nodes,
-      marks: this.marks
-    })
-  }
-
   createState() {
     return EditorState.create({
-      schema: this.schema,
-      doc: markdownParser(this.schema).parse(''),
+      schema: schema,
+      doc: markdownParser.parse(''),
       plugins: [
-        ...this.plugins,
+        ...manager.plugins,
         inputRules({
           rules: this.inputRules
         }),
@@ -158,13 +132,12 @@ export default class Editor {
     })
 
     view.dom.style.whiteSpace = 'pre-wrap'
-    view.dom.classList = ''
     view.dom.classList.add('chu-editor')
 
     return view
   }
 
-  dispatchTransaction(transaction) {
+  dispatchTransaction(transaction: Transaction) {
     this.state = this.state.apply(transaction)
     this.view.updateState(this.state)
 
@@ -175,7 +148,7 @@ export default class Editor {
     this.emitUpdate(transaction)
   }
 
-  emitUpdate(transaction) {
+  emitUpdate(transaction: Transaction) {
     console.log(this.getMarkdown())
   }
 
@@ -188,7 +161,7 @@ export default class Editor {
   }
 
   setActiveNodesAndMarks() {
-    this.activeMarks = Object.entries(this.schema.marks).reduce(
+    this.activeMarks = Object.entries(schema.marks).reduce(
       (marks, [name, mark]) => ({
         ...marks,
         [name]: (attrs = {}) => isMarkActive(this.state, mark, attrs)
@@ -196,7 +169,7 @@ export default class Editor {
       {}
     )
 
-    this.activeMarkAttrs = Object.entries(this.schema.marks).reduce(
+    this.activeMarkAttrs = Object.entries(schema.marks).reduce(
       (marks, [name, mark]) => ({
         ...marks,
         [name]: getMarkAttrs(this.state, mark)
@@ -204,7 +177,7 @@ export default class Editor {
       {}
     )
 
-    this.activeNodes = Object.entries(this.schema.nodes).reduce(
+    this.activeNodes = Object.entries(schema.nodes).reduce(
       (nodes, [name, node]) => ({
         ...nodes,
         [name]: (attrs = {}) => isNodeActive(this.state, node, attrs)
@@ -213,7 +186,7 @@ export default class Editor {
     )
   }
 
-  getMarkAttrs(type = null) {
+  getMarkAttrs(type: ?string = null) {
     return this.activeMarkAttrs[type]
   }
 

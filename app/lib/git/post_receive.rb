@@ -1,17 +1,20 @@
+require 'securerandom'
+require_relative 'repository'
+
 module Git
   class PostReceive
     attr_reader :repository, :repo_path, :changes, :jid
-    delegate :config, to: Git
 
-    def initialize(repository, repo_path, actor, changes)
-      @repository = repository
-      @repo_path, @actor = repo_path.strip, actor
+    def initialize(repo_path, key_id, changes)
+      @repo_path = repo_path.strip
+      @repository = Git::Repository.new(path: repo_path)
       @changes = changes
       @jid = SecureRandom.hex(12)
     end
 
     def exec
       $stderr.puts 'i run'
+      true
       # do something here after receive
     end
   end

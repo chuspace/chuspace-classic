@@ -1,0 +1,41 @@
+{
+  "name": "@chuspace/code-editor-modes",
+  "version": "0.0.1",
+  "description": "Code editor language modes",
+  "keywords": [
+    "codemirror",
+    "prosemirror",
+    "modes"
+  ],
+  "author": "Gaurav Tiwari <gaurav@gauravtiwari.co.uk>",
+  "homepage": "https://chuspace.com",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gauravtiwari/chuspace.git"
+  },
+  "scripts": {
+    "transpile": "babel --watch lib -d dist --copy-files --source-maps inline --ignore '**/*.spec.js,**/*.stories.js, __tests__/**/*.js'",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/gauravtiwari/chuspace/issues"
+  },
+  "dependencies": {
+    "codemirror": "^5.46.0",
+    "codemirror-mode-elixir": "^1.1.2",
+    "graphql-language-service-parser": "^1.2.2",
+    "tohash": "^1.0.2"
+  }
+}

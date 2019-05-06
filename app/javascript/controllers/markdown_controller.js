@@ -3,7 +3,7 @@
 
 import { h, render } from 'preact'
 
-import CodeEditor from 'editor/components/code-block'
+import { CodeBlock } from '@chuspace/editor-ui'
 import { Controller } from 'stimulus'
 import markdownit from 'markdown-it'
 
@@ -22,7 +22,7 @@ export default class extends Controller {
       codeNode.parentNode.insertBefore(div, codeNode)
       codeNode.remove()
 
-      render(<CodeEditor content={content} mode={mode} getCMInstance={getCMInstance} readOnly="noCursor" />, div)
+      render(<CodeBlock content={content} mode={mode} getCMInstance={getCMInstance} readOnly="noCursor" />, div)
     })
   }
 }

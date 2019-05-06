@@ -2,6 +2,8 @@
 
 # Gitlab::Git::Diff is a wrapper around native Rugged::Diff object
 
+require_relative '../concerns/encoding_helper'
+
 module Git
   class Diff
     class TimeoutError < StandardError; end

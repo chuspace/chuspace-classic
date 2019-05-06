@@ -3,6 +3,8 @@
 require 'shellwords'
 require 'pathname'
 require 'forwardable'
+require 'http'
+require_relative 'logger'
 
 module Git
   class Shell
@@ -44,13 +46,13 @@ module Git
       true
     rescue AccessDeniedError => ex
       message = "remote: Access denied for git command <#{origin_cmd}> by #{log_username}."
-      Rails.logger.warn message
+      Git.logger.warn message
 
       $stderr.puts ex.message
       false
     rescue DisallowedCommandError => ex
       message = "remote: Attempt to execute disallowed command <#{origin_cmd}> by #{log_username}."
-      Rails.logger.warn message
+      Git.logger.warn message
 
       $stderr.puts 'remote: Disallowed command'
       false
@@ -67,15 +69,21 @@ module Git
 
       raise DisallowedCommandError unless GIT_COMMANDS.include?(@command)
       raise DisallowedCommandError unless args.count == 2
+
       @full_repo_name = args.last[1..-1]
     end
 
     def verify_access
-      self.repo_path = user.blogs.find_by_repo_name(full_repo_name)&.repo_path
+      response = HTTP.post('http://chuspace.test/git_shell/access', json: { key_id: key_id, repo_name: full_repo_name })
+      body = response.parse
+
+      raise AccessDeniedError, 'remote: Unauthorized' unless body['allowed']
+
+      self.repo_path = body['repo_path']
     end
 
     def process_cmd(args)
-      Rails.logger.info "executing git command <#{@command} #{repo_path}> for #{log_username}."
+      Git.logger.info "executing git command <#{@command} #{repo_path}> for #{log_username}."
       exec_cmd(@command, repo_path)
     end
 
@@ -96,22 +104,6 @@ module Git
       }
 
       Kernel.exec(env, *args, unsetenv_others: true)
-    end
-
-    def ssh_key
-      @ssh_key ||= SshKey.find_by(id: key_id.split('-').last)
-      raise AccessDeniedError, 'remote: Ssh key not found on server' if @ssh_key.blank?
-      @ssh_key
-    end
-
-    def user
-      @user ||= ssh_key&.user
-      raise AccessDeniedError, 'remote: User not found for your ssh key' if @user.blank?
-      @user
-    end
-
-    def username
-      user && user.name || 'Anonymous'
     end
 
     def log_username

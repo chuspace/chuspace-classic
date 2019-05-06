@@ -4,13 +4,12 @@
 # will be processed properly.
 
 refs = $stdin.read
-key_id  = ENV.delete('GL_ID')
-gl_repository = ENV.delete('GL_REPOSITORY')
+key_id = ENV.delete('GIT_ID')
 repo_path = Dir.pwd
 
-require_relative '../post-receive'
+require_relative '../post_receive'
 
-if Git::PostReceive.new(gl_repository, repo_path, key_id, refs).exec
+if Git::PostReceive.new(repo_path, key_id, refs).exec
   exit 0
 else
   exit 1

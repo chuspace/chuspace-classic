@@ -1,7 +1,14 @@
 # frozen_string_literal: true
 
+require 'forwardable'
+require 'rugged'
+require_relative 'logger'
+require_relative 'blob'
+
 module Git
   class Repository
+    extend Forwardable
+
     class NoRepository < StandardError; end
     class InvalidBlobName < StandardError; end
     class InvalidRef < StandardError; end
@@ -10,22 +17,15 @@ module Git
     START_REF = 'HEAD'
     DEFAULT_REF = 'refs/heads/master'
     CONTRIBUTIONS_REF = 'refs/heads/contributions'
-    GLOBAL_HOOKS_DIRECTORY = Rails.root.join('app', 'lib', 'git', 'hooks')
+    GLOBAL_HOOKS_DIRECTORY = File.join(Git::Config::ROOT_PATH, 'hooks')
 
-    attr_reader :author_nickname, :name, :path, :rugged, :storage_path, :namespace_path
+    attr_reader :name, :path, :rugged
 
-    delegate :lookup, :checkout, :empty?, :bare?, :index, to: :rugged
+    def_delegators :@rugged, :lookup, :checkout, :empty?, :bare?, :index
 
-    def initialize(name:)
-      @name = name
-      @author_nickname = name.split('/').first
-      @storage_path = Git.config.git_storage_path
-      @namespace_path = storage_path.join(author_nickname).tap(&:mkpath).to_s
-      @path = storage_path.join(name).tap(&:mkpath).to_s
-    end
-
-    def full_path_for(name:)
-      storage_path.join(name).tap(&:mkpath).to_s
+    def initialize(path:)
+      @name = path.split('/').last
+      @path = path
     end
 
     def reload
@@ -98,6 +98,10 @@ module Git
       !empty?
     end
 
+    def merge_base_commit(from, to)
+      rugged.merge_base(from, to)
+    end
+
     def discover_default_branch
       names = branch_names
 
@@ -114,11 +118,17 @@ module Git
     end
 
     def create(author:)
+      # Ensure directory exists
+      FileUtils.mkdir_p(path, mode: 0770)
+
+      # Create git repo
       repo = Rugged::Repository.init_at(path, :bare)
       repo.config['user.name'] = author.name
       repo.config['user.email'] = author.email
       repo.config['user.nickname'] = author.nickname
       repo.close
+
+      # Create git hooks
       create_hooks
       true
     end
@@ -135,25 +145,24 @@ module Git
 
       if real_local_hooks_directory != File.realpath(GLOBAL_HOOKS_DIRECTORY)
         if File.exist?(local_hooks_directory)
-          Rails.logger.info "Moving existing hooks directory and symlinking global hooks directory for #{path}."
+          Git.logger.info "Moving existing hooks directory and symlinking global hooks directory for #{path}."
           FileUtils.mv(local_hooks_directory, "#{local_hooks_directory}.old.#{Time.now.to_i}")
         end
         FileUtils.ln_sf(GLOBAL_HOOKS_DIRECTORY, local_hooks_directory)
       else
-        Rails.logger.info "Hooks already exist for #{path}."
+        Git.logger.info "Hooks already exist for #{path}."
         true
       end
     end
 
     def destroy
-      Rails.logger.info "Removing repository for <#{name}> from <#{namespace_path}>."
-      FileUtils.rm_rf(namespace_path)
+      Git.logger.info "Removing repository for <#{name}> from <#{path}>."
+      FileUtils.rm_rf(path)
       true
     end
 
-    def rename(new_name:)
-      new_path = full_path_for(name: new_name)
-      Rails.logger.info "Moving repository from #{path} to <#{new_path}>."
+    def rename(new_path:)
+      Git.logger.info "Moving repository from #{path} to <#{new_path}>."
       FileUtils.mv(path, new_path)
     end
   end

@@ -1,0 +1,14 @@
+export default function (state, type) {
+  var _state$selection = state.selection,
+      from = _state$selection.from,
+      $from = _state$selection.$from,
+      to = _state$selection.to,
+      empty = _state$selection.empty;
+
+  if (empty) {
+    return !!type.isInSet(state.storedMarks || $from.marks());
+  }
+
+  return !!state.doc.rangeHasMark(from, to, type);
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL2xpYi9pcy1tYXJrLWFjdGl2ZS5qcyJdLCJuYW1lcyI6WyJzdGF0ZSIsInR5cGUiLCJzZWxlY3Rpb24iLCJmcm9tIiwiJGZyb20iLCJ0byIsImVtcHR5IiwiaXNJblNldCIsInN0b3JlZE1hcmtzIiwibWFya3MiLCJkb2MiLCJyYW5nZUhhc01hcmsiXSwibWFwcGluZ3MiOiJBQUFBLGVBQWUsVUFBU0EsS0FBVCxFQUFnQkMsSUFBaEIsRUFBc0I7QUFBQSx5QkFDQUQsS0FBSyxDQUFDRSxTQUROO0FBQUEsTUFDM0JDLElBRDJCLG9CQUMzQkEsSUFEMkI7QUFBQSxNQUNyQkMsS0FEcUIsb0JBQ3JCQSxLQURxQjtBQUFBLE1BQ2RDLEVBRGMsb0JBQ2RBLEVBRGM7QUFBQSxNQUNWQyxLQURVLG9CQUNWQSxLQURVOztBQUduQyxNQUFJQSxLQUFKLEVBQVc7QUFDVCxXQUFPLENBQUMsQ0FBQ0wsSUFBSSxDQUFDTSxPQUFMLENBQWFQLEtBQUssQ0FBQ1EsV0FBTixJQUFxQkosS0FBSyxDQUFDSyxLQUFOLEVBQWxDLENBQVQ7QUFDRDs7QUFFRCxTQUFPLENBQUMsQ0FBQ1QsS0FBSyxDQUFDVSxHQUFOLENBQVVDLFlBQVYsQ0FBdUJSLElBQXZCLEVBQTZCRSxFQUE3QixFQUFpQ0osSUFBakMsQ0FBVDtBQUNEIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24oc3RhdGUsIHR5cGUpIHtcbiAgY29uc3QgeyBmcm9tLCAkZnJvbSwgdG8sIGVtcHR5IH0gPSBzdGF0ZS5zZWxlY3Rpb25cblxuICBpZiAoZW1wdHkpIHtcbiAgICByZXR1cm4gISF0eXBlLmlzSW5TZXQoc3RhdGUuc3RvcmVkTWFya3MgfHwgJGZyb20ubWFya3MoKSlcbiAgfVxuXG4gIHJldHVybiAhIXN0YXRlLmRvYy5yYW5nZUhhc01hcmsoZnJvbSwgdG8sIHR5cGUpXG59XG4iXX0=

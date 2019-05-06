@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative '../concerns/encoding_helper'
+
 module Git
   class Blob
     include EncodingHelper

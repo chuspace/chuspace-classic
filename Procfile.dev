@@ -1,3 +1,4 @@
 chuspace: bundle exec rails s -p $PORT
 webpacker: ./bin/webpack-dev-server
 sshd: /usr/sbin/sshd -e -D -f /Users/gaurav/personal/chuspace/openssh/sshd_config
+lerna: lerna run --parallel transpile

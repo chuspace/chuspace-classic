@@ -1,7 +1,9 @@
+require 'securerandom'
+require_relative 'repository'
+
 module Git
   class Update
     attr_reader :repository, :repo_path, :key_id, :protocol
-    delegate :config, to: Git
 
     def initialize(repo_path, key_id)
       @repo_path = repo_path.strip
@@ -12,6 +14,7 @@ module Git
 
     def update(ref_name, old_value, new_value)
       $stderr.puts 'i run'
+      true
       # do something here before receive
     end
   end

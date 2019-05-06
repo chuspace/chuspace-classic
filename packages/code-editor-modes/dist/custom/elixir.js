@@ -1,0 +1,2 @@
+import 'codemirror-mode-elixir';
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL2xpYi9jdXN0b20vZWxpeGlyLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUVBLE9BQU8sd0JBQVAiLCJzb3VyY2VzQ29udGVudCI6WyIvLyBAZmxvd1xuXG5pbXBvcnQgJ2NvZGVtaXJyb3ItbW9kZS1lbGl4aXInXG4iXX0=

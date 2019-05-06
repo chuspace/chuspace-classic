@@ -4,14 +4,12 @@
 # will be processed properly.
 
 refs = $stdin.read
-key_id = ENV.delete('GL_ID')
-protocol = ENV.delete('GL_PROTOCOL')
+key_id = ENV.delete('GIT_ID')
 repo_path = Dir.pwd
-gl_repository = ENV['GL_REPOSITORY']
 
-require_relative '../pre-receive'
+require_relative '../pre_receive'
 
-if Git::PreReceive.new(gl_repository, repo_path, key_id, refs, protocol).exec
+if Git::PreReceive.new(repo_path, key_id, refs).exec
   exit 0
 else
   exit 1

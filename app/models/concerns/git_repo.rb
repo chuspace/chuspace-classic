@@ -11,7 +11,7 @@ module GitRepo
   end
 
   def repo
-    Git::Repository.new(name: repo_name)
+    Git::Repository.new(path: repo_path)
   end
 
   private
@@ -19,7 +19,7 @@ module GitRepo
   def assign_repo_details
     self.name_with_author = "#{author.nickname}/#{slug}"
     self.repo_name = "#{name_with_author}.git"
-    self.repo_path = repo.path
+    self.repo_path = Git.config.repositories_path.join(repo_name).to_s
   end
 
   def create_repository

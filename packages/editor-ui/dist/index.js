@@ -1,0 +1,2 @@
+export { default as CodeBlock } from './components/code-block';
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL2xpYi9pbmRleC5qcyJdLCJuYW1lcyI6WyJkZWZhdWx0IiwiQ29kZUJsb2NrIl0sIm1hcHBpbmdzIjoiQUFBQSxTQUFTQSxPQUFPLElBQUlDLFNBQXBCLFFBQXFDLHlCQUFyQyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCB7IGRlZmF1bHQgYXMgQ29kZUJsb2NrIH0gZnJvbSAnLi9jb21wb25lbnRzL2NvZGUtYmxvY2snXG4iXX0=
