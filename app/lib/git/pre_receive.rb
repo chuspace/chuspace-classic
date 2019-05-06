@@ -1,8 +1,12 @@
 require_relative 'repository'
 require_relative 'diff'
+require 'http'
+require_relative '../concerns/encoding_helper'
 
 module Git
   class PreReceive
+    include EncodingHelper
+
     attr_reader :repository, :repo_path, :key_id, :changes
 
     def initialize(repo_path, key_id, changes)
@@ -23,7 +27,8 @@ module Git
 
 
       files.each do |file|
-        $stderr.puts `git show #{newrev}:#{file}`
+        content = encode!(`git show #{newrev}:#{file}`)
+        $stderr.puts content
       end
 
       $stderr.puts 'Checking failed...'
