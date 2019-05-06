@@ -26,7 +26,7 @@ module Git
         $stderr.puts `git show #{newrev}:#{file}`
       end
 
-       $stderr.puts 'Checking failed...'
+      $stderr.puts 'Checking failed...'
 
       false
       # do something here before receive
