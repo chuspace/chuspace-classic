@@ -1,2 +1,0 @@
-export { default as CodeBlockView } from './code-block';
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL2xpYi9pbmRleC5qcyJdLCJuYW1lcyI6WyJkZWZhdWx0IiwiQ29kZUJsb2NrVmlldyJdLCJtYXBwaW5ncyI6IkFBQUEsU0FBU0EsT0FBTyxJQUFJQyxhQUFwQixRQUF5QyxjQUF6QyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCB7IGRlZmF1bHQgYXMgQ29kZUJsb2NrVmlldyB9IGZyb20gJy4vY29kZS1ibG9jaydcbiJdfQ==
