@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :magic_logins, only: :index
   resources :users, except: :show
   resources :posts, except: :show
+  resources :post_validations, only: :create
 
   resources :settings, only: :index
 

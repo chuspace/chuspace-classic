@@ -3,12 +3,13 @@ require_relative 'repository'
 
 module Git
   class PostReceive
-    attr_reader :repository, :repo_path, :changes, :jid
+    attr_reader :repository, :repo_name, :repo_path, :changes, :jid
 
-    def initialize(repo_path, key_id, changes)
+    def initialize(repo_path, repo_name, key_id, changes)
       @repo_path = repo_path.strip
       @repository = Git::Repository.new(path: repo_path)
       @changes = changes
+      @repo_name = repo_name
       @jid = SecureRandom.hex(12)
     end
 

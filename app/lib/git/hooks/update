@@ -7,11 +7,12 @@ ref_name  = ARGV[0]
 old_value = ARGV[1]
 new_value = ARGV[2]
 repo_path = Dir.pwd
+repo_name = ENV.delete('GIT_REPO_NAME')
 key_id    = ENV.delete('GIT_ID')
 
 require_relative '../update'
 
-if Git::Update.new(repo_path, key_id).update(ref_name, old_value, new_value)
+if Git::Update.new(repo_path, repo_name, key_id).update(ref_name, old_value, new_value)
   exit 0
 else
   exit 1

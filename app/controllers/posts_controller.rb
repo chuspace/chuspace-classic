@@ -17,7 +17,7 @@ class PostsController < ApplicationController
     post = Posts::Create.call(user: Current.user, blog: Current.user.default_blog, params: params)
 
     if post.save
-      redirect_to blog_post_path(blog: @blog.slug, slug: post.slug)
+      redirect_to blog_post_path(blog: post.blog.slug, slug: post.slug)
     else
       render json: { errors: post.api_validation_errors }
     end

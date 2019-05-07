@@ -1,5 +1,8 @@
-class GitShellController < ApplicationController
-  skip_before_action :verify_authenticity_token
+class GitShellController < ActionController::Metal
+  include AbstractController::Rendering
+  include ActionController::Renderers::All
+  include ActionController::MimeResponds
+  include Rails.application.routes.url_helpers
 
   def access
     @ssh_key ||= SshKey.find_by(id: params[:key_id].split('-').last)

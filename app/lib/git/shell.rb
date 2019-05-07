@@ -99,7 +99,8 @@ module Git
         'PATH' => ENV['PATH'],
         'LD_LIBRARY_PATH' => ENV['LD_LIBRARY_PATH'],
         'LANG' => ENV['LANG'],
-        'GIT_ID' => @key_id,
+        'GIT_ID' => key_id,
+        'GIT_REPO_NAME' => full_repo_name,
         'GIT_PROTOCOL' => GIT_PROTOCOL
       }
 

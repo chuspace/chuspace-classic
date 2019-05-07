@@ -5,11 +5,12 @@
 
 refs = $stdin.read
 key_id = ENV.delete('GIT_ID')
+repo_name = ENV.delete('GIT_REPO_NAME')
 repo_path = Dir.pwd
 
 require_relative '../post_receive'
 
-if Git::PostReceive.new(repo_path, key_id, refs).exec
+if Git::PostReceive.new(repo_path, repo_name, key_id, refs).exec
   exit 0
 else
   exit 1
