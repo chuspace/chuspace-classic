@@ -16,6 +16,6 @@ class ApplicationRecord < ActiveRecord::Base
       self.class.validators_on(attribute).each { |validator| validator.validate_each(self, attribute, send(attribute)) }
     end
 
-    errors.none?
+    errors.empty?
   end
 end

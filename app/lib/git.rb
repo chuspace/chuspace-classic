@@ -8,6 +8,6 @@ module Git
   end
 
   def self.logger
-    @config ||= Git::Logger.new(log_level: config.log_level, log_file: config.log_file).logger
+    @logger ||= Git::Logger.new(log_level: config.log_level, log_file: config.log_file).logger
   end
 end

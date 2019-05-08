@@ -4,10 +4,12 @@ class Blog < ApplicationRecord
   include HasGitRepo, Sluggable
   sluggable :name
 
-  validates :name, :slug, :name_with_author, :repo_name, :repo_path, presence: true
-  validates_uniqueness_of :name_with_author
+  validates_presence_of :name, :slug, :repo_name, :repo_path, :status
+  validates :repo_path, uniqueness: true
+  validates_uniqueness_of :repo_name, scope: :author_id
+  validates_uniqueness_of :slug, scope: :author_id
 
-  enum status: { draft: 0, published: 1, archived: 2 }
+  enum status: { published: 0, unpublished: 1, archived: 2 }
 
   belongs_to :author, class_name: 'User'
   has_many :posts

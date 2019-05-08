@@ -8,6 +8,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :email, null: false, default: ''
       t.citext :nickname, null: false, default: ''
       t.string :avatar
+      t.string :blog_storage_path
 
       # Passwordless login
       t.string :auth_token, null: false, default: ''
@@ -32,6 +33,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
     add_index :users, :email, unique: true
     add_index :users, :nickname, unique: true
     add_index :users, :auth_token, unique: true
+    add_index :users, :blog_storage_path, unique: true
     add_index :users, :location
   end
 end

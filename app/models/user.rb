@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  include Trackable
+  include Trackable, Blogable
 
   validates :email, presence: true, uniqueness: true, email: true
   validates :name, presence: true
@@ -16,7 +16,6 @@ class User < ApplicationRecord
 
   has_many :ssh_keys, dependent: :destroy
   has_many :posts, foreign_key: 'author_id', dependent: :destroy
-  has_many :blogs, foreign_key: 'author_id', dependent: :destroy
   has_many :user_relationships, foreign_key: 'follower_id', dependent: :destroy
   has_many :followers, through: :user_relationships, source: :follower
   has_many :followings, through: :user_relationships, source: :followed
@@ -24,9 +23,6 @@ class User < ApplicationRecord
   has_many :taggings, through: :tag_relationships, source: :follower
   has_many :contributions, foreign_key: 'contributor_id'
   has_many :collaborations, class_name: 'Collaborator'
-  has_one :default_blog, -> { where(default: true) }, foreign_key: 'author_id', class_name: 'Blog', required: true
-
-  after_save -> {  blogs.touch_all }, if: :nickname_changed?
 
   def to_param
     nickname

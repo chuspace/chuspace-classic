@@ -5,9 +5,9 @@ module HasGitRepo
 
   included do
     before_validation :assign_repo_details
-    before_create :create_repository
+    before_create -> { repo.create(author: author) }
     before_save :rename_repository, if: -> { !new_record? && repo_name_changed? }
-    before_destroy :destroy_repository
+    before_destroy -> { repo.destroy }
   end
 
   def repo
@@ -17,20 +17,11 @@ module HasGitRepo
   private
 
   def assign_repo_details
-    self.name_with_author = "#{author.nickname}/#{slug}"
-    self.repo_name = "#{name_with_author}.git"
-    self.repo_path = Git.config.storage_path.join(repo_name).to_s
-  end
-
-  def create_repository
-    repo.create(author: author)
+    self.repo_name = "#{slug}.git"
+    self.repo_path = File.join(author.blog_storage_path, repo_name).to_s
   end
 
   def rename_repository(record)
-    repo.rename(new_name: record.repo_name)
-  end
-
-  def destroy_repository
-    repo.destroy
+    repo.rename(new_path: record.repo_path)
   end
 end

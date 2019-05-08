@@ -164,6 +164,7 @@ module Git
     def rename(new_path:)
       Git.logger.info "Moving repository from #{path} to <#{new_path}>."
       FileUtils.mv(path, new_path)
+      true
     end
   end
 end

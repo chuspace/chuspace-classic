@@ -40,7 +40,6 @@ ActiveRecord::Schema.define(version: 2019_04_17_082803) do
 
   create_table "blogs", force: :cascade do |t|
     t.string "name", null: false
-    t.string "name_with_author", null: false
     t.citext "slug", null: false
     t.text "introduction"
     t.bigint "author_id"
@@ -52,12 +51,11 @@ ActiveRecord::Schema.define(version: 2019_04_17_082803) do
     t.bigint "posts_count", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["author_id"], name: "index_blogs_on_author_id"
-    t.index ["name_with_author"], name: "index_blogs_on_name_with_author", unique: true
+    t.index ["author_id", "repo_name"], name: "index_blogs_on_author_id_and_repo_name", unique: true
+    t.index ["author_id", "slug"], name: "index_blogs_on_author_id_and_slug", unique: true
+    t.index ["default"], name: "index_blogs_on_default"
     t.index ["posts_count"], name: "index_blogs_on_posts_count"
-    t.index ["repo_name"], name: "index_blogs_on_repo_name", unique: true
     t.index ["repo_path"], name: "index_blogs_on_repo_path", unique: true
-    t.index ["slug"], name: "index_blogs_on_slug"
     t.index ["status"], name: "index_blogs_on_status"
     t.index ["visibility"], name: "index_blogs_on_visibility"
   end
@@ -215,6 +213,7 @@ ActiveRecord::Schema.define(version: 2019_04_17_082803) do
     t.string "email", default: "", null: false
     t.citext "nickname", default: "", null: false
     t.string "avatar"
+    t.string "blog_storage_path"
     t.string "auth_token", default: "", null: false
     t.text "bio"
     t.string "company"
@@ -228,6 +227,7 @@ ActiveRecord::Schema.define(version: 2019_04_17_082803) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["auth_token"], name: "index_users_on_auth_token", unique: true
+    t.index ["blog_storage_path"], name: "index_users_on_blog_storage_path", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["location"], name: "index_users_on_location"
     t.index ["nickname"], name: "index_users_on_nickname", unique: true
