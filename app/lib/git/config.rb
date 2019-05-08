@@ -54,11 +54,11 @@ module Git
     end
 
     def ssh_auth_file_path
-      @ssh_auth_file_path ||= File.join(Git::SSH_ROOT, ssh_auth_file_name)
+      @ssh_auth_file_path ||= File.join(SSH_ROOT, ssh_auth_file_name)
     end
 
     def ssh_auth_lock_file_path
-      @ssh_auth_lock_file_path ||= File.join(Git::SSH_ROOT, ssh_auth_file_name + '.lock')
+      @ssh_auth_lock_file_path ||= File.join(SSH_ROOT, ssh_auth_file_name + '.lock')
     end
 
     def log_level

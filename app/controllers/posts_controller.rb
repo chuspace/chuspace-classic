@@ -14,9 +14,9 @@ class PostsController < ApplicationController
   end
 
   def create
-    post = Posts::Create.call(user: Current.user, blog: Current.user.default_blog, params: params)
+    post = Post.commit_and_create_by(author: Current.user, committer: Current.user, blog: Current.user.default_blog, attrs: post_params)
 
-    if post.save
+    if post.persisted?
       redirect_to blog_post_path(blog: post.blog.slug, slug: post.slug)
     else
       render json: { errors: post.api_validation_errors }
@@ -32,6 +32,10 @@ class PostsController < ApplicationController
   end
 
   private
+
+  def post_params
+    params.require(:post).permit(:title, :slug, :excerpt, :body, :tag_slugs, :published_at, :status, :parent_slug, :visibility)
+  end
 
   def find_blog
     @blog = Blog.find_by_slug(params[:blog])

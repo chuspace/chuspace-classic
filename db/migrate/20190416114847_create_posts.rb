@@ -17,7 +17,6 @@ class CreatePosts < ActiveRecord::Migration[6.0]
 
       # Flags
       t.string :visibility, default: 'public'
-      t.boolean :premium, default: false, null: false
 
       # Git
       t.string :blob_id, null: false
@@ -36,7 +35,6 @@ class CreatePosts < ActiveRecord::Migration[6.0]
     add_index :posts, :published_at
     add_index :posts, :visibility
     add_index :posts, :ancestry
-    add_index :posts, :premium
     add_index :posts, :blob_id
     add_index :posts, :status
     add_index :posts, [:slug, :blog_id], unique: true

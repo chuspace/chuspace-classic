@@ -70,7 +70,7 @@ module Git
       raise DisallowedCommandError unless GIT_COMMANDS.include?(@command)
       raise DisallowedCommandError unless args.count == 2
 
-      @full_repo_name = args.last[1..-1]
+      @full_repo_name = args.last.split('/').last
     end
 
     def verify_access

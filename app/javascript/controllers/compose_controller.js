@@ -20,17 +20,14 @@ export default class extends Controller {
 
   saveDraft(e) {
     e.preventDefault()
-    const html = this.editor.getMarkdown()
+    const body = this.editor.getMarkdown()
     const title = this.editor.getTitle()
-
-    var data = new FormData()
-    data.append('title', title)
-    data.append('body', html)
 
     fetch(e.target.dataset.url, {
       method: 'POST',
-      body: data,
+      body: JSON.stringify({ post: { title, body } }),
       headers: {
+        'Content-Type': 'application/json',
         'X-CSRF-TOKEN': Rails.csrfToken()
       }
     })

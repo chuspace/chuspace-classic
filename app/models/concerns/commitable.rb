@@ -5,7 +5,8 @@ module Commitable
 
   class_methods do
     def commit_and_create_by(author:, blog:, committer:, attrs:, commit_message: nil)
-      post = blog.posts.build(author: author, **attrs)
+      post = blog.posts.build(author: author)
+      post.assign_attributes(attrs)
       post.commit_and_save(committer: committer, commit_message: commit_message)
     end
   end
@@ -18,9 +19,9 @@ module Commitable
 
       self.blob_id = blob.id
       self.save
-    else
-      self
     end
+
+    self
   end
 
   def commit_and_destroy(committer:, commit_message: nil)
