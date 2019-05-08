@@ -15,7 +15,6 @@ class CreateBlogs < ActiveRecord::Migration[6.0]
       t.string :repo_path, null: false
 
       # Flags
-      t.string :visibility, default: 'public'
       t.boolean :default, null: false, default: false
 
       # Counters
@@ -27,7 +26,6 @@ class CreateBlogs < ActiveRecord::Migration[6.0]
     # Indexes
     add_index :blogs, :status
     add_index :blogs, :default
-    add_index :blogs, :visibility
 
     add_index :blogs, %i[author_id repo_name], unique: true
     add_index :blogs, %i[author_id slug], unique: true

@@ -26,10 +26,11 @@ module Blogable
     FileUtils.mkdir_p(blog_storage_path)
   end
 
-  def rename_blog_storage(record)
-    new_blog_storage_path = File.join(blog_storage_path, '..', record.nickname)
-    Rails.logger.info "Moving repository storage from #{blog_storage_path} to #{new_blog_storage_path} for #{record.nickname}."
+  def rename_blog_storage
+    new_blog_storage_path = File.join(File.expand_path('..', blog_storage_path), nickname)
+    Rails.logger.info "Moving repository storage from #{blog_storage_path} to #{new_blog_storage_path} for #{nickname}."
     FileUtils.mv(blog_storage_path, new_blog_storage_path)
+    self.blog_storage_path = new_blog_storage_path
   end
 
   def destroy_blog_storage

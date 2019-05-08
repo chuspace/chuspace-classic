@@ -10,17 +10,12 @@ class Post < ApplicationRecord
   belongs_to :author, class_name: 'User'
   belongs_to :blog
 
-  has_many :comments
-  has_many :likes
   has_many :taggings
-  has_many :bookmarks
   has_many :tags, through: :taggings
   has_many :contributions
-  has_many :collaborators
   has_many :contributors, through: :contributions, source: :contributor
 
   has_ancestry
-
   has_many_attached :images
 
   enum status: { draft: 0, published: 1, archived: 2 }
