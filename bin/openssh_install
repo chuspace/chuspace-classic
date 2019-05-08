@@ -3,7 +3,7 @@
 
 require_relative '../app/lib/git'
 
-repository_storage_paths = ARGV.any? ? ARGV : [Git.config.repositories_path]
+repository_storage_paths = ARGV.any? ? ARGV : [Git.config.storage_paths]
 
 commands = [
   %W(mkdir -p #{Git::SSH_ROOT}),

@@ -32,7 +32,6 @@ class CreateUsers < ActiveRecord::Migration[5.2]
     add_index :users, :email, unique: true
     add_index :users, :nickname, unique: true
     add_index :users, :auth_token, unique: true
-
     add_index :users, :location
   end
 end

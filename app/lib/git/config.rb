@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 require 'yaml'
+require 'ostruct'
 
 module Git
+  class Storage < OpenStruct; end
+
   class Config
     attr_reader :config
 
@@ -22,12 +25,28 @@ module Git
       ENV.fetch('GIT_URL', 'http://chuspace.test'.sub(%r{/*$}, ''))
     end
 
-    def repositories_dirname
-      @config['storage_dir_name'] ||= 'repositories'
+    def storages
+      fail StandardError, 'No storage configured' if @config['storages'].blank?
+
+      @config['storages'].each_with_object([]) do |(name, path), list|
+        list << Storage.new(name: name, path: Pathname.new(path))
+      end
     end
 
-    def repositories_path
-      File.join(APP_ROOT, repositories_dirname)
+    def storage
+      storages.sample
+    end
+
+    def storage_path
+      storage.path
+    end
+
+    def default_storage
+      storages.find { |storage| storage.name == 'default' }
+    end
+
+    def storage_paths
+      storages.map { |storage| storage.path }
     end
 
     def ssh_auth_file_name

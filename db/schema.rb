@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2019_04_17_082803) do
     t.bigint "byte_size", null: false
     t.string "checksum", null: false
     t.datetime "created_at", null: false
+    t.index ["filename"], name: "index_active_storage_blobs_on_filename"
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
@@ -58,6 +59,7 @@ ActiveRecord::Schema.define(version: 2019_04_17_082803) do
     t.index ["repo_path"], name: "index_blogs_on_repo_path", unique: true
     t.index ["slug"], name: "index_blogs_on_slug"
     t.index ["status"], name: "index_blogs_on_status"
+    t.index ["visibility"], name: "index_blogs_on_visibility"
   end
 
   create_table "bookmarks", force: :cascade do |t|

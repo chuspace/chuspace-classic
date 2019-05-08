@@ -3,10 +3,11 @@ require_relative 'diff'
 require 'http'
 require 'yaml'
 require_relative '../concerns/encoding_helper'
+require_relative '../concerns/formatting_helper'
 
 module Git
   class PreReceive
-    include EncodingHelper
+    include EncodingHelper, FormattingHelper
 
     attr_reader :repository, :repo_name, :repo_path, :key_id, :changes
 
@@ -19,28 +20,34 @@ module Git
     end
 
     def exec
-      # Get the file names, without directory, of the files that have been modified
-      # between the new revision and the old revision
-      $stdout.puts 'Checking marking content...'
-
       oldrev, newrev, ref_name = changes.split(' ')
 
-      files = `git diff --name-only #{oldrev} #{newrev}`.split("\n")
-
+      files = `git diff-tree --name-only #{oldrev} #{newrev}`.split("\n")
+      messages = []
+      blobs = []
 
       files.each do |file|
-        content = encode!(`git show #{newrev}:#{file}`)
-        response = HTTP.post('http://chuspace.test/post_validations', json: { key_id: key_id, repo_name: repo_name, markdown: content })
-        body = response.parse
+        blob = encode!(`git show #{newrev}:#{file}`)
+        next unless detect(blob)[:type] == :text
 
-        $stderr.puts body.inspect
-        raise StandardError, 'remote: Invalid post' unless body['valid']
+        blobs << blob
       end
 
-      $stderr.puts 'Checking failed...'
+      response = HTTP.post(
+        'http://chuspace.test/post_validations',
+        json: { key_id: key_id, repo_name: repo_name, blobs: blobs }
+      )
 
-      false
-      # do something here before receive
+      body = response.parse
+
+      unless body['valid']
+        messages << 'Validation failed...'
+        messages << body['errors']
+      end
+
+      print_broadcast_message(messages.join("\n")) if messages.any?
+
+      body['valid']
     end
   end
 end

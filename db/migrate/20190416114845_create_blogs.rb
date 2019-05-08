@@ -28,6 +28,7 @@ class CreateBlogs < ActiveRecord::Migration[6.0]
     # Indexes
     add_index :blogs, :author_id
     add_index :blogs, :status
+    add_index :blogs, :visibility
     add_index :blogs, :slug
 
     add_index :blogs, :name_with_author, unique: true

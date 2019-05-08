@@ -55,3 +55,4 @@ openssh/sshd_config
 yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+dump.rdb

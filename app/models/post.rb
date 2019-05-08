@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Post < ApplicationRecord
+  include Commitable
+  include Blobable # Depends on commitable
+
   include Sluggable
   sluggable :title
 
@@ -26,23 +29,31 @@ class Post < ApplicationRecord
   validates_presence_of :blob_id, on: :update
   validates_uniqueness_of :slug, scope: %i[blog_id author_id]
 
-  def blob
-    blog.repo.find_blob(blob_id)
-  end
+  delegate :repo, to: :blog
 
-  def blob_content
-    blob_frontmatter + "\n" + body
-  end
-
-  def tag_names
+  def tag_slugs
     tags.pluck(:slug)
   end
 
-  def blob_frontmatter
-    "---\n" +
-      %w[title slug excerpt tag_names status published_at].map { |attribute| "#{attribute}: #{send(attribute)}" }.join(
-        "\n"
-      ) +
-      "\n---"
+  def tag_slugs=(slugs)
+    self.tags = slugs.map do |slug|
+      Tag.where(slug: slug.strip).first_or_create!
+    end
+  end
+
+  def parent_slug
+    parent&.slug
+  end
+
+  def parent_slug=(slug)
+    self.parent = Post.find_by_slug(slug)
+  end
+
+  def blog_slug
+    blog.slug
+  end
+
+  def blog_slug=(slug)
+    self.blog = Blog.find_by_slug(slug)
   end
 end

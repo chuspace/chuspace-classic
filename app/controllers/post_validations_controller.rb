@@ -6,15 +6,20 @@ class PostValidationsController < ActionController::Metal
   include ActionController::MimeResponds
 
   def create
-    @ssh_key ||= SshKey.find_by(id: params[:key_id].split('-').last)
-    @user ||= @ssh_key&.user
-    @blog = @user.blogs.find_by(repo_name: params[:repo_name])
+    ssh_key = SshKey.find_by(id: params[:key_id].split('-').last)
+    user = ssh_key&.user
+    blog = user.blogs.find_by(repo_name: params[:repo_name])
 
-    frontmatter_attrs = YAML.safe_load(params[:markdown]).deep_symbolize_keys!
+    posts = params[:blobs].map do |blob|
+      Post.find_or_initialize_from_blob(author: user, blob: blob)
+    end
 
-    post = Post.find_or_initialize_by(author: @user, blog: @blog, slug: frontmatter_attrs[:slug])
-    post.assign_attributes(frontmatter_attrs)
+    posts.map(&:valid?)
 
-    render json: { valid: post.valid?, errors: post.api_validation_errors }
+    errors = posts.flat_map do |post|
+      "#{post.blob_name}:\n #{post.api_validation_errors_sentence}"
+    end.join("\n")
+
+    render json: { valid: posts.all?(&:valid?), errors: errors }
   end
 end

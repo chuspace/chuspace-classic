@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Blog < ApplicationRecord
-  include GitRepo, Sluggable
+  include HasGitRepo, Sluggable
   sluggable :name
 
   validates :name, :slug, :name_with_author, :repo_name, :repo_path, presence: true

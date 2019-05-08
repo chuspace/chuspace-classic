@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module GitRepo
+module HasGitRepo
   extend ActiveSupport::Concern
 
   included do
@@ -19,7 +19,7 @@ module GitRepo
   def assign_repo_details
     self.name_with_author = "#{author.nickname}/#{slug}"
     self.repo_name = "#{name_with_author}.git"
-    self.repo_path = Git.config.repositories_path.join(repo_name).to_s
+    self.repo_path = Git.config.storage_path.join(repo_name).to_s
   end
 
   def create_repository

@@ -5,7 +5,7 @@ module Git
   class Update
     attr_reader :repository, :repo_name, :repo_path, :key_id, :protocol
 
-    def initialize(repo_path, key_id)
+    def initialize(repo_path, repo_name, key_id)
       @repo_path = repo_path.strip
       @repository = Git::Repository.new(path: @repo_path)
       @key_id = key_id
@@ -14,7 +14,8 @@ module Git
     end
 
     def update(ref_name, old_value, new_value)
-      $stderr.puts 'i run'
+      $stderr.puts new_value.inspect
+      $stderr.puts old_value.inspect
       true
       # do something here before receive
     end
