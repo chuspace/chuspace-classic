@@ -2,15 +2,15 @@
 
 FactoryBot.define do
   factory :blog do
-    title { 'MyString' }
+    name { 'MyString' }
     slug { 'MyString' }
     introduction { 'MyText' }
-    author { nil }
+
+    author
+
     status { 1 }
-    premium { false }
-    version { 'MyString' }
+    default { false }
     repo_name { 'MyString' }
     repo_path { 'MyString' }
-    commit_sha { 'MyString' }
   end
 end

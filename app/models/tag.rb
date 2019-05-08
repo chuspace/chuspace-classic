@@ -2,6 +2,7 @@
 
 class Tag < ApplicationRecord
   include Sluggable
+  sluggable :name
 
   has_many :taggings
   has_many :posts, through: :taggings

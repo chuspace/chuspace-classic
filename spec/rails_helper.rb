@@ -31,6 +31,10 @@ Shoulda::Matchers.configure do |config|
 end
 
 RSpec.configure do |config|
+  config.before(:suite) do
+    system './bin/openssh_install'
+  end
+
   config.include FactoryBot::Syntax::Methods
   config.include(Shoulda::Matchers::ActiveModel, type: :model)
   config.include(Shoulda::Matchers::ActiveRecord, type: :model)
@@ -53,8 +57,8 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system, js: true) { driven_by :selenium_chrome_headless }
 
-  config.after(:all) do
-    FileUtils.rm_rf(*Git.config.storage_paths)
+  config.after(:suite) do
+    FileUtils.rm_rf(Git.config.storage_paths)
     FileUtils.rm_rf(Git.config.ssh_auth_file_path)
     FileUtils.rm_rf(Git.config.ssh_auth_lock_file_path)
   end

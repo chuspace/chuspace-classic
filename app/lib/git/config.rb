@@ -2,6 +2,7 @@
 
 require 'yaml'
 require 'ostruct'
+require 'pathname'
 
 module Git
   class Storage < OpenStruct; end
@@ -14,7 +15,7 @@ module Git
     SSH_ROOT ||= File.join(APP_ROOT, '.ssh')
 
     def initialize
-      @config = YAML.load_file(File.join(APP_ROOT, 'config', 'git.yml'))['development']
+      @config = YAML.load_file(File.join(APP_ROOT, 'config', 'git.yml'))[ENV.fetch('RAILS_ENV', 'development')]
     end
 
     def ssh_user
@@ -26,7 +27,7 @@ module Git
     end
 
     def storages
-      fail StandardError, 'No storage configured' if @config['storages'].blank?
+      fail StandardError, 'No storage configured' if @config['storages'].empty?
 
       @config['storages'].each_with_object([]) do |(name, path), list|
         list << Storage.new(name: name, path: Pathname.new(path))

@@ -4,7 +4,7 @@ class Blog < ApplicationRecord
   include HasGitRepo, Sluggable
   sluggable :name
 
-  validates_presence_of :name, :slug, :repo_name, :repo_path, :status
+  validates_presence_of :name, :slug, :repo_name, :repo_path, :status, :author_id
   validates :repo_path, uniqueness: true
   validates_uniqueness_of :repo_name, scope: :author_id
   validates_uniqueness_of :slug, scope: :author_id

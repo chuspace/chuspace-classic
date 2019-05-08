@@ -1,13 +1,14 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require 'fileutils'
 require_relative '../app/lib/git'
 
-repository_storage_paths = ARGV.any? ? ARGV : [Git.config.storage_paths]
+repository_storage_paths = ARGV.any? ? ARGV : Git.config.storage_paths.map(&:to_s)
 
 commands = [
-  %W(mkdir -p #{Git::SSH_ROOT}),
-  %W(chmod 700 #{Git::SSH_ROOT}),
+  %W(mkdir -p #{Git::Config::SSH_ROOT}),
+  %W(chmod 700 #{Git::Config::SSH_ROOT}),
 ]
 
 repository_storage_paths.each do |repository_storage_path|
