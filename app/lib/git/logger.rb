@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'logger'
 
 require_relative '../git'
@@ -19,7 +21,7 @@ module Git
       ::Logger.const_get(log_level.upcase)
     rescue NameError
       $stderr.puts "WARNING: Unrecognized log level #{log_level.inspect}."
-      $stderr.puts "WARNING: Falling back to INFO."
+      $stderr.puts 'WARNING: Falling back to INFO.'
       ::Logger::INFO
     end
   end

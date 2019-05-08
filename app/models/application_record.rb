@@ -4,11 +4,11 @@ class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
   def api_validation_errors
-    errors.messages.map { |field, errors| { field: field, errors: errors.to_sentence } }.freeze
+    errors.map { |error| { field: error.attribute, errors: error.full_message } }.freeze
   end
 
   def api_validation_errors_sentence
-    api_validation_errors.map { |error| "#{error[:field]}: #{error[:errors]}" }.to_sentence
+    errors.map { |error| error.full_message }.to_sentence
   end
 
   def valid_attributes?(*attributes)

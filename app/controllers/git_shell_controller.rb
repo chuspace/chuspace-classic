@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GitShellController < ActionController::Metal
   include AbstractController::Rendering
   include ActionController::Renderers::All
