@@ -7,6 +7,13 @@ GIT
       activesupport (>= 4.2.0)
 
 GIT
+  remote: https://github.com/jensljungblad/components.git
+  revision: 1ec768424130f349ee0b58b8065e7b9fe5a5b6bd
+  specs:
+    components (0.1.0)
+      rails (>= 5.1.0)
+
+GIT
   remote: https://github.com/rails/rails.git
   revision: 669b52d2965f50f1f3f99f1c54677a328191c69d
   specs:
@@ -394,6 +401,7 @@ DEPENDENCIES
   brakeman
   byebug
   charlock_holmes
+  components!
   coveralls
   down
   factory_bot_rails
