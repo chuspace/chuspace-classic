@@ -7,13 +7,10 @@ AllCops:
   DisabledByDefault: true
   Exclude:
     - 'node_modules/**/*'
-    - 'git-storage/**/*'
-    - 'db/**/*'
     - 'vendor/**/*'
     - 'openssh/**/*'
     - 'ssh/**/*'
     - 'circleci/**/*'
-    - 'storage/**/*'
     - 'log/**/*'
     - 'tmp/**/*'
     - 'coverage/**/*'

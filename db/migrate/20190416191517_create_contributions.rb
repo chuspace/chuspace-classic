@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateContributions < ActiveRecord::Migration[6.0]
   def change
     create_table :contributions do |t|
@@ -12,7 +14,7 @@ class CreateContributions < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    # Indexes
+    #  Indexes
     add_index :contributions, :status
     add_index :contributions, :contributor_id
     add_index :contributions, :post_id

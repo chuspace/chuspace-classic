@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class CreateTaggings < ActiveRecord::Migration[6.0]
   def change
     create_table :taggings do |t|
-      # Tag and post
+      #  Tag and post
       t.bigint :tag_id, foreign_key: true, null: false
       t.bigint :post_id, foreign_key: true, null: false
 
