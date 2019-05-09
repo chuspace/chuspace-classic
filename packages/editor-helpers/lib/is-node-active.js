@@ -1,7 +1,7 @@
 // @flow
 
 import { EditorState } from 'prosemirror-state'
-import { findParentNode } from 'prosemirror-utils'
+import findParentNode from './find-parent-node'
 
 export default function(state: EditorState, type: string, attrs: {} = {}) {
   const predicate = node => node.type === type
