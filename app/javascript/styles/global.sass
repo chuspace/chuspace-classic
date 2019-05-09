@@ -1,0 +1,100 @@
+html, body
+  @apply font-headings
+  width: 100%
+  position: relative
+  font-weight: normal
+  margin: 0
+  padding: 0
+  color: rgba(0, 0, 0, 0.8)
+  letter-spacing: 0.015em
+  --x-height-multiplier: 0.375
+  --baseline-multiplier: 0.17
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: greyscale
+  text-rendering: optimizeL segibility
+
+
+h1, h2, h3, h4, h5, h6, strong
+  @apply font-headings
+  line-height: 1.15
+
+code, pre
+  @apply font-code
+
+.chu-editor
+  @apply font-content
+  letter-spacing: 0.01rem
+  font-weight: 400
+  font-style: normal
+  font-size: 22px
+  color: rgba(0, 0, 0, 1)
+  line-height: 1.5
+  margin-bottom: 50px
+
+  blockquote
+    strong
+      font-style: italic
+
+  p
+    margin-bottom: 1rem
+
+  h1, h2, h3, h4, h5, h6, strong
+    margin-bottom: 1rem
+
+
+::-webkit-scrollbar
+  width: 0px
+  background: transparent
+
+
+.dialog-open
+  overflow: hidden
+
+
+dialog::backdrop, dialog + .backdrop
+  background-color: rgba(255, 255, 255, 0.65)
+
+input
+  font-family: inherit
+  appearance: none
+
+button
+  font-family: inherit
+
+button::-moz-focus-inner
+  border: 0
+  padding: 0
+
+select::-moz-focus-inner,
+textarea::-moz-focus-inner,
+input::-moz-focus-inner,
+a::-moz-focus-inner
+  border: 0
+  padding: 0
+
+select:focus,
+textarea:focus,
+input:focus,
+a:focus,
+.chu-editor
+  outline: none
+
+select:-webkit-autofill,
+textarea:-webkit-autofill,
+input:-webkit-autofill,
+a:-webkit-autofill
+  box-shadow: 0 0 0 30px white inset
+
+hr:before
+  content: '...'
+  display: block
+  margin-left: .6em
+  color: rgba(0,0,0,.68)
+  position: relative
+  top: -55px
+  font-weight: 400
+  font-style: italic
+  font-size: 30px
+  letter-spacing: .6em;
+  text-align: center
+  margin: 50px

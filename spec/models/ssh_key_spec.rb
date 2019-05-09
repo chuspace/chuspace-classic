@@ -7,7 +7,7 @@ RSpec.describe SshKey, type: :model do
 
   it { is_expected.to validate_presence_of(:title) }
   it { is_expected.to validate_presence_of(:key) }
-  it { is_expected.to belong_to(:person) }
+  it { is_expected.to belong_to(:user) }
 
   it 'should have a title' do
     expect(subject.title).to eq('Key 1')
@@ -26,7 +26,10 @@ RSpec.describe SshKey, type: :model do
   end
 
   it 'should have full ssh command' do
-    expect(subject.command_with_key).to eq("command=\"#{Rails.root}/bin/git_shell key-#{subject.id}\",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty #{subject.key}")
+    expect(subject.command_with_key).to eq(
+      "command=\"#{Rails.root}/bin/git_shell key-#{subject
+        .id}\",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty #{subject.key}"
+              )
   end
 
   it 'should have command in file' do

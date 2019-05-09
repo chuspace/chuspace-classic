@@ -2,13 +2,16 @@
 
 class MagicLoginsController < ApplicationController
   def index
-    person = Person.find_by(auth_token: params[:token])
+    user = User.find_by(auth_token: params[:token])
 
-    if person
-      login(person)
-      person.regenerate_auth_token
+    if user
+      login(user)
+      user.update_tracked_fields!(request)
+      user.regenerate_auth_token
+
+      redirect_to root_url
+    else
+      redirect_to sessions_url, notice: t('.magic_login.expired')
     end
-
-    redirect_to root_path
   end
 end

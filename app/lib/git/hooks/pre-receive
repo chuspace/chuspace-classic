@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# This file was placed here by GitLab. It makes sure that your pushed commits
+# will be processed properly.
+
+refs = $stdin.read
+key_id = ENV.delete('GIT_ID')
+repo_name = ENV.delete('GIT_REPO_NAME')
+repo_path = Dir.pwd
+
+require_relative '../pre_receive'
+
+if Git::PreReceive.new(repo_path, repo_name, key_id, refs).exec
+  exit 0
+else
+  exit 1
+end

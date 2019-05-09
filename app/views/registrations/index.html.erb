@@ -1,20 +1,54 @@
-<div class='centered mt-10'>
+<div data-controller='register check-nicknames check-emails' class='centered mt-10'>
   <div class='card max-w-sm text-center'>
-    <h2 class='card-title'>Join Chuspace</h2>
+    <h2 class='card-title'>Sign up</h2>
 
     <p class='card-intro'>
-      Create an account to personalize your homepage, follow your favorite
-      authors and publications, applaud stories you love, and more.
+      Enter the email address associated with your account, and we’ll send a
+      magic link to your inbox.
     </p>
 
     <div class='card-body'>
-      <%= link_to('Sign up with github', '/auth/github', class: 'btn btn-bordered btn-bordered-green mb-2 block max-w-xxs mx-auto') %>
-      <%= link_to('Sign up with email', new_registration_path, class: 'btn btn-bordered btn-bordered-green block max-w-xxs mx-auto') %>
+      <%= form_with url: registrations_path, scope: :user, data: { target: 'register.form', action: 'ajax:success->register#onFormSubmit' } do |form| %>
+        <%= form.text_field(
+          'name',
+          autocomplete: 'name',
+          placeholder: 'Full name',
+          autofocus: true,
+          data: { target: 'register.inputName' },
+          class: 'input input-bordered input-bordered-green block mb-2 mx-auto'
+        ) %>
+
+        <span class="alert alert-error mb-2 text-left text-xs" data-target='register.inputNameError'></span>
+
+        <%= form.text_field(
+          'nickname',
+          autocomplete: 'nickname',
+          placeholder: 'Nickname',
+          data: { target: 'register.inputNickname check-nicknames.inputNickname', action: "input->check-nicknames#call", url: check_nicknames_path },
+          class: 'input input-bordered input-bordered-green block mb-2 mx-auto'
+        ) %>
+
+        <span class="alert alert-error mb-2 text-left text-xs" data-target='register.inputNicknameError check-nicknames.inputNicknameError'></span>
+
+        <%= form.text_field(
+          'email',
+          autocomplete: 'email',
+          placeholder: 'Email',
+          data: { target: 'register.inputEmail check-emails.inputEmail', action: "blur->check-emails#call", url: check_emails_path },
+          class: 'input input-bordered input-bordered-green block mb-2 mx-auto',
+          type: 'email'
+        ) %>
+
+        <span class="alert alert-error mb-2 text-left text-xs" data-target='register.inputEmailError check-emails.inputEmailError'></span>
+
+        <%= form.submit('Submit', class: 'btn btn-black mt-4 mx-auto') %>
+      <% end %>
+
+      <div class="alert alert-success" data-target='register.formSuccess'></div>
     </div>
 
-    <p class='card-footer'>
-      Already have an account?
-      <%= link_to('Sign in', sessions_path, class: 'link link-green') %>
-    </p>
+    <div class='card-footer'>
+      <%= link_to('← Go back', registrations_path, class: 'link link-default db') %>
+    </div>
   </div>
 </div>

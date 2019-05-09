@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class ApplicationPolicy
-  attr_reader :person, :record
+  attr_reader :user, :record
 
-  def initialize(person, record)
-    @person = person
+  def initialize(user, record)
+    @user = user
     @record = record
   end
 
@@ -37,14 +37,14 @@ class ApplicationPolicy
   end
 
   def scope
-    Pundit.policy_scope!(person, record.class)
+    Pundit.policy_scope!(user, record.class)
   end
 
   class Scope
-    attr_reader :person, :scope
+    attr_reader :user, :scope
 
-    def initialize(person, scope)
-      @person = person
+    def initialize(user, scope)
+      @user = user
       @scope = scope
     end
 

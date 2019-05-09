@@ -15,7 +15,7 @@ require 'simplecov-lcov'
 SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
 SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
 SimpleCov.start 'rails' do
-  add_filter(/^\/spec|bin|db|config|views|javascript|lib\//)
+  add_filter(%r{^\/spec|bin|db|config|views|javascript|lib\/})
 end
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
@@ -31,6 +31,10 @@ Shoulda::Matchers.configure do |config|
 end
 
 RSpec.configure do |config|
+  config.before(:suite) do
+    system './bin/openssh_install'
+  end
+
   config.include FactoryBot::Syntax::Methods
   config.include(Shoulda::Matchers::ActiveModel, type: :model)
   config.include(Shoulda::Matchers::ActiveRecord, type: :model)
@@ -49,16 +53,12 @@ RSpec.configure do |config|
     mocks.allow_message_expectations_on_nil = true
   end
 
-  config.before(:each, type: :system) do
-    driven_by :rack_test
-  end
+  config.before(:each, type: :system) { driven_by :rack_test }
 
-  config.before(:each, type: :system, js: true) do
-    driven_by :selenium_chrome_headless
-  end
+  config.before(:each, type: :system, js: true) { driven_by :selenium_chrome_headless }
 
-  config.after(:all) do
-    FileUtils.rm_rf(Git.config.git_storage_path)
+  config.after(:suite) do
+    FileUtils.rm_rf(Git.config.storage_paths)
     FileUtils.rm_rf(Git.config.ssh_auth_file_path)
     FileUtils.rm_rf(Git.config.ssh_auth_lock_file_path)
   end

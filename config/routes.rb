@@ -1,16 +1,18 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  post 'git_shell/access'
+
   root to: 'pages#index'
 
-  get '/auth/:provider/callback', to: 'github#create', as: :omniauth_callback
-
-  resources :sessions, path: 'signin'
-  resources :registrations, path: 'signup'
+  resources :sessions, path: 'signin', only: %i[index create destroy]
+  resources :registrations, path: 'signup', only: %i[index create]
   resources :check_nicknames, only: :create
+  resources :check_emails, only: :create
   resources :magic_logins, only: :index
-  resources :people, except: :show
-  resources :posts
+  resources :users, except: :show
+  resources :posts, except: :show
+  resources :post_validations, only: :create
 
   resources :settings, only: :index
 
@@ -19,5 +21,6 @@ Rails.application.routes.draw do
     resources :ssh_keys, path: 'ssh', except: %i[show update]
   end
 
-  get '/:nickname', to: 'people#show', as: :profile
+  get '/:nickname', to: 'users#show', as: :profile
+  get '/:blog/:slug', to: 'posts#show', as: :blog_post
 end

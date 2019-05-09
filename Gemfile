@@ -11,6 +11,9 @@ gem 'rails', github: 'rails/rails'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.x'
 
+#  Nested tree
+gem 'ancestry'
+
 # Use Puma as the app server
 gem 'puma', '>= 3.11'
 
@@ -46,10 +49,6 @@ gem 'sidekiq'
 # ENV
 gem 'figaro'
 
-# oAuth
-gem 'oauth2', '>= 1.4.0'
-gem 'omniauth-github', '>= 1.3.0'
-
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'octicons_helper'
@@ -63,13 +62,15 @@ gem 'turbolinks'
 # Git API
 gem 'rugged'
 gem 'charlock_holmes'
-gem 'github-linguist'
 
 # SSH host key support
 gem 'sshkey'
 
 # Instrumentation
 gem 'yabeda'
+
+# Faster pathname
+gem 'faster_path'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -95,9 +96,16 @@ group :development do
   # Security
   gem 'brakeman', require: false
   # Better messages
-  gem 'awesome_print', require: false
+  gem 'awesome_print'
   # Pry
-  gem 'pry-rails', require: false
+  gem 'pry-rails'
+  # Fake data
+  gem 'faker'
+  # Profiler
+  gem 'rack-mini-profiler', require: false
+  gem 'memory_profiler', require: false
+
+  # gem 'sorbet'
 end
 
 group :test do

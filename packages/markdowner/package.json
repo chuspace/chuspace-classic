@@ -1,0 +1,40 @@
+{
+  "name": "@chuspace/markdowner",
+  "version": "0.0.1",
+  "description": "Markdown parser and validator",
+  "private": true,
+  "keywords": [
+    "markdowner",
+    "prosemirror"
+  ],
+  "author": "Gaurav Tiwari <gaurav@gauravtiwari.co.uk>",
+  "homepage": "https://chuspace.com",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gauravtiwari/chuspace.git"
+  },
+  "scripts": {
+    "transpile": "babel --watch lib -d dist --copy-files --source-maps inline --ignore '**/*.spec.js,**/*.stories.js, __tests__/**/*.js'",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/gauravtiwari/chuspace/issues"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "dependencies": {
+    "@chuspace/editor-schema": "^0.0.1",
+    "markdown-it": "^8.4.2",
+    "prosemirror-markdown": "^1.3.0"
+  }
+}

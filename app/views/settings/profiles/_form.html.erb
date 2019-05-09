@@ -1,4 +1,13 @@
-<%= form_with model: person, local: true do |f| %>
+<%= form_with model: @user, local: true do |f| %>
+ <div class='input-container'>
+    <%= f.label :avatar, class: 'input-label block' %>
+    <%= avatar_for(user: @user, size: :sm) if @user.avatar.present? %>
+    <%= f.file_field(
+      :avatar,
+      class: 'input block mt-2'
+    ) %>
+  </div>
+
   <div class='input-container'>
     <%= f.label :name, class: 'input-label block' %>
     <%= f.text_field(

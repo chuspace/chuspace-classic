@@ -3,23 +3,21 @@
 module Authentication
   extend ActiveSupport::Concern
 
-  included do
-    before_action :authenticate
-  end
+  included { before_action :authenticate }
 
-  def login(person)
-    cookies.encrypted[:person_id] = { value: person.id, expires: 1.year.from_now }
+  def login(user)
+    cookies.encrypted[:user_id] = { value: user.id, expires: 1.year.from_now }
   end
 
   def logout
-    cookies.encrypted[:person_id] = nil
+    cookies.encrypted[:user_id] = nil
   end
 
   private
 
   def authenticate
-    authenticated_person = Person.find_by(id: cookies.encrypted[:person_id])
-    Current.person = authenticated_person
+    authenticated_user = User.find_by(id: cookies.encrypted[:user_id])
+    Current.user = authenticated_user
   end
 
   def authenticate!

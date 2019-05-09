@@ -1,11 +1,11 @@
 <header>
-  <nav class='flex justify-between py-6'>
-    <div class='logo text-4xl'>
-      <%= link_to 'chuspace', root_path, class: 'link link-default' %>
-    </div>
+  <nav class='flex justify-between items-center py-6'>
+    <%= link_to root_path, class: 'link link-white' do %>
+      <div class='logo icon'>C</div>
+    <% end %>
 
-    <% if Current.person.present? %>
-      <%= render 'header/person'  %>
+    <% if Current.user.present? %>
+      <%= render 'header/user'  %>
     <% else %>
       <%= render 'header/guest'  %>
     <% end %>

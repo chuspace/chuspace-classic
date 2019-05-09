@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_08_201406) do
+ActiveRecord::Schema.define(version: 2019_04_16_191517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -34,20 +34,105 @@ ActiveRecord::Schema.define(version: 2019_03_08_201406) do
     t.bigint "byte_size", null: false
     t.string "checksum", null: false
     t.datetime "created_at", null: false
+    t.index ["filename"], name: "index_active_storage_blobs_on_filename"
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "people", force: :cascade do |t|
+  create_table "blogs", force: :cascade do |t|
+    t.string "name", null: false
+    t.citext "slug", null: false
+    t.text "introduction"
+    t.bigint "author_id"
+    t.integer "status", default: 0, null: false
+    t.string "repo_name", null: false
+    t.string "repo_path", null: false
+    t.boolean "default", default: false, null: false
+    t.bigint "posts_count", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_id", "repo_name"], name: "index_blogs_on_author_id_and_repo_name", unique: true
+    t.index ["author_id", "slug"], name: "index_blogs_on_author_id_and_slug", unique: true
+    t.index ["default"], name: "index_blogs_on_default"
+    t.index ["posts_count"], name: "index_blogs_on_posts_count"
+    t.index ["repo_path"], name: "index_blogs_on_repo_path", unique: true
+    t.index ["status"], name: "index_blogs_on_status"
+  end
+
+  create_table "contributions", force: :cascade do |t|
+    t.bigint "contributor_id", null: false
+    t.bigint "post_id", null: false
+    t.string "raw_changes", default: [], array: true
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["contributor_id"], name: "index_contributions_on_contributor_id"
+    t.index ["post_id"], name: "index_contributions_on_post_id"
+    t.index ["status"], name: "index_contributions_on_status"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string "title", null: false
+    t.citext "slug", null: false
+    t.text "excerpt"
+    t.text "body"
+    t.bigint "author_id", null: false
+    t.bigint "blog_id", null: false
+    t.datetime "published_at"
+    t.integer "status", default: 0, null: false
+    t.string "ancestry"
+    t.string "blob_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ancestry"], name: "index_posts_on_ancestry"
+    t.index ["blob_id"], name: "index_posts_on_blob_id", unique: true
+    t.index ["published_at"], name: "index_posts_on_published_at"
+    t.index ["slug", "blog_id", "author_id"], name: "index_posts_on_slug_and_blog_id_and_author_id", unique: true
+    t.index ["status"], name: "index_posts_on_status"
+  end
+
+  create_table "ssh_keys", force: :cascade do |t|
+    t.string "title"
+    t.text "key", null: false
+    t.string "fingerprint", null: false
+    t.bigint "user_id", null: false
+    t.datetime "last_used"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["key"], name: "index_ssh_keys_on_key", unique: true
+    t.index ["last_used"], name: "index_ssh_keys_on_last_used"
+    t.index ["user_id"], name: "index_ssh_keys_on_user_id"
+  end
+
+  create_table "taggings", force: :cascade do |t|
+    t.bigint "tag_id", null: false
+    t.bigint "post_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_taggings_on_post_id"
+    t.index ["tag_id", "post_id"], name: "index_taggings_on_tag_id_and_post_id", unique: true
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name", null: false
+    t.citext "slug", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_tags_on_name", unique: true
+    t.index ["slug"], name: "index_tags_on_slug", unique: true
+  end
+
+  create_table "users", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "email", default: "", null: false
     t.citext "nickname", default: "", null: false
     t.string "avatar"
+    t.string "blog_storage_path"
     t.string "auth_token", default: "", null: false
     t.text "bio"
     t.string "company"
     t.string "location"
     t.string "url"
-    t.jsonb "github_info", default: "{}"
     t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
@@ -55,25 +140,12 @@ ActiveRecord::Schema.define(version: 2019_03_08_201406) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["auth_token"], name: "index_people_on_auth_token", unique: true
-    t.index ["email"], name: "index_people_on_email", unique: true
-    t.index ["github_info"], name: "index_people_on_github_info", using: :gin
-    t.index ["location"], name: "index_people_on_location"
-    t.index ["nickname"], name: "index_people_on_nickname", unique: true
-  end
-
-  create_table "ssh_keys", force: :cascade do |t|
-    t.string "title"
-    t.text "key", null: false
-    t.string "fingerprint", null: false
-    t.bigint "person_id"
-    t.datetime "last_used"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["key"], name: "index_ssh_keys_on_key", unique: true
-    t.index ["person_id"], name: "index_ssh_keys_on_person_id"
+    t.index ["auth_token"], name: "index_users_on_auth_token", unique: true
+    t.index ["blog_storage_path"], name: "index_users_on_blog_storage_path", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["location"], name: "index_users_on_location"
+    t.index ["nickname"], name: "index_users_on_nickname", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "ssh_keys", "people"
 end

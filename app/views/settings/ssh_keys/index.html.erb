@@ -15,8 +15,8 @@
     </div>
 
     <div class="mt-16 border-t border-grey-lighter">
-      <% if @person.ssh_keys.any? %>
-        <% @person.ssh_keys.each do |key| %>
+      <% if @user.ssh_keys.any? %>
+        <% @user.ssh_keys.each do |key| %>
           <div class="border-b pb-2 border-grey-lighter">
             <div class="flex justify-between items-center my-4">
               <div>

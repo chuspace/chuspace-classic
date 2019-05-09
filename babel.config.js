@@ -1,4 +1,4 @@
-module.exports = function (api) {
+module.exports = function(api) {
   var validEnv = ['development', 'test', 'production']
   var currentEnv = api.env()
   var isDevelopmentEnv = api.env('development')
@@ -16,6 +16,12 @@ module.exports = function (api) {
   }
 
   return {
+    babelrcRoots: [
+      // Keep the root as a root
+      '.',
+      // Also consider monorepo packages "root" and load their .babelrc files.
+      './packages/*'
+    ],
     presets: [
       isTestEnv && [
         require('@babel/preset-env').default,
@@ -30,6 +36,7 @@ module.exports = function (api) {
         {
           forceAllTransforms: true,
           useBuiltIns: 'entry',
+          corejs: 3,
           modules: false,
           exclude: ['transform-typeof-symbol']
         }
@@ -38,6 +45,12 @@ module.exports = function (api) {
     ].filter(Boolean),
     plugins: [
       require('babel-plugin-macros'),
+      [
+        require('@babel/plugin-transform-react-jsx').default,
+        {
+          pragma: 'h'
+        }
+      ],
       require('@babel/plugin-syntax-dynamic-import').default,
       isTestEnv && require('babel-plugin-dynamic-import-node'),
       [require('@babel/plugin-proposal-decorators').default, { legacy: true }],
@@ -70,14 +83,14 @@ module.exports = function (api) {
       [
         require('babel-plugin-module-resolver').default,
         {
-          root: ['./app/javascript/src'],
+          root: ['./app/javascript'],
           alias: {
             types: './app/javascript/flow-types',
-            controllers: './app/javascript/src/controllers',
-            helpers: './app/javascript/src/helpers',
-            decorators: './app/javascript/src/decorators',
-            styles: './app/javascript/src/styles',
-            editor: './app/javascript/src/editor'
+            controllers: './app/javascript/controllers',
+            helpers: './app/javascript/helpers',
+            decorators: './app/javascript/decorators',
+            styles: './app/javascript/styles',
+            editor: './app/javascript/editor'
           }
         }
       ]

@@ -1,21 +1,3 @@
 <div class='editor w-1/2 mx-auto mt-8'>
-  <div class='flex items-center mt-2'>
-    <div class='image'>
-      <%= avatar_for(person: Current.person, size: :sm) %>
-    </div>
-
-    <div class='pl-3 flex-1'>
-      <h3><%= Current.person.name %></h3>
-      <h5><%= Current.person.bio %></h5>
-      <p><%= Current.person.company %></p>
-    </div>
-
-    <div class='flex items-center justify-between'>
-      <span class='mr-2'>Draft</span>
-      <%= link_to('Publish', '#', class: 'link link-green mr-2') %>
-      <%= link_to('Delete', '#', class: 'link link-red') %>
-    </div>
-  </div>
-
-  <div class='mt-8' id='editor' data-controller='editor'></div>
+  <div data-target='compose.editor'></div>
 </div>

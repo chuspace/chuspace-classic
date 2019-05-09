@@ -1,12 +1,12 @@
 {
+  "extends": ["plugin:prettier/recommended"],
   "env": {
     "node": true,
     "es6": true,
     "jest": true
   },
-  "plugins": ["flowtype"],
+  "plugins": ["flowtype", "prettier"],
   "parser": "babel-eslint",
-  "extends": ["standard"],
   "globals": {
     "URLSearchParams": true,
     "analytics": true

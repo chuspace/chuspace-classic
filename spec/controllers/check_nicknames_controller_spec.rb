@@ -10,33 +10,43 @@ RSpec.describe CheckNicknamesController, type: :controller do
     end
 
     it 'should return false if nickname is unavailable with errors' do
-      create(:person, name: 'John Doe', nickname: 'doe')
+      create(:user, name: 'John Doe', nickname: 'doe')
       post :create, params: { nickname: 'doe' }, format: :json
 
       expect(JSON.parse(response.body)['available']).to be_falsy
-      expect(JSON.parse(response.body)['errors']).to eq([{ 'errors' => 'Oops! doe is already taken.', 'field' => 'nickname' }])
+      expect(JSON.parse(response.body)['errors']).to eq(
+        [{ 'errors' => 'Oops! doe is already taken.', 'field' => 'nickname' }]
+                )
     end
 
     it 'should return validation errors if bad nickname' do
       post :create, params: { nickname: 'doe--' }, format: :json
 
       expect(JSON.parse(response.body)['available']).to be_falsy
-      expect(JSON.parse(response.body)['errors']).to eq([{
-        'errors' =>
-          'Nickname may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen',
-         'field' => 'nickname'
-        }])
+      expect(JSON.parse(response.body)['errors']).to eq(
+        [
+          {
+            'errors' =>
+              'Nickname may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen',
+            'field' => 'nickname'
+          }
+        ]
+                )
     end
 
     it 'should return validation errors if bad nickname' do
       post :create, params: { nickname: '122*doe' }, format: :json
 
       expect(JSON.parse(response.body)['available']).to be_falsy
-      expect(JSON.parse(response.body)['errors']).to eq([{
-        'errors' =>
-          'Nickname may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen',
-         'field' => 'nickname'
-        }])
+      expect(JSON.parse(response.body)['errors']).to eq(
+        [
+          {
+            'errors' =>
+              'Nickname may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen',
+            'field' => 'nickname'
+          }
+        ]
+                )
     end
 
     it 'should return validation errors if bad nickname' do
