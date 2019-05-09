@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_16_191517) do
+ActiveRecord::Schema.define(version: 2019_05_09_141030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -68,6 +68,17 @@ ActiveRecord::Schema.define(version: 2019_04_16_191517) do
     t.index ["contributor_id"], name: "index_contributions_on_contributor_id"
     t.index ["post_id"], name: "index_contributions_on_post_id"
     t.index ["status"], name: "index_contributions_on_status"
+  end
+
+  create_table "invites", force: :cascade do |t|
+    t.string "email", null: false
+    t.string "code", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_invites_on_code", unique: true
+    t.index ["email"], name: "index_invites_on_email", unique: true
+    t.index ["status"], name: "index_invites_on_status"
   end
 
   create_table "posts", force: :cascade do |t|
