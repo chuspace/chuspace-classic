@@ -2,6 +2,7 @@
 
 import 'styles/application'
 import 'animate.css'
+import '../custom-elements'
 
 import * as Rails from 'rails-ujs'
 import * as Turbolinks from 'turbolinks'

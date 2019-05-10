@@ -16,6 +16,7 @@ module AvatarHelper
   end
 
   private
+
   def variants
     {
       xs: { size: 40, class: 'avatar-xs' },

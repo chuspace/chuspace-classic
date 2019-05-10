@@ -16,7 +16,7 @@ RSpec.describe CheckNicknamesController, type: :controller do
       expect(JSON.parse(response.body)['available']).to be_falsy
       expect(JSON.parse(response.body)['errors']).to eq(
         [{ 'errors' => 'Oops! doe is already taken.', 'field' => 'nickname' }]
-                )
+      )
     end
 
     it 'should return validation errors if bad nickname' do
@@ -31,7 +31,7 @@ RSpec.describe CheckNicknamesController, type: :controller do
             'field' => 'nickname'
           }
         ]
-                )
+      )
     end
 
     it 'should return validation errors if bad nickname' do
@@ -46,7 +46,7 @@ RSpec.describe CheckNicknamesController, type: :controller do
             'field' => 'nickname'
           }
         ]
-                )
+      )
     end
 
     it 'should return validation errors if bad nickname' do

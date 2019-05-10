@@ -37,8 +37,7 @@ module Blobable
   end
 
   def frontmatter
-    "---\n" +
-      FRONTMATTER_ATTRS.map { |attribute| "#{attribute}: #{send(attribute)}" }.join("\n") + "\n---"
+    "---\n" + FRONTMATTER_ATTRS.map { |attribute| "#{attribute}: #{send(attribute)}" }.join("\n") + "\n---"
   end
 
   def blob_content

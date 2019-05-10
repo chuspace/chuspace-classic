@@ -1,14 +1,8 @@
+# frozen_string_literal: true
+
 class LogoComponent < Components::Component
   TYPES = {
-    badge: {
-      css_class: 'logo--badge',
-      label: 'C'
-    },
-
-    text: {
-      css_class: 'logo--text',
-      label: 'Chuspace'
-    }
+    badge: { css_class: 'logo--badge', label: 'C' }, text: { css_class: 'logo--text', label: 'Chuspace' }
   }.freeze
 
   attribute :type

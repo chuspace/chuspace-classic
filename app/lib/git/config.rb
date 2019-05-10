@@ -47,7 +47,7 @@ module Git
     end
 
     def storage_paths
-      storages.map { |storage| storage.path }
+      storages.map(&:path)
     end
 
     def ssh_auth_file_name

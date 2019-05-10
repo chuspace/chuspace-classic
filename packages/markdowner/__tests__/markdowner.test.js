@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-const markdowner = require('..');
+const markdowner = require('..')
 
 describe('@chuspace/markdowner', () => {
-    it('needs tests');
-});
+  it('needs tests')
+})

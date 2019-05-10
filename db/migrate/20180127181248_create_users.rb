@@ -4,7 +4,8 @@ class CreateUsers < ActiveRecord::Migration[5.2]
   def change
     create_table :users, force: :cascade do |t|
       ## Database authentication
-      t.string :name, null: false, default: ''
+      t.string :name,
+                                         null: false, default: ''
       t.string :email, null: false, default: ''
       t.citext :nickname, null: false, default: ''
       t.string :avatar

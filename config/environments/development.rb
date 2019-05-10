@@ -42,7 +42,7 @@ Rails.application.configure do
 
   # Use mailcatcher for delivery. View emails at http://localhost:1080/
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = { host: 'chuspace.test', port: 1025 }
+  config.action_mailer.smtp_settings = { host: 'chuspace.test', port: 1_025 }
   config.action_mailer.asset_host = 'http://chuspace.test'
   config.hosts << 'chuspace.test'
 

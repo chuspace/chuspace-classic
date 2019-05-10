@@ -4,7 +4,8 @@ class CreatePosts < ActiveRecord::Migration[6.0]
   def change
     create_table :posts do |t|
       # Content
-      t.string :title, null: false
+      t.string :title,
+                        null: false
       t.citext :slug, null: false
       t.text :excerpt
       t.text :body
@@ -30,6 +31,6 @@ class CreatePosts < ActiveRecord::Migration[6.0]
     add_index :posts, :status
 
     add_index :posts, :blob_id, unique: true
-    add_index :posts, [:slug, :blog_id, :author_id], unique: true
+    add_index :posts, %i[slug blog_id author_id], unique: true
   end
 end

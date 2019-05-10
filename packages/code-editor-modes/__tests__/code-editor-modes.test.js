@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-const codeEditorModes = require('..');
+const codeEditorModes = require('..')
 
 describe('@chuspace/code-editor-modes', () => {
-    it('needs tests');
-});
+  it('needs tests')
+})

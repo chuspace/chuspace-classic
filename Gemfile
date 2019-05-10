@@ -58,6 +58,7 @@ gem 'rails_12factor', group: :production
 
 # Turblinks
 gem 'turbolinks'
+gem 'turbolinks_render'
 
 # Git API
 gem 'rugged'
@@ -73,7 +74,7 @@ gem 'yabeda'
 gem 'faster_path'
 
 # View components
-gem "components", git: "https://github.com/jensljungblad/components.git"
+gem 'components', git: 'https://github.com/jensljungblad/components.git'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-const editorPlugins = require('..');
+const editorPlugins = require('..')
 
 describe('@chuspace/editor-plugins', () => {
-    it('needs tests');
-});
+  it('needs tests')
+})

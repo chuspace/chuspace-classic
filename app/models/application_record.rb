@@ -8,7 +8,7 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   def api_validation_errors_sentence
-    errors.map { |error| error.full_message }.to_sentence
+    errors.map(&:full_message).to_sentence
   end
 
   def valid_attributes?(*attributes)

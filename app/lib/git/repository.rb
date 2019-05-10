@@ -34,7 +34,7 @@ module Git
 
     def size
       size = popen(%w[du -sk], path).first.strip.to_i
-      (size.to_f / 1024).round(2)
+      (size.to_f / 1_024).round(2)
     end
 
     def rugged
@@ -59,9 +59,7 @@ module Git
 
     def author_hash
       {
-        name: rugged.config['user.name'],
-        email: rugged.config['user.email'],
-        nickname: rugged.config['user.nickname']
+        name: rugged.config['user.name'], email: rugged.config['user.email'], nickname: rugged.config['user.nickname']
       }.freeze
     end
 
@@ -119,7 +117,7 @@ module Git
 
     def create(author:)
       # Ensure directory exists
-      FileUtils.mkdir_p(path, mode: 0770)
+      FileUtils.mkdir_p(path, mode: 0o770)
 
       # Create git repo
       repo = Rugged::Repository.init_at(path, :bare)

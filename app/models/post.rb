@@ -31,9 +31,7 @@ class Post < ApplicationRecord
   end
 
   def tag_slugs=(slugs)
-    self.tags = slugs.map do |slug|
-      Tag.where(slug: slug.strip).first_or_create!
-    end
+    self.tags = slugs.map { |slug| Tag.where(slug: slug.strip).first_or_create! }
   end
 
   def parent_slug

@@ -1,4 +1,4 @@
 <div class='nav-links flex items-center'>
-  <%= link_to('Sign in', sessions_path, class: 'link link-default mr-6') %>
-  <%= link_to('Get Started', registrations_path, class: 'btn btn-bordered btn-bordered-green') %>
+  <%= component 'link', label: 'Sign in', url: sessions_url %>
+  <%= component 'link', label: 'Get Started', url: registrations_url, type: :button, state: :active, css_class: 'ml-4' %>
 </div>

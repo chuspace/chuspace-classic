@@ -1,0 +1,47 @@
+.link
+  @apply no-underline
+
+  &.link--default
+    @apply text-grey-darkest
+
+  &.link--default:hover
+    @apply text-grey-light
+
+  &.link--active
+    @apply text-green
+
+  &.link--active:hover
+    @apply text-green-light
+
+  &.link--danger
+    @apply text-red
+
+  &.link--danger:hover
+    @apply text-red-light
+
+  &.link--disabled
+    @apply text-grey-lighter pointer-events-none
+
+.button
+  @apply py-2 px-4 rounded no-underline text-center border bg-white
+
+  &.button--default
+    @apply border-grey text-grey-darkest bg-grey-lightest
+
+  &.button--default:hover
+    @apply border-grey-light text-grey-light
+
+  &.button--active
+    @apply border-green-light text-green-dark bg-green-lightest
+
+  &.button--active:hover
+    @apply border-green-lighter text-green-light
+
+  &.button--danger
+    @apply border-red-light text-red-dark bg-red-lightest
+
+  &.button--danger:hover
+    @apply border-red-lighter text-red-light
+
+  &.button--disabled
+    @apply border-grey-lighter text-grey-lighter pointer-events-none

@@ -3,9 +3,7 @@
 module Sluggable
   extend ActiveSupport::Concern
 
-  included do
-    before_validation :assign_slug
-  end
+  included { before_validation :assign_slug }
 
   class_methods do
     attr_reader :slug_attribute

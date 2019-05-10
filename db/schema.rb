@@ -13,7 +13,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2019_05_09_141030) do
-
   # These are extensions that must be enabled in order to support this database
   enable_extension 'citext'
   enable_extension 'plpgsql'
@@ -24,8 +23,8 @@ ActiveRecord::Schema.define(version: 2019_05_09_141030) do
     t.bigint 'record_id', null: false
     t.bigint 'blob_id', null: false
     t.datetime 'created_at', null: false
-    t.index ['blob_id'], name: 'index_active_storage_attachments_on_blob_id'
-    t.index ['record_type', 'record_id', 'name', 'blob_id'], name: 'index_active_storage_attachments_uniqueness', unique: true
+    t.index %w[blob_id], name: 'index_active_storage_attachments_on_blob_id'
+    t.index %w[record_type record_id name blob_id], name: 'index_active_storage_attachments_uniqueness', unique: true
   end
 
   create_table 'active_storage_blobs', force: :cascade do |t|
@@ -36,8 +35,8 @@ ActiveRecord::Schema.define(version: 2019_05_09_141030) do
     t.bigint 'byte_size', null: false
     t.string 'checksum', null: false
     t.datetime 'created_at', null: false
-    t.index ['filename'], name: 'index_active_storage_blobs_on_filename'
-    t.index ['key'], name: 'index_active_storage_blobs_on_key', unique: true
+    t.index %w[filename], name: 'index_active_storage_blobs_on_filename'
+    t.index %w[key], name: 'index_active_storage_blobs_on_key', unique: true
   end
 
   create_table 'blogs', force: :cascade do |t|
@@ -52,12 +51,12 @@ ActiveRecord::Schema.define(version: 2019_05_09_141030) do
     t.bigint 'posts_count', default: 0, null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
-    t.index ['author_id', 'repo_name'], name: 'index_blogs_on_author_id_and_repo_name', unique: true
-    t.index ['author_id', 'slug'], name: 'index_blogs_on_author_id_and_slug', unique: true
-    t.index ['default'], name: 'index_blogs_on_default'
-    t.index ['posts_count'], name: 'index_blogs_on_posts_count'
-    t.index ['repo_path'], name: 'index_blogs_on_repo_path', unique: true
-    t.index ['status'], name: 'index_blogs_on_status'
+    t.index %w[author_id repo_name], name: 'index_blogs_on_author_id_and_repo_name', unique: true
+    t.index %w[author_id slug], name: 'index_blogs_on_author_id_and_slug', unique: true
+    t.index %w[default], name: 'index_blogs_on_default'
+    t.index %w[posts_count], name: 'index_blogs_on_posts_count'
+    t.index %w[repo_path], name: 'index_blogs_on_repo_path', unique: true
+    t.index %w[status], name: 'index_blogs_on_status'
   end
 
   create_table 'contributions', force: :cascade do |t|
@@ -67,9 +66,9 @@ ActiveRecord::Schema.define(version: 2019_05_09_141030) do
     t.integer 'status', default: 0, null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
-    t.index ['contributor_id'], name: 'index_contributions_on_contributor_id'
-    t.index ['post_id'], name: 'index_contributions_on_post_id'
-    t.index ['status'], name: 'index_contributions_on_status'
+    t.index %w[contributor_id], name: 'index_contributions_on_contributor_id'
+    t.index %w[post_id], name: 'index_contributions_on_post_id'
+    t.index %w[status], name: 'index_contributions_on_status'
   end
 
   create_table 'invites', force: :cascade do |t|
@@ -78,9 +77,9 @@ ActiveRecord::Schema.define(version: 2019_05_09_141030) do
     t.integer 'status', default: 0, null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
-    t.index ['code'], name: 'index_invites_on_code', unique: true
-    t.index ['email'], name: 'index_invites_on_email', unique: true
-    t.index ['status'], name: 'index_invites_on_status'
+    t.index %w[code], name: 'index_invites_on_code', unique: true
+    t.index %w[email], name: 'index_invites_on_email', unique: true
+    t.index %w[status], name: 'index_invites_on_status'
   end
 
   create_table 'posts', force: :cascade do |t|
@@ -96,11 +95,11 @@ ActiveRecord::Schema.define(version: 2019_05_09_141030) do
     t.string 'blob_id', null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
-    t.index ['ancestry'], name: 'index_posts_on_ancestry'
-    t.index ['blob_id'], name: 'index_posts_on_blob_id', unique: true
-    t.index ['published_at'], name: 'index_posts_on_published_at'
-    t.index ['slug', 'blog_id', 'author_id'], name: 'index_posts_on_slug_and_blog_id_and_author_id', unique: true
-    t.index ['status'], name: 'index_posts_on_status'
+    t.index %w[ancestry], name: 'index_posts_on_ancestry'
+    t.index %w[blob_id], name: 'index_posts_on_blob_id', unique: true
+    t.index %w[published_at], name: 'index_posts_on_published_at'
+    t.index %w[slug blog_id author_id], name: 'index_posts_on_slug_and_blog_id_and_author_id', unique: true
+    t.index %w[status], name: 'index_posts_on_status'
   end
 
   create_table 'ssh_keys', force: :cascade do |t|
@@ -111,9 +110,9 @@ ActiveRecord::Schema.define(version: 2019_05_09_141030) do
     t.datetime 'last_used'
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
-    t.index ['key'], name: 'index_ssh_keys_on_key', unique: true
-    t.index ['last_used'], name: 'index_ssh_keys_on_last_used'
-    t.index ['user_id'], name: 'index_ssh_keys_on_user_id'
+    t.index %w[key], name: 'index_ssh_keys_on_key', unique: true
+    t.index %w[last_used], name: 'index_ssh_keys_on_last_used'
+    t.index %w[user_id], name: 'index_ssh_keys_on_user_id'
   end
 
   create_table 'taggings', force: :cascade do |t|
@@ -121,9 +120,9 @@ ActiveRecord::Schema.define(version: 2019_05_09_141030) do
     t.bigint 'post_id', null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
-    t.index ['post_id'], name: 'index_taggings_on_post_id'
-    t.index ['tag_id', 'post_id'], name: 'index_taggings_on_tag_id_and_post_id', unique: true
-    t.index ['tag_id'], name: 'index_taggings_on_tag_id'
+    t.index %w[post_id], name: 'index_taggings_on_post_id'
+    t.index %w[tag_id post_id], name: 'index_taggings_on_tag_id_and_post_id', unique: true
+    t.index %w[tag_id], name: 'index_taggings_on_tag_id'
   end
 
   create_table 'tags', force: :cascade do |t|
@@ -131,8 +130,8 @@ ActiveRecord::Schema.define(version: 2019_05_09_141030) do
     t.citext 'slug', null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
-    t.index ['name'], name: 'index_tags_on_name', unique: true
-    t.index ['slug'], name: 'index_tags_on_slug', unique: true
+    t.index %w[name], name: 'index_tags_on_name', unique: true
+    t.index %w[slug], name: 'index_tags_on_slug', unique: true
   end
 
   create_table 'users', force: :cascade do |t|
@@ -153,11 +152,11 @@ ActiveRecord::Schema.define(version: 2019_05_09_141030) do
     t.inet 'last_sign_in_ip'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.index ['auth_token'], name: 'index_users_on_auth_token', unique: true
-    t.index ['blog_storage_path'], name: 'index_users_on_blog_storage_path', unique: true
-    t.index ['email'], name: 'index_users_on_email', unique: true
-    t.index ['location'], name: 'index_users_on_location'
-    t.index ['nickname'], name: 'index_users_on_nickname', unique: true
+    t.index %w[auth_token], name: 'index_users_on_auth_token', unique: true
+    t.index %w[blog_storage_path], name: 'index_users_on_blog_storage_path', unique: true
+    t.index %w[email], name: 'index_users_on_email', unique: true
+    t.index %w[location], name: 'index_users_on_location'
+    t.index %w[nickname], name: 'index_users_on_nickname', unique: true
   end
 
   add_foreign_key 'active_storage_attachments', 'active_storage_blobs', column: 'blob_id'

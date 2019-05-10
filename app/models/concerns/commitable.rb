@@ -41,8 +41,7 @@ module Commitable
       committer: committer,
       action: action,
       options: {
-        commit: { message: message || "Created post #{blob_name}" },
-        file: { content: blob_content, path: blob_name }
+        commit: { message: message || "Created post #{blob_name}" }, file: { content: blob_content, path: blob_name }
       }
     )
   end

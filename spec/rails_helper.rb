@@ -31,9 +31,7 @@ Shoulda::Matchers.configure do |config|
 end
 
 RSpec.configure do |config|
-  config.before(:suite) do
-    system './bin/openssh_install'
-  end
+  config.before(:suite) { system './bin/openssh_install' }
 
   config.include FactoryBot::Syntax::Methods
   config.include(Shoulda::Matchers::ActiveModel, type: :model)

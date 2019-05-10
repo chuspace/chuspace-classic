@@ -35,10 +35,8 @@ module Git
         blobs << blob
       end
 
-      response = HTTP.post(
-        'http://chuspace.test/post_validations',
-        json: { key_id: key_id, repo_name: repo_name, blobs: blobs }
-      )
+      response =
+        HTTP.post('http://chuspace.test/post_validations', json: { key_id: key_id, repo_name: repo_name, blobs: blobs })
 
       body = response.parse
 

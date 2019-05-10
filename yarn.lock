@@ -755,6 +755,16 @@
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
 
+"@github/details-menu-element@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@github/details-menu-element/-/details-menu-element-0.10.0.tgz#0ed5924f60f989ec2a556cdff85a09e51e86f097"
+  integrity sha512-pAGjBWpOfTxQpwp09+sCVzU3gYXpMIXH9YKHbiGHYLxrkwkWkiKtXxGpE3cMaS8nCqN87EErNFOOwDu9fMCtUA==
+
+"@github/tab-container-element@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@github/tab-container-element/-/tab-container-element-1.0.0.tgz#489595735db1b13cb10e5a0e80ea3d8c8e794df7"
+  integrity sha512-yVbLNXg8VJAqutJfJ7RDEAPJ53SeXu22kDkMrSnNE+noU+W8ak64vaAnetPTCRSXS6D0Fh1y0j4/BjFB53QqMg==
+
 "@lerna/add@3.13.3":
   version "3.13.3"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.13.3.tgz#f4c1674839780e458f0426d4f7b6d0a77b9a2ae9"
@@ -1698,6 +1708,11 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
+"@webcomponents/custom-elements@^1.2.4":
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/@webcomponents/custom-elements/-/custom-elements-1.2.4.tgz#7074543155396114617722724d6f6cb7b3800a14"
+  integrity sha512-WiTlgz6/kuwajYIcgyq64rSlCtb2AvbxwwrExP3wr6rKbJ72I3hi/sb4KdGUumfC+isDn2F0btZGk4MnWpyO1Q==
+
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@xtuc/ieee754/-/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"
@@ -2016,6 +2031,11 @@ atob@^2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
+
+auto-check-element@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/auto-check-element/-/auto-check-element-2.0.0.tgz#6d7142a41cb4536329b292f3835d457e5ca6bfd9"
+  integrity sha512-AGhkl95d26GDeePCNqE/woxlW4XI/2M/fC0vedGQNEpJ3a/0Wqtf+IV7qF/KnJWLpYg6OWxE0sXf68FX8DRdWg==
 
 autoprefixer@^9.4.5, autoprefixer@^9.4.9:
   version "9.5.1"
@@ -5031,13 +5051,6 @@ graphql@0.13.0:
   dependencies:
     iterall "1.1.x"
 
-graphql@14.3.0:
-  version "14.3.0"
-  resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.3.0.tgz#34dd36faa489ff642bcd25df6c3b4f988a1a2f3e"
-  integrity sha512-MdfI4v7kSNC3NhB7cF8KNijDsifuWO2XOtzpyququqaclO8wVuChYv+KogexDwgP5sp7nFI9Z6N4QHgoLkfjrg==
-  dependencies:
-    iterall "^1.2.2"
-
 handle-thing@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/handle-thing/-/handle-thing-2.0.0.tgz#0e039695ff50c93fc288557d696f3c1dc6776754"
@@ -5887,11 +5900,6 @@ iterall@1.1.x:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.1.4.tgz#0db40d38fdcf53ae14dc8ec674e62ab190d52cfc"
   integrity sha512-eaDsM/PY8D/X5mYQhecVc5/9xvSHED7yPON+ffQroBeTuqUVm7dfphMkK8NksXuImqZlVRoKtrNfMIVCYIqaUQ==
-
-iterall@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.2.2.tgz#92d70deb8028e0c39ff3164fdbf4d8b088130cd7"
-  integrity sha512-yynBb1g+RFUPY64fTrFv7nsjRrENBQJaX2UL+2Szc9REFrSNm1rpSXHGzhmAy7a9uv3vlvgBlXnf9RqmPH1/DA==
 
 js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.5.1"

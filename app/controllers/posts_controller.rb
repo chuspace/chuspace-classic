@@ -14,7 +14,10 @@ class PostsController < ApplicationController
   end
 
   def create
-    post = Post.commit_and_create_by(author: Current.user, committer: Current.user, blog: Current.user.default_blog, attrs: post_params)
+    post =
+      Post.commit_and_create_by(
+        author: Current.user, committer: Current.user, blog: Current.user.default_blog, attrs: post_params
+      )
 
     if post.persisted?
       redirect_to blog_post_path(blog: post.blog.slug, slug: post.slug)
@@ -34,7 +37,17 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :slug, :excerpt, :body, :tag_slugs, :published_at, :status, :parent_slug, :visibility)
+    params.require(:post).permit(
+      :title,
+      :slug,
+      :excerpt,
+      :body,
+      :tag_slugs,
+      :published_at,
+      :status,
+      :parent_slug,
+      :visibility
+    )
   end
 
   def find_blog
