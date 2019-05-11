@@ -5,6 +5,10 @@ class PostsController < ApplicationController
   before_action :find_blog, except: :index
   layout 'editor', only: :new
 
+  def index
+    @posts = Post.all.limit(20)
+  end
+
   def show
     if @blog.present?
       @post = @blog.posts.find_by(slug: params[:slug])

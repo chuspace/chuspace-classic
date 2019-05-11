@@ -1,2 +1,23 @@
-<div class='home'>
+<div class='container mx-auto mt-32 flex items-center justify-between'>
+  <div class='home--banner w-1/2 pr-8'>
+    <h1>Collaborative blogging platform built on Git</h1>
+    <p class="mt-6 text-lg text-secondary">
+      Chuspace is a collaborative blogging platform built on top
+      of Git for technical writing.
+    </p>
+  </div>
+
+  <div class='home--invite-form w-1/3'>
+    <h5 class="text-lg text-secondary font-normal">
+      Enter your email to get invite for preview version
+    </h5>
+
+    <%= form_with model: @invite, class: 'mt-6' do |f| %>
+      <div class='input-container'>
+        <%= f.label :email, class: 'input-label' %>
+        <%= f.text_field :email, class: 'input mt-2', placeholder: 'john@doe.com' %>
+        <%= f.submit 'Get Started', class: 'button button--active mt-4' %>
+      </div>
+    <% end %>
+  </div>
 </div>
