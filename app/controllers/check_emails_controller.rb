@@ -2,19 +2,13 @@
 
 class CheckEmailsController < ApplicationController
   def create
-    user = User.find_by(email: params[:email])
+    user = User.new(email: params[:value])
 
-    if user
-      render json: { available: false, errors: errors_for(:email, t('.check_email.taken', email: params[:email])) },
-             status: :unprocessable_entity
+    if user.valid_attributes?(:email)
+      head :ok, content_type: 'text/html'
     else
-      new_user = User.new(email: params[:email])
-
-      if new_user.valid_attributes?(:email)
-        render json: { available: true }
-      else
-        render json: { available: false, errors: new_user.api_validation_errors }, status: :unprocessable_entity
-      end
+      response.headers['Content-type'] = 'text/html; fragment'
+      render html: user.errors.full_messages.to_sentence, status: :unprocessable_entity
     end
   end
 end

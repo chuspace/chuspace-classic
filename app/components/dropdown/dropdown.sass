@@ -2,7 +2,7 @@
   @apply w-48 absolute bg-white border border-grey-lighter rounded-sm shadow mt-2 right-0
 
   .dropdown__divider
-    @apply border-t border-grey-lighter block my-2
+    @apply border-t border-grey-lighter block
 
   .dropdown__item
     @apply py-2 px-4 block overflow-hidden whitespace-no-wrap truncate
@@ -29,6 +29,6 @@
 
   &:before
     border-color: rgba(204, 204, 204, 0)
-    border-bottom-color: config('colors.grey-lighter')
+    border-bottom-color: theme('colors.grey-lighter')
     border-width: 8px
     margin-right: -8px

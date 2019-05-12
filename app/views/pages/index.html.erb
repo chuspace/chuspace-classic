@@ -13,11 +13,11 @@
     </h5>
 
     <%= form_with model: @invite, class: 'mt-6' do |f| %>
-      <div class='input-container'>
-        <%= f.label :email, class: 'input-label' %>
-        <%= f.text_field :email, class: 'input mt-2', placeholder: 'john@doe.com' %>
-        <%= f.submit 'Get Started', class: 'button button--active mt-4' %>
-      </div>
+      <auto-check src="/check_emails" csrf="<%= form_authenticity_token %>">
+        <%= component 'input', type: :email, name: :email, form: f, css_class: 'mt-2', placeholder: 'john@doe.com', options: { required: true } %>
+      </auto-check>
+
+      <%= f.submit 'Get Started', class: 'button button--active mt-4' %>
     <% end %>
   </div>
 </div>
