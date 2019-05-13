@@ -23,7 +23,7 @@ class AvatarComponent < Components::Component
 
   def css_classes
     classes = [DEFAULT_CSS_CLASS]
-    classes << 'avatar--badge' if avatar.blank?
+    classes << 'avatar__badge' if avatar.blank?
     classes << VARIANTS[variant][:class]
     classes.join(' ')
   end
