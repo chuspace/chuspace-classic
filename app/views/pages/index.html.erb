@@ -21,8 +21,8 @@
           form: f,
           css_class: 'mt-2',
           placeholder: 'john@doe.com',
-          help_text: @error || 'We’ll never share your email address with anyone.',
-          options: { autocomplete: false, spellcheck: false }
+          help_text: @error || t('invite.attributes.email.help_text'),
+          options: { autocomplete: 'off', spellcheck: 'off' }
         )
         %>
       </input-check>

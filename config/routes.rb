@@ -16,7 +16,10 @@ Rails.application.routes.draw do
   end
 
   resources :magic_logins, only: :index
-  resources :invites, only: :create
+  resources :invites, only: :create, param: :code do
+    get :approve
+  end
+
   resources :users, except: :show
   resources :posts, except: :show
   resources :post_validations, only: :create

@@ -15,9 +15,8 @@ class CheckEmailsController < ApplicationController
 
   def validate!
     if @record.valid_attributes?(:email)
-      head :ok, content_type: 'text/html'
+      head :ok
     else
-      response.headers['Content-type'] = 'text/html; fragment'
       render html: @record.errors.full_messages.to_sentence, status: :unprocessable_entity
     end
   end

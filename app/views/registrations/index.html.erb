@@ -34,14 +34,14 @@
           'email',
           autocomplete: 'email',
           placeholder: 'Email',
-          data: { target: 'register.inputEmail check-emails.inputEmail', action: "blur->check-emails#call", url: check_emails_path },
+          data: { target: 'register.inputEmail check-emails.inputEmail', action: "blur->check-emails#call", url: check_signup_email_path },
           class: 'input input-bordered input-bordered-green block mb-2 mx-auto',
           type: 'email'
         ) %>
 
         <span class="alert alert-error mb-2 text-left text-xs" data-target='register.inputEmailError check-emails.inputEmailError'></span>
 
-        <%= form.submit('Submit', class: 'btn btn-black mt-4 mx-auto') %>
+        <%= form.submit('Submit', class: 'button button--active mt-4 mx-auto') %>
       <% end %>
 
       <div class="alert alert-success" data-target='register.formSuccess'></div>

@@ -3,12 +3,16 @@
 
 .input__label
   @apply mb-4 text-sm font-bold
+  transition: color 0.5s ease
 
 .input__error
   @apply mt-2 block text-xs text-grey-light
+  transition: color 0.5s ease
 
 .input
   @apply py-3 px-4 rounded border border-blue bg-white min-w-full
+
+  transition: border-color 0.5s ease
 
   &:focus, &:hover
     @apply outline-none appearance-none
