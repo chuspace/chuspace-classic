@@ -24,6 +24,10 @@ en:
     destroy:
       success: Ssh key successfully removed from your account
 
+  invite:
+    create:
+      success: We have received your invite request.
+
   registration:
     success: Welcome aboard! we have sent you an email with login link.
 

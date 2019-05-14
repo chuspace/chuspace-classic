@@ -84,7 +84,7 @@ module.exports = function(api) {
             helpers: './app/javascript/helpers',
             decorators: './app/javascript/decorators',
             styles: './app/javascript/styles',
-            editor: './app/javascript/editor'
+            components: './app/components'
           }
         }
       ]

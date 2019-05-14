@@ -5,6 +5,7 @@ class InputComponent < Components::Component
   attribute :form
   attribute :type, default: :text
   attribute :css_class
+  attribute :help_text
   attribute :placeholder, default: 'Type something...'
   attribute :options, default: {}
 

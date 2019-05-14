@@ -12,11 +12,22 @@
       Enter your email to get invite for preview version
     </h5>
 
-    <%= form_with model: @invite, class: 'mt-6' do |f| %>
-      <auto-check src="/check_emails" csrf="<%= form_authenticity_token %>">
-        <%= component 'input', type: :email, name: :email, form: f, css_class: 'mt-2', placeholder: 'john@doe.com', options: { required: true } %>
-      </auto-check>
-      <%= f.submit 'Get Started', class: 'button button--active mt-4' %>
+    <%= form_with model: @invite, class: 'mt-6', remote: true do |f| %>
+      <input-check name='email' url="<%= check_invite_email_path %>" status='<%= @status || 'ready' %>'>
+        <%= component(
+          'input',
+          type: :email,
+          name: :email,
+          form: f,
+          css_class: 'mt-2',
+          placeholder: 'john@doe.com',
+          help_text: @error || 'We’ll never share your email address with anyone.',
+          options: { autocomplete: false, spellcheck: false }
+        )
+        %>
+      </input-check>
+
+      <%= f.submit 'Get Started', class: 'button button--active mt-2' %>
     <% end %>
   </div>
 </div>

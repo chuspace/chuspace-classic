@@ -1,21 +1,25 @@
 .input__container
-  @apply mb-4
-
-  &--invalid
-    .input__label
-      @apply text-red
-
-    .input
-      @apply border-red
+  @apply w-full
 
 .input__label
   @apply mb-4 text-sm font-bold
 
 .input__error
-  @apply mt-2 block text-sm font-bold text-red
+  @apply mt-2 block text-xs text-grey-light
 
 .input
   @apply py-3 px-4 rounded border border-blue bg-white min-w-full
 
   &:focus, &:hover
     @apply outline-none appearance-none
+
+input-check
+  &[status="invalid"]
+    .input__label
+      @apply text-red
+
+    .input
+      @apply border-red
+
+    .input__error
+      @apply text-red

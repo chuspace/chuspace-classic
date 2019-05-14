@@ -2,6 +2,6 @@
 
 class PagesController < ApplicationController
   def index
-    @posts = Post.all.includes(:blog, :author).limit(20)
+    @invite = Invite.new
   end
 end

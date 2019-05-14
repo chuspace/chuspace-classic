@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'invites/create'
   post 'git_shell/access'
 
   root to: 'pages#index'
@@ -8,8 +9,14 @@ Rails.application.routes.draw do
   resources :sessions, path: 'signin', only: %i[index create destroy]
   resources :registrations, path: 'signup', only: %i[index create]
   resources :check_nicknames, only: :create
-  resources :check_emails, only: :create
+
+  namespace :check_emails, as: :check do
+    post :signup, as: :signup_email
+    post :invite, as: :invite_email
+  end
+
   resources :magic_logins, only: :index
+  resources :invites, only: :create
   resources :users, except: :show
   resources :posts, except: :show
   resources :post_validations, only: :create

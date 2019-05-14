@@ -1,5 +1,5 @@
 <%= content_tag :div, class: 'input__container' do %>
   <%= input.form.label input.name, class: 'input__label' %>
   <%= input.form.text_field input.name, type: input.type, class: input.css_classes, placeholder: input.placeholder, **input.options %>
-  <span class='input__error'></span>
+  <span class='input__error'><%= input.help_text %></span>
 <% end %>
