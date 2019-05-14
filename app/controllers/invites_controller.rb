@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class InvitesController < ApplicationController
   def create
     @invite = Invite.new(invite_params)

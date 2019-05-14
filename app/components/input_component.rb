@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class InputComponent < Components::Component
   DEFAULT_CSS_CLASS = 'input'
 

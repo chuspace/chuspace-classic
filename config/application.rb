@@ -31,5 +31,8 @@ module Chuspace
 
     # Use Vips for processing variants.
     config.active_storage.variant_processor = :vips
+
+    # Configure rack attack
+    config.middleware.use Rack::Attack
   end
 end
