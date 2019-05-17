@@ -198,14 +198,8 @@ GEM
     down (4.8.1)
       addressable (~> 2.5)
     dry-initializer (3.0.1)
-    elasticsearch (7.0.0)
-      elasticsearch-api (= 7.0.0)
-      elasticsearch-transport (= 7.0.0)
-    elasticsearch-api (7.0.0)
-      multi_json
-    elasticsearch-transport (7.0.0)
-      faraday
-      multi_json
+    easymon (1.4.2)
+      redis
     erubi (1.8.0)
     factory_bot (5.0.2)
       activesupport (>= 4.2.0)
@@ -214,8 +208,6 @@ GEM
       railties (>= 4.2.0)
     faker (1.9.3)
       i18n (>= 0.7)
-    faraday (0.15.4)
-      multipart-post (>= 1.2, < 3)
     faster_path (0.3.10)
       bundler (~> 1.12)
       rake (~> 12.3)
@@ -226,7 +218,6 @@ GEM
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     hashdiff (0.3.9)
-    hashie (3.6.0)
     hiredis (0.6.3)
     http (4.1.1)
       addressable (~> 2.3)
@@ -261,16 +252,9 @@ GEM
     minitar (0.8)
     minitest (5.11.3)
     msgpack (1.2.10)
-    multi_json (1.13.1)
-    multipart-post (2.1.0)
     nio4r (2.3.1)
     nokogiri (1.10.3)
       mini_portile2 (~> 2.4.0)
-    octicons (8.5.0)
-      nokogiri (>= 1.6.3.1)
-    octicons_helper (8.5.0)
-      octicons (= 8.5.0)
-      rails
     oj (3.7.12)
     parallel (1.17.0)
     parser (2.6.3.0)
@@ -305,16 +289,8 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.0.4)
       loofah (~> 2.2, >= 2.2.2)
-    rails_12factor (0.0.3)
-      rails_serve_static_assets
-      rails_stdout_logging
-    rails_serve_static_assets (0.0.5)
-    rails_stdout_logging (0.0.5)
     rainbow (3.0.0)
     rake (12.3.2)
-    readthis (2.2.0)
-      connection_pool (~> 2.1)
-      redis (>= 3.0, < 5.0)
     redis (4.1.1)
     rspec_junit_formatter (0.4.1)
       rspec-core (>= 2, < 4, != 2.12.0)
@@ -332,10 +308,6 @@ GEM
       ffi (~> 1.9)
     rugged (0.28.1)
     safe_yaml (1.0.5)
-    searchkick (4.0.0)
-      activemodel (>= 5)
-      elasticsearch (>= 6)
-      hashie
     sidekiq (5.2.7)
       connection_pool (~> 2.2, >= 2.2.2)
       rack (>= 1.5.0)
@@ -409,6 +381,7 @@ DEPENDENCIES
   components!
   coveralls
   down
+  easymon
   factory_bot_rails
   faker
   faster_path
@@ -417,7 +390,6 @@ DEPENDENCIES
   http
   image_processing
   memory_profiler
-  octicons_helper
   oj
   pg (>= 1.x)
   pry-rails
@@ -427,8 +399,6 @@ DEPENDENCIES
   rack-mini-profiler
   rails!
   rails-controller-testing
-  rails_12factor
-  readthis
   redis (>= 4.0)
   rspec-core!
   rspec-expectations!
@@ -439,7 +409,6 @@ DEPENDENCIES
   rubocop
   rubocop-performance
   rugged
-  searchkick
   shoulda-matchers!
   sidekiq
   simplecov

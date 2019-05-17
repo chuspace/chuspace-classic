@@ -30,7 +30,6 @@ gem 'down'
 gem 'http'
 
 # caching
-gem 'readthis'
 gem 'hiredis'
 
 # Auth
@@ -40,7 +39,6 @@ gem 'pundit'
 gem 'aasm'
 
 # Search
-gem 'searchkick'
 gem 'oj'
 
 # Jobs
@@ -51,10 +49,6 @@ gem 'figaro'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'octicons_helper'
-
-# 12 factor app
-gem 'rails_12factor', group: :production
 
 # Turblinks
 gem 'turbolinks'
@@ -78,6 +72,11 @@ gem 'components', git: 'https://github.com/jensljungblad/components.git'
 
 # Security
 gem 'rack-attack'
+
+group :production do
+ # Resource monitoring
+ gem 'easymon'
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

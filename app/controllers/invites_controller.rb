@@ -7,7 +7,7 @@ class InvitesController < ApplicationController
     if @invite.accepted!
       redirect_to registrations_path(email: @invite.email, code: @invite.code), notice: t('.invite.create.success')
     else
-      redirect_to root_path, notice:  @invite.errors.full_messages.to_sentence
+      redirect_to root_path, notice: @invite.errors.full_messages.to_sentence
     end
   end
 

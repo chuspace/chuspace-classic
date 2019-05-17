@@ -33,4 +33,6 @@ Rails.application.routes.draw do
 
   get '/:nickname', to: 'users#show', as: :profile
   get '/:blog/:slug', to: 'posts#show', as: :blog_post
+
+  mount Easymon::Engine => '/alive' if Rails.env.production?
 end
