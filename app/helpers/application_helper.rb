@@ -14,7 +14,7 @@ module ApplicationHelper
       { label: 'Write post', url: new_post_url, options: {} },
       { label: 'Settings', url: settings_url, options: {} },
       { divider: true },
-      { label: 'Sign out', url: session_url(Current.user), options: { method: :delete } }
+      { label: 'Sign out', url: signin_url(Current.user), options: { method: :delete } }
     ].map { |hash| OpenStruct.new(hash) }.freeze
   end
 end

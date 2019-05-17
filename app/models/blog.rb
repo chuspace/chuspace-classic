@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class Blog < ApplicationRecord
-  include HasGitRepo, Sluggable
-  sluggable :name
+  include HasGitRepo
+
+  extend FriendlyId
+  friendly_id :name, use: :slugged
 
   validates_presence_of :name, :slug, :repo_name, :repo_path, :status, :author_id
   validates :repo_path, uniqueness: true
@@ -13,4 +15,8 @@ class Blog < ApplicationRecord
 
   belongs_to :author, class_name: 'User'
   has_many :posts
+
+  def should_generate_new_friendly_id?
+    slug.blank? || name_changed?
+  end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RegistrationsController < ApplicationController
+class SignupsController < ApplicationController
   before_action :redirect_if_registered
 
   def create

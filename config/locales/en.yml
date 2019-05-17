@@ -18,6 +18,17 @@ en:
       link_request: You don’t need a password to access your Chuspace account. Just click the secure link below.
       heading: Log in to Chuspace
 
+  invite_mailer:
+    notify_invitee:
+      subject: Thanks for registering
+      body: We will let you know once we are ready
+      heading: Thanks for registering your interest
+
+    send_rsvp:
+      subject: Welcome to Chuspace
+      body: Please use this link to signup
+      heading: Click to signup
+
   ssh_key:
     create:
       success: Ssh key successfully added to your account

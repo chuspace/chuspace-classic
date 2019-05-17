@@ -8,7 +8,7 @@
     </p>
 
     <div class='card-body'>
-      <%= form_with url: registrations_path, scope: :user, data: { target: 'register.form', action: 'ajax:success->register#onFormSubmit' } do |form| %>
+      <%= form_with url: signups_path, scope: :user, data: { target: 'register.form', action: 'ajax:success->register#onFormSubmit' } do |form| %>
         <%= form.text_field(
           'name',
           autocomplete: 'name',
@@ -48,7 +48,7 @@
     </div>
 
     <div class='card-footer'>
-      <%= link_to('← Go back', registrations_path, class: 'link link-default db') %>
+      <%= link_to('← Go back', signups_path, class: 'link link-default db') %>
     </div>
   </div>
 </div>

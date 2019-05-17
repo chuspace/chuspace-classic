@@ -11,7 +11,7 @@ class MagicLoginsController < ApplicationController
 
       redirect_to root_url
     else
-      redirect_to sessions_url, notice: t('.magic_login.expired')
+      redirect_to signins_url, notice: t('.magic_login.expired')
     end
   end
 end

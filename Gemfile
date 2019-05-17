@@ -14,6 +14,10 @@ gem 'pg', '>= 1.x'
 #  Nested tree
 gem 'ancestry'
 
+# Friendly urls
+gem 'friendly_id'
+gem 'babosa'
+
 # Use Puma as the app server
 gem 'puma', '>= 3.11'
 

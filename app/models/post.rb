@@ -4,8 +4,8 @@ class Post < ApplicationRecord
   include Commitable
   include Blobable # Depends on commitable
 
-  include Sluggable
-  sluggable :title
+  extend FriendlyId
+  friendly_id :title, use: :slugged
 
   belongs_to :author, class_name: 'User'
   belongs_to :blog
@@ -20,8 +20,8 @@ class Post < ApplicationRecord
 
   enum status: { draft: 0, published: 1, archived: 2 }
 
-  validates_presence_of :title, :slug, :status
-  validates_presence_of :blob_id, on: :update
+  validates_presence_of :title, :slug, :status, :blob_id
+  validates_uniqueness_of :blob_id
   validates_uniqueness_of :slug, scope: %i[blog_id author_id]
 
   delegate :repo, to: :blog
@@ -48,5 +48,9 @@ class Post < ApplicationRecord
 
   def blog_slug=(slug)
     self.blog = Blog.find_by_slug(slug)
+  end
+
+  def should_generate_new_friendly_id?
+    slug.blank? || title_changed?
   end
 end

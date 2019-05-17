@@ -6,8 +6,8 @@ Rails.application.routes.draw do
 
   root to: 'pages#index'
 
-  resources :sessions, path: 'signin', only: %i[index create destroy]
-  resources :registrations, path: 'signup', only: %i[index create]
+  resources :signins, path: 'signin', only: %i[index create destroy]
+  resources :signups, path: 'signup', only: %i[index create]
   resources :check_nicknames, only: :create
 
   namespace :check_emails, as: :check do
@@ -16,9 +16,7 @@ Rails.application.routes.draw do
   end
 
   resources :magic_logins, only: :index
-  resources :invites, only: :create, param: :code do
-    get :approve
-  end
+  resources :invites, only: :create
 
   resources :users, except: :show
   resources :posts, except: :show

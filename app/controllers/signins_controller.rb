@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SessionsController < ApplicationController
+class SigninsController < ApplicationController
   before_action :redirect_if_signedin, except: :destroy
 
   def create
