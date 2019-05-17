@@ -3,8 +3,6 @@
 class SessionsController < ApplicationController
   before_action :redirect_if_signedin, except: :destroy
 
-  def index; end
-
   def create
     user = User.find_by(email: params[:email])
 
