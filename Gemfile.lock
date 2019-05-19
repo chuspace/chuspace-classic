@@ -316,6 +316,9 @@ GEM
       rack (>= 1.5.0)
       rack-protection (>= 1.5.0)
       redis (>= 3.3.5, < 5)
+    simple_form (4.1.0)
+      actionpack (>= 5.0)
+      activemodel (>= 5.0)
     simplecov (0.16.1)
       docile (~> 1.1)
       json (>= 1.8, < 3)
@@ -416,6 +419,7 @@ DEPENDENCIES
   rugged
   shoulda-matchers!
   sidekiq
+  simple_form
   simplecov
   simplecov-lcov
   sshkey

@@ -18,8 +18,6 @@ class InvitesController < ApplicationController
       redirect_to root_path, notice: t('.invite.create.success')
     else
       @status = 'invalid'
-      @error = @invite.errors.full_messages.to_sentence
-
       render 'pages/index'
     end
   end

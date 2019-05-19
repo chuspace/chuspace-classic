@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 2019_05_09_141030) do
   create_table "invites", force: :cascade do |t|
     t.string "email", null: false
     t.string "code", null: false
-    t.integer "status", default: 0, null: false
+    t.string "status", default: "invited", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["code"], name: "index_invites_on_code", unique: true

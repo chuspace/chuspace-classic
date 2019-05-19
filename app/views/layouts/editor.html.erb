@@ -11,11 +11,9 @@
     <div class='container mx-auto'>
       <header>
         <nav class='flex justify-between items-center py-6'>
-          <%= link_to root_path, class: 'link link-white' do %>
-            <div class='logo icon'>C</div>
-          <% end %>
+          <%= component 'logo', type: :badge %>
 
-          <div class='flex justify-end items-center flex-1 mr-8'>
+          <div class='flex justify-end items-center flex-1 mr-4'>
             <%= link_to 'Save as draft', '#', class: 'link link-default mr-4', data: { action: 'click->compose#saveDraft', url: posts_path } %>
             <%= link_to 'Publish', '#', class: 'link link-green mr-4', data: { action: 'click->compose#publish'} %>
           </div>

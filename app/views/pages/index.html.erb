@@ -21,7 +21,7 @@
           form: f,
           css_class: 'mt-2',
           placeholder: 'john@doe.com',
-          help_text: @error || t('invite.attributes.email.help_text'),
+          help_text: @invite.errors.messages_for(:email).to_sentence || t('invite.attributes.email.help_text'),
           options: { autocomplete: 'off', spellcheck: 'off' }
         )
         %>

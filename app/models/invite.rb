@@ -3,6 +3,8 @@
 class Invite < ApplicationRecord
   include AASM
 
+  DEFAULT_STATUS = :invited.freeze
+
   validates :email, presence: true, uniqueness: true, email: true
   validates :code, uniqueness: true
 
@@ -12,11 +14,11 @@ class Invite < ApplicationRecord
   after_update_commit :send_rsvp, if: :approved?
 
   aasm column: :status do
-    state :invited, initial: true
+    state DEFAULT_STATUS, initial: true
     state :approved, :accepted
 
     event :approve do
-      transitions from: :invited, to: :approved
+      transitions from: DEFAULT_STATUS, to: :approved
     end
 
     event :accept do

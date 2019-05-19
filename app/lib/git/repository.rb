@@ -38,9 +38,9 @@ module Git
     end
 
     def rugged
-      @rugged ||= Rugged::Repository.new(path)
+      @rugged ||= Rugged::Repository.bare(path)
     rescue Rugged::RepositoryError, Rugged::OSError
-      raise NoRepository.new('no repository for such path')
+      fail NoRepository, 'no repository for such path'
     end
 
     def exists?

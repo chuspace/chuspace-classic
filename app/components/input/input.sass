@@ -1,8 +1,11 @@
 .input__container
   @apply w-full
 
+  &:first-child
+    @apply mt-0
+
 .input__label
-  @apply mb-4 text-sm font-bold
+  @apply mb-2 block text-sm font-bold
   transition: color 0.5s ease
 
 .input__error
@@ -11,16 +14,23 @@
 
 .input
   @apply py-3 px-4 rounded border border-blue bg-white min-w-full
-
   transition: border-color 0.5s ease
+  box-sizing: border-box
+
+  &:focus, &:hover
+    @apply outline-none appearance-none
+    box-shadow: 0 0 0 1px theme('colors.blue')
 
 input-check
+  @apply block w-full
+
   &[status="invalid"]
     .input__label
       @apply text-red
 
     .input
       @apply border-red
+      box-shadow: 0 0 0 1px theme('colors.red')
 
     .input__error
       @apply text-red

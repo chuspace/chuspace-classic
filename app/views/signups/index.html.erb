@@ -1,54 +1,60 @@
-<div data-controller='register check-nicknames check-emails' class='centered mt-10'>
-  <div class='card max-w-sm text-center'>
-    <h2 class='card-title'>Sign up</h2>
+<div class='mt-10'>
+  <div class='container mx-auto'>
+    <div class='intro w-1/2 mt-8'>
+      <h2 class='title'>Sign up</h2>
 
-    <p class='card-intro'>
-      Enter the email address associated with your account, and we’ll send a
-      magic link to your inbox.
-    </p>
-
-    <div class='card-body'>
-      <%= form_with url: signups_path, scope: :user, data: { target: 'register.form', action: 'ajax:success->register#onFormSubmit' } do |form| %>
-        <%= form.text_field(
-          'name',
-          autocomplete: 'name',
-          placeholder: 'Full name',
-          autofocus: true,
-          data: { target: 'register.inputName' },
-          class: 'input input-bordered input-bordered-green block mb-2 mx-auto'
-        ) %>
-
-        <span class="alert alert-error mb-2 text-left text-xs" data-target='register.inputNameError'></span>
-
-        <%= form.text_field(
-          'nickname',
-          autocomplete: 'nickname',
-          placeholder: 'Nickname',
-          data: { target: 'register.inputNickname check-nicknames.inputNickname', action: "input->check-nicknames#call", url: check_nicknames_path },
-          class: 'input input-bordered input-bordered-green block mb-2 mx-auto'
-        ) %>
-
-        <span class="alert alert-error mb-2 text-left text-xs" data-target='register.inputNicknameError check-nicknames.inputNicknameError'></span>
-
-        <%= form.text_field(
-          'email',
-          autocomplete: 'email',
-          placeholder: 'Email',
-          data: { target: 'register.inputEmail check-emails.inputEmail', action: "blur->check-emails#call", url: check_signup_email_path },
-          class: 'input input-bordered input-bordered-green block mb-2 mx-auto',
-          type: 'email'
-        ) %>
-
-        <span class="alert alert-error mb-2 text-left text-xs" data-target='register.inputEmailError check-emails.inputEmailError'></span>
-
-        <%= form.submit('Submit', class: 'button button--active mt-4 mx-auto') %>
-      <% end %>
-
-      <div class="alert alert-success" data-target='register.formSuccess'></div>
+      <p class='introduction mt-4'>
+        Enter the email address associated with your account, and we’ll send a
+        magic link to your inbox.
+      </p>
     </div>
 
-    <div class='card-footer'>
-      <%= link_to('← Go back', signups_path, class: 'link link-default db') %>
+    <div class='form-body w-1/2 mt-8'>
+      <%= form_with model: @user, remote: true do |form| %>
+        <%= form.hidden_field :code, name: :code, value: @invite.code %>
+        <%= component(
+            'input',
+            name: :name,
+            form: form,
+            css_class: 'mt-2 block mx-auto',
+            placeholder: 'John Doe',
+            help_text: @user.errors.messages_for(:name).to_sentence || t('signup.attributes.name.help_text'),
+            options: { autocomplete: 'off', spellcheck: 'off', autofocus: true }
+          )
+        %>
+
+        <input-check class='mt-2' name='nickname' url="<%= check_nicknames_path %>" status='<%= @status || 'ready' %>'>
+          <%= component(
+              'input',
+              name: :nickname,
+              form: form,
+              css_class: 'mt-2 block mx-auto',
+              placeholder: 'johndoe',
+              help_text: @user.errors.messages_for(:nickname).to_sentence || t('signup.attributes.nickname.help_text'),
+              options: { autocomplete: 'off', spellcheck: 'off' }
+            )
+          %>
+        </input-check>
+
+        <input-check class='mt-2' name='email' url="<%= check_signup_email_path %>" status='<%= @status || 'ready' %>'>
+          <%= component(
+              'input',
+              type: :email,
+              name: :email,
+              form: form,
+              css_class: 'mt-2 block mx-auto',
+              placeholder: 'john@doe.com',
+              help_text: @user.errors.messages_for(:email).to_sentence || t('signup.attributes.email.help_text'),
+              options: { autocomplete: 'off', spellcheck: 'off' }
+            )
+          %>
+        </input-check>
+
+        <div class='flex items-center  mt-4'>
+          <%= form.submit('Submit', class: 'button button--active mr-4') %>
+          <%= link_to('← Go back', signups_path, class: 'link link--default block flex-1') %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

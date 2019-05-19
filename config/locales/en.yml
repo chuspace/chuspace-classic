@@ -43,8 +43,20 @@ en:
     create:
       success: We have received your invite request.
 
-  registration:
+  signup:
+    code_invalid: Your signup code is invalid. Please use the code sent in your email to signup.
+    code_accepted: Looks like you have already joined. Please login
     success: Welcome aboard! we have sent you an email with login link.
+
+    attributes:
+      name:
+        help_text: Your full name
+
+      email:
+        help_text: We’ll never share your email address with anyone.
+
+      nickname:
+        help_text: Should be lowercase, alphanumeric characters or single hyphens, and cannot begin or end with a hyphen
 
   login:
     email_not_found: We couldn't find that email. Perhaps you mispelled it?

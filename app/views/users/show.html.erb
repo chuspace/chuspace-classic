@@ -1,6 +1,6 @@
 <div class='w-1/2 mx-auto mt-12'>
   <div class='sidebar flex justify-between items-center mb-5'>
-    <%= avatar_for(user: Current.user, size: :sm) %>
+   <%= component 'avatar', avatar: Current.user.avatar, initials: Current.user.initials, variant: :sm %>
 
     <div class='useral flex-1 pl-4 w-75'>
       <h1 class='f4 lh-solid mb0 black-80'><%= @user.name %></h1>
@@ -9,7 +9,7 @@
     </div>
 
     <div class='actions'>
-      <%= button_tag('Follow', type: 'submit', class: "btn btn-bordered btn-bordered-green") %>
+      <%= button_tag('Follow', type: 'submit', class: "button") %>
     </div>
   </div>
 

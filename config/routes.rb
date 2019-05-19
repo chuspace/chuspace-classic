@@ -4,10 +4,11 @@ Rails.application.routes.draw do
   get 'invites/create'
   post 'git_shell/access'
 
+  root to: 'users#show', constraints: PrivateRootConstraint.new, as: :authenticated_root
   root to: 'pages#index'
 
   resources :signins, path: 'signin', only: %i[index create destroy]
-  resources :signups, path: 'signup', only: %i[index create]
+  resources :signups, path: 'signup', only: %i[index]
   resources :check_nicknames, only: :create
 
   namespace :check_emails, as: :check do
@@ -18,8 +19,8 @@ Rails.application.routes.draw do
   resources :magic_logins, only: :index
   resources :invites, only: :create
 
-  resources :users, except: :show
-  resources :posts, except: :show
+  resources :users, path: 'u', param: :nickname
+  resources :posts, path: 'p', param: :slug
   resources :post_validations, only: :create
 
   resources :settings, only: :index
@@ -28,9 +29,6 @@ Rails.application.routes.draw do
     resources :profiles, path: 'profile', only: %i[index]
     resources :ssh_keys, path: 'ssh', except: %i[show update]
   end
-
-  get '/:nickname', to: 'users#show', as: :profile
-  get '/:blog/:slug', to: 'posts#show', as: :blog_post
 
   mount Easymon::Engine => '/alive' if Rails.env.production?
 end

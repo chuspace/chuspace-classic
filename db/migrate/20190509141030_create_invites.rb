@@ -8,7 +8,7 @@ class CreateInvites < ActiveRecord::Migration[6.1]
       t.string :code, null: false
       t.index :code, unique: true
 
-      t.integer :status, null: false, default: 0
+      t.string :status, null: false, default: Invite::DEFAULT_STATUS
       t.index :status
 
       t.timestamps

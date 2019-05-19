@@ -18,6 +18,9 @@ gem 'ancestry'
 gem 'friendly_id'
 gem 'babosa'
 
+# Forms
+gem 'simple_form'
+
 # Use Puma as the app server
 gem 'puma', '>= 3.11'
 
