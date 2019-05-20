@@ -5,7 +5,7 @@ en:
         user:
           attributes:
             nickname:
-              invalid: may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen
+              invalid: Should be all lowercase, may have a single hyphen and no special characters.
         ssh_key:
           attributes:
             key:
@@ -31,32 +31,25 @@ en:
 
   ssh_key:
     create:
-      success: Ssh key successfully added to your account
+      success: Ssh key successfully added to y\our account
     destroy:
       success: Ssh key successfully removed from your account
-
-  invite:
-    attributes:
-      email:
-        help_text: We’ll never share your email address with anyone.
-
     create:
       success: We have received your invite request.
 
-  signup:
-    code_invalid: Your signup code is invalid. Please use the code sent in your email to signup.
-    code_accepted: Looks like you have already joined. Please login
-    success: Welcome aboard! we have sent you an email with login link.
+  pages:
+    index:
+      heading: Blogging platform for developers
+      intro: Chuspace is a collaborative blogging platform made for developers. Publish, learn and inspire using the same tools you use everyday.
+      invite_cta: Signup and get early access to developer preview
 
-    attributes:
-      name:
-        help_text: Your full name
-
-      email:
-        help_text: We’ll never share your email address with anyone.
-
-      nickname:
-        help_text: Should be lowercase, alphanumeric characters or single hyphens
+  signups:
+    index:
+      heading: Join Chuspace
+      intro: The best way to blog using the tools you love and use everyday
+      code_invalid: Your signup code is invalid. Please use the code sent in your email to signup.
+      code_accepted: Looks like you have already joined. Please login
+      success: Welcome aboard! we have sent you an email with login link.
 
   login:
     email_not_found: We couldn't find that email. Perhaps you mispelled it?
@@ -64,9 +57,3 @@ en:
 
   magic_login:
     expired: Login link expired! Please request a new one.
-
-  check_nickname:
-    taken: Oops! %{nickname} is already taken.
-
-  check_email:
-    taken: Oops! %{email} is already taken.

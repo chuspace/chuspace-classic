@@ -15,4 +15,8 @@ class LogoComponent < Components::Component
   def label
     TYPES[type.to_sym][:label]
   end
+
+  def version
+    'axiom'
+  end
 end
