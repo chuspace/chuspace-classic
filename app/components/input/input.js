@@ -8,15 +8,11 @@ import httpClient from 'helpers/fetch-client'
 const previousValues = new WeakMap()
 
 class AutoValidateInput extends LitElement {
-  name: string = 'value'
-  status: string = 'ready'
   input: HTMLInputElement = this.querySelector('input')
 
   static get properties() {
     return {
-      name: { type: String },
-      url: { type: String },
-      status: { type: String, reflect: true }
+      url: { type: String }
     }
   }
 
@@ -26,8 +22,15 @@ class AutoValidateInput extends LitElement {
     this.boundCheck = debounce(this.check.bind(this), 300)
 
     if (this.input instanceof HTMLInputElement) {
-      this.inputError = this.querySelector('.input__error')
-      this.defaultErrorText = this.inputError.textContent
+      this.inputContainer = this.querySelector('.input__container')
+      this.inputError = this.inputContainer.querySelector('.input__error')
+
+      if (!this.inputError) {
+        this.inputError = document.createElement('span')
+        this.inputError.className = 'input__error'
+        this.inputContainer.appendChild(this.inputError)
+      }
+
       this.input.addEventListener('change', this.boundCheck)
       this.input.addEventListener('input', this.boundCheck)
     }
@@ -47,7 +50,7 @@ class AutoValidateInput extends LitElement {
     }
 
     const body = {
-      [this.name]: this.input.value
+      value: this.input.value
     }
 
     const id = Object.entries(body) ? Object.entries(body).join(':') : null
@@ -86,17 +89,16 @@ class AutoValidateInput extends LitElement {
   }
 
   setError(text: string) {
-    this.inputError.textContent = text || this.defaultErrorText
+    this.inputError.textContent = text
+
     if (text) {
-      this.status = 'invalid'
+      this.inputContainer.classList.add('input__container--invalid')
     } else {
-      this.status = 'ready'
+      this.inputContainer.classList.remove('input__container--invalid')
     }
   }
 
   render() {
-    this.check()
-
     return html`
       <div>
         <slot></slot>

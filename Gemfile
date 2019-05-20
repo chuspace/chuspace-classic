@@ -81,8 +81,8 @@ gem 'components', git: 'https://github.com/jensljungblad/components.git'
 gem 'rack-attack'
 
 group :production do
- # Resource monitoring
- gem 'easymon'
+  # Resource monitoring
+  gem 'easymon'
 end
 
 group :development, :test do

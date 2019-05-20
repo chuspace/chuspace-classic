@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RedisClient
   attr_reader :config, :config_file_path, :instance
 

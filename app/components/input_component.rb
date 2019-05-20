@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 class InputComponent < Components::Component
-  DEFAULT_CSS_CLASS = 'input__container'
-
   attribute :name
   attribute :form
-  attribute :type, default: :text
+  attribute :type, default: nil
   attribute :css_class
   attribute :help_text
   attribute :placeholder, default: 'Type something...'
@@ -13,8 +11,7 @@ class InputComponent < Components::Component
 
   validates :name, :form, presence: true
 
-  def css_classes
-    classes = [DEFAULT_CSS_CLASS]
-    classes << css_class
+  def render
+    form.input name, as: type, placeholder: placeholder, **options
   end
 end

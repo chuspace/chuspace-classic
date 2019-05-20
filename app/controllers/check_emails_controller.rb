@@ -2,12 +2,12 @@
 
 class CheckEmailsController < ApplicationController
   def signup
-    @record = User.new(email: params[:email])
+    @record = User.new(email: params[:value])
     validate!
   end
 
   def invite
-    @record = Invite.new(email: params[:email])
+    @record = Invite.new(email: params[:value])
     validate!
   end
 

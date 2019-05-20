@@ -8,9 +8,20 @@
   @apply mb-2 block text-sm font-bold
   transition: color 0.5s ease
 
-.input__error
+  abbr
+    text-decoration: none
+    color: theme('colors.red')
+
+.input__error,
+.input__hint
   @apply mt-2 block text-xs text-grey-light
   transition: color 0.5s ease
+
+.input__hint
+  @apply block
+
+.input__error
+  @apply hidden
 
 .input
   @apply py-3 px-4 rounded border border-blue bg-white min-w-full
@@ -24,13 +35,18 @@
 input-check
   @apply block w-full
 
-  &[status="invalid"]
-    .input__label
-      @apply text-red
+.input__container--invalid
+  .input__label
+    @apply text-red
 
-    .input
-      @apply border-red
+  .input
+    @apply border-red
+
+    &:focus, &:hover
       box-shadow: 0 0 0 1px theme('colors.red')
 
-    .input__error
-      @apply text-red
+  .input__hint
+    @apply hidden
+
+  .input__error
+    @apply text-red block

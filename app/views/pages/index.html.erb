@@ -12,8 +12,8 @@
       Enter your email to get invite for preview version
     </h5>
 
-    <%= form_with model: @invite, class: 'mt-6', remote: true do |f| %>
-      <input-check name='email' url="<%= check_invite_email_path %>" status='<%= @status || 'ready' %>'>
+    <%= simple_form_for @invite, html: { class: 'mt-4' }, remote: true do |f| %>
+      <input-check url="<%= check_invite_email_path %>">
         <%= component(
           'input',
           type: :email,
@@ -21,8 +21,7 @@
           form: f,
           css_class: 'mt-2',
           placeholder: 'john@doe.com',
-          help_text: @invite.errors.messages_for(:email).to_sentence || t('invite.attributes.email.help_text'),
-          options: { autocomplete: 'off', spellcheck: 'off' }
+          options: { autocomplete: 'off', spellcheck: 'off', hint: t('invite.attributes.email.help_text') }
         )
         %>
       </input-check>

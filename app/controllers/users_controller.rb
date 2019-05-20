@@ -12,11 +12,12 @@ class UsersController < ApplicationController
     @invite = Invite.find_by(code: params[:code])
     @user.build_default_blog(author: @user, name: @user.name, slug: @user.nickname, default: true)
 
-    if @invite.accept! && @user.save
+    if @invite.may_accept? && @user.save
+      @invite.accept!
       LoginMailer.with(user: @user).send_magic_login.deliver_later
       redirect_to root_path, notice: t('.signup.success')
     else
-      render :index
+      render 'signups/index'
     end
   end
 

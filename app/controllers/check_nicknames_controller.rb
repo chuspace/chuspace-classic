@@ -2,7 +2,7 @@
 
 class CheckNicknamesController < ApplicationController
   def create
-    user = User.new(nickname: params[:nickname])
+    user = User.new(nickname: params[:value])
 
     if user.valid_attributes?(:nickname)
       head :ok
