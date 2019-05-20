@@ -3,9 +3,24 @@
 require 'application_system_test_case'
 
 class SignupsTest < ApplicationSystemTestCase
-  # test "visiting the index" do
-  #   visit signups_url
-  #
-  #   assert_selector "h1", text: "Signup"
-  # end
+  test 'Creating signup' do
+    visit signups_url
+    assert_text "Your signup code is invalid. Please use the code sent in your email to signup."
+
+    puts Invite.last.inspect
+    # visit signups_url
+    # assert_selector 'h2', text: 'Join us'
+    # assert_selector 'button', text: 'Signup'
+
+    # click_button 'Signup'
+    # assert_text "Email can't be blank"
+
+    # fill_in 'invite_email', with: 'gaurav'
+    # assert_text 'Email is not a valid email'
+
+    # fill_in 'invite_email', with: "gaurav#{rand(0...10)}@chuspace.com"
+    # assert_text 'We’ll never share your email address with anyone'
+    # click_button 'Signup'
+    # assert_text 'We have received your invite request.'
+  end
 end

@@ -3,7 +3,7 @@
 require 'application_system_test_case'
 
 class InvitationsTest < ApplicationSystemTestCase
-  test 'visiting the index page' do
+  test 'Creating invite' do
     visit root_url
 
     assert_selector 'label', text: 'Your email'
