@@ -5,7 +5,7 @@ class InvitesController < ApplicationController
     @invite = Invite.find_by_code(params[:invite_code])
 
     if @invite.accepted!
-      redirect_to registrations_path(email: @invite.email, code: @invite.code), notice: t('.invite.create.success')
+      redirect_to registrations_path(email: @invite.email, code: @invite.code), notice: t('success')
     else
       redirect_to root_path, notice: @invite.errors.full_messages.to_sentence
     end
@@ -15,9 +15,8 @@ class InvitesController < ApplicationController
     @invite = Invite.new(invite_params)
 
     if @invite.save
-      redirect_to root_path, notice: t('.invite.create.success')
+      redirect_to root_path, notice: t('.success')
     else
-      @status = 'invalid'
       render 'pages/index'
     end
   end

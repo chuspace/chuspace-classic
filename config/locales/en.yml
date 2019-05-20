@@ -5,7 +5,7 @@ en:
         user:
           attributes:
             nickname:
-              invalid: Should be all lowercase, may have a single hyphen and no special characters.
+              invalid: Should be all lowercase, unique, min 1 character, may have a single hyphen and no special characters.
         ssh_key:
           attributes:
             key:
@@ -29,13 +29,24 @@ en:
       body: Please use this link to signup
       heading: Click to signup
 
-  ssh_key:
+  settings:
+    ssh_keys:
+      create:
+        success: Ssh key successfully added to your account
+      destroy:
+        success: Ssh key successfully removed from your account
+
+  users:
     create:
-      success: Ssh key successfully added to y\our account
-    destroy:
-      success: Ssh key successfully removed from your account
+      success: Welcome aboard! we have sent you an email with login link.
+
+  invites:
     create:
       success: We have received your invite request.
+
+  header:
+    guest:
+      signin_cta: Got an account?
 
   pages:
     index:
@@ -49,7 +60,6 @@ en:
       intro: The best way to blog using the tools you love and use everyday
       code_invalid: Your signup code is invalid. Please use the code sent in your email to signup.
       code_accepted: Looks like you have already joined. Please login
-      success: Welcome aboard! we have sent you an email with login link.
 
   login:
     email_not_found: We couldn't find that email. Perhaps you mispelled it?
