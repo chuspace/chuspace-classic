@@ -1,0 +1,3 @@
+default:
+  email: gaurav@chuspace.com
+  code: <%= SecureRandom.hex(10) %>

@@ -15,7 +15,7 @@ SimpleForm.setup do |config|
     b.use :full_error, wrap_with: { tag: 'div', class: 'input__error' }
   end
 
-  config.form_class = 'form'
+  config.default_form_class = 'form'
   config.label_text = lambda { |label, required, explicit_label| "#{label} #{required}" }
 
   config.default_wrapper = :custom
