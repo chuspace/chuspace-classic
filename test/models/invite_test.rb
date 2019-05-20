@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class InviteTest < ActiveSupport::TestCase
-  test 'Valid user' do
+  test 'Valid invite' do
     invite = Invite.new
     refute invite.valid?
   end

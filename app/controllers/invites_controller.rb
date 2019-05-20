@@ -5,7 +5,7 @@ class InvitesController < ApplicationController
     @invite = Invite.find_by_code(params[:invite_code])
 
     if @invite.accepted!
-      redirect_to registrations_path(email: @invite.email, code: @invite.code), notice: t('success')
+      redirect_to registrations_path(email: @invite.email, code: @invite.code), notice: t('invites.approve.success')
     else
       redirect_to root_path, notice: @invite.errors.full_messages.to_sentence
     end
