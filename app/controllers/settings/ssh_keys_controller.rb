@@ -14,7 +14,7 @@ class Settings::SshKeysController < ApplicationController
     key = Current.user.ssh_keys.build(key_params)
 
     if key.save
-      redirect_to settings_ssh_keys_path, notice: t('.success')
+      redirect_to settings_ssh_keys_path, notice: t('settings.ssh_keys.create.success')
     else
       render json: { errors: key.api_validation_errors }
     end
@@ -22,7 +22,7 @@ class Settings::SshKeysController < ApplicationController
 
   def destroy
     if @ssh_key.destroy
-      redirect_to settings_ssh_keys_path, notice: t('.success')
+      redirect_to settings_ssh_keys_path, notice: t('settings.ssh_keys.destroy.success')
     else
       redirect_to settings_ssh_keys_path, notice: @ssh_key.api_validation_errors
     end

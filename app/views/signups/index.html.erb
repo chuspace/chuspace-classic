@@ -1,14 +1,14 @@
 <div class='mt-10'>
   <div class='container w-1/3 mx-auto'>
-    <div class='intro mt-8'>
-      <h3 class='title font-bold'><%= t('.heading') %></h3>
+    <div class='mt-8'>
+      <h3 class='font-bold'><%= t('.heading') %></h3>
 
-      <p class='introduction mt-4'>
+      <p class='mt-4'>
         <%= t('.intro') %>
       </p>
     </div>
 
-    <div class='form-body mt-8'>
+    <div class='mt-8'>
       <%= simple_form_for @user, remote: true do |f| %>
         <%= f.hidden_field :code, name: :code, value: @invite.code %>
         <%= f.input :name, class: 'mt-2' %>
@@ -22,8 +22,8 @@
         </input-check>
 
         <div class='flex items-center mt-4'>
-          <%= f.submit('Submit', class: 'button button--active mr-4') %>
-          <%= link_to('Go back', signups_path, class: 'link link--default text-sm underline') %>
+          <%= f.button :button, 'Signup' %>
+          <%= link_to('Signin', signins_path, class: 'link link--default text-sm underline ml-4') %>
         </div>
       <% end %>
     </div>

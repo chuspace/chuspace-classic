@@ -15,7 +15,7 @@ class InvitesController < ApplicationController
     @invite = Invite.new(invite_params)
 
     if @invite.save
-      redirect_to root_path, notice: t('.success')
+      redirect_to root_path, notice: t('invites.create.success')
     else
       render 'pages/index'
     end

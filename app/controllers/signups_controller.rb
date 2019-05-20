@@ -7,9 +7,9 @@ class SignupsController < ApplicationController
     @invite = Invite.find_by(code: params[:code])
 
     if @invite.blank?
-      redirect_to root_path, notice: t('.code_invalid')
+      redirect_to root_path, notice: t('signups.index.code_invalid')
     elsif @invite.accepted?
-      redirect_to signins_path, notice: t('.code_accepted')
+      redirect_to signins_path, notice: t('signups.index.code_accepted')
     elsif @invite.may_accept?
       @user = User.new(email: @invite.email)
       render :index

@@ -61,9 +61,14 @@ en:
       code_invalid: Your signup code is invalid. Please use the code sent in your email to signup.
       code_accepted: Looks like you have already joined. Please login
 
-  login:
-    email_not_found: We couldn't find that email. Perhaps you mispelled it?
-    success: We have sent you an email with login link.
+  signins:
+    index:
+      heading: Sign in
+      intro: Enter the email address associated with your account, and we’ll send a magic link to your inbox.
+
+    create:
+      failure: We couldn't find that email. Perhaps you mispelled it?
+      success: We have sent you an email with login link.
 
   magic_login:
     expired: Login link expired! Please request a new one.

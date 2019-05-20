@@ -3,14 +3,20 @@
 class SigninsController < ApplicationController
   before_action :redirect_if_signedin, except: :destroy
 
-  def create
-    user = User.find_by(email: params[:email])
+  def index
+    @user = User.new
+  end
 
-    if user
-      LoginMailer.with(user: user).send_magic_login.deliver_later
-      render json: { success: t('.login.success') }
+  def create
+    @user = User.find_by(email: signin_params[:email])
+
+    if @user
+      LoginMailer.with(user: @user).send_magic_login.deliver_later
+      redirect_to signins_path, notice: t('signins.create.success')
     else
-      render json: { errors: errors_for(:email, t('.login.email_not_found')) }
+      @user = User.new(email: signin_params[:email])
+      @user.errors.add(:email, t('signins.create.failure'))
+      render :index
     end
   end
 
@@ -20,6 +26,10 @@ class SigninsController < ApplicationController
   end
 
   private
+
+  def signin_params
+    params.require(:user).permit(:email)
+  end
 
   def redirect_if_signedin
     redirect_back(fallback_location: root_path) if Current.user.present?
