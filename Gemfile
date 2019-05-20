@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', github: 'rails/rails'
+gem 'rails', '6.0.0.rc1'
 
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.x'
@@ -93,11 +93,7 @@ group :development, :test do
   gem 'rspec_junit_formatter'
   gem 'coveralls', require: false
   gem 'webmock'
-
-  # Rspec
-  %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
-    gem lib, github: "rspec/#{lib}"
-  end
+  gem 'minitest'
 end
 
 
@@ -124,6 +120,5 @@ end
 group :test do
   gem 'simplecov', require: false
   gem 'simplecov-lcov', require: false
-  gem 'shoulda-matchers', github: 'chuspace/shoulda-matchers', branch: 'rails-6-compat'
   gem 'rails-controller-testing'
 end
