@@ -4,17 +4,9 @@
 require 'fileutils'
 require_relative '../app/lib/git'
 
-repository_storage_paths = ARGV.any? ? ARGV : Git.config.storage_paths.map(&:to_s)
-
-commands = [
-  %W(mkdir -p #{Git::Config::SSH_ROOT}),
-  %W(chmod 700 #{Git::Config::SSH_ROOT}),
-]
-
-repository_storage_paths.each do |repository_storage_path|
-  commands << %W(mkdir -p #{repository_storage_path})
-  commands << %W(chmod ug+rwX,o-rwx #{repository_storage_path})
-end
+commands = []
+commands << %W(mkdir -p #{Git.config.storage_path})
+commands << %W(chmod ug+rwX,o-rwx #{Git.config.storage_path})
 
 commands.each do |cmd|
   print "#{cmd.join(' ')}: "
@@ -25,8 +17,5 @@ commands.each do |cmd|
     abort "#{$PROGRAM_NAME} failed"
   end
 end
-
-FileUtils.touch(Git.config.ssh_auth_file_path)
-FileUtils.touch(Git.config.ssh_auth_lock_file_path)
 
 exit
