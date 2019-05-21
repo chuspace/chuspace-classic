@@ -2,7 +2,6 @@
 
 Rails.application.routes.draw do
   get 'invites/create'
-  post 'git_shell/access'
 
   root to: 'users#show', constraints: PrivateRootConstraint.new, as: :authenticated_root
   root to: 'pages#index'
@@ -21,9 +20,14 @@ Rails.application.routes.draw do
 
   resources :users, path: 'u', param: :nickname
   resources :posts, path: 'p', param: :slug
-  resources :post_validations, only: :create
 
   resources :settings, only: :index
+
+  namespace :git_shell do
+    resources :auth, only: :create
+    resources :access, only: :create
+    resources :pre_recieve, only: :create
+  end
 
   namespace :settings do
     resources :profiles, path: 'profile', only: %i[index]

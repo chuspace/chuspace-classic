@@ -10,4 +10,5 @@ StrictModes no
 UsePAM no
 
 Match User git
-AuthorizedKeysFile /home/git/.ssh/authorized_keys
+AuthorizedKeysCommandUser git
+AuthorizedKeysCommand /bin/git_shell_authorize git %u %k

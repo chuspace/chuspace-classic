@@ -33,6 +33,6 @@ module Chuspace
     config.active_storage.variant_processor = :vips
 
     # Configure rack attack
-    config.middleware.use Rack::Attack
+    config.middleware.use Rack::Attack unless Rails.env.test?
   end
 end

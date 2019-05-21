@@ -17,6 +17,7 @@ class InvitationsTest < ApplicationSystemTestCase
 
     fill_in 'invite_email', with: "gaurav#{rand(0...10)}@chuspace.com"
     assert_text 'We’ll never share your email address with anyone'
+
     click_button 'Signup'
     assert_text 'We have received your invite request.'
   end
