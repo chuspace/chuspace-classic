@@ -10,11 +10,8 @@ class PostsController < ApplicationController
   end
 
   def show
-    if @blog.present?
-      @post = @blog.posts.find_by(slug: params[:slug])
-    else
-      redirect_to root_path
-    end
+    @post = Post.find_by(slug: params[:slug])
+    redirect_to root_path if @post.blank?
   end
 
   def create
@@ -26,7 +23,7 @@ class PostsController < ApplicationController
     if post.persisted?
       redirect_to blog_post_path(blog: post.blog.slug, slug: post.slug)
     else
-      render json: { errors: post.api_validation_errors }
+      render json: { errors: post.errors.full_messages }
     end
   end
 

@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   namespace :git_shell do
     resources :auth, only: :create
     resources :access, only: :create
-    resources :pre_recieve, only: :create
+    resources :pre_receive, only: :create
   end
 
   namespace :settings do

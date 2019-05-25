@@ -10,7 +10,7 @@
         </p>
       </div>
       <div>
-        <%= link_to 'Add new key', new_settings_ssh_key_path, class: 'btn btn-green block' %>
+        <%= link_to 'Add new key', new_settings_ssh_key_path, class: 'button block' %>
       </div>
     </div>
 
@@ -32,7 +32,7 @@
                 settings_ssh_key_path(key),
                 method: :delete,
                 remote: true,
-                class: 'btn btn-bordered btn-bordered-red',
+                class: 'button',
                 data: { confirm: 'Are you sure?' }
               )
               %>
@@ -40,7 +40,7 @@
           </div>
         <% end %>
       <% else %>
-        <%= render 'components/placeholder', text: "No ssh keys added" %>
+        <h3 class='text-secondary text-center mt-8'>No ssh keys added</h3>
       <% end %>
     </div>
   </div>

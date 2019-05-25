@@ -116,6 +116,7 @@ module Git
     end
 
     def create(author:)
+      Git.logger.info "Creating repository for <#{name}> from <#{path}>."
       # Ensure directory exists
       FileUtils.mkdir_p(path, mode: 0o770)
 

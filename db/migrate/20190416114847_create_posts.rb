@@ -24,6 +24,8 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.string :blob_id, null: false
       t.index :blob_id, unique: true
 
+       t.jsonb :frontmatter
+
       t.timestamps
     end
   end

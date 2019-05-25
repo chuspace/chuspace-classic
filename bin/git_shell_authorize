@@ -1,8 +1,8 @@
-#!/usr/bin/env ruby
+#!/Users/gaurav/.rbenv/shims/ruby
 # frozen_string_literal: true
 
 #
-# Git shell authorized_keys helper. Query database to get the authorized
+# GitLab shell authorized_keys helper. Query GitLab API to get the authorized
 # command for a given ssh key fingerprint
 #
 # Ex.
@@ -15,22 +15,10 @@
 #     AuthorizedKeysCommandUser git
 #     AuthorizedKeysCommand /bin/git_shell_authorize git %u %k
 
-abort "# Wrong number of arguments. #{ARGV.size}. Usage:
-#     git_shell_authorize <expected-username> <actual-username> <key>" unless ARGV.size == 3
 
-expected_username = ARGV[0]
-abort '# No username provided' if expected_username.nil? || expected_username == ''
+key = ARGV[1]
 
-actual_username = ARGV[1]
-abort '# No username provided' if actual_username.nil? || actual_username == ''
-
-# Only check access if the requested username matches the configured username.
-# Normally, these would both be 'git', but it can be configured by the user
-exit 0 unless expected_username == actual_username
-
-key = ARGV[2]
 abort '# No key provided' if key.nil? || key == ''
 
 require_relative '../app/lib/git/ssh_key'
-
-Git::SshKey.new(key).command
+puts Git::SshKey.new(key).command

@@ -110,16 +110,5 @@ module Git
     def log_username
       "user with key #{@key_id}"
     end
-
-    private
-
-    def repo_path=(repo_path)
-      unless repo_path
-        raise ArgumentError, "Repository path not provided. Please make sure you're using Git v8.10 or later."
-      end
-      raise InvalidRepositoryPathError if File.absolute_path(repo_path) != repo_path
-
-      @repo_path = repo_path
-    end
   end
 end

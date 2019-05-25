@@ -21,13 +21,13 @@ module Git
       ENV.fetch('GIT_USER', 'git')
     end
 
-    def url
-      ENV.fetch('GIT_URL', 'http://chuspace.test'.sub(%r{/*$}, ''))
+    def app_url
+      ENV.fetch('APP_URL', 'http://chuspace.test'.sub(%r{/*$}, ''))
     end
 
     def storage_path
       @storage_path ||= @config['storage_path']
-      fail StandardError, 'No storage configured' if @storage_path.blank?
+      fail StandardError, 'No storage configured' if @storage_path.nil?
 
       Pathname.new(@storage_path)
     end

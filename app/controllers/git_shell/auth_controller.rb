@@ -8,10 +8,11 @@ module GitShell
     include Rails.application.routes.url_helpers
 
     def create
-      ssh_key = SshKey.find_by(key: params[:key])
+      fingerprint = OpenSSL::Digest::MD5.hexdigest(Base64.decode64(params[:key])).scan(/../).join(':')
+      ssh_key = SshKey.find_by(fingerprint: fingerprint)
 
       if ssh_key
-        render json: { command: @ssh_key.command_with_key, allowed: true }
+        render json: { command: ssh_key.command_with_key, allowed: true }
       else
         render json: { allowed: false }
       end

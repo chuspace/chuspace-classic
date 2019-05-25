@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 2019_05_09_141030) do
     t.integer "status", default: 0, null: false
     t.string "ancestry"
     t.string "blob_id", null: false
+    t.jsonb "frontmatter"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["ancestry"], name: "index_posts_on_ancestry"

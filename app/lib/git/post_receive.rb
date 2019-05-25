@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'securerandom'
-require_relative 'repository'
 
 module Git
   class PostReceive
@@ -9,7 +8,6 @@ module Git
 
     def initialize(repo_path, repo_name, key_id, changes)
       @repo_path = repo_path.strip
-      @repository = Git::Repository.new(path: repo_path)
       @changes = changes
       @repo_name = repo_name
       @jid = SecureRandom.hex(12)

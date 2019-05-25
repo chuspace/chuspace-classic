@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Post < ApplicationRecord
+  class InvalidFrontMatterError < StandardError; end
+
   include Commitable
   include Blobable # Depends on commitable
 
