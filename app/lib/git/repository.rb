@@ -18,6 +18,21 @@ module Git
     DEFAULT_REF = 'refs/heads/master'
     CONTRIBUTIONS_REF = 'refs/heads/contributions'
     GLOBAL_HOOKS_DIRECTORY = File.join(Git::Config::ROOT_PATH, 'hooks')
+    GITIGNORE_PATH = '.gitignore'
+    GITIGNORE = <<~STRING
+      # Ignore everything
+      *
+
+      # Except
+      !.gitignore
+      !*.md
+      !*.png
+      !*.gif
+      !*.jpeg
+
+      # Allow sub-directories
+      !/*
+    STRING
 
     attr_reader :name, :path, :rugged
 
@@ -129,6 +144,10 @@ module Git
 
       # Create git hooks
       create_hooks
+
+      # Initial commit - add .gitignore
+      create_initial_commit(author)
+
       true
     end
 
@@ -152,6 +171,17 @@ module Git
         Git.logger.info "Hooks already exist for #{path}."
         true
       end
+    end
+
+    def create_initial_commit(author)
+      Commit.create(
+        repository: self,
+        author: author,
+        committer: author,
+        options: {
+          commit: { message: 'Initial commit' }, file: { content: GITIGNORE, path: GITIGNORE_PATH }
+        }
+      )
     end
 
     def destroy
