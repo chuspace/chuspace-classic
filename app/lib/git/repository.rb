@@ -14,7 +14,7 @@ module Git
     START_REF = 'HEAD'
     DEFAULT_REF = 'refs/heads/master'
     CONTRIBUTIONS_REF = 'refs/heads/contributions'
-    GLOBAL_HOOKS_DIRECTORY = File.join(Git::Config::ROOT_PATH, 'hooks')
+    GLOBAL_HOOKS_DIRECTORY = Rails.root.join('hooks')
     GITIGNORE_PATH = '.gitignore'
     GITIGNORE = <<~STRING
       # Ignore everything
