@@ -5,4 +5,4 @@
 
 require_relative 'config/application'
 
-Rails.application.load_tasks
+Rails.application.load_tasks if Rake::Task.tasks.empty?
