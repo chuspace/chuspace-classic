@@ -4,13 +4,12 @@ class CreatePosts < ActiveRecord::Migration[6.0]
   def change
     create_table :posts do |t|
       t.string :title, null: false
-      t.citext :slug, null: false
+      t.string :slug, null: false
       t.text :excerpt
       t.text :body
 
-      t.bigint :author_id, foreign_key: true, null: false
       t.bigint :blog_id, foreign_key: true, null: false
-      t.index %i[slug blog_id author_id], unique: true
+      t.index %i[slug blog_id], unique: true
 
       t.datetime :published_at
       t.index :published_at
@@ -22,10 +21,8 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.index :ancestry
 
       t.string :blob_id, null: false
-      t.index :blob_id, unique: true
 
        t.jsonb :frontmatter
-
       t.timestamps
     end
   end

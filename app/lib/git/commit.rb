@@ -71,7 +71,7 @@ module Git
       #   }
       # }
 
-      def create(repository:, author:, committer:, options:, action: :add)
+      def create(repository:, committer:, options:, action: :add)
         rugged = repository.rugged
         file = options[:file]
         commit = options[:commit]
@@ -79,7 +79,7 @@ module Git
         parents = []
         mode = 0o100644
 
-        author_hash = { name: author.name, email: author.email, time: Time.now }
+        author_hash = repository.author_hash.merge(time: Time.now)
         committer_hash = { name: committer.name, email: committer.email, time: Time.now }
 
         branch = 'refs/heads/' + branch unless branch.start_with?('refs/')

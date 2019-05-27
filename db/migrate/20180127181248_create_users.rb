@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :name, null: false, default: ''
       t.string :email, null: false, default: ''
       t.index :email, unique: true
-      t.citext :nickname, null: false, default: ''
+      t.string :nickname, null: false, default: ''
       t.index :nickname, unique: true
       t.string :avatar
 

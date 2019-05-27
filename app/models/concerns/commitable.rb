@@ -4,9 +4,8 @@ module Commitable
   extend ActiveSupport::Concern
 
   class_methods do
-    def commit_and_create_by(author:, blog:, committer:, attrs:, commit_message: nil)
-      post = blog.posts.build(author: author)
-      post.assign_attributes(attrs)
+    def commit_and_create_by(blog:, committer:, attrs:, commit_message: nil)
+      post = blog.posts.find_or_initialize_by(attrs)
       post.commit_and_save(committer: committer, commit_message: commit_message)
     end
   end
@@ -25,11 +24,12 @@ module Commitable
   end
 
   def commit_and_destroy(committer:, commit_message: nil)
-    if valid?
+    if destroy
       commit_message ||= "Deleted post #{blob_name}"
       commit(committer: committer, message: commit_message, action: :remove)
-      self.destroy
     end
+
+    self
   end
 
   private
@@ -37,7 +37,6 @@ module Commitable
   def commit(committer:, message:, action: :add)
     Git::Commit.create(
       repository: repo,
-      author: author,
       committer: committer,
       action: action,
       options: {

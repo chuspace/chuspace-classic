@@ -1,0 +1,21 @@
+name: mobius
+version: 0.1.0
+
+authors:
+  - Gaurav Tiwari <gaurav@gauravtiwari.co.uk>
+
+targets:
+  mobius:
+    main: src/mobius.cr
+
+dependencies:
+  pg:
+    github: will/crystal-pg
+
+  sidekiq:
+    github: mperham/sidekiq.cr
+    branch: master
+
+crystal: 0.28.0
+
+license: MIT

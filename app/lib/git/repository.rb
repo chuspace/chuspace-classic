@@ -1,14 +1,11 @@
 # frozen_string_literal: true
 
-require 'forwardable'
 require 'rugged'
 require_relative 'logger'
 require_relative 'blob'
 
 module Git
   class Repository
-    extend Forwardable
-
     class NoRepository < StandardError; end
     class InvalidBlobName < StandardError; end
     class InvalidRef < StandardError; end
@@ -36,7 +33,7 @@ module Git
 
     attr_reader :name, :path, :rugged
 
-    def_delegators :@rugged, :lookup, :checkout, :empty?, :bare?, :index
+    delegate :lookup, :checkout, :empty?, :bare?, :index, to: :rugged
 
     def initialize(path:)
       @name = path.split('/').last
@@ -176,7 +173,6 @@ module Git
     def create_initial_commit(author)
       Commit.create(
         repository: self,
-        author: author,
         committer: author,
         options: {
           commit: { message: 'Initial commit' }, file: { content: GITIGNORE, path: GITIGNORE_PATH }

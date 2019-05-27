@@ -19,15 +19,12 @@ Rails.application.routes.draw do
   resources :invites, only: :create
 
   resources :users, path: 'u', param: :nickname
-  resources :posts, path: 'p', param: :slug
+
+  resources :blogs, path: 'b', param: :slug do
+    resources :posts, path: 'p', param: :slug
+  end
 
   resources :settings, only: :index
-
-  namespace :git_shell do
-    resources :auth, only: :create
-    resources :access, only: :create
-    resources :pre_receive, only: :create
-  end
 
   namespace :settings do
     resources :profiles, path: 'profile', only: %i[index]

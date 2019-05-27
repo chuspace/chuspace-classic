@@ -7,6 +7,7 @@ class CreateSshKeys < ActiveRecord::Migration[6.0]
       t.text :key, null: false
       t.index :key, unique: true
       t.string :fingerprint, null: false
+      t.index :fingerprint, unique: true
 
       t.bigint :user_id, foreign_key: true, null: false
       t.index :user_id

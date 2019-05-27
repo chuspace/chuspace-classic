@@ -18,13 +18,14 @@ module Blobable
   end
 
   class_methods do
-    def find_or_initialize_from_blob(author:, blob:)
+    def find_or_initialize_from_blob(blog:, blob_id:)
+      blob = repo.find_blob(blob_id)
       attrs = YAML.safe_load(blob)
       fail Post::InvalidFrontMatterError unless attrs.is_a?(Hash)
 
       attrs = attrs&.deep_symbolize_keys!
       body = blob.gsub(/---(.|\n)*---/, '').strip!
-      post = find_or_initialize_by(author: author, slug: attrs[:slug])
+      post = find_or_initialize_by(blog: blog, slug: attrs[:slug])
       post.assign_attributes(attrs)
       post
 
@@ -32,13 +33,25 @@ module Blobable
       false
     end
 
-    def create_and_commit_from_blob(author:, blob:)
-      post = find_or_initialize_from_blob(author: author, blob: blob)
-      post.commit_and_save
+    def create_from_blob(blog:, blob_id:)
+      post = find_or_initialize_from_blob(blog: blog, blob_id: blob_id)
+      post.blob_id = blob_id
+      post.save
     end
 
-    def valid_blob?(author:, blob:)
-      find_or_initialize_from_blob(author: author, blob: blob).valid?
+    def update_from_blob(blog:, old_blob_id:, new_blob_id:)
+      post = find_or_initialize_from_blob(blog: blog, blob_id: old_blob_id)
+      post.blob_id = new_blob_id
+      post.save
+    end
+
+    def destroy_from_blob(blog:, blob_id:)
+      post = find_by(blog: blog, blob_id: blob_id)
+      post.destroy
+    end
+
+    def valid_blob?(blog:, blob_id:)
+      find_or_initialize_from_blob(blog: blog, blob_id: blob_id).valid?
     end
   end
 

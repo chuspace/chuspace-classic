@@ -12,7 +12,7 @@ class User < ApplicationRecord
   has_secure_token :auth_token
 
   has_many :ssh_keys, dependent: :destroy
-  has_many :posts, foreign_key: 'author_id', dependent: :destroy
+  has_many :posts, through: :blogs, foreign_key: 'author_id', dependent: :destroy
   has_many :contributions, foreign_key: 'contributor_id'
 
   def to_param

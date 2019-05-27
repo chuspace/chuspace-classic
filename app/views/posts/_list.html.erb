@@ -1,7 +1,7 @@
 <section class='post-list'>
   <h3 class='mt-12 border-b pb-2'>Latest</h3>
   <% @posts.each do |post| %>
-    <%= link_to post_path(slug: post.slug) do %>
+    <%= link_to blog_post_path(blog_slug: blog.slug, slug: post.slug) do %>
       <article class='py-6'>
         <div class='flex'>
           <div class='w-4/5 pr-16'>
