@@ -37,7 +37,7 @@ class PostsController < ApplicationController
     unless @post.persisted?
       redirect_to blog_path(slug: blog.slug)
     else
-      redirect_to blog_post_path(blog: blog.slug, slug: post.slug), notice: "Something went wrong!"
+      redirect_to blog_post_path(blog: blog.slug, slug: post.slug), notice: 'Something went wrong!'
     end
   end
 
