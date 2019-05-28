@@ -35,7 +35,7 @@ module Git
 
       def all(repository, branch = 'master')
         repository.head.target.tree.map do |blob_entry|
-          blob = rugged.lookup(blob_entry[:oid])
+          blob = repository.lookup(blob_entry[:oid])
 
           Blob.new(
             id: blob.oid,

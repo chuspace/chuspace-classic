@@ -6,11 +6,6 @@ module Blobable
   included do
     FRONTMATTER_ATTRS = %w[title slug parent_slug excerpt tag_slugs status published_at]
     BLOB_ATTRS = FRONTMATTER_ATTRS + %w[body]
-    before_validation :assign_blob_id
-  end
-
-  def assign_blob_id
-    self.blob_id = Rugged::Repository.hash_data(blob_content, :blob)
   end
 
   class_methods do
@@ -25,10 +20,8 @@ module Blobable
       body = content.gsub(/---(.|\n)*---/, '').strip!
       post = find_or_initialize_by(author: author, slug: attrs[:slug])
       post.assign_attributes(attrs)
+      post.body = body
       post
-
-    rescue ActiveModel::UnknownAttributeError, Post::InvalidFrontMatterError
-      false
     end
 
     def create_from_blob(author:, blob_id:)

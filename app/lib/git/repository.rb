@@ -80,17 +80,17 @@ module Git
 
       sha = sha_from_ref(ref)
 
-      Blob.all(self, sha)
+      Git::Blob.all(self, sha)
     end
 
     def find_blob(id, ref = DEFAULT_REF)
       ref ||= root_branch
 
-      Blob.find(self, id, ref)
+      Git::Blob.find(self, id, ref)
     end
 
     def find_commit(sha)
-      Commit.find(self, sha)
+      Git::Commit.find(self, sha)
     end
 
     def sha_from_ref(ref)
@@ -101,7 +101,7 @@ module Git
 
     def rev_parse_target(revspec)
       obj = rugged.rev_parse(revspec)
-      Branch.dereference_object(obj)
+      Git::Branch.dereference_object(obj)
     end
 
     def has_commits?

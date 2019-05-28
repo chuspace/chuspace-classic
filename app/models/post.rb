@@ -21,8 +21,7 @@ class Post < ApplicationRecord
 
   enum status: { draft: 0, published: 1, archived: 2 }
 
-  validates_presence_of :title, :slug, :status, :blob_id
-  validates_uniqueness_of :blob_id
+  validates_presence_of :title, :slug, :status
   validates_uniqueness_of :slug, scope: %i[author_id]
 
   delegate :repo, to: :author
