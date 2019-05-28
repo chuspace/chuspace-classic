@@ -2,7 +2,6 @@
 
 class PostsController < ApplicationController
   before_action :authenticate!, only: %i[new create]
-  before_action :find_blog
   before_action :find_post, except: :index
 
   layout 'editor', only: :new
@@ -17,10 +16,10 @@ class PostsController < ApplicationController
   end
 
   def create
-    post = Post.commit_and_create_by(committer: Current.user, blog: Current.user.default_blog, attrs: post_params)
+    post = Post.commit_and_create_by(author: Current.user, committer: Current.user, attrs: post_params)
 
     if post.persisted?
-      redirect_to blog_post_path(blog: blog.slug, slug: post.slug)
+      redirect_to post_show_path(nickname: Current.user.nickname, slug: post.slug)
     else
       render json: { errors: post.errors.full_messages }
     end
@@ -29,16 +28,12 @@ class PostsController < ApplicationController
   def update
     @post.update(post_params)
     @post.commit_and_save(committer: Current.user)
+    redirect_to post_show_path(nickname: Current.user.nickname, slug: @post.slug)
   end
 
   def destroy
     @post.commit_and_destroy
-
-    unless @post.persisted?
-      redirect_to blog_path(slug: blog.slug)
-    else
-      redirect_to blog_post_path(blog: blog.slug, slug: post.slug), notice: 'Something went wrong!'
-    end
+    redirect_to root_path
   end
 
   private
@@ -55,10 +50,6 @@ class PostsController < ApplicationController
       :parent_slug,
       :visibility
     )
-  end
-
-  def find_blog
-    @blog = Blog.find_by_slug(params[:blog_slug])
   end
 
   def find_post

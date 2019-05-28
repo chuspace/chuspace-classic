@@ -4,8 +4,8 @@ module Commitable
   extend ActiveSupport::Concern
 
   class_methods do
-    def commit_and_create_by(blog:, committer:, attrs:, commit_message: nil)
-      post = blog.posts.find_or_initialize_by(attrs)
+    def commit_and_create_by(author:, committer:, attrs:, commit_message: nil)
+      post = author.posts.find_or_initialize_by(attrs)
       post.commit_and_save(committer: committer, commit_message: commit_message)
     end
   end

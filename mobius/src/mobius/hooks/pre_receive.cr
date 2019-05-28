@@ -9,7 +9,6 @@ module Mobius
         YAML.mapping(
           title: String,
           slug: String?,
-          blog_slug: String?,
           status: String?,
           parent_slug: String?,
           excerpt: String?,

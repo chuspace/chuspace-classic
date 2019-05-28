@@ -16,30 +16,20 @@ module Mobius
       original_cmd = ENV.delete("SSH_ORIGINAL_COMMAND")
       commands = original_cmd.try &.split(" ", remove_empty: true)
       command = commands.try &.[0] || ""
-
       log_error_and_exit(nickname) unless GIT_COMMANDS.try &.includes?(command) || commands.try &.size == 2
 
-      full_repo_name = commands.try &.[1]
-      log_error_and_exit(nickname) if full_repo_name.nil?
-
       begin
-        repo = full_repo_name.gsub("'", "").split("/", remove_empty: true)
-        log_error_and_exit(nickname) unless repo.try &.size == 2
-
-        repo_nickname = repo.try &.[0]
-        repo_name = repo.try &.[1]
-
-        raise RepositoryNotFound.new("Repository not found") unless repo_nickname && repo_nickname == nickname
+        repo_name = commands.try &.[1].try &.gsub("'", "").try &.gsub("/", "")
+        raise RepositoryNotFound.new("Repository not found") if repo_name.nil? || repo_name != "#{nickname}.git"
 
         sql = <<-STRING
-          SELECT author_id AS user_id, repo_path, repo_name
-          FROM blogs
-          INNER JOIN users ON (blogs.id = users.id)
-          WHERE users.nickname = '#{nickname}' AND repo_name = '#{repo_name}'
+          SELECT id AS user_id, repo_path
+          FROM users
+          WHERE nickname = '#{nickname}'
           LIMIT 1
         STRING
 
-        user_id, repo_path, repo_name = Mobius.database.query_one sql, as: { Int64, String, String }
+        user_id, repo_path = Mobius.database.query_one sql, as: { Int64, String }
         raise RepositoryNotFound.new("Repository not found") unless repo_path && Dir.exists?(repo_path)
 
         Process.exec(command, { repo_path }, {
@@ -49,7 +39,6 @@ module Mobius
           "LANG" => fetchEnv("LANG"),
           "USER_ID" => user_id.to_s,
           "USER_NICKNAME" => nickname,
-          "GIT_REPO_NAME" => repo_name,
           "GIT_PROTOCOL" => GIT_PROTOCOL
         })
 
@@ -65,7 +54,7 @@ module Mobius
     end
 
     private def self.log_error_and_exit(username : String)
-      STDERR.puts "Hey #{username}! You've successfully authenticated, but Chuspace does not provide shell access."
+      STDERR.puts "Hey #{username}! You've successfully authenticated, but we don't recognise the command you are trying to run."
       exit 0
     end
 

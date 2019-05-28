@@ -10,7 +10,6 @@ class Post < ApplicationRecord
   friendly_id :title, use: :slugged
 
   belongs_to :author, class_name: 'User'
-  belongs_to :blog
 
   has_many :taggings
   has_many :tags, through: :taggings
@@ -24,9 +23,9 @@ class Post < ApplicationRecord
 
   validates_presence_of :title, :slug, :status, :blob_id
   validates_uniqueness_of :blob_id
-  validates_uniqueness_of :slug, scope: %i[blog_id author_id]
+  validates_uniqueness_of :slug, scope: %i[author_id]
 
-  delegate :repo, to: :blog
+  delegate :repo, to: :author
 
   def tag_slugs
     tags.pluck(:slug)
@@ -42,14 +41,6 @@ class Post < ApplicationRecord
 
   def parent_slug=(slug)
     self.parent = Post.find_by_slug(slug)
-  end
-
-  def blog_slug
-    blog.slug
-  end
-
-  def blog_slug=(slug)
-    self.blog = Blog.find_by_slug(slug)
   end
 
   def should_generate_new_friendly_id?

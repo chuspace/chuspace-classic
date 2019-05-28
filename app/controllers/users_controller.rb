@@ -4,13 +4,12 @@ class UsersController < ApplicationController
   before_action :find_user, only: :show
 
   def show
-    @posts = @user.posts.includes(:blog, :author).limit(20)
+    @posts = @user.posts.includes(:author).limit(20)
   end
 
   def create
     @user = User.new(create_params)
     @invite = Invite.find_by(code: params[:code])
-    @user.build_default_blog(author: @user, name: @user.name, slug: @user.nickname, default: true)
 
     if @invite.may_accept? && @user.save
       @invite.accept!

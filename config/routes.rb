@@ -18,11 +18,8 @@ Rails.application.routes.draw do
   resources :magic_logins, only: :index
   resources :invites, only: :create
 
-  resources :users, path: 'u', param: :nickname
-
-  resources :blogs, path: 'b', param: :slug do
-    resources :posts, path: 'p', param: :slug
-  end
+  resources :users, path: 'u', param: :nickname, except: :show
+  resources :posts, path: 'p', param: :slug, except: :show
 
   resources :settings, only: :index
 
@@ -32,4 +29,7 @@ Rails.application.routes.draw do
   end
 
   mount Easymon::Engine => '/alive' if Rails.env.production?
+
+  get '/:nickname', to: 'users#show', as: :profile
+  get '/:nickname/:slug', to: 'posts#show', as: :post_show
 end

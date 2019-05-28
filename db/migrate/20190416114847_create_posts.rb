@@ -8,8 +8,8 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.text :excerpt
       t.text :body
 
-      t.bigint :blog_id, foreign_key: true, null: false
-      t.index %i[slug blog_id], unique: true
+      t.bigint :author_id, foreign_key: true, null: false
+      t.index %i[slug author_id], unique: true
 
       t.datetime :published_at
       t.index :published_at
@@ -21,8 +21,6 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.index :ancestry
 
       t.string :blob_id, null: false
-
-       t.jsonb :frontmatter
       t.timestamps
     end
   end

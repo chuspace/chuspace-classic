@@ -6,18 +6,15 @@ module Mobius
       JOB_CLASS = "PostReceiveJob"
       QUEUE = "critical"
 
-      getter repo_name : String
       getter user_id : String
       property refs : Array(String)
 
       def initialize
-        @repo_name = ENV.fetch("GIT_REPO_NAME", "")
         @user_id = ENV.fetch("USER_ID", "")
         @refs = STDIN.gets_to_end.split(" ", remove_empty: true)
       end
 
       def exec
-        @refs << repo_name
         @refs << user_id
 
         job = Sidekiq::Job.new

@@ -14,7 +14,7 @@ module Git
     START_REF = 'HEAD'
     DEFAULT_REF = 'refs/heads/master'
     CONTRIBUTIONS_REF = 'refs/heads/contributions'
-    GLOBAL_HOOKS_DIRECTORY = Rails.root.join('hooks')
+    GLOBAL_HOOKS_DIRECTORY = Rails.root.join('bin', 'git-hooks')
     GITIGNORE_PATH = '.gitignore'
     GITIGNORE = <<~STRING
       # Ignore everything
@@ -186,9 +186,9 @@ module Git
       true
     end
 
-    def rename(new_path:)
-      Git.logger.info "Moving repository from #{path} to <#{new_path}>."
-      FileUtils.mv(path, new_path)
+    def rename(old_path, new_path)
+      Git.logger.info "Moving repository from #{old_path} to <#{new_path}>."
+      FileUtils.mv(old_path, new_path)
       true
     end
   end

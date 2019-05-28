@@ -7,5 +7,5 @@ default:
   bio: Lorem ipsum
   company: chuspace
   location: Earth
-  blog_storage_path: <%= Git.config.storage_path.join('gaurav') %>
+  repo_path: <%= Git.config.storage_path.join('gaurav.git') %>
   url: https://chuspace.com

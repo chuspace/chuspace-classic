@@ -5,12 +5,12 @@ module ApplicationHelper
     [
       {
         label: "Signed in as <strong>#{Current.user.nickname}</strong>",
-        url: user_url(Current.user),
+        url: profile_url(Current.user),
         active: true,
         options: { css_class: 'whitespace-normal' }
       },
       { divider: true },
-      { label: 'Profile', url: user_url(Current.user), options: {} },
+      { label: 'Profile', url: profile_url(Current.user), options: {} },
       { label: 'Write post', url: new_post_url, options: {} },
       { label: 'Settings', url: settings_url, options: {} },
       { divider: true },
