@@ -17,6 +17,7 @@ module Mobius
       def exec
         @refs << user_id
 
+        Sidekiq::Client.default_context = Sidekiq::Client::Context.new
         job = Sidekiq::Job.new
         job.klass = JOB_CLASS
         job.queue = QUEUE

@@ -15,12 +15,14 @@ module Blobable
 
   class_methods do
     def find_or_initialize_from_blob(author:, blob_id:)
-      blob = repo.find_blob(blob_id)
-      attrs = YAML.safe_load(blob)
+      blob = author.repo.find_blob(blob_id)
+      return nil unless blob
+      content = blob.content
+      attrs = YAML.safe_load(content)
       fail Post::InvalidFrontMatterError unless attrs.is_a?(Hash)
 
       attrs = attrs&.deep_symbolize_keys!
-      body = blob.gsub(/---(.|\n)*---/, '').strip!
+      body = content.gsub(/---(.|\n)*---/, '').strip!
       post = find_or_initialize_by(author: author, slug: attrs[:slug])
       post.assign_attributes(attrs)
       post
