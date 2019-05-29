@@ -3,38 +3,10 @@
 module Commitable
   extend ActiveSupport::Concern
 
-  class_methods do
-    def commit_and_create_by(author:, committer:, attrs:, commit_message: nil)
-      post = author.posts.find_or_initialize_by(attrs)
-      post.commit_and_save(committer: committer, commit_message: commit_message)
-    end
-  end
-
-  def commit_and_save(committer:, commit_message: nil)
-    if valid?
-      action = persisted? ? 'Updated' : 'Created'
-      commit_message ||= "#{action} post #{blob_name}"
-      blob = commit(committer: committer, message: commit_message)
-
-      self.blob_id = blob.id
-      self.save
-    end
-
-    self
-  end
-
-  def commit_and_destroy(committer:, commit_message: nil)
-    if destroy
-      commit_message ||= "Deleted post #{blob_name}"
-      commit(committer: committer, message: commit_message, action: :remove)
-    end
-
-    self
-  end
-
-  private
-
   def commit(committer:, message:, action: :add)
+    action = persisted? ? 'Updated' : 'Created'
+    message ||= "#{action} post #{blob_name}"
+
     Git::Commit.create(
       repository: repo,
       committer: committer,
