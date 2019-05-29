@@ -5,9 +5,7 @@ require_relative '../concerns/encoding_helper'
 module Git
   class Blob
     include EncodingHelper
-
     MAX_DATA_DISPLAY_SIZE = 10_485_760
-
     attr_accessor :name, :path, :size, :content, :mode, :id, :commit_sha, :binary
 
     class << self
@@ -15,28 +13,28 @@ module Git
         rugged = repository.rugged
         root_tree = repository.head.target.tree
         blob_entry = root_tree.find { |entry| entry[:oid] == id }
-
         return nil unless blob_entry
 
-        blob = rugged.lookup(blob_entry[:oid])
+        from(blob_entry)
+      end
 
-        if blob
-          Blob.new(
-            id: blob.oid,
-            name: blob_entry[:name],
-            size: blob.size,
-            content: blob.content(MAX_DATA_DISPLAY_SIZE),
-            mode: blob_entry[:filemode].to_s(8),
-            path: blob_entry[:name],
-            binary: blob.binary?
-          )
-        end
+      def at(repository, sha, path)
+        blob_entry = repository.rugged.blob_at(sha, path)
+        return nil unless blob_entry
+
+        from(blob_entry)
       end
 
       def all(repository, branch = 'master')
         repository.head.target.tree.map do |blob_entry|
-          blob = repository.lookup(blob_entry[:oid])
+          from(blob_entry)
+        end
+      end
 
+      def from(blob_entry)
+        blob = rugged.lookup(blob_entry[:oid])
+
+        if blob
           Blob.new(
             id: blob.oid,
             name: blob_entry[:name],
