@@ -8,15 +8,18 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(create_params)
-    @invite = Invite.find_by(code: params[:code])
+    User.transaction do
+      @user = User.new(create_params)
+      @invite = Invite.find_by(code: params[:code])
 
-    if @invite.may_accept? && @user.save
-      @invite.accept!
-      LoginMailer.with(user: @user).send_magic_login.deliver_later
-      redirect_to root_path, notice: t('users.create.success')
-    else
-      render 'signups/index'
+      if @invite.may_accept? && @user.save
+        @invite.user = @user
+        @invite.accept!
+        LoginMailer.with(user: @user).send_magic_login.deliver_later
+        redirect_to root_path, notice: t('users.create.success')
+      else
+        render 'signups/index'
+      end
     end
   end
 

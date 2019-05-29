@@ -16,24 +16,39 @@ class PostsController < ApplicationController
   end
 
   def create
-    post = Post.commit_and_create_by(author: Current.user, committer: Current.user, attrs: post_params)
+    Post.transaction do
+      post = author.posts.build(attrs: post_params)
 
-    if post.persisted?
-      redirect_to post_show_path(nickname: Current.user.nickname, slug: post.slug)
+      if post.valid?
+        post.blob_name = "#{post.slug}.md"
+        post.commit(committer: Current.user, commit_message: params[:commit_message])
+        post.save
+        redirect_to post_show_path(nickname: Current.user.nickname, slug: post.slug)
+      else
+        render json: { errors: post.errors.full_messages }
+      end
+    end
+  end
+
+  def update
+    @post.assign_attributes(post_params)
+
+    if post.valid?
+      post.commit(committer: Current.user, commit_message: params[:commit_message])
+      post.save
+      redirect_to post_show_path(nickname: Current.user.nickname, slug: @post.slug)
     else
       render json: { errors: post.errors.full_messages }
     end
   end
 
-  def update
-    @post.update(post_params)
-    @post.commit_and_save(committer: Current.user)
-    redirect_to post_show_path(nickname: Current.user.nickname, slug: @post.slug)
-  end
-
   def destroy
-    @post.commit_and_destroy
-    redirect_to root_path
+    if @post.destroy
+      @post.commit(committer: committer, message: params[:commit_message], action: :remove)
+      redirect_to root_path
+    else
+      redirect_to post_show_path(nickname: Current.user.nickname, slug: @post.slug)
+    end
   end
 
   private
@@ -47,8 +62,7 @@ class PostsController < ApplicationController
       :tag_slugs,
       :published_at,
       :status,
-      :parent_slug,
-      :visibility
+      :parent_slug
     )
   end
 
