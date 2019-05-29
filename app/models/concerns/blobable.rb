@@ -9,49 +9,45 @@ module Blobable
   end
 
   class_methods do
-    def find_or_initialize_from_blob(author:, blob_id:)
-      blob = author.repo.find_blob(blob_id)
-      return nil unless blob
-      content = blob.content
-      attrs = YAML.safe_load(content)
-      fail Post::InvalidFrontMatterError unless attrs.is_a?(Hash)
+    def sync_from_repo(old_sha:, new_sha:, ref:, user_id:)
+      author = User.find(user_id)
+      rugged_commit = author.repository.lookup(new_sha)
+      diff = Git::Commit.diff_from_parent(rugged_commit)
 
-      attrs = attrs&.deep_symbolize_keys!
-      body = content.gsub(/---(.|\n)*---/, '').strip!
-      post = find_or_initialize_by(author: author, slug: attrs[:slug])
-      post.assign_attributes(attrs)
-      post.body = body
-      post
+      diff.deltas.each do |delta|
+        next unless delta.new_file[:name].ends_with?('.md')
+        old_blob = author.repository.blob_at(old_sha, delta.old_file[:name])
+        new_blob = author.repository.blob_at(new_sha, delta.new_file[:name])
+
+        case delta.status
+        when :added
+          post = find_or_initialize_by(author: author, blob_name: new_blob.name)
+          post.sync_from_blob(blob: new_blob)
+        when :renamed, :modified
+          post = find_by(author: author, blob_name: old_blob.name)
+          post.sync_from_blob(blob: new_blob)
+        when :deleted
+          post = find_by(author: author, blob_name: old_blob.name)
+          post.destroy
+        end
+      end
     end
 
-    def create_from_blob(author:, blob_id:)
-      post = find_or_initialize_from_blob(author: author, blob_id: blob_id)
-      post.blob_id = blob_id
-      post.save
-    end
-
-    def update_from_blob(author:, old_blob_id:, new_blob_id:)
-      post = find_or_initialize_from_blob(author: author, blob_id: old_blob_id)
-      post.blob_id = new_blob_id
-      post.save
-    end
-
-    def destroy_from_blob(author:, blob_id:)
-      post = find_by(author: author, blob_id: blob_id)
-      post.destroy
-    end
-
-    def valid_blob?(author:, blob_id:)
-      find_or_initialize_from_blob(author: author, blob_id: blob_id).valid?
+    def valid_blob?(author:, blob_name:)
+      find_or_initialize_from_blob(author: author, blob_name: blob_name).valid?
     end
   end
 
-  def blob
-    author&.repo&.find_blob(blob_id)
-  end
+  def sync_from_blob(blob:)
+    return nil unless blob
+    attrs = YAML.safe_load(blob.content)
+    fail Post::InvalidFrontMatterError unless attrs.is_a?(Hash)
 
-  def blob_name
-    "#{slug}.md"
+    attrs = attrs&.deep_symbolize_keys!
+    self.assign_attributes(attrs)
+    self.blob_name = blob.name
+    self.body = blob.content.gsub(/---(.|\n)*---/, '').strip!
+    self.save
   end
 
   def frontmatter_hash
