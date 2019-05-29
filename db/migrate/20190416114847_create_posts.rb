@@ -20,7 +20,9 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.string :ancestry
       t.index :ancestry
 
-      t.string :blob_id, null: false
+      t.string :blob_name, null: false
+      t.index %i[blob_name author_id], unique: true
+
       t.timestamps
     end
   end

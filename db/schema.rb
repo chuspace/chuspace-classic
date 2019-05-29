@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 2019_05_09_141030) do
     t.string "email", null: false
     t.string "code", null: false
     t.string "status", default: "invited", null: false
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["code"], name: "index_invites_on_code", unique: true
@@ -80,10 +81,11 @@ ActiveRecord::Schema.define(version: 2019_05_09_141030) do
     t.datetime "published_at"
     t.integer "status", default: 0, null: false
     t.string "ancestry"
-    t.string "blob_id", null: false
+    t.string "blob_name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["ancestry"], name: "index_posts_on_ancestry"
+    t.index ["blob_name", "author_id"], name: "index_posts_on_blob_name_and_author_id", unique: true
     t.index ["published_at"], name: "index_posts_on_published_at"
     t.index ["slug", "author_id"], name: "index_posts_on_slug_and_author_id", unique: true
     t.index ["status"], name: "index_posts_on_status"
@@ -127,6 +129,7 @@ ActiveRecord::Schema.define(version: 2019_05_09_141030) do
     t.string "email", default: "", null: false
     t.string "nickname", default: "", null: false
     t.string "avatar"
+    t.string "repo_name", null: false
     t.string "repo_path", null: false
     t.string "auth_token", default: "", null: false
     t.text "bio"
@@ -143,6 +146,7 @@ ActiveRecord::Schema.define(version: 2019_05_09_141030) do
     t.index ["auth_token"], name: "index_users_on_auth_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["nickname"], name: "index_users_on_nickname", unique: true
+    t.index ["repo_name"], name: "index_users_on_repo_name"
     t.index ["repo_path"], name: "index_users_on_repo_path", unique: true
   end
 

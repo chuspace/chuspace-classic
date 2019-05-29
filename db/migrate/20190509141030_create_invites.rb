@@ -11,6 +11,8 @@ class CreateInvites < ActiveRecord::Migration[6.0]
       t.string :status, null: false, default: Invite::DEFAULT_STATUS
       t.index :status
 
+      t.bigint :user_id, foreign_key: true
+
       t.timestamps
     end
   end

@@ -10,6 +10,9 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.index :nickname, unique: true
       t.string :avatar
 
+      t.string :repo_name, null: false
+      t.index :repo_name, unique: false
+
       t.string :repo_path, null: false
       t.index :repo_path, unique: true
 
