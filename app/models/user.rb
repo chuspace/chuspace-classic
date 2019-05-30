@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  include Trackable, Repoable
+  include Trackable, HasGitRepo
 
   validates :email, presence: true, uniqueness: true, email: true
   validates :name, presence: true
@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_secure_token :auth_token
 
   has_many :ssh_keys, dependent: :destroy
+  has_one :invite, dependent: :destroy
   has_many :posts, foreign_key: 'author_id', dependent: :destroy
   has_many :contributions, foreign_key: 'contributor_id'
 

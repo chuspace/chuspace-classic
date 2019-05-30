@@ -17,11 +17,11 @@ class PostsController < ApplicationController
 
   def create
     Post.transaction do
-      post = author.posts.build(attrs: post_params)
+      post = Current.user.posts.build(post_params)
 
       if post.valid?
         post.blob_name = "#{post.slug}.md"
-        post.commit(committer: Current.user, commit_message: params[:commit_message])
+        post.commit(committer: Current.user, message: params[:commit_message])
         post.save
         redirect_to post_show_path(nickname: Current.user.nickname, slug: post.slug)
       else
@@ -34,7 +34,7 @@ class PostsController < ApplicationController
     @post.assign_attributes(post_params)
 
     if post.valid?
-      post.commit(committer: Current.user, commit_message: params[:commit_message])
+      post.commit(committer: Current.user, message: params[:commit_message])
       post.save
       redirect_to post_show_path(nickname: Current.user.nickname, slug: @post.slug)
     else

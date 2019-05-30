@@ -9,18 +9,6 @@ class SshKey < ApplicationRecord
 
   before_validation :assign_fingerprint
 
-  def key_id
-    "key-#{id}"
-  end
-
-  def command
-    "#{Rails.root}/bin/#{Git::Shell::BINARY} #{key_id}"
-  end
-
-  def command_with_key
-    "command=\"#{command}\",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty #{key}"
-  end
-
   private
 
   def assign_fingerprint

@@ -4,6 +4,10 @@ class Settings::SshKeysController < ApplicationController
   before_action :authenticate!
   before_action :find_ssh_key, only: %i[update destroy]
 
+  def new
+    @key = Current.user.ssh_keys.build
+  end
+
   def index
     @user = Current.user
   end

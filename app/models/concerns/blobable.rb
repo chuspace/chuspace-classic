@@ -11,23 +11,23 @@ module Blobable
   class_methods do
     def sync_from_repo(old_sha:, new_sha:, ref:, user_id:)
       author = User.find(user_id)
-      rugged_commit = author.repository.lookup(new_sha)
+      rugged_commit = author.repo.lookup(new_sha)
       diff = Git::Commit.diff_from_parent(rugged_commit)
 
       diff.deltas.each do |delta|
-        next unless delta.new_file[:name].ends_with?('.md')
-        old_blob = author.repository.blob_at(old_sha, delta.old_file[:name])
-        new_blob = author.repository.blob_at(new_sha, delta.new_file[:name])
+        old_blob = author.repo.rugged.blob_at(old_sha, delta.old_file[:path]) if delta.old_file[:path]
+        new_blob = author.repo.rugged.blob_at(new_sha, delta.new_file[:path]) if delta.new_file[:path]
 
         case delta.status
         when :added
-          post = find_or_initialize_by(author: author, blob_name: new_blob.name)
+          post = find_or_initialize_by(author: author, blob_name: delta.old_file[:path])
           post.sync_from_blob(blob: new_blob)
         when :renamed, :modified
-          post = find_by(author: author, blob_name: old_blob.name)
+          post = find_by(author: author, blob_name: delta.old_file[:path])
+          post.blob_name = delta.new_file[:path]
           post.sync_from_blob(blob: new_blob)
         when :deleted
-          post = find_by(author: author, blob_name: old_blob.name)
+          post = find_by(author: author, blob_name: delta.old_file[:path])
           post.destroy
         end
       end
@@ -45,7 +45,6 @@ module Blobable
 
     attrs = attrs&.deep_symbolize_keys!
     self.assign_attributes(attrs)
-    self.blob_name = blob.name
     self.body = blob.content.gsub(/---(.|\n)*---/, '').strip!
     self.save
   end

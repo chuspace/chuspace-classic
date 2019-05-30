@@ -15,14 +15,7 @@ module Git
         blob_entry = root_tree.find { |entry| entry[:oid] == id }
         return nil unless blob_entry
 
-        from(blob_entry)
-      end
-
-      def at(repository, sha, path)
-        blob_entry = repository.rugged.blob_at(sha, path)
-        return nil unless blob_entry
-
-        from(blob_entry)
+        from(repository, blob_entry)
       end
 
       def all(repository, branch = 'master')
@@ -31,8 +24,8 @@ module Git
         end
       end
 
-      def from(blob_entry)
-        blob = rugged.lookup(blob_entry[:oid])
+      def from(repository, blob_entry)
+        blob = repository.lookup(blob_entry[:oid])
 
         if blob
           Blob.new(

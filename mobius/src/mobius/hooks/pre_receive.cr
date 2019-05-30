@@ -5,8 +5,18 @@ module Mobius
     class PreReceive
       getter refs : Array(String)
 
+      ALLOWED_ATTRIBUTES = %w(
+        title
+        slug
+        status
+        excerpt
+        parent_slug
+        tag_slugs
+        published_at
+      )
+
       class Post
-        YAML.mapping(
+        YAML.mapping({
           title: String,
           slug: String?,
           status: String?,
@@ -14,7 +24,7 @@ module Mobius
           excerpt: String?,
           tag_slugs: Array(String?)?,
           published_at: String?
-        )
+        }, strict: true)
       end
 
       MAX_SIZE = 1024*1024
@@ -47,7 +57,7 @@ module Mobius
       end
 
       def exec
-        errors = [] of Hash(String, String)
+        errors = [] of String
 
         blob_names.each do |file|
           blob = `git show #{refs[1]}:'#{file}'`
@@ -55,30 +65,35 @@ module Mobius
           mime_type = encoding[:type]
 
           if encoding[:binary] && !mime_type.includes?("image")
-            errors << { file => "Unsupported file format" }
+            errors << "#{file}: Unsupported file format"
             next
           end
 
           if mime_type.includes?("image") && encoding[:size] > MAX_IMAGE_SIZE
-            errors << { file => "Max image size is #{MAX_IMAGE_SIZE}MB" }
+            errors << "#{file}: Max image size is #{MAX_IMAGE_SIZE}MB"
             next
           end
 
           next if mime_type.includes?("image")
 
           if mime_type.includes?("text") && encoding[:size] > MAX_POST_SIZE
-            errors << { file =>  "Max post size is #{MAX_POST_SIZE}MB" }
+            errors << "#{file}: Max post size is #{MAX_POST_SIZE}MB"
             next
           end
 
           next if safelisted?(file)
-
           Post.from_yaml(blob)
-        rescue YAML::ParseException
-          errors << { file =>  "Invalid frontmatter" }
+        rescue ex : YAML::ParseException
+          print("#{file}: #{ex.message}. Allowed #{ALLOWED_ATTRIBUTES}")
+          exit 1
         end
 
-        errors.empty?
+        if errors.any?
+          print(errors.join("\n"))
+          exit 1
+        else
+          exit 0
+        end
       end
 
       private def safelisted?(file)
@@ -102,6 +117,12 @@ module Mobius
         return default_encoding.merge({ type: BINARY_MIME, binary: true }) if !!LibC.memchr(buf, 0, buf_size)
 
         return default_encoding
+      end
+
+      private def print(message : String)
+        puts
+        puts message
+        puts
       end
     end
   end

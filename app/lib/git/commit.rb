@@ -121,7 +121,6 @@ module Git
         opts[:update_ref] = branch
 
         Rugged::Commit.create(rugged, opts)
-        Git::Blob.find(repository, oid)
       end
 
       def diff_from_parent(rugged_commit, options = {})
