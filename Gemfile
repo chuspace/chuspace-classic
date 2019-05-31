@@ -90,7 +90,6 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec_junit_formatter'
   gem 'coveralls', require: false
-  gem 'webmock'
   gem 'minitest'
 end
 
