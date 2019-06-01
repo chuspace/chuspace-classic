@@ -27,13 +27,13 @@ module Mobius
         repo_name = commands.try &.[1].try &.gsub("'", "").try &.lstrip("/")
 
         sql = <<-STRING
-          SELECT name, path
+          SELECT id, name, path
           FROM repositories
           WHERE author_id = $1 AND name = $2
           LIMIT 1
         STRING
 
-        name, path = Mobius.database.query_one sql, user_id, repo_name, as: { String, String }
+        repo_id, name, path = Mobius.database.query_one sql, user_id, repo_name, as: { Int64, String, String }
 
         raise RepositoryNotFound.new("Repository not found") if name.nil?
         raise RepositoryNotFound.new("Repository not found") unless path && Dir.exists?(path)
@@ -44,6 +44,7 @@ module Mobius
           "LD_LIBRARY_PATH" => fetchEnv("LD_LIBRARY_PATH"),
           "LANG" => fetchEnv("LANG"),
           "GIT_USER_ID" => user_id.to_s,
+          "GIT_REPO_ID" => repo_id.to_s,
           "GIT_REPO_NAME" => name,
           "GIT_PROTOCOL" => GIT_PROTOCOL
         })

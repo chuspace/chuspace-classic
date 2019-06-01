@@ -12,8 +12,7 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.bigint :author_id, foreign_key: true, null: false
       t.index :author_id
 
-      t.bigint :repository_id, foreign_key: true, null: false
-      t.index :repository_id
+      t.references :repository, foreign_key: true, null: false
 
       t.string :ancestry
       t.index :ancestry

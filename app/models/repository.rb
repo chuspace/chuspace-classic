@@ -29,12 +29,17 @@ class Repository < ApplicationRecord
 
   before_validation :assign_default_attributes, on: :create
   before_create :create_git_repo, :create_git_hooks, :create_initial_commit_and_assign_commit_sha
-  before_save :rename_git_repo, if: -> { !new_record? && repo_path_changed? }
+  before_save :rename_git_repo, if: -> { !new_record? && path_changed? }
   after_destroy :destroy_git_repo
   after_rollback :destroy_git_repo, on: :create
 
   belongs_to :author, class_name: 'User'
+  has_many :posts, dependent: :destroy
   delegate :lookup, :checkout, :empty?, :bare?, :index, to: :rugged
+
+  def commit
+    lookup(commit_sha)
+  end
 
   def rugged
     @rugged ||= Rugged::Repository.bare(path)
@@ -51,12 +56,6 @@ class Repository < ApplicationRecord
   def size
     size = popen(%w[du -sk], path).first.strip.to_i
     (size.to_f / 1_024).round(2)
-  end
-
-  def head
-    rugged.head
-  rescue Rugged::ReferenceError
-    nil
   end
 
   def author_hash

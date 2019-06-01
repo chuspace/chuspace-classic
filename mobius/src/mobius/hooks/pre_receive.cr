@@ -11,7 +11,7 @@ module Mobius
         status
         excerpt
         parent_slug
-        tag_slugs
+        topics
         published_at
       )
 
@@ -22,7 +22,7 @@ module Mobius
           status: String?,
           parent_slug: String?,
           excerpt: String?,
-          tag_slugs: Array(String?)?,
+          topics: Array(String?)?,
           published_at: String?
         }, strict: true)
       end

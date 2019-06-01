@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '6.0.0.rc1'
+gem 'rails', '>= 6.0.0.rc1', '<= 6.1'
 
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.x'
@@ -80,6 +80,7 @@ gem 'components', git: 'https://github.com/jensljungblad/components.git'
 # Security
 gem 'rack-attack'
 
+gem 'octokit'
 group :production do
   # Resource monitoring
   gem 'easymon'

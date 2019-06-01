@@ -18,14 +18,12 @@ class PostsController < ApplicationController
   def create
     Post.transaction do
       post = Current.user.posts.build(post_params)
+      persisted = post.commit_to_repo_and_save(message: params[:commit_message])
 
-      if post.valid?
-        post.blob_name = "#{post.slug}.md"
-        post.repo.commit_sha = post.commit(committer: Current.user, message: params[:commit_message])
-        post.save
+      if persisted
         redirect_to post_show_path(nickname: Current.user.nickname, slug: post.slug)
       else
-        render json: { errors: post.errors.full_messages }
+        render json: { errors: post.errors.full_messages }, status: 422
       end
     end
   end
