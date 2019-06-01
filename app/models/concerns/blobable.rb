@@ -4,14 +4,16 @@ module Blobable
   extend ActiveSupport::Concern
 
   included do
-    FRONTMATTER_ATTRS = %w[title slug parent_slug excerpt tag_slugs status published_at]
+    FRONTMATTER_ATTRS = %w[title slug parent_slug excerpt topics status published_at]
     BLOB_ATTRS = FRONTMATTER_ATTRS + %w[body]
   end
 
   class_methods do
-    def sync_from_repo(old_sha:, new_sha:, ref:, user_id:)
-      author = User.find(user_id)
-      rugged_commit = author.repo.lookup(new_sha)
+    def sync_from_repo(user_id:, repo_name:, new_sha:)
+      author = User.includes(:repo).find(user_id)
+      old_rugged_commit = author.repo.lookup(author.repo.commit_sha)
+      new_rugged_commit = author.repo.lookup(new_sha)
+
       diff = Git::Commit.diff_from_parent(rugged_commit)
 
       diff.deltas.each do |delta|

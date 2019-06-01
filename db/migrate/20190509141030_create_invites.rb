@@ -5,6 +5,7 @@ class CreateInvites < ActiveRecord::Migration[6.0]
     create_table :invites do |t|
       t.string :email, null: false
       t.index :email, unique: true
+
       t.string :code, null: false
       t.index :code, unique: true
 
@@ -12,6 +13,7 @@ class CreateInvites < ActiveRecord::Migration[6.0]
       t.index :status
 
       t.bigint :user_id, foreign_key: true
+      t.index :user_id
 
       t.timestamps
     end

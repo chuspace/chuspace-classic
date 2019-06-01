@@ -37,18 +37,6 @@ ActiveRecord::Schema.define(version: 2019_05_09_141030) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "contributions", force: :cascade do |t|
-    t.bigint "contributor_id", null: false
-    t.bigint "post_id", null: false
-    t.string "raw_changes", default: [], array: true
-    t.integer "status", default: 0, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["contributor_id"], name: "index_contributions_on_contributor_id"
-    t.index ["post_id"], name: "index_contributions_on_post_id"
-    t.index ["status"], name: "index_contributions_on_status"
-  end
-
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -70,6 +58,7 @@ ActiveRecord::Schema.define(version: 2019_05_09_141030) do
     t.index ["code"], name: "index_invites_on_code", unique: true
     t.index ["email"], name: "index_invites_on_email", unique: true
     t.index ["status"], name: "index_invites_on_status"
+    t.index ["user_id"], name: "index_invites_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -78,17 +67,34 @@ ActiveRecord::Schema.define(version: 2019_05_09_141030) do
     t.text "excerpt"
     t.text "body"
     t.bigint "author_id", null: false
-    t.datetime "published_at"
-    t.integer "status", default: 0, null: false
+    t.bigint "repository_id", null: false
     t.string "ancestry"
     t.string "blob_name", null: false
+    t.integer "status", default: 0, null: false
+    t.string "topics", default: [], array: true
+    t.datetime "published_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["ancestry"], name: "index_posts_on_ancestry"
-    t.index ["blob_name", "author_id"], name: "index_posts_on_blob_name_and_author_id", unique: true
+    t.index ["author_id"], name: "index_posts_on_author_id"
+    t.index ["blob_name", "repository_id"], name: "index_posts_on_blob_name_and_repository_id", unique: true
     t.index ["published_at"], name: "index_posts_on_published_at"
-    t.index ["slug", "author_id"], name: "index_posts_on_slug_and_author_id", unique: true
+    t.index ["repository_id"], name: "index_posts_on_repository_id"
     t.index ["status"], name: "index_posts_on_status"
+    t.index ["topics"], name: "index_posts_on_topics", using: :gin
+  end
+
+  create_table "repositories", force: :cascade do |t|
+    t.string "name", default: "blog.git", null: false
+    t.string "path", null: false
+    t.string "commit_sha", null: false
+    t.bigint "author_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_id"], name: "index_repositories_on_author_id"
+    t.index ["commit_sha"], name: "index_repositories_on_commit_sha", unique: true
+    t.index ["name", "author_id"], name: "index_repositories_on_name_and_author_id", unique: true
+    t.index ["path"], name: "index_repositories_on_path", unique: true
   end
 
   create_table "ssh_keys", force: :cascade do |t|
@@ -105,32 +111,11 @@ ActiveRecord::Schema.define(version: 2019_05_09_141030) do
     t.index ["user_id"], name: "index_ssh_keys_on_user_id"
   end
 
-  create_table "taggings", force: :cascade do |t|
-    t.bigint "tag_id", null: false
-    t.bigint "post_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["post_id"], name: "index_taggings_on_post_id"
-    t.index ["tag_id", "post_id"], name: "index_taggings_on_tag_id_and_post_id", unique: true
-    t.index ["tag_id"], name: "index_taggings_on_tag_id"
-  end
-
-  create_table "tags", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "slug", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["name"], name: "index_tags_on_name", unique: true
-    t.index ["slug"], name: "index_tags_on_slug", unique: true
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "email", default: "", null: false
     t.string "nickname", default: "", null: false
     t.string "avatar"
-    t.string "repo_name", null: false
-    t.string "repo_path", null: false
     t.string "auth_token", default: "", null: false
     t.text "bio"
     t.string "company"
@@ -146,8 +131,6 @@ ActiveRecord::Schema.define(version: 2019_05_09_141030) do
     t.index ["auth_token"], name: "index_users_on_auth_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["nickname"], name: "index_users_on_nickname", unique: true
-    t.index ["repo_name"], name: "index_users_on_repo_name"
-    t.index ["repo_path"], name: "index_users_on_repo_path", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

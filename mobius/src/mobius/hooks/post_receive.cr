@@ -5,28 +5,28 @@ module Mobius
     class PostReceive
       JOB_CLASS = "PostReceiveJob"
       QUEUE = "critical"
+      DEFAULT_REF = "refs/heads/master"
 
-      getter user_id : String
-      property refs : Array(String)
+      def self.exec
+        _, new_sha, ref = STDIN.gets_to_end.split(" ", remove_empty: true)
+        exit unless ref == DEFAULT_REF
 
-      def initialize
-        @user_id = ENV.fetch("USER_ID", "")
-        @refs = STDIN.gets_to_end.split(" ", remove_empty: true)
-      end
-
-      def exec
-        @refs << user_id
+        args = [] of String
+        args << ENV.fetch("GIT_USER_ID", "")
+        args << ENV.fetch("GIT_REPO_NAME", "")
+        args << new_sha
 
         Sidekiq::Client.default_context = Sidekiq::Client::Context.new
         job = Sidekiq::Job.new
         job.klass = JOB_CLASS
         job.queue = QUEUE
-        job.args = @refs.to_json
+        job.args = args.to_json
+
         client = Sidekiq::Client.new
-        jid = client.push(job)
+        client.push(job)
       end
     end
   end
 end
 
-Mobius::Hooks::PostReceive.new.exec
+Mobius::Hooks::PostReceive.exec

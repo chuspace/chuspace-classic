@@ -1,6 +1,6 @@
 default: &default
   user: git
-  storage_path: /tmp/repositories/
+  storage_path: /Users/gaurav/.chuspace/repositories/
   log_file: log/git-shell.log
 
 development:
@@ -8,7 +8,7 @@ development:
 
 test:
   <<: *default
-  storage_path: /tmp/test-repositories/
+  storage_path: /tmp/repositories/
   log_file: log/test-git-shell.log
 
 staging:

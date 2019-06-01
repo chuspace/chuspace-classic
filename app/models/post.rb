@@ -10,11 +10,7 @@ class Post < ApplicationRecord
   friendly_id :title, use: :slugged
 
   belongs_to :author, class_name: 'User'
-
-  has_many :taggings
-  has_many :tags, through: :taggings
-  has_many :contributions
-  has_many :contributors, through: :contributions, source: :contributor
+  belongs_to :repository, autosave: true
 
   has_ancestry
   has_many_attached :images
@@ -23,16 +19,9 @@ class Post < ApplicationRecord
 
   validates_presence_of :title, :slug, :status
   validates_uniqueness_of :slug, scope: %i[author_id]
+  validates :topics, length: { maximum: 3 }
 
-  delegate :repo, to: :author
-
-  def tag_slugs
-    tags.pluck(:slug)
-  end
-
-  def tag_slugs=(slugs)
-    self.tags = slugs.map { |slug| Tag.where(name: slug.humanize).first_or_create! }
-  end
+  alias repo repository
 
   def parent_slug
     parent&.slug

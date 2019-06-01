@@ -3,7 +3,7 @@
 module Commitable
   extend ActiveSupport::Concern
 
-  def commit(committer:, message:, action: :add)
+  def commit(committer:, message: nil, action: :add)
     action = persisted? ? 'Updated' : 'Created'
     message ||= "#{action} post #{blob_name}"
 

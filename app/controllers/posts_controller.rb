@@ -21,7 +21,7 @@ class PostsController < ApplicationController
 
       if post.valid?
         post.blob_name = "#{post.slug}.md"
-        post.commit(committer: Current.user, message: params[:commit_message])
+        post.repo.commit_sha = post.commit(committer: Current.user, message: params[:commit_message])
         post.save
         redirect_to post_show_path(nickname: Current.user.nickname, slug: post.slug)
       else
@@ -34,7 +34,7 @@ class PostsController < ApplicationController
     @post.assign_attributes(post_params)
 
     if post.valid?
-      post.commit(committer: Current.user, message: params[:commit_message])
+      post.commit_sha = post.commit(committer: Current.user, message: params[:commit_message])
       post.save
       redirect_to post_show_path(nickname: Current.user.nickname, slug: @post.slug)
     else

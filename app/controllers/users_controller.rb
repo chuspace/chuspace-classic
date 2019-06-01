@@ -13,9 +13,11 @@ class UsersController < ApplicationController
       @invite = Invite.find_by(code: params[:code])
 
       if @invite.may_accept? && @user.save
+        @user.create_repository
         @invite.user = @user
-        @invite.accept!
-        LoginMailer.with(user: @user).send_magic_login.deliver_later
+        @invite.accept
+
+        login(@user)
         redirect_to root_path, notice: t('users.create.success')
       else
         render 'signups/index'

@@ -32,12 +32,12 @@ module Git
         end
     end
 
-    def create(start_point: Git::Repository::START_REF)
+    def create(start_point: Repository::START_REF)
       branch = rugged.branches.create(name, start_point)
       Git::Branch.new(self, branch.name, branch.target)
     rescue Rugged::ReferenceError => e
-      raise InvalidRef.new("Git::Branch #{name} already exists") if e.to_s =~ %r{'refs\/heads\/#{name}'}
-      raise InvalidRef.new("Invalid reference #{start_point}")
+      raise Repository::InvalidRef.new("Git::Branch #{name} already exists") if e.to_s =~ %r{'refs\/heads\/#{name}'}
+      raise Repository::InvalidRef.new("Invalid reference #{start_point}")
     end
 
     def delete

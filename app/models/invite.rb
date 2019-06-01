@@ -12,6 +12,7 @@ class Invite < ApplicationRecord
 
   after_create_commit :notify_invitee
   after_update_commit :send_rsvp, if: :approved?
+
   belongs_to :user, required: false
 
   aasm column: :status do
