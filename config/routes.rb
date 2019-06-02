@@ -22,13 +22,13 @@ Rails.application.routes.draw do
   resources :settings, only: :index
 
   namespace :settings do
-    resources :profiles, path: 'profile', only: %i[index], constraints: MobiusConstraint.new
-    resources :ssh_keys, path: 'ssh', except: %i[show update], constraints: MobiusConstraint.new
+    resources :profiles, path: 'profile', only: %i[index]
+    resources :ssh_keys, path: 'ssh', except: %i[show update]
   end
 
   namespace :mobius do
-    resources :pre_receive, only: :create
-    resources :post_receive, only: :create
+    resources :pre_receive, only: :create, constraints: MobiusConstraint.new
+    resources :post_receive, only: :create, constraints: MobiusConstraint.new
   end
 
   mount Easymon::Engine => '/alive' if Rails.env.production?

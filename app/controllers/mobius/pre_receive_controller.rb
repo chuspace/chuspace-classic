@@ -1,6 +1,7 @@
 module Mobius
   class PreReceiveController < BaseController
     def create
+      puts params.inspect
       author = User.find_by(id: params[:author_id])
       repository = Repository.find_by(id: params[:repository_id], author: author)
 

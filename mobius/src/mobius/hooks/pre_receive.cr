@@ -52,8 +52,14 @@ module Mobius
             YAML.parse(blob)
             response = validate(file, blob)
 
-            unless response.body.try &.blank?
+            case response.status_code
+            when 200
+              exit 0
+            when 401, 422
               print "ERROR: #{response.body}"
+              exit 1
+            else
+              print "ERROR: Something went wrong!"
               exit 1
             end
           end
@@ -128,7 +134,7 @@ module Mobius
 
       private def print(message : String)
         puts
-        puts message
+        puts "ERROR: #{message}"
         puts
       end
     end
