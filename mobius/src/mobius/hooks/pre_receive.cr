@@ -134,7 +134,7 @@ module Mobius
 
       private def print(message : String)
         puts
-        puts "ERROR: #{message}"
+        puts message
         puts
       end
     end
