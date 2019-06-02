@@ -1,37 +1,20 @@
 require "yaml"
+require "./common.cr"
 
 module Mobius
   module Hooks
     class PreReceive
+      include Mobius::Hooks::Common
+
       getter refs : Array(String)
+      getter user_id : String
+      getter repo_id : String
 
-      ALLOWED_ATTRIBUTES = %w(
-        title
-        slug
-        status
-        excerpt
-        parent_slug
-        topics
-        published_at
-      )
-
-      class Post
-        YAML.mapping({
-          title: String,
-          slug: String?,
-          status: String?,
-          parent_slug: String?,
-          excerpt: String?,
-          topics: Array(String?)?,
-          published_at: String?
-        }, strict: true)
-      end
+      PRE_RECEIVE_CHECK_ENDPOINT = "/mobius/pre_receive"
 
       MAX_SIZE = 1024*1024
       MAX_IMAGE_SIZE = 25
       MAX_POST_SIZE = 0.5
-
-      IGNORED_FILES = %w(.gitignore .gitkeep .keep)
 
       BINARY_MIME = "application/octet-stream"
       CHAR_ENCODINGS = {
@@ -49,6 +32,8 @@ module Mobius
 
       def initialize
         @refs = STDIN.gets_to_end.split(" ", remove_empty: true)
+        @repo_id = ENV.fetch("GIT_REPO_ID", "")
+        @user_id = ENV.fetch("GIT_USER_ID", "")
       end
 
       def blob_names
@@ -57,47 +42,34 @@ module Mobius
       end
 
       def exec
-        errors = [] of String
+        error_messages = [] of String
 
         blob_names.each do |file|
           blob = `git show #{refs[1]}:'#{file}'`
-          encoding = encoding(blob)
-          mime_type = encoding[:type]
+          errors = validate_encoding(file, blob)
 
-          if encoding[:binary] && !mime_type.includes?("image")
-            errors << "#{file}: Unsupported file format"
-            next
+          if file.ends_with?(".md")
+            YAML.parse(blob)
+            response = validate(file, blob)
+
+            unless response.body.try &.blank?
+              print "ERROR: #{response.body}"
+              exit 1
+            end
           end
 
-          if mime_type.includes?("image") && encoding[:size] > MAX_IMAGE_SIZE
-            errors << "#{file}: Max image size is #{MAX_IMAGE_SIZE}MB"
-            next
-          end
-
-          next if mime_type.includes?("image")
-
-          if mime_type.includes?("text") && encoding[:size] > MAX_POST_SIZE
-            errors << "#{file}: Max post size is #{MAX_POST_SIZE}MB"
-            next
-          end
-
-          next if safelisted?(file)
-          Post.from_yaml(blob)
+          error_messages += errors
         rescue ex : YAML::ParseException
-          print("#{file}: #{ex.message}. Allowed #{ALLOWED_ATTRIBUTES}")
+          print "ERROR: Malformed frontmatter"
           exit 1
         end
 
-        if errors.any?
-          print(errors.join("\n"))
+        if error_messages.any?
+          print(error_messages.join("\n"))
           exit 1
         else
           exit 0
         end
-      end
-
-      private def safelisted?(file)
-        IGNORED_FILES.includes?(file)
       end
 
       private def encoding(blob)
@@ -116,7 +88,42 @@ module Mobius
         buf_size = MAX_SIZE if MAX_SIZE < buf_size
         return default_encoding.merge({ type: BINARY_MIME, binary: true }) if !!LibC.memchr(buf, 0, buf_size)
 
-        return default_encoding
+        default_encoding
+      end
+
+      private def validate_encoding(file : String, blob)
+        errors = [] of String
+
+        encoding = encoding(blob)
+        mime_type = encoding[:type]
+
+        if !mime_type.match(/image|text/)
+          errors << "#{file}: Unsupported file format"
+        end
+
+        if mime_type.includes?("image") && encoding[:size] > MAX_IMAGE_SIZE
+          errors << "#{file}: Max image size is #{MAX_IMAGE_SIZE}MB"
+        end
+
+        if mime_type.includes?("text") && encoding[:size] > MAX_POST_SIZE
+          errors << "#{file}: Max post size is #{MAX_POST_SIZE}MB"
+        end
+
+        errors
+      end
+
+      private def validate(name : String, blob : String)
+        HTTP::Client.post(
+          "#{base_url}#{PRE_RECEIVE_CHECK_ENDPOINT}",
+          headers: HTTP_HEADERS,
+          form: {
+            "token" => token,
+            "repository_id" => repo_id,
+            "author_id" => user_id,
+            "blob_name" => name,
+            "blob" => blob
+          }
+        )
       end
 
       private def print(message : String)

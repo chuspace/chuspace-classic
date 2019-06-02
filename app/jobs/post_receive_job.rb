@@ -1,11 +1,17 @@
 # frozen_string_literal: true
 
-class PostReceiveJob
-  include Sidekiq::Worker
-  sidekiq_options queue: 'critical'
+class PostReceiveJob < ApplicationJob
+  queue_as :critical
 
-  def perform(*args)
-    user_id, repo_name, new_sha = args
-    Post.sync_from_repo(user_id: user_id, repo_name: repo_name, new_sha: new_sha)
+  def perform(author_id:, repository_id:, commit_sha:)
+    author = User.find_by(id: author_id)
+    repository = Repository.find_by(id: repository_id, author: author)
+
+    unless repository
+      Rails.logger.error("Repository not found: author-#{author.id} repository-#{repository.id}")
+      return
+    end
+
+    Post.sync_from_repo(author: author, repository: repository, commit_sha: commit_sha)
   end
 end

@@ -2,6 +2,7 @@
 
 class Post < ApplicationRecord
   class InvalidFrontMatterError < StandardError; end
+  SLUG_FORMAT = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 
   include Blobable
 
@@ -17,10 +18,18 @@ class Post < ApplicationRecord
   enum status: { draft: 0, published: 1, archived: 2 }
 
   validates_presence_of :title, :slug, :status
+  validates :title, :slug, length: { in: 10..100 }
+  validates :slug, format: { with: Regexp.new('\A' + SLUG_FORMAT.source + '\z')  }
+  validates :excerpt, :slug, length: { in: 0..140 }, allow_blank: true
   validates_uniqueness_of :slug, scope: %i[author_id]
-  validates :topics, length: { maximum: 3 }
+  validates :topics, length: { maximum: 3 }, allow_blank: true
+  validates :published_at, date: { allow_nil: true  }
 
   alias repo repository
+
+  def topics=(val)
+    super(topics&.map(&:parameterize))
+  end
 
   def parent_slug
     parent&.slug

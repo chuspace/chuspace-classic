@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get 'invites/create'
-
   root to: 'users#show', constraints: PrivateRootConstraint.new, as: :authenticated_root
   root to: 'pages#index'
 
@@ -24,8 +22,13 @@ Rails.application.routes.draw do
   resources :settings, only: :index
 
   namespace :settings do
-    resources :profiles, path: 'profile', only: %i[index]
-    resources :ssh_keys, path: 'ssh', except: %i[show update]
+    resources :profiles, path: 'profile', only: %i[index], constraints: MobiusConstraint.new
+    resources :ssh_keys, path: 'ssh', except: %i[show update], constraints: MobiusConstraint.new
+  end
+
+  namespace :mobius do
+    resources :pre_receive, only: :create
+    resources :post_receive, only: :create
   end
 
   mount Easymon::Engine => '/alive' if Rails.env.production?

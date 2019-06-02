@@ -27,7 +27,7 @@ module Mobius
         repo_name = commands.try &.[1].try &.gsub("'", "").try &.lstrip("/")
 
         sql = <<-STRING
-          SELECT id, name, path
+          SELECT id AS repo_id, name, path
           FROM repositories
           WHERE author_id = $1 AND name = $2
           LIMIT 1

@@ -14,15 +14,14 @@ class Repository < ApplicationRecord
     # Ignore everything
     *
 
-    # Except
+    # Allow
     !.gitignore
     !*.md
     !*.png
     !*.gif
     !*.jpeg
-
-    # Allow sub-directories
-    !/*
+    !*.jpg
+    !/images
   STRING
 
   validates :name, :path, presence: true, uniqueness: true
@@ -51,6 +50,12 @@ class Repository < ApplicationRecord
     !!rugged
   rescue NoRepository
     false
+  end
+
+  def head
+    rugged.head
+  rescue Rugged::ReferenceError
+    nil
   end
 
   def size

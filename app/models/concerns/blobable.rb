@@ -9,45 +9,51 @@ module Blobable
   end
 
   class_methods do
-    def sync_from_repo(user_id:, repo_name:, new_sha:)
-      author = User.includes(:repo).find(user_id)
+    def find_or_initialize_from_blob(author:, repository:, blob:, blob_name:)
+      post = Post.find_or_initialize_by(author: author, repository: repository, blob_name: blob_name)
+      attrs = YAML.safe_load(blob)
 
-      old_rugged_commit = author.repo.commit
-      new_rugged_commit = author.repo.lookup(new_sha)
-      diff = old_rugged_commit.diff(new_rugged_commit)
+      fail Post::InvalidFrontMatterError unless attrs.is_a?(Hash)
+      attrs = attrs&.deep_symbolize_keys!
+      post.assign_attributes(attrs)
+      post.body = blob.gsub(/---(.|\n)*---/, '').strip!
+      post
 
-      diff.deltas.each do |delta|
-        new_blob = author.repo.find_blob(delta.new_file[:oid])
+    rescue TypeError, ArgumentError, Psych::SyntaxError, Post::InvalidFrontMatterError
+      post
+    end
 
-        case delta.status
-        when :added
-          post = find_or_initialize_by(author: author, blob_name: delta.new_file[:path])
-          post.sync_from_blob(blob: new_blob)
-        when :renamed, :modified
-          post = find_by(author: author, blob_name: delta.old_file[:path])
-          post.sync_from_blob(blob: new_blob)
-        when :deleted
-          post = find_by(author: author, blob_name: delta.old_file[:path])
-          post.destroy
+    def sync_from_repo(author:, repository:, commit_sha:)
+      Post.transaction do
+        old_rugged_commit = repository.commit
+        new_rugged_commit = repository.lookup(commit_sha)
+        diff = old_rugged_commit.diff(new_rugged_commit)
+
+        diff.deltas.each do |delta|
+          next unless delta.new_file[:path].ends_with?('.md')
+
+          blob = repository.find_blob(delta.new_file[:oid])
+          content = blob&.content
+          old_name = delta.old_file[:path]
+          new_name = delta.new_file[:path]
+
+          case delta.status
+          when :added
+            post = find_or_initialize_from_blob(author: author, repository: repository, blob: content, blob_name: new_name)
+            post.save
+          when :renamed, :modified
+            post = find_or_initialize_from_blob(author: author, repository: repository, blob: content, blob_name: old_name)
+            post.blob_name = delta.new_file[:path]
+            post.save
+          when :deleted
+            post = find_or_initialize_from_blob(author: author, repository: repository, blob: content, blob_name: old_name)
+            post.destroy
+          end
         end
+
+        repository.update(commit_sha: commit_sha)
       end
     end
-
-    def valid_blob?(author:, blob_name:)
-      find_or_initialize_from_blob(author: author, blob_name: blob_name).valid?
-    end
-  end
-
-  def sync_from_blob(blob:)
-    return nil unless blob
-    attrs = YAML.safe_load(blob.content)
-    fail Post::InvalidFrontMatterError unless attrs.is_a?(Hash)
-
-    attrs = attrs&.deep_symbolize_keys!
-    self.assign_attributes(attrs)
-    self.blob_name = blob.name
-    self.body = blob.content.gsub(/---(.|\n)*---/, '').strip!
-    self.save
   end
 
   def frontmatter_hash

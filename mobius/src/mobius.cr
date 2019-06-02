@@ -1,17 +1,17 @@
 
 require "db"
 require "pg"
+require "dotenv"
 require "./mobius/auth.cr"
 require "./mobius/shell.cr"
 
-ENV["MOBIUS_ENV"] ||= "development"
+Dotenv.load!("/Users/gaurav/personal/chuspace/.env")
 
 module Mobius
   VERSION = "0.1.0"
-  DEFAULT_DATABASE_URL = "postgres://localhost:5432/chuspace_#{ENV["MOBIUS_ENV"] }?sslmode=disable"
 
   def self.database
-    DB.open ENV.fetch("DATABASE_URL", DEFAULT_DATABASE_URL)
+    DB.open ENV.fetch("DATABASE_URL")
   end
 
   def self.call(args : Array(String) = [] of String)

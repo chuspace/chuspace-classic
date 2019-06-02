@@ -8,3 +8,7 @@ shards:
     github: will/crystal-pg
     version: 0.16.1
 
+  validations:
+    github: vladfaust/validations.cr
+    version: 0.2.1
+

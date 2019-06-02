@@ -12,6 +12,9 @@ dependencies:
   pg:
     github: will/crystal-pg
 
+  dotenv:
+    github: gdotdesign/cr-dotenv
+
 crystal: 0.28.0
 
 license: MIT
