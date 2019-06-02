@@ -12,7 +12,6 @@ module Git
 
     APP_ROOT ||= File.expand_path(File.join(File.dirname(__FILE__), '../../..'))
     ROOT_PATH ||= File.join(APP_ROOT, 'app/lib/git')
-    SSH_ROOT ||= File.join(APP_ROOT, '.ssh')
 
     def initialize
       @config = YAML.load_file(File.join(APP_ROOT, 'config', 'git.yml'))[ENV.fetch('RAILS_ENV', 'development')]
@@ -22,44 +21,15 @@ module Git
       ENV.fetch('GIT_USER', 'git')
     end
 
-    def url
-      ENV.fetch('GIT_URL', 'http://chuspace.test'.sub(%r{/*$}, ''))
-    end
-
-    def storages
-      fail StandardError, 'No storage configured' if @config['storages'].empty?
-
-      @config['storages'].each_with_object([]) do |(name, path), list|
-        list << Storage.new(name: name, path: Pathname.new(path))
-      end
-    end
-
-    def storage
-      storages.sample
+    def app_url
+      ENV.fetch('APP_URL', 'http://chuspace.test'.sub(%r{/*$}, ''))
     end
 
     def storage_path
-      storage.path
-    end
+      @storage_path ||= @config['storage_path']
+      fail StandardError, 'No storage configured' if @storage_path.nil?
 
-    def default_storage
-      storages.find { |storage| storage.name == 'default' }
-    end
-
-    def storage_paths
-      storages.map { |storage| storage.path }
-    end
-
-    def ssh_auth_file_name
-      config['auth_key_file'] || 'authorized_keys'
-    end
-
-    def ssh_auth_file_path
-      @ssh_auth_file_path ||= File.join(SSH_ROOT, ssh_auth_file_name)
-    end
-
-    def ssh_auth_lock_file_path
-      @ssh_auth_lock_file_path ||= File.join(SSH_ROOT, ssh_auth_file_name + '.lock')
+      Pathname.new(@storage_path)
     end
 
     def log_level

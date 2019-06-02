@@ -5,12 +5,18 @@ en:
         user:
           attributes:
             nickname:
-              invalid: may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen
+              invalid: should be all lowercase, unique, min 1 character, may have a single hyphen and no special characters.
         ssh_key:
           attributes:
             key:
               invalid_key: is invalid. It must begin with 'ssh-ed25519', 'ssh-rsa', 'ssh-dss', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', or 'ecdsa-sha2-nistp521'. Please paste public key only.
               nonunique_key: is already taken
+        post:
+          attributes:
+            slug:
+              invalid: should be all lowercase, unique, min 10 character, may have a single hyphen and no special characters.
+            topics:
+              too_long: maximum %{count} topics allowed
 
   login_mailer:
     send_magic_login:
@@ -18,24 +24,57 @@ en:
       link_request: You don’t need a password to access your Chuspace account. Just click the secure link below.
       heading: Log in to Chuspace
 
-  ssh_key:
+  invite_mailer:
+    notify_invitee:
+      subject: Thanks for registering
+      body: We will let you know once we are ready
+      heading: Thanks for registering your interest
+
+    send_rsvp:
+      subject: Welcome to Chuspace
+      body: Please use this link to signup
+      heading: Click to signup
+
+  settings:
+    ssh_keys:
+      create:
+        success: Ssh key successfully added to your account
+      destroy:
+        success: Ssh key successfully removed from your account
+
+  users:
     create:
-      success: Ssh key successfully added to your account
-    destroy:
-      success: Ssh key successfully removed from your account
+      success: Welcome aboard! we have sent you an email with login link.
 
-  registration:
-    success: Welcome aboard! we have sent you an email with login link.
+  invites:
+    create:
+      success: We have received your invite request.
 
-  login:
-    email_not_found: We couldn't find that email. Perhaps you mispelled it?
-    success: We have sent you an email with login link.
+  header:
+    guest:
+      signin_cta: Got an account?
+
+  pages:
+    index:
+      heading: Blogging platform for developers
+      intro: Chuspace is a collaborative blogging platform made for developers. Publish, learn and inspire using the same tools you use everyday.
+      invite_cta: Signup and get early access to developer preview
+
+  signups:
+    index:
+      heading: Join Chuspace
+      intro: The best way to blog using the tools you love and use everyday
+      code_invalid: Your signup code is invalid. Please use the code sent in your email to signup.
+      code_accepted: Looks like you have already joined. Please login
+
+  signins:
+    index:
+      heading: Sign in
+      intro: Enter the email address associated with your account, and we’ll send a magic link to your inbox.
+
+    create:
+      failure: We couldn't find that email. Perhaps you mispelled it?
+      success: We have sent you an email with login link.
 
   magic_login:
     expired: Login link expired! Please request a new one.
-
-  check_nickname:
-    taken: Oops! %{nickname} is already taken.
-
-  check_email:
-    taken: Oops! %{email} is already taken.

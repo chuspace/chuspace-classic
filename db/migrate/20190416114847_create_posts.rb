@@ -1,33 +1,35 @@
+# frozen_string_literal: true
+
 class CreatePosts < ActiveRecord::Migration[6.0]
   def change
     create_table :posts do |t|
-      # Content
       t.string :title, null: false
-      t.citext :slug, null: false
+      t.string :slug, null: false
+
       t.text :excerpt
       t.text :body
 
-      # Associations
       t.bigint :author_id, foreign_key: true, null: false
-      t.bigint :blog_id, foreign_key: true, null: false
-      t.datetime :published_at
-      t.integer :status, default: 0, null: false
+      t.index :author_id
 
-      # Tree
+      t.references :repository, foreign_key: true, null: false
+
       t.string :ancestry
+      t.index :ancestry
 
-      # Git
-      t.string :blob_id, null: false
+      t.string :blob_name, null: false
+      t.index %i[blob_name repository_id], unique: true
+
+      t.integer :status, default: 0, null: false
+      t.index :status
+
+      t.string :topics, array: true, default: []
+      t.index :topics, using: 'gin'
+
+      t.datetime :published_at
+      t.index :published_at
 
       t.timestamps
     end
-
-    # Indexes
-    add_index :posts, :published_at
-    add_index :posts, :ancestry
-    add_index :posts, :status
-
-    add_index :posts, :blob_id, unique: true
-    add_index :posts, [:slug, :blog_id, :author_id], unique: true
   end
 end

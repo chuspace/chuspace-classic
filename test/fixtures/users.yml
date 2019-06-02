@@ -1,0 +1,11 @@
+
+default:
+  name: Gaurav Tiwari
+  email: gaurav@chuspace.com
+  nickname: gaurav
+  avatar: <%= Rails.root.join('test/fixtures/files/avatar.jpeg') %>
+  bio: Lorem ipsum
+  company: chuspace
+  location: Earth
+  repo_path: <%= Git.config.storage_path.join('gaurav.git') %>
+  url: https://chuspace.com

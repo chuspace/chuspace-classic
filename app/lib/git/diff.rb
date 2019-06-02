@@ -18,10 +18,10 @@ module Git
     attr_accessor :too_large
 
     # The maximum size of a diff to display.
-    DIFF_SIZE_LIMIT = 102400 # 100 KB
+    DIFF_SIZE_LIMIT = 102_400 # 100 KB
 
     # The maximum size before a diff is collapsed.
-    DIFF_COLLAPSE_LIMIT = 10240 # 10 KB
+    DIFF_COLLAPSE_LIMIT = 10_240 # 10 KB
 
     class << self
       def between(repo, head, base, options = {}, *paths)

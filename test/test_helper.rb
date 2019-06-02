@@ -1,0 +1,25 @@
+# frozen_string_literal: true
+
+ENV['RAILS_ENV'] ||= 'test'
+
+require_relative '../config/environment'
+require 'rails/test_help'
+require 'simplecov'
+require 'simplecov-lcov'
+
+SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
+SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
+SimpleCov.start 'rails' do
+  add_filter(%r{^\/test|bin|db|config|views|javascript|lib\/})
+end
+
+class ActiveSupport::TestCase
+  parallelize(workers: 4)
+  fixtures :all
+
+  teardown do
+    FileUtils.rm_rf(Git.config.storage_paths)
+    FileUtils.rm_rf(Git.config.ssh_auth_file_path)
+    FileUtils.rm_rf(Git.config.ssh_auth_lock_file_path)
+  end
+end

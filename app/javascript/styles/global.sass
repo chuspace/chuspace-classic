@@ -5,14 +5,20 @@ html, body
   font-weight: normal
   margin: 0
   padding: 0
+  box-sizing: border-box
   color: rgba(0, 0, 0, 0.8)
-  letter-spacing: 0.015em
   --x-height-multiplier: 0.375
   --baseline-multiplier: 0.17
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: greyscale
   text-rendering: optimizeL segibility
 
+*, *:before, *:after
+  box-sizing: inherit
+
+.flex-body
+  height: 100%
+  @apply flex flex-col
 
 h1, h2, h3, h4, h5, h6, strong
   @apply font-headings
@@ -23,7 +29,7 @@ code, pre
 
 .chu-editor
   @apply font-content
-  letter-spacing: 0.01rem
+  letter-spacing: 0.015em
   font-weight: 400
   font-style: normal
   font-size: 22px
@@ -58,24 +64,6 @@ input
   font-family: inherit
   appearance: none
 
-button
-  font-family: inherit
-
-button::-moz-focus-inner
-  border: 0
-  padding: 0
-
-select::-moz-focus-inner,
-textarea::-moz-focus-inner,
-input::-moz-focus-inner,
-a::-moz-focus-inner
-  border: 0
-  padding: 0
-
-select:focus,
-textarea:focus,
-input:focus,
-a:focus,
 .chu-editor
   outline: none
 
@@ -98,3 +86,14 @@ hr:before
   letter-spacing: .6em;
   text-align: center
   margin: 50px
+
+summary
+  &:focus
+    outline: none
+  &::-moz-list-bullet
+    list-style-type: none
+  &::-webkit-details-marker
+    display: none
+
+button
+  font-family: inherit

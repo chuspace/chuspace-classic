@@ -1,4 +1,4 @@
-<div class='nav-links flex items-center'>
-  <%= link_to('Sign in', sessions_path, class: 'link link-default mr-6') %>
-  <%= link_to('Get Started', registrations_path, class: 'btn btn-bordered btn-bordered-green') %>
+<div class='flex items-center'>
+  <span class='mr-2'><%= t('.signin_cta') %></span>
+  <%= component 'link', label: 'Sign in', css_class: 'font-bold underline', url: signins_url %>
 </div>

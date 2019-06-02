@@ -1,18 +1,23 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  post 'git_shell/access'
-
+  root to: 'users#show', constraints: PrivateRootConstraint.new, as: :authenticated_root
   root to: 'pages#index'
 
-  resources :sessions, path: 'signin', only: %i[index create destroy]
-  resources :registrations, path: 'signup', only: %i[index create]
+  resources :signins, path: 'signin', only: %i[index create destroy]
+  resources :signups, path: 'signup', only: %i[index]
   resources :check_nicknames, only: :create
-  resources :check_emails, only: :create
+
+  namespace :check_emails, as: :check do
+    post :signup, as: :signup_email
+    post :invite, as: :invite_email
+  end
+
   resources :magic_logins, only: :index
-  resources :users, except: :show
-  resources :posts, except: :show
-  resources :post_validations, only: :create
+  resources :invites, only: :create
+
+  resources :users, path: 'u', param: :nickname, except: :show
+  resources :posts, path: 'p', param: :slug, except: :show
 
   resources :settings, only: :index
 
@@ -21,6 +26,13 @@ Rails.application.routes.draw do
     resources :ssh_keys, path: 'ssh', except: %i[show update]
   end
 
+  namespace :mobius do
+    resources :pre_receive, only: :create, constraints: MobiusConstraint.new
+    resources :post_receive, only: :create, constraints: MobiusConstraint.new
+  end
+
+  mount Easymon::Engine => '/alive' if Rails.env.production?
+
   get '/:nickname', to: 'users#show', as: :profile
-  get '/:blog/:slug', to: 'posts#show', as: :blog_post
+  get '/:nickname/:slug', to: 'posts#show', as: :post_show
 end

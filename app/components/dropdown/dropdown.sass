@@ -1,0 +1,34 @@
+.dropdown
+  @apply w-48 absolute bg-white border border-grey-lighter rounded-sm shadow mt-2 right-0
+
+  .dropdown__divider
+    @apply border-t border-grey-lighter block
+
+  .dropdown__item
+    @apply py-2 px-4 block overflow-hidden whitespace-no-wrap truncate
+
+    &:last-child
+      @apply mb-0
+
+  &:after, &:before
+    bottom: 100%
+    right: 10%
+    border: solid transparent
+    content: " "
+    height: 0
+    width: 0
+    position: absolute
+    pointer-events: none
+
+
+  &:after
+    border-color: rgba(255, 255, 255, 0)
+    border-bottom-color: #fff
+    border-width: 7px
+    margin-right: -7px
+
+  &:before
+    border-color: rgba(204, 204, 204, 0)
+    border-bottom-color: theme('colors.grey-lighter')
+    border-width: 8px
+    margin-right: -8px

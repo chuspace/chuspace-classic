@@ -1,8 +1,6 @@
-# git config settings
-
 default: &default
   user: git
-  storage_dir_name: git-storage
+  storage_path: /Users/gaurav/.chuspace/repositories/
   log_file: log/git-shell.log
 
 development:
@@ -10,7 +8,7 @@ development:
 
 test:
   <<: *default
-  storage_dir_name: test-git-storage
+  storage_path: /tmp/repositories/
   log_file: log/test-git-shell.log
 
 staging:
@@ -18,3 +16,4 @@ staging:
 
 production:
   <<: *default
+  storage_path: /mnt/repositories/

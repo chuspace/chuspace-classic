@@ -1,13 +1,25 @@
-AllowUsers git
+
+HostKey /home/chuspace/openssh/ssh_host_rsa_key
+
+AuthorizedKeysCommandUser gaurav
+AuthorizedKeysCommand /home/chuspace/bin/git_shell_authorize %u %k
+AuthorizedKeysFile none
+
+AllowUsers gaurav
 AuthenticationMethods publickey
-HostKey /home/git/openssh/ssh_host_rsa_key
 ListenAddress 127.0.0.1:2222
 LogLevel VERBOSE
 PasswordAuthentication no
-PidFile none
+AllowAgentForwarding no
+PermitEmptyPasswords no
+ChallengeResponseAuthentication no
+X11Forwarding no
+AllowTcpForwarding no
+PrintMotd no
+PrintLastLog no
+PermitRootLogin no
 Protocol 2
-StrictModes no
+StrictModes yes
 UsePAM no
 
-Match User git
-AuthorizedKeysFile /home/git/.ssh/authorized_keys
+PidFile /home/chuspace/tmp/pids/sshd.pid

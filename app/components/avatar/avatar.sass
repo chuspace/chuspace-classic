@@ -1,0 +1,13 @@
+$variants: ("xs": 32, "sm": 48, "md": 64, "lg": 80)
+
+.avatar
+  @apply rounded cursor-pointer block
+
+.avatar__badge
+  @apply border border-grey-light flex items-center justify-center
+
+@each $variant, $size in $variants
+  &.avatar--#{$variant}
+    width: #{$size}px
+    height: #{$size}px
+    font-size: #{$size / 2}px

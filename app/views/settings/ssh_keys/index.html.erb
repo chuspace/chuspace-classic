@@ -10,7 +10,7 @@
         </p>
       </div>
       <div>
-        <%= link_to 'Add new key', new_settings_ssh_key_path, class: 'btn btn-green block' %>
+        <%= link_to 'Add new key', new_settings_ssh_key_path, class: 'button block' %>
       </div>
     </div>
 
@@ -23,7 +23,7 @@
                 <strong><%= key.title %></strong>
                 <small class="block mt-2">
                   Added <%= key.created_at.to_formatted_s(:long) %> |
-                  <%= key.last_used ? "Last used #{distance_of_time_in_words_to_now(key.last_used)} ago" : 'Never used'  %>
+                  <%= key.last_used ? "Last used #{time_ago_in_words(key.last_used, include_seconds: true)} ago" : 'Never used'  %>
                 </small>
               </div>
               <code><%= key.fingerprint %></code>
@@ -32,7 +32,7 @@
                 settings_ssh_key_path(key),
                 method: :delete,
                 remote: true,
-                class: 'btn btn-bordered btn-bordered-red',
+                class: 'button',
                 data: { confirm: 'Are you sure?' }
               )
               %>
@@ -40,7 +40,7 @@
           </div>
         <% end %>
       <% else %>
-        <%= render 'components/placeholder', text: "No ssh keys added" %>
+        <h3 class='text-secondary text-center mt-8'>No ssh keys added</h3>
       <% end %>
     </div>
   </div>

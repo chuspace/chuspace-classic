@@ -16,12 +16,6 @@ module.exports = function(api) {
   }
 
   return {
-    babelrcRoots: [
-      // Keep the root as a root
-      '.',
-      // Also consider monorepo packages "root" and load their .babelrc files.
-      './packages/*'
-    ],
     presets: [
       isTestEnv && [
         require('@babel/preset-env').default,
@@ -90,7 +84,7 @@ module.exports = function(api) {
             helpers: './app/javascript/helpers',
             decorators: './app/javascript/decorators',
             styles: './app/javascript/styles',
-            editor: './app/javascript/editor'
+            components: './app/components'
           }
         }
       ]

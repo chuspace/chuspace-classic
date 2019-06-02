@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-const editorUi = require('..');
+const editorUi = require('..')
 
 describe('@chuspace/editor-ui', () => {
-    it('needs tests');
-});
+  it('needs tests')
+})

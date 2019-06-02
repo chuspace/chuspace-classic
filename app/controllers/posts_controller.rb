@@ -2,42 +2,69 @@
 
 class PostsController < ApplicationController
   before_action :authenticate!, only: %i[new create]
-  before_action :find_blog, except: :index
+  before_action :find_post, except: :index
+
   layout 'editor', only: :new
 
+  def index
+    @posts = Post.all.limit(20)
+  end
+
   def show
-    if @blog.present?
-      @post = @blog.posts.find_by(slug: params[:slug])
-    else
-      redirect_to root_path
-    end
+    @post = Post.find_by(slug: params[:slug])
+    redirect_to root_path if @post.blank?
   end
 
   def create
-    post = Post.commit_and_create_by(author: Current.user, committer: Current.user, blog: Current.user.default_blog, attrs: post_params)
+    Post.transaction do
+      post = Current.user.posts.build(post_params)
+      persisted = post.commit_to_repo_and_save(message: params[:commit_message])
 
-    if post.persisted?
-      redirect_to blog_post_path(blog: post.blog.slug, slug: post.slug)
-    else
-      render json: { errors: post.api_validation_errors }
+      if persisted
+        redirect_to post_show_path(nickname: Current.user.nickname, slug: post.slug)
+      else
+        render json: { errors: post.errors.full_messages }, status: 422
+      end
     end
   end
 
   def update
-    Posts::Update.call(author: author, params: params, committer: Current.user)
+    @post.assign_attributes(post_params)
+
+    if post.valid?
+      post.commit_sha = post.commit(committer: Current.user, message: params[:commit_message])
+      post.save
+      redirect_to post_show_path(nickname: Current.user.nickname, slug: @post.slug)
+    else
+      render json: { errors: post.errors.full_messages }
+    end
   end
 
   def destroy
-    Posts::Destroy.call(params[:id])
+    if @post.destroy
+      @post.commit(committer: committer, message: params[:commit_message], action: :remove)
+      redirect_to root_path
+    else
+      redirect_to post_show_path(nickname: Current.user.nickname, slug: @post.slug)
+    end
   end
 
   private
 
   def post_params
-    params.require(:post).permit(:title, :slug, :excerpt, :body, :tag_slugs, :published_at, :status, :parent_slug, :visibility)
+    params.require(:post).permit(
+      :title,
+      :slug,
+      :excerpt,
+      :body,
+      :tag_slugs,
+      :published_at,
+      :status,
+      :parent_slug
+    )
   end
 
-  def find_blog
-    @blog = Blog.find_by_slug(params[:blog])
+  def find_post
+    @post = Post.find_by(slug: params[:slug])
   end
 end

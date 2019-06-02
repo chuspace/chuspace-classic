@@ -1,0 +1,32 @@
+en:
+  form:
+    "yes": 'Yes'
+    "no": 'No'
+    required:
+      text: required
+      mark: '*'
+    error_notification:
+      default_message: 'Please review the problems below:'
+    labels:
+      defaults:
+        email: Your email
+        name: Your name
+        nickname: Your username
+    hints:
+      defaults:
+        name: Nice to meet you
+        email: We’ll never share your email address with anyone
+        nickname: Should be all lowercase, unique, min 1 character, may have a single hyphen and no special characters.
+
+    placeholders:
+      defaults:
+        name: John Doe
+        email: example@domain.com
+        nickname: john-doe or johndoe
+
+    include_blanks:
+      defaults:
+        age: Rather not say
+    prompts:
+      defaults:
+        age: Select your age

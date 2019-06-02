@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'git/config'
+require_relative 'git/logger'
 
 module Git
   def self.config

@@ -3,16 +3,23 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.2'
+ruby '2.6.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', github: 'rails/rails'
+gem 'rails', '>= 6.0.0.rc1', '<= 6.1'
 
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.x'
 
 #  Nested tree
 gem 'ancestry'
+
+# Friendly urls
+gem 'friendly_id'
+gem 'babosa'
+
+# Forms
+gem 'simple_form'
 
 # Use Puma as the app server
 gem 'puma', '>= 3.11'
@@ -30,7 +37,6 @@ gem 'down'
 gem 'http'
 
 # caching
-gem 'readthis'
 gem 'hiredis'
 
 # Auth
@@ -40,24 +46,17 @@ gem 'pundit'
 gem 'aasm'
 
 # Search
-gem 'searchkick'
 gem 'oj'
 
 # Jobs
 gem 'sidekiq'
 
-# ENV
-gem 'figaro'
-
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'octicons_helper'
-
-# 12 factor app
-gem 'rails_12factor', group: :production
 
 # Turblinks
 gem 'turbolinks'
+gem 'turbolinks_render'
 
 # Git API
 gem 'rugged'
@@ -72,19 +71,25 @@ gem 'yabeda'
 # Faster pathname
 gem 'faster_path'
 
+# View components
+gem 'components', git: 'https://github.com/jensljungblad/components.git'
+
+# Security
+gem 'rack-attack'
+
+gem 'octokit'
+group :production do
+  # Resource monitoring
+  gem 'easymon'
+end
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  # Testing
-  gem 'factory_bot_rails'
   gem 'rspec_junit_formatter'
   gem 'coveralls', require: false
-  gem 'webmock'
-
-  # Rspec
-  %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
-    gem lib, github: "rspec/#{lib}"
-  end
+  gem 'minitest'
+  gem 'dotenv-rails'
 end
 
 
@@ -111,6 +116,8 @@ end
 group :test do
   gem 'simplecov', require: false
   gem 'simplecov-lcov', require: false
-  gem 'shoulda-matchers', github: 'chuspace/shoulda-matchers', branch: 'rails-6-compat'
   gem 'rails-controller-testing'
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'webdrivers'
 end

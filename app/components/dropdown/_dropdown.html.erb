@@ -1,0 +1,15 @@
+<details class='relative'>
+  <summary>
+    <%= dropdown.opener %>
+  </summary>
+
+  <details-menu role="menu" class='dropdown'>
+    <% dropdown.items.each do |item| %>
+      <% if item.divider %>
+        <%= content_tag :div, nil, class: 'dropdown__divider' %>
+      <% else %>
+        <%= component 'link', label: item.label, url: item.url, css_class: 'dropdown__item', options: item.options.merge(role: 'menuitem', tabindex: '-1') %>
+      <% end %>
+    <% end %>
+  </details-menu>
+</details>
