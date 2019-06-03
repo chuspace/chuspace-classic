@@ -77,6 +77,11 @@ gem 'components', git: 'https://github.com/jensljungblad/components.git'
 # Security
 gem 'rack-attack'
 
+# Rust extensions
+gem 'helix-rails'
+# Rust powered markdown parser
+gem 'euclid', path: 'crates/euclid'
+
 gem 'octokit'
 group :production do
   # Resource monitoring

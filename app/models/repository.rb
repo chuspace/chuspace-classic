@@ -64,11 +64,7 @@ class Repository < ApplicationRecord
   end
 
   def author_hash
-    {
-      name: author.name,
-      email: author.email,
-      nickname: author.nickname
-    }.freeze
+    { name: author.name, email: author.email, nickname: author.nickname }.freeze
   end
 
   def blobs(ref = DEFAULT_REF)
@@ -143,13 +139,12 @@ class Repository < ApplicationRecord
   end
 
   def create_initial_commit_and_assign_commit_sha
-    self.commit_sha = Git::Commit.create(
-      repository: self,
-      committer: author,
-      options: {
-        commit: { message: 'Initial commit' }, file: { content: GITIGNORE, path: GITIGNORE_PATH }
-      }
-    )
+    self.commit_sha =
+      Git::Commit.create(
+        repository: self,
+        committer: author,
+        options: { commit: { message: 'Initial commit' }, file: { content: GITIGNORE, path: GITIGNORE_PATH } }
+      )
   end
 
   def destroy_git_repo

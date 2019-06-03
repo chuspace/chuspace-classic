@@ -55,6 +55,7 @@ class DateValidator < ActiveModel::EachValidator
       original_option_value = option_value
 
       # To enable to_i conversion, these types must be converted to Datetimes
+
       if defined?(ActiveSupport::TimeWithZone)
         option_value = option_value.to_datetime if option_value.is_a?(ActiveSupport::TimeWithZone)
         value = value.to_datetime if value.is_a?(ActiveSupport::TimeWithZone)

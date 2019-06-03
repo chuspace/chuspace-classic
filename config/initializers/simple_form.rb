@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 SimpleForm.setup do |config|
-  config.wrappers :custom, tag: 'div', class: 'input__container', error_class: 'input__container--invalid', valid_class: 'input__container' do |b|
+  config.wrappers :custom,
+                  tag: 'div',
+                  class: 'input__container',
+                  error_class: 'input__container--invalid',
+                  valid_class: 'input__container' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
@@ -11,12 +15,12 @@ SimpleForm.setup do |config|
     b.optional :readonly
     b.use :label, class: 'input__label'
     b.use :input, class: 'input', autocomplete: 'off', spellcheck: 'off'
-    b.use :hint,  wrap_with: { tag: :span, class: 'input__hint' }
+    b.use :hint, wrap_with: { tag: :span, class: 'input__hint' }
     b.use :full_error, wrap_with: { tag: 'div', class: 'input__error' }
   end
 
   config.default_form_class = 'form'
-  config.label_text = lambda { |label, required, explicit_label| "#{label} #{required}" }
+  config.label_text = ->(label, required, explicit_label) { "#{label} #{required}" }
 
   config.default_wrapper = :custom
 

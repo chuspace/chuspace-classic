@@ -19,11 +19,11 @@ class Post < ApplicationRecord
 
   validates_presence_of :title, :slug, :status
   validates :title, :slug, length: { in: 10..100 }
-  validates :slug, format: { with: Regexp.new('\A' + SLUG_FORMAT.source + '\z')  }
+  validates :slug, format: { with: Regexp.new('\A' + SLUG_FORMAT.source + '\z') }
   validates :excerpt, :slug, length: { in: 0..140 }, allow_blank: true
   validates_uniqueness_of :slug, scope: %i[author_id]
   validates :topics, length: { maximum: 3 }, allow_blank: true
-  validates :published_at, date: { allow_nil: true  }
+  validates :published_at, date: { allow_nil: true }
 
   alias repo repository
 
@@ -39,6 +39,10 @@ class Post < ApplicationRecord
     self.parent = Post.find_by_slug(slug)
   end
 
+  def body_html
+    Euclid.to_html(body).html_safe
+  end
+
   def should_generate_new_friendly_id?
     slug.blank? || title_changed?
   end
@@ -49,15 +53,16 @@ class Post < ApplicationRecord
     if valid?
       self.blob_name = "#{slug}.md"
 
-      author.repository.commit_sha = Git::Commit.create(
-        repository: repo,
-        committer: author,
-        action: action,
-        options: {
-          commit: { message: message || "Created post #{blob_name}" },
-          file: { content: blob_content, path: blob_name }
-        }
-      )
+      author.repository.commit_sha =
+        Git::Commit.create(
+          repository: repo,
+          committer: author,
+          action: action,
+          options: {
+            commit: { message: message || "Created post #{blob_name}" },
+            file: { content: blob_content, path: blob_name }
+          }
+        )
 
       self.save
     end

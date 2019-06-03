@@ -13,6 +13,7 @@ import 'codemirror/addon/edit/matchtags'
 import 'codemirror/addon/edit/trailingspace'
 import 'codemirror/addon/edit/closetag'
 import 'codemirror/addon/display/placeholder'
+import 'codemirror/addon/display/autorefresh'
 
 import * as CodeMirror from 'codemirror'
 
@@ -91,7 +92,9 @@ class LanguageSwitcher extends Component<Props, State> {
   }
 
   render() {
-    return (
+    return this.props.readOnly ? (
+      <div class="codemirror-language-badge">{this.props.mode}</div>
+    ) : (
       <div class="codemirror-language-switcher-container">
         <input type="text" value={this.state.mode} class="codemirror-language-input" onFocus={this.toggleSwitcher} />
         {this.state.showSwitcher && (
@@ -119,7 +122,7 @@ class Toolbar extends Component {
     super(props)
   }
 
-  initClipboardJS = node => new ClipboardJS(node)
+  initClipboardJS = node => new ClipboardJS(node, { text: trigger => this.props.cm.getDoc().getValue() })
 
   render() {
     return (
@@ -139,14 +142,19 @@ class Toolbar extends Component {
 export default class Container extends Component {
   cm: ?CodeMirror
 
+  state = {
+    cm: null
+  }
+
   setMode = async (mode: string) => {
     await loadMode(mode)
-    this.cm && this.cm.setOption('mode', mode)
+    this.state.cm && this.state.cm.setOption('mode', mode)
     this.props.handleLanguageChange && this.props.handleLanguageChange(mode)
   }
 
-  createCM = (node: ?HTMLElement) => {
-    this.cm = new CodeMirror(node, {
+  createCM = async (node: ?HTMLElement) => {
+    await loadMode(this.props.mode)
+    const cm = new CodeMirror(node, {
       value: this.props.content,
       lineNumbers: true,
       smartIndent: !this.props.readOnly,
@@ -161,18 +169,20 @@ export default class Container extends Component {
       autoCloseTags: true,
       showTrailingSpace: true,
       matchTags: true,
+      autoRefresh: { delay: 500 },
       placeholder: `Start writing ${this.props.mode} code...`,
       extraKeys: this.props.codeMirrorKeymap && this.props.codeMirrorKeymap()
     })
 
-    this.props.getCMInstance(this.cm)
-    this.setMode(this.props.mode)
+    this.setState({ cm })
+
+    this.props.onInit && this.props.onInit(this.cm)
   }
 
   render = () => {
     return (
       <div class="codemirror-container" contentEditable={false}>
-        <Toolbar {...this.props} setMode={this.setMode} />
+        <Toolbar {...this.props} setMode={this.setMode} cm={this.state.cm} />
         <span ref={this.createCM} />
       </div>
     )

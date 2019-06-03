@@ -15,7 +15,8 @@ Rails.application.configure do
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
-  config.cache_store = :redis_cache_store, { driver: :hiredis, url: ENV.fetch('REDIS_CACHE_URL', RedisClient.config[:default_url]) }
+  config.cache_store =
+    :redis_cache_store, { driver: :hiredis, url: ENV.fetch('REDIS_CACHE_URL', RedisClient.config[:default_url]) }
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.

@@ -30,11 +30,11 @@ export default class CodeBlockView extends BaseView {
 
     // Renders view component
     this.renderElement()
+  }
 
-    // CodeMirror needs to be in the DOM to properly initialize, so
-    // schedule it to update itself
-    setTimeout(() => this.cm.refresh(), 20)
-
+  onInit = (cm: CodeMirror) => {
+    console.log(cm)
+    this.cm = cm
     // Propagate updates from the code editor to ProseMirror
     this.cm.on('beforeChange', () => (this.incomingChanges = true))
     // Propagate updates from the code editor to ProseMirror
@@ -53,9 +53,6 @@ export default class CodeBlockView extends BaseView {
 
     this.cm.on('focus', () => this.forwardSelection())
   }
-
-  /* Component calls to set cm instance after render */
-  getCMInstance = (instance: CodeMirror) => (this.cm = instance)
 
   /* Component calls to set cm instance mode and node attrs */
   handleLanguageChange = (mode: string = this.mode) => (this.node.attrs.language = mode)
@@ -115,6 +112,8 @@ export default class CodeBlockView extends BaseView {
    * @param head
    */
   setSelection = (anchor: string, head: string): void => {
+    if (!this.cm) return
+
     this.cm.focus()
     this.updating = true
     this.cm.setSelection(this.cm.posFromIndex(anchor), this.cm.posFromIndex(head))

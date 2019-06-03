@@ -14,12 +14,10 @@ module Mobius
         return
       end
 
-      post = Post.find_or_initialize_from_blob(
-        author: author,
-        repository: repository,
-        blob: params[:blob],
-        blob_name: params[:blob_name]
-      )
+      post =
+        Post.find_or_initialize_from_blob(
+          author: author, repository: repository, blob: params[:blob], blob_name: params[:blob_name]
+        )
 
       if post.valid?
         self.status = 200
@@ -27,7 +25,6 @@ module Mobius
         self.status = 422
         self.response_body = post.errors.full_messages.to_sentence
       end
-
     rescue ActiveModel::UnknownAttributeError => ex
       self.response_body = ex.message
     end

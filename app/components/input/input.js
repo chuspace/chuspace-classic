@@ -1,6 +1,6 @@
 // @flow
 
-import { LitElement, customElement, html, property } from 'lit-element'
+import { LitElement, customElement, html } from 'lit-element'
 
 import debounce from 'lodash/debounce'
 import httpClient from 'helpers/fetch-client'

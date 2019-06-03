@@ -19,9 +19,7 @@ module Git
       end
 
       def all(repository, branch = 'master')
-        repository.head.target.tree.map do |blob_entry|
-          from(blob_entry)
-        end
+        repository.head.target.tree.map { |blob_entry| from(blob_entry) }
       end
 
       def from(repository, blob_entry)

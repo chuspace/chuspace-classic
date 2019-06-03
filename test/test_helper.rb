@@ -17,7 +17,5 @@ class ActiveSupport::TestCase
   parallelize(workers: 4)
   fixtures :all
 
-  teardown do
-    FileUtils.rm_rf(Git.config.storage_path)
-  end
+  teardown { FileUtils.rm_rf(Git.config.storage_path) }
 end

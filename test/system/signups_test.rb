@@ -24,7 +24,6 @@ class SignupsTest < ApplicationSystemTestCase
     assert_text 'should be all lowercase, unique, min 1 character, may have a single hyphen and no special characters.'
     assert_text 'is not a valid email'
 
-
     fill_in 'user_nickname', with: "gaurav-#{rand(0..100)}"
     fill_in 'user_email', with: invite.email
     click_button 'Signup'

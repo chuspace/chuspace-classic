@@ -4,7 +4,7 @@ class CreateRepositories < ActiveRecord::Migration[6.0]
   def change
     create_table :repositories do |t|
       t.string :name, default: Repository::DEFAULT_NAME, null: false
-      t.index [:name, :author_id], unique: true
+      t.index %i[name author_id], unique: true
 
       t.string :path, null: false
       t.index :path, unique: true

@@ -18,7 +18,6 @@ module Blobable
       post.assign_attributes(attrs)
       post.body = blob.gsub(/---(.|\n)*---/, '').strip!
       post
-
     rescue TypeError, ArgumentError, Psych::SyntaxError, Post::InvalidFrontMatterError
       post
     end
@@ -39,14 +38,17 @@ module Blobable
 
           case delta.status
           when :added
-            post = find_or_initialize_from_blob(author: author, repository: repository, blob: content, blob_name: new_name)
+            post =
+              find_or_initialize_from_blob(author: author, repository: repository, blob: content, blob_name: new_name)
             post.save
           when :renamed, :modified
-            post = find_or_initialize_from_blob(author: author, repository: repository, blob: content, blob_name: old_name)
+            post =
+              find_or_initialize_from_blob(author: author, repository: repository, blob: content, blob_name: old_name)
             post.blob_name = delta.new_file[:path]
             post.save
           when :deleted
-            post = find_or_initialize_from_blob(author: author, repository: repository, blob: content, blob_name: old_name)
+            post =
+              find_or_initialize_from_blob(author: author, repository: repository, blob: content, blob_name: old_name)
             post.destroy
           end
         end

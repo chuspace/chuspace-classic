@@ -8,13 +8,29 @@ page = 1
 requests = 0
 
 client = Octokit::Client.new(access_token: '84d476ccf244aff5f5bd5f51f006952785f9f883')
-queries = ['web framework', 'mobile framework', 'database', 'programming language', 'devops', 'server', 'ruby', 'javascript', 'go', 'python']
+queries = [
+  'web framework',
+  'mobile framework',
+  'database',
+  'programming language',
+  'devops',
+  'server',
+  'ruby',
+  'javascript',
+  'go',
+  'python'
+]
 
 queries.each do |query|
   loop do
     sleep 60 if requests > 0 && requests % 30 == 0
 
-    client.send(:search, 'search/topics', query, page: page, per_page: 100, accept: 'application/vnd.github.mercy-preview+json')
+    client.send(
+      :search,
+      'search/topics',
+      query,
+      page: page, per_page: 100, accept: 'application/vnd.github.mercy-preview+json'
+    )
     response = client.last_response
     rels = response.rels
     items = response.data.items
@@ -31,7 +47,6 @@ queries.each do |query|
     next
   end
 end
-
 
 # ActiveRecord::Base.transaction do
 #   10.times do

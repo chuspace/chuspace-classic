@@ -25,7 +25,7 @@ namespace :chuspace do
         FileUtils.mv(binary_path, APP_BIN_DIR.join(binary_name))
       end
 
-      system "cd #{ Rails.root}"
+      system "cd #{Rails.root}"
     end
     puts "Compiled mobius binaries to #{APP_BIN_DIR}"
   end
