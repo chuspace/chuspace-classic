@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mobius
   class BaseController < ActionController::Metal
     include AbstractController::Rendering

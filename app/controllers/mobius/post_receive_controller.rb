@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mobius
   class PostReceiveController < BaseController
     def create
