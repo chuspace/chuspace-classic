@@ -10,10 +10,10 @@ class InvitationsTest < ApplicationSystemTestCase
     assert_selector 'button', text: 'Signup'
 
     click_button 'Signup'
-    assert_text "Email can't be blank"
+    assert_text "can't be blank"
 
     fill_in 'invite_email', with: 'gaurav'
-    assert_text 'Email is not a valid email'
+    assert_text 'is not a valid email'
 
     fill_in 'invite_email', with: "gaurav#{rand(0...10)}@chuspace.com"
     assert_text 'We’ll never share your email address with anyone'

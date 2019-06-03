@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  path: MyString
-  commit_sha: MyString
-  user: one
+  name: blog
+  path: <%= Git.config.storage_path.join('gaurav/blog.git') %>
+  commit_sha: <%= SecureRandom.hex %>
+  author: default
 
 two:
-  name: MyString
-  path: MyString
-  commit_sha: MyString
-  user: two
+  name: blog
+  path: <%= Git.config.storage_path.join('parul/blog.git') %>
+  commit_sha: <%= SecureRandom.hex %>
+  author: parul

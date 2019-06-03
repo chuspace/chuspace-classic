@@ -7,5 +7,16 @@ default:
   bio: Lorem ipsum
   company: chuspace
   location: Earth
-  repo_path: <%= Git.config.storage_path.join('gaurav.git') %>
+  auth_token: <%= SecureRandom.hex %>
+  url: https://chuspace.com
+
+parul:
+  name: Parul Singh
+  email: parul@chuspace.com
+  nickname: parul
+  avatar: <%= Rails.root.join('test/fixtures/files/avatar.jpeg') %>
+  bio: I am a rockstar
+  company: chuspace
+  location: Earth
+  auth_token: <%= SecureRandom.hex %>
   url: https://chuspace.com
