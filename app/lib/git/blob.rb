@@ -19,7 +19,16 @@ module Git
       end
 
       def all(repository, branch = 'master')
-        repository.head.target.tree.map { |blob_entry| from(blob_entry) }
+        repository.head.target.tree.each_with_object([]) do |item, array|
+          case item[:type]
+          when :blob
+            array << from(repository, item)
+          when :tree
+            repository.lookup(item[:oid]).each do |entry|
+              array << from(repository, entry)
+            end
+          end
+        end
       end
 
       def from(repository, blob_entry)

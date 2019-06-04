@@ -126,3 +126,4 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
+gem 'fast_slug', path: 'crates/fast_slug'

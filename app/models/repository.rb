@@ -70,9 +70,7 @@ class Repository < ApplicationRecord
   def blobs(ref = DEFAULT_REF)
     return [] if empty?
 
-    sha = sha_from_ref(ref)
-
-    Git::Blob.all(self, sha)
+    Git::Blob.all(self)
   end
 
   def find_blob(id, ref = DEFAULT_REF)

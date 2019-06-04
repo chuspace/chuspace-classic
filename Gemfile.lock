@@ -20,6 +20,12 @@ PATH
     euclid (1.0.0)
       helix_runtime (~> 0.7.5)
 
+PATH
+  remote: crates/fast_slug
+  specs:
+    fast_slug (1.0.0)
+      helix_runtime (~> 0.7.5)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -371,6 +377,7 @@ DEPENDENCIES
   easymon
   euclid!
   faker
+  fast_slug!
   faster_path
   friendly_id
   helix-rails
