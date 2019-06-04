@@ -40,7 +40,7 @@ class Post < ApplicationRecord
   end
 
   def body_html
-    Euclid.to_html(body).html_safe
+    body
   end
 
   def should_generate_new_friendly_id?
