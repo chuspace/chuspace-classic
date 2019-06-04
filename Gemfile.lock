@@ -144,8 +144,6 @@ GEM
       rake (~> 12.3)
       thermite (= 0.13.0)
     ffi (1.11.1)
-    friendly_id (5.2.5)
-      activerecord (>= 4.0.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     hiredis (0.6.3)
@@ -351,7 +349,6 @@ DEPENDENCIES
   easymon
   faker
   faster_path
-  friendly_id
   hiredis
   http
   image_processing

@@ -24,9 +24,7 @@ module Git
           when :blob
             array << from(repository, item)
           when :tree
-            repository.lookup(item[:oid]).each do |entry|
-              array << from(repository, entry)
-            end
+            repository.lookup(item[:oid]).each { |entry| array << from(repository, entry) }
           end
         end
       end

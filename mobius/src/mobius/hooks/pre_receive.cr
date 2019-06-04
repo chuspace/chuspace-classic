@@ -7,6 +7,7 @@ module Mobius
       MAX_IMAGE_SIZE = 25
       MAX_POST_SIZE = 0.5
       FILE_NAME_RANGE = 1..100
+      FILENAME_REGEX = /^(?:.+\/)*(.*)(\.[^.]+)$/
 
       BINARY_MIME = "application/octet-stream"
       CHAR_ENCODINGS = {
@@ -39,6 +40,7 @@ module Mobius
           encoding = encoding(blob)
           mime_type = encoding[:type]
 
+          errors << "#{file}: Invalid file name, should be lowercase, no spaces and separated by a hyphen" unless FILENAME_REGEX.match(file)
           errors << "#{file}: File name out of range, should be #{FILE_NAME_RANGE} chars" unless FILE_NAME_RANGE.includes?(file.size)
 
           case mime_type

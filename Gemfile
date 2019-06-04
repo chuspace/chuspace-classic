@@ -18,7 +18,6 @@ gem 'redcarpet'
 gem 'ancestry'
 
 # Friendly urls
-gem 'friendly_id'
 gem 'babosa'
 
 # Forms

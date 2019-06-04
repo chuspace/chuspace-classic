@@ -3,9 +3,6 @@
 class Post < ApplicationRecord
   SLUG_FORMAT = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 
-  extend FriendlyId
-  friendly_id :title, use: :slugged
-
   belongs_to :author, class_name: 'User'
   belongs_to :repository, autosave: true
 
@@ -14,15 +11,19 @@ class Post < ApplicationRecord
 
   enum status: { draft: 0, published: 1, archived: 2 }
 
-  validates_presence_of :title, :slug, :status
-  validates :title, :slug, length: { in: 10..100 }
-  validates :slug, format: { with: Regexp.new('\A' + SLUG_FORMAT.source + '\z') }
+  validates_presence_of :status
+  validates :title, :slug, length: { in: 10..100 }, allow_blank: true
+  validates :slug, format: { with: Regexp.new('\A' + SLUG_FORMAT.source + '\z') }, allow_blank: true
   validates :excerpt, :slug, length: { in: 0..140 }, allow_blank: true
   validates_uniqueness_of :slug, scope: %i[author_id]
   validates :topics, length: { maximum: 3 }, allow_blank: true
   validates :published_at, date: { allow_nil: true }
 
   alias repo repository
+
+  def to_param
+    slug || blob_name
+  end
 
   def topics=(val)
     super(topics&.map(&:parameterize))
@@ -42,10 +43,6 @@ class Post < ApplicationRecord
     markdown.render(body).html_safe
   end
 
-  def should_generate_new_friendly_id?
-    slug.blank? || title_changed?
-  end
-
   def commit_to_repo_and_save(message: nil, action: :add)
     self.repository = author.repository
 
@@ -58,8 +55,7 @@ class Post < ApplicationRecord
           committer: author,
           action: action,
           options: {
-            commit: { message: message || "Created post #{blob_name}" },
-            file: { content: body, path: blob_name }
+            commit: { message: message || "Created post #{blob_name}" }, file: { content: body, path: blob_name }
           }
         )
 
@@ -67,26 +63,26 @@ class Post < ApplicationRecord
     end
   end
 
-  def sync_from_repo(author:, repository:, commit_sha:)
+  def self.sync_from_repo(author:, repository:, commit_sha: nil)
     Post.transaction do
       old_rugged_commit = repository.commit
-      new_rugged_commit = repository.lookup(commit_sha)
+      new_rugged_commit = commit_sha ? repository.lookup(commit_sha) : repository.head.target
       diff = old_rugged_commit.diff(new_rugged_commit)
 
       diff.deltas.each do |delta|
         next unless delta.new_file[:path].ends_with?('.md')
 
         blob = repository.find_blob(delta.new_file[:oid])
-        content = blob&.content
+        body = blob&.content
         old_name = delta.old_file[:path]
         new_name = delta.new_file[:path]
 
         case delta.status
         when :added
-          repository.posts.create(author: author, blob_name: new_name, content: blob.content)
+          repository.posts.create(author: author, blob_name: new_name, body: body)
         when :renamed, :modified
           post = repository.posts.find_by(author: author, blob_name: old_name)
-          post.update(content: content, blob_name: new_name)
+          post.update(body: body, blob_name: new_name)
         when :deleted
           repository.posts.find_by(author: author, blob_name: old_name).destroy
         end
