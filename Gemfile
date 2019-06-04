@@ -11,6 +11,9 @@ gem 'rails', '>= 6.0.0.rc1', '<= 6.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.x'
 
+# Markdown
+gem 'redcarpet'
+
 #  Nested tree
 gem 'ancestry'
 

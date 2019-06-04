@@ -1,10 +1,17 @@
-require "./common.cr"
+require "dotenv"
+require "http/client"
+
+Dotenv.load!("/Users/gaurav/personal/chuspace/.env")
 
 module Mobius
   module Hooks
     class PostReceive
-      include Mobius::Hooks::Common
       POST_RECEIVE_CHECK_ENDPOINT= "/mobius/post_receive"
+      DEFAULT_REF = "refs/heads/master"
+      HTTP_HEADERS = HTTP::Headers{
+        "User-Agent" => "Mobius",
+        "Content-Type" => "application/json"
+      }
 
       getter commit_sha : String
 
@@ -16,6 +23,8 @@ module Mobius
       def exec
         repo_id = ENV.fetch("GIT_REPO_ID", "")
         user_id = ENV.fetch("GIT_USER_ID", "")
+        token = ENV.fetch("MOBIUS_TOKEN", "")
+        base_url = ENV.fetch("CHUSPACE_URL", "")
 
         HTTP::Client.post(
           "#{base_url}#{POST_RECEIVE_CHECK_ENDPOINT}",

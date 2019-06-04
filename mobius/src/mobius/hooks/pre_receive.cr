@@ -1,20 +1,12 @@
-require "yaml"
-require "./common.cr"
-
 module Mobius
   module Hooks
     class PreReceive
-      include Mobius::Hooks::Common
-
       getter refs : Array(String)
-      getter user_id : String
-      getter repo_id : String
-
-      PRE_RECEIVE_CHECK_ENDPOINT = "/mobius/pre_receive"
 
       MAX_SIZE = 1024*1024
       MAX_IMAGE_SIZE = 25
       MAX_POST_SIZE = 0.5
+      FILE_NAME_RANGE = 1..100
 
       BINARY_MIME = "application/octet-stream"
       CHAR_ENCODINGS = {
@@ -32,8 +24,6 @@ module Mobius
 
       def initialize
         @refs = STDIN.gets_to_end.split(" ", remove_empty: true)
-        @repo_id = ENV.fetch("GIT_REPO_ID", "")
-        @user_id = ENV.fetch("GIT_USER_ID", "")
       end
 
       def blob_names
@@ -42,36 +32,27 @@ module Mobius
       end
 
       def exec
-        error_messages = [] of String
+        errors = [] of String
 
         blob_names.each do |file|
           blob = `git show #{refs[1]}:'#{file}'`
-          errors = validate_encoding(file, blob)
+          encoding = encoding(blob)
+          mime_type = encoding[:type]
 
-          if file.ends_with?(".md")
-            YAML.parse(blob)
-            response = validate(file, blob)
+          errors << "#{file}: File name out of range, should be #{FILE_NAME_RANGE} chars" unless FILE_NAME_RANGE.includes?(file.size)
 
-            case response.status_code
-            when 200
-              exit 0
-            when 401, 422
-              print "ERROR: #{response.body}"
-              exit 1
-            else
-              print "ERROR: Something went wrong!"
-              exit 1
-            end
+          case mime_type
+          when "plain/text"
+            errors << "#{file}: Max post size is #{MAX_POST_SIZE}MB" if encoding[:size] > MAX_POST_SIZE
+          when "image/gif", "image/png", "image/jpeg"
+            errors << "#{file}: Max image size is #{MAX_IMAGE_SIZE}MB" if encoding[:size] > MAX_IMAGE_SIZE
+          else
+            errors << "#{file}: Unsupported file format"
           end
-
-          error_messages += errors
-        rescue ex : YAML::ParseException
-          print "ERROR: Malformed frontmatter"
-          exit 1
         end
 
-        if error_messages.any?
-          print(error_messages.join("\n"))
+        if errors.any?
+          print(errors.join("\n"))
           exit 1
         else
           exit 0
@@ -95,41 +76,6 @@ module Mobius
         return default_encoding.merge({ type: BINARY_MIME, binary: true }) if !!LibC.memchr(buf, 0, buf_size)
 
         default_encoding
-      end
-
-      private def validate_encoding(file : String, blob)
-        errors = [] of String
-
-        encoding = encoding(blob)
-        mime_type = encoding[:type]
-
-        if !mime_type.match(/image|text/)
-          errors << "#{file}: Unsupported file format"
-        end
-
-        if mime_type.includes?("image") && encoding[:size] > MAX_IMAGE_SIZE
-          errors << "#{file}: Max image size is #{MAX_IMAGE_SIZE}MB"
-        end
-
-        if mime_type.includes?("text") && encoding[:size] > MAX_POST_SIZE
-          errors << "#{file}: Max post size is #{MAX_POST_SIZE}MB"
-        end
-
-        errors
-      end
-
-      private def validate(name : String, blob : String)
-        HTTP::Client.post(
-          "#{base_url}#{PRE_RECEIVE_CHECK_ENDPOINT}",
-          headers: HTTP_HEADERS,
-          form: {
-            "token" => token,
-            "repository_id" => repo_id,
-            "author_id" => user_id,
-            "blob_name" => name,
-            "blob" => blob
-          }
-        )
       end
 
       private def print(message : String)

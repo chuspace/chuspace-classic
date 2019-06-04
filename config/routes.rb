@@ -27,7 +27,6 @@ Rails.application.routes.draw do
   end
 
   namespace :mobius do
-    resources :pre_receive, only: :create, constraints: MobiusConstraint.new
     resources :post_receive, only: :create, constraints: MobiusConstraint.new
   end
 
