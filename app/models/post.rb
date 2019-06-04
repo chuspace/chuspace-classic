@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
 class Post < ApplicationRecord
-  class InvalidFrontMatterError < StandardError; end
   SLUG_FORMAT = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
-
-  include Blobable
 
   extend FriendlyId
   friendly_id :title, use: :slugged
@@ -40,7 +37,9 @@ class Post < ApplicationRecord
   end
 
   def body_html
-    body
+    opts = { autolink: true, fenced_code_blocks: true, disable_indented_code_blocks: true, strikethrough: true }
+    markdown = ::Redcarpet::Markdown.new(Redcarpet::Render::HTML, **opts)
+    markdown.render(body).html_safe
   end
 
   def should_generate_new_friendly_id?
@@ -60,11 +59,40 @@ class Post < ApplicationRecord
           action: action,
           options: {
             commit: { message: message || "Created post #{blob_name}" },
-            file: { content: blob_content, path: blob_name }
+            file: { content: body, path: blob_name }
           }
         )
 
       self.save
+    end
+  end
+
+  def sync_from_repo(author:, repository:, commit_sha:)
+    Post.transaction do
+      old_rugged_commit = repository.commit
+      new_rugged_commit = repository.lookup(commit_sha)
+      diff = old_rugged_commit.diff(new_rugged_commit)
+
+      diff.deltas.each do |delta|
+        next unless delta.new_file[:path].ends_with?('.md')
+
+        blob = repository.find_blob(delta.new_file[:oid])
+        content = blob&.content
+        old_name = delta.old_file[:path]
+        new_name = delta.new_file[:path]
+
+        case delta.status
+        when :added
+          repository.posts.create(author: author, blob_name: new_name, content: blob.content)
+        when :renamed, :modified
+          post = repository.posts.find_by(author: author, blob_name: old_name)
+          post.update(content: content, blob_name: new_name)
+        when :deleted
+          repository.posts.find_by(author: author, blob_name: old_name).destroy
+        end
+      end
+
+      repository.update(commit_sha: commit_sha)
     end
   end
 end
