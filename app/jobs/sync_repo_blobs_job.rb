@@ -9,7 +9,7 @@ class SyncRepoBlobsJob < ApplicationJob
 
     blobs.each do |git_blob|
       blob = repository.blobs.find_or_initialize_by(path: git_blob.path)
-      attrs = { name: git_blob.name, blob: git_blob.content, binary: git_blob.binary }.freeze
+      attrs = { blob: git_blob.content, binary: git_blob.binary }.freeze
 
       if blob
         blob.update(attrs)

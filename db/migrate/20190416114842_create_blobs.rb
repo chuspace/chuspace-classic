@@ -3,12 +3,13 @@
 class CreateBlobs < ActiveRecord::Migration[6.0]
   def change
     create_table :blobs do |t|
-      t.text :name
+      t.string :blob_type
+      t.index :blob_type
 
-      t.text :path
+      t.string :path
       t.index :path, unique: true
 
-      t.text :blob_data
+      t.jsonb :blob_data
 
       t.boolean :binary, default: false
       t.index :binary

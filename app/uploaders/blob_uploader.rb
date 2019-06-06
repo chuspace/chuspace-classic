@@ -3,7 +3,7 @@
 class BlobUploader < AppUploader
   Attacher.validate do
     validate_max_size 15.megabytes, message: 'is too large (max is 15 MB)'
-    validate_mime_type_inclusion %w[image/jpeg image/jpg image/png image/gif plain/text text/x-c]
+    validate_mime_type_inclusion %w[image/jpeg image/jpg image/png image/gif text/x-c text/plain]
   end
 
   process(:store) do |io|

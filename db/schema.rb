@@ -10,20 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_05_190045) do
+ActiveRecord::Schema.define(version: 2019_06_01_073804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "blobs", force: :cascade do |t|
-    t.text "name"
-    t.text "path"
-    t.text "blob_data"
+    t.string "name"
+    t.string "blob_type"
+    t.string "path"
+    t.jsonb "blob_data"
     t.boolean "binary", default: false
     t.bigint "repository_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["binary"], name: "index_blobs_on_binary"
+    t.index ["blob_type"], name: "index_blobs_on_blob_type"
     t.index ["path"], name: "index_blobs_on_path", unique: true
     t.index ["repository_id"], name: "index_blobs_on_repository_id"
   end
@@ -47,6 +49,7 @@ ActiveRecord::Schema.define(version: 2019_06_05_190045) do
     t.text "excerpt"
     t.text "body"
     t.bigint "author_id", null: false
+    t.bigint "blob_id", null: false
     t.bigint "repository_id", null: false
     t.string "ancestry"
     t.string "blob_name", null: false
@@ -57,6 +60,7 @@ ActiveRecord::Schema.define(version: 2019_06_05_190045) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["ancestry"], name: "index_posts_on_ancestry"
     t.index ["author_id"], name: "index_posts_on_author_id"
+    t.index ["blob_id"], name: "index_posts_on_blob_id"
     t.index ["blob_name", "repository_id"], name: "index_posts_on_blob_name_and_repository_id", unique: true
     t.index ["published_at"], name: "index_posts_on_published_at"
     t.index ["repository_id"], name: "index_posts_on_repository_id"
@@ -122,6 +126,7 @@ ActiveRecord::Schema.define(version: 2019_06_05_190045) do
 
   add_foreign_key "blobs", "repositories"
   add_foreign_key "invites", "users"
+  add_foreign_key "posts", "blobs"
   add_foreign_key "posts", "repositories"
   add_foreign_key "ssh_keys", "users"
 end

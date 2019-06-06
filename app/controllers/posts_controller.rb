@@ -17,10 +17,15 @@ class PostsController < ApplicationController
 
   def create
     Post.transaction do
-      post = Current.user.posts.build(post_params)
-      persisted = post.commit_to_repo_and_save(message: params[:commit_message])
+      author = Current.user
+      repository = author.repository
+      blob = repository.blobs.build(blob_params)
+      post = blob.build_post(post_params)
 
-      if persisted
+      post.assign_attributes(author: author, repository: repository)
+
+
+      if blob.save
         redirect_to post_show_path(Current.user, post)
       else
         render json: { errors: post.errors.full_messages }, status: 422
@@ -52,7 +57,18 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :slug, :excerpt, :body, :topics, :published_at, :status, :parent)
+    params.require(:post).permit(:title, :slug, :excerpt, :topics, :published_at, :status, :parent)
+  end
+
+  def blob_params
+    attrs = params.require(:post).permit(:title, :slug, :body, :commit_message)
+
+    {
+      path: attrs[:slug] || Slug.generate(attrs[:title]) || SecureRandom.uuid + '.md',
+      blob: StringIO.new(attrs[:body]),
+      blob_type: :text,
+      commit_message: attrs[:commit_message]
+    }.freeze
   end
 
   def find_post

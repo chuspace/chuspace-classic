@@ -7,6 +7,7 @@ class Post < ApplicationRecord
 
   belongs_to :author, class_name: 'User'
   belongs_to :repository, autosave: true
+  belongs_to :blob
 
   has_ancestry
   enum status: { draft: 0, published: 1, archived: 2 }
@@ -24,7 +25,7 @@ class Post < ApplicationRecord
   alias repo repository
 
   def to_param
-    slug || blob_name
+    slug
   end
 
   def topics=(val)
@@ -41,25 +42,6 @@ class Post < ApplicationRecord
 
   def body_html
     Markdown.to_html(body).html_safe
-  end
-
-  def commit_to_repo_and_save(message: nil, action: :add)
-    self.repository = author.repository
-
-    if valid?
-      self.blob_name = "#{slug}.md"
-      author.repository.commit_sha =
-        Git::Commit.create(
-          repository: repo,
-          committer: author,
-          action: action,
-          options: {
-            commit: { message: message || "Created post #{blob_name}" }, file: { content: body, path: blob_name }
-          }
-        )
-
-      self.save
-    end
   end
 
   def self.sync_from_repo(author:, repository:, commit_sha: nil)
