@@ -1,7 +1,7 @@
 <div class='right-nav flex items-center'>
   <%= component 'dropdown', flush: true, items: nav_items do |d| %>
     <% d.opener do %>
-      <%= component 'avatar', avatar: Current.user.avatar, initials: Current.user.initials, variant: :xs %>
+      <%= component 'avatar', avatar_url: Current.user.avatar_url(:sm), initials: Current.user.initials, variant: :sm %>
     <% end %>
   <% end %>
 </div>

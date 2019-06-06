@@ -21,7 +21,7 @@ class PostsController < ApplicationController
       persisted = post.commit_to_repo_and_save(message: params[:commit_message])
 
       if persisted
-        redirect_to post_show_path(nickname: Current.user.nickname, slug: post.slug)
+        redirect_to post_show_path(Current.user, post)
       else
         render json: { errors: post.errors.full_messages }, status: 422
       end
@@ -52,7 +52,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :slug, :excerpt, :body, :tag_slugs, :published_at, :status, :parent_slug)
+    params.require(:post).permit(:title, :slug, :excerpt, :body, :topics, :published_at, :status, :parent)
   end
 
   def find_post

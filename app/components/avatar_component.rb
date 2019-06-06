@@ -4,14 +4,14 @@ class AvatarComponent < Components::Component
   DEFAULT_CSS_CLASS = 'avatar'
 
   VARIANTS = {
-    xs: { size: 40, class: 'avatar--xs' },
-    sm: { size: 80, class: 'avatar--sm' },
-    md: { size: 120, class: 'avatar--md' },
-    lg: { size: 150, class: 'avatar--lg' }
+    sm: { size: 32, class: 'avatar--sm' },
+    md: { size: 64, class: 'avatar--md' },
+    lg: { size: 80, class: 'avatar--lg' },
+    xl: { size: 120, class: 'avatar--xl' }
   }.freeze
 
-  attribute :avatar
-  attribute :variant, default: :xs
+  attribute :avatar_url
+  attribute :variant, default: :sm
   attribute :initials
   attribute :options, default: {}
 
@@ -23,13 +23,13 @@ class AvatarComponent < Components::Component
 
   def css_classes
     classes = [DEFAULT_CSS_CLASS]
-    classes << 'avatar__badge' if avatar.blank?
+    classes << 'avatar__badge' if avatar_url.blank?
     classes << VARIANTS[variant][:class]
     classes.join(' ')
   end
 
   def render
-    avatar.blank? ? initials_badge : image
+    avatar_url.blank? ? initials_badge : image
   end
 
   private
@@ -39,7 +39,6 @@ class AvatarComponent < Components::Component
   end
 
   def image
-    url = Rails.application.routes.url_helpers.url_for(avatar.variant(resize_to_fit: [size, size]))
-    @view.image_tag(url, class: css_classes, **options)
+    @view.image_tag(avatar_url, class: css_classes, **options)
   end
 end

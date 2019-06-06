@@ -29,11 +29,14 @@ class Repository < ApplicationRecord
   before_validation :assign_default_attributes, on: :create
   before_create :create_git_repo, :create_git_hooks, :create_initial_commit_and_assign_commit_sha
   before_save :rename_git_repo, if: -> { !new_record? && path_changed? }
+  after_commit :sync_blobs
   after_destroy :destroy_git_repo
   after_rollback :destroy_git_repo, on: :create
 
   belongs_to :author, class_name: 'User'
   has_many :posts, dependent: :destroy
+  has_many :blobs, dependent: :destroy
+  validates_associated :blobs
   delegate :lookup, :checkout, :empty?, :bare?, :index, to: :rugged
 
   def commit
@@ -65,20 +68,6 @@ class Repository < ApplicationRecord
 
   def author_hash
     { name: author.name, email: author.email, nickname: author.nickname }.freeze
-  end
-
-  def blobs(ref = DEFAULT_REF)
-    return [] if empty?
-
-    Git::Blob.all(self)
-  end
-
-  def find_blob(id, ref = DEFAULT_REF)
-    Git::Blob.find(self, id, ref)
-  end
-
-  def find_commit(sha)
-    Git::Commit.find(self, sha)
   end
 
   def sha_from_ref(ref)
@@ -153,5 +142,9 @@ class Repository < ApplicationRecord
   def rename_git_repo
     Git.logger.info "Moving repository from #{path_was} to <#{path}>."
     FileUtils.mv(path_was, path)
+  end
+
+  def sync_blobs
+    SyncRepoBlobsJob.perform_later(self.id)
   end
 end

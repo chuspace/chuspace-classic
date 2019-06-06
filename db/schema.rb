@@ -10,31 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_01_073804) do
+ActiveRecord::Schema.define(version: 2019_06_05_190045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "active_storage_attachments", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "record_type", null: false
-    t.bigint "record_id", null: false
-    t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
-    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
-    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
-  end
-
-  create_table "active_storage_blobs", force: :cascade do |t|
-    t.string "key", null: false
-    t.string "filename", null: false
-    t.string "content_type"
-    t.text "metadata"
-    t.bigint "byte_size", null: false
-    t.string "checksum", null: false
-    t.datetime "created_at", null: false
-    t.index ["filename"], name: "index_active_storage_blobs_on_filename"
-    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  create_table "blobs", force: :cascade do |t|
+    t.text "name"
+    t.text "path"
+    t.text "blob_data"
+    t.boolean "binary", default: false
+    t.bigint "repository_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["binary"], name: "index_blobs_on_binary"
+    t.index ["path"], name: "index_blobs_on_path", unique: true
+    t.index ["repository_id"], name: "index_blobs_on_repository_id"
   end
 
   create_table "invites", force: :cascade do |t|
@@ -111,7 +102,7 @@ ActiveRecord::Schema.define(version: 2019_06_01_073804) do
     t.string "name", default: "", null: false
     t.string "email", default: "", null: false
     t.string "nickname", default: "", null: false
-    t.string "avatar"
+    t.string "avatar_data"
     t.string "auth_token", default: "", null: false
     t.text "bio"
     t.string "company"
@@ -129,7 +120,7 @@ ActiveRecord::Schema.define(version: 2019_06_01_073804) do
     t.index ["nickname"], name: "index_users_on_nickname", unique: true
   end
 
-  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "blobs", "repositories"
   add_foreign_key "invites", "users"
   add_foreign_key "posts", "repositories"
   add_foreign_key "ssh_keys", "users"

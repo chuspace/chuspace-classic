@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'mimemagic'
+
 class Post < ApplicationRecord
   SLUG_FORMAT = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 
@@ -7,17 +9,17 @@ class Post < ApplicationRecord
   belongs_to :repository, autosave: true
 
   has_ancestry
-  has_many_attached :images
-
   enum status: { draft: 0, published: 1, archived: 2 }
 
-  validates_presence_of :status
-  validates :title, :slug, length: { in: 10..100 }, allow_blank: true
-  validates :slug, format: { with: Regexp.new('\A' + SLUG_FORMAT.source + '\z') }, allow_blank: true
+  validates_presence_of :title, :slug, :status
+  validates :title, :slug, length: { in: 10..100 }
+  validates :slug, format: { with: Regexp.new('\A' + SLUG_FORMAT.source + '\z') }
   validates :excerpt, :slug, length: { in: 0..140 }, allow_blank: true
   validates_uniqueness_of :slug, scope: %i[author_id]
   validates :topics, length: { maximum: 3 }, allow_blank: true
   validates :published_at, date: { allow_nil: true }
+
+  before_validation :assign_slug
 
   alias repo repository
 
@@ -26,21 +28,19 @@ class Post < ApplicationRecord
   end
 
   def topics=(val)
-    super(topics&.map(&:parameterize))
+    super(val&.map { |topic| Slug.generate(topic) })
   end
 
-  def parent_slug
-    parent&.slug
-  end
-
-  def parent_slug=(slug)
-    self.parent = Post.find_by_slug(slug)
+  def parent=(val)
+    case val
+    when String then super(Post.find_by_slug(Slug.generate(val)))
+    when Post then val
+    else nil
+    end
   end
 
   def body_html
-    opts = { autolink: true, fenced_code_blocks: true, disable_indented_code_blocks: true, strikethrough: true }
-    markdown = ::Redcarpet::Markdown.new(Redcarpet::Render::HTML, **opts)
-    markdown.render(body).html_safe
+    Markdown.to_html(body).html_safe
   end
 
   def commit_to_repo_and_save(message: nil, action: :add)
@@ -48,7 +48,6 @@ class Post < ApplicationRecord
 
     if valid?
       self.blob_name = "#{slug}.md"
-
       author.repository.commit_sha =
         Git::Commit.create(
           repository: repo,
@@ -70,25 +69,31 @@ class Post < ApplicationRecord
       diff = old_rugged_commit.diff(new_rugged_commit)
 
       diff.deltas.each do |delta|
-        next unless delta.new_file[:path].ends_with?('.md')
+        mime = MimeMagic.by_path(delta.new_file[:path])
+        next unless mime.text?
 
-        blob = repository.find_blob(delta.new_file[:oid])
-        body = blob&.content
         old_name = delta.old_file[:path]
         new_name = delta.new_file[:path]
 
         case delta.status
         when :added
-          repository.posts.create(author: author, blob_name: new_name, body: body)
+          repository.posts.create!(author: author, blob_name: new_name)
         when :renamed, :modified
           post = repository.posts.find_by(author: author, blob_name: old_name)
-          post.update(body: body, blob_name: new_name)
+          post.update!(blob_name: new_name)
         when :deleted
-          repository.posts.find_by(author: author, blob_name: old_name).destroy
+          repository.posts.find_by(author: author, blob_name: old_name)&.destroy
         end
       end
 
-      repository.update(commit_sha: commit_sha)
+      repository.update(commit_sha: commit_sha || new_rugged_commit.oid)
     end
+  end
+
+  private
+
+  def assign_slug
+    self.title = Markdown.title(body || '') if title.blank?
+    self.slug = title ? Slug.generate(title) : SecureRandom.uuid
   end
 end

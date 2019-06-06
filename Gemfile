@@ -11,14 +11,15 @@ gem 'rails', '>= 6.0.0.rc1', '<= 6.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.x'
 
-# Markdown
-gem 'redcarpet'
+# File uploads
+gem 'aws-sdk-s3'
+gem 'fastimage'
+gem 'image_processing'
+gem 'ruby-vips'
+gem 'shrine'
 
 #  Nested tree
 gem 'ancestry'
-
-# Friendly urls
-gem 'babosa'
 
 # Forms
 gem 'simple_form'
@@ -31,12 +32,6 @@ gem 'webpacker', github: 'rails/webpacker'
 
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '>= 4.0'
-
-# Use ActiveStorage variant
-gem 'image_processing'
-gem 'aws-sdk-s3'
-gem 'down'
-gem 'http'
 
 # caching
 gem 'hiredis'
@@ -52,6 +47,7 @@ gem 'oj'
 
 # Jobs
 gem 'sidekiq'
+gem 'mini_scheduler'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
@@ -78,6 +74,14 @@ gem 'components', git: 'https://github.com/jensljungblad/components.git'
 
 # Security
 gem 'rack-attack'
+
+# Rust extensions
+gem 'helix-rails'
+gem 'markdown', path: 'crates/markdown'
+gem 'slug', path: 'crates/slug'
+
+# Link previews
+gem 'onebox'
 
 group :production do
   # Resource monitoring
