@@ -3,15 +3,15 @@
 class AppUploader < Shrine
   include ImageProcessing::Vips
 
-  plugin :backgrounding
-  plugin :determine_mime_type
-  plugin :store_dimensions
-  plugin :validation_helpers
   plugin :pretty_location
   plugin :processing
+  plugin :add_metadata
+  plugin :determine_mime_type
+  plugin :validation_helpers
   plugin :versions
   plugin :delete_promoted
   plugin :delete_raw
+  plugin :restore_cached_data
   plugin :cached_attachment_data
   plugin :logging
   plugin :recache

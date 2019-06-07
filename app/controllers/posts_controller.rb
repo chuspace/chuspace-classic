@@ -21,11 +21,12 @@ class PostsController < ApplicationController
       repository = author.repository
       blob = repository.blobs.build(blob_params)
       post = blob.build_post(post_params)
-
       post.assign_attributes(author: author, repository: repository)
 
-
       if blob.save
+        post.save
+        repository.commit_sha = blob.commit(message: params[:commit_message])
+        repository.save
         redirect_to post_show_path(Current.user, post)
       else
         render json: { errors: post.errors.full_messages }, status: 422
@@ -35,10 +36,12 @@ class PostsController < ApplicationController
 
   def update
     @post.assign_attributes(post_params)
+    @post.blob.assign_attributes(blob: StringIO.new(attrs[:body]))
 
-    if post.valid?
-      post.commit_sha = post.commit(committer: Current.user, message: params[:commit_message])
-      post.save
+    if @post.valid?
+      @post.repository.commit_sha = @post.commit(committer: Current.user, message: params[:commit_message])
+      @post.save
+
       redirect_to post_show_path(nickname: Current.user.nickname, slug: @post.slug)
     else
       render json: { errors: post.errors.full_messages }
@@ -47,7 +50,9 @@ class PostsController < ApplicationController
 
   def destroy
     if @post.destroy
-      @post.commit(committer: committer, message: params[:commit_message], action: :remove)
+      @post.repository.commit_sha = @post.commit(committer: Current.user, message: params[:commit_message])
+      @post.repository.save
+
       redirect_to root_path
     else
       redirect_to post_show_path(nickname: Current.user.nickname, slug: @post.slug)
@@ -61,13 +66,11 @@ class PostsController < ApplicationController
   end
 
   def blob_params
-    attrs = params.require(:post).permit(:title, :slug, :body, :commit_message)
+    attrs = params.require(:post).permit(:title, :slug, :body)
 
     {
-      path: attrs[:slug] || Slug.generate(attrs[:title]) || SecureRandom.uuid + '.md',
-      blob: StringIO.new(attrs[:body]),
-      blob_type: :text,
-      commit_message: attrs[:commit_message]
+      path: (attrs[:slug] || Slug.generate(attrs[:title]) || SecureRandom.uuid) + '.md',
+      blob: StringIO.new(attrs[:body])
     }.freeze
   end
 

@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-require_relative '../concerns/encoding_helper'
-
 module Git
   class Blob
-    include EncodingHelper
+    include ::EncodingHelper
     attr_accessor :name, :path, :size, :content, :mode, :id, :commit_sha, :binary
 
     class << self
@@ -31,7 +29,7 @@ module Git
             name: blob_entry[:name],
             size: blob.size,
             path: File.join('/', tree, blob_entry[:name]),
-            content: StringIO.new(blob.content),
+            content: blob.content,
             mode: blob_entry[:filemode].to_s(8),
             binary: blob.binary?
           )
@@ -40,11 +38,21 @@ module Git
     end
 
     def initialize(options)
-      %w[id name path size content mode commit_sha binary].each { |key| self.send("#{key}=", options[key.to_sym]) }
+      %w[id name path size content mode commit_sha binary].each do |key|
+        self.send("#{key}=", options[key.to_sym])
+      end
     end
 
     def binary?
       @binary.nil? ? super : @binary == true
+    end
+
+    def safe_content
+      encode!(content)
+    end
+
+    def io
+      StringIO.new(safe_content)
     end
 
     def empty?

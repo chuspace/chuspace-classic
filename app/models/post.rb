@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
-require 'mimemagic'
-
 class Post < ApplicationRecord
   SLUG_FORMAT = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 
   belongs_to :author, class_name: 'User'
-  belongs_to :repository, autosave: true
+  belongs_to :repository
   belongs_to :blob
 
   has_ancestry
@@ -19,6 +17,8 @@ class Post < ApplicationRecord
   validates_uniqueness_of :slug, scope: %i[author_id]
   validates :topics, length: { maximum: 3 }, allow_blank: true
   validates :published_at, date: { allow_nil: true }
+
+  delegate :content, to: :blob
 
   before_validation :assign_slug
 
@@ -41,41 +41,13 @@ class Post < ApplicationRecord
   end
 
   def body_html
-    Markdown.to_html(body).html_safe
-  end
-
-  def self.sync_from_repo(author:, repository:, commit_sha: nil)
-    Post.transaction do
-      old_rugged_commit = repository.commit
-      new_rugged_commit = commit_sha ? repository.lookup(commit_sha) : repository.head.target
-      diff = old_rugged_commit.diff(new_rugged_commit)
-
-      diff.deltas.each do |delta|
-        mime = MimeMagic.by_path(delta.new_file[:path])
-        next unless mime.text?
-
-        old_name = delta.old_file[:path]
-        new_name = delta.new_file[:path]
-
-        case delta.status
-        when :added
-          repository.posts.create!(author: author, blob_name: new_name)
-        when :renamed, :modified
-          post = repository.posts.find_by(author: author, blob_name: old_name)
-          post.update!(blob_name: new_name)
-        when :deleted
-          repository.posts.find_by(author: author, blob_name: old_name)&.destroy
-        end
-      end
-
-      repository.update(commit_sha: commit_sha || new_rugged_commit.oid)
-    end
+    @body_html ||= Markdown.to_html(content).html_safe
   end
 
   private
 
   def assign_slug
-    self.title = Markdown.title(body || '') if title.blank?
-    self.slug = title ? Slug.generate(title) : SecureRandom.uuid
+    self.title = Markdown.title(content || '') if title.blank?
+    self.slug = title ? Slug.generate(title) : SecureRandom.uuid if slug.blank? || slug_changed?
   end
 end

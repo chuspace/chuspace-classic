@@ -17,6 +17,8 @@ gem 'fastimage'
 gem 'image_processing'
 gem 'ruby-vips'
 gem 'shrine'
+gem 'mime-types'
+gem 'marcel'
 
 #  Nested tree
 gem 'ancestry'

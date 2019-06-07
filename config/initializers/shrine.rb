@@ -20,14 +20,6 @@ require 'shrine/plugins/versions'
 
 Shrine.plugin :activerecord
 Shrine.plugin :backgrounding
-Shrine.plugin :cached_attachment_data
-Shrine.plugin :data_uri
-Shrine.plugin :determine_mime_type
-Shrine.plugin :logging
-Shrine.plugin :restore_cached_data
-Shrine.plugin :store_dimensions
-Shrine.plugin :validation_helpers
-Shrine.plugin :versions
 
 def production_storages
   s3_options = {
