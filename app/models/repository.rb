@@ -34,9 +34,8 @@ class Repository < ApplicationRecord
 
   belongs_to :author, class_name: 'User'
   has_many :posts, dependent: :destroy
-  has_many :blobs, dependent: :destroy
+  has_many :images, dependent: :destroy
 
-  validates_associated :blobs
   delegate :lookup, :checkout, :empty?, :bare?, :index, to: :rugged
 
   def commit
@@ -83,6 +82,27 @@ class Repository < ApplicationRecord
 
   def merge_base_commit(from, to)
     rugged.merge_base(from, to)
+  end
+
+  def commit(action: :add, message:, content:, path:)
+    message ||= case action
+                when :add
+                  "Created #{path}"
+                when :update
+                  "Updated #{path}"
+                when :remove
+                  "Deleted #{path}"
+    end
+
+    Git::Commit.create(
+      repository: self,
+      committer: self.author,
+      action: action,
+      options: {
+        commit: { message: message },
+        file: { content: content, path: path }
+      }
+    )
   end
 
   private

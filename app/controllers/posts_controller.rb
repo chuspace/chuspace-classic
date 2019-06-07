@@ -20,8 +20,8 @@ class PostsController < ApplicationController
       author = Current.user
       repository = author.repository
       blob = repository.blobs.build(blob_params)
-      post = blob.build_post(post_params)
-      post.assign_attributes(author: author, repository: repository)
+      post = repository.posts.build(post_params)
+      post.assign_attributes(author: author)
 
       if blob.save
         post.save

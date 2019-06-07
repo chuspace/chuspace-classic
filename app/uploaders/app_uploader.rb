@@ -7,6 +7,7 @@ class AppUploader < Shrine
   plugin :processing
   plugin :add_metadata
   plugin :determine_mime_type
+  plugin :store_dimensions
   plugin :validation_helpers
   plugin :versions
   plugin :delete_promoted

@@ -12,30 +12,21 @@ class PostReceiveJob < ApplicationJob
       return
     end
 
-    if commit_sha == repository.commit_sha
-      Rails.logger.error("Everything up to date: author-#{author.id} repository-#{repository.id}")
-      return
-    end
+    blobs = Git::Blob.all(repository, repository.head.target.oid)
 
-    old_rugged_commit = repository.commit
-    new_rugged_commit = repository.lookup(commit_sha)
-    diff = old_rugged_commit.diff(new_rugged_commit)
-    blobs ||= Git::Blob.all(repository, commit_sha)
+    blobs.each do |git_blob|
+      mime_type = Shrine.determine_mime_type(git_blob.io)
 
-    diff&.deltas&.each do |delta|
-      git_blob = blobs.find { |blob| blob.id == delta.new_file[:oid] }
-
-      case delta.status
-      when :added, :renamed
-        blob = repository.blobs.create(blob: git_blob.io, path: git_blob.path)
-        next unless git_blob.binary?
-
-        blob.create_post(repository: repository, author: author)
-      when :modified
-        blob = repository.blobs.find_by(path: File.join('/', delta.old_file[:path]))
-        blob.update(blob: git_blob.io, path: git_blob.path)
-      when :deleted
-        repository.blobs.find_by(path: File.join('/', delta.old_file[:path]))&.destroy
+      if mime_type.include?('image')
+        image = repository.images.find_or_initialize_by(repository: repository, path: git_blob.path)
+        image.assign_attributes(blob_path: git_blob.path, image: git_blob.io)
+        image.save
+      elsif mime_type.include?('text')
+        post = repository.posts.find_or_initialize_by(repository: repository, path: git_blob.path)
+        post.assign_attributes(blob_path: git_blob.path, author: author)
+        post.save
+      else
+        Rails.logger.error("Repository invalid mime: mime-#{mime_type} commit-#{commit_sha} author-#{author.id} repository-#{repository.id}")
       end
     end
 
