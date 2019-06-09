@@ -5,7 +5,6 @@ class Post < ApplicationRecord
 
   belongs_to :author, class_name: 'User'
   belongs_to :repository
-  belongs_to :blob
 
   has_ancestry
   enum status: { draft: 0, published: 1, archived: 2 }
@@ -18,11 +17,27 @@ class Post < ApplicationRecord
   validates :topics, length: { maximum: 3 }, allow_blank: true
   validates :published_at, date: { allow_nil: true }
 
-  delegate :content, to: :blob
+  delegate :safe_content, to: :blob, allow_nil: true
 
   before_validation :assign_slug
 
   alias repo repository
+
+  def self.url_for(blob_path)
+    blob_path = blob_path[1..-1] if blob_path.starts_with?('/')
+    post = find_by(blob_path: blob_path)
+
+    if post
+      author = post.author
+      Rails.application.routes.url_helpers.post_show_path(author, post)
+    else
+      blob_path
+    end
+  end
+
+  def blob
+    Git::Blob.all(repository, repository.commit_sha).find { |blob| blob.path == blob_path }
+  end
 
   def to_param
     slug
@@ -41,13 +56,13 @@ class Post < ApplicationRecord
   end
 
   def body_html
-    @body_html ||= Markdown.to_html(content).html_safe
+    @body_html ||= FastMarkdown.to_html(safe_content).html_safe
   end
 
   private
 
   def assign_slug
-    self.title = Markdown.title(content || '') if title.blank?
-    self.slug = title ? Slug.generate(title) : SecureRandom.uuid if slug.blank? || slug_changed?
+    self.title = FastMarkdown.title(safe_content || '') if title.blank?
+    self.slug = title ? FastSlug.generate(title) : SecureRandom.uuid if slug.blank? || slug_changed?
   end
 end

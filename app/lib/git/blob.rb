@@ -28,7 +28,7 @@ module Git
             id: blob.oid,
             name: blob_entry[:name],
             size: blob.size,
-            path: File.join('/', tree, blob_entry[:name]),
+            path: tree.blank? ? blob_entry[:name] : File.join(tree, blob_entry[:name]),
             content: blob.content,
             mode: blob_entry[:filemode].to_s(8),
             binary: blob.binary?

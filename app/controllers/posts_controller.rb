@@ -19,14 +19,11 @@ class PostsController < ApplicationController
     Post.transaction do
       author = Current.user
       repository = author.repository
-      blob = repository.blobs.build(blob_params)
       post = repository.posts.build(post_params)
-      post.assign_attributes(author: author)
+      post.assign_attributes(author: author, blob_path: blob_params[:path])
 
-      if blob.save
-        post.save
-        repository.commit_sha = blob.commit(message: params[:commit_message])
-        repository.save
+      if post.save
+        repository.commit(message: params[:commit_message], content: blob_params[:blob], path: blob_params[:path])
         redirect_to post_show_path(Current.user, post)
       else
         render json: { errors: post.errors.full_messages }, status: 422
@@ -36,11 +33,9 @@ class PostsController < ApplicationController
 
   def update
     @post.assign_attributes(post_params)
-    @post.blob.assign_attributes(blob: StringIO.new(attrs[:body]))
 
-    if @post.valid?
-      @post.repository.commit_sha = @post.commit(committer: Current.user, message: params[:commit_message])
-      @post.save
+    if @post.save
+      @post.repository.commit(message: params[:commit_message], content: blob_params[:body], path: blob_params[:path])
 
       redirect_to post_show_path(nickname: Current.user.nickname, slug: @post.slug)
     else
@@ -50,8 +45,7 @@ class PostsController < ApplicationController
 
   def destroy
     if @post.destroy
-      @post.repository.commit_sha = @post.commit(committer: Current.user, message: params[:commit_message])
-      @post.repository.save
+      @post.repository.commit(committer: Current.user, message: params[:commit_message])
 
       redirect_to root_path
     else
@@ -67,10 +61,9 @@ class PostsController < ApplicationController
 
   def blob_params
     attrs = params.require(:post).permit(:title, :slug, :body)
-
     {
-      path: (attrs[:slug] || Slug.generate(attrs[:title]) || SecureRandom.uuid) + '.md',
-      blob: StringIO.new(attrs[:body])
+      path: (attrs[:slug] || FastSlug.generate(attrs[:title]) || SecureRandom.uuid) + '.md',
+      blob: attrs[:body]
     }.freeze
   end
 

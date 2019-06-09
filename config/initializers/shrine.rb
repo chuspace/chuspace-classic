@@ -20,6 +20,7 @@ require 'shrine/plugins/versions'
 
 Shrine.plugin :activerecord
 Shrine.plugin :backgrounding
+Shrine.plugin :determine_mime_type
 
 def production_storages
   s3_options = {

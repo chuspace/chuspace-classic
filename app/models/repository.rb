@@ -94,7 +94,7 @@ class Repository < ApplicationRecord
                   "Deleted #{path}"
     end
 
-    Git::Commit.create(
+    commit_sha = Git::Commit.create(
       repository: self,
       committer: self.author,
       action: action,
@@ -103,6 +103,8 @@ class Repository < ApplicationRecord
         file: { content: content, path: path }
       }
     )
+
+    self.update(commit_sha: commit_sha)
   end
 
   private

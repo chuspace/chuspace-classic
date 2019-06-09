@@ -7,7 +7,7 @@ ruby '2.6.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '>= 6.0.0.rc1', '<= 6.1'
-
+gem 'bundler', '1.17.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.x'
 
@@ -68,9 +68,6 @@ gem 'sshkey'
 # Instrumentation
 gem 'yabeda'
 
-# Faster pathname
-gem 'faster_path'
-
 # View components
 gem 'components', git: 'https://github.com/jensljungblad/components.git'
 
@@ -78,9 +75,9 @@ gem 'components', git: 'https://github.com/jensljungblad/components.git'
 gem 'rack-attack'
 
 # Rust extensions
-gem 'helix-rails'
-gem 'markdown', path: 'crates/markdown'
-gem 'slug', path: 'crates/slug'
+gem 'fast_markdown', path: 'fast_markdown'
+gem 'fast_slug', path: 'fast_slug'
+gem 'faster_path'
 
 # Link previews
 gem 'onebox'

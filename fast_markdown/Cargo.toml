@@ -1,0 +1,14 @@
+[package]
+name = "fast_markdown"
+version = "0.1.0"
+authors = ["Gaurav Tiwari <gaurav@gauravtiwari.co.uk>"]
+edition = "2018"
+
+[dependencies]
+rutie = "0.5.6"
+pulldown-cmark = { path = "./vendor/pulldown-cmark"}
+
+
+[lib]
+name = "fast_markdown"
+crate-type = ["dylib"]

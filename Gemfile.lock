@@ -7,24 +7,24 @@ GIT
 
 GIT
   remote: https://github.com/rails/webpacker.git
-  revision: 6cb399bc5599ee60f6a5f2e7788aaba20bd87248
+  revision: 891b50d61eadfc41422a8437cbcbdf199c7f13fc
   specs:
-    webpacker (4.0.6)
+    webpacker (4.0.7)
       activesupport (>= 4.2)
       rack-proxy (>= 0.6.1)
       railties (>= 4.2)
 
 PATH
-  remote: crates/markdown
+  remote: fast_markdown
   specs:
-    markdown (1.0.0)
-      helix_runtime (~> 0.7.5)
+    fast_markdown (0.1.0)
+      rutie (>= 0.0.3)
 
 PATH
-  remote: crates/slug
+  remote: fast_slug
   specs:
-    slug (1.0.0)
-      helix_runtime (~> 0.7.5)
+    fast_slug (0.1.0)
+      rutie (>= 0.0.3)
 
 GEM
   remote: https://rubygems.org/
@@ -88,13 +88,13 @@ GEM
       zeitwerk (~> 2.1, >= 2.1.4)
     addressable (2.6.0)
       public_suffix (>= 2.0.2, < 4.0)
-    ancestry (3.0.6)
+    ancestry (3.0.7)
       activerecord (>= 3.2.0)
     ast (2.4.0)
     awesome_print (1.8.0)
     aws-eventstream (1.0.3)
-    aws-partitions (1.170.0)
-    aws-sdk-core (3.54.1)
+    aws-partitions (1.173.0)
+    aws-sdk-core (3.54.2)
       aws-eventstream (~> 1.0, >= 1.0.2)
       aws-partitions (~> 1.0)
       aws-sigv4 (~> 1.1)
@@ -102,7 +102,7 @@ GEM
     aws-sdk-kms (1.21.0)
       aws-sdk-core (~> 3, >= 3.53.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.41.0)
+    aws-sdk-s3 (1.42.0)
       aws-sdk-core (~> 3, >= 3.53.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.1)
@@ -157,13 +157,6 @@ GEM
     ffi (1.11.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    helix-rails (0.5.0)
-      helix_runtime (>= 0.5.0)
-      rails (>= 4.0)
-    helix_runtime (0.7.5)
-      rake (>= 10.0)
-      thor (>= 0.19.4, < 2.0)
-      tomlrb (~> 1.2.4)
     hiredis (0.6.3)
     htmlentities (4.3.4)
     i18n (1.6.0)
@@ -288,6 +281,7 @@ GEM
       ffi (~> 1.9)
     rubyzip (1.2.3)
     rugged (0.28.1)
+    rutie (0.0.4)
     sanitize (5.0.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.8.0)
@@ -368,6 +362,7 @@ DEPENDENCIES
   aws-sdk-s3
   bootsnap (>= 1.1.0)
   brakeman
+  bundler (= 1.17.2)
   byebug
   capybara
   charlock_holmes
@@ -376,16 +371,15 @@ DEPENDENCIES
   dotenv-rails
   easymon
   faker
+  fast_markdown!
+  fast_slug!
   faster_path
   fastimage
-  helix-rails
   hiredis
   image_processing
   marcel
-  markdown!
   memory_profiler
   mime-types
-  mimemagic
   mini_scheduler
   minitest
   oj
@@ -410,7 +404,6 @@ DEPENDENCIES
   simple_form
   simplecov
   simplecov-lcov
-  slug!
   sshkey
   turbolinks
   turbolinks_render
