@@ -19,12 +19,14 @@ PATH
   specs:
     fast_markdown (0.1.0)
       rutie (>= 0.0.3)
+      thermite
 
 PATH
   remote: fast_slug
   specs:
     fast_slug (0.1.0)
       rutie (>= 0.0.3)
+      thermite
 
 GEM
   remote: https://rubygems.org/

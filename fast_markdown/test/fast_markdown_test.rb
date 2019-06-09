@@ -7,7 +7,7 @@ class FastMarkdownTest < Minitest::Test
     refute_nil ::FastMarkdown::VERSION
   end
 
-  def test_it_does_something_useful
-    assert false
+  def test_it_converts_to_html
+    assert_equal FastMarkdown.to_html('# hello ds'), "<h1>hello ds</h1>\n"
   end
 end

@@ -3,19 +3,26 @@ PATH
   specs:
     fast_markdown (0.1.0)
       rutie (>= 0.0.3)
+      thermite
 
 GEM
   remote: https://rubygems.org/
   specs:
+    minitar (0.8)
     minitest (5.11.3)
     rake (12.3.2)
     rutie (0.0.4)
+    thermite (0.13.0)
+      minitar (~> 0.5)
+      rake (>= 10)
+      tomlrb (~> 1.2)
+    tomlrb (1.2.8)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (>= 1.7.2, <= 2.0)
+  bundler (>= 1.17.2, <= 2.0)
   fast_markdown!
   minitest (>= 5.0)
   rake (>= 10.0)

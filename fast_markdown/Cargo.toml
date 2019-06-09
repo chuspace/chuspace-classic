@@ -6,7 +6,7 @@ edition = "2018"
 
 [dependencies]
 rutie = "0.5.6"
-pulldown-cmark = { path = "./vendor/pulldown-cmark"}
+pulldown-cmark = "0.5.2"
 
 
 [lib]

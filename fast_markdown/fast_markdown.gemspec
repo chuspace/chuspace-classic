@@ -35,7 +35,9 @@ Gem::Specification.new do |spec|
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
+  spec.extensions << 'ext/Rakefile'
 
+  spec.add_runtime_dependency 'thermite', '>= 0'
   spec.add_dependency 'rutie', '>= 0.0.3'
 
   spec.add_development_dependency 'bundler', '>= 1.17.2', '<= 2.0'

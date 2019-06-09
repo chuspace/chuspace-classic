@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Gaurav Tiwari']
   spec.email         = ['gaurav@gauravtiwari.co.uk']
 
-  spec.summary      = 'Fast slug to html parser built in rust'
+  spec.summary = 'Fast slug to html parser built in rust'
   spec.description   = 'Fast slug to html parser built in rust'
   spec.homepage      = 'https://github.com/chuspace/chuspace'
 
@@ -37,7 +37,9 @@ Gem::Specification.new do |spec|
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
+  spec.extensions << 'ext/Rakefile'
 
+  spec.add_runtime_dependency 'thermite', '>= 0'
   spec.add_dependency 'rutie', '>= 0.0.3'
   spec.add_development_dependency 'bundler', '>= 1.17.2', '<= 2.0'
   spec.add_development_dependency 'rake', '>= 10.0'
