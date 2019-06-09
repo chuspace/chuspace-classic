@@ -16,8 +16,8 @@ Rails.application.routes.draw do
   resources :magic_logins, only: :index
   resources :invites, only: :create
 
-  resources :users, path: 'u', param: :nickname, except: :show
-  resources :posts, path: 'p', param: :slug, except: :show
+  resources :users, path: 'u', except: :show
+  resources :posts, path: 'p', except: :show
 
   resources :settings, only: :index
 

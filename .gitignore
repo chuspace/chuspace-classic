@@ -63,3 +63,4 @@ bin/git-hooks/*
 
 # Env
 .env
+public/uploads

@@ -34,6 +34,8 @@ class Repository < ApplicationRecord
 
   belongs_to :author, class_name: 'User'
   has_many :posts, dependent: :destroy
+  has_many :images, dependent: :destroy
+
   delegate :lookup, :checkout, :empty?, :bare?, :index, to: :rugged
 
   def commit
@@ -67,20 +69,6 @@ class Repository < ApplicationRecord
     { name: author.name, email: author.email, nickname: author.nickname }.freeze
   end
 
-  def blobs(ref = DEFAULT_REF)
-    return [] if empty?
-
-    Git::Blob.all(self)
-  end
-
-  def find_blob(id, ref = DEFAULT_REF)
-    Git::Blob.find(self, id, ref)
-  end
-
-  def find_commit(sha)
-    Git::Commit.find(self, sha)
-  end
-
   def sha_from_ref(ref)
     rev_parse_target(ref).oid
   rescue Rugged::ReferenceError
@@ -94,6 +82,29 @@ class Repository < ApplicationRecord
 
   def merge_base_commit(from, to)
     rugged.merge_base(from, to)
+  end
+
+  def commit(action: :add, message:, content:, path:)
+    message ||= case action
+                when :add
+                  "Created #{path}"
+                when :update
+                  "Updated #{path}"
+                when :remove
+                  "Deleted #{path}"
+    end
+
+    commit_sha = Git::Commit.create(
+      repository: self,
+      committer: self.author,
+      action: action,
+      options: {
+        commit: { message: message },
+        file: { content: content, path: path }
+      }
+    )
+
+    self.update(commit_sha: commit_sha)
   end
 
   private

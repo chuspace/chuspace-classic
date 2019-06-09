@@ -2,13 +2,13 @@
 
 class User < ApplicationRecord
   include Trackable
+  include AvatarUploader::Attachment.new(:avatar)
 
   validates :email, presence: true, uniqueness: true, email: true
   validates :name, presence: true
   validates :nickname,
             presence: true, uniqueness: true, length: { in: 1..39 }, format: { with: /\A[a-z\d]+[-a-z\d]*[a-z\d]\z/i }
 
-  has_one_attached :avatar
   has_secure_token :auth_token
 
   has_many :ssh_keys, dependent: :destroy

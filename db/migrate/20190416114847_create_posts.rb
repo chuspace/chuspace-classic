@@ -5,20 +5,18 @@ class CreatePosts < ActiveRecord::Migration[6.0]
     create_table :posts do |t|
       t.string :title
       t.string :slug
-
       t.text :excerpt
-      t.text :body
 
       t.bigint :author_id, foreign_key: true, null: false
       t.index :author_id
+
+      t.string :blob_path
+      t.index :blob_path, unique: true
 
       t.references :repository, foreign_key: true, null: false
 
       t.string :ancestry
       t.index :ancestry
-
-      t.string :blob_name, null: false
-      t.index %i[blob_name repository_id], unique: true
 
       t.integer :status, default: 0, null: false
       t.index :status

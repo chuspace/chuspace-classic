@@ -6,7 +6,6 @@ require 'rails'
 require 'active_model/railtie'
 require 'active_job/railtie'
 require 'active_record/railtie'
-require 'active_storage/engine'
 require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'action_view/railtie'
@@ -28,9 +27,6 @@ module Chuspace
 
     # Setup custom path for mailer previews
     config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
-
-    # Use Vips for processing variants.
-    config.active_storage.variant_processor = :vips
 
     # Configure rack attack
     config.middleware.use Rack::Attack unless Rails.env.test?

@@ -17,11 +17,14 @@ class PostsController < ApplicationController
 
   def create
     Post.transaction do
-      post = Current.user.posts.build(post_params)
-      persisted = post.commit_to_repo_and_save(message: params[:commit_message])
+      author = Current.user
+      repository = author.repository
+      post = repository.posts.build(post_params)
+      post.assign_attributes(author: author, blob_path: blob_params[:path])
 
-      if persisted
-        redirect_to post_show_path(nickname: Current.user.nickname, slug: post.slug)
+      if post.save
+        repository.commit(message: params[:commit_message], content: blob_params[:blob], path: blob_params[:path])
+        redirect_to post_show_path(Current.user, post)
       else
         render json: { errors: post.errors.full_messages }, status: 422
       end
@@ -31,9 +34,9 @@ class PostsController < ApplicationController
   def update
     @post.assign_attributes(post_params)
 
-    if post.valid?
-      post.commit_sha = post.commit(committer: Current.user, message: params[:commit_message])
-      post.save
+    if @post.save
+      @post.repository.commit(message: params[:commit_message], content: blob_params[:body], path: blob_params[:path])
+
       redirect_to post_show_path(nickname: Current.user.nickname, slug: @post.slug)
     else
       render json: { errors: post.errors.full_messages }
@@ -42,7 +45,8 @@ class PostsController < ApplicationController
 
   def destroy
     if @post.destroy
-      @post.commit(committer: committer, message: params[:commit_message], action: :remove)
+      @post.repository.commit(committer: Current.user, message: params[:commit_message])
+
       redirect_to root_path
     else
       redirect_to post_show_path(nickname: Current.user.nickname, slug: @post.slug)
@@ -52,7 +56,15 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :slug, :excerpt, :body, :tag_slugs, :published_at, :status, :parent_slug)
+    params.require(:post).permit(:title, :slug, :excerpt, :topics, :published_at, :status, :parent)
+  end
+
+  def blob_params
+    attrs = params.require(:post).permit(:title, :slug, :body)
+    {
+      path: (attrs[:slug] || FastSlug.generate(attrs[:title]) || SecureRandom.uuid) + '.md',
+      blob: attrs[:body]
+    }.freeze
   end
 
   def find_post

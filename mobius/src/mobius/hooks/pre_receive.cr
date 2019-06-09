@@ -4,7 +4,7 @@ module Mobius
       getter refs : Array(String)
 
       MAX_SIZE = 1024*1024
-      MAX_IMAGE_SIZE = 25
+      MAX_IMAGE_SIZE = 15
       MAX_POST_SIZE = 0.5
       FILE_NAME_RANGE = 1..100
       FILENAME_REGEX = /^(?:.+\/)*(.*)(\.[^.]+)$/
@@ -66,7 +66,7 @@ module Mobius
         buf_size = blob.bytesize
 
         default_encoding = {
-          type: "plain/text",
+          type: "text/plain",
           binary: !blob.try &.valid_encoding?,
           size: (buf_size / MAX_SIZE.to_f).try &.round(2)
         }

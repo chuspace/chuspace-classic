@@ -1,0 +1,24 @@
+PATH
+  remote: .
+  specs:
+    fast_markdown (0.1.0)
+      rutie (>= 0.0.3)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    minitest (5.11.3)
+    rake (12.3.2)
+    rutie (0.0.4)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (>= 1.7.2, <= 2.0)
+  fast_markdown!
+  minitest (>= 5.0)
+  rake (>= 10.0)
+
+BUNDLED WITH
+   1.17.2

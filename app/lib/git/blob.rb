@@ -1,35 +1,26 @@
 # frozen_string_literal: true
 
-require_relative '../concerns/encoding_helper'
-
 module Git
   class Blob
-    include EncodingHelper
-    MAX_DATA_DISPLAY_SIZE = 10_485_760
+    include ::EncodingHelper
     attr_accessor :name, :path, :size, :content, :mode, :id, :commit_sha, :binary
 
     class << self
-      def find(repository, id, branch = 'master')
-        rugged = repository.rugged
-        root_tree = repository.head.target.tree
-        blob_entry = root_tree.find { |entry| entry[:oid] == id }
-        return nil unless blob_entry
+      def all(repository, commit_sha = nil)
+        tree = commit_sha ? repository.lookup(commit_sha).tree : repository.head.target.tree
 
-        from(repository, blob_entry)
-      end
-
-      def all(repository, branch = 'master')
-        repository.head.target.tree.each_with_object([]) do |item, array|
+        tree.each_with_object([]) do |item, blobs|
           case item[:type]
           when :blob
-            array << from(repository, item)
+            blobs << from(repository, item)
           when :tree
-            repository.lookup(item[:oid]).each { |entry| array << from(repository, entry) }
+            tree = repository.lookup(item[:oid])
+            tree.each { |entry| blobs << from(repository, entry, item[:name]) }
           end
         end
       end
 
-      def from(repository, blob_entry)
+      def from(repository, blob_entry, tree = '')
         blob = repository.lookup(blob_entry[:oid])
 
         if blob
@@ -37,9 +28,9 @@ module Git
             id: blob.oid,
             name: blob_entry[:name],
             size: blob.size,
-            content: blob.content(MAX_DATA_DISPLAY_SIZE),
+            path: tree.blank? ? blob_entry[:name] : File.join(tree, blob_entry[:name]),
+            content: blob.content,
             mode: blob_entry[:filemode].to_s(8),
-            path: blob_entry[:name],
             binary: blob.binary?
           )
         end
@@ -47,11 +38,21 @@ module Git
     end
 
     def initialize(options)
-      %w[id name path size content mode commit_sha binary].each { |key| self.send("#{key}=", options[key.to_sym]) }
+      %w[id name path size content mode commit_sha binary].each do |key|
+        self.send("#{key}=", options[key.to_sym])
+      end
     end
 
     def binary?
       @binary.nil? ? super : @binary == true
+    end
+
+    def safe_content
+      encode!(content)
+    end
+
+    def io
+      StringIO.new(safe_content)
     end
 
     def empty?
