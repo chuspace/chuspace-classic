@@ -373,6 +373,7 @@ DEPENDENCIES
   pundit
   rack-attack
   rack-mini-profiler
+  rack-proxy
   rails (>= 6.0.0.rc1, <= 6.1)
   rails-controller-testing
   redis (>= 4.0)

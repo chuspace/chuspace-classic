@@ -24,4 +24,8 @@ class User < ApplicationRecord
   def initials
     name.gsub(/([[:upper:]])[[:lower:]]+/, '\1').tr(' ', '')
   end
+
+  def avatar_path
+    "local:///#{nickname}/#{avatar}".freeze
+  end
 end

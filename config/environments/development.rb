@@ -53,4 +53,8 @@ Rails.application.configure do
   config.active_record.migration_error = :page_load
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # Add proxy to redirect to img proxy host in development
+  # in production we would use nginx or similar
+  config.middleware.insert_before 0, ImgproxyMiddleware, backend: ENV.fetch('IMGPROXY_ENDPOINT'), streaming: false
 end

@@ -32,8 +32,9 @@ class UsersController < ApplicationController
     if params[:user][:avatar].present?
       uploaded_io = params[:user][:avatar]
 
-      FileUtils.mkdir_p(Rails.root.join('public', 'uploads'))
-      File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
+      path = Rails.root.join('public', 'uploads', user.nickname)
+      FileUtils.mkdir_p(path)
+      File.open(path.join(uploaded_io.original_filename), 'wb') do |file|
         file.write(uploaded_io.read)
       end
 

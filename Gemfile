@@ -89,6 +89,7 @@ group :development, :test do
   gem 'coveralls', require: false
   gem 'minitest'
   gem 'dotenv-rails'
+  gem 'rack-proxy'
 end
 
 
