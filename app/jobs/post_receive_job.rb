@@ -21,21 +21,14 @@ class PostReceiveJob < ApplicationJob
 
     diff.deltas.each do |delta|
       git_blob = blobs.find { |blob| blob.id == delta.new_file[:oid] }
-      type = case FasterPath.extname(git_blob&.path || delta.old_file[:path])
-             when '.md' then 'post'
-             when '.png', '.jpg', '.gif', '.jpeg' then 'image'
-      end
+      next unless FasterPath.extname(git_blob&.path || delta.old_file[:path]).end_with?('.md')
+
 
       case delta.status
       when :added, :modified, :renamed
         create_or_update(git_blob, type) if git_blob
       when :deleted
-        case type
-        when 'post'
-          repository.posts.find_by(repository: repository, blob_path: delta.old_file[:path])&.destroy
-        when 'image'
-          repository.images.find_by(repository: repository, blob_path: delta.old_file[:path])&.destroy
-        end
+        repository.posts.find_by(repository: repository, blob_path: delta.old_file[:path])&.destroy
       end
     end
 
@@ -49,17 +42,8 @@ class PostReceiveJob < ApplicationJob
   private
 
   def create_or_update(git_blob, type)
-    case type
-    when 'image'
-      image = repository.images.find_or_initialize_by(repository: repository, blob_path: git_blob.path)
-      image.assign_attributes(blob_path: git_blob.path, image: git_blob.io)
-      image.save
-    when 'post'
-      post = repository.posts.find_or_initialize_by(repository: repository, blob_path: git_blob.path)
-      post.assign_attributes(blob_path: git_blob.path, author: author)
-      post.save
-    else
-      Rails.logger.error("Repository unknown type: #{type} commit-#{commit_sha} author-#{author.id} repository-#{repository.id}")
-    end
+    post = repository.posts.find_or_initialize_by(repository: repository, blob_path: git_blob.path)
+    post.assign_attributes(blob_path: git_blob.path, author: author)
+    post.save
   end
 end

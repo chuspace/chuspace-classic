@@ -2,7 +2,6 @@
 
 class User < ApplicationRecord
   include Trackable
-  include AvatarUploader::Attachment.new(:avatar)
 
   validates :email, presence: true, uniqueness: true, email: true
   validates :name, presence: true

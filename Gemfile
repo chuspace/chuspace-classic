@@ -13,12 +13,7 @@ gem 'pg', '>= 1.x'
 
 # File uploads
 gem 'aws-sdk-s3'
-gem 'fastimage'
-gem 'image_processing'
-gem 'ruby-vips'
-gem 'shrine'
-gem 'mime-types'
-gem 'marcel'
+gem 'imgproxy'
 
 #  Nested tree
 gem 'ancestry'
