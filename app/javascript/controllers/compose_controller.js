@@ -14,7 +14,7 @@ export default class extends Controller {
       element: this.editorTarget,
       autoFocus: true,
       editable: true,
-      content: '<p>This is just a boring paragraph</p>'
+      content: this.editorTarget.dataset.content || ''
     })
   }
 

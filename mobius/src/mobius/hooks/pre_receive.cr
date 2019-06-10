@@ -44,7 +44,7 @@ module Mobius
           errors << "#{file}: File name out of range, should be #{FILE_NAME_RANGE} chars" unless FILE_NAME_RANGE.includes?(file.size)
 
           case mime_type
-          when "plain/text"
+          when "text/plain"
             errors << "#{file}: Max post size is #{MAX_POST_SIZE}MB" if encoding[:size] > MAX_POST_SIZE
           when "image/gif", "image/png", "image/jpeg"
             errors << "#{file}: Max image size is #{MAX_IMAGE_SIZE}MB" if encoding[:size] > MAX_IMAGE_SIZE

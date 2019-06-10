@@ -35,6 +35,7 @@ export default class Editor {
   options = {}
   element: HTMLElement
   keymaps: any
+  content: string
   inputRules: []
   pasteRules: []
   state: EditorState
@@ -86,7 +87,7 @@ export default class Editor {
   createState() {
     return EditorState.create({
       schema: schema,
-      doc: markdownParser.parse(''),
+      doc: markdownParser.parse(this.options.content),
       plugins: [
         ...manager.plugins,
         inputRules({

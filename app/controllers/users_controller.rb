@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :find_user, only: :show
 
   def show
-    @posts = @user.posts.includes(:author).limit(20)
+    @posts = @user.posts.includes(:author).limit(20).order(id: :desc)
   end
 
   def create

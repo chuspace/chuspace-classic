@@ -7,12 +7,15 @@ class PostsController < ApplicationController
   layout 'editor', only: :new
 
   def index
-    @posts = Post.all.limit(20)
+    @posts = Post.all.limit(20).order(id: :desc)
   end
 
   def show
     @post = Post.find_by(slug: params[:slug])
     redirect_to root_path if @post.blank?
+  end
+
+  def edit
   end
 
   def create
@@ -68,6 +71,6 @@ class PostsController < ApplicationController
   end
 
   def find_post
-    @post = Post.find_by(slug: params[:slug])
+    @post = Post.find_by(slug: params[:id])
   end
 end
