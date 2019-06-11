@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   before_action :authenticate!, only: %i[new create]
   before_action :find_post, except: :index
 
-  layout 'editor', only: :new
+  layout 'editor', only: %i[new edit]
 
   def index
     @posts = Post.all.limit(20).order(id: :desc)
@@ -23,10 +23,10 @@ class PostsController < ApplicationController
       author = Current.user
       repository = author.repository
       post = repository.posts.build(post_params)
-      post.assign_attributes(author: author, blob_path: blob_params[:path])
+      post.assign_attributes(author: author)
 
       if post.save
-        repository.commit(message: params[:commit_message], content: blob_params[:blob], path: blob_params[:path])
+        repository.commit(message: params[:commit_message], content: post.body, path: post.blob_path)
         redirect_to post_show_path(Current.user, post)
       else
         render json: { errors: post.errors.full_messages }, status: 422
@@ -59,15 +59,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :slug, :excerpt, :topics, :published_at, :status, :parent)
-  end
-
-  def blob_params
-    attrs = params.require(:post).permit(:title, :slug, :body)
-    {
-      path: (attrs[:slug] || FastSlug.generate(attrs[:title]) || SecureRandom.uuid) + '.md',
-      blob: attrs[:body]
-    }.freeze
+    params.require(:post).permit(:title, :slug, :excerpt, :topics, :published_at, :status, :parent, :body)
   end
 
   def find_post

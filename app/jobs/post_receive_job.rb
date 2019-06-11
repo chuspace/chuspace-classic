@@ -66,7 +66,7 @@ class PostReceiveJob < ApplicationJob
 
   def create_or_update(git_blob)
     post = repository.posts.find_or_initialize_by(repository: repository, blob_path: git_blob.path)
-    post.assign_attributes(blob_path: git_blob.path, author: author)
+    post.assign_attributes(author: author, body: git_blob.safe_content)
     post.save
   end
 end

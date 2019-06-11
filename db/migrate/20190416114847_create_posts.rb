@@ -5,7 +5,9 @@ class CreatePosts < ActiveRecord::Migration[6.0]
     create_table :posts do |t|
       t.string :title
       t.string :slug
+
       t.text :excerpt
+      t.text :body
 
       t.bigint :author_id, foreign_key: true, null: false
       t.index :author_id

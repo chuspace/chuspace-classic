@@ -26,6 +26,6 @@ class User < ApplicationRecord
   end
 
   def avatar_path
-    "local:///#{nickname}/#{avatar}".freeze
+    avatar.present? ? "local:///#{nickname}/#{avatar}".freeze : nil
   end
 end

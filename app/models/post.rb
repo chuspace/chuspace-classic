@@ -17,9 +17,7 @@ class Post < ApplicationRecord
   validates :topics, length: { maximum: 3 }, allow_blank: true
   validates :published_at, date: { allow_nil: true }
 
-  delegate :safe_content, to: :blob, allow_nil: true
-
-  before_validation :assign_slug
+  before_validation :assign_defaults
 
   alias repo repository
 
@@ -33,10 +31,6 @@ class Post < ApplicationRecord
     else
       blob_path
     end
-  end
-
-  def blob
-    Git::Blob.all(repository, repository.commit_sha).find { |blob| blob.path == blob_path }
   end
 
   def to_param
@@ -56,13 +50,14 @@ class Post < ApplicationRecord
   end
 
   def body_html
-    @body_html ||= FastMarkdown.to_html(safe_content).html_safe
+    @body_html ||= FastMarkdown.to_html(body).html_safe
   end
 
   private
 
-  def assign_slug
-    self.title = FastMarkdown.title(safe_content || '') if title.blank?
+  def assign_defaults
+    self.title = FastMarkdown.title(body || '') if title.blank?
     self.slug = title ? FastSlug.generate(title) : SecureRandom.uuid if slug.blank? || slug_changed?
+    self.blob_path = slug + '.md' if blob_path.blank?
   end
 end
