@@ -4,7 +4,7 @@ class ImgproxyMiddleware < Rack::Proxy
   def perform_request(env)
     if env['PATH_INFO'].include?('/images/')
       url = Imgproxy.url_for(
-        "local:///gauravtiwari#{env['PATH_INFO']}".freeze,
+        "local://#{env['PATH_INFO']}".freeze,
         width: 700,
         height: 350,
         resizing_type: :fill,
