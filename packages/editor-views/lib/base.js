@@ -68,4 +68,9 @@ export default class BaseView {
     evt.type === 'paste'
 
   ignoreMutation = () => true
+
+  destroy = () => {
+    this.containerNode.remove()
+    this.view.focus()
+  }
 }

@@ -95,8 +95,18 @@ export default class CodeBlock extends Node {
         return ['pre', ['code', { 'data-language': node.attrs.language }, 0]]
       },
 
-      toStatic: props => {
-        return <CodeBlockComponent key={props.node.currIndex} {...props} />
+      toStatic: (node, mode, content, readOnly, onInit, onLanguageChange, onDestroy) => {
+        return (
+          <CodeBlockComponent
+            key={node.currIndex}
+            mode={mode}
+            content={content}
+            readOnly={readOnly}
+            onInit={onInit}
+            onLanguageChange={onLanguageChange}
+            onDestroy={onDestroy}
+          />
+        )
       }
     }
   }

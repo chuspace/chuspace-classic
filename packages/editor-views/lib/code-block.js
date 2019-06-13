@@ -10,15 +10,17 @@ import CodeMirror from 'codemirror'
 import { DEFAULT_MODE } from '@chuspace/code-editor-modes'
 import { EditorView } from 'prosemirror-view'
 import { exitCode } from 'prosemirror-commands'
+import { render } from 'preact'
 
 export default class CodeBlockView extends BaseView {
   cm: typeof CodeMirror.defaults = null
   updating: boolean = false
   mode: string = DEFAULT_MODE
   content: string
+  readOnly: boolean
   incomingChanges: boolean = false
   getCMInstance: () => CodeMirror
-  handleLanguageChange: (mode: string) => void
+  onLanguageChange: (mode: string) => void
 
   constructor(props: BaseViewPropType) {
     // Call super but don't render the view
@@ -27,14 +29,33 @@ export default class CodeBlockView extends BaseView {
     // Custom attrs for code block node view
     this.mode = this.node.attrs.language
     this.content = this.node.textContent
+    this.readOnly = false
 
     // Renders view component
     this.renderElement()
   }
 
+  renderElement = () => {
+    render(
+      this.node.type.spec.toStatic(
+        this.node,
+        this.mode,
+        this.content,
+        this.readOnly,
+        this.onInit,
+        this.onLanguageChange,
+        this.destroy
+      ),
+      this.containerNode
+    )
+
+    this.dom = this.containerNode
+  }
+
   onInit = (cm: CodeMirror) => {
-    console.log(cm)
     this.cm = cm
+    this.cm.focus()
+    this.cm.setOption('extraKeys', this.codeMirrorKeymap())
     // Propagate updates from the code editor to ProseMirror
     this.cm.on('beforeChange', () => (this.incomingChanges = true))
     // Propagate updates from the code editor to ProseMirror
@@ -55,7 +76,7 @@ export default class CodeBlockView extends BaseView {
   }
 
   /* Component calls to set cm instance mode and node attrs */
-  handleLanguageChange = (mode: string = this.mode) => (this.node.attrs.language = mode)
+  onLanguageChange = (mode: string) => (this.node.attrs.language = mode)
 
   /**
    * when the code editor is focused,we can keep the selection of
@@ -185,14 +206,7 @@ export default class CodeBlockView extends BaseView {
     return true
   }
 
-  selectNode = () => {
-    this.cm.focus()
-  }
-
-  destroy = () => {
-    this.containerNode.remove()
-    this.view.focus()
-  }
+  selectNode = () => this.cm.focus()
 }
 
 function computeChange(oldVal: string, newVal: string) {
