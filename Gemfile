@@ -14,6 +14,10 @@ gem 'pg', '>= 1.x'
 # File uploads
 gem 'aws-sdk-s3'
 gem 'imgproxy'
+gem 'fastimage'
+gem 'image_processing'
+gem 'ruby-vips'
+gem 'shrine'
 
 #  Nested tree
 gem 'ancestry'

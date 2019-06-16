@@ -17,10 +17,10 @@ export default new MarkdownParser(schema, markdownit('commonmark', { html: false
     block: 'heading',
     getAttrs: tok => ({ level: +tok.tag.slice(1) })
   },
-  code_block: { block: 'code_block' },
+  code_block: { block: 'code_block', getAttrs: (tok: any) => ({ language: (tok.info && tok.info.trim()) || null }) },
   fence: {
     block: 'code_block',
-    getAttrs: tok => ({ params: tok.info || '' })
+    getAttrs: tok => ({ language: tok.info || '' })
   },
   hr: { node: 'horizontal_rule' },
   image: {

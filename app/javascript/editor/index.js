@@ -55,7 +55,7 @@ export default class Editor {
     this.view = this.createView()
     this.commands = this.createCommands()
     this.setActiveNodesAndMarks()
-    this.focus()
+    if (this.options.autoFocus) this.focus()
   }
 
   createKeymaps() {
@@ -150,7 +150,7 @@ export default class Editor {
   }
 
   emitUpdate(transaction: Transaction) {
-    console.log(this.getMarkdown())
+    this.options.onChange()
   }
 
   focus() {

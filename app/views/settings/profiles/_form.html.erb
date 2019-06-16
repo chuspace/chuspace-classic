@@ -1,7 +1,7 @@
 <%= form_with model: @user, local: true do |f| %>
  <div class='input-container'>
     <%= f.label :avatar, class: 'input-label block' %>
-    <%= component 'avatar', avatar_path: @user.avatar_path, initials: @user.initials, variant: :sm %>
+    <%= component 'avatar', avatar: @user.avatar, initials: @user.initials, variant: :sm %>
     <%= f.file_field(
       :avatar,
       class: 'input block mt-2'

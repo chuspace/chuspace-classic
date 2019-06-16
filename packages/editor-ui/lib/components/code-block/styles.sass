@@ -1,16 +1,14 @@
-.CodeMirror
-  @apply rounded
-  min-height: 300px
-  height: auto
-  max-width: 100%
 
 .code-editor-container
-  @apply rounded
-  border: 1px solid #ccc
+  @apply rounded shadow-lg
+
+  .CodeMirror
+    @apply rounded-b max-w-full
+    min-height: 300px
+    height: auto
 
 .code-editor-toolbar
-  @apply flex items-center p-4 mb-2 w-full relative rounded text-base
-  background-color: #fafbfc
+  @apply flex items-center p-4 w-full relative rounded-t text-base bg-white shadow-lg
   height: 40px
 
 .code-editor-toolbar-heading
@@ -21,29 +19,23 @@
   @apply flex items-center justify-end flex-1
 
 .code-editor-language-switcher-container
-  position: relative
+  @apply relative cursor-pointer select-none ml-4
   width: 150px
-  cursor: pointer
-  user-select: none
-  margin-left: 40px
 
 .code-editor-language-input
   @apply px-4 py-2 mr-4 w-full
   border: 1px solid #ccc
 
 .code-editor-language-switcher
-  @apply mr-4
-
-  background: white
-  margin-top: -2px
+  @apply mr-4 bg-white -m-2 overflow-scroll border-2 border-grey-light rounded list-none absolute z-50
   max-height: 350px
-  overflow-y: scroll
-  border-width: 2px
-  border-style: solid
-  border-color: #ccc
-  border-image: initial
-  border-radius: 0px 0px 3px 3px
-  list-style: none
-  position: absolute
   top: 40px
-  z-index: 100
+
+.code-editor-container
+    &--light
+      .code-editor-toolbar
+        @apply bg-white shadow-lg
+
+    &--dark
+      .code-editor-toolbar
+        @apply bg-grey-lighter shadow-lg

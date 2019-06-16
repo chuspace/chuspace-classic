@@ -3,10 +3,13 @@
 /** @jsx h */
 
 import { Fragment, NodeSpec, Node as PMNode, Schema } from 'prosemirror-model'
+import { Plugin, Selection } from 'prosemirror-state'
 
 import { CodeBlock as CodeBlockComponent } from '@chuspace/editor-ui'
+import { Element } from '@chuspace/editor-base'
 import { Node } from '@chuspace/editor-base'
 import { h } from 'preact'
+import { nodeInputRule } from '@chuspace/editor-commands'
 import { setBlockType } from 'prosemirror-commands'
 import { toggleBlockType } from '@chuspace/editor-commands'
 
@@ -119,5 +122,64 @@ export default class CodeBlock extends Node {
     return {
       'Shift-Ctrl-\\': setBlockType(type)
     }
+  }
+
+  get plugins() {
+    return [
+      new Plugin({
+        props: {
+          handleKeyDown(view, event) {
+            if (event.keyCode === 13) {
+              const { state } = view
+              const { schema, tr } = state
+
+              if (!state.selection.$cursor) {
+                return false
+              }
+
+              const { nodeBefore, pos } = state.selection.$from
+
+              if (!nodeBefore || !nodeBefore.isText) {
+                return false
+              }
+
+              const regex = /^```([a-zA-Z]*)?$/
+              const matches = nodeBefore.text.match(regex)
+
+              if (matches) {
+                const [, language] = matches
+
+                const { tr } = state
+
+                const from = pos - matches[0].length
+                const to = pos
+                const text = matches[0]
+
+                if (matches[0]) {
+                  const node = schema.nodes.code_block.create({ language })
+                  const selection = Selection.near(state.doc.resolve(from), to)
+
+                  tr.replaceWith(pos - matches[0].length - 1, pos, node)
+                    .setMeta(this, {
+                      transform: tr,
+                      from,
+                      to,
+                      text
+                    })
+                    .setSelection(selection)
+                    .scrollIntoView()
+
+                  view.dispatch(tr)
+
+                  return true
+                }
+              }
+            }
+
+            return false
+          }
+        }
+      })
+    ]
   }
 }

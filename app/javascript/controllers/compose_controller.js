@@ -1,6 +1,7 @@
 // @flow
 
 import * as Rails from 'rails-ujs'
+import * as Turbolinks from 'turbolinks'
 
 import { Controller } from 'stimulus'
 import Editor from 'editor'
@@ -8,29 +9,49 @@ import Editor from 'editor'
 export default class extends Controller {
   static targets = ['editor']
   editor: any
+  saving = false
+  method = this.editorTarget.dataset.method
+  url = this.editorTarget.dataset.url
 
   connect() {
     this.editor = new Editor({
       element: this.editorTarget,
-      autoFocus: true,
+      autoFocus: this.method === 'POST',
       editable: true,
+      onChange: this.onChange,
       content: this.editorTarget.dataset.content || ''
     })
   }
 
-  saveDraft(e) {
-    e.preventDefault()
+  onChange = () => {
+    if (!this.saving) this.save()
+  }
+
+  save() {
+    this.saving = true
+    console.log(this.editor.getMarkdown())
     const body = this.editor.getMarkdown()
     const title = this.editor.getTitle()
 
-    fetch(e.target.dataset.url, {
-      method: 'POST',
+    fetch(this.url, {
+      method: this.method,
       body: JSON.stringify({ post: { title, body } }),
       headers: {
         'Content-Type': 'application/json',
         'X-CSRF-TOKEN': Rails.csrfToken()
       }
     })
+      .then(response => response.json())
+      .then(response => {
+        if (response.url) {
+          window.history.pushState(null, 'Edit', response.redirect)
+          this.url = response.url
+          this.method = 'PATCH'
+        }
+
+        this.saving = false
+        return response
+      })
   }
 
   publish(e) {

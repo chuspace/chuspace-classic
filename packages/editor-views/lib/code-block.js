@@ -25,7 +25,7 @@ export default class CodeBlockView extends BaseView {
   constructor(props: BaseViewPropType) {
     // Call super but don't render the view
     super(props, false)
-
+    console.log(this.node.attrs.language)
     // Custom attrs for code block node view
     this.mode = this.node.attrs.language
     this.content = this.node.textContent
@@ -54,7 +54,6 @@ export default class CodeBlockView extends BaseView {
 
   onInit = (cm: CodeMirror) => {
     this.cm = cm
-    this.cm.focus()
     this.cm.setOption('extraKeys', this.codeMirrorKeymap())
     // Propagate updates from the code editor to ProseMirror
     this.cm.on('beforeChange', () => (this.incomingChanges = true))
@@ -72,6 +71,7 @@ export default class CodeBlockView extends BaseView {
       this.incomingChanges = false
     })
 
+    setTimeout(() => this.cm.refresh(), 100)
     this.cm.on('focus', () => this.forwardSelection())
   }
 

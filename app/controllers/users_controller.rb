@@ -27,19 +27,7 @@ class UsersController < ApplicationController
 
   def update
     user = Current.user
-    user.assign_attributes(update_params.except(:avatar))
-
-    if params[:user][:avatar].present?
-      uploaded_io = params[:user][:avatar]
-
-      path = Rails.root.join('public', 'uploads', user.nickname)
-      FileUtils.mkdir_p(path)
-      File.open(path.join(uploaded_io.original_filename), 'wb') do |file|
-        file.write(uploaded_io.read)
-      end
-
-      user.avatar = uploaded_io.original_filename
-    end
+    user.assign_attributes(update_params)
 
     if user.save
       flash[:notice] = 'Profile successfully updated'

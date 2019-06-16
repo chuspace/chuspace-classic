@@ -2,6 +2,8 @@
 
 /* global FileReader */
 
+import * as Rails from 'rails-ujs'
+
 import { EditorState, Plugin, Transaction } from 'prosemirror-state'
 
 import { Node } from '@chuspace/editor-base'
@@ -77,14 +79,35 @@ export default class Image extends Node {
               images.forEach(image => {
                 const reader = new FileReader()
 
-                reader.onload = readerEvent => {
-                  const node = schema.nodes.image.create({
-                    src: readerEvent.target.result
-                  })
-                  const transaction = view.state.tr.insert(coordinates.pos, node)
-                  view.dispatch(transaction)
-                }
-                reader.readAsDataURL(image)
+                // reader.onload = readerEvent => {
+                //   const node = schema.nodes.image.create({
+                //     src: readerEvent.target.result
+                //   })
+                //   const transaction = view.state.tr.insert(coordinates.pos, node)
+                //   view.dispatch(transaction)
+                // }
+
+                var formData = new FormData()
+                formData.append('image', image)
+
+                Rails.ajax({
+                  type: 'POST',
+                  url: '/images',
+                  data: formData,
+                  success: data => {
+                    console.log(data)
+                    const node = schema.nodes.image.create({
+                      src: data.url
+                    })
+                    const transaction = view.state.tr.insert(coordinates.pos, node)
+                    view.dispatch(transaction)
+                  },
+                  error: data => {
+                    console.log(data)
+                  }
+                })
+
+                // reader.readAsDataURL(image)
               })
             }
           }

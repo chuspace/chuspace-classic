@@ -9,15 +9,13 @@ class Post < ApplicationRecord
   has_ancestry
   enum status: { draft: 0, published: 1, archived: 2 }
 
-  validates_presence_of :title, :slug, :status
-  validates :title, :slug, length: { in: 10..100 }
+  validates_presence_of :slug, :status
+  validates :title, :slug, length: { in: 1..100 }, allow_blank: true
   validates :slug, format: { with: Regexp.new('\A' + SLUG_FORMAT.source + '\z') }
   validates :excerpt, :slug, length: { in: 0..140 }, allow_blank: true
   validates_uniqueness_of :slug, scope: %i[author_id]
   validates :topics, length: { maximum: 3 }, allow_blank: true
   validates :published_at, date: { allow_nil: true }
-
-  before_validation :assign_defaults
 
   alias repo repository
 
@@ -51,13 +49,5 @@ class Post < ApplicationRecord
 
   def body_html
     @body_html ||= FastMarkdown.to_html(body).html_safe
-  end
-
-  private
-
-  def assign_defaults
-    self.title = FastMarkdown.title(body || '') if title.blank?
-    self.slug = title ? FastSlug.generate(title) : SecureRandom.uuid if slug.blank? || slug_changed?
-    self.blob_path = slug + '.md' if blob_path.blank?
   end
 end

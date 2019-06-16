@@ -10,7 +10,7 @@ class AvatarComponent < Components::Component
     xl: { size: 120, class: 'avatar--xl' }
   }.freeze
 
-  attribute :avatar_path
+  attribute :avatar
   attribute :variant, default: :sm
   attribute :initials
   attribute :options, default: {}
@@ -23,20 +23,19 @@ class AvatarComponent < Components::Component
 
   def css_classes
     classes = [DEFAULT_CSS_CLASS]
-    classes << 'avatar__badge' if avatar_path.blank?
+    classes << 'avatar__badge' if avatar.blank?
     classes << VARIANTS[variant][:class]
     classes.join(' ')
   end
 
   def render
-    avatar_path.blank? ? initials_badge : image
+    avatar.blank? ? initials_badge : image
   end
 
   private
 
   def avatar_url
-    Imgproxy.url_for(
-      avatar_path,
+    avatar.imgproxy_url(
       width: size,
       height: size,
       resizing_type: :fill,

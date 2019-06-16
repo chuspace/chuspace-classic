@@ -43,7 +43,7 @@ export default class LanguageSwitcher extends Component<Props, State> {
 
   render() {
     return this.props.readOnly ? (
-      <div class="code-editor-language-badge">{this.props.mode}</div>
+      <div class="code-editor-language-badge badge--grey mr-4">{this.props.mode}</div>
     ) : (
       <div class="code-editor-language-switcher-container mr-4">
         <input type="text" value={this.state.mode} class="input input--slim w-full" onFocus={this.toggleSwitcher} />

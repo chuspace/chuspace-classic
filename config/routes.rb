@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   resources :users, path: 'u', except: :show
   resources :posts, path: 'p', except: :show
+  resources :images, only: :create
 
   resources :settings, only: :index
 

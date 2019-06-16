@@ -2,7 +2,7 @@
 
 class ImgproxyMiddleware < Rack::Proxy
   def perform_request(env)
-    if env['PATH_INFO'].include?('/images/')
+    if env['PATH_INFO'].include?('/blobs/')
       url = Imgproxy.url_for(
         "local://#{env['PATH_INFO']}".freeze,
         width: 700,

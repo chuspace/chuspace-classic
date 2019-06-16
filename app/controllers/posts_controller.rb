@@ -23,11 +23,12 @@ class PostsController < ApplicationController
       author = Current.user
       repository = author.repository
       post = repository.posts.build(post_params)
-      post.assign_attributes(author: author)
+      next_post_id = repository.posts.maximum(:id)&.next || 1
+      post.assign_attributes(author: author, slug: Digest::MD5.hexdigest("#{next_post_id}-#{Current.user.nickname}-post")[0..8], blob_path: "#{next_post_id}-post.md")
 
       if post.save
         repository.commit(message: params[:commit_message], content: post.body, path: post.blob_path)
-        redirect_to post_show_path(Current.user, post)
+        render json: { redirect: edit_post_path(post), url: post_path(post) }
       else
         render json: { errors: post.errors.full_messages }, status: 422
       end
@@ -38,11 +39,11 @@ class PostsController < ApplicationController
     @post.assign_attributes(post_params)
 
     if @post.save
-      @post.repository.commit(message: params[:commit_message], content: blob_params[:body], path: blob_params[:path])
+      @post.repository.commit(message: params[:commit_message], content: @post.body, path: @post.blob_path)
 
-      redirect_to post_show_path(nickname: Current.user.nickname, slug: @post.slug)
+      render json: { saved: true }
     else
-      render json: { errors: post.errors.full_messages }
+      render json: { errors: @post.errors.full_messages }
     end
   end
 

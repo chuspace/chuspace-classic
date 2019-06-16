@@ -11,7 +11,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :nickname, null: false, default: ''
       t.index :nickname, unique: true
 
-      t.string :avatar
+      t.jsonb :avatar_data
 
       t.string :auth_token, null: false, default: ''
       t.index :auth_token, unique: true

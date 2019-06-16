@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  include AvatarUploader::Attachment.new(:avatar)
   include Trackable
 
   validates :email, presence: true, uniqueness: true, email: true
@@ -23,9 +24,5 @@ class User < ApplicationRecord
 
   def initials
     name.gsub(/([[:upper:]])[[:lower:]]+/, '\1').tr(' ', '')
-  end
-
-  def avatar_path
-    avatar.present? ? "local:///#{nickname}/#{avatar}".freeze : nil
   end
 end

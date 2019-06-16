@@ -40,9 +40,7 @@ type EditorState = {
 }
 
 export default class Editor extends Component<EditorProps, EditorState> {
-  state = {
-    cm: null
-  }
+  cm: ?CodeMirror
 
   setMode = async (mode: string) => {
     await loadMode(mode)
@@ -53,7 +51,7 @@ export default class Editor extends Component<EditorProps, EditorState> {
 
   createCM = async (node: ?HTMLElement) => {
     await loadMode(this.props.mode)
-    const cm = new CodeMirror(node, {
+    this.cm = new CodeMirror(node, {
       value: this.props.content,
       lineNumbers: true,
       smartIndent: !this.props.readOnly,
@@ -65,33 +63,29 @@ export default class Editor extends Component<EditorProps, EditorState> {
       autoCloseBrackets: true,
       autoCloseTags: true,
       showTrailingSpace: true,
-      matchTags: true,
-      autoRefresh: { delay: 500 }
+      matchTags: true
     })
 
-    if (!this.props.content) {
-      cm.refresh()
-      cm.focus()
-    }
-
-    this.setState({ cm })
-    this.props.onInit && this.props.onInit(cm)
+    this.props.onInit && this.props.onInit(this.cm)
+    return this.cm
   }
 
-  initClipboardJS = (node: ?HTMLElement) =>
-    new ClipboardJS(node, { text: trigger => this.state.cm && this.state.cm.getDoc().getValue() })
+  initClipboardJS = (node: ?HTMLElement) => new ClipboardJS(node, { text: trigger => this.cm.getDoc().getValue() })
 
   render = () => {
     return (
-      <div class="code-editor-container" contentEditable={false}>
-        <div class="code-editor-toolbar">
+      <div class="code-editor-container code-editor-container--light" contentEditable={false}>
+        <div class="code-editor-toolbar" contentEditable={false}>
           <Controls destroy={this.props.onDestroy} />
-          <div class="code-editor-toolbar-menu">
+          <div class="code-editor-toolbar-menu" contentEditable={false}>
             <LanguageSwitcher mode={this.props.mode} readOnly={this.props.readOnly} setMode={this.setMode} />
             <CopyClipboard initClipboardJS={this.initClipboardJS} />
           </div>
         </div>
-        <span ref={this.createCM} />
+
+        <div className="code-editor">
+          <span ref={this.createCM}></span>
+        </div>
       </div>
     )
   }
