@@ -10,16 +10,13 @@ class ImagesController < ApplicationController
     uploaded_io = params[:image]
     blob_name = uploaded_io.original_filename
     blob_path = File.join(Current.user.nickname, 'images', blob_name)
+    image = repository.images.find_by(blob_path: blob_path)
 
-    image = repository.images.find_or_initialize_by(blob_path: blob_path)
-    image.image = uploaded_io
-
-    if image.save
+    unless image
+      image = repository.images.create(image: uploaded_io, blob_path: blob_path)
       repository.commit(content: image.image.read, message: "Added #{blob_path}", path: blob_path)
-      render json: { url: image.image.imgproxy_url(width: 700, height: 350, resizing_type: :fill,
-      sharpen: 1) }
-    else
-      render json: { error: image.api_validation_errors }
     end
+
+    render json: { url: image.image.imgproxy_url(width: 700, height: 350, resizing_type: :fill, sharpen: 1) }
   end
 end

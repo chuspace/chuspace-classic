@@ -20,7 +20,7 @@ export default new MarkdownParser(schema, markdownit('commonmark', { html: false
   code_block: { block: 'code_block', getAttrs: (tok: any) => ({ language: (tok.info && tok.info.trim()) || null }) },
   fence: {
     block: 'code_block',
-    getAttrs: tok => ({ language: tok.info || '' })
+    getAttrs: tok => ({ language: (tok.info && tok.info.trim()) || null })
   },
   hr: { node: 'horizontal_rule' },
   image: {

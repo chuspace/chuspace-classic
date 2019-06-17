@@ -179,9 +179,6 @@ GEM
       mimemagic (~> 0.3.2)
     memory_profiler (0.9.13)
     method_source (0.9.2)
-    mime-types (3.2.2)
-      mime-types-data (~> 3.2015)
-    mime-types-data (3.2019.0331)
     mimemagic (0.3.3)
     mini_magick (4.9.3)
     mini_mime (1.0.1)
@@ -263,6 +260,7 @@ GEM
       thor (>= 0.20.3, < 2.0)
     rainbow (3.0.0)
     rake (12.3.2)
+    redcarpet (3.4.0)
     redis (4.1.2)
     regexp_parser (1.5.1)
     rspec-core (3.8.0)
@@ -381,9 +379,7 @@ DEPENDENCIES
   hiredis
   image_processing
   imgproxy
-  marcel
   memory_profiler
-  mime-types
   mini_scheduler
   minitest
   oj
@@ -397,6 +393,7 @@ DEPENDENCIES
   rack-proxy
   rails (>= 6.0.0.rc1, <= 6.1)
   rails-controller-testing
+  redcarpet
   redis (>= 4.0)
   rspec_junit_formatter
   rubocop

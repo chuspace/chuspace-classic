@@ -77,6 +77,7 @@ gem 'rack-attack'
 gem 'fast_markdown', path: 'fast_markdown'
 gem 'fast_slug', path: 'fast_slug'
 gem 'faster_path'
+gem 'redcarpet'
 
 # Link previews
 gem 'onebox'
