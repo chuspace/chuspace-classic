@@ -15,14 +15,14 @@ GIT
       railties (>= 4.2)
 
 PATH
-  remote: fast_markdown
+  remote: extensions/fast_markdown
   specs:
     fast_markdown (0.1.0)
       rutie (>= 0.0.3)
       thermite
 
 PATH
-  remote: fast_slug
+  remote: extensions/fast_slug
   specs:
     fast_slug (0.1.0)
       rutie (>= 0.0.3)

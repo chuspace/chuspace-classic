@@ -74,8 +74,8 @@ gem 'components', git: 'https://github.com/jensljungblad/components.git'
 gem 'rack-attack'
 
 # Rust extensions
-gem 'fast_markdown', path: 'fast_markdown'
-gem 'fast_slug', path: 'fast_slug'
+gem 'fast_markdown', path: 'extensions/fast_markdown'
+gem 'fast_slug', path: 'extensions/fast_slug'
 gem 'faster_path'
 gem 'redcarpet'
 

@@ -6,10 +6,10 @@ namespace :chuspace do
     APP_BIN_DIR = Rails.root.join('bin')
     GIT_HOOKS_DIR = APP_BIN_DIR.join('git-hooks')
 
-    MOBIUS_ROOT = Rails.root.join('mobius')
+    MOBIUS_ROOT = Rails.root.join('extensions', 'mobius')
     MOBIUS_SRC = MOBIUS_ROOT.join('src')
     MOBIUS_BINARIES = %w[mobius/hooks/pre_receive mobius/hooks/post_receive mobius]
-    RUST_BINARIES = %w[fast_slug fast_markdown]
+    RUST_BINARIES = %w[extensions/fast_slug extensions/fast_markdown]
 
     FileUtils.mkdir_p(GIT_HOOKS_DIR)
 
