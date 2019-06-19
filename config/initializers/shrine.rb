@@ -28,17 +28,20 @@ def production_storages
     region: 'nyc3'
   }
 
-   {
-    cache: Shrine::Storage::FileSystem.new('public/uploads', prefix: 'cache'), # temporary
-    store: Shrine::Storage::S3.new(prefix: 'store', upload_options: { acl: 'public-read' }, **s3_options)
+  {
+    cache: Shrine::Storage::FileSystem.new('public/uploads', prefix: 'cache'),
+    store:
+      # temporary
+      Shrine::Storage::S3
+        .new(prefix: 'store', upload_options: { acl: 'public-read' }, **s3_options)
   }
 end
 
 def development_storages
   {
     cache: Shrine::Storage::FileSystem.new('public', prefix: 'uploads/cache'),
-    store: Shrine::Storage::FileSystem.new('public', prefix: 'uploads'),
+    store: Shrine::Storage::FileSystem.new('public', prefix: 'uploads')
   }
 end
 
- Shrine.storages = Rails.env.production? ? production_storages : development_storages
+Shrine.storages = Rails.env.production? ? production_storages : development_storages

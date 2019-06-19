@@ -41,9 +41,7 @@ module Git
     end
 
     def initialize(options)
-      %w[id name path size content mode commit_sha binary].each do |key|
-        self.send("#{key}=", options[key.to_sym])
-      end
+      %w[id name path size content mode commit_sha binary].each { |key| self.send("#{key}=", options[key.to_sym]) }
     end
 
     def binary?

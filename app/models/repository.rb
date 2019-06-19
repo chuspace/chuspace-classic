@@ -85,24 +85,23 @@ class Repository < ApplicationRecord
   end
 
   def commit(action: :add, message:, content:, path:)
-    message ||= case action
-                when :add
-                  "Created #{path}"
-                when :update
-                  "Updated #{path}"
-                when :remove
-                  "Deleted #{path}"
-    end
+    message ||=
+      case action
+      when :add
+        "Created #{path}"
+      when :update
+        "Updated #{path}"
+      when :remove
+        "Deleted #{path}"
+      end
 
-    commit_sha = Git::Commit.create(
-      repository: self,
-      committer: self.author,
-      action: action,
-      options: {
-        commit: { message: message },
-        file: { content: content, path: path }
-      }
-    )
+    commit_sha =
+      Git::Commit.create(
+        repository: self,
+        committer: self.author,
+        action: action,
+        options: { commit: { message: message }, file: { content: content, path: path } }
+      )
 
     self.update(commit_sha: commit_sha)
   end

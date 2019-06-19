@@ -36,7 +36,9 @@ class PostReceiveJob < ApplicationJob
     sync_images
 
     if repository.update(commit_sha: commit_sha)
-      Rails.logger.error("Repository sync success: commit-#{commit_sha} author-#{author.id} repository-#{repository.id}")
+      Rails.logger.error(
+        "Repository sync success: commit-#{commit_sha} author-#{author.id} repository-#{repository.id}"
+      )
     else
       Rails.logger.error("Repository sync failed: commit-#{commit_sha} author-#{author.id} repository-#{repository.id}")
     end
@@ -58,7 +60,11 @@ class PostReceiveJob < ApplicationJob
   def create_or_update(git_blob)
     post = repository.posts.find_or_initialize_by(repository: repository, blob_path: git_blob.path)
     next_post_id = repository.posts.maximum(:id)&.next || 1
-    post.assign_attributes(author: author, body: git_blob.safe_content, slug: Digest::MD5.hexdigest("#{next_post_id}-#{author.nickname}-post")[0..8])
+    post.assign_attributes(
+      author: author,
+      body: git_blob.safe_content,
+      slug: Digest::MD5.hexdigest("#{next_post_id}-#{author.nickname}-post")[0..8]
+    )
     post.save
   end
 end

@@ -15,8 +15,7 @@ class PostsController < ApplicationController
     redirect_to root_path if @post.blank?
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     Post.transaction do
@@ -24,7 +23,11 @@ class PostsController < ApplicationController
       repository = author.repository
       post = repository.posts.build(post_params)
       next_post_id = repository.posts.maximum(:id)&.next || 1
-      post.assign_attributes(author: author, slug: Digest::MD5.hexdigest("#{next_post_id}-#{Current.user.nickname}-post")[0..8], blob_path: "#{next_post_id}-post.md")
+      post.assign_attributes(
+        author: author,
+        slug: Digest::MD5.hexdigest("#{next_post_id}-#{Current.user.nickname}-post")[0..8],
+        blob_path: "#{next_post_id}-post.md"
+      )
 
       if post.save
         repository.commit(message: params[:commit_message], content: post.body, path: post.blob_path)

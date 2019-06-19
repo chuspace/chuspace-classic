@@ -44,9 +44,12 @@ class Post < ApplicationRecord
 
   def parent=(val)
     case val
-    when String then super(Post.find_by_slug(Slug.generate(val)))
-    when Post then val
-    else nil
+    when String
+      super(Post.find_by_slug(Slug.generate(val)))
+    when Post
+      val
+    else
+      nil
     end
   end
 

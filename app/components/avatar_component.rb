@@ -35,12 +35,7 @@ class AvatarComponent < Components::Component
   private
 
   def avatar_url
-    avatar.imgproxy_url(
-      width: size,
-      height: size,
-      resizing_type: :fill,
-      sharpen: 1
-    )
+    avatar.imgproxy_url(width: size, height: size, resizing_type: :fill, sharpen: 1)
   end
 
   def initials_badge
