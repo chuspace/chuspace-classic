@@ -3,7 +3,7 @@
 
 import { h, render } from 'preact'
 
-import { CodeBlock } from '@chuspace/editor-ui'
+import { CodeBlock } from 'editor/components'
 import { Controller } from 'stimulus'
 
 export default class extends Controller {

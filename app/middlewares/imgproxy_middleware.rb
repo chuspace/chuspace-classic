@@ -5,7 +5,7 @@ class ImgproxyMiddleware < Rack::Proxy
     if env['PATH_INFO'].include?('/blobs/')
       url = Imgproxy.url_for(
         "local://#{env['PATH_INFO']}".freeze,
-        width: 700,
+        width: 750,
         height: 350,
         resizing_type: :fill,
         sharpen: 0.5

@@ -28,12 +28,19 @@
   transition: border-color 0.5s ease
   box-sizing: border-box
 
-  &--slim
-    padding: 0.2rem 0.5rem
-
   &:focus, &:hover
     @apply outline-none appearance-none
     box-shadow: 0 0 0 1px theme('colors.blue')
+
+  &--slim
+    padding: 0.2rem 0.5rem
+
+  &--borderless
+    @apply border-none
+
+    &:focus, &:hover
+      @apply outline-none appearance-none border-none shadow-none
+
 
 input-check
   @apply block w-full

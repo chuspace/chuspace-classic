@@ -9,7 +9,8 @@ class ImagesController < ApplicationController
     repository = Current.user.repository
     uploaded_io = params[:image]
     blob_name = uploaded_io.original_filename
-    blob_path = File.join(Current.user.nickname, 'images', blob_name)
+    blob_path = File.join('images', blob_name)
+
     image = repository.images.find_by(blob_path: blob_path)
 
     unless image

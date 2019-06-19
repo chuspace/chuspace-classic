@@ -5,6 +5,7 @@ import * as Turbolinks from 'turbolinks'
 
 import { Controller } from 'stimulus'
 import Editor from 'editor'
+import debounce from 'lodash/debounce'
 
 export default class extends Controller {
   static targets = ['editor']
@@ -24,12 +25,11 @@ export default class extends Controller {
   }
 
   onChange = () => {
-    if (!this.saving) this.save()
+    if (!this.saving) debounce(this.save, 200)
   }
 
   save() {
     this.saving = true
-    console.log(this.editor.getMarkdown())
     const body = this.editor.getMarkdown()
     const title = this.editor.getTitle()
 
@@ -50,6 +50,7 @@ export default class extends Controller {
         }
 
         this.saving = false
+
         return response
       })
   }

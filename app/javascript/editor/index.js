@@ -1,13 +1,13 @@
 // @flow
 
+import { CodeBlockView, ImageView } from 'editor/views'
 import { EditorState, Plugin, PluginKey, Transaction } from 'prosemirror-state'
 import { baseKeymap, selectParentNode } from 'prosemirror-commands'
-import { getMarkAttrs, isMarkActive, isNodeActive } from '@chuspace/editor-helpers'
+import { getMarkAttrs, isMarkActive, isNodeActive } from 'editor/helpers'
 import { inputRules, undoInputRule } from 'prosemirror-inputrules'
-import { manager, schema } from '@chuspace/editor-schema'
-import { markdownParser, markdownSerializer } from '@chuspace/markdowner'
+import { manager, schema } from 'editor/schema'
+import { markdownParser, markdownSerializer } from 'editor/markdowner'
 
-import { CodeBlockView } from '@chuspace/editor-views'
 import { EditorView } from 'prosemirror-view'
 import { Schema } from 'prosemirror-model'
 import { Selection } from 'prosemirror-state'
@@ -128,7 +128,8 @@ export default class Editor {
       state: this.state,
       dispatchTransaction: this.dispatchTransaction.bind(this),
       nodeViews: {
-        code_block: (node, view, getPos) => new CodeBlockView({ node, view, getPos })
+        code_block: (node, view, getPos) => new CodeBlockView({ node, view, getPos }),
+        image: (node, view, getPos) => new ImageView({ node, view, getPos })
       }
     })
 

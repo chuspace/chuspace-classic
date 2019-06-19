@@ -8,14 +8,17 @@ module Git
     class << self
       def all(repository, commit_sha = nil)
         tree = commit_sha ? repository.lookup(commit_sha).tree : repository.head.target.tree
+        from_tree(repository, tree)
+      end
 
+      def from_tree(repository, tree)
         tree.each_with_object([]) do |item, blobs|
           case item[:type]
           when :blob
             blobs << from(repository, item)
           when :tree
             tree = repository.lookup(item[:oid])
-            tree.each { |entry| blobs << from(repository, entry, item[:name]) }
+            from_tree(repository, tree)
           end
         end
       end

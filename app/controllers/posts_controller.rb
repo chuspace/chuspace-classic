@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
-  before_action :authenticate!, only: %i[new create]
-  before_action :find_post, except: :index
+  before_action :authenticate!, only: %i[new create edit]
+  before_action :find_post, only: %i[edit update]
 
   layout 'editor', only: %i[new edit]
 

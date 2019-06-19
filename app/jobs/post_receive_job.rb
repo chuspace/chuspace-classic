@@ -49,24 +49,16 @@ class PostReceiveJob < ApplicationJob
       next if FasterPath.extname(blob.path).end_with?('.md')
 
       if MimeMagic.by_magic(blob.io)&.image?
-        path = File.join(Rails.root, 'public', 'uploads', author.nickname)
-        subdirectory, filename = FasterPath.chop_basename(blob.path)
-
-        if subdirectory
-          path_with_subdirectory = File.join(path, subdirectory)
-          FileUtils.mkdir_p(path_with_subdirectory) unless File.exists?(path_with_subdirectory)
-        end
-
-        File.open(File.join(path_with_subdirectory, filename), 'wb') do |file|
-          file.write(blob.io.read)
-        end
+        image = repository.images.find_by(blob_path: blob.path)
+        repository.images.create(image: blob.io, blob_path: blob.path) unless image
       end
     end
   end
 
   def create_or_update(git_blob)
     post = repository.posts.find_or_initialize_by(repository: repository, blob_path: git_blob.path)
-    post.assign_attributes(author: author, body: git_blob.safe_content)
+    next_post_id = repository.posts.maximum(:id)&.next || 1
+    post.assign_attributes(author: author, body: git_blob.safe_content, slug: Digest::MD5.hexdigest("#{next_post_id}-#{author.nickname}-post")[0..8])
     post.save
   end
 end

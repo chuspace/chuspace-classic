@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'redcarpet/render_strip'
 
 class Post < ApplicationRecord
   SLUG_FORMAT = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
@@ -16,6 +17,8 @@ class Post < ApplicationRecord
   validates_uniqueness_of :slug, scope: %i[author_id]
   validates :topics, length: { maximum: 3 }, allow_blank: true
   validates :published_at, date: { allow_nil: true }
+
+  before_destroy :remove_from_repository
 
   alias repo repository
 
@@ -36,7 +39,7 @@ class Post < ApplicationRecord
   end
 
   def topics=(val)
-    super(val&.map { |topic| Slug.generate(topic) })
+    super(val&.map { |topic| FastSlug.generate(topic) })
   end
 
   def parent=(val)
@@ -48,6 +51,18 @@ class Post < ApplicationRecord
   end
 
   def body_html
-    @body_html ||= FastMarkdown.to_html(body).html_safe
+    renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML, {})
+    @body_html ||= renderer.render(body).html_safe
+  end
+
+  def title
+    renderer = Redcarpet::Markdown.new(Redcarpet::Render::StripDown)
+    super || renderer.render(body)[0..100]
+  end
+
+  private
+
+  def remove_from_repository
+    repository.commit(message: "Deleted #{blob_path}", action: :remove, path: blob_path, content: body)
   end
 end
