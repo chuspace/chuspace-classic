@@ -84,6 +84,7 @@ gem 'onebox'
 
 # Typechecking
 gem 'sorbet-runtime'
+gem 'sorbet-rails'
 
 group :production do
   # Resource monitoring

@@ -206,6 +206,11 @@ export default class CodeBlockView extends BaseView {
   }
 
   selectNode = () => this.cm.focus()
+
+  destroy = () => {
+    this.containerNode.remove()
+    this.view.focus()
+  }
 }
 
 function computeChange(oldVal: string, newVal: string) {

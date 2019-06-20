@@ -29,12 +29,9 @@ export default class BaseView {
     this.node = props.node
     this.options = props.options
     this.isSelected = false
+    this.containerNode = props.node.type.spec.inline ? document.createElement('span') : document.createElement('div')
 
-    if (render) {
-      this.renderElement()
-      this.containerNode = props.node.type.spec.inline ? document.createElement('span') : document.createElement('div')
-      this.dom = this.containerNode
-    }
+    if (render) this.renderElement()
   }
 
   renderElement = () => {
@@ -42,6 +39,7 @@ export default class BaseView {
       this.node.type.spec.toStatic(this.node, this.options, this.isSelected, this.view.editable),
       this.containerNode
     )
+    this.dom = this.containerNode
   }
 
   update = (updateNode: ProsemirrorNode) => {
@@ -76,6 +74,5 @@ export default class BaseView {
 
   destroy = () => {
     this.containerNode.remove()
-    this.view.focus()
   }
 }

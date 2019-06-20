@@ -48,7 +48,7 @@ const Image = (props: Props) => {
   return (
     <Fragment>
       <img alt={attrs.caption} class="lazy" data-src={imageUrl} />
-      <figcaption>
+      <figcaption contentEditable="false">
         <input
           type="text"
           onChange={e => props.handleAltChange(e.target.value)}

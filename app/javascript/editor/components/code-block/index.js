@@ -44,8 +44,6 @@ export default class Editor extends Component<EditorProps, EditorState> {
 
   setMode = async (mode: string) => {
     await loadMode(mode)
-
-    this.state.cm && this.state.cm.setOption('mode', mode)
     this.props.onLanguageChange && this.props.onLanguageChange(mode)
   }
 
@@ -70,12 +68,13 @@ export default class Editor extends Component<EditorProps, EditorState> {
     return this.cm
   }
 
-  initClipboardJS = (node: ?HTMLElement) => new ClipboardJS(node, { text: trigger => this.cm.getDoc().getValue() })
+  initClipboardJS = (node: ?HTMLElement) =>
+    new ClipboardJS(node, { text: trigger => this.cm && this.cm.getDoc().getValue() })
 
   render = () => {
     return (
       <div class="code-editor-container code-editor-container--light" contentEditable={false}>
-        <div class="code-editor-toolbar" contentEditable={false}>
+        <div class="code-editor-toolbar font-headings" contentEditable={false}>
           <Controls destroy={this.props.onDestroy} />
           <div class="code-editor-toolbar-menu" contentEditable={false}>
             <LanguageSwitcher mode={this.props.mode} readOnly={this.props.readOnly} setMode={this.setMode} />

@@ -1,19 +1,15 @@
-.figure-wrapper
-	text-align: center
-	pointer-events: none
-
-img
+.lazy
 	display: block
 	border: 0
 	opacity: 0
 
-img:not(.initial)
-	transition: opacity 1s
+	&:not(.initial)
+		transition: opacity 1s
 
-img.initial,
-img.loaded,
-img.error
-	opacity: 1
+	&.initial,
+	&.loaded,
+	&.error
+		opacity: 1
 
-img:not([src])
-	visibility: hidden
+	&:not([src])
+		visibility: hidden
