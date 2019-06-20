@@ -1,3 +1,4 @@
+# typed: false
 # frozen_string_literal: true
 
 # Gitlab::Git::Diff is a wrapper around native Rugged::Diff object

@@ -13,6 +13,7 @@ export default class ImageView extends BaseView {
 
     this.containerNode = document.createElement('figure')
     this.renderElement()
+    console.log('i run')
   }
 
   renderElement = () => {

@@ -1,3 +1,4 @@
+# typed: false
 # frozen_string_literal: true
 
 module ApplicationHelper
@@ -5,12 +6,12 @@ module ApplicationHelper
     [
       {
         label: "Signed in as <strong>#{Current.user.nickname}</strong>",
-        url: profile_url(Current.user),
+        url: user_url(Current.user),
         active: true,
         options: { css_class: 'whitespace-normal' }
       },
       { divider: true },
-      { label: 'Profile', url: profile_url(Current.user), options: {} },
+      { label: 'Profile', url: user_url(Current.user), options: {} },
       { label: 'Write post', url: new_post_url, options: {} },
       { label: 'Settings', url: settings_url, options: {} },
       { divider: true },

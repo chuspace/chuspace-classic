@@ -1,3 +1,4 @@
+# typed: true
 class ShrineBackgrounding::DeleteJob < ApplicationJob
   queue_as :default
 

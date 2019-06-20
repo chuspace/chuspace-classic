@@ -1,3 +1,4 @@
+# typed: true
 # frozen_string_literal: true
 
 class CreatePosts < ActiveRecord::Migration[6.0]

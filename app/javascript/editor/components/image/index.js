@@ -6,9 +6,19 @@ import './image.sass'
 
 import { Component, Fragment, h, render } from 'preact'
 
+import LazyLoad from 'vanilla-lazyload'
+import { useEffect } from 'preact/hooks'
+
 type Props = {
   attrs: any,
   options: any
+}
+
+if (document && !document.lazyLoadInstance) {
+  document.lazyLoadInstance = new LazyLoad({
+    elements_selector: '.lazy',
+    load_delay: 300
+  })
 }
 
 const Image = (props: Props) => {
@@ -33,19 +43,11 @@ const Image = (props: Props) => {
     float: figFloat
   }
 
+  useEffect(() => document && document.lazyLoadInstance.update())
+
   return (
     <Fragment>
-      <img
-        src={imageUrl}
-        alt={attrs.caption}
-        onError={evt => {
-          /* If the resizer fails, try using the original url */
-          if (evt.target.src !== attrs.src) {
-            /* eslint-disable-next-line no-param-reassign */
-            evt.target.src = attrs.src
-          }
-        }}
-      />
+      <img alt={attrs.caption} class="lazy" data-src={imageUrl} />
       <figcaption>
         <input
           type="text"

@@ -1,3 +1,4 @@
+# typed: strict
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
@@ -18,7 +19,7 @@ Rails.application.routes.draw do
 
   resources :users, path: 'u', except: :show
   resources :posts, path: 'p', except: :show
-  resources :images, only: :create
+  resources :images, only: %i[create destroy]
 
   resources :settings, only: :index
 
@@ -32,7 +33,4 @@ Rails.application.routes.draw do
   end
 
   mount Easymon::Engine => '/alive' if Rails.env.production?
-
-  get '/:nickname', to: 'users#show', as: :profile
-  get '/:nickname/:slug', to: 'posts#show', as: :post_show
 end

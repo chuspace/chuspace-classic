@@ -82,6 +82,9 @@ gem 'redcarpet'
 # Link previews
 gem 'onebox'
 
+# Typechecking
+gem 'sorbet-runtime'
+
 group :production do
   # Resource monitoring
   gem 'easymon'
@@ -115,7 +118,7 @@ group :development do
   gem 'rack-mini-profiler', require: false
   gem 'memory_profiler', require: false
 
-  # gem 'sorbet'
+  gem 'sorbet'
 end
 
 group :test do

@@ -1,3 +1,4 @@
+# typed: true
 class MarkdownRenderer < Redcarpet::Render::HTML
   # Methods where the first argument is the text content
 

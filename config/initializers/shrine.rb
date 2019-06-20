@@ -1,3 +1,4 @@
+# typed: false
 # frozen_string_literal: true
 
 require 'shrine'
@@ -29,7 +30,7 @@ def production_storages
   }
 
   {
-    cache: Shrine::Storage::FileSystem.new('public/uploads', prefix: 'cache'),
+    cache: Shrine::Storage::FileSystem.new('public', prefix: 'uploads/cache'),
     store:
       # temporary
       Shrine::Storage::S3

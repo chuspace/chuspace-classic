@@ -1,3 +1,4 @@
+# typed: false
 # frozen_string_literal: true
 
 class ImagesController < ApplicationController
@@ -15,9 +16,9 @@ class ImagesController < ApplicationController
 
     unless image
       image = repository.images.create(image: uploaded_io, blob_path: blob_path)
-      repository.commit(content: image.image.read, message: "Added #{blob_path}", path: blob_path)
+      repository.commit(content: image.image.read, message: "Added #{blob_path}", path: blob_path) if image
     end
 
-    render json: { url: image.image.imgproxy_url(width: 700, height: 350, resizing_type: :fill, sharpen: 1) }
+    render json: { url: '/' + blob_path }
   end
 end

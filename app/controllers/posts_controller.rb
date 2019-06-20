@@ -1,3 +1,4 @@
+# typed: false
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
@@ -56,7 +57,7 @@ class PostsController < ApplicationController
 
       redirect_to root_path
     else
-      redirect_to post_show_path(nickname: Current.user.nickname, slug: @post.slug)
+      redirect_to post_path(@post)
     end
   end
 

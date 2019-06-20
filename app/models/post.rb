@@ -1,3 +1,4 @@
+# typed: false
 # frozen_string_literal: true
 require 'redcarpet/render_strip'
 
@@ -28,7 +29,7 @@ class Post < ApplicationRecord
 
     if post
       author = post.author
-      Rails.application.routes.url_helpers.post_show_path(author, post)
+      Rails.application.routes.url_helpers.post_path(post)
     else
       blob_path
     end

@@ -31,8 +31,8 @@ export default class Image extends Node {
         width: { default: 750 },
         align: { default: 'center' }
       },
-      inline: false,
-      group: 'block',
+      inline: true,
+      group: 'inline',
       draggable: false,
       parseDOM: [
         {
@@ -46,18 +46,7 @@ export default class Image extends Node {
           })
         }
       ],
-      toDOM: (node: PMNode) => {
-        return [
-          'img',
-          {
-            src: node.attrs.src,
-            alt: node.attrs.alt,
-            title: node.attrs.title,
-            width: node.attrs.width,
-            align: node.attrs.align
-          }
-        ]
-      },
+      toDOM: (node: PMNode) => ['img', node.attrs],
       toStatic: (node: PMNode, options: any, isSelected: boolean, isEditable: boolean, handleAltChange: () => void) => {
         return (
           <ImageComponent
@@ -140,7 +129,7 @@ export default class Image extends Node {
                     view.dispatch(transaction)
                   },
                   error: data => {
-                    console.log(data)
+                    return false
                   }
                 })
               })

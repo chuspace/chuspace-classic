@@ -1,8 +1,10 @@
+# typed: false
 # frozen_string_literal: true
 
 class AppUploader < Shrine
   include ImageProcessing::Vips
 
+  plugin :pretty_location
   plugin :add_metadata
   plugin :determine_mime_type
   plugin :store_dimensions

@@ -1,3 +1,4 @@
+# typed: true
 class ShrineBackgrounding::PromoteJob < ApplicationJob
   queue_as :default
 

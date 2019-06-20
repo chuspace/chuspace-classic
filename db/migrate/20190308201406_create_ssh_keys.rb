@@ -1,3 +1,4 @@
+# typed: true
 # frozen_string_literal: true
 
 class CreateSshKeys < ActiveRecord::Migration[6.0]

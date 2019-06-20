@@ -25,7 +25,7 @@ export default class extends Controller {
   }
 
   onChange = () => {
-    if (!this.saving) debounce(this.save, 200)
+    if (!this.saving) this.save()
   }
 
   save() {
