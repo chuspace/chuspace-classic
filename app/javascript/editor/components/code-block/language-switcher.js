@@ -37,7 +37,8 @@ export default class LanguageSwitcher extends Component<Props, State> {
 
   componentDidMount() {
     document.addEventListener('click', (e: MouseEvent) => {
-      if (this.toolbar && this.toolbar.contains(e.target)) return
+      const el = e.target
+      if (this.toolbar && el instanceof Node && this.toolbar.contains(el)) return
       this.setState({ showSwitcher: false })
     })
   }

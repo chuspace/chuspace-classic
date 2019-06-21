@@ -79,9 +79,6 @@ gem 'fast_slug', path: 'extensions/fast_slug'
 gem 'faster_path'
 gem 'redcarpet'
 
-# Link previews
-gem 'onebox'
-
 # Typechecking
 gem 'sorbet-runtime'
 gem 'sorbet-rails'

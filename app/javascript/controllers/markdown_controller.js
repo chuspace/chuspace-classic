@@ -9,7 +9,7 @@ import { Controller } from 'stimulus'
 export default class extends Controller {
   connect() {
     this.element.querySelectorAll('pre').forEach(codeNode => {
-      const mode = codeNode.childNodes[0].className.split('-')[1]
+      const mode = codeNode.childNodes[0].className
       const getCMInstance = instance => (this.cm = instance)
       const content = codeNode.textContent
 

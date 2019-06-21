@@ -48,7 +48,6 @@ export default class CodeBlock extends Node {
           tag: 'div[style]',
           preserveWhitespace: 'full',
           getAttrs: (dom: PMNode) => {
-            console.log(dom.style)
             if (dom.style.whiteSpace === 'pre') {
               return {}
             }

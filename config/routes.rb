@@ -17,9 +17,10 @@ Rails.application.routes.draw do
   resources :magic_logins, only: :index
   resources :invites, only: :create
 
-  resources :users, path: 'u', except: :show
-  resources :posts, path: 'p', except: :show
+  resources :users, path: 'u'
+  resources :posts, path: 'p'
   resources :images, only: %i[create destroy]
+  resources :unfurls, only: :index
 
   resources :settings, only: :index
 

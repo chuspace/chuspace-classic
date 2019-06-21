@@ -55,7 +55,7 @@ class Post < ApplicationRecord
   end
 
   def body_html
-    renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML, {})
+    renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(filter_html: true, safe_links_only: true), fenced_code_blocks: true, disable_indented_code_blocks: true, autolink: true, strikethrough: true, space_after_headers: true)
     @body_html ||= renderer.render(body).html_safe
   end
 
