@@ -1,5 +1,3 @@
-import toHash from 'tohash'
-
 export type ModeType = {
   name: string,
   mode: string,
@@ -345,7 +343,3 @@ export const MODES: ModesType = [
     mode: 'yaml'
   }
 ]
-
-export const LANGUAGE_MIME_HASH = toHash(MODES, 'mime')
-export const LANGUAGE_MODE_HASH = toHash(MODES, 'mode')
-export const LANGUAGE_NAME_HASH = toHash(MODES, 'short')

@@ -1,5 +1,6 @@
 // @flow
 
+import { InputRule, inputRules } from 'prosemirror-inputrules'
 import { Plugin, TextSelection } from 'prosemirror-state'
 import { pasteRule, removeMark, updateMark } from 'editor/commands'
 
@@ -7,6 +8,7 @@ import { Mark } from 'editor/base'
 import { Mark as PMMark } from 'prosemirror-model'
 import { getMarkRange } from 'editor/helpers'
 
+const LINK_INPUT_REGEX = /(^|[^!])\[(.*?)\]\((\S+)\)(\s)$/
 export default class Link extends Mark {
   name = 'link'
 
@@ -15,6 +17,9 @@ export default class Link extends Mark {
       attrs: {
         href: {
           default: null
+        },
+        title: {
+          default: null
         }
       },
       inclusive: false,
@@ -22,7 +27,8 @@ export default class Link extends Mark {
         {
           tag: 'a[href]',
           getAttrs: (dom: PMMark) => ({
-            href: dom.getAttribute('href')
+            href: dom.getAttribute('href'),
+            title: dom.getAttribute('title')
           })
         }
       ],
@@ -45,6 +51,18 @@ export default class Link extends Mark {
 
       return removeMark(type)
     }
+  }
+
+  inputRules({ type }: PMMark) {
+    const markdownInputRule = new InputRule(LINK_INPUT_REGEX, (state, match, start, end) => {
+      const { schema } = state
+      const [, prefix, linkText, linkUrl] = match
+      const markType = schema.mark('link', { href: linkUrl })
+
+      return state.tr.replaceWith(start + prefix.length, end, schema.text(linkText, [markType]))
+    })
+
+    return [markdownInputRule]
   }
 
   pasteRules({ type }: PMMark) {

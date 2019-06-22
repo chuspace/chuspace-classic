@@ -9,6 +9,7 @@ import type { BaseViewPropType } from './base'
 import CodeMirror from 'codemirror'
 import { DEFAULT_MODE } from 'editor/modes'
 import { EditorView } from 'prosemirror-view'
+import { LANGUAGE_MODE_HASH } from 'editor/modes'
 import { exitCode } from 'prosemirror-commands'
 import { render } from 'preact'
 
@@ -25,8 +26,11 @@ export default class CodeBlockView extends BaseView {
   constructor(props: BaseViewPropType) {
     // Call super but don't render the view
     super(props, false)
+    const { mode } = LANGUAGE_MODE_HASH[this.node.attrs.language] || { mode: 'auto' }
+
     // Custom attrs for code block node view
-    this.mode = this.node.attrs.language
+    this.mode = mode
+    this.node.attrs.language = mode
     this.content = this.node.textContent
     this.readOnly = false
 
@@ -53,6 +57,8 @@ export default class CodeBlockView extends BaseView {
 
   onInit = (cm: CodeMirror) => {
     this.cm = cm
+
+    this.cm.setOption('mode', this.mode)
     this.cm.setOption('extraKeys', this.codeMirrorKeymap())
     // Propagate updates from the code editor to ProseMirror
     this.cm.on('beforeChange', () => (this.incomingChanges = true))
@@ -70,12 +76,16 @@ export default class CodeBlockView extends BaseView {
       this.incomingChanges = false
     })
 
-    setTimeout(() => this.cm.refresh(), 100)
     this.cm.on('focus', () => this.forwardSelection())
+    if (!this.content) this.cm.focus()
+    setTimeout(() => this.cm.refresh(), 100)
   }
 
   /* Component calls to set cm instance mode and node attrs */
-  onLanguageChange = (mode: string) => (this.node.attrs.language = mode)
+  onLanguageChange = (mode: string) => {
+    this.cm.setOption('mode', mode)
+    this.node.attrs.language = mode
+  }
 
   /**
    * when the code editor is focused,we can keep the selection of
@@ -206,11 +216,6 @@ export default class CodeBlockView extends BaseView {
   }
 
   selectNode = () => this.cm.focus()
-
-  destroy = () => {
-    this.containerNode.remove()
-    this.view.focus()
-  }
 }
 
 function computeChange(oldVal: string, newVal: string) {

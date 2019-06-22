@@ -2,6 +2,7 @@
 
 import type { LanguageType } from './modes'
 import { MODES } from './modes'
+import toHash from 'tohash'
 
 export const DEFAULT_MODE: string = 'auto'
 
@@ -21,4 +22,8 @@ export const loadMode = async (mode: string) => {
   return language
 }
 
-export { MODES }
+const LANGUAGE_MIME_HASH = toHash(MODES, 'mime')
+const LANGUAGE_MODE_HASH = toHash(MODES, 'mode')
+const LANGUAGE_NAME_HASH = toHash(MODES, 'short')
+
+export { MODES, LANGUAGE_MIME_HASH, LANGUAGE_MODE_HASH, LANGUAGE_NAME_HASH }

@@ -3,8 +3,8 @@
 /** @jsx h */
 
 import { Component, h, render } from 'preact'
+import { LANGUAGE_MODE_HASH, MODES } from 'editor/modes'
 
-import { MODES } from 'editor/modes'
 import classNames from 'classnames'
 
 type Props = {
@@ -52,11 +52,13 @@ export default class LanguageSwitcher extends Component<Props, State> {
   }
 
   render() {
+    const { name } = LANGUAGE_MODE_HASH[this.state.mode]
+
     return this.props.readOnly ? (
       <div class="code-editor-language-badge badge--grey mr-4">{this.props.mode}</div>
     ) : (
       <div class="code-editor-language-switcher-container mr-4" ref={node => (this.toolbar = node)}>
-        <input type="text" value={this.state.mode} class="input input--slim w-full" onFocus={this.toggleSwitcher} />
+        <input type="text" value={name} class="input input--slim w-full" onFocus={this.toggleSwitcher} />
         <ul
           class={classNames('code-editor-language-switcher', {
             hidden: !this.state.showSwitcher
