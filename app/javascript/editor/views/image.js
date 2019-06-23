@@ -1,11 +1,11 @@
 // @flow
 
 import { Node as ProsemirrorNode, Schema } from 'prosemirror-model'
+import { html, render } from 'lit-html'
 
 import BaseView from './base'
 import type { BaseViewPropType } from './base'
 import { EditorView } from 'prosemirror-view'
-import { render } from 'preact'
 
 export default class ImageView extends BaseView {
   constructor(props: BaseViewPropType) {
@@ -17,16 +17,28 @@ export default class ImageView extends BaseView {
 
   renderElement = () => {
     render(
-      this.node.type.spec.toStatic(this.node, this.options, this.isSelected, this.view.editable, this.handleAltChange),
+      html`
+        <lazy-image
+          src=${this.node.attrs.src}
+          alt=${this.node.attrs.alt}
+          align=${this.node.attrs.align}
+          width=${this.node.attrs.width}
+          title=${this.node.attrs.title || this.node.attrs.alt}
+          editable=${this.view.editable}
+          isSelected=${this.isSelected}
+          .handleAltChange=${this.handleAltChange}
+        ></lazy-image>
+      `,
       this.containerNode
     )
 
-    this.dom = this.containerNode
+    this.dom = this.containerNode.children[0]
   }
 
   handleAltChange = (newAlt: string) => {
     this.node.attrs.alt = newAlt
     this.renderElement()
+    this.view.dispatch(this.view.state.tr.setNodeMarkup(this.getPos(), null, this.node.attrs))
   }
 
   stopEvent = () => true

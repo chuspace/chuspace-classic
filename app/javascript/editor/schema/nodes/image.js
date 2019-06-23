@@ -2,16 +2,12 @@
 
 /* global FileReader */
 
-/** @jsx h */
-
 import * as Rails from 'rails-ujs'
 
 import { EditorState, Plugin, PluginKey, Transaction } from 'prosemirror-state'
 
-import { ImageComponent } from 'editor/components'
 import { Node } from 'editor/base'
 import { Node as PMNode } from 'prosemirror-model'
-import { h } from 'preact'
 import { nodeInputRule } from 'editor/commands'
 
 const IMAGE_INPUT_REGEX = /!\[(.+|:?)\]\((\S+)(?:(?:\s+)["'](\S+)["'])?\)/
@@ -46,19 +42,7 @@ export default class Image extends Node {
           })
         }
       ],
-      toDOM: (node: PMNode) => ['img', node.attrs],
-      toStatic: (node: PMNode, options: any, isSelected: boolean, isEditable: boolean, handleAltChange: () => void) => {
-        return (
-          <ImageComponent
-            key={node.currIndex}
-            attrs={node.attrs}
-            options={options}
-            isSelected={isSelected}
-            isEditable={isEditable}
-            handleAltChange={handleAltChange}
-          />
-        )
-      }
+      toDOM: (node: PMNode) => ['img', node.attrs]
     }
   }
 

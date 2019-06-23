@@ -55,7 +55,10 @@ export default class CodeEditor extends LitElement {
     super.connectedCallback()
 
     await loadMode(this.mode)
-    this.readonly = JSON.parse(this.readonly)
+
+    try {
+      this.readonly = JSON.parse(this.readonly)
+    } catch (e) {}
 
     const codeNode = this.querySelector('.code-editor')
     this.cm = this.createCM(codeNode)

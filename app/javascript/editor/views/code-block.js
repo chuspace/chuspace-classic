@@ -42,7 +42,7 @@ export default class CodeBlockView extends BaseView {
   }
 
   renderElement = () => {
-    const htmlSt = render(
+    render(
       html`
         <code-editor
           mode=${this.mode}

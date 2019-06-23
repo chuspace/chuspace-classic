@@ -35,7 +35,9 @@ export default class LanguageSwitcher extends LitElement<Props, State> {
 
   connectedCallback() {
     super.connectedCallback()
-    this.readonly = JSON.parse(this.readonly)
+    try {
+      this.readonly = JSON.parse(this.readonly)
+    } catch (e) {}
 
     document.addEventListener('click', (e: MouseEvent) => {
       const el = e.target
