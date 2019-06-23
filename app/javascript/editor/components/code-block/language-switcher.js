@@ -1,9 +1,7 @@
 // @flow
 
-/** @jsx h */
-
-import { Component, h, render } from 'preact'
 import { LANGUAGE_MODE_HASH, MODES } from 'editor/modes'
+import { LitElement, customElement, html } from 'lit-element'
 
 import classNames from 'classnames'
 
@@ -18,63 +16,83 @@ type State = {
   showSwitcher: boolean
 }
 
-export default class LanguageSwitcher extends Component<Props, State> {
-  toolbar: ?HTMLElement
-
-  constructor(props: Props) {
-    super(props)
-
-    this.state = {
-      mode: props.mode,
-      showSwitcher: false
+export default class LanguageSwitcher extends LitElement<Props, State> {
+  static get properties() {
+    return {
+      mode: { type: String, reflect: true },
+      setMode: { type: Function },
+      showSwitcher: { type: Boolean },
+      readonly: { type: String }
     }
   }
 
-  toggleSwitcher = () =>
-    this.setState({
-      showSwitcher: !this.state.showSwitcher
-    })
+  constructor(props: Props) {
+    super()
+    this.showSwitcher = false
+  }
 
-  componentDidMount() {
+  toggleSwitcher = () => (this.showSwitcher = !this.showSwitcher)
+
+  connectedCallback() {
+    super.connectedCallback()
+    this.readonly = JSON.parse(this.readonly)
+
     document.addEventListener('click', (e: MouseEvent) => {
       const el = e.target
-      if (this.toolbar && el instanceof Node && this.toolbar.contains(el)) return
-      this.setState({ showSwitcher: false })
+      const toolbar = this.querySelector('.code-editor-language-switcher-container')
+      if (toolbar && el && toolbar.contains(el)) return
+      this.showSwitcher = false
     })
   }
 
   handleLanguageChange = (e: SyntheticInputEvent<HTMLElement>) => {
     e.preventDefault()
 
-    const mode = e.target.dataset.mode
-    this.setState({ mode, showSwitcher: false })
-    this.props.setMode(mode)
+    this.mode = e.target.dataset.mode
+    this.setMode(this.mode)
+    this.showSwitcher = false
+
+    this.requestUpdate()
+  }
+
+  createRenderRoot() {
+    return this
   }
 
   render() {
-    const { name } = LANGUAGE_MODE_HASH[this.state.mode]
+    const { name } = LANGUAGE_MODE_HASH[this.mode]
 
-    return this.props.readOnly ? (
-      <div class="code-editor-language-badge badge--grey mr-4">{this.props.mode}</div>
-    ) : (
-      <div class="code-editor-language-switcher-container mr-4" ref={node => (this.toolbar = node)}>
-        <input type="text" value={name} class="input input--slim w-full" onFocus={this.toggleSwitcher} />
-        <ul
-          class={classNames('code-editor-language-switcher', {
-            hidden: !this.state.showSwitcher
-          })}
-        >
-          {MODES.map(({ name, mode }) => (
-            <li
-              class={classNames('code-editor-language-switcher-mode', { selected: mode === this.state.mode })}
-              onClick={this.handleLanguageChange}
-              data-mode={mode}
+    return this.readonly
+      ? html`
+          <div class="code-editor-language-badge badge--grey mr-4">${this.mode}</div>
+        `
+      : html`
+          <div class="code-editor-language-switcher-container mr-4">
+            <input type="text" value=${name} class="input input--slim w-full" @focus=${this.toggleSwitcher} />
+            <ul
+              class=${classNames('code-editor-language-switcher', {
+                hidden: !this.showSwitcher
+              })}
             >
-              {name}
-            </li>
-          ))}
-        </ul>
-      </div>
-    )
+              ${MODES.map(
+                ({ name, mode }) => html`
+                  <li
+                    class=${classNames('code-editor-language-switcher-mode', { selected: mode === this.mode })}
+                    @click=${this.handleLanguageChange}
+                    data-mode=${mode}
+                  >
+                    ${name}
+                  </li>
+                `
+              )}
+            </ul>
+          </div>
+        `
   }
 }
+
+document.addEventListener('turbolinks:load', () => {
+  if (!window.customElements.get('code-editor-language-switcher')) {
+    customElements.define('code-editor-language-switcher', LanguageSwitcher)
+  }
+})

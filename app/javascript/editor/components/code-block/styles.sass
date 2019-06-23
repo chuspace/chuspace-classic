@@ -1,4 +1,7 @@
 
+code-editor
+  @apply whitespace-no-wrap
+
 .code-editor-container
   @apply rounded shadow-lg
 
@@ -7,7 +10,7 @@
     height: auto
 
 .code-editor-toolbar
-  @apply flex items-center p-4 w-full relative rounded-t text-base bg-white shadow-lg text-sm
+  @apply flex items-center p-4 w-full relative rounded-t text-base bg-white text-sm bg-grey-lighter
   height: 40px
 
 .code-editor-toolbar-heading
@@ -21,10 +24,6 @@
   @apply relative cursor-pointer select-none
   width: 150px
 
-.code-editor-language-input
-  @apply px-4 py-2 mr-4 w-full
-  border: 1px solid #ccc
-
 .code-editor-language-switcher
   @apply mr-4 bg-white -m-2 overflow-scroll py-2 shadow-md rounded list-none absolute z-50
   max-height: 250px
@@ -37,12 +36,3 @@
 
     &:hover, &.selected
       @apply bg-grey-lightest
-
-.code-editor-container
-    &--light
-      .code-editor-toolbar
-        @apply bg-white shadow-lg
-
-    &--dark
-      .code-editor-toolbar
-        @apply bg-grey-lighter shadow-lg

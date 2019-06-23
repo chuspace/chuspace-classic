@@ -2,6 +2,7 @@
 
 import { Node as ProsemirrorNode, Schema } from 'prosemirror-model'
 import { Selection, TextSelection } from 'prosemirror-state'
+import { html, render } from 'lit-html'
 import { redo, undo } from 'prosemirror-history'
 
 import BaseView from './base'
@@ -11,7 +12,6 @@ import { DEFAULT_MODE } from 'editor/modes'
 import { EditorView } from 'prosemirror-view'
 import { LANGUAGE_MODE_HASH } from 'editor/modes'
 import { exitCode } from 'prosemirror-commands'
-import { render } from 'preact'
 
 export default class CodeBlockView extends BaseView {
   cm: typeof CodeMirror.defaults = null
@@ -19,11 +19,13 @@ export default class CodeBlockView extends BaseView {
   mode: string = DEFAULT_MODE
   content: string
   readOnly: boolean
+  lines: number
+  theme: string
   incomingChanges: boolean = false
   getCMInstance: () => CodeMirror
   onLanguageChange: (mode: string) => void
 
-  constructor(props: BaseViewPropType) {
+  constructor(props: BaseViewPropType & { theme: string }) {
     // Call super but don't render the view
     super(props, false)
     const { mode } = LANGUAGE_MODE_HASH[this.node.attrs.language] || { mode: 'auto' }
@@ -31,34 +33,39 @@ export default class CodeBlockView extends BaseView {
     // Custom attrs for code block node view
     this.mode = mode
     this.node.attrs.language = mode
-    this.content = this.node.textContent
+    this.content = this.node.textContent || ''
     this.readOnly = false
+    this.lines = this.content.split(/\r\n|\r|\n/).length
+    this.theme = props.theme || 'light'
 
-    // Renders view component
     this.renderElement()
   }
 
   renderElement = () => {
-    render(
-      this.node.type.spec.toStatic(
-        this.node,
-        this.mode,
-        this.content,
-        this.readOnly,
-        this.onInit,
-        this.onLanguageChange,
-        this.destroy
-      ),
+    const htmlSt = render(
+      html`
+        <code-editor
+          mode=${this.mode}
+          readonly=${this.readOnly}
+          lines=${this.lines}
+          theme=${this.theme}
+          .onInit=${this.onInit}
+          .onLanguageChange=${this.onLanguageChange}
+          .onDestroy=${this.destroy}
+        ></code-editor>
+      `,
       this.containerNode
     )
 
-    this.dom = this.containerNode
+    this.dom = this.containerNode.children[0]
   }
 
   onInit = (cm: CodeMirror) => {
     this.cm = cm
 
     this.cm.setOption('mode', this.mode)
+    this.cm.setValue(this.content)
+
     this.cm.setOption('extraKeys', this.codeMirrorKeymap())
     // Propagate updates from the code editor to ProseMirror
     this.cm.on('beforeChange', () => (this.incomingChanges = true))
@@ -78,13 +85,14 @@ export default class CodeBlockView extends BaseView {
 
     this.cm.on('focus', () => this.forwardSelection())
     if (!this.content) this.cm.focus()
-    setTimeout(() => this.cm.refresh(), 100)
+    setTimeout(() => this.cm.refresh(), 200)
   }
 
   /* Component calls to set cm instance mode and node attrs */
   onLanguageChange = (mode: string) => {
     this.cm.setOption('mode', mode)
     this.node.attrs.language = mode
+    this.view.dispatch(this.view.state.tr.setNodeMarkup(this.getPos(), null, this.node.attrs))
   }
 
   /**

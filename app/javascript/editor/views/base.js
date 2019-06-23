@@ -3,7 +3,6 @@
 import { Node as ProsemirrorNode, Schema } from 'prosemirror-model'
 
 import { EditorView } from 'prosemirror-view'
-import { render } from 'preact'
 
 export type BaseViewPropType = {
   node: ProsemirrorNode,
@@ -34,13 +33,7 @@ export default class BaseView {
     if (render) this.renderElement()
   }
 
-  renderElement = () => {
-    render(
-      this.node.type.spec.toStatic(this.node, this.options, this.isSelected, this.view.editable),
-      this.containerNode
-    )
-    this.dom = this.containerNode
-  }
+  renderElement = () => console.error('Must override')
 
   update = (updateNode: ProsemirrorNode) => {
     if (updateNode.type !== this.node.type) return false

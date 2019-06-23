@@ -5,9 +5,9 @@
 import './image.sass'
 
 import { Component, Fragment, h, render } from 'preact'
+import { useEffect, useState } from 'preact/hooks'
 
 import LazyLoad from 'vanilla-lazyload'
-import { useEffect } from 'preact/hooks'
 
 type Props = {
   attrs: any,
@@ -26,7 +26,7 @@ const Image = (props: Props) => {
   const options = props.options
   const imageUrl = attrs.src
   const figFloat = attrs.align === 'left' || attrs.align === 'right' ? attrs.align : 'none'
-  let figMargin = '0em auto 1em'
+  let figMargin = '0em auto'
 
   if (attrs.align === 'left') {
     figMargin = '1em 1em 1em 0px'
@@ -47,7 +47,7 @@ const Image = (props: Props) => {
 
   return (
     <Fragment>
-      <img alt={attrs.caption} class="lazy" data-src={imageUrl} />
+      <img alt={attrs.caption} class="lazy" data-src={imageUrl} style={figStyle} />
       <figcaption contentEditable="false">
         <input
           type="text"

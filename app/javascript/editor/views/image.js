@@ -26,6 +26,7 @@ export default class ImageView extends BaseView {
 
   handleAltChange = (newAlt: string) => {
     this.node.attrs.alt = newAlt
+    this.renderElement()
   }
 
   stopEvent = () => true

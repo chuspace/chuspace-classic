@@ -1,14 +1,11 @@
 // @flow
 
-/** @jsx h */
-
 import { Element, Node } from 'editor/base'
 import { Fragment, NodeSpec, Node as PMNode, Schema } from 'prosemirror-model'
 import { Plugin, PluginKey, Selection } from 'prosemirror-state'
 import { nodeInputRule, toggleBlockType } from 'editor/commands'
 
 import { CodeBlock as CodeBlockComponent } from 'editor/components'
-import { h } from 'preact'
 import { setBlockType } from 'prosemirror-commands'
 
 const removeLastNewLine = (dom: HTMLElement): HTMLElement => {
@@ -93,20 +90,6 @@ export default class CodeBlock extends Node {
       ],
       toDOM(node: PMNode) {
         return ['pre', ['code', { 'data-language': node.attrs.language }, 0]]
-      },
-
-      toStatic: (node, mode, content, readOnly, onInit, onLanguageChange, onDestroy) => {
-        return (
-          <CodeBlockComponent
-            key={node.currIndex}
-            mode={mode}
-            content={content}
-            readOnly={readOnly}
-            onInit={onInit}
-            onLanguageChange={onLanguageChange}
-            onDestroy={onDestroy}
-          />
-        )
       }
     }
   }
