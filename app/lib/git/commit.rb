@@ -86,41 +86,52 @@ module Git
         branch = 'refs/heads/' + branch unless branch.start_with?('refs/')
 
         filename = file[:path].to_s
+        index = repository.index
 
-        unless repository.empty?
+        unless rugged.empty?
           rugged_ref = rugged.references[branch]
           raise Repository::InvalidRef.new('Invalid branch name') unless rugged_ref
           last_commit = rugged_ref.target
-          repository.index.read_tree(last_commit.tree)
+          index.read_tree(last_commit.tree)
           parents = [last_commit]
         end
 
         if action == :remove
-          repository.index.remove(filename)
+          File.unlink File.join(rugged.workdir, filename)
+          index.remove(filename)
         else
-          file_entry = repository.index.get(filename)
+          file_entry = index.get(filename)
 
           if action == :rename
             old_path_name = file[:previous_path].to_s
             old_filename = old_path_name.to_s
-            file_entry = repository.index.get(old_filename)
-            repository.index.remove(old_filename) unless file_entry.blank?
+            old_file_entry = index.get(old_filename)
+            unless old_file_entry.blank?
+              File.unlink File.join(rugged.workdir, old_filename)
+              index.remove(old_filename)
+            end
           end
 
           mode = file_entry[:mode] if file_entry && file_entry[:mode]
           content = file[:content]
-          oid = rugged.write(content, :blob)
-          repository.index.add(path: filename, oid: oid, mode: mode)
+
+          File.open File.join(rugged.workdir, filename), 'wb' do |f|
+            f.write(content)
+          end
+
+          oid = Rugged::Blob.from_workdir(rugged, filename)
+          index.add(path: filename, oid: oid, mode: mode)
         end
 
         opts = {}
-        opts[:tree] = repository.index.write_tree(rugged)
+        opts[:tree] = index.write_tree(rugged)
         opts[:author] = author_hash
         opts[:committer] = committer_hash
         opts[:message] = commit[:message]
         opts[:parents] = parents
         opts[:update_ref] = branch
 
+        index.write
         Rugged::Commit.create(rugged, opts)
       end
 

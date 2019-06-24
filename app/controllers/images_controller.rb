@@ -3,22 +3,16 @@
 
 class ImagesController < ApplicationController
   before_action :authenticate!, only: %i[new create]
-
   layout 'editor', only: %i[new edit]
 
   def create
     repository = Current.user.repository
     uploaded_io = params[:image]
     blob_name = uploaded_io.original_filename
-    blob_path = File.join('images', blob_name)
+    blob_path = File.join('/', repository.name, blob_name)
 
-    image = repository.images.find_by(blob_path: blob_path)
+    repository.commit(content: image.image.read, message: "Added #{blob_name}", path: blob_name)
 
-    unless image
-      image = repository.images.create(image: uploaded_io, blob_path: blob_path)
-      repository.commit(content: image.image.read, message: "Added #{blob_path}", path: blob_path) if image
-    end
-
-    render json: { url: '/' + blob_path }
+    render json: { url: blob_path }
   end
 end

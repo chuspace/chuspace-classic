@@ -12,16 +12,18 @@ module Git
         from_tree(repository, tree)
       end
 
-      def from_tree(repository, tree)
-        tree.each_with_object([]) do |item, blobs|
+      def from_tree(repository, tree, blobs = [])
+        tree.each do |item|
           case item[:type]
           when :blob
             blobs << from(repository, item)
           when :tree
             tree = repository.lookup(item[:oid])
-            from_tree(repository, tree)
+            from_tree(repository, tree, blobs)
           end
         end
+
+        blobs
       end
 
       def from(repository, blob_entry, tree = '')

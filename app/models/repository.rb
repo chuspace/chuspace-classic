@@ -5,7 +5,7 @@ class Repository < ApplicationRecord
   class NoRepository < StandardError; end
   class InvalidRef < StandardError; end
 
-  DEFAULT_NAME = 'blog.git'
+  DEFAULT_NAME = 'blog'
   START_REF = 'HEAD'
   DEFAULT_REF = 'refs/heads/master'
   CONTRIBUTIONS_REF = 'refs/heads/contributions'
@@ -43,8 +43,12 @@ class Repository < ApplicationRecord
     lookup(commit_sha)
   end
 
+  def blobs
+    Git::Blob.all(self, commit_sha)
+  end
+
   def rugged
-    @rugged ||= Rugged::Repository.bare(path)
+    @rugged ||= Rugged::Repository.new(path)
   rescue Rugged::RepositoryError, Rugged::OSError
     fail NoRepository, 'no repository for such path'
   end
@@ -115,10 +119,10 @@ class Repository < ApplicationRecord
   end
 
   def create_git_repo
-    Git.logger.info "Creating repository for <#{name}> from <#{path}>."
+    Rails.logger.info "Creating repository for <#{name}> at <#{path}>."
     FileUtils.mkdir_p(path, mode: 0o770)
 
-    repo = Rugged::Repository.init_at(path, :bare)
+    repo = Rugged::Repository.init_at(path)
     repo.config['user.name'] = author.name
     repo.config['user.email'] = author.email
     repo.config['user.nickname'] = author.nickname
@@ -137,13 +141,13 @@ class Repository < ApplicationRecord
 
     if real_local_hooks_directory != File.realpath(GLOBAL_HOOKS_DIRECTORY)
       if File.exist?(local_hooks_directory)
-        Git.logger.info "Moving existing hooks directory and symlinking global hooks directory for #{path}."
+        Rails.logger.info "Moving existing hooks directory and symlinking global hooks directory in #{path}."
         FileUtils.mv(local_hooks_directory, "#{local_hooks_directory}.old.#{Time.now.to_i}")
       end
 
       FileUtils.ln_sf(GLOBAL_HOOKS_DIRECTORY, local_hooks_directory)
     else
-      Git.logger.info "Hooks already exist for #{path}."
+      Rails.logger.info "Hooks already exist at #{path}."
     end
   end
 
@@ -157,12 +161,12 @@ class Repository < ApplicationRecord
   end
 
   def destroy_git_repo
-    Git.logger.info "Removing repository for <#{name}> from <#{path}>."
+    Rails.logger.info "Removing repository <#{name}> from <#{path}>."
     FileUtils.rm_rf(path)
   end
 
   def rename_git_repo
-    Git.logger.info "Moving repository from #{path_was} to <#{path}>."
+    Rails.logger.info "Moving repository from #{path_was} to <#{path}>."
     FileUtils.mv(path_was, path)
   end
 end

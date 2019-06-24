@@ -18,14 +18,20 @@ class LazyImage extends LitElement {
   }
   constructor() {
     super()
+
     this.selected = false
   }
 
   connectedCallback() {
     super.connectedCallback()
 
+    try {
+      this.alt = JSON.parse(this.alt) || ''
+    } catch (e) {}
+
     setTimeout(() => {
       document.lazyLoadInstance.update()
+
       this.imageNode = this.querySelector('.lazy')
     }, 1)
 

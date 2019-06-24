@@ -63,7 +63,5 @@ Rails.application.configure do
 
   # Add proxy to redirect to img proxy host in development
   # in production we would use nginx or similar
-  config.middleware.insert_before 0,
-                                  ImgproxyMiddleware,
-                                  backend: ENV.fetch('IMGPROXY_ENDPOINT'), streaming: true, ssl_verify_none: true
+  config.middleware.insert_before 0, ActionDispatch::Static, '/Users/gaurav/.chuspace/repositories/'
 end
