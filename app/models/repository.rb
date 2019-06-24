@@ -35,7 +35,6 @@ class Repository < ApplicationRecord
 
   belongs_to :author, class_name: 'User'
   has_many :posts, dependent: :destroy
-  has_many :images, dependent: :destroy
 
   delegate :lookup, :checkout, :empty?, :bare?, :index, to: :rugged
 

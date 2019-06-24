@@ -1,8 +1,6 @@
 # typed: false
 # frozen_string_literal: true
 
-require 'mimemagic'
-
 class PostReceiveJob < ApplicationJob
   queue_as :critical
   attr_reader :repository, :author, :commit_sha
@@ -34,8 +32,6 @@ class PostReceiveJob < ApplicationJob
       end
     end
 
-    sync_images
-
     if repository.update(commit_sha: commit_sha)
       Rails.logger.error(
         "Repository sync success: commit-#{commit_sha} author-#{author.id} repository-#{repository.id}"
@@ -46,17 +42,6 @@ class PostReceiveJob < ApplicationJob
   end
 
   private
-
-  def sync_images
-    @blobs.each do |blob|
-      next if FasterPath.extname(blob.path).end_with?('.md')
-
-      if MimeMagic.by_magic(blob.io)&.image?
-        image = repository.images.find_by(blob_path: blob.path)
-        repository.images.create(image: blob.io, blob_path: blob.path) unless image
-      end
-    end
-  end
 
   def create_or_update(git_blob)
     post = repository.posts.find_or_initialize_by(repository: repository, blob_path: git_blob.path)

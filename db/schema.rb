@@ -10,20 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_16_142830) do
+ActiveRecord::Schema.define(version: 2019_06_01_073804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "images", force: :cascade do |t|
-    t.jsonb "image_data"
-    t.string "blob_path"
-    t.bigint "repository_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["blob_path"], name: "index_images_on_blob_path", unique: true
-    t.index ["repository_id"], name: "index_images_on_repository_id"
-  end
 
   create_table "invites", force: :cascade do |t|
     t.string "email", null: false
@@ -117,7 +107,6 @@ ActiveRecord::Schema.define(version: 2019_06_16_142830) do
     t.index ["nickname"], name: "index_users_on_nickname", unique: true
   end
 
-  add_foreign_key "images", "repositories"
   add_foreign_key "invites", "users"
   add_foreign_key "posts", "repositories"
   add_foreign_key "ssh_keys", "users"
