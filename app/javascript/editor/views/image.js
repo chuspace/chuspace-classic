@@ -24,8 +24,6 @@ export default class ImageView extends BaseView {
           align=${this.node.attrs.align}
           width=${this.node.attrs.width}
           title=${this.node.attrs.title || this.node.attrs.alt}
-          editable=${this.view.editable}
-          isSelected=${this.isSelected}
           .handleAltChange=${this.handleAltChange}
         ></lazy-image>
       `,

@@ -6,6 +6,9 @@ lazy-image
 	border: 0
 	opacity: 0
 
+	&.selected
+		@apply border-4 border-solid border-grey-lighter
+
 	&:not(.initial)
 		transition: opacity 1s
 

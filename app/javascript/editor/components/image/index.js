@@ -13,8 +13,12 @@ class LazyImage extends LitElement {
       align: { type: String },
       alt: { type: String },
       width: { type: Number },
-      isSelected: { type: Boolean }
+      selected: { type: Boolean }
     }
+  }
+  constructor() {
+    super()
+    this.selected = false
   }
 
   connectedCallback() {
@@ -22,7 +26,18 @@ class LazyImage extends LitElement {
 
     setTimeout(() => {
       document.lazyLoadInstance.update()
+      this.imageNode = this.querySelector('.lazy')
     }, 1)
+
+    document.addEventListener('click', (e: MouseEvent) => {
+      const el = e.target
+      if (this.imageNode && this.contains(el)) return
+      this.imageNode.classList.remove('selected')
+    })
+  }
+
+  selectNode = () => {
+    this.imageNode.classList.toggle('selected')
   }
 
   createRenderRoot() {
@@ -50,13 +65,13 @@ class LazyImage extends LitElement {
         class="lazy"
         data-src=${imageUrl}
         style="width: ${figWidth}; margin: ${figMargin}; float: ${figFloat}"
+        @click=${this.selectNode}
       />
       <figcaption contentEditable="false">
         <input
           type="text"
           @change=${e => this.handleAltChange(e.target.value)}
           class="input input--slim input--borderless text-center text-sm font-headings"
-          autofocus=${this.isSelected}
           value=${this.alt}
           maxlength=${70}
           placeholder="Click to enter caption"
