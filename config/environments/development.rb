@@ -1,5 +1,6 @@
 # typed: strict
 # frozen_string_literal: true
+
 require 'rack-mini-profiler'
 
 Rails.application.configure do
@@ -63,5 +64,5 @@ Rails.application.configure do
 
   # Add proxy to redirect to img proxy host in development
   # in production we would use nginx or similar
-  config.middleware.insert_before 0, ActionDispatch::Static, '/Users/gaurav/.chuspace/repositories/'
+  config.middleware.insert_before 0, ImgproxyMiddleware, opts: { path: '/Users/gaurav/.chuspace/repositories/' }
 end

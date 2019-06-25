@@ -11,7 +11,7 @@ class ImagesController < ApplicationController
     blob_name = uploaded_io.original_filename
     blob_path = File.join('/', repository.name, blob_name)
 
-    repository.commit(content: image.image.read, message: "Added #{blob_name}", path: blob_name)
+    repository.commit(content: uploaded_io.read, message: "Added #{blob_name}", path: blob_name)
 
     render json: { url: blob_path }
   end

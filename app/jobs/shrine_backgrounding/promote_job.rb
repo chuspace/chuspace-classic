@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # typed: true
 class ShrineBackgrounding::PromoteJob < ApplicationJob
   queue_as :default
