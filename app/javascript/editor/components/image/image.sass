@@ -1,21 +1,35 @@
 lazy-image
-	@apply whitespace-no-wrap
+	@apply whitespace-no-wrap relative block
 
-.lazy
-	display: block
-	border: 0
-	opacity: 0
+	.image-container
+		@apply float-none relative
 
-	&.selected
-		@apply border-4 border-solid border-grey-lighter
+		.image-toolbar
+			@apply absolute flex justify-between items-center rounded mx-auto py-2 px-4 bg-black z-50 invisible
+			width: 150px
+			top: -45px
+			left: calc(50% - 100px / 2)
+			height: 36px
 
-	&:not(.initial)
-		transition: opacity 1s
+		.lazy
+			display: block
+			border: 0
+			opacity: 0
 
-	&.initial,
-	&.loaded,
-	&.error
-		opacity: 1
+			&:not(.initial)
+				transition: opacity 1s
 
-	&:not([src])
-		visibility: hidden
+			&.initial,
+			&.loaded,
+			&.error
+				opacity: 1
+
+			&:not([src])
+				visibility: hidden
+
+		&.selected, &:hover
+			box-shadow: 0 0 0 3px theme('colors.blue')
+
+		&.selected
+			.image-toolbar
+				@apply visible

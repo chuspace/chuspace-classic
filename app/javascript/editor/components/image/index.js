@@ -32,22 +32,27 @@ class LazyImage extends LitElement {
     setTimeout(() => {
       document.lazyLoadInstance.update()
 
-      this.imageNode = this.querySelector('.lazy')
+      this.containerNode = this.querySelector('.image-container')
     }, 1)
 
     document.addEventListener('click', (e: MouseEvent) => {
       const el = e.target
-      if (this.imageNode && this.contains(el)) return
-      this.imageNode.classList.remove('selected')
+      if (this.containerNode && this.contains(el)) return
+      this.containerNode.classList.remove('selected')
     })
   }
 
   selectNode = () => {
-    this.imageNode.classList.toggle('selected')
+    this.containerNode.classList.toggle('selected')
   }
 
   createRenderRoot() {
     return this
+  }
+
+  setAlign = (e, direction) => {
+    e.preventDefault()
+    this.align = direction
   }
 
   render() {
@@ -66,22 +71,30 @@ class LazyImage extends LitElement {
     const figWidth = this.align === 'full' ? '100%' : `${this.width}%`
 
     return html`
-      <img
-        alt=${this.alt}
-        class="lazy"
-        data-src=${imageUrl}
-        style="width: ${figWidth}; margin: ${figMargin}; float: ${figFloat}"
-        @click=${this.selectNode}
-      />
-      <figcaption contentEditable="false">
-        <input
-          type="text"
-          @change=${e => this.handleAltChange(e.target.value)}
-          class="input input--slim input--borderless text-center text-sm font-headings"
-          value=${this.alt}
-          maxlength=${70}
-          placeholder="Click to enter caption"
+      <div class="image-container" style="width: ${figWidth}; margin: ${figMargin}; float: ${figFloat}">
+        <div class="image-toolbar">
+          <svg-icon name="image-left" color="#fff" @click=${e => this.setAlign(e, 'left')}></svg-icon>
+          <svg-icon name="image-center" color="#fff"></svg-icon>
+          <svg-icon name="image-right" color="#fff"></svg-icon>
+          <svg-icon name="image-full" color="#fff"></svg-icon>
+          <tooltip-arrow></tooltip-arrow>
+        </div>
+        <img
+          alt=${this.alt}
+          class="lazy"
+          data-src=${this.src}
+          @click=${this.selectNode}
         />
+        <figcaption contentEditable="false">
+          <input
+            type="text"
+            @change=${e => this.handleAltChange(e.target.value)}
+            class="input input--slim input--borderless text-center text-sm font-headings"
+            value=${this.alt}
+            maxlength=${70}
+            placeholder="Click to enter caption"
+          />
+        </div>
       </figcaption>
     `
   }

@@ -5,7 +5,7 @@ class Repository < ApplicationRecord
   class NoRepository < StandardError; end
   class InvalidRef < StandardError; end
 
-  DEFAULT_NAME = 'blog'
+  DEFAULT_NAME = 'blog.git'
   START_REF = 'HEAD'
   DEFAULT_REF = 'refs/heads/master'
   CONTRIBUTIONS_REF = 'refs/heads/contributions'

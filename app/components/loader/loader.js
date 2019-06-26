@@ -1,5 +1,7 @@
 // @flow
 
+import './styles.sass'
+
 import { LitElement, customElement, html, svg } from 'lit-element'
 
 import nanoid from 'nanoid/generate'
@@ -28,7 +30,7 @@ class ContentLoader extends LitElement {
       ariaLabel: 'Loading interface...',
       baseUrl: '',
       gradientRatio: 2,
-      height: this.lines * 10,
+      height: 200,
       interval: 0.25,
       preserveAspectRatio: 'none',
       primaryColor: '#f0f0f0',
@@ -50,6 +52,8 @@ class ContentLoader extends LitElement {
     const clipPath = `url(${props.baseUrl}#${idClip})`
 
     const items = Array.from({ length: this.lines }, (v, i) => i)
+
+    if (this.type !== 'image') props.height = this.lines * 10
 
     return svg`
       <svg
@@ -76,11 +80,16 @@ class ContentLoader extends LitElement {
 
         <defs>
           <clipPath id=${idClip}>
-            ${items.map(index => {
-              return svg`
+          ${
+            this.type === 'image'
+              ? svg`<rect x="0" y="0" width="400" height="200" />`
+              : items.map(
+                  index =>
+                    svg`
                   <rect x="15" y="${index * 15}" rx="2" ry="2" width="300" height="4" />
                 `
-            })}
+                )
+          }
           </clipPath>
 
           <linearGradient id=${idGradient}>

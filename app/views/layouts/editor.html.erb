@@ -8,6 +8,7 @@
     ></script>
     <%= javascript_pack_tag 'application' %>
     <%= stylesheet_pack_tag 'application', media: 'all' %>
+    <%= javascript_pack_tag 'custom-elements' %>
   </head>
 
   <body class="editor" data-controller="compose popper">
@@ -33,7 +34,5 @@
     <section class="content">
       <%= yield %>
     </section>
-
-    <%= javascript_pack_tag 'custom-elements' %>
   </body>
 </html>

@@ -8,6 +8,7 @@ import { EditorState, Plugin, PluginKey, Transaction } from 'prosemirror-state'
 
 import { Node } from 'editor/base'
 import { Node as PMNode } from 'prosemirror-model'
+import nanoid from 'nanoid/generate'
 import { nodeInputRule } from 'editor/commands'
 
 const IMAGE_INPUT_REGEX = /!\[(.+|:?)\]\((\S+)(?:(?:\s+)["'](\S+)["'])?\)/
@@ -24,7 +25,7 @@ export default class Image extends Node {
         title: {
           default: null
         },
-        width: { default: 750 },
+        width: { default: 100 },
         align: { default: 'center' }
       },
       inline: true,
@@ -88,6 +89,14 @@ export default class Image extends Node {
                 return
               }
 
+              const placeholderPlugin = view.state.plugins.find(plugin => plugin.key === 'image-placeholder$1')
+              const findPlaceholder = placeholderPlugin.props.findPlaceholder
+              let id = nanoid('1234567890abcdef', 10)
+              let tr = view.state.tr
+              if (!tr.selection.empty) tr.deleteSelection()
+              tr.setMeta(placeholderPlugin, { add: { id, pos: tr.selection.from } })
+              view.dispatch(tr)
+
               event.preventDefault()
 
               const { schema } = view.state
@@ -99,6 +108,7 @@ export default class Image extends Node {
               images.forEach(image => {
                 const formData = new FormData()
                 formData.append('image', image)
+                let pos = findPlaceholder(view.state, id)
 
                 Rails.ajax({
                   type: 'POST',
@@ -109,11 +119,15 @@ export default class Image extends Node {
                       src: data.url
                     })
 
-                    const transaction = view.state.tr.insert(coordinates.pos, node)
+                    if (pos == null) return
+
+                    const transaction = view.state.tr
+                      .replaceWith(pos, pos, node)
+                      .setMeta(placeholderPlugin, { remove: { id } })
                     view.dispatch(transaction)
                   },
                   error: data => {
-                    return false
+                    view.dispatch(tr.setMeta(placeholderPlugin, { remove: { id } }))
                   }
                 })
               })
