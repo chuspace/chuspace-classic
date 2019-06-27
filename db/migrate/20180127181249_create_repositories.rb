@@ -7,6 +7,9 @@ class CreateRepositories < ActiveRecord::Migration[6.0]
       t.string :name, default: Repository::DEFAULT_NAME, null: false
       t.index %i[name author_id], unique: true
 
+      t.string :full_name, null: false
+      t.index :full_name, unique: true
+
       t.string :path, null: false
       t.index :path, unique: true
 

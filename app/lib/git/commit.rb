@@ -97,7 +97,6 @@ module Git
         end
 
         if action == :remove
-          File.unlink File.join(rugged.workdir, filename)
           index.remove(filename)
         else
           file_entry = index.get(filename)
@@ -107,19 +106,13 @@ module Git
             old_filename = old_path_name.to_s
             old_file_entry = index.get(old_filename)
             unless old_file_entry.blank?
-              File.unlink File.join(rugged.workdir, old_filename)
               index.remove(old_filename)
             end
           end
 
           mode = file_entry[:mode] if file_entry && file_entry[:mode]
           content = file[:content]
-
-          File.open File.join(rugged.workdir, filename), 'wb' do |f|
-            f.write(content)
-          end
-
-          oid = Rugged::Blob.from_workdir(rugged, filename)
+          oid = rugged.write(content, :blob)
           index.add(path: filename, oid: oid, mode: mode)
         end
 
@@ -131,7 +124,6 @@ module Git
         opts[:parents] = parents
         opts[:update_ref] = branch
 
-        index.write
         Rugged::Commit.create(rugged, opts)
       end
 

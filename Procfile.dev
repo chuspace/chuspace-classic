@@ -4,3 +4,4 @@ webpacker: bundle exec ./bin/webpack-dev-server
 # lerna: lerna run --parallel transpile
 sidekiq: bundle exec sidekiq -C config/sidekiq.yml
 imgproxy: imgproxy
+minio: minio server /Users/gaurav/personal/chuspace/public/uploads

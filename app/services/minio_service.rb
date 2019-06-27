@@ -11,30 +11,33 @@ class MinioService
     @minio_client ||= Aws::S3::Client.new
   end
 
-  sig { params(filename: String, content: IO, content_type: String).returns(Aws::S3::Types::PutObjectOutput) }
-  def minio_put(filename, content, content_type)
+  sig { params(filename: String, file: ActionDispatch::Http::UploadedFile, content_type: String).returns(Seahorse::Client::Response) }
+  def put_object(filename:, file:, content_type:)
     minio_client.put_object(
       key: filename,
-      body: content,
+      body: file.read,
       bucket: bucket,
       content_type: content_type
     )
   end
 
-  sig { params(filename: String).returns(Aws::S3::Types::GetObjectOutput) }
-  def minio_get(filename)
+  sig { params(filename: String).returns(Seahorse::Client::Response) }
+  def get_object(filename:)
     minio_client.get_object(
       bucket: bucket,
-      key: filename,
-      response_target: 'download_testobject'
+      key: filename
     )
   end
 
-  sig { params(filename: String).returns(Aws::S3::Types::DeleteObjectOutput) }
-  def minio_delete(filename)
+  sig { params(filename: String).returns(Seahorse::Client::Response) }
+  def delete_object(filename:)
     minio_client.delete_object(
       bucket: bucket,
       key: filename
     )
+  end
+
+  def create_bucket(name:)
+    minio_client.create_bucket(bucket: bucket)
   end
 end

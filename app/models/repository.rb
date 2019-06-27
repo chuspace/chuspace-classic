@@ -5,7 +5,7 @@ class Repository < ApplicationRecord
   class NoRepository < StandardError; end
   class InvalidRef < StandardError; end
 
-  DEFAULT_NAME = 'blog.git'
+  DEFAULT_NAME = 'blog'
   START_REF = 'HEAD'
   DEFAULT_REF = 'refs/heads/master'
   CONTRIBUTIONS_REF = 'refs/heads/contributions'
@@ -113,12 +113,13 @@ class Repository < ApplicationRecord
   private
 
   def assign_default_attributes
-    self.name = "#{author.nickname}/#{DEFAULT_NAME}"
-    self.path = Git.config.storage_path.join(name)
+    self.name ||= DEFAULT_NAME
+    self.full_name = "#{author.nickname}/#{DEFAULT_NAME}"
+    self.path = Git.config.storage_path.join("#{full_name}.git")
   end
 
   def create_git_repo
-    Rails.logger.info "Creating repository for <#{name}> at <#{path}>."
+    Rails.logger.info "Creating repository <#{name}> at <#{path}>."
     FileUtils.mkdir_p(path, mode: 0o770)
 
     repo = Rugged::Repository.init_at(path, :bare)
