@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/faker/all/faker.rbi
 #
-# faker-1.9.3
+# faker-1.9.4
 module Faker
 end
 module Faker::Base58
@@ -41,6 +41,7 @@ class Faker::Blockchain::Ethereum < Faker::Base
 end
 class Faker::Blockchain::Tezos < Faker::Base
   def self.account; end
+  def self.block; end
   def self.contract; end
   def self.encode_tz(prefix, payload_size); end
   def self.operation; end
@@ -101,6 +102,10 @@ class Faker::Creature::Dog < Faker::Base
   def self.name; end
   def self.size; end
   def self.sound; end
+end
+class Faker::Creature::Horse < Faker::Base
+  def self.breed; end
+  def self.name; end
 end
 class Faker::Address < Faker::Base
   def self.building_number; end
@@ -281,6 +286,7 @@ class Faker::Company < Faker::Base
   def self.polish_register_of_national_economy(length = nil); end
   def self.polish_taxpayer_identification_number; end
   def self.profession; end
+  def self.sic_code; end
   def self.south_african_close_corporation_registration_number; end
   def self.south_african_listed_company_registration_number; end
   def self.south_african_pty_ltd_registration_number; end
@@ -436,13 +442,6 @@ class Faker::Food < Faker::Base
   def self.spice; end
   def self.vegetables; end
 end
-class Faker::Football < Faker::Base
-  def self.coach; end
-  def self.competition; end
-  def self.player; end
-  def self.position; end
-  def self.team; end
-end
 class Faker::FunnyName < Faker::Base
   def self.four_word_name; end
   def self.name; end
@@ -504,7 +503,7 @@ class Faker::IndustrySegments < Faker::Base
 end
 class Faker::Internet < Faker::Base
   def self.device_token; end
-  def self.domain_name; end
+  def self.domain_name(subdomain = nil); end
   def self.domain_suffix; end
   def self.domain_word; end
   def self.email(name = nil, *separators); end
@@ -528,6 +527,7 @@ class Faker::Internet < Faker::Base
   def self.user_agent(vendor = nil); end
   def self.user_name(specifier = nil, separators = nil); end
   def self.username(specifier = nil, separators = nil); end
+  def self.uuid; end
 end
 class Faker::Invoice < Faker::Base
   def self.amount_between(from = nil, to = nil); end
@@ -892,640 +892,23 @@ class Faker::WorldCup < Faker::Base
   def self.stadium; end
   def self.team; end
 end
-class Faker::AquaTeenHungerForce
-  def self._deprecated_character; end
-  def self.character(*args, &block); end
-end
-class Faker::BackToTheFuture
-  def self._deprecated_character; end
-  def self._deprecated_date; end
-  def self._deprecated_quote; end
-  def self.character(*args, &block); end
-  def self.date(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::Bitcoin
-  def self._deprecated_address; end
-  def self._deprecated_testnet_address; end
-  def self.address(*args, &block); end
-  def self.testnet_address(*args, &block); end
-end
-class Faker::BojackHorseman
-  def self._deprecated_character; end
-  def self._deprecated_quote; end
-  def self._deprecated_tongue_twister; end
-  def self.character(*args, &block); end
-  def self.quote(*args, &block); end
-  def self.tongue_twister(*args, &block); end
-end
-class Faker::BreakingBad
-  def self._deprecated_character; end
-  def self._deprecated_episode; end
-  def self.character(*args, &block); end
-  def self.episode(*args, &block); end
-end
-class Faker::Buffy
-  def self._deprecated_big_bad; end
-  def self._deprecated_celebrity; end
-  def self._deprecated_character; end
-  def self._deprecated_episode; end
-  def self._deprecated_quote; end
-  def self.big_bad(*args, &block); end
-  def self.celebrity(*args, &block); end
-  def self.character(*args, &block); end
-  def self.episode(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::Cat
-  def self._deprecated_breed; end
-  def self._deprecated_name; end
-  def self._deprecated_registry; end
-  def self.breed(*args, &block); end
-  def self.name(*args, &block); end
-  def self.registry(*args, &block); end
-end
-class Faker::Community
-  def self._deprecated_characters; end
-  def self._deprecated_quotes; end
-  def self.characters(*args, &block); end
-  def self.quotes(*args, &block); end
-end
-class Faker::Dog
-  def self._deprecated_age; end
-  def self._deprecated_breed; end
-  def self._deprecated_coat_length; end
-  def self._deprecated_gender; end
-  def self._deprecated_meme_phrase; end
-  def self._deprecated_name; end
-  def self._deprecated_size; end
-  def self._deprecated_sound; end
-  def self.age(*args, &block); end
-  def self.breed(*args, &block); end
-  def self.coat_length(*args, &block); end
-  def self.gender(*args, &block); end
-  def self.meme_phrase(*args, &block); end
-  def self.name(*args, &block); end
-  def self.size(*args, &block); end
-  def self.sound(*args, &block); end
-end
-class Faker::Dota
-  def self._deprecated_hero; end
-  def self._deprecated_item; end
+class Faker::Football
+  def self._deprecated_coach; end
+  def self._deprecated_competition; end
   def self._deprecated_player; end
-  def self._deprecated_quote(hero = nil); end
+  def self._deprecated_position; end
   def self._deprecated_team; end
-  def self.hero(*args, &block); end
-  def self.item(*args, &block); end
+  def self.coach(*args, &block); end
+  def self.competition(*args, &block); end
   def self.player(*args, &block); end
-  def self.quote(*args, &block); end
+  def self.position(*args, &block); end
   def self.team(*args, &block); end
 end
-class Faker::DrWho
-  def self._deprecated_actor; end
-  def self._deprecated_catch_phrase; end
-  def self._deprecated_character; end
-  def self._deprecated_quote; end
-  def self._deprecated_specie; end
-  def self._deprecated_the_doctor; end
-  def self._deprecated_villian; end
-  def self.actor(*args, &block); end
-  def self.catch_phrase(*args, &block); end
-  def self.character(*args, &block); end
-  def self.quote(*args, &block); end
-  def self.specie(*args, &block); end
-  def self.the_doctor(*args, &block); end
-  def self.villian(*args, &block); end
-end
-class Faker::DragonBall
-  def self._deprecated_character; end
-  def self.character(*args, &block); end
-end
-class Faker::DumbAndDumber
-  def self._deprecated_actor; end
-  def self._deprecated_character; end
-  def self._deprecated_quote; end
-  def self.actor(*args, &block); end
-  def self.character(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::Dune
-  def self._deprecated_character; end
-  def self._deprecated_planet; end
-  def self._deprecated_quote(character = nil); end
-  def self._deprecated_saying(source = nil); end
-  def self._deprecated_title; end
-  def self.character(*args, &block); end
-  def self.planet(*args, &block); end
-  def self.quote(*args, &block); end
-  def self.saying(*args, &block); end
-  def self.title(*args, &block); end
-end
-class Faker::ElderScrolls
-  def self._deprecated_city; end
-  def self._deprecated_creature; end
-  def self._deprecated_dragon; end
-  def self._deprecated_first_name; end
-  def self._deprecated_last_name; end
-  def self._deprecated_name; end
-  def self._deprecated_race; end
-  def self._deprecated_region; end
-  def self.city(*args, &block); end
-  def self.creature(*args, &block); end
-  def self.dragon(*args, &block); end
-  def self.first_name(*args, &block); end
-  def self.last_name(*args, &block); end
-  def self.name(*args, &block); end
-  def self.race(*args, &block); end
-  def self.region(*args, &block); end
-end
-class Faker::Ethereum
-  def self._deprecated_address; end
-  def self.address(*args, &block); end
-end
-class Faker::Fallout
-  def self._deprecated_character; end
-  def self._deprecated_faction; end
-  def self._deprecated_location; end
-  def self._deprecated_quote; end
-  def self.character(*args, &block); end
-  def self.faction(*args, &block); end
-  def self.location(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::FamilyGuy
-  def self._deprecated_character; end
-  def self._deprecated_location; end
-  def self._deprecated_quote; end
-  def self.character(*args, &block); end
-  def self.location(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::FamousLastWords
-  def self._deprecated_last_words; end
-  def self.last_words(*args, &block); end
-end
-class Faker::Friends
-  def self._deprecated_character; end
-  def self._deprecated_location; end
-  def self._deprecated_quote; end
-  def self.character(*args, &block); end
-  def self.location(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::GameOfThrones
-  def self._deprecated_character; end
-  def self._deprecated_city; end
-  def self._deprecated_dragon; end
-  def self._deprecated_house; end
-  def self._deprecated_quote; end
-  def self.character(*args, &block); end
-  def self.city(*args, &block); end
-  def self.dragon(*args, &block); end
-  def self.house(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::HarryPotter
-  def self._deprecated_book; end
-  def self._deprecated_character; end
-  def self._deprecated_house; end
-  def self._deprecated_location; end
-  def self._deprecated_quote; end
-  def self._deprecated_spell; end
-  def self.book(*args, &block); end
-  def self.character(*args, &block); end
-  def self.house(*args, &block); end
-  def self.location(*args, &block); end
-  def self.quote(*args, &block); end
-  def self.spell(*args, &block); end
-end
-class Faker::HeroesOfTheStorm
-  def self._deprecated_battleground; end
-  def self._deprecated_class; end
-  def self._deprecated_hero; end
-  def self._deprecated_quote; end
-  def self.battleground(*args, &block); end
-  def self.class(*args, &block); end
-  def self.hero(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::HeyArnold
-  def self._deprecated_character; end
-  def self._deprecated_location; end
-  def self._deprecated_quote; end
-  def self.character(*args, &block); end
-  def self.location(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::HitchhikersGuideToTheGalaxy
-  def self._deprecated_character; end
-  def self._deprecated_location; end
-  def self._deprecated_marvin_quote; end
-  def self._deprecated_planet; end
-  def self._deprecated_specie; end
-  def self._deprecated_starship; end
-  def self.character(*args, &block); end
-  def self.location(*args, &block); end
-  def self.marvin_quote(*args, &block); end
-  def self.planet(*args, &block); end
-  def self.quote; end
-  def self.specie(*args, &block); end
-  def self.starship(*args, &block); end
-end
-class Faker::Hobbit
-  def self._deprecated_character; end
-  def self._deprecated_location; end
-  def self._deprecated_quote; end
-  def self._deprecated_thorins_company; end
-  def self.character(*args, &block); end
-  def self.location(*args, &block); end
-  def self.quote(*args, &block); end
-  def self.thorins_company(*args, &block); end
-end
-class Faker::HowIMetYourMother
-  def self._deprecated_catch_phrase; end
-  def self._deprecated_character; end
-  def self._deprecated_high_five; end
-  def self._deprecated_quote; end
-  def self.catch_phrase(*args, &block); end
-  def self.character(*args, &block); end
-  def self.high_five(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::LeagueOfLegends
-  def self._deprecated_champion; end
-  def self._deprecated_location; end
-  def self._deprecated_masteries; end
-  def self._deprecated_quote; end
-  def self._deprecated_rank; end
-  def self._deprecated_summoner_spell; end
-  def self.champion(*args, &block); end
-  def self.location(*args, &block); end
-  def self.masteries(*args, &block); end
-  def self.quote(*args, &block); end
-  def self.rank(*args, &block); end
-  def self.summoner_spell(*args, &block); end
-end
-class Faker::Lebowski
-  def self._deprecated_actor; end
-  def self._deprecated_character; end
-  def self._deprecated_quote; end
-  def self.actor(*args, &block); end
-  def self.character(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::LordOfTheRings
-  def self._deprecated_character; end
-  def self._deprecated_location; end
-  def self._deprecated_quote; end
-  def self.character(*args, &block); end
-  def self.location(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::Lovecraft
-  def self._deprecated_deity; end
-  def self._deprecated_fhtagn(number_of = nil); end
-  def self._deprecated_location; end
-  def self._deprecated_paragraph(sentence_count = nil, random_sentences_to_add = nil); end
-  def self._deprecated_paragraph_by_chars(chars = nil); end
-  def self._deprecated_paragraphs(paragraph_count = nil); end
-  def self._deprecated_sentence(word_count = nil, random_words_to_add = nil); end
-  def self._deprecated_sentences(sentence_count = nil); end
-  def self._deprecated_tome; end
-  def self._deprecated_word; end
-  def self._deprecated_words(num = nil, spaces_allowed = nil); end
-  def self.deity(*args, &block); end
-  def self.fhtagn(*args, &block); end
-  def self.location(*args, &block); end
-  def self.paragraph(*args, &block); end
-  def self.paragraph_by_chars(*args, &block); end
-  def self.paragraphs(*args, &block); end
-  def self.sentence(*args, &block); end
-  def self.sentences(*args, &block); end
-  def self.tome(*args, &block); end
-  def self.word(*args, &block); end
-  def self.words(*args, &block); end
-end
-class Faker::Matz
-  def self._deprecated_quote; end
-  def self.quote(*args, &block); end
-end
-class Faker::MichaelScott
-  def self._deprecated_quote; end
-  def self.quote(*args, &block); end
-end
-class Faker::MostInterestingManInTheWorld
-  def self._deprecated_quote; end
-  def self.quote(*args, &block); end
-end
-class Faker::Myst
-  def self._deprecated_age; end
-  def self._deprecated_character; end
-  def self._deprecated_creature; end
-  def self._deprecated_game; end
-  def self._deprecated_quote; end
-  def self.age(*args, &block); end
-  def self.character(*args, &block); end
-  def self.creature(*args, &block); end
-  def self.game(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::NewGirl
-  def self._deprecated_character; end
-  def self._deprecated_quote; end
-  def self.character(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::OnePiece
-  def self._deprecated_akuma_no_mi; end
-  def self._deprecated_character; end
-  def self._deprecated_island; end
-  def self._deprecated_location; end
-  def self._deprecated_quote; end
-  def self._deprecated_sea; end
-  def self.akuma_no_mi(*args, &block); end
-  def self.character(*args, &block); end
-  def self.island(*args, &block); end
-  def self.location(*args, &block); end
-  def self.quote(*args, &block); end
-  def self.sea(*args, &block); end
-end
-class Faker::Overwatch
-  def self._deprecated_hero; end
-  def self._deprecated_location; end
-  def self._deprecated_quote; end
-  def self.hero(*args, &block); end
-  def self.location(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::ParksAndRec
-  def self._deprecated_character; end
-  def self._deprecated_city; end
-  def self.character(*args, &block); end
-  def self.city(*args, &block); end
-end
-class Faker::Pokemon
-  def self._deprecated_location; end
-  def self._deprecated_move; end
-  def self._deprecated_name; end
-  def self.location(*args, &block); end
-  def self.move(*args, &block); end
-  def self.name(*args, &block); end
-end
-class Faker::PrincessBride
-  def self._deprecated_character; end
-  def self._deprecated_quote; end
-  def self.character(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::RickAndMorty
-  def self._deprecated_character; end
-  def self._deprecated_location; end
-  def self._deprecated_quote; end
-  def self.character(*args, &block); end
-  def self.location(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::Robin
-  def self._deprecated_quote; end
-  def self.quote(*args, &block); end
-end
-class Faker::RockBand
-  def self._deprecated_name; end
-  def self.name(*args, &block); end
-end
-class Faker::RuPaul
-  def self._deprecated_queen; end
-  def self._deprecated_quote; end
-  def self.queen(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::Seinfeld
-  def self._deprecated_business; end
-  def self._deprecated_character; end
-  def self._deprecated_quote; end
-  def self.business(*args, &block); end
-  def self.character(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::Shakespeare
-  def self._deprecated_as_you_like_it; end
-  def self._deprecated_as_you_like_it_quote; end
-  def self._deprecated_hamlet; end
-  def self._deprecated_hamlet_quote; end
-  def self._deprecated_king_richard_iii; end
-  def self._deprecated_king_richard_iii_quote; end
-  def self._deprecated_romeo_and_juliet; end
-  def self._deprecated_romeo_and_juliet_quote; end
-  def self.as_you_like_it(*args, &block); end
-  def self.as_you_like_it_quote(*args, &block); end
-  def self.hamlet(*args, &block); end
-  def self.hamlet_quote(*args, &block); end
-  def self.king_richard_iii(*args, &block); end
-  def self.king_richard_iii_quote(*args, &block); end
-  def self.romeo_and_juliet(*args, &block); end
-  def self.romeo_and_juliet_quote(*args, &block); end
-end
-class Faker::SiliconValley
-  def self._deprecated_app; end
-  def self._deprecated_character; end
-  def self._deprecated_company; end
-  def self._deprecated_email; end
-  def self._deprecated_invention; end
-  def self._deprecated_motto; end
-  def self._deprecated_quote; end
-  def self._deprecated_url; end
-  def self.app(*args, &block); end
-  def self.character(*args, &block); end
-  def self.company(*args, &block); end
-  def self.email(*args, &block); end
-  def self.invention(*args, &block); end
-  def self.motto(*args, &block); end
-  def self.quote(*args, &block); end
-  def self.url(*args, &block); end
-end
-class Faker::Simpsons
-  def self._deprecated_character; end
-  def self._deprecated_location; end
-  def self._deprecated_quote; end
-  def self.character(*args, &block); end
-  def self.location(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::SingularSiegler
-  def self._deprecated_quote; end
-  def self.quote(*args, &block); end
-end
-class Faker::SouthPark
-  def self._deprecated_character; end
-  def self._deprecated_quote; end
-  def self.character(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::StarTrek
-  def self._deprecated_character; end
-  def self._deprecated_location; end
-  def self._deprecated_specie; end
-  def self._deprecated_villain; end
-  def self.character(*args, &block); end
-  def self.location(*args, &block); end
-  def self.specie(*args, &block); end
-  def self.villain(*args, &block); end
-end
-class Faker::StarWars
-  def self._deprecated_call_number; end
-  def self._deprecated_call_sign; end
-  def self._deprecated_call_squadron; end
-  def self._deprecated_character; end
-  def self._deprecated_droid; end
-  def self._deprecated_planet; end
-  def self._deprecated_quote(character = nil); end
-  def self._deprecated_specie; end
-  def self._deprecated_vehicle; end
-  def self._deprecated_wookiee_sentence; end
-  def self.call_number(*args, &block); end
-  def self.call_numbers; end
-  def self.call_sign(*args, &block); end
-  def self.call_squadron(*args, &block); end
-  def self.call_squadrons; end
-  def self.character(*args, &block); end
-  def self.characters; end
-  def self.droid(*args, &block); end
-  def self.droids; end
-  def self.planet(*args, &block); end
-  def self.planets; end
-  def self.quote(*args, &block); end
-  def self.specie(*args, &block); end
-  def self.species; end
-  def self.vehicle(*args, &block); end
-  def self.vehicles; end
-  def self.wookie_sentence(*args, &block); end
-  def self.wookie_words; end
-  def self.wookiee_sentence(*args, &block); end
-  def self.wookiee_words; end
-end
-class Faker::Stargate
-  def self._deprecated_character; end
-  def self._deprecated_planet; end
-  def self._deprecated_quote; end
-  def self.character(*args, &block); end
-  def self.planet(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::StrangerThings
-  def self._deprecated_character; end
-  def self._deprecated_quote; end
-  def self.character(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::SwordArtOnline
-  def self._deprecated_game_name; end
-  def self._deprecated_item; end
-  def self._deprecated_location; end
-  def self._deprecated_real_name; end
-  def self.game_name(*args, &block); end
-  def self.item(*args, &block); end
-  def self.location(*args, &block); end
-  def self.real_name(*args, &block); end
-end
-class Faker::Tezos
-  def self._deprecated_account; end
-  def self._deprecated_contract; end
-  def self._deprecated_operation; end
-  def self._deprecated_signature; end
-  def self.account(*args, &block); end
-  def self.contract(*args, &block); end
-  def self.operation(*args, &block); end
-  def self.signature(*args, &block); end
-end
-class Faker::TheFreshPrinceOfBelAir
-  def self._deprecated_celebrity; end
-  def self._deprecated_character; end
-  def self._deprecated_quote; end
-  def self.celebrity(*args, &block); end
-  def self.character(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::TheITCrowd
-  def self._deprecated_actor; end
-  def self._deprecated_character; end
-  def self._deprecated_email; end
-  def self._deprecated_quote; end
-  def self.actor(*args, &block); end
-  def self.character(*args, &block); end
-  def self.email(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::TheThickOfIt
-  def self._deprecated_character; end
-  def self._deprecated_department; end
-  def self._deprecated_position; end
-  def self.character(*args, &block); end
-  def self.department(*args, &block); end
-  def self.position(*args, &block); end
-end
-class Faker::TwinPeaks
-  def self._deprecated_character; end
-  def self._deprecated_location; end
-  def self._deprecated_quote; end
-  def self.character(*args, &block); end
-  def self.location(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::UmphreysMcgee
+class Faker::Movies::GratefulDead < Faker::Base
+  def self._deprecated_player; end
   def self._deprecated_song; end
+  def self.player(*args, &block); end
   def self.song(*args, &block); end
-end
-class Faker::VForVendetta
-  def self._deprecated_character; end
-  def self._deprecated_quote; end
-  def self._deprecated_speech; end
-  def self.character(*args, &block); end
-  def self.quote(*args, &block); end
-  def self.speech(*args, &block); end
-end
-class Faker::VentureBros
-  def self._deprecated_character; end
-  def self._deprecated_organization; end
-  def self._deprecated_quote; end
-  def self._deprecated_vehicle; end
-  def self.character(*args, &block); end
-  def self.organization(*args, &block); end
-  def self.quote(*args, &block); end
-  def self.vehicle(*args, &block); end
-end
-class Faker::Witcher
-  def self._deprecated_character; end
-  def self._deprecated_location; end
-  def self._deprecated_monster; end
-  def self._deprecated_quote; end
-  def self._deprecated_school; end
-  def self._deprecated_witcher; end
-  def self.character(*args, &block); end
-  def self.location(*args, &block); end
-  def self.monster(*args, &block); end
-  def self.quote(*args, &block); end
-  def self.school(*args, &block); end
-  def self.witcher(*args, &block); end
-end
-class Faker::WorldOfWarcraft
-  def self._deprecated_hero; end
-  def self._deprecated_quote; end
-  def self.hero(*args, &block); end
-  def self.quote(*args, &block); end
-end
-class Faker::Yoda
-  def self._deprecated_quote; end
-  def self.quote(*args, &block); end
-end
-class Faker::Zelda
-  def self._deprecated_character; end
-  def self._deprecated_game; end
-  def self._deprecated_item; end
-  def self._deprecated_location; end
-  def self.character(*args, &block); end
-  def self.game(*args, &block); end
-  def self.item(*args, &block); end
-  def self.location(*args, &block); end
 end
 class Faker::Games::Dota < Faker::Base
   def self.hero; end
@@ -1549,6 +932,11 @@ class Faker::Games::Fallout < Faker::Base
   def self.faction; end
   def self.location; end
   def self.quote; end
+end
+class Faker::Game < Faker::Base
+  def self.genre; end
+  def self.platform; end
+  def self.title; end
 end
 class Faker::Games::HalfLife < Faker::Base
   def self.character; end
@@ -1645,10 +1033,6 @@ class Faker::Movies::Ghostbusters < Faker::Base
   def self.character; end
   def self.quote; end
 end
-class Faker::Movies::GratefulDead < Faker::Base
-  def self.player; end
-  def self.song; end
-end
 class Faker::Movies::HarryPotter < Faker::Base
   def self.book; end
   def self.character; end
@@ -1728,6 +1112,16 @@ class Faker::Music < Faker::Base
   def self.key_variants; end
   def self.keys; end
 end
+class Faker::Music::GratefulDead < Faker::Base
+  def self.player; end
+  def self.song; end
+end
+class Faker::Music::Opera < Faker::Base
+  def self.bellini; end
+  def self.donizetti; end
+  def self.rossini; end
+  def self.verdi; end
+end
 class Faker::Music::Phish < Faker::Base
   def self.song; end
 end
@@ -1756,6 +1150,21 @@ class Faker::Quotes::Shakespeare < Faker::Base
   def self.king_richard_iii_quote; end
   def self.romeo_and_juliet; end
   def self.romeo_and_juliet_quote; end
+end
+class Faker::Sports
+end
+class Faker::Sports::Basketball < Faker::Base
+  def self.coach; end
+  def self.player; end
+  def self.position; end
+  def self.team; end
+end
+class Faker::Sports::Football < Faker::Base
+  def self.coach; end
+  def self.competition; end
+  def self.player; end
+  def self.position; end
+  def self.team; end
 end
 class Faker::TvShows::AquaTeenHungerForce < Faker::Base
   def self.character; end

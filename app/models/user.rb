@@ -1,8 +1,7 @@
-# typed: ignore
+# typed: false
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  include AvatarUploader::Attachment.new(:avatar)
   include Trackable
 
   validates :email, presence: true, uniqueness: true, email: true
@@ -25,5 +24,10 @@ class User < ApplicationRecord
 
   def initials
     name.gsub(/([[:upper:]])[[:lower:]]+/, '\1').tr(' ', '')
+  end
+
+  def avatar=(io)
+    fail ArgumentError, 'Invalid avatar type, required: IO' unless io.respond_to?(:read)
+    super(io.original_filename)
   end
 end

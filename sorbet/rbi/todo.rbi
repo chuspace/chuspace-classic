@@ -22,6 +22,5 @@ module ::Spring; end
 module ActionMailer::Base::Mail::Message; end
 module Git::Diff::Util; end
 module Post::Slug; end
-module PostReceiveJob::MimeMagic; end
 module Sidekiq::Middleware::Server::RetryJobs; end
 module Sidekiq::Middleware::Server::RetryJobs; end

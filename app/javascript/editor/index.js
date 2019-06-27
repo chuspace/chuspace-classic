@@ -206,7 +206,9 @@ export default class Editor {
   }
 
   getMarkdown() {
-    return markdownSerializer.serialize(this.state.doc)
+    const markdown = markdownSerializer.serialize(this.state.doc)
+    console.log(markdown)
+    return markdown
   }
 
   getTitle() {

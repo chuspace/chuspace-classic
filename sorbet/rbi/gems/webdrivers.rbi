@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/webdrivers/all/webdrivers.rbi
 #
-# webdrivers-4.0.0
+# webdrivers-4.0.1
 module Webdrivers
   def self.cache_time; end
   def self.cache_time=(arg0); end
@@ -62,6 +62,7 @@ class Webdrivers::System
   def self.delete(file); end
   def self.download(url, target); end
   def self.download_file(url, target); end
+  def self.escape_path(path); end
   def self.exists?(file); end
   def self.install_dir; end
   def self.platform; end

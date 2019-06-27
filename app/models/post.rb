@@ -68,6 +68,6 @@ class Post < ApplicationRecord
   private
 
   def remove_from_repository
-    repository.commit(message: "Deleted #{blob_path}", action: :remove, path: blob_path, content: body)
+    repository.commit(action: :remove, path: blob_path, content: body)
   end
 end

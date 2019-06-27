@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/turbolinks_render/all/turbolinks_render.rbi
 #
-# turbolinks_render-0.9.13
+# turbolinks_render-0.9.15
 module TurbolinksRender
 end
 module TurbolinksRender::Rendering

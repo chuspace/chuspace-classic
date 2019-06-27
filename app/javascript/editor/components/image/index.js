@@ -10,16 +10,9 @@ class LazyImage extends LitElement {
   static get properties() {
     return {
       src: { type: String },
-      align: { type: String },
       alt: { type: String },
-      width: { type: Number },
-      selected: { type: Boolean }
+      align: { type: String, reflect: true }
     }
-  }
-  constructor() {
-    super()
-
-    this.selected = false
   }
 
   connectedCallback() {
@@ -31,52 +24,44 @@ class LazyImage extends LitElement {
 
     setTimeout(() => {
       document.lazyLoadInstance.update()
-
-      this.containerNode = this.querySelector('.image-container')
     }, 1)
 
     document.addEventListener('click', (e: MouseEvent) => {
       const el = e.target
-      if (this.containerNode && this.contains(el)) return
-      this.containerNode.classList.remove('selected')
+      if (this && this.contains(el)) return
+      this.classList.remove('selected')
     })
   }
 
   selectNode = () => {
-    this.containerNode.classList.toggle('selected')
+    this.classList.toggle('selected')
   }
 
   createRenderRoot() {
     return this
   }
 
-  setAlign = (e, direction) => {
+  setAlign = (e: Event) => {
     e.preventDefault()
-    this.align = direction
+    // $FlowFixMe
+    this.align = e.currentTarget.dataset.align
   }
 
+  updated() {
+    this.handleChange({ align: this.align, alt: this.alt })
+  }
+
+  // $FlowFixMe
+  onCaptionChange = (e: Event) => (this.alt = e.target.value)
+
   render() {
-    const imageUrl = this.src
-    const figFloat = this.align === 'left' || this.align === 'right' ? this.align : 'none'
-    let figMargin = '0em auto'
-
-    if (this.align === 'left') {
-      figMargin = '1em 1em 1em 0px'
-    }
-
-    if (this.align === 'right') {
-      figMargin = '1em 0px 1em 1em'
-    }
-
-    const figWidth = this.align === 'full' ? '100%' : `${this.width}%`
-
     return html`
-      <div class="image-container" style="width: ${figWidth}; margin: ${figMargin}; float: ${figFloat}">
+      <div class="image-container">
         <div class="image-toolbar">
-          <svg-icon name="image-left" color="#fff" @click=${e => this.setAlign(e, 'left')}></svg-icon>
-          <svg-icon name="image-center" color="#fff"></svg-icon>
-          <svg-icon name="image-right" color="#fff"></svg-icon>
-          <svg-icon name="image-full" color="#fff"></svg-icon>
+          <svg-icon name="image-left" color="#fff" @click=${this.setAlign} data-align='left'></svg-icon>
+          <svg-icon name="image-center" color="#fff" @click=${this.setAlign} data-align='middle'></svg-icon>
+          <svg-icon name="image-right" color="#fff" @click=${this.setAlign} data-align='right'></svg-icon>
+          <svg-icon name="image-full" color="#fff" @click=${this.setAlign} data-align='none'></svg-icon>
           <tooltip-arrow></tooltip-arrow>
         </div>
         <img
@@ -88,7 +73,7 @@ class LazyImage extends LitElement {
         <figcaption contentEditable="false">
           <input
             type="text"
-            @change=${e => this.handleAltChange(e.target.value)}
+            @change=${this.onCaptionChange}
             class="input input--slim input--borderless text-center text-sm font-headings"
             value=${this.alt}
             maxlength=${70}

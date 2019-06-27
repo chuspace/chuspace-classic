@@ -30,10 +30,8 @@ class PostsController < ApplicationController
         blob_path: "#{next_post_id}-post.md"
       )
 
-      commit_message = params[:commit_message] || "Created #{post.blob_path}"
-
       if post.save
-        repository.commit(message: commit_message, content: post.body, path: post.blob_path)
+        repository.commit(message: params[:commit_message], content: post.body, path: post.blob_path)
         render json: { redirect: edit_post_path(post), url: post_path(post) }
       else
         render json: { errors: post.errors.full_messages }, status: 422
@@ -43,10 +41,9 @@ class PostsController < ApplicationController
 
   def update
     @post.assign_attributes(post_params)
-    commit_message = params[:commit_message] || "Updated #{@post.blob_path}"
 
     if @post.save
-      @post.repository.commit(message: commit_message, content: @post.body, path: @post.blob_path)
+      @post.repository.commit(message: params[:commit_message], content: @post.body, path: @post.blob_path, action: :update)
 
       render json: { saved: true }
     else
@@ -56,8 +53,7 @@ class PostsController < ApplicationController
 
   def destroy
     if @post.destroy
-      commit_message = params[:commit_message] || "Deleted #{@post.blob_path}"
-      @post.repository.commit(committer: Current.user, message: commit_message, action: :remove)
+      @post.repository.commit(committer: Current.user, message: params[:commit_message], action: :remove)
 
       redirect_to root_path
     else

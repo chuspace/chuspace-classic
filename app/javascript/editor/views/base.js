@@ -43,6 +43,7 @@ export default class BaseView {
   }
 
   selectNode = () => {
+    console.log(this.view.editable)
     if (this.view.editable) {
       this.isSelected = true
       this.renderElement()

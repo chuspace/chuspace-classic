@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/msgpack/all/msgpack.rbi
 #
-# msgpack-1.2.10
+# msgpack-1.3.0
 module MessagePack
   def dump(v, *rest); end
   def load(src, param = nil); end
@@ -160,4 +160,15 @@ end
 class Integer < Numeric
   def to_msgpack_with_packer(packer); end
   include MessagePack::CoreExt
+end
+class MessagePack::Timestamp
+  def ==(other); end
+  def initialize(sec, nsec); end
+  def nsec; end
+  def sec; end
+  def self.from_msgpack_ext(data); end
+  def self.to_msgpack_ext(sec, nsec); end
+  def to_msgpack_ext; end
+end
+module MessagePack::Time
 end

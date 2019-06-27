@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/puma/all/puma.rbi
 #
-# puma-3.12.1
+# puma-4.0.0
 module Puma
   def self.jruby?; end
   def self.stats; end
@@ -88,6 +88,7 @@ class Puma::DSL
   def on_worker_boot(&block); end
   def on_worker_fork(&block); end
   def on_worker_shutdown(&block); end
+  def out_of_band(&block); end
   def persistent_timeout(seconds); end
   def pidfile(path); end
   def plugin(name); end
@@ -97,6 +98,7 @@ class Puma::DSL
   def queue_requests(answer = nil); end
   def quiet(which = nil); end
   def rackup(path); end
+  def raise_exception_on_sigterm(answer = nil); end
   def restart_command(cmd); end
   def set_default_host(host); end
   def set_remote_address(val = nil); end
@@ -230,8 +232,6 @@ class Puma::ThreadPool::Reaper
   def start!; end
   def stop; end
 end
-class String
-end
 module Puma::Util
   def parse_query(qs, d = nil, &unescaper); end
   def pipe; end
@@ -283,8 +283,11 @@ class Puma::MiniSSL::Context
   def cert; end
   def cert=(cert); end
   def check; end
+  def initialize; end
   def key; end
   def key=(key); end
+  def no_tlsv1; end
+  def no_tlsv1=(tlsv1); end
   def ssl_cipher_filter; end
   def ssl_cipher_filter=(arg0); end
   def verify_mode; end
@@ -301,6 +304,7 @@ class Puma::Reactor
   def add(c); end
   def calculate_sleep; end
   def clear!; end
+  def clear_monitor(mon); end
   def initialize(server, app_pool); end
   def run; end
   def run_in_thread; end
@@ -338,6 +342,7 @@ class Puma::Client
   def remote_addr_header; end
   def remote_addr_header=(arg0); end
   def reset(fast_check = nil); end
+  def set_ready; end
   def set_timeout(val); end
   def setup_body; end
   def setup_chunked_body(body); end

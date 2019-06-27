@@ -15,10 +15,7 @@ gem 'pg', '>= 1.x'
 gem 'aws-sdk-s3'
 gem 'imgproxy'
 gem 'fastimage'
-gem 'image_processing'
-gem 'ruby-vips'
-gem 'shrine'
-
+gem 'mimemagic'
 #  Nested tree
 gem 'ancestry'
 

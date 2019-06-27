@@ -1,6 +1,7 @@
 // @flow
 
 import { MarkdownSerializer } from 'prosemirror-markdown'
+import queryString from 'query-string'
 
 export default new MarkdownSerializer(
   {
@@ -44,11 +45,17 @@ export default new MarkdownSerializer(
     },
 
     image(state, node) {
+      const [src, params] = node.attrs.src.split('#')
+      const imageParams = queryString.parse(params)
+      imageParams.align = node.attrs.align
+
       state.write(
         '![' +
           state.esc(node.attrs.alt || '') +
           '](' +
-          state.esc(node.attrs.src) +
+          state.esc(src) +
+          '#' +
+          queryString.stringify(imageParams) +
           (node.attrs.title ? ' ' + state.quote(node.attrs.title) : '') +
           ')'
       )

@@ -25,8 +25,7 @@ export default class Image extends Node {
         title: {
           default: null
         },
-        width: { default: 100 },
-        align: { default: 'center' }
+        align: { default: 'none' }
       },
       inline: true,
       group: 'inline',
@@ -38,7 +37,6 @@ export default class Image extends Node {
             src: dom.getAttribute('src'),
             title: dom.getAttribute('title'),
             alt: dom.getAttribute('alt'),
-            width: dom.getAttribute('width'),
             align: dom.getAttribute('align')
           })
         }

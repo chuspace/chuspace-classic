@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/capybara/all/capybara.rbi
 #
-# capybara-3.23.0
+# capybara-3.24.0
 module Capybara
   def self.HTML(html); end
   def self.add_selector(name, **options, &block); end
@@ -1340,7 +1340,9 @@ class Capybara::Selenium::ChromeNode < Capybara::Selenium::Node
   include Capybara::Selenium::Node::Html5Drag
 end
 module Capybara::Selenium::ChromeLogs
-  def method_missing(meth, *arg1); end
+  def available_log_types; end
+  def commands(command); end
+  def log(type); end
 end
 module Capybara::Selenium::Driver::ChromeDriver
   def bridge; end

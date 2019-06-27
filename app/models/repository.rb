@@ -47,7 +47,7 @@ class Repository < ApplicationRecord
   end
 
   def rugged
-    @rugged ||= Rugged::Repository.new(path)
+    @rugged ||= Rugged::Repository.bare(path)
   rescue Rugged::RepositoryError, Rugged::OSError
     fail NoRepository, 'no repository for such path'
   end
@@ -121,7 +121,7 @@ class Repository < ApplicationRecord
     Rails.logger.info "Creating repository for <#{name}> at <#{path}>."
     FileUtils.mkdir_p(path, mode: 0o770)
 
-    repo = Rugged::Repository.init_at(path)
+    repo = Rugged::Repository.init_at(path, :bare)
     repo.config['user.name'] = author.name
     repo.config['user.email'] = author.email
     repo.config['user.nickname'] = author.nickname

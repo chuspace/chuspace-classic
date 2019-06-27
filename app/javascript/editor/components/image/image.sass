@@ -1,15 +1,24 @@
 lazy-image
 	@apply whitespace-no-wrap relative block
 
+	&[align='left']
+		@apply float-left mr-4 w-1/2
+
+	&[align='right']
+		@apply float-right mr-4 w-1/2
+
+	&[align='middle']
+		@apply float-none w-1/2 mx-auto
+
+	.image-toolbar
+		@apply absolute flex justify-between items-center rounded mx-auto py-2 px-4 bg-black z-50 invisible
+		width: 150px
+		top: -45px
+		left: calc(50% - 100px / 2)
+		height: 36px
+
 	.image-container
 		@apply float-none relative
-
-		.image-toolbar
-			@apply absolute flex justify-between items-center rounded mx-auto py-2 px-4 bg-black z-50 invisible
-			width: 150px
-			top: -45px
-			left: calc(50% - 100px / 2)
-			height: 36px
 
 		.lazy
 			display: block
@@ -27,9 +36,9 @@ lazy-image
 			&:not([src])
 				visibility: hidden
 
-		&.selected, &:hover
-			box-shadow: 0 0 0 3px theme('colors.blue')
+	&.selected, &:hover
+		box-shadow: 0 0 0 3px theme('colors.blue')
 
-		&.selected
-			.image-toolbar
-				@apply visible
+	&.selected
+		.image-toolbar
+			@apply visible

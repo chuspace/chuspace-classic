@@ -4130,9 +4130,6 @@ end
 class ActionView::Template::Inline
 end
 
-class ActionView::Template::LegacyTemplate
-end
-
 class ActionView::Template::RawFile
   def format(); end
 
@@ -5438,9 +5435,6 @@ module ActiveRecord::AttributeMethods::TimeZoneConversion::ClassMethods
   extend ::T::Sig
 end
 
-class ActiveRecord::AttributeMethods::TimeZoneConversion::TimeZoneConverter
-end
-
 module ActiveRecord::AttributeMethods::TimeZoneConversion
   extend ::T::Sig
 end
@@ -5612,9 +5606,6 @@ end
 
 module ActiveRecord::ConnectionAdapters::PostgreSQL::SchemaStatements
   extend ::T::Sig
-end
-
-class ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
 end
 
 module ActiveRecord::ConnectionAdapters::PostgreSQL::Utils
@@ -5957,9 +5948,6 @@ end
 module ActiveRecord::LegacyYamlAdapter
   extend ::T::Sig
   def self.convert(klass, coder); end
-end
-
-class ActiveRecord::Locking::LockingType
 end
 
 module ActiveRecord::Locking::Optimistic
@@ -6686,13 +6674,7 @@ module ActiveRecord::Type::Internal
   extend ::T::Sig
 end
 
-class ActiveRecord::Type::Serialized
-end
-
 ActiveRecord::Type::String = ActiveModel::Type::String
-
-class ActiveRecord::Type::Time::Value
-end
 
 ActiveRecord::Type::Value = ActiveModel::Type::Value
 
@@ -7674,57 +7656,11 @@ module Ancestry
   extend ::T::Sig
 end
 
-class AppUploader
-  include ::ImageProcessing::Vips
-  include ::Shrine::Plugins::PrettyLocation::InstanceMethods
-  include ::Shrine::Plugins::AddMetadata::InstanceMethods
-  include ::Shrine::Plugins::StoreDimensions::InstanceMethods
-  include ::Shrine::Plugins::DeleteRaw::InstanceMethods
-  include ::Shrine::Plugins::Hooks::InstanceMethods
-  include ::Shrine::Plugins::Logging::InstanceMethods
-end
-
-class AppUploader::Attacher
-  include ::Shrine::Plugins::ValidationHelpers::AttacherMethods
-  include ::Shrine::Plugins::DeletePromoted::AttacherMethods
-  include ::Shrine::Plugins::RestoreCachedData::AttacherMethods
-  include ::Shrine::Plugins::CachedAttachmentData::AttacherMethods
-  include ::Shrine::Plugins::Recache::AttacherMethods
-end
-
-class AppUploader::Attacher
-  extend ::Shrine::Plugins::ValidationHelpers::AttacherClassMethods
-end
-
-class AppUploader::Attachment
-  include ::Shrine::Plugins::CachedAttachmentData::AttachmentMethods
-end
-
-class AppUploader::Attachment
-end
-
-class AppUploader::UploadedFile
-  include ::Shrine::Plugins::StoreDimensions::FileMethods
-  include ::Shrine::Plugins::RefreshMetadata::FileMethods
-end
-
-class AppUploader::UploadedFile
-end
-
-class AppUploader
-  extend ::Shrine::Plugins::AddMetadata::ClassMethods
-  extend ::Shrine::Plugins::StoreDimensions::ClassMethods
-  extend ::Shrine::Plugins::Logging::ClassMethods
-end
-
 class ApplicationCable::Connection
 end
 
 module ApplicationCable
   extend ::T::Sig
-end
-
-class ApplicationController
 end
 
 module ApplicationHelper
@@ -7886,24 +7822,6 @@ class AvatarComponent
   def options(); end
 
   def variant(); end
-end
-
-class AvatarUploader::Attacher
-end
-
-class AvatarUploader::Attacher
-end
-
-class AvatarUploader::Attachment
-end
-
-class AvatarUploader::Attachment
-end
-
-class AvatarUploader::UploadedFile
-end
-
-class AvatarUploader::UploadedFile
 end
 
 module AwesomeMethodArray
@@ -10836,6 +10754,7 @@ module Capybara::Selector::Filters
 end
 
 module Capybara::Selenium::ChromeLogs
+  COMMANDS = ::T.let(nil, ::T.untyped)
   LOG_MSG = ::T.let(nil, ::T.untyped)
 end
 
@@ -11499,15 +11418,6 @@ class ConnectionPool::Wrapper
   METHODS = ::T.let(nil, ::T.untyped)
 end
 
-class ContentDisposition
-  ATTACHMENT = ::T.let(nil, ::T.untyped)
-  DEFAULT_TO_ASCII = ::T.let(nil, ::T.untyped)
-  INLINE = ::T.let(nil, ::T.untyped)
-  RFC_5987_ESCAPED_CHAR = ::T.let(nil, ::T.untyped)
-  TRADITIONAL_ESCAPED_CHAR = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
 module Coverage
   extend ::T::Sig
   def self.line_stub(file); end
@@ -11543,9 +11453,6 @@ end
 
 module Crass
   extend ::T::Sig
-end
-
-class CreateImages
 end
 
 class CreateInvites
@@ -12121,6 +12028,7 @@ module Docile::Execution
 end
 
 class Docile::FallbackContextProxy
+  NON_FALLBACK_METHODS = ::T.let(nil, ::T.untyped)
   NON_PROXIED_INSTANCE_VARIABLES = ::T.let(nil, ::T.untyped)
   NON_PROXIED_METHODS = ::T.let(nil, ::T.untyped)
 end
@@ -12146,10 +12054,6 @@ module Dotenv::Substitutions
 end
 
 module Dotenv
-  extend ::T::Sig
-end
-
-module Down
   extend ::T::Sig
 end
 
@@ -13222,235 +13126,6 @@ end
 class ExitCalledError
 end
 
-module FFI
-  CURRENT_PROCESS = ::T.let(nil, ::T.untyped)
-  SizeTypes = ::T.let(nil, ::T.untyped)
-  TYPE_BOOL = ::T.let(nil, ::T.untyped)
-  TYPE_BUFFER_IN = ::T.let(nil, ::T.untyped)
-  TYPE_BUFFER_INOUT = ::T.let(nil, ::T.untyped)
-  TYPE_BUFFER_OUT = ::T.let(nil, ::T.untyped)
-  TYPE_FLOAT32 = ::T.let(nil, ::T.untyped)
-  TYPE_FLOAT64 = ::T.let(nil, ::T.untyped)
-  TYPE_INT16 = ::T.let(nil, ::T.untyped)
-  TYPE_INT32 = ::T.let(nil, ::T.untyped)
-  TYPE_INT64 = ::T.let(nil, ::T.untyped)
-  TYPE_INT8 = ::T.let(nil, ::T.untyped)
-  TYPE_LONG = ::T.let(nil, ::T.untyped)
-  TYPE_LONGDOUBLE = ::T.let(nil, ::T.untyped)
-  TYPE_POINTER = ::T.let(nil, ::T.untyped)
-  TYPE_STRING = ::T.let(nil, ::T.untyped)
-  TYPE_UINT16 = ::T.let(nil, ::T.untyped)
-  TYPE_UINT32 = ::T.let(nil, ::T.untyped)
-  TYPE_UINT64 = ::T.let(nil, ::T.untyped)
-  TYPE_UINT8 = ::T.let(nil, ::T.untyped)
-  TYPE_ULONG = ::T.let(nil, ::T.untyped)
-  TYPE_VARARGS = ::T.let(nil, ::T.untyped)
-  TYPE_VOID = ::T.let(nil, ::T.untyped)
-  TypeDefs = ::T.let(nil, ::T.untyped)
-  USE_THIS_PROCESS_AS_LIBRARY = ::T.let(nil, ::T.untyped)
-end
-
-FFI::CallbackInfo = FFI::FunctionType
-
-module FFI::DataConverter
-  extend ::T::Sig
-end
-
-class FFI::DynamicLibrary
-  RTLD_ALL_MASK = ::T.let(nil, ::T.untyped)
-  RTLD_BINDING_MASK = ::T.let(nil, ::T.untyped)
-  RTLD_DEEPBIND = ::T.let(nil, ::T.untyped)
-  RTLD_FIRST = ::T.let(nil, ::T.untyped)
-  RTLD_GLOBAL = ::T.let(nil, ::T.untyped)
-  RTLD_LAZY = ::T.let(nil, ::T.untyped)
-  RTLD_LOCAL = ::T.let(nil, ::T.untyped)
-  RTLD_LOCATION_MASK = ::T.let(nil, ::T.untyped)
-  RTLD_MEMBER = ::T.let(nil, ::T.untyped)
-  RTLD_NODELETE = ::T.let(nil, ::T.untyped)
-  RTLD_NOLOAD = ::T.let(nil, ::T.untyped)
-  RTLD_NOW = ::T.let(nil, ::T.untyped)
-end
-
-FFI::FunctionInfo = FFI::FunctionType
-
-module FFI::IO
-  extend ::T::Sig
-end
-
-module FFI::LastError
-  extend ::T::Sig
-end
-
-module FFI::Library
-  CURRENT_PROCESS = ::T.let(nil, ::T.untyped)
-  FlagsMap = ::T.let(nil, ::T.untyped)
-  LIBC = ::T.let(nil, ::T.untyped)
-end
-
-module FFI::Library
-  extend ::T::Sig
-end
-
-FFI::NativeLibrary = FFI::DynamicLibrary
-
-module FFI::NativeType
-  BOOL = ::T.let(nil, ::T.untyped)
-  BUFFER_IN = ::T.let(nil, ::T.untyped)
-  BUFFER_INOUT = ::T.let(nil, ::T.untyped)
-  BUFFER_OUT = ::T.let(nil, ::T.untyped)
-  FLOAT32 = ::T.let(nil, ::T.untyped)
-  FLOAT64 = ::T.let(nil, ::T.untyped)
-  INT16 = ::T.let(nil, ::T.untyped)
-  INT32 = ::T.let(nil, ::T.untyped)
-  INT64 = ::T.let(nil, ::T.untyped)
-  INT8 = ::T.let(nil, ::T.untyped)
-  LONG = ::T.let(nil, ::T.untyped)
-  LONGDOUBLE = ::T.let(nil, ::T.untyped)
-  POINTER = ::T.let(nil, ::T.untyped)
-  STRING = ::T.let(nil, ::T.untyped)
-  UINT16 = ::T.let(nil, ::T.untyped)
-  UINT32 = ::T.let(nil, ::T.untyped)
-  UINT64 = ::T.let(nil, ::T.untyped)
-  UINT8 = ::T.let(nil, ::T.untyped)
-  ULONG = ::T.let(nil, ::T.untyped)
-  VARARGS = ::T.let(nil, ::T.untyped)
-  VOID = ::T.let(nil, ::T.untyped)
-end
-
-module FFI::NativeType
-  extend ::T::Sig
-end
-
-class FFI::NullPointerError
-end
-
-class FFI::NullPointerError
-end
-
-module FFI::Platform
-  ADDRESS_ALIGN = ::T.let(nil, ::T.untyped)
-  ADDRESS_SIZE = ::T.let(nil, ::T.untyped)
-  ARCH = ::T.let(nil, ::T.untyped)
-  BIG_ENDIAN = ::T.let(nil, ::T.untyped)
-  BYTE_ORDER = ::T.let(nil, ::T.untyped)
-  CONF_DIR = ::T.let(nil, ::T.untyped)
-  CPU = ::T.let(nil, ::T.untyped)
-  DOUBLE_ALIGN = ::T.let(nil, ::T.untyped)
-  DOUBLE_SIZE = ::T.let(nil, ::T.untyped)
-  FLOAT_ALIGN = ::T.let(nil, ::T.untyped)
-  FLOAT_SIZE = ::T.let(nil, ::T.untyped)
-  INT16_ALIGN = ::T.let(nil, ::T.untyped)
-  INT16_SIZE = ::T.let(nil, ::T.untyped)
-  INT32_ALIGN = ::T.let(nil, ::T.untyped)
-  INT32_SIZE = ::T.let(nil, ::T.untyped)
-  INT64_ALIGN = ::T.let(nil, ::T.untyped)
-  INT64_SIZE = ::T.let(nil, ::T.untyped)
-  INT8_ALIGN = ::T.let(nil, ::T.untyped)
-  INT8_SIZE = ::T.let(nil, ::T.untyped)
-  IS_BSD = ::T.let(nil, ::T.untyped)
-  IS_FREEBSD = ::T.let(nil, ::T.untyped)
-  IS_GNU = ::T.let(nil, ::T.untyped)
-  IS_LINUX = ::T.let(nil, ::T.untyped)
-  IS_MAC = ::T.let(nil, ::T.untyped)
-  IS_NETBSD = ::T.let(nil, ::T.untyped)
-  IS_OPENBSD = ::T.let(nil, ::T.untyped)
-  IS_SOLARIS = ::T.let(nil, ::T.untyped)
-  IS_WINDOWS = ::T.let(nil, ::T.untyped)
-  LIBC = ::T.let(nil, ::T.untyped)
-  LIBPREFIX = ::T.let(nil, ::T.untyped)
-  LIBSUFFIX = ::T.let(nil, ::T.untyped)
-  LITTLE_ENDIAN = ::T.let(nil, ::T.untyped)
-  LONG_ALIGN = ::T.let(nil, ::T.untyped)
-  LONG_SIZE = ::T.let(nil, ::T.untyped)
-  NAME = ::T.let(nil, ::T.untyped)
-  OS = ::T.let(nil, ::T.untyped)
-  OSVERSION = ::T.let(nil, ::T.untyped)
-end
-
-module FFI::Platform
-  extend ::T::Sig
-end
-
-class FFI::Pointer
-  NULL = ::T.let(nil, ::T.untyped)
-  SIZE = ::T.let(nil, ::T.untyped)
-end
-
-class FFI::Struct::InlineArray
-  include ::Enumerable
-end
-
-class FFI::StructLayout::Number
-end
-
-class FFI::StructLayout::Number
-end
-
-class FFI::StructLayout::Pointer
-end
-
-class FFI::StructLayout::Pointer
-end
-
-class FFI::StructLayout::String
-end
-
-class FFI::StructLayout::String
-end
-
-class FFI::StructLayoutBuilder
-  NUMBER_TYPES = ::T.let(nil, ::T.untyped)
-end
-
-class FFI::Type
-  BOOL = ::T.let(nil, ::T.untyped)
-  BUFFER_IN = ::T.let(nil, ::T.untyped)
-  BUFFER_INOUT = ::T.let(nil, ::T.untyped)
-  BUFFER_OUT = ::T.let(nil, ::T.untyped)
-  CHAR = ::T.let(nil, ::T.untyped)
-  DOUBLE = ::T.let(nil, ::T.untyped)
-  FLOAT = ::T.let(nil, ::T.untyped)
-  FLOAT32 = ::T.let(nil, ::T.untyped)
-  FLOAT64 = ::T.let(nil, ::T.untyped)
-  INT = ::T.let(nil, ::T.untyped)
-  INT16 = ::T.let(nil, ::T.untyped)
-  INT32 = ::T.let(nil, ::T.untyped)
-  INT64 = ::T.let(nil, ::T.untyped)
-  INT8 = ::T.let(nil, ::T.untyped)
-  LONG = ::T.let(nil, ::T.untyped)
-  LONGDOUBLE = ::T.let(nil, ::T.untyped)
-  LONG_LONG = ::T.let(nil, ::T.untyped)
-  POINTER = ::T.let(nil, ::T.untyped)
-  SCHAR = ::T.let(nil, ::T.untyped)
-  SHORT = ::T.let(nil, ::T.untyped)
-  SINT = ::T.let(nil, ::T.untyped)
-  SLONG = ::T.let(nil, ::T.untyped)
-  SLONG_LONG = ::T.let(nil, ::T.untyped)
-  SSHORT = ::T.let(nil, ::T.untyped)
-  STRING = ::T.let(nil, ::T.untyped)
-  UCHAR = ::T.let(nil, ::T.untyped)
-  UINT = ::T.let(nil, ::T.untyped)
-  UINT16 = ::T.let(nil, ::T.untyped)
-  UINT32 = ::T.let(nil, ::T.untyped)
-  UINT64 = ::T.let(nil, ::T.untyped)
-  UINT8 = ::T.let(nil, ::T.untyped)
-  ULONG = ::T.let(nil, ::T.untyped)
-  ULONG_LONG = ::T.let(nil, ::T.untyped)
-  USHORT = ::T.let(nil, ::T.untyped)
-  VARARGS = ::T.let(nil, ::T.untyped)
-  VOID = ::T.let(nil, ::T.untyped)
-end
-
-FFI::Type::Array = FFI::ArrayType
-
-FFI::Type::Function = FFI::FunctionType
-
-FFI::Type::Struct = FFI::StructByValue
-
-module FFI
-  extend ::T::Sig
-end
-
 module Faker
   VERSION = ::T.let(nil, ::T.untyped)
 end
@@ -13994,6 +13669,8 @@ end
 
 class File
   extend ::T::Sig
+  def self.atomic_write(file_name, temp_dir=T.unsafe(nil)); end
+
   def self.exists?(_); end
 
   def self.lutime(*_); end
@@ -14375,43 +14052,6 @@ module GC
   def self.verify_internal_consistency(); end
 
   def self.verify_transient_heap_internal_consistency(); end
-end
-
-module GLib
-  GLIB_TO_SEVERITY = ::T.let(nil, ::T.untyped)
-  G_FREE = ::T.let(nil, ::T.untyped)
-  LOG_FLAG_FATAL = ::T.let(nil, ::T.untyped)
-  LOG_FLAG_RECURSION = ::T.let(nil, ::T.untyped)
-  LOG_HANDLER = ::T.let(nil, ::T.untyped)
-  LOG_LEVEL_CRITICAL = ::T.let(nil, ::T.untyped)
-  LOG_LEVEL_DEBUG = ::T.let(nil, ::T.untyped)
-  LOG_LEVEL_ERROR = ::T.let(nil, ::T.untyped)
-  LOG_LEVEL_INFO = ::T.let(nil, ::T.untyped)
-  LOG_LEVEL_MESSAGE = ::T.let(nil, ::T.untyped)
-  LOG_LEVEL_WARNING = ::T.let(nil, ::T.untyped)
-end
-
-module GLib
-  extend ::T::Sig
-end
-
-module GObject
-  GBOOL_TYPE = ::T.let(nil, ::T.untyped)
-  GDOUBLE_TYPE = ::T.let(nil, ::T.untyped)
-  GENUM_TYPE = ::T.let(nil, ::T.untyped)
-  GFLAGS_TYPE = ::T.let(nil, ::T.untyped)
-  GINT_TYPE = ::T.let(nil, ::T.untyped)
-  GOBJECT_TYPE = ::T.let(nil, ::T.untyped)
-  GSTR_TYPE = ::T.let(nil, ::T.untyped)
-  GUINT64_TYPE = ::T.let(nil, ::T.untyped)
-end
-
-module GObject::GObject::GObjectLayout
-  extend ::T::Sig
-end
-
-module GObject
-  extend ::T::Sig
 end
 
 module Gem
@@ -18544,27 +18184,6 @@ module GlobalID::Locator
   def self.use(app, locator=T.unsafe(nil), &locator_block); end
 end
 
-class HTMLEntities
-  FLAVORS = ::T.let(nil, ::T.untyped)
-  MAPPINGS = ::T.let(nil, ::T.untyped)
-  SKIP_DUP_ENCODINGS = ::T.let(nil, ::T.untyped)
-end
-
-class HTMLEntities::Encoder
-  INSTRUCTIONS = ::T.let(nil, ::T.untyped)
-end
-
-module HTMLEntities::VERSION
-  MAJOR = ::T.let(nil, ::T.untyped)
-  MINOR = ::T.let(nil, ::T.untyped)
-  STRING = ::T.let(nil, ::T.untyped)
-  TINY = ::T.let(nil, ::T.untyped)
-end
-
-module HTMLEntities::VERSION
-  extend ::T::Sig
-end
-
 class HTMLSelector
   NO_STRIP = ::T.let(nil, ::T.untyped)
 end
@@ -19263,8 +18882,6 @@ class IO
   def self.default_console_size(); end
 
   def self.foreach(*_); end
-
-  def self.open(*_); end
 
   def self.pipe(*_); end
 
@@ -20028,298 +19645,8 @@ end
 module Icon
 end
 
-module Icon::Images
-end
-
-module Icon::Images
-  extend ::T::Sig
-end
-
 module Icon
   extend ::T::Sig
-end
-
-class IconComponent
-  def css_class(); end
-
-  def name(); end
-end
-
-class Image
-  include ::Image::GeneratedAttributeMethods
-  include ::Image::GeneratedAssociationMethods
-  def autosave_associated_records_for_repository(*args); end
-end
-
-module Image::GeneratedAssociationMethods
-  def build_repository(*args, &block); end
-
-  def create_repository(*args, &block); end
-
-  def create_repository!(*args, &block); end
-
-  def reload_repository(); end
-
-  def repository(); end
-
-  def repository=(value); end
-end
-
-module Image::GeneratedAssociationMethods
-  extend ::T::Sig
-end
-
-module Image::GeneratedAttributeMethods
-end
-
-module Image::GeneratedAttributeMethods
-  extend ::Mutex_m
-  extend ::T::Sig
-end
-
-module ImageProcessing
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module ImageProcessing::Chainable
-  DEFAULT_OPTIONS = ::T.let(nil, ::T.untyped)
-end
-
-module ImageProcessing::Chainable
-  extend ::T::Sig
-end
-
-module ImageProcessing::MiniMagick
-end
-
-class ImageProcessing::MiniMagick::Processor
-  def append(*args); end
-
-  def composite(overlay=T.unsafe(nil), mask: T.unsafe(nil), mode: T.unsafe(nil), gravity: T.unsafe(nil), offset: T.unsafe(nil), args: T.unsafe(nil), **options, &block); end
-
-  def define(options); end
-
-  def limits(options); end
-
-  def magick(); end
-
-  def resize_and_pad(width, height, background: T.unsafe(nil), gravity: T.unsafe(nil), **options); end
-
-  def resize_to_fill(width, height, gravity: T.unsafe(nil), **options); end
-
-  def resize_to_fit(width, height, **options); end
-
-  def resize_to_limit(width, height, **options); end
-
-  def rotate(degrees, background: T.unsafe(nil)); end
-  SHARPEN_PARAMETERS = ::T.let(nil, ::T.untyped)
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS
-  def +(*values); end
-
-  def <<(arg); end
-
-  def args(); end
-
-  def call(*args); end
-
-  def canvas(value=T.unsafe(nil)); end
-
-  def clone(*args); end
-
-  def command(); end
-
-  def executable(); end
-
-  def gradient(value=T.unsafe(nil)); end
-
-  def initialize(name, options=T.unsafe(nil)); end
-
-  def logo(value=T.unsafe(nil)); end
-
-  def merge!(new_args); end
-
-  def method_missing(name, *args); end
-
-  def name(); end
-
-  def pango(value=T.unsafe(nil)); end
-
-  def pattern(value=T.unsafe(nil)); end
-
-  def plasma(value=T.unsafe(nil)); end
-
-  def radial_gradient(value=T.unsafe(nil)); end
-
-  def rose(value=T.unsafe(nil)); end
-
-  def stack(); end
-
-  def stdin(); end
-
-  def stdout(); end
-
-  def text(value=T.unsafe(nil)); end
-
-  def xc(value=T.unsafe(nil)); end
-  CREATION_OPERATORS = ::T.let(nil, ::T.untyped)
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Animate
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Animate
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Compare
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Compare
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Composite
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Composite
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Conjure
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Conjure
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Convert
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Convert
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Display
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Display
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Identify
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Identify
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Import
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Import
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Magick
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Magick
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Mogrify
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Mogrify
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::MogrifyRestricted
-  def format(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::MogrifyRestricted
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Montage
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Montage
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Stream
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Stream
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS
-  def self.new(*args); end
-
-  def self.option_methods(); end
-end
-
-module ImageProcessing::MiniMagick::Processor::Utils
-end
-
-module ImageProcessing::MiniMagick::Processor::Utils
-  extend ::T::Sig
-  def self.apply_define(magick, options); end
-
-  def self.apply_options(magick, define: T.unsafe(nil), **options); end
-
-  def self.disallow_split_layers!(destination_path); end
-end
-
-class ImageProcessing::MiniMagick::Processor
-  def self.load_image(path_or_magick, page: T.unsafe(nil), geometry: T.unsafe(nil), auto_orient: T.unsafe(nil), **options); end
-
-  def self.save_image(magick, destination_path, allow_splitting: T.unsafe(nil), **options); end
-end
-
-module ImageProcessing::MiniMagick
-  extend ::ImageProcessing::Chainable
-  extend ::T::Sig
-  def self.valid_image?(file); end
-end
-
-class ImageProcessing::Pipeline
-  DEFAULT_FORMAT = ::T.let(nil, ::T.untyped)
-end
-
-module ImageProcessing::Vips
-end
-
-module ImageProcessing::Vips
-  extend ::ImageProcessing::Chainable
-  extend ::T::Sig
-  def self.valid_image?(file); end
-end
-
-module ImageProcessing
-  extend ::T::Sig
-end
-
-class ImageUploader::Attacher
-end
-
-class ImageUploader::Attacher
-end
-
-class ImageUploader::Attachment
-end
-
-class ImageUploader::Attachment
-end
-
-class ImageUploader::UploadedFile
-end
-
-class ImageUploader::UploadedFile
 end
 
 class ImagesController
@@ -20359,6 +19686,15 @@ end
 
 module Imgproxy
   extend ::T::Sig
+end
+
+class ImgproxyMiddleware
+  def initialize(app, opts: T.unsafe(nil)); end
+
+  def root(); end
+end
+
+class ImgproxyMiddleware
 end
 
 class IndexError
@@ -20864,6 +20200,17 @@ end
 
 class LoadError
   extend ::T::Sig
+end
+
+module Loader
+end
+
+module Loader
+  extend ::T::Sig
+end
+
+class LoaderComponent
+  def type(); end
 end
 
 class LocalJumpError
@@ -21408,6 +20755,22 @@ class MessagePack::StackError
   extend ::T::Sig
 end
 
+module MessagePack::Time
+  Packer = ::T.let(nil, ::T.untyped)
+  TIME_AT_3_AVAILABLE = ::T.let(nil, ::T.untyped)
+  Unpacker = ::T.let(nil, ::T.untyped)
+end
+
+module MessagePack::Time
+  extend ::T::Sig
+end
+
+class MessagePack::Timestamp
+  TIMESTAMP32_MAX_SEC = ::T.let(nil, ::T.untyped)
+  TIMESTAMP64_MAX_SEC = ::T.let(nil, ::T.untyped)
+  TYPE = ::T.let(nil, ::T.untyped)
+end
+
 module MessagePack::TypeError
   extend ::T::Sig
 end
@@ -21537,6 +20900,13 @@ module Mime
   extend ::T::Sig
 end
 
+class MimeMagic
+  EXTENSIONS = ::T.let(nil, ::T.untyped)
+  MAGIC = ::T.let(nil, ::T.untyped)
+  TYPES = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
 module MiniMime
   VERSION = ::T.let(nil, ::T.untyped)
 end
@@ -21555,6 +20925,12 @@ end
 
 module MiniMime
   extend ::T::Sig
+end
+
+class MiniScheduler::DistributedMutex
+  BASE_SLEEP_DURATION = ::T.let(nil, ::T.untyped)
+  MAX_POLLING_ATTEMPTS = ::T.let(nil, ::T.untyped)
+  MAX_SLEEP_DURATION = ::T.let(nil, ::T.untyped)
 end
 
 module MiniScheduler::Schedule
@@ -21589,45 +20965,7 @@ module MiniScheduler
   extend ::T::Sig
 end
 
-module Minitest
-end
-
-MiniTest::Assertions = Minitest::Assertions
-
-MiniTest::Expectations = Minitest::Expectations
-
-MiniTest::Guard = Minitest::Guard
-
-module Minitest::Parallel
-end
-
-MiniTest::Parallel::Test = Minitest::Parallel::Test
-
-module Minitest::Parallel
-end
-
-MiniTest::Reportable = Minitest::Reportable
-
-MiniTest::Runnable = Minitest::Runnable
-
-class Minitest::Spec
-end
-
-module Minitest::Spec::DSL
-end
-
-MiniTest::Spec::DSL::InstanceMethods = Minitest::Spec::DSL::InstanceMethods
-
-module Minitest::Spec::DSL
-end
-
-class Minitest::Spec
-end
-
-MiniTest::Test = Minitest::Test
-
-module Minitest
-end
+MiniTest = Minitest
 
 module Minitest
   ENCS = ::T.let(nil, ::T.untyped)
@@ -21727,6 +21065,9 @@ class Mobius::BaseController
   def self.default_url_options?(); end
 end
 
+class Mobius::PostReceiveController
+end
+
 module Mobius
   extend ::T::Sig
 end
@@ -21748,601 +21089,6 @@ end
 class Module
   extend ::T::Sig
   def self.used_modules(); end
-end
-
-class Moneta::Adapters::ActiveRecord
-  include ::Moneta::Defaults
-  include ::Moneta::OptionSupport
-  def clear(options=T.unsafe(nil)); end
-
-  def delete(key, options=T.unsafe(nil)); end
-
-  def each_key(&block); end
-
-  def initialize(options=T.unsafe(nil)); end
-
-  def key_column(); end
-
-  def load(key, options=T.unsafe(nil)); end
-
-  def slice(*keys, lock: T.unsafe(nil), **options); end
-
-  def store(key, value, options=T.unsafe(nil)); end
-
-  def table(); end
-
-  def value_column(); end
-
-  def with_connection(*args, &block); end
-end
-
-class Moneta::Adapters::ActiveRecord
-  extend ::Moneta::Defaults::ClassMethods
-  def self.configurations(*args, &block); end
-
-  def self.configurations=(arg); end
-
-  def self.connection_handler(*args, &block); end
-
-  def self.connection_lock(); end
-
-  def self.establish_connection(spec_name); end
-
-  def self.retrieve_connection_pool(spec_name); end
-
-  def self.retrieve_or_establish_connection_pool(spec_name); end
-end
-
-class Moneta::Adapters::ActiveSupportCache
-  include ::Moneta::Defaults
-  include ::Moneta::OptionSupport
-  include ::Moneta::ExpiresSupport
-  def clear(options=T.unsafe(nil)); end
-
-  def delete(key, options=T.unsafe(nil)); end
-
-  def initialize(options=T.unsafe(nil)); end
-
-  def load(key, options=T.unsafe(nil)); end
-
-  def store(key, value, options=T.unsafe(nil)); end
-end
-
-class Moneta::Adapters::ActiveSupportCache
-  extend ::Moneta::Defaults::ClassMethods
-end
-
-class Moneta::Adapters::Client
-  include ::Moneta::Defaults
-  include ::Moneta::OptionSupport
-  def clear(options=T.unsafe(nil)); end
-
-  def delete(key, options=T.unsafe(nil)); end
-
-  def initialize(options=T.unsafe(nil)); end
-
-  def load(key, options=T.unsafe(nil)); end
-
-  def store(key, value, options=T.unsafe(nil)); end
-end
-
-class Moneta::Adapters::Client
-  extend ::Moneta::Defaults::ClassMethods
-end
-
-class Moneta::Adapters::Cookie
-  def cookies(); end
-
-  def reset(cookies); end
-end
-
-class Moneta::Adapters::Cookie
-end
-
-class Moneta::Adapters::DBM
-  include ::Moneta::Defaults
-  include ::Moneta::OptionSupport
-  include ::Moneta::DBMAdapter
-  include ::Moneta::HashAdapter
-  include ::Moneta::IncrementSupport
-  include ::Moneta::CreateSupport
-  include ::Moneta::EachKeySupport
-  def initialize(options=T.unsafe(nil)); end
-end
-
-class Moneta::Adapters::DBM
-  extend ::Moneta::Defaults::ClassMethods
-end
-
-class Moneta::Adapters::File
-  include ::Moneta::Defaults
-  include ::Moneta::OptionSupport
-  def clear(options=T.unsafe(nil)); end
-
-  def delete(key, options=T.unsafe(nil)); end
-
-  def each_key(&block); end
-
-  def initialize(options=T.unsafe(nil)); end
-
-  def load(key, options=T.unsafe(nil)); end
-
-  def store(key, value, options=T.unsafe(nil)); end
-
-  def store_path(key); end
-end
-
-class Moneta::Adapters::File
-  extend ::Moneta::Defaults::ClassMethods
-end
-
-class Moneta::Adapters::GDBM
-  include ::Moneta::Defaults
-  include ::Moneta::OptionSupport
-  include ::Moneta::DBMAdapter
-  include ::Moneta::HashAdapter
-  include ::Moneta::IncrementSupport
-  include ::Moneta::CreateSupport
-  include ::Moneta::EachKeySupport
-  def initialize(options=T.unsafe(nil)); end
-end
-
-class Moneta::Adapters::GDBM
-  extend ::Moneta::Defaults::ClassMethods
-end
-
-class Moneta::Adapters::LRUHash
-  include ::Moneta::Defaults
-  include ::Moneta::OptionSupport
-  include ::Moneta::IncrementSupport
-  include ::Moneta::CreateSupport
-  def clear(options=T.unsafe(nil)); end
-
-  def delete(key, options=T.unsafe(nil)); end
-
-  def each_key(&block); end
-
-  def initialize(options=T.unsafe(nil)); end
-
-  def load(key, options=T.unsafe(nil)); end
-
-  def store(key, value, options=T.unsafe(nil)); end
-  DEFAULT_MAX_COUNT = ::T.let(nil, ::T.untyped)
-  DEFAULT_MAX_SIZE = ::T.let(nil, ::T.untyped)
-end
-
-class Moneta::Adapters::LRUHash::Entry
-  def insert_after(entry); end
-
-  def key(); end
-
-  def key=(key); end
-
-  def next(); end
-
-  def next=(_); end
-
-  def prev(); end
-
-  def prev=(prev); end
-
-  def unlink(); end
-
-  def value(); end
-
-  def value=(value); end
-end
-
-class Moneta::Adapters::LRUHash::Entry
-end
-
-class Moneta::Adapters::LRUHash
-  extend ::Moneta::Defaults::ClassMethods
-end
-
-class Moneta::Adapters::Null
-  include ::Moneta::Defaults
-  include ::Moneta::OptionSupport
-  def clear(options=T.unsafe(nil)); end
-
-  def delete(key, options=T.unsafe(nil)); end
-
-  def initialize(options=T.unsafe(nil)); end
-
-  def load(key, options=T.unsafe(nil)); end
-
-  def store(key, value, options=T.unsafe(nil)); end
-end
-
-class Moneta::Adapters::Null
-  extend ::Moneta::Defaults::ClassMethods
-end
-
-class Moneta::Adapters::PStore
-  include ::Moneta::Defaults
-  include ::Moneta::OptionSupport
-  include ::Moneta::NilValues
-  def backend(); end
-
-  def clear(options=T.unsafe(nil)); end
-
-  def delete(key, options=T.unsafe(nil)); end
-
-  def each_key(&block); end
-
-  def initialize(options=T.unsafe(nil)); end
-
-  def load(key, options=T.unsafe(nil)); end
-
-  def new_store(options); end
-
-  def store(key, value, options=T.unsafe(nil)); end
-
-  def transaction(read_only=T.unsafe(nil)); end
-end
-
-class Moneta::Adapters::PStore::TransactionError
-end
-
-class Moneta::Adapters::PStore::TransactionError
-end
-
-class Moneta::Adapters::PStore
-  extend ::Moneta::Defaults::ClassMethods
-end
-
-class Moneta::Adapters::Redis
-  include ::Moneta::Defaults
-  include ::Moneta::OptionSupport
-  include ::Moneta::ExpiresSupport
-  def backend(); end
-
-  def clear(options=T.unsafe(nil)); end
-
-  def delete(key, options=T.unsafe(nil)); end
-
-  def each_key(&block); end
-
-  def initialize(options=T.unsafe(nil)); end
-
-  def load(key, options=T.unsafe(nil)); end
-
-  def store(key, value, options=T.unsafe(nil)); end
-
-  def update_expires(key, expires); end
-
-  def with_expiry_update(*keys, default: T.unsafe(nil), **options); end
-end
-
-class Moneta::Adapters::Redis
-  extend ::Moneta::Defaults::ClassMethods
-end
-
-class Moneta::Adapters::SDBM
-  include ::Moneta::Defaults
-  include ::Moneta::OptionSupport
-  include ::Moneta::DBMAdapter
-  include ::Moneta::HashAdapter
-  include ::Moneta::IncrementSupport
-  include ::Moneta::CreateSupport
-  include ::Moneta::EachKeySupport
-  def initialize(options=T.unsafe(nil)); end
-end
-
-class Moneta::Adapters::SDBM
-  extend ::Moneta::Defaults::ClassMethods
-end
-
-class Moneta::Adapters::YAML
-end
-
-class Moneta::Adapters::YAML
-end
-
-module Moneta::Adapters
-  extend ::T::Sig
-end
-
-class Moneta::Cache
-  include ::Moneta::Defaults
-  include ::Moneta::OptionSupport
-  def adapter(); end
-
-  def adapter=(adapter); end
-
-  def cache(); end
-
-  def cache=(cache); end
-
-  def clear(options=T.unsafe(nil)); end
-
-  def delete(key, options=T.unsafe(nil)); end
-
-  def each_key(&block); end
-
-  def initialize(options=T.unsafe(nil), &block); end
-
-  def load(key, options=T.unsafe(nil)); end
-
-  def store(key, value, options=T.unsafe(nil)); end
-end
-
-class Moneta::Cache::DSL
-  def adapter(store=T.unsafe(nil), &block); end
-
-  def cache(store=T.unsafe(nil), &block); end
-
-  def initialize(store, &block); end
-end
-
-class Moneta::Cache::DSL
-end
-
-class Moneta::Cache
-  extend ::Moneta::Defaults::ClassMethods
-end
-
-module Moneta::CreateSupport
-  extend ::T::Sig
-end
-
-module Moneta::DBMAdapter
-  extend ::T::Sig
-end
-
-module Moneta::Defaults::ClassMethods
-  extend ::T::Sig
-end
-
-module Moneta::Defaults
-  extend ::T::Sig
-end
-
-module Moneta::EachKeySupport
-  extend ::T::Sig
-end
-
-module Moneta::ExpiresSupport
-  extend ::T::Sig
-end
-
-module Moneta::HashAdapter
-  extend ::T::Sig
-end
-
-module Moneta::IncrementSupport
-  extend ::T::Sig
-end
-
-class Moneta::Lock
-  def lock!(&block); end
-
-  def locked?(); end
-
-  def locks(); end
-
-  def wrap(name, *args, &block); end
-end
-
-class Moneta::Lock
-end
-
-class Moneta::Logger
-  def wrap(method, *args); end
-end
-
-class Moneta::Logger::Format
-  def close(); end
-
-  def dump(value); end
-
-  def format(entry); end
-
-  def initialize(options); end
-
-  def log(entry); end
-end
-
-class Moneta::Logger::Format
-end
-
-class Moneta::Logger
-end
-
-class Moneta::Mutex
-  def enter_primitive(); end
-
-  def initialize(store, lock); end
-
-  def leave_primitive(); end
-end
-
-class Moneta::Mutex
-end
-
-module Moneta::NilValues
-  extend ::T::Sig
-end
-
-class Moneta::OptionMerger
-  def default_options(); end
-
-  def wrap(method, *args); end
-  METHODS = ::T.let(nil, ::T.untyped)
-end
-
-class Moneta::OptionMerger
-end
-
-module Moneta::OptionSupport
-  extend ::T::Sig
-end
-
-class Moneta::Pool
-  def check_out!(); end
-
-  def checked_out?(); end
-
-  def initialize(options=T.unsafe(nil), &block); end
-
-  def pop(); end
-
-  def wrap(*args, &block); end
-end
-
-class Moneta::Pool
-end
-
-class Moneta::Semaphore
-  def enter_primitive(); end
-
-  def initialize(store, counter, max=T.unsafe(nil)); end
-
-  def leave_primitive(); end
-end
-
-class Moneta::Semaphore
-end
-
-class Moneta::Server
-  def initialize(store, options=T.unsafe(nil)); end
-
-  def run(); end
-
-  def running?(); end
-
-  def stop(); end
-  MAXSIZE = ::T.let(nil, ::T.untyped)
-  TIMEOUT = ::T.let(nil, ::T.untyped)
-end
-
-class Moneta::Server
-end
-
-class Moneta::Shared
-  def connect(); end
-
-  def each_key(); end
-
-  def initialize(options=T.unsafe(nil), &block); end
-
-  def start_server(); end
-
-  def wrap(*args); end
-end
-
-class Moneta::Shared
-end
-
-class Moneta::Stack
-  include ::Moneta::Defaults
-  include ::Moneta::OptionSupport
-  def clear(options=T.unsafe(nil)); end
-
-  def delete(key, options=T.unsafe(nil)); end
-
-  def initialize(options=T.unsafe(nil), &block); end
-
-  def load(key, options=T.unsafe(nil)); end
-
-  def stack(); end
-
-  def store(key, value, options=T.unsafe(nil)); end
-end
-
-class Moneta::Stack::DSL
-  def add(store=T.unsafe(nil), &block); end
-
-  def initialize(stack, &block); end
-end
-
-class Moneta::Stack::DSL
-end
-
-class Moneta::Stack
-  extend ::Moneta::Defaults::ClassMethods
-end
-
-class Moneta::SynchronizePrimitive
-  def enter(timeout=T.unsafe(nil), wait=T.unsafe(nil)); end
-
-  def leave(); end
-
-  def lock(timeout=T.unsafe(nil), wait=T.unsafe(nil)); end
-
-  def locked?(); end
-
-  def synchronize(); end
-
-  def try_enter(); end
-
-  def try_lock(); end
-
-  def unlock(); end
-end
-
-class Moneta::SynchronizePrimitive
-end
-
-class Moneta::Transformer
-  KEY_TRANSFORMER = ::T.let(nil, ::T.untyped)
-  TRANSFORMER = ::T.let(nil, ::T.untyped)
-  VALUE_TRANSFORMER = ::T.let(nil, ::T.untyped)
-end
-
-module Moneta::Transformer::Helper
-  extend ::T::Sig
-end
-
-module Moneta::Utils
-  def only(hash, *keys); end
-
-  def to_int(value); end
-
-  def without(hash, *keys); end
-end
-
-module Moneta::Utils
-  extend ::Moneta::Utils
-  extend ::T::Sig
-end
-
-class Moneta::WeakCreate
-  include ::Moneta::CreateSupport
-end
-
-class Moneta::WeakCreate
-end
-
-class Moneta::WeakEachKey
-  def all_keys(); end
-
-  def each_key(); end
-
-  def each_key_save(key); end
-
-  def wrap(name, *args); end
-end
-
-class Moneta::WeakEachKey
-end
-
-class Moneta::WeakIncrement
-  include ::Moneta::IncrementSupport
-end
-
-class Moneta::WeakIncrement
-end
-
-class Moneta::Wrapper
-  def merge!(pairs, options=T.unsafe(nil)); end
-end
-
-class Moneta::Wrapper
-end
-
-module Moneta
-  extend ::T::Sig
 end
 
 class Monitor
@@ -22408,54 +21154,6 @@ module MonitorMixin
   def self.extend_object(obj); end
 end
 
-module MultiJson
-  ALIASES = ::T.let(nil, ::T.untyped)
-  REQUIREMENT_MAP = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-MultiJson::DecodeError = MultiJson::ParseError
-
-MultiJson::LoadError = MultiJson::ParseError
-
-module MultiJson::Options
-  extend ::T::Sig
-end
-
-module MultiJson::OptionsCache
-  MAX_CACHE_SIZE = ::T.let(nil, ::T.untyped)
-end
-
-module MultiJson::OptionsCache
-  extend ::T::Sig
-end
-
-class MultiJson::Version
-  MAJOR = ::T.let(nil, ::T.untyped)
-  MINOR = ::T.let(nil, ::T.untyped)
-  PATCH = ::T.let(nil, ::T.untyped)
-  PRE = ::T.let(nil, ::T.untyped)
-end
-
-module MultiJson
-  extend ::T::Sig
-end
-
-module Mustache::Enumerable
-  extend ::T::Sig
-end
-
-class Mustache::Parser
-  ALLOWED_CONTENT = ::T.let(nil, ::T.untyped)
-  ANY_CONTENT = ::T.let(nil, ::T.untyped)
-  SKIP_WHITESPACE = ::T.let(nil, ::T.untyped)
-  VALID_TYPES = ::T.let(nil, ::T.untyped)
-end
-
-module Mustache::Utils
-  extend ::T::Sig
-end
-
 Mutex = Thread::Mutex
 
 module Mutex_m
@@ -22463,6 +21161,37 @@ module Mutex_m
 end
 
 module Mutex_m
+  extend ::T::Sig
+end
+
+module NIO
+  ENGINE = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class NIO::ByteBuffer
+  include ::Enumerable
+end
+
+class NIO::ByteBuffer::MarkUnsetError
+end
+
+class NIO::ByteBuffer::MarkUnsetError
+end
+
+class NIO::ByteBuffer::OverflowError
+end
+
+class NIO::ByteBuffer::OverflowError
+end
+
+class NIO::ByteBuffer::UnderflowError
+end
+
+class NIO::ByteBuffer::UnderflowError
+end
+
+module NIO
   extend ::T::Sig
 end
 
@@ -23316,23 +22045,6 @@ module Nokogiri::HTML
   extend ::T::Sig
 end
 
-module Nokogiri::HTML5
-  HTML_NAMESPACE = ::T.let(nil, ::T.untyped)
-  MATHML_NAMESPACE = ::T.let(nil, ::T.untyped)
-  SVG_NAMESPACE = ::T.let(nil, ::T.untyped)
-  XLINK_NAMESPACE = ::T.let(nil, ::T.untyped)
-  XMLNS_NAMESPACE = ::T.let(nil, ::T.untyped)
-  XML_NAMESPACE = ::T.let(nil, ::T.untyped)
-end
-
-module Nokogiri::HTML5::Node
-  extend ::T::Sig
-end
-
-module Nokogiri::HTML5
-  extend ::T::Sig
-end
-
 module Nokogiri::XML
   XML_C14N_1_0 = ::T.let(nil, ::T.untyped)
   XML_C14N_1_1 = ::T.let(nil, ::T.untyped)
@@ -23373,7 +22085,6 @@ class Nokogiri::XML::EntityDecl
 end
 
 class Nokogiri::XML::Node
-  include ::Nokogiri::HTML5::Node
   ATTRIBUTE_DECL = ::T.let(nil, ::T.untyped)
   ATTRIBUTE_NODE = ::T.let(nil, ::T.untyped)
   CDATA_SECTION_NODE = ::T.let(nil, ::T.untyped)
@@ -23486,16 +22197,6 @@ module Nokogiri::XSLT
 end
 
 module Nokogiri
-  extend ::T::Sig
-end
-
-module Nokogumbo
-  DEFAULT_MAX_ERRORS = ::T.let(nil, ::T.untyped)
-  DEFAULT_MAX_TREE_DEPTH = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module Nokogumbo
   extend ::T::Sig
 end
 
@@ -23613,124 +22314,6 @@ module Oj::Rails
 end
 
 module Oj
-  extend ::T::Sig
-end
-
-module Onebox
-  DEFAULTS = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module Onebox::Engine
-  DEFAULT = ::T.let(nil, ::T.untyped)
-end
-
-module Onebox::Engine::ClassMethods
-  extend ::T::Sig
-end
-
-class Onebox::Engine::GithubGistOnebox
-  MAX_FILES = ::T.let(nil, ::T.untyped)
-end
-
-class Onebox::Engine::GithubGistOnebox::GistFile
-  MAX_LINES = ::T.let(nil, ::T.untyped)
-end
-
-class Onebox::Engine::GooglePlayAppOnebox
-  DEFAULTS = ::T.let(nil, ::T.untyped)
-end
-
-module Onebox::Engine::HTML
-  extend ::T::Sig
-end
-
-module Onebox::Engine::JSON
-  extend ::T::Sig
-end
-
-module Onebox::Engine::OpengraphImage
-  extend ::T::Sig
-end
-
-class Onebox::Engine::PastebinOnebox
-  MAX_LINES = ::T.let(nil, ::T.untyped)
-end
-
-module Onebox::Engine::StandardEmbed
-  extend ::T::Sig
-end
-
-class Onebox::Engine::VimeoOnebox
-  HEIGHT = ::T.let(nil, ::T.untyped)
-  WIDTH = ::T.let(nil, ::T.untyped)
-end
-
-class Onebox::Engine::YoutubeOnebox
-  HEIGHT = ::T.let(nil, ::T.untyped)
-  WIDTH = ::T.let(nil, ::T.untyped)
-end
-
-module Onebox::Engine
-  extend ::T::Sig
-end
-
-module Onebox::FileTypeFinder
-  extend ::T::Sig
-end
-
-module Onebox::Helpers
-  RFC_3986_URI_REGEX = ::T.let(nil, ::T.untyped)
-end
-
-module Onebox::Helpers
-  extend ::T::Sig
-end
-
-class Onebox::Layout
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module Onebox::LayoutSupport
-  extend ::T::Sig
-end
-
-module Onebox::Mixins::GitBlobOnebox
-  DEFAULTS = ::T.let(nil, ::T.untyped)
-  EXPAND_AFTER = ::T.let(nil, ::T.untyped)
-  EXPAND_BEFORE = ::T.let(nil, ::T.untyped)
-  EXPAND_NONE = ::T.let(nil, ::T.untyped)
-end
-
-module Onebox::Mixins::GitBlobOnebox::InstanceMethods
-  extend ::T::Sig
-end
-
-module Onebox::Mixins::GitBlobOnebox
-  extend ::T::Sig
-end
-
-module Onebox::Mixins::TwitchOnebox::InstanceMethods
-  extend ::T::Sig
-end
-
-module Onebox::Mixins::TwitchOnebox
-  extend ::T::Sig
-end
-
-module Onebox::Mixins
-  extend ::T::Sig
-end
-
-class Onebox::Preview
-  WEB_EXCEPTIONS = ::T.let(nil, ::T.untyped)
-end
-
-module Onebox::TemplateSupport
-  extend ::T::Sig
-end
-
-module Onebox
   extend ::T::Sig
 end
 
@@ -24427,104 +23010,6 @@ end
 
 class OpenStruct
   extend ::T::Sig
-end
-
-module OpenURI
-  Options = ::T.let(nil, ::T.untyped)
-end
-
-class OpenURI::Buffer
-  def <<(str); end
-
-  def io(); end
-
-  def size(); end
-  StringMax = ::T.let(nil, ::T.untyped)
-end
-
-class OpenURI::Buffer
-end
-
-class OpenURI::HTTPError
-  def initialize(message, io); end
-
-  def io(); end
-end
-
-class OpenURI::HTTPError
-end
-
-class OpenURI::HTTPRedirect
-  def initialize(message, io, uri); end
-
-  def uri(); end
-end
-
-class OpenURI::HTTPRedirect
-end
-
-module OpenURI::Meta
-  def base_uri(); end
-
-  def base_uri=(base_uri); end
-
-  def charset(); end
-
-  def content_encoding(); end
-
-  def content_type(); end
-
-  def content_type_parse(); end
-
-  def last_modified(); end
-
-  def meta(); end
-
-  def meta_add_field(name, value); end
-
-  def meta_add_field2(name, values); end
-
-  def meta_setup_encoding(); end
-
-  def metas(); end
-
-  def status(); end
-
-  def status=(status); end
-  RE_LWS = ::T.let(nil, ::T.untyped)
-  RE_PARAMETERS = ::T.let(nil, ::T.untyped)
-  RE_QUOTED_STRING = ::T.let(nil, ::T.untyped)
-  RE_TOKEN = ::T.let(nil, ::T.untyped)
-end
-
-module OpenURI::Meta
-  extend ::T::Sig
-  def self.init(obj, src=T.unsafe(nil)); end
-end
-
-module OpenURI::OpenRead
-  def open(*rest, &block); end
-
-  def read(options=T.unsafe(nil)); end
-end
-
-module OpenURI::OpenRead
-  extend ::T::Sig
-end
-
-module OpenURI
-  extend ::T::Sig
-  def self.check_options(options); end
-
-  def self.open_http(buf, target, proxy, options); end
-
-  def self.open_loop(uri, options); end
-
-  def self.open_uri(name, *rest); end
-
-  def self.redirectable?(uri1, uri2); end
-
-  def self.scan_open_optional_arguments(*rest); end
 end
 
 OptParse = OptionParser
@@ -26870,43 +25355,6 @@ class PP
   extend ::T::Sig
 end
 
-class PStore
-  def [](name); end
-
-  def []=(name, value); end
-
-  def abort(); end
-
-  def commit(); end
-
-  def delete(name); end
-
-  def fetch(name, default=T.unsafe(nil)); end
-
-  def initialize(file, thread_safe=T.unsafe(nil)); end
-
-  def path(); end
-
-  def root?(name); end
-
-  def roots(); end
-
-  def transaction(read_only=T.unsafe(nil)); end
-
-  def ultra_safe(); end
-
-  def ultra_safe=(ultra_safe); end
-  EMPTY_MARSHAL_CHECKSUM = ::T.let(nil, ::T.untyped)
-  EMPTY_MARSHAL_DATA = ::T.let(nil, ::T.untyped)
-  EMPTY_STRING = ::T.let(nil, ::T.untyped)
-  RDWR_ACCESS = ::T.let(nil, ::T.untyped)
-  RD_ACCESS = ::T.let(nil, ::T.untyped)
-  WR_ACCESS = ::T.let(nil, ::T.untyped)
-end
-
-class PStore
-end
-
 module ParamsSanitizer
   extend ::T::Sig
 end
@@ -27951,15 +26399,6 @@ end
 class Psych::Set
 end
 
-class Psych::Store
-  def initialize(*o); end
-
-  def marshal_dump_supports_canonical_option?(); end
-end
-
-class Psych::Store
-end
-
 class Psych::Stream
   include ::Psych::Streaming
 end
@@ -28263,10 +26702,6 @@ class Puma::Client
   EmptyBody = ::T.let(nil, ::T.untyped)
 end
 
-class Puma::Cluster
-  WORKER_CHECK_INTERVAL = ::T.let(nil, ::T.untyped)
-end
-
 module Puma::ConfigDefault
   DefaultRackup = ::T.let(nil, ::T.untyped)
   DefaultTCPHost = ::T.let(nil, ::T.untyped)
@@ -28355,6 +26790,7 @@ module Puma::Const
   TRANSFER_ENCODING2 = ::T.let(nil, ::T.untyped)
   TRANSFER_ENCODING_CHUNKED = ::T.let(nil, ::T.untyped)
   VERSION = ::T.let(nil, ::T.untyped)
+  WORKER_CHECK_INTERVAL = ::T.let(nil, ::T.untyped)
   WRITE_TIMEOUT = ::T.let(nil, ::T.untyped)
 end
 
@@ -30344,6 +28780,7 @@ class Rack::Attack::Safelist
 end
 
 module Rack::Attack::StoreProxy
+  PROXIES = ::T.let(nil, ::T.untyped)
 end
 
 class Rack::Attack::StoreProxy::ActiveSupportRedisStoreProxy
@@ -30355,6 +28792,22 @@ class Rack::Attack::StoreProxy::ActiveSupportRedisStoreProxy
 end
 
 class Rack::Attack::StoreProxy::ActiveSupportRedisStoreProxy
+  def self.handle?(store); end
+end
+
+class Rack::Attack::StoreProxy::DalliProxy
+  def delete(key); end
+
+  def increment(key, amount, options=T.unsafe(nil)); end
+
+  def initialize(client); end
+
+  def read(key); end
+
+  def write(key, value, options=T.unsafe(nil)); end
+end
+
+class Rack::Attack::StoreProxy::DalliProxy
   def self.handle?(store); end
 end
 
@@ -30400,6 +28853,7 @@ end
 
 module Rack::Attack::StoreProxy
   extend ::T::Sig
+  def self.build(store); end
 end
 
 class Rack::Attack::Throttle
@@ -32978,23 +31432,11 @@ end
 class Repository
   include ::Repository::GeneratedAttributeMethods
   include ::Repository::GeneratedAssociationMethods
-  def after_add_for_images(); end
-
-  def after_add_for_images=(val); end
-
-  def after_add_for_images?(); end
-
   def after_add_for_posts(); end
 
   def after_add_for_posts=(val); end
 
   def after_add_for_posts?(); end
-
-  def after_remove_for_images(); end
-
-  def after_remove_for_images=(val); end
-
-  def after_remove_for_images?(); end
 
   def after_remove_for_posts(); end
 
@@ -33004,15 +31446,7 @@ class Repository
 
   def autosave_associated_records_for_author(*args); end
 
-  def autosave_associated_records_for_images(*args); end
-
   def autosave_associated_records_for_posts(*args); end
-
-  def before_add_for_images(); end
-
-  def before_add_for_images=(val); end
-
-  def before_add_for_images?(); end
 
   def before_add_for_posts(); end
 
@@ -33020,19 +31454,11 @@ class Repository
 
   def before_add_for_posts?(); end
 
-  def before_remove_for_images(); end
-
-  def before_remove_for_images=(val); end
-
-  def before_remove_for_images?(); end
-
   def before_remove_for_posts(); end
 
   def before_remove_for_posts=(val); end
 
   def before_remove_for_posts?(); end
-
-  def validate_associated_records_for_images(*args); end
 
   def validate_associated_records_for_posts(*args); end
 end
@@ -33047,14 +31473,6 @@ module Repository::GeneratedAssociationMethods
   def create_author(*args, &block); end
 
   def create_author!(*args, &block); end
-
-  def image_ids(); end
-
-  def image_ids=(ids); end
-
-  def images(); end
-
-  def images=(value); end
 
   def post_ids(); end
 
@@ -33080,23 +31498,11 @@ module Repository::GeneratedAttributeMethods
 end
 
 class Repository
-  def self.after_add_for_images(); end
-
-  def self.after_add_for_images=(val); end
-
-  def self.after_add_for_images?(); end
-
   def self.after_add_for_posts(); end
 
   def self.after_add_for_posts=(val); end
 
   def self.after_add_for_posts?(); end
-
-  def self.after_remove_for_images(); end
-
-  def self.after_remove_for_images=(val); end
-
-  def self.after_remove_for_images?(); end
 
   def self.after_remove_for_posts(); end
 
@@ -33104,23 +31510,11 @@ class Repository
 
   def self.after_remove_for_posts?(); end
 
-  def self.before_add_for_images(); end
-
-  def self.before_add_for_images=(val); end
-
-  def self.before_add_for_images?(); end
-
   def self.before_add_for_posts(); end
 
   def self.before_add_for_posts=(val); end
 
   def self.before_add_for_posts?(); end
-
-  def self.before_remove_for_images(); end
-
-  def self.before_remove_for_images=(val); end
-
-  def self.before_remove_for_images?(); end
 
   def self.before_remove_for_posts(); end
 
@@ -34456,47 +32850,6 @@ class SSHKey
   SSHFP_TYPES = ::T.let(nil, ::T.untyped)
   SSH_CONVERSION = ::T.let(nil, ::T.untyped)
   SSH_TYPES = ::T.let(nil, ::T.untyped)
-end
-
-class Sanitize
-  REGEX_PROTOCOL = ::T.let(nil, ::T.untyped)
-  REGEX_UNSUITABLE_CHARS = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module Sanitize::Config
-  BASIC = ::T.let(nil, ::T.untyped)
-  DEFAULT = ::T.let(nil, ::T.untyped)
-  HTTP_PROTOCOLS = ::T.let(nil, ::T.untyped)
-  ONEBOX = ::T.let(nil, ::T.untyped)
-  RELAXED = ::T.let(nil, ::T.untyped)
-  RESTRICTED = ::T.let(nil, ::T.untyped)
-end
-
-module Sanitize::Config
-  extend ::T::Sig
-end
-
-module Sanitize::Transformers
-  CleanCDATA = ::T.let(nil, ::T.untyped)
-  CleanComment = ::T.let(nil, ::T.untyped)
-  CleanDoctype = ::T.let(nil, ::T.untyped)
-end
-
-module Sanitize::Transformers::CSS
-  extend ::T::Sig
-end
-
-class Sanitize::Transformers::CleanElement
-  REGEX_DATA_ATTR = ::T.let(nil, ::T.untyped)
-  UNSAFE_LIBXML_ATTRS_A = ::T.let(nil, ::T.untyped)
-  UNSAFE_LIBXML_ATTRS_GLOBAL = ::T.let(nil, ::T.untyped)
-  UNSAFE_LIBXML_ESCAPE_CHARS = ::T.let(nil, ::T.untyped)
-  UNSAFE_LIBXML_ESCAPE_REGEX = ::T.let(nil, ::T.untyped)
-end
-
-module Sanitize::Transformers
-  extend ::T::Sig
 end
 
 ScanError = StringScanner::Error
@@ -36010,317 +34363,6 @@ module Shellwords
   def self.split(line); end
 end
 
-class Shrine
-  include ::Shrine::Plugins::DetermineMimeType::InstanceMethods
-  IO_METHODS = ::T.let(nil, ::T.untyped)
-end
-
-class Shrine::Attacher
-  include ::Shrine::Plugins::Activerecord::AttacherMethods
-  include ::Shrine::Plugins::Backgrounding::AttacherMethods
-end
-
-module Shrine::Attacher::InstanceMethods
-  extend ::T::Sig
-end
-
-class Shrine::Attacher
-  extend ::Shrine::Plugins::Activerecord::AttacherClassMethods
-  extend ::Shrine::Plugins::Backgrounding::AttacherClassMethods
-end
-
-class Shrine::Attachment
-  include ::Shrine::Plugins::Activerecord::AttachmentMethods
-end
-
-module Shrine::Attachment::InstanceMethods
-  extend ::T::Sig
-end
-
-module Shrine::ClassMethods
-  extend ::T::Sig
-end
-
-module Shrine::InstanceMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Activerecord::AttacherClassMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Activerecord::AttacherMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Activerecord::AttachmentMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Activerecord
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::AddMetadata
-end
-
-module Shrine::Plugins::AddMetadata::ClassMethods
-  def add_metadata(name=T.unsafe(nil), **options, &block); end
-
-  def metadata_method(*names); end
-end
-
-module Shrine::Plugins::AddMetadata::ClassMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::AddMetadata::InstanceMethods
-  def extract_metadata(io, context=T.unsafe(nil)); end
-end
-
-module Shrine::Plugins::AddMetadata::InstanceMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::AddMetadata
-  extend ::T::Sig
-  def self.configure(uploader); end
-end
-
-module Shrine::Plugins::Backgrounding::AttacherClassMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Backgrounding::AttacherMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Backgrounding
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::CachedAttachmentData::AttacherMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::CachedAttachmentData::AttachmentMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::CachedAttachmentData
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::DeletePromoted::AttacherMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::DeletePromoted
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::DeleteRaw::InstanceMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::DeleteRaw
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::DetermineMimeType::ClassMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::DetermineMimeType::InstanceMethods
-  extend ::T::Sig
-end
-
-class Shrine::Plugins::DetermineMimeType::MimeTypeAnalyzer
-  MAGIC_NUMBER = ::T.let(nil, ::T.untyped)
-  SUPPORTED_TOOLS = ::T.let(nil, ::T.untyped)
-end
-
-module Shrine::Plugins::DetermineMimeType
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Hooks
-end
-
-module Shrine::Plugins::Hooks::InstanceMethods
-  def after_delete(*_); end
-
-  def after_process(*_); end
-
-  def after_store(*_); end
-
-  def after_upload(*_); end
-
-  def around_delete(*args); end
-
-  def around_process(*args); end
-
-  def around_store(*args); end
-
-  def around_upload(*args); end
-
-  def before_delete(*_); end
-
-  def before_process(*_); end
-
-  def before_store(*_); end
-
-  def before_upload(*_); end
-
-  def delete(io, context=T.unsafe(nil)); end
-
-  def store(io, context=T.unsafe(nil)); end
-
-  def upload(io, context=T.unsafe(nil)); end
-end
-
-module Shrine::Plugins::Hooks::InstanceMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Hooks
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Logging::ClassMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Logging::InstanceMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Logging
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::PrettyLocation::InstanceMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::PrettyLocation
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Recache
-end
-
-module Shrine::Plugins::Recache::AttacherMethods
-  def recache(); end
-
-  def save(); end
-end
-
-module Shrine::Plugins::Recache::AttacherMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Recache
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::RefreshMetadata
-end
-
-module Shrine::Plugins::RefreshMetadata::FileMethods
-  def refresh_metadata!(context=T.unsafe(nil)); end
-end
-
-module Shrine::Plugins::RefreshMetadata::FileMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::RefreshMetadata
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::RestoreCachedData::AttacherMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::RestoreCachedData
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::StoreDimensions::ClassMethods
-  extend ::T::Sig
-end
-
-class Shrine::Plugins::StoreDimensions::DimensionsAnalyzer
-  SUPPORTED_TOOLS = ::T.let(nil, ::T.untyped)
-end
-
-module Shrine::Plugins::StoreDimensions::FileMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::StoreDimensions::InstanceMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::StoreDimensions
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::ValidationHelpers
-  DEFAULT_MESSAGES = ::T.let(nil, ::T.untyped)
-  FILESIZE_UNITS = ::T.let(nil, ::T.untyped)
-  PRETTY_FILESIZE = ::T.let(nil, ::T.untyped)
-end
-
-module Shrine::Plugins::ValidationHelpers::AttacherClassMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::ValidationHelpers::AttacherMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::ValidationHelpers
-  extend ::T::Sig
-end
-
-module Shrine::Plugins
-  extend ::T::Sig
-end
-
-module Shrine::Storage
-  extend ::T::Sig
-end
-
-class Shrine::UploadedFile
-  include ::Imgproxy::Extensions::Shrine
-end
-
-module Shrine::UploadedFile::InstanceMethods
-  extend ::T::Sig
-end
-
-module Shrine::VERSION
-  MAJOR = ::T.let(nil, ::T.untyped)
-  MINOR = ::T.let(nil, ::T.untyped)
-  PRE = ::T.let(nil, ::T.untyped)
-  STRING = ::T.let(nil, ::T.untyped)
-  TINY = ::T.let(nil, ::T.untyped)
-end
-
-module Shrine::VERSION
-  extend ::T::Sig
-end
-
-class Shrine
-  extend ::Shrine::Plugins::DetermineMimeType::ClassMethods
-end
-
-module ShrineBackgrounding
-  extend ::T::Sig
-end
-
 module Sidekiq
   DEFAULTS = ::T.let(nil, ::T.untyped)
   DEFAULT_WORKER_OPTIONS = ::T.let(nil, ::T.untyped)
@@ -37648,6 +35690,14 @@ class Sorbet
   extend ::T::Sig
 end
 
+module SorbetRails::CustomFinderMethods
+  extend ::T::Sig
+end
+
+module SorbetRails
+  extend ::T::Sig
+end
+
 class SortedSet
   def initialize(*args, &block); end
 end
@@ -38828,6 +36878,13 @@ module Tomlrb
   extend ::T::Sig
 end
 
+module TooltipArrow
+end
+
+module TooltipArrow
+  extend ::T::Sig
+end
+
 class Topic
   include ::Topic::GeneratedAttributeMethods
   include ::Topic::GeneratedAssociationMethods
@@ -38970,9 +37027,6 @@ module URI::Escape
 end
 
 class URI::FTP
-  include ::OpenURI::OpenRead
-  def buffer_open(buf, proxy, options); end
-
   def set_typecode(v); end
 
   def typecode(); end
@@ -39134,9 +37188,6 @@ class URI::Generic
 end
 
 class URI::HTTP
-  include ::OpenURI::OpenRead
-  def buffer_open(buf, proxy, options); end
-
   def request_uri(); end
 end
 
@@ -39325,6 +37376,7 @@ end
 class User
   include ::User::GeneratedAttributeMethods
   include ::User::GeneratedAssociationMethods
+  include ::Trackable
   def after_add_for_posts(); end
 
   def after_add_for_posts=(val); end
@@ -39357,6 +37409,8 @@ class User
 
   def autosave_associated_records_for_ssh_keys(*args); end
 
+  def avatar=(io); end
+
   def before_add_for_posts(); end
 
   def before_add_for_posts=(val); end
@@ -39381,7 +37435,11 @@ class User
 
   def before_remove_for_ssh_keys?(); end
 
+  def initials(); end
+
   def regenerate_auth_token(); end
+
+  def repo(); end
 
   def validate_associated_records_for_invite(*args); end
 
@@ -39494,56 +37552,6 @@ class User
   def self.before_remove_for_ssh_keys=(val); end
 
   def self.before_remove_for_ssh_keys?(); end
-end
-
-module Vips
-  ARGUMENT_CONSTRUCT = ::T.let(nil, ::T.untyped)
-  ARGUMENT_DEPRECATED = ::T.let(nil, ::T.untyped)
-  ARGUMENT_FLAGS = ::T.let(nil, ::T.untyped)
-  ARGUMENT_INPUT = ::T.let(nil, ::T.untyped)
-  ARGUMENT_MODIFY = ::T.let(nil, ::T.untyped)
-  ARGUMENT_OUTPUT = ::T.let(nil, ::T.untyped)
-  ARGUMENT_REQUIRED = ::T.let(nil, ::T.untyped)
-  ARGUMENT_SET_ALWAYS = ::T.let(nil, ::T.untyped)
-  ARGUMENT_SET_ONCE = ::T.let(nil, ::T.untyped)
-  ARRAY_DOUBLE_TYPE = ::T.let(nil, ::T.untyped)
-  ARRAY_IMAGE_TYPE = ::T.let(nil, ::T.untyped)
-  ARRAY_INT_TYPE = ::T.let(nil, ::T.untyped)
-  BAND_FORMAT_TYPE = ::T.let(nil, ::T.untyped)
-  BLEND_MODE_TYPE = ::T.let(nil, ::T.untyped)
-  BLOB_TYPE = ::T.let(nil, ::T.untyped)
-  CODING_TYPE = ::T.let(nil, ::T.untyped)
-  IMAGE_TYPE = ::T.let(nil, ::T.untyped)
-  INTERPRETATION_TYPE = ::T.let(nil, ::T.untyped)
-  LIBRARY_VERSION = ::T.let(nil, ::T.untyped)
-  LOG_DOMAIN = ::T.let(nil, ::T.untyped)
-  MAX_COORD = ::T.let(nil, ::T.untyped)
-  OPERATION_DEPRECATED = ::T.let(nil, ::T.untyped)
-  OPERATION_FLAGS = ::T.let(nil, ::T.untyped)
-  OPERATION_NOCACHE = ::T.let(nil, ::T.untyped)
-  OPERATION_SEQUENTIAL = ::T.let(nil, ::T.untyped)
-  REFSTR_TYPE = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module Vips::Image::ImageLayout
-  extend ::T::Sig
-end
-
-module Vips::Interpolate::InterpolateLayout
-  extend ::T::Sig
-end
-
-module Vips::Object::ObjectLayout
-  extend ::T::Sig
-end
-
-module Vips::Operation::OperationLayout
-  extend ::T::Sig
-end
-
-module Vips
-  extend ::T::Sig
 end
 
 Visitor = Psych::Visitors::Visitor
@@ -40108,6 +38116,7 @@ class WeakRef
 end
 
 module Webdrivers
+  DEFAULT_CACHE_TIME = ::T.let(nil, ::T.untyped)
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
@@ -40327,9 +38336,6 @@ module Zip::NullInputStream
   extend ::T::Sig
 end
 
-class Zip::StreamableStream
-end
-
 module Zip::TraditionalEncryption
   extend ::T::Sig
 end
@@ -40534,7 +38540,6 @@ class Zlib::GzipReader
 end
 
 class Zlib::GzipReader
-  def self.open(*_); end
 end
 
 class Zlib::GzipWriter
@@ -40558,7 +38563,6 @@ class Zlib::GzipWriter
 end
 
 class Zlib::GzipWriter
-  def self.open(*_); end
 end
 
 class Zlib::Inflate

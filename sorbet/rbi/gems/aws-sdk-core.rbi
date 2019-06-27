@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/aws-sdk-core/all/aws-sdk-core.rbi
 #
-# aws-sdk-core-3.54.2
+# aws-sdk-core-3.56.0
 module Seahorse
 end
 module Seahorse::Util
@@ -967,6 +967,7 @@ class Aws::SharedConfig
   def credentials_process(profile); end
   def csm_client_id(opts = nil); end
   def csm_enabled(opts = nil); end
+  def csm_host(opts = nil); end
   def csm_port(opts = nil); end
   def default_shared_config_path(file); end
   def determine_config_path; end
@@ -1588,6 +1589,8 @@ class Aws::ClientSideMonitoring::RequestMetrics::ApiCallAttempt
   def x_amzn_request_id=(arg0); end
 end
 class Aws::ClientSideMonitoring::Publisher
+  def agent_host; end
+  def agent_host=(value); end
   def agent_port; end
   def agent_port=(value); end
   def initialize(opts = nil); end
@@ -2091,6 +2094,7 @@ class Aws::Plugins::ClientMetricsPlugin < Seahorse::Client::Plugin
   def add_handlers(handlers, config); end
   def self.resolve_client_id(cfg); end
   def self.resolve_client_side_monitoring(cfg); end
+  def self.resolve_client_side_monitoring_host(cfg); end
   def self.resolve_client_side_monitoring_port(cfg); end
   def self.resolve_publisher(cfg); end
 end

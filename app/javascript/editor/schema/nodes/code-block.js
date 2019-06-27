@@ -27,6 +27,7 @@ export default class CodeBlock extends Node {
       group: 'block',
       code: true,
       defining: true,
+      isolating: true,
       draggable: false,
       parseDOM: [
         {

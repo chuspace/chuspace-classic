@@ -22,9 +22,8 @@ export default class ImageView extends BaseView {
           src=${this.node.attrs.src}
           alt=${this.node.attrs.alt}
           align=${this.node.attrs.align}
-          width=${this.node.attrs.width}
           title=${this.node.attrs.title || this.node.attrs.alt}
-          .handleAltChange=${this.handleAltChange}
+          .handleChange=${this.handleChange}
         ></lazy-image>
       `,
       this.containerNode
@@ -33,8 +32,8 @@ export default class ImageView extends BaseView {
     this.dom = this.containerNode.children[0]
   }
 
-  handleAltChange = (newAlt: string) => {
-    this.node.attrs.alt = newAlt
+  handleChange = (attrs: ?{ align: String, alt: string } = {}) => {
+    this.node.attrs = Object.assign({}, this.node.attrs, attrs)
     this.renderElement()
     this.view.dispatch(this.view.state.tr.setNodeMarkup(this.getPos(), null, this.node.attrs))
   }

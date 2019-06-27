@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/mini_scheduler/all/mini_scheduler.rbi
 #
-# mini_scheduler-0.10.0
+# mini_scheduler-0.11.0
 module MiniScheduler
   def self.before_sidekiq_web_request(&blk); end
   def self.configure; end
@@ -112,6 +112,8 @@ class MiniScheduler::DistributedMutex
   def self.synchronize(key, redis = nil, &blk); end
   def synchronize; end
   def try_to_get_lock; end
+end
+class MiniScheduler::DistributedMutex::Timeout < StandardError
 end
 class MiniScheduler::SidekiqExceptionHandler
   extend Sidekiq::ExceptionHandler

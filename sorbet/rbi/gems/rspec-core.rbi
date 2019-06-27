@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rspec-core/all/rspec-core.rbi
 #
-# rspec-core-3.8.0
+# rspec-core-3.8.1
 module RSpec
   def self.clear_examples; end
   def self.configuration; end
@@ -167,6 +167,7 @@ class RSpec::Core::Formatters::ExceptionPresenter
   def colorized_message_lines(colorizer = nil); end
   def description; end
   def detail_formatter; end
+  def encoded_description(description); end
   def encoded_string(string); end
   def encoding_of(string); end
   def example; end

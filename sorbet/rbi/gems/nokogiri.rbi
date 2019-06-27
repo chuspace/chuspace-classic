@@ -132,7 +132,7 @@ class Nokogiri::XML::Node
   def html?; end
   def in_context(arg0, arg1); end
   def initialize(name, document); end
-  def inner_html(options = nil); end
+  def inner_html(*args); end
   def inner_html=(node_or_tags); end
   def inner_text; end
   def inspect_attributes; end

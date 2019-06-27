@@ -2,6 +2,7 @@
 
 import { MarkdownParser } from 'prosemirror-markdown'
 import markdownit from 'markdown-it'
+import queryString from 'query-string'
 import { schema } from 'editor/schema'
 
 export default new MarkdownParser(schema, markdownit('commonmark', { html: false }), {
@@ -25,11 +26,15 @@ export default new MarkdownParser(schema, markdownit('commonmark', { html: false
   hr: { node: 'horizontal_rule' },
   image: {
     node: 'image',
-    getAttrs: tok => ({
-      src: tok.attrGet('src'),
-      title: tok.attrGet('title') || null,
-      alt: (tok.children[0] && tok.children[0].content) || null
-    })
+    getAttrs: tok => {
+      const [src, params] = tok.attrGet('src').split('#')
+      return {
+        src: src,
+        align: queryString.parse(params).align,
+        title: tok.attrGet('title') || null,
+        alt: (tok.children[0] && tok.children[0].content) || null
+      }
+    }
   },
   hardbreak: { node: 'hard_break' },
 
