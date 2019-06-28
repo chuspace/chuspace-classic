@@ -1,0 +1,4 @@
+#!/bin/sh
+
+bundle exec rubocop -a
+bundle exec srb tc --suggest-typed --typed=strict --error-white-list=7022 --autocorrect
