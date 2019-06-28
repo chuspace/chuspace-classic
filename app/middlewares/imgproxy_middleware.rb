@@ -19,7 +19,8 @@ class ImgproxyMiddleware < Rack::Proxy
 
     if (req.get? || req.head?) && match
       u = URI.parse(match)
-      env['HTTP_HOST'] = env['HTTP_X_FORWARDED_HOST'] = env['HTTP_X_FORWARDED_SERVER'] = ENV.fetch('IMGPROXY_HOST_WITH_PORT')
+      env['HTTP_HOST'] =
+        env['HTTP_X_FORWARDED_HOST'] = env['HTTP_X_FORWARDED_SERVER'] = ENV.fetch('IMGPROXY_HOST_WITH_PORT')
       env['PATH_INFO'] = u.request_uri
 
       super(env)
@@ -39,12 +40,6 @@ class ImgproxyMiddleware < Rack::Proxy
 
     return false unless File.file?(full_path) && File.readable?(full_path) && MimeMagic.by_path(full_path).image?
 
-    Imgproxy.url_for(
-      "local://#{path}",
-      width: 750,
-      height: 300,
-      resizing_type: :fill,
-      sharpen: 0.5
-    )
+    Imgproxy.url_for("local://#{path}", width: 750, height: 300, resizing_type: :fill, sharpen: 0.5)
   end
 end

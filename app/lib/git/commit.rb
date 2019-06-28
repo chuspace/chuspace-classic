@@ -105,9 +105,7 @@ module Git
             old_path_name = file[:previous_path].to_s
             old_filename = old_path_name.to_s
             old_file_entry = index.get(old_filename)
-            unless old_file_entry.blank?
-              index.remove(old_filename)
-            end
+            index.remove(old_filename) unless old_file_entry.blank?
           end
 
           mode = file_entry[:mode] if file_entry && file_entry[:mode]

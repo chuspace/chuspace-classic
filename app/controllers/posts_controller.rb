@@ -43,7 +43,9 @@ class PostsController < ApplicationController
     @post.assign_attributes(post_params)
 
     if @post.save
-      @post.repository.commit(message: params[:commit_message], content: @post.body, path: @post.blob_path, action: :update)
+      @post.repository.commit(
+        message: params[:commit_message], content: @post.body, path: @post.blob_path, action: :update
+      )
 
       render json: { saved: true }
     else

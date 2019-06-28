@@ -36,13 +36,7 @@ class AvatarComponent < Components::Component
   private
 
   def avatar_url
-    Imgproxy.url_for(
-      "s3://#{avatar}",
-      width: size,
-      height: size,
-      resizing_type: :fill,
-      sharpen: 0.5
-    )
+    Imgproxy.url_for("s3://#{avatar}", width: size, height: size, resizing_type: :fill, sharpen: 0.5)
   end
 
   def initials_badge
