@@ -11,7 +11,8 @@ class LazyImage extends LitElement {
     return {
       src: { type: String },
       alt: { type: String },
-      align: { type: String, reflect: true }
+      align: { type: String, reflect: true },
+      editable: { type: String }
     }
   }
 
@@ -21,6 +22,12 @@ class LazyImage extends LitElement {
     try {
       this.alt = JSON.parse(this.alt) || ''
     } catch (e) {}
+
+    try {
+      this.editable = JSON.parse(this.editable)
+    } catch (e) {
+      this.editable = false
+    }
 
     setTimeout(() => {
       document.lazyLoadInstance.update()
@@ -34,7 +41,9 @@ class LazyImage extends LitElement {
   }
 
   selectNode = () => {
-    this.classList.toggle('selected')
+    if (this.editable) {
+      this.classList.toggle('selected')
+    }
   }
 
   createRenderRoot() {
@@ -45,32 +54,32 @@ class LazyImage extends LitElement {
     e.preventDefault()
     // $FlowFixMe
     this.align = e.currentTarget.dataset.align
-  }
-
-  updated() {
     this.handleChange({ align: this.align, alt: this.alt })
   }
 
-  // $FlowFixMe
-  onCaptionChange = (e: Event) => (this.alt = e.target.value)
+  onCaptionChange = (e: Event) => {
+    // $FlowFixMe
+    this.alt = e.target.value
+    this.handleChange({ align: this.align, alt: this.alt })
+  }
 
   render() {
     return html`
       <div class="image-container">
-        <div class="image-toolbar">
-          <svg-icon name="image-left" color="#fff" @click=${this.setAlign} data-align='left'></svg-icon>
-          <svg-icon name="image-center" color="#fff" @click=${this.setAlign} data-align='middle'></svg-icon>
-          <svg-icon name="image-right" color="#fff" @click=${this.setAlign} data-align='right'></svg-icon>
-          <svg-icon name="image-full" color="#fff" @click=${this.setAlign} data-align='none'></svg-icon>
-          <tooltip-arrow></tooltip-arrow>
-        </div>
-        <img
-          alt=${this.alt}
-          class="lazy"
-          data-src=${this.src}
-          @click=${this.selectNode}
-        />
-        <figcaption contentEditable="false">
+        ${this.editable
+          ? html`
+              <div class="image-toolbar">
+                <svg-icon name="image-left" color="#fff" @click=${this.setAlign} data-align="left"></svg-icon>
+                <svg-icon name="image-center" color="#fff" @click=${this.setAlign} data-align="middle"></svg-icon>
+                <svg-icon name="image-right" color="#fff" @click=${this.setAlign} data-align="right"></svg-icon>
+                <svg-icon name="image-full" color="#fff" @click=${this.setAlign} data-align="none"></svg-icon>
+                <tooltip-arrow></tooltip-arrow>
+              </div>
+            `
+          : null}
+        <img alt=${this.alt} class="lazy" data-src=${this.src} @click=${this.selectNode} />
+        ${this.editable
+          ? html`<figcaption contentEditable="false">
           <input
             type="text"
             @change=${this.onCaptionChange}
@@ -80,7 +89,9 @@ class LazyImage extends LitElement {
             placeholder="Click to enter caption"
           />
         </div>
-      </figcaption>
+      </figcaption>`
+          : null}
+      </div>
     `
   }
 }

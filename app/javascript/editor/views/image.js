@@ -22,6 +22,7 @@ export default class ImageView extends BaseView {
           src=${this.node.attrs.src}
           alt=${this.node.attrs.alt}
           align=${this.node.attrs.align}
+          editable="true"
           title=${this.node.attrs.title || this.node.attrs.alt}
           .handleChange=${this.handleChange}
         ></lazy-image>

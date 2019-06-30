@@ -10,13 +10,19 @@ class ContentLoader extends LitElement {
   static get properties() {
     return {
       type: { type: String },
-      lines: { type: Number }
+      lines: { type: Number },
+      width: { type: Number },
+      height: { type: Number }
     }
   }
 
   constructor() {
     super()
     this.type = 'default'
+
+    this.width = 750
+    this.height = 300
+
     this.lines = 1
   }
 
@@ -30,7 +36,7 @@ class ContentLoader extends LitElement {
       ariaLabel: 'Loading interface...',
       baseUrl: '',
       gradientRatio: 2,
-      height: 200,
+      boxHeight: 400,
       interval: 0.25,
       preserveAspectRatio: 'none',
       primaryColor: '#f0f0f0',
@@ -40,7 +46,7 @@ class ContentLoader extends LitElement {
       secondaryOpacity: 1,
       speed: 2,
       style: {},
-      width: 400,
+      boxWidth: 400,
       className: 'loader'
     }
 
@@ -51,15 +57,14 @@ class ContentLoader extends LitElement {
     const dur = `${props.speed}s`
     const clipPath = `url(${props.baseUrl}#${idClip})`
 
-    const items = Array.from({ length: this.lines }, (v, i) => i)
-
-    if (this.type !== 'image') props.height = this.lines * 10
+    this.boxHeight = this.height
+    if (this.type !== 'image') this.boxHeight = this.lines * 15
 
     return svg`
       <svg
         role="img"
         aria-labelledby=${props.ariaLabel ? props.ariaLabel : null}
-        viewBox=${`0 0 ${props.width} ${props.height}`}
+        viewBox=${`0 0 ${this.width} ${this.boxHeight}`}
         preserveAspectRatio=${props.preserveAspectRatio}
       >
         ${
@@ -72,8 +77,8 @@ class ContentLoader extends LitElement {
         <rect
           x="0"
           y="0"
-          width=${props.width}
-          height=${props.height}
+          width=${this.width}
+          height=${this.boxHeight}
           clip-path=${`url(${props.baseUrl}#${idClip})`}
           style=${`fill:url(${props.baseUrl}#${idGradient})`}
         />
@@ -82,11 +87,11 @@ class ContentLoader extends LitElement {
           <clipPath id=${idClip}>
           ${
             this.type === 'image'
-              ? svg`<rect x="0" y="0" width="400" height="200" />`
-              : items.map(
-                  index =>
+              ? svg`<rect x="0" y="0" width=${this.width} height=${this.height} />`
+              : Array.from({ length: this.lines }, (v, i) => i + 1).map(
+                  (_, index) =>
                     svg`
-                  <rect x="15" y="${index * 15}" rx="2" ry="2" width="300" height="4" />
+                  <rect x="15" y="${index * 15}" rx="2" ry="2" width=${this.width} height='10' />
                 `
                 )
           }
