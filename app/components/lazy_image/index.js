@@ -4,8 +4,6 @@ import './image.sass'
 
 import { LitElement, customElement, html } from 'lit-element'
 
-import LazyLoad from 'vanilla-lazyload'
-
 class LazyImage extends LitElement {
   static get properties() {
     return {
@@ -28,10 +26,6 @@ class LazyImage extends LitElement {
     } catch (e) {
       this.editable = false
     }
-
-    setTimeout(() => {
-      document.lazyLoadInstance.update()
-    }, 1)
 
     document.addEventListener('click', (e: MouseEvent) => {
       const el = e.target
@@ -97,13 +91,6 @@ class LazyImage extends LitElement {
 }
 
 document.addEventListener('turbolinks:load', () => {
-  if (document && !document.lazyLoadInstance) {
-    document.lazyLoadInstance = new LazyLoad({
-      elements_selector: 'lazy-image img',
-      load_delay: 0
-    })
-  }
-
   if (!window.customElements.get('lazy-image')) {
     customElements.define('lazy-image', LazyImage)
   }

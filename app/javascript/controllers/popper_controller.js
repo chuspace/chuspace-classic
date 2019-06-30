@@ -84,13 +84,11 @@ export default class PopperController extends Controller {
           const data = await response.json()
           if (!data.title) throw new Error(data)
 
-          // If the tooltip hid before finishing the request, stop further action
           if (!instance.state.isVisible) {
             return
           }
 
           instance.setContent(this.tooltipMarkup(href, data))
-          document.lazyLoadInstance.update()
         } catch (error) {
           instance.setContent('Link preview unavailable')
         } finally {
