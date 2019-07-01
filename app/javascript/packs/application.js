@@ -2,6 +2,7 @@
 
 import 'styles/application'
 import 'animate.css'
+import 'turbolinks'
 
 import * as Rails from 'rails-ujs'
 
@@ -13,3 +14,4 @@ const controllersContext = require.context('../controllers', true, /\.js$/)
 application.load(definitionsFromContext(controllersContext))
 
 Rails.start()
+Turbolinks.start()

@@ -62,7 +62,7 @@ export default class CodeEditor extends LitElement {
 
     const codeNode = this.querySelector('.code-editor')
     this.cm = this.createCM(codeNode)
-    this.onInit(this.cm)
+    this.onInit && this.onInit(this.cm)
 
     this.loaded = true
   }
@@ -122,6 +122,8 @@ export default class CodeEditor extends LitElement {
   }
 }
 
-if (!window.customElements.get('code-editor')) {
-  customElements.define('code-editor', CodeEditor)
-}
+document.addEventListener('turbolinks:load', () => {
+  if (!window.customElements.get('code-editor')) {
+    customElements.define('code-editor', CodeEditor)
+  }
+})

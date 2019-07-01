@@ -90,8 +90,10 @@ class LazyImage extends LitElement {
   }
 }
 
-if (!window.customElements.get('lazy-image')) {
-  customElements.define('lazy-image', LazyImage)
-}
+document.addEventListener('turbolinks:load', () => {
+  if (!window.customElements.get('lazy-image')) {
+    customElements.define('lazy-image', LazyImage)
+  }
+})
 
 export default LazyImage

@@ -127,8 +127,10 @@ class ChuEditor extends LitElement {
   }
 }
 
-if (!window.customElements.get('chu-editor')) {
-  customElements.define('chu-editor', ChuEditor)
-}
+document.addEventListener('turbolinks:load', () => {
+  if (!window.customElements.get('chu-editor')) {
+    customElements.define('chu-editor', ChuEditor)
+  }
+})
 
 export default ChuEditor

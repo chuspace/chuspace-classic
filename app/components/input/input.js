@@ -107,8 +107,10 @@ class AutoValidateInput extends LitElement {
   }
 }
 
-if (!window.customElements.get('input-check')) {
-  customElements.define('input-check', AutoValidateInput)
-}
+document.addEventListener('turbolinks:load', () => {
+  if (!window.customElements.get('input-check')) {
+    customElements.define('input-check', AutoValidateInput)
+  }
+})
 
 export default AutoValidateInput

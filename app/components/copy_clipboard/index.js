@@ -4,12 +4,8 @@ import { LitElement, customElement, html } from 'lit-element'
 
 const SVG_RATIO = 0.81
 
-type Props = {
-  initClipboardJS: (node: ?HTMLElement) => void
-}
-
-export default class CopyClipboard extends LitElement<Props> {
-  static get properties() {
+export default class CopyClipboard extends LitElement {
+  static properties() {
     return {
       initClipboardJS: { type: Function }
     }
@@ -18,7 +14,7 @@ export default class CopyClipboard extends LitElement<Props> {
   connectedCallback() {
     super.connectedCallback()
 
-    this.initClipboardJS(this)
+    this.initClipboardJS && this.initClipboardJS(this)
   }
 
   createRenderRoot() {
@@ -47,6 +43,8 @@ export default class CopyClipboard extends LitElement<Props> {
   }
 }
 
-if (!window.customElements.get('copy-clipboard')) {
-  customElements.define('copy-clipboard', CopyClipboard)
-}
+document.addEventListener('turbolinks:load', () => {
+  if (!window.customElements.get('copy-clipboard')) {
+    customElements.define('copy-clipboard', CopyClipboard)
+  }
+})

@@ -17,8 +17,10 @@ class TooltipArrow extends LitElement {
   }
 }
 
-if (!window.customElements.get('tooltip-arrow')) {
-  customElements.define('tooltip-arrow', TooltipArrow)
-}
+document.addEventListener('turbolinks:load', () => {
+  if (!window.customElements.get('tooltip-arrow')) {
+    customElements.define('tooltip-arrow', TooltipArrow)
+  }
+})
 
 export default TooltipArrow

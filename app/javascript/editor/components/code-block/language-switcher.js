@@ -35,6 +35,7 @@ export default class LanguageSwitcher extends LitElement<Props, State> {
 
   connectedCallback() {
     super.connectedCallback()
+
     try {
       this.readonly = JSON.parse(this.readonly)
     } catch (e) {}
