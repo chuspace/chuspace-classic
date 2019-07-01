@@ -88,7 +88,7 @@ class Repository < ApplicationRecord
     rugged.merge_base(from, to)
   end
 
-  def commit(action: :add, message:, content:, path:)
+  def commit(action: :add, message: nil, content:, path:)
     message ||=
       case action
       when :add

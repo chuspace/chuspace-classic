@@ -32,7 +32,7 @@ class PostsController < ApplicationController
 
       if post.save
         repository.commit(message: params[:commit_message], content: post.body, path: post.blob_path)
-        render json: { redirect: edit_post_path(post), url: post_path(post) }
+        render json: { redirect: edit_post_path(post), url: post_path(post), slug: post.slug }
       else
         render json: { errors: post.errors.full_messages }, status: 422
       end

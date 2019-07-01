@@ -31,6 +31,7 @@ export default class ImageView extends BaseView {
     )
 
     this.dom = this.containerNode.children[0]
+    this.containerNode = this.dom
   }
 
   handleChange = (attrs: ?{ align: String, alt: string } = {}) => {

@@ -12,10 +12,12 @@ type ConfigObj = {
 type Input = {
   url: string,
   body?: any,
+  headers?: any,
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
 }
 
-export class HttpClient {
+export class FetchClient {
+  isConfigured = false
   headers: any = {
     'Content-Type': 'application/json',
     'X-Requested-With': 'Chuspace fetch',
@@ -26,14 +28,14 @@ export class HttpClient {
     if (typeof fetch === 'undefined') {
       // tslint:disable-next-line:max-line-length
       throw new Error(
-        "HttpClient requires a Fetch API implementation, but the current environment doesn't support it. You may need to load a polyfill such as https://github.com/github/fetch"
+        "FetchClient requires a Fetch API implementation, but the current environment doesn't support it. You may need to load a polyfill such as https://github.com/github/fetch"
       )
     }
   }
 
   fetch(input: Input): Promise<Response> {
     if (!input.method) {
-      console.warn('No fetch method specified, using default GET methid')
+      console.warn('No fetch method specified, using default GET method')
     }
 
     this.headers = Object.assign({}, this.headers, input.headers || {})
@@ -73,4 +75,4 @@ export class HttpClient {
   }
 }
 
-export default new HttpClient()
+export default new FetchClient()

@@ -134,10 +134,8 @@ class ContentLoader extends LitElement {
   }
 }
 
-document.addEventListener('turbolinks:load', () => {
-  if (!window.customElements.get('content-loader')) {
-    customElements.define('content-loader', ContentLoader)
-  }
-})
+if (!window.customElements.get('content-loader')) {
+  customElements.define('content-loader', ContentLoader)
+}
 
 export default ContentLoader

@@ -58,6 +58,7 @@ export default class CodeBlockView extends BaseView {
     )
 
     this.dom = this.containerNode.children[0]
+    this.containerNode = this.dom
   }
 
   onInit = (cm: CodeMirror) => {

@@ -43,7 +43,6 @@ export default class BaseView {
   }
 
   selectNode = () => {
-    console.log(this.view.editable)
     if (this.view.editable) {
       this.isSelected = true
       this.renderElement()
@@ -66,7 +65,5 @@ export default class BaseView {
 
   ignoreMutation = () => true
 
-  destroy = () => {
-    this.containerNode.remove()
-  }
+  destroy = () => this.containerNode.remove()
 }

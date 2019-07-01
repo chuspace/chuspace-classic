@@ -71,7 +71,7 @@ class LazyImage extends LitElement {
               </div>
             `
           : null}
-        <img alt=${this.alt} class="lazy" data-src=${this.src} @click=${this.selectNode} />
+        <img alt=${this.alt} src=${this.src} @click=${this.selectNode} />
         ${this.editable
           ? html`<figcaption contentEditable="false">
           <input
@@ -90,10 +90,8 @@ class LazyImage extends LitElement {
   }
 }
 
-document.addEventListener('turbolinks:load', () => {
-  if (!window.customElements.get('lazy-image')) {
-    customElements.define('lazy-image', LazyImage)
-  }
-})
+if (!window.customElements.get('lazy-image')) {
+  customElements.define('lazy-image', LazyImage)
+}
 
 export default LazyImage

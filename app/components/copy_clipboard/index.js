@@ -15,13 +15,18 @@ export default class CopyClipboard extends LitElement<Props> {
     }
   }
 
+  connectedCallback() {
+    super.connectedCallback()
+
+    this.initClipboardJS(this)
+  }
+
   createRenderRoot() {
     return this
   }
 
   render() {
     const width = SVG_RATIO * 16
-    this.initClipboardJS(this)
 
     return html`
       <svg
@@ -42,8 +47,6 @@ export default class CopyClipboard extends LitElement<Props> {
   }
 }
 
-document.addEventListener('turbolinks:load', () => {
-  if (!window.customElements.get('copy-clipboard')) {
-    customElements.define('copy-clipboard', CopyClipboard)
-  }
-})
+if (!window.customElements.get('copy-clipboard')) {
+  customElements.define('copy-clipboard', CopyClipboard)
+}

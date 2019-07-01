@@ -122,8 +122,6 @@ export default class CodeEditor extends LitElement {
   }
 }
 
-document.addEventListener('turbolinks:load', () => {
-  if (!window.customElements.get('code-editor')) {
-    customElements.define('code-editor', CodeEditor)
-  }
-})
+if (!window.customElements.get('code-editor')) {
+  customElements.define('code-editor', CodeEditor)
+}

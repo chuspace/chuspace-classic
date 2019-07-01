@@ -3,7 +3,7 @@
 import { LitElement, customElement, html } from 'lit-element'
 
 import debounce from 'lodash/debounce'
-import httpClient from 'helpers/fetch-client'
+import fetchClient from 'helpers/fetch-client'
 
 const previousValues = new WeakMap()
 
@@ -62,7 +62,7 @@ class AutoValidateInput extends LitElement {
       return
     }
 
-    httpClient
+    fetchClient
       .post({
         url: this.url,
         body
@@ -107,10 +107,8 @@ class AutoValidateInput extends LitElement {
   }
 }
 
-document.addEventListener('turbolinks:load', () => {
-  if (!window.customElements.get('input-check')) {
-    customElements.define('input-check', AutoValidateInput)
-  }
-})
+if (!window.customElements.get('input-check')) {
+  customElements.define('input-check', AutoValidateInput)
+}
 
 export default AutoValidateInput
