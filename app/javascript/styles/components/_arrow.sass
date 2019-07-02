@@ -1,5 +1,6 @@
-tooltip-arrow
+.tooltip-arrow
   @apply block bg-black absolute z-50
+
   width: 20px
   height: 20px
   transform: rotate(45deg) scale(.5)
@@ -8,3 +9,6 @@ tooltip-arrow
 
   [direction='top']
     top: -10px
+
+  &--grey
+    @apply bg-grey

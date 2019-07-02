@@ -8,7 +8,7 @@
       <% if item.divider %>
         <%= content_tag :div, nil, class: 'dropdown__divider' %>
       <% else %>
-        <%= component 'link', label: item.label, url: item.url, css_class: 'dropdown__item', options: item.options.merge(role: 'menuitem', tabindex: '-1') %>
+        <%= link_to item.label.html_safe, item.url, class: 'link link--default dropdown__item', role: 'menuitem', tabindex: '-1', **item.options %>
       <% end %>
     <% end %>
   </details-menu>

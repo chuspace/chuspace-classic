@@ -1,10 +1,8 @@
 // @flow
 
-import './image.sass'
-
 import { LitElement, customElement, html } from 'lit-element'
 
-class LazyImage extends LitElement {
+export default class LazyImage extends LitElement {
   static get properties() {
     return {
       src: { type: String },
@@ -67,7 +65,7 @@ class LazyImage extends LitElement {
                 <svg-icon name="image-center" color="#fff" @click=${this.setAlign} data-align="middle"></svg-icon>
                 <svg-icon name="image-right" color="#fff" @click=${this.setAlign} data-align="right"></svg-icon>
                 <svg-icon name="image-full" color="#fff" @click=${this.setAlign} data-align="none"></svg-icon>
-                <tooltip-arrow></tooltip-arrow>
+                <div class="tooltip-arrow"></div>
               </div>
             `
           : null}
@@ -95,5 +93,3 @@ document.addEventListener('turbolinks:load', () => {
     customElements.define('lazy-image', LazyImage)
   }
 })
-
-export default LazyImage

@@ -1,12 +1,10 @@
 // @flow
 
-import './styles.sass'
-
 import { LitElement, customElement, svg } from 'lit-element'
 
 import icons from './icons.json'
 
-class SvgIcon extends LitElement {
+export default class SvgIcon extends LitElement {
   static get properties() {
     return {
       name: { type: String },
@@ -81,5 +79,3 @@ document.addEventListener('turbolinks:load', () => {
     customElements.define('svg-icon', SvgIcon)
   }
 })
-
-export default SvgIcon

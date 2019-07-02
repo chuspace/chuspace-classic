@@ -1,12 +1,10 @@
 // @flow
 
-import './styles.sass'
-
 import { LitElement, customElement, html, svg } from 'lit-element'
 
 import nanoid from 'nanoid/generate'
 
-class ContentLoader extends LitElement {
+export default class ContentLoader extends LitElement {
   static get properties() {
     return {
       type: { type: String },
@@ -139,5 +137,3 @@ document.addEventListener('turbolinks:load', () => {
     customElements.define('content-loader', ContentLoader)
   }
 })
-
-export default ContentLoader

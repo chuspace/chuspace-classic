@@ -3,7 +3,7 @@
 
 class PostsController < ApplicationController
   before_action :authenticate!, only: %i[new create edit]
-  before_action :find_post, only: %i[edit update]
+  before_action :find_post, only: %i[show edit update]
 
   layout 'editor', only: %i[new edit]
 
@@ -12,7 +12,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find_by(slug: params[:id])
+    # Permission logic
     redirect_to root_path if @post.blank?
   end
 
@@ -70,6 +70,6 @@ class PostsController < ApplicationController
   end
 
   def find_post
-    @post = Post.find_by(slug: params[:id])
+    @post = Post.find_by(slug: params[:slug])
   end
 end

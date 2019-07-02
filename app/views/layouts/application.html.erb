@@ -6,8 +6,15 @@
     <%= javascript_pack_tag 'application' %>
     <%= stylesheet_pack_tag 'application', media: 'all' %>
   </head>
-
   <body class="application flex-body" data-controller='popper'>
+    <% flash.each do |key, value| %>
+      <alert-notification
+        level='<%= key %>'
+        message='<%= value %>'
+        class="alert-container animated fast fadeInDown">
+      </alert-notification>
+    <% end %>
+
     <div class='container mx-auto'>
       <%= render 'layouts/header' %>
     </div>
@@ -18,16 +25,6 @@
 
     <div class='container mx-auto'>
       <%= render 'layouts/footer' %>
-    </div>
-
-    <div class="animated alert-container fast bounceInRight" data-controller="alerts">
-      <% flash.each do |key, value| %>
-        <div class="<%= flash_message_class(key) %>">
-          <div class="p-4 ">
-            <%= value %>
-          </div>
-        </div>
-      <% end %>
     </div>
   </body>
 </html>

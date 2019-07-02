@@ -7,7 +7,7 @@ import fetchClient from 'helpers/fetch-client'
 
 const previousValues = new WeakMap()
 
-class AutoValidateInput extends LitElement {
+export default class AutoValidateInput extends LitElement {
   input: HTMLInputElement = this.querySelector('input')
 
   static get properties() {
@@ -112,5 +112,3 @@ document.addEventListener('turbolinks:load', () => {
     customElements.define('input-check', AutoValidateInput)
   }
 })
-
-export default AutoValidateInput

@@ -8,7 +8,7 @@ import ActioncableClient from 'helpers/actioncable-client'
 import Editor from 'editor'
 import debounce from 'lodash/debounce'
 
-class ChuEditor extends LitElement {
+export default class ChuEditor extends LitElement {
   editor: Editor
 
   static get properties() {
@@ -22,8 +22,9 @@ class ChuEditor extends LitElement {
     }
   }
 
-  onRecieved = data => {
+  onRecieved = (data: any) => {
     this.saving = false
+
     console.log(data)
   }
 
@@ -46,7 +47,9 @@ class ChuEditor extends LitElement {
 
   disconnectedCallback() {
     super.disconnectedCallback()
+
     ActioncableClient.unsubscribe('PostChannel')
+    this.editor.destroy()
   }
 
   updated = () => {
@@ -99,6 +102,7 @@ class ChuEditor extends LitElement {
   create = debounce(
     () => {
       this.saving = true
+
       fetch(this.url, {
         method: this.method,
         body: JSON.stringify({ post: this.payload }),
@@ -133,5 +137,3 @@ document.addEventListener('turbolinks:load', () => {
     customElements.define('chu-editor', ChuEditor)
   }
 })
-
-export default ChuEditor

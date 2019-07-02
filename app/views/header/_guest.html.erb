@@ -1,4 +1,4 @@
 <div class='flex items-center'>
   <span class='mr-2'><%= t('.signin_cta') %></span>
-  <%= component 'link', label: 'Sign in', css_class: 'font-bold underline', url: signins_url %>
+  <%= link_to 'Sign in', signins_url, class: 'link link--default font-bold underline' %>
 </div>
