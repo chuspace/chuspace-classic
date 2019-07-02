@@ -15,7 +15,6 @@ SimpleCov.start 'rails' do
 end
 
 class ActiveSupport::TestCase
-  parallelize(workers: 4)
   fixtures :all
 
   teardown { FileUtils.rm_rf(Git.config.storage_path) }
