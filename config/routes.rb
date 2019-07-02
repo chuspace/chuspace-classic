@@ -13,9 +13,12 @@ Rails.application.routes.draw do
   resources :magic_logins, only: :index
 
   resources :users, path: 'u'
-  resources :posts, path: 'p'
+
+  resources :posts, path: 'p' do
+    resources :publish, only: %i[index create]
+  end
+
   resources :images, only: %i[create destroy]
-  resources :unfurls, only: :index
 
   resources :settings, only: :index
 

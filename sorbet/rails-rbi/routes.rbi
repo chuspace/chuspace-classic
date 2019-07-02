@@ -76,6 +76,12 @@ class ActionController::Base
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def user_url(*args, **kwargs); end
 
+  # Sigs for route /p/:post_id/publish(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def post_publish_index_path(*args, **kwargs); end
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def post_publish_index_url(*args, **kwargs); end
+
   # Sigs for route /p(.:format)
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def posts_path(*args, **kwargs); end
@@ -111,12 +117,6 @@ class ActionController::Base
   def image_path(*args, **kwargs); end
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def image_url(*args, **kwargs); end
-
-  # Sigs for route /unfurls(.:format)
-  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def unfurls_path(*args, **kwargs); end
-  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def unfurls_url(*args, **kwargs); end
 
   # Sigs for route /settings(.:format)
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }

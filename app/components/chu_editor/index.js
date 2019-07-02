@@ -38,6 +38,7 @@ class ChuEditor extends LitElement {
       element: this,
       autoFocus: this.autofocus,
       editable: true,
+      placeholder: 'Write your post',
       onChange: this.onChange,
       content: this.content || ''
     })

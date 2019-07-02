@@ -30,14 +30,14 @@ class User < ApplicationRecord
     name.gsub(/([[:upper:]])[[:lower:]]+/, '\1').tr(' ', '')
   end
 
-  def avatar=(avatar)
-    case avatar
+  def avatar=(avatar_blob)
+    case avatar_blob
     when ActionDispatch::Http::UploadedFile
-      path = "#{nickname}/#{uploaded_file.original_filename}"
+      path = "#{nickname}/#{avatar_blob.original_filename}"
       super(path)
 
       content_type = MimeMagic.by_path(avatar).type
-      minio_client.put_object(key: avatar, content_type: content_type, bucket: nickname, body: uploaded_file.read)
+      minio_client.put_object(key: avatar, content_type: content_type, bucket: nickname, body: avatar_blob.read)
     when String
       path = "#{nickname}/#{avatar}"
       super(path)

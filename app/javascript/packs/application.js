@@ -3,6 +3,7 @@
 import 'styles/application'
 import 'animate.css'
 import 'turbolinks'
+import '@github/details-menu-element'
 
 import * as Rails from 'rails-ujs'
 
@@ -12,6 +13,9 @@ import { definitionsFromContext } from 'stimulus/webpack-helpers'
 const application = Application.start()
 const controllersContext = require.context('../controllers', true, /\.js$/)
 application.load(definitionsFromContext(controllersContext))
+
+const componentsContext = require.context('../../components', true, /\.(js)$/)
+componentsContext.keys().forEach(key => componentsContext(key))
 
 Rails.start()
 Turbolinks.start()

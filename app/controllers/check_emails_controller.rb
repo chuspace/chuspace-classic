@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 class CheckEmailsController < ApplicationController
-  def signup
+  def create
     @user = User.new(email: params[:value])
 
     if @user.valid_attributes?(:email)

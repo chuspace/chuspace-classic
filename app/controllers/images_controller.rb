@@ -16,6 +16,7 @@ class ImagesController < ApplicationController
     content_type = MimeMagic.by_path(blob_name).type
 
     repository.commit(content: io, message: "Added #{blob_name}", path: blob_name)
+
     Current.user.minio_client.put_object(
       key: repository.name, body: io, bucket: Current.user.nickname, content_type: content_type
     )
