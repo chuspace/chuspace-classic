@@ -14,7 +14,6 @@ class User < ApplicationRecord
   has_secure_token :auth_token
 
   has_many :ssh_keys, dependent: :destroy
-  has_one :invite, dependent: :destroy, autosave: true
   has_one :repository, dependent: :destroy, foreign_key: 'author_id', autosave: true
   has_many :posts, foreign_key: 'author_id', dependent: :destroy
 

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/capybara/all/capybara.rbi
 #
-# capybara-3.24.0
+# capybara-3.25.0
 module Capybara
   def self.HTML(html); end
   def self.add_selector(name, **options, &block); end
@@ -100,6 +100,8 @@ module Capybara
   def self.using_wait_time(seconds); end
   def self.visible_text_only(*args, &block); end
   def self.visible_text_only=(*args, &block); end
+  def self.w3c_click_offset(*args, &block); end
+  def self.w3c_click_offset=(*args, &block); end
 end
 class Capybara::SessionConfig
   def always_include_port; end
@@ -153,6 +155,8 @@ class Capybara::SessionConfig
   def test_id=(id); end
   def visible_text_only; end
   def visible_text_only=(arg0); end
+  def w3c_click_offset; end
+  def w3c_click_offset=(arg0); end
 end
 class Capybara::ReadOnlySessionConfig < SimpleDelegator
   def always_include_port=(_); end
@@ -180,6 +184,7 @@ class Capybara::ReadOnlySessionConfig < SimpleDelegator
   def server_port=(_); end
   def test_id=(_); end
   def visible_text_only=(_); end
+  def w3c_click_offset=(_); end
 end
 class Capybara::Config
   def allow_gumbo; end
@@ -249,6 +254,8 @@ class Capybara::Config
   def threadsafe=(bool); end
   def visible_text_only(*args, &block); end
   def visible_text_only=(*args, &block); end
+  def w3c_click_offset(*args, &block); end
+  def w3c_click_offset=(*args, &block); end
   extend Forwardable
 end
 module Capybara::Helpers
@@ -622,6 +629,7 @@ class Capybara::Selector::CSSBuilder
   def class_conditions(classes); end
   def expression; end
   def initialize(expression); end
+  def regexp_conditions(name, value); end
 end
 class Capybara::Selector::Definition
   def css(*allowed_filters, &block); end
@@ -971,7 +979,7 @@ class Capybara::Node::Element < Capybara::Node::Base
   def [](attribute); end
   def allow_reload!; end
   def checked?; end
-  def click(*keys, wait: nil, **offset); end
+  def click(*keys, wait: nil, **options); end
   def disabled?; end
   def double_click(*keys, wait: nil, **offset); end
   def drag_to(node, **options); end
@@ -1159,7 +1167,7 @@ class Capybara::RackTest::Node < Capybara::Driver::Node
   def type; end
   def unchecked_all_text; end
   def unchecked_checked?; end
-  def unchecked_click(keys = nil, **offset); end
+  def unchecked_click(keys = nil, **options); end
   def unchecked_disabled?; end
   def unchecked_find_css(locator, **_hints); end
   def unchecked_find_xpath(locator, **_hints); end
@@ -1242,6 +1250,7 @@ module Capybara::Selenium::Find
   def find_by(format, selector, uses_visibility:, texts:, styles:); end
   def find_css(selector, uses_visibility: nil, texts: nil, styles: nil, **_options); end
   def find_xpath(selector, uses_visibility: nil, styles: nil, **_options); end
+  def gather_hints(elements, uses_visibility:, styles:); end
   def is_displayed_atom; end
 end
 module Capybara::Selenium::Scroll
@@ -1315,6 +1324,7 @@ class Capybara::Selenium::Node::SettableValue
   def value; end
 end
 class Capybara::Selenium::Node::ClickOptions
+  def center_offset?; end
   def coords; end
   def coords?; end
   def empty?; end
@@ -1325,6 +1335,8 @@ end
 module Capybara::Selenium::Node::Html5Drag
   def drag_to(element, delay: nil); end
   def html5_drop(*args); end
+  def perform_html5_drag(element, delay); end
+  def perform_legacy_drag(element); end
 end
 class Capybara::Selenium::ChromeNode < Capybara::Selenium::Node
   def bridge; end
@@ -1333,6 +1345,7 @@ class Capybara::Selenium::ChromeNode < Capybara::Selenium::Node
   def disabled?; end
   def drop(*args); end
   def file_errors; end
+  def perform_legacy_drag(element); end
   def select_option; end
   def set_file(value); end
   def set_text(value, clear: nil, **_unused); end
@@ -1375,13 +1388,6 @@ class Capybara::Selenium::FirefoxNode < Capybara::Selenium::Node
   def upload(local_file); end
   include Capybara::Selenium::Node::Html5Drag
 end
-class Capybara::Selenium::FirefoxNode::ModifierKeysStack
-  def include?(key); end
-  def initialize; end
-  def pop; end
-  def press(key); end
-  def push; end
-end
 module Capybara::Selenium::Driver::FirefoxDriver
   def self.extended(driver); end
   def self.w3c?(driver); end
@@ -1402,6 +1408,13 @@ module Capybara::Selenium::Driver::InternetExplorerDriver
   def build_node(native_node, initial_cache = nil); end
   def switch_to_frame(frame); end
 end
+class Capybara::Selenium::Node::ModifierKeysStack
+  def include?(key); end
+  def initialize; end
+  def pop; end
+  def press(key); end
+  def push; end
+end
 class Capybara::Selenium::SafariNode < Capybara::Selenium::Node
   def _send_keys(keys, actions = nil, down_keys = nil); end
   def bridge; end
@@ -1414,13 +1427,6 @@ class Capybara::Selenium::SafariNode < Capybara::Selenium::Node
   def set_text(value, clear: nil, **_unused); end
   def unselect_option; end
   def visible_text; end
-end
-class Capybara::Selenium::SafariNode::ModifierKeysStack
-  def include?(key); end
-  def initialize; end
-  def pop; end
-  def press(key); end
-  def push; end
 end
 module Capybara::Selenium::Driver::SafariDriver
   def bridge; end
@@ -1516,6 +1522,7 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
   def wait_for_empty_page(timer); end
   def window_handles; end
   def window_size(handle); end
+  def with_legacy_error(errors, legacy_error); end
   def within_given_window(handle); end
   include Capybara::Selenium::Find
 end

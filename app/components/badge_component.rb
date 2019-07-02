@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# typed: true
+# typed: ignore
 class BadgeComponent < Components::Component
   STYLES = %w[primary grey]
 

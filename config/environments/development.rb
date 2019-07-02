@@ -1,7 +1,5 @@
-# typed: strict
+# typed: false
 # frozen_string_literal: true
-
-require 'rack-mini-profiler'
 
 Rails.application.configure do
   # Verifies that versions and hashed value of the package contents in the project's package.json
@@ -54,13 +52,6 @@ Rails.application.configure do
   config.active_record.migration_error = :page_load
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-
-  if Rails.env.development?
-    require 'rack-mini-profiler'
-
-    # initialization is skipped so trigger it
-    Rack::MiniProfilerRails.initialize!(Rails.application)
-  end
 
   # Add proxy to redirect to img proxy host in development
   # in production we would use nginx or similar

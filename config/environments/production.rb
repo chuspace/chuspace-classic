@@ -1,4 +1,4 @@
-# typed: strict
+# typed: ignore
 # frozen_string_literal: true
 
 Rails.application.configure do

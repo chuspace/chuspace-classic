@@ -1,4 +1,4 @@
-# typed: true
+# typed: false
 # frozen_string_literal: true
 
 class CreateUsers < ActiveRecord::Migration[5.2]

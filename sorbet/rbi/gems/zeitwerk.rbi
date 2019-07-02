@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/zeitwerk/all/zeitwerk.rbi
 #
-# zeitwerk-2.1.6
+# zeitwerk-2.1.8
 module Zeitwerk::Loader::Callbacks
   def on_dir_autoloaded(dir); end
   def on_file_autoloaded(file); end
@@ -70,7 +70,6 @@ class Zeitwerk::Loader
   def set_autoload(parent, cname, abspath); end
   def set_autoloads_in_dir(dir, parent); end
   def setup; end
-  def shadowed_files; end
   def strict_autoload_path(parent, cname); end
   def tag; end
   def tag=(tag); end

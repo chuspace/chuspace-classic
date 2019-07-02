@@ -5,6 +5,7 @@
     <%= csrf_meta_tags %>
     <%= javascript_pack_tag 'application' %>
     <%= stylesheet_pack_tag 'application', media: 'all' %>
+    <%= javascript_pack_tag 'custom-elements' %>
   </head>
 
   <body class="application flex-body" data-controller='popper'>
@@ -29,7 +30,5 @@
         </div>
       <% end %>
     </div>
-
-    <%= javascript_pack_tag 'custom-elements' %>
   </body>
 </html>

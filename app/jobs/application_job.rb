@@ -1,4 +1,4 @@
-# typed: strong
+# typed: ignore
 # frozen_string_literal: true
 
 class ApplicationJob < ActiveJob::Base; end

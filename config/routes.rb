@@ -1,4 +1,4 @@
-# typed: strict
+# typed: ignore
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
@@ -8,14 +8,9 @@ Rails.application.routes.draw do
   resources :signins, path: 'signin', only: %i[index create destroy]
   resources :signups, path: 'signup', only: %i[index]
   resources :check_nicknames, only: :create
-
-  namespace :check_emails, as: :check do
-    post :signup, as: :signup_email
-    post :invite, as: :invite_email
-  end
+  resources :check_emails, only: :create
 
   resources :magic_logins, only: :index
-  resources :invites, only: :create
 
   resources :users, path: 'u'
   resources :posts, path: 'p'

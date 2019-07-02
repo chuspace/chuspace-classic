@@ -3,6 +3,6 @@
 
 class PagesController < ApplicationController
   def index
-    @invite = Invite.new
+    @user = User.new
   end
 end

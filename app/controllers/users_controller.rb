@@ -11,13 +11,9 @@ class UsersController < ApplicationController
   def create
     User.transaction do
       @user = User.new(create_params)
-      @invite = Invite.find_by(code: params[:code])
 
-      if @invite.may_accept? && @user.save
+      if @user.save
         @user.create_repository
-        @invite.user = @user
-        @invite.accept
-
         login(@user)
         redirect_to root_path, notice: t('users.create.success')
       else

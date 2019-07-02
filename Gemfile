@@ -93,6 +93,7 @@ group :development, :test do
   gem 'minitest'
   gem 'dotenv-rails'
   gem 'rack-proxy'
+  gem 'rack-mini-profiler'
 end
 
 
@@ -109,9 +110,6 @@ group :development do
   gem 'pry-rails'
   # Fake data
   gem 'faker'
-  # Profiler
-  gem 'rack-mini-profiler', require: false
-  gem 'memory_profiler', require: false
 
   gem 'sorbet'
 end

@@ -1,4 +1,4 @@
-<main class='container mt-32 flex items-center justify-between'>
+<main class='container mt-24 flex items-center justify-between'>
   <section class='w-1/2 pr-8'>
     <h1><%= t('.heading') %></h1>
     <p class="mt-6 text-lg text-secondary">
@@ -6,13 +6,7 @@
     </p>
   </section>
 
-  <section class='w-1/3'>
-    <p class="text-lg text-secondary"><%= t('.invite_cta')%></p>
-    <%= simple_form_for @invite, html: { class: 'mt-4' }, remote: true do |f| %>
-      <input-check url="<%= check_invite_email_path %>">
-        <%= f.input :email, class: 'mt-2' %>
-      </input-check>
-      <%= f.button :button, 'Signup', class: 'mt-4' %>
-    <% end %>
+  <section class='w-2/5'>
+    <%= render 'signups/form', user: @user %>
   </section>
 </main>

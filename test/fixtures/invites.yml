@@ -1,3 +1,0 @@
-default:
-  email: gaurav<%= rand(0..10) %>@chuspace.com
-  code: <%= SecureRandom.hex(10) %>

@@ -40,29 +40,17 @@ class ActionController::Base
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def check_nicknames_url(*args, **kwargs); end
 
-  # Sigs for route /check_emails/signup(.:format)
+  # Sigs for route /check_emails(.:format)
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def check_signup_email_path(*args, **kwargs); end
+  def check_emails_path(*args, **kwargs); end
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def check_signup_email_url(*args, **kwargs); end
-
-  # Sigs for route /check_emails/invite(.:format)
-  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def check_invite_email_path(*args, **kwargs); end
-  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def check_invite_email_url(*args, **kwargs); end
+  def check_emails_url(*args, **kwargs); end
 
   # Sigs for route /magic_logins(.:format)
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def magic_logins_path(*args, **kwargs); end
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def magic_logins_url(*args, **kwargs); end
-
-  # Sigs for route /invites(.:format)
-  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def invites_path(*args, **kwargs); end
-  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def invites_url(*args, **kwargs); end
 
   # Sigs for route /u(.:format)
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
@@ -123,6 +111,12 @@ class ActionController::Base
   def image_path(*args, **kwargs); end
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def image_url(*args, **kwargs); end
+
+  # Sigs for route /unfurls(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def unfurls_path(*args, **kwargs); end
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def unfurls_url(*args, **kwargs); end
 
   # Sigs for route /settings(.:format)
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }

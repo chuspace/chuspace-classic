@@ -3,7 +3,13 @@
 # typed: strong
 
 class User::Relation < ActiveRecord::Relation
-  include User::NamedScope
+  include User::ModelRelationShared
+  extend T::Generic
+  Elem = type_member(fixed: User)
+end
+
+class User::CollectionProxy < ActiveRecord::Associations::CollectionProxy
+  include User::ModelRelationShared
   extend T::Generic
   Elem = type_member(fixed: User)
 end
@@ -11,8 +17,62 @@ end
 class User < ApplicationRecord
   extend T::Sig
   extend T::Generic
-  extend User::NamedScope
+  extend User::ModelRelationShared
+  extend User::ClassMethods
+  include User::InstanceMethods
   Elem = type_template(fixed: User)
+end
+
+module User::InstanceMethods
+  extend T::Sig
+
+  sig { returns(String) }
+  def auth_token(); end
+
+  sig { params(value: String).void }
+  def auth_token=(value); end
+
+  sig { returns(T.nilable(T.any(Array, T::Boolean, Float, Hash, Integer, String))) }
+  def avatar(); end
+
+  sig { params(value: T.nilable(T.any(Array, T::Boolean, Float, Hash, Integer, String))).void }
+  def avatar=(value); end
+
+  sig { returns(T.nilable(String)) }
+  def bio(); end
+
+  sig { params(value: T.nilable(String)).void }
+  def bio=(value); end
+
+  sig { returns(T.nilable(String)) }
+  def company(); end
+
+  sig { params(value: T.nilable(String)).void }
+  def company=(value); end
+
+  sig { returns(DateTime) }
+  def created_at(); end
+
+  sig { params(value: DateTime).void }
+  def created_at=(value); end
+
+  sig { returns(T.nilable(DateTime)) }
+  def current_sign_in_at(); end
+
+  sig { params(value: T.nilable(DateTime)).void }
+  def current_sign_in_at=(value); end
+
+  sig { returns(T.nilable(T.untyped)) }
+  def current_sign_in_ip(); end
+
+  sig { params(value: T.nilable(T.untyped)).void }
+  def current_sign_in_ip=(value); end
+
+  sig { returns(String) }
+  def email(); end
+
+  sig { params(value: String).void }
+  def email=(value); end
 
   sig { returns(Integer) }
   def id(); end
@@ -20,16 +80,40 @@ class User < ApplicationRecord
   sig { params(value: Integer).void }
   def id=(value); end
 
-  sig { returns(T.nilable(Invite)) }
-  def invite(); end
+  sig { returns(T.nilable(DateTime)) }
+  def last_sign_in_at(); end
 
-  sig { params(value: T.nilable(Invite)).void }
-  def invite=(value); end
+  sig { params(value: T.nilable(DateTime)).void }
+  def last_sign_in_at=(value); end
 
-  sig { returns(ActiveRecord::Relation[T.untyped]) }
+  sig { returns(T.nilable(T.untyped)) }
+  def last_sign_in_ip(); end
+
+  sig { params(value: T.nilable(T.untyped)).void }
+  def last_sign_in_ip=(value); end
+
+  sig { returns(T.nilable(String)) }
+  def location(); end
+
+  sig { params(value: T.nilable(String)).void }
+  def location=(value); end
+
+  sig { returns(String) }
+  def name(); end
+
+  sig { params(value: String).void }
+  def name=(value); end
+
+  sig { returns(String) }
+  def nickname(); end
+
+  sig { params(value: String).void }
+  def nickname=(value); end
+
+  sig { returns(ActiveRecord::Associations::CollectionProxy[T.untyped]) }
   def posts(); end
 
-  sig { params(value: T.any(T::Array[Post], ActiveRecord::Relation[T.untyped])).void }
+  sig { params(value: T.any(T::Array[Post], ActiveRecord::Associations::CollectionProxy[T.untyped])).void }
   def posts=(value); end
 
   sig { returns(T.nilable(Repository)) }
@@ -38,16 +122,38 @@ class User < ApplicationRecord
   sig { params(value: T.nilable(Repository)).void }
   def repository=(value); end
 
-  sig { returns(ActiveRecord::Relation[T.untyped]) }
+  sig { returns(Integer) }
+  def sign_in_count(); end
+
+  sig { params(value: Integer).void }
+  def sign_in_count=(value); end
+
+  sig { returns(ActiveRecord::Associations::CollectionProxy[T.untyped]) }
   def ssh_keys(); end
 
-  sig { params(value: T.any(T::Array[SshKey], ActiveRecord::Relation[T.untyped])).void }
+  sig { params(value: T.any(T::Array[SshKey], ActiveRecord::Associations::CollectionProxy[T.untyped])).void }
   def ssh_keys=(value); end
+
+  sig { returns(DateTime) }
+  def updated_at(); end
+
+  sig { params(value: DateTime).void }
+  def updated_at=(value); end
+
+  sig { returns(T.nilable(String)) }
+  def url(); end
+
+  sig { params(value: T.nilable(String)).void }
+  def url=(value); end
 
 end
 
+module User::ClassMethods
+  extend T::Sig
 
-module User::NamedScope
+end
+
+module User::ModelRelationShared
   extend T::Sig
 
   sig { returns(User::Relation) }
@@ -147,4 +253,3 @@ module User::NamedScope
   def only(*args, block); end
 
 end
-

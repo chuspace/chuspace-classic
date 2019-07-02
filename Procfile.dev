@@ -1,4 +1,4 @@
-chuspace: bundle exec rails s
+chuspace: SCOUT_DEV_TRACE=true bundle exec rails s
 webpacker: bundle exec ./bin/webpack-dev-server
 # sshd: sudo /usr/sbin/sshd -e -D -f /Users/gaurav/personal/chuspace/openssh/sshd_config
 # lerna: lerna run --parallel transpile

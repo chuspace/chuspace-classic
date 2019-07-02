@@ -1,4 +1,4 @@
-# typed: true
+# typed: ignore
 # frozen_string_literal: true
 
 class CreateRepositories < ActiveRecord::Migration[6.0]

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/aws-sdk-core/all/aws-sdk-core.rbi
 #
-# aws-sdk-core-3.56.0
+# aws-sdk-core-3.57.0
 module Seahorse
 end
 module Seahorse::Util
