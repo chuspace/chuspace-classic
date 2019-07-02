@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# typed: strong
+# typed: ignore
 require 'test_helper'
 
 class ShrineBackgrounding::PromoteJobTest < ActiveJob::TestCase
