@@ -1,5 +1,5 @@
 <%= link_to root_url, class: 'link link-white relative' do %>
   <span class='logo <%= logo.css_class %>'>
     <%= logo.label %>
-  </span><%= content_tag :span, logo.version, class: 'logo__version' if logo.version %>
+  </span><%= content_tag :span, logo.version, class: "logo__version logo__version--#{logo.type}" if logo.version %>
 <% end %>

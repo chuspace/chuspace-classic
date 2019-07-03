@@ -14,6 +14,7 @@ class UsersController < ApplicationController
 
       if @user.save
         @user.create_repository
+        LoginMailer.with(user: @user).send_magic_login.deliver_later
         redirect_to root_path, notice: t('users.create.success')
       else
         render 'signups/index'
