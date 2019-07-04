@@ -22,12 +22,16 @@ export default class Heading extends Node {
       attrs: {
         level: {
           default: 1
+        },
+        class: {
+          default: 'heading'
         }
       },
       content: 'inline*',
       group: 'block',
       defining: true,
       draggable: false,
+      // $FlowFixMe
       parseDOM: this.options.levels.map((level: number) => ({
         tag: `h${level}`,
         attrs: { level }
@@ -53,6 +57,7 @@ export default class Heading extends Node {
   }
 
   inputRules({ type }: PMNode) {
+    // $FlowFixMe
     return this.options.levels.map(level =>
       textblockTypeInputRule(new RegExp(`^(#{1,${level}})\\s$`), type, () => ({
         level

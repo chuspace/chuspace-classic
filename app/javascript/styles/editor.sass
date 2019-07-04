@@ -10,15 +10,31 @@
   outline: none
 
   blockquote
-    strong
-      font-style: italic
-
-  p
-    margin-bottom: 1rem
+    @apply border-l-2 -ml-4 pl-4 mb-6
+    font-style: italic
 
   a
     text-decoration: underline
 
-  h1, h2, h3, h4, h5, h6, strong
-    margin-bottom: 1rem
+  h1, h2, h3, h4, h5, h6, strong, p, lazy-image
+    @apply mb-6
     @apply font-content
+
+  code-editor
+    @apply mb-6 block
+
+  .title
+    @apply mb-2
+
+  .subtitle
+    @apply text-grey text-3xl
+
+  ul, ol
+    @apply ml-8 mb-6 list-disc
+
+    li
+      p
+        @apply mb-2
+
+  ol
+    @apply list-decimal

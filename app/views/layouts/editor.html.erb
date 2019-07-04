@@ -12,16 +12,18 @@
       <header>
         <nav class='flex justify-between items-center py-6'>
           <%= component 'logo', type: :badge %>
-          <div class='flex items-center justify-left ml-4'>
+          <div class='flex-1 ml-4'>
             <%= @post.author.name %>
           </div>
 
-          <div class='flex justify-end items-center flex-1 mr-4'>
-            <div class="mr-4 badge badge--grey"><%= @post.status.titlecase %></div>
-            <div class="mr-4 badge badge--grey">Saved</div>
-            <div class="mr-4 badge badge--grey">4 mins</div>
-            <%= link_to 'Publish', post_publish_index_path(@post), class: 'link link-green mr-4' %>
-          </div>
+          <% if @post.body %>
+            <div class='flex justify-end items-center flex-1 mr-4'>
+              <div class="mr-4 badge badge--grey"><%= @post.status.titlecase %></div>
+              <div class="mr-4 badge badge--grey">Saved</div>
+              <div class="mr-4 badge badge--grey">4 mins</div>
+              <%= link_to 'Publish', post_publish_index_path(@post), class: 'link link-green mr-4' %>
+            </div>
+          <% end %>
 
           <% if Current.user.present? %>
             <%= render 'header/user'  %>
@@ -32,7 +34,7 @@
       </header>
     </div>
 
-    <section class="content">
+    <section class='w-1/2 mx-auto chu-editor mt-12'>
       <%= yield %>
     </section>
   </body>

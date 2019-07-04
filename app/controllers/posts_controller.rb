@@ -11,6 +11,10 @@ class PostsController < ApplicationController
     @posts = Post.all.limit(20).order(id: :desc)
   end
 
+  def new
+    @post = Post.new(author: Current.user, repository: Current.user.repository)
+  end
+
   def show
     # Permission logic
     redirect_to root_path if @post.blank?

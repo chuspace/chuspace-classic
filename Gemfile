@@ -91,7 +91,7 @@ group :development, :test do
   gem 'rspec_junit_formatter'
   gem 'coveralls', require: false
   gem 'minitest'
-  gem 'dotenv-rails'
+  gem 'dotenv-rails', require: 'dotenv/rails-now'
   gem 'rack-proxy'
   gem 'rack-mini-profiler'
 end

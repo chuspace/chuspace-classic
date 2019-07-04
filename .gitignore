@@ -62,5 +62,5 @@ bin/mobius
 bin/git-hooks/*
 
 # Env
-.env
+.env*
 public/uploads

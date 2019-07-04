@@ -85,6 +85,7 @@ export default class CodeBlockView extends BaseView {
     })
 
     this.cm.on('focus', () => this.forwardSelection())
+
     if (!this.content) this.cm.focus()
     setTimeout(() => this.cm.refresh(), 200)
   }

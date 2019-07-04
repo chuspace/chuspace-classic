@@ -1,3 +1,7 @@
-<div class='w-1/2 mx-auto chu-editor mt-10' spellcheck="false">
-  <chu-editor url="<%= post_path(@post) %>" method="PATCH" content="<%= @post.body %>" id="<%= @post.slug %>"></chu-editor>
-</div>
+ <chu-editor
+  spellcheck="false"
+  url="<%= post_path(@post) %>"
+  method="PATCH"
+  content="<%= @post.body %>"
+  id="<%= @post.slug %>">
+</chu-editor>

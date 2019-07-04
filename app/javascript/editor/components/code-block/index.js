@@ -77,6 +77,7 @@ export default class CodeEditor extends LitElement {
       smartIndent: !this.readonly,
       readOnly: this.readonly || false,
       indentUnit: 2,
+      lineWrapping: true,
       indentWithTabs: !this.readonly,
       theme: `chuspace-${this.theme}`,
       addModeClass: true,
@@ -105,17 +106,15 @@ export default class CodeEditor extends LitElement {
         </div>
 
         <div class="code-editor">
-          <span>
-            ${!this.loaded
-              ? html`
-                  <content-loader
-                    contentEditable="false"
-                    lines=${this.lines}
-                    class="block whitespace-no-wrap py-4"
-                  ></content-loader>
-                `
-              : null}
-          </span>
+          ${!this.loaded
+            ? html`
+                <content-loader
+                  contentEditable="false"
+                  lines=${this.lines}
+                  class="block whitespace-no-wrap py-4"
+                ></content-loader>
+              `
+            : null}
         </div>
       </div>
     `
