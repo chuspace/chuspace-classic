@@ -1,1 +1,18 @@
-<h1>Publish post here</h1>
+<div class='w-full absolute bg-white top-0 right-0 bottom-0 left-0'>
+  <div class='container mt-32 relative'>
+    <%= link_to edit_post_url(@post) do %>
+      <svg-icon
+        class='absolute top-0 right-0'
+        name='x-circle'
+        feather='true'
+        color='none' width='24' height='24'>
+      </svg-icon>
+    <% end %>
+    <h3 class='border-b pb-2 inline-block'>Publish</h3>
+
+    <div class='card card--default'>
+      <%= @post.title %>
+      <%= @post.excerpt %>
+    </div>
+  </div>
+</div>

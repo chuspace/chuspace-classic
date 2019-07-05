@@ -66,7 +66,6 @@ export default class CodeBlock extends Node {
           tag: 'table[style]',
           preserveWhitespace: 'full',
           getAttrs: (dom: PMNode) => {
-            console.log(dom)
             if (dom.querySelector('td[class*="blob-code"]')) {
               return {}
             }

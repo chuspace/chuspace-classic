@@ -35,7 +35,7 @@ class PostsController < ApplicationController
       )
 
       if post.save
-        repository.commit(message: params[:commit_message], content: post.body, path: post.blob_path)
+        repository.create_commit(message: params[:commit_message], content: post.body, path: post.blob_path)
         render json: { redirect: edit_post_path(post), url: post_path(post), slug: post.slug }
       else
         render json: { errors: post.errors.full_messages }, status: 422
@@ -47,10 +47,6 @@ class PostsController < ApplicationController
     @post.assign_attributes(post_params)
 
     if @post.save
-      @post.repository.commit(
-        message: params[:commit_message], content: @post.body, path: @post.blob_path, action: :update
-      )
-
       render json: { saved: true }
     else
       render json: { errors: @post.errors.full_messages }
@@ -59,7 +55,7 @@ class PostsController < ApplicationController
 
   def destroy
     if @post.destroy
-      @post.repository.commit(committer: Current.user, message: params[:commit_message], action: :remove)
+      @post.repository.create_commit(committer: Current.user, message: params[:commit_message], action: :remove)
 
       redirect_to root_path
     else
@@ -70,7 +66,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :slug, :excerpt, :topics, :published_at, :status, :parent, :body)
+    params.require(:post).permit(:title, :subtitle, :slug, :excerpt, :topics, :published_at, :status, :parent)
   end
 
   def find_post

@@ -12,15 +12,12 @@ export default class Placeholder extends Element {
   name = 'placeholder'
 
   options = {
-    emptyH1Class: 'title-empty',
-    H1Class: 'title',
-    emptyH2Class: 'subtitle-empty',
-    H2Class: 'subtitle',
-    emptyBodyClass: 'body-empty',
-    emptyH1Text: 'Title',
-    emptyH2Text: 'Subtitle',
-    emptyBodyText: 'Write your post here...',
-    showOnlyWhenEditable: true
+    h1Class: 'title',
+    h2Class: 'excerpt',
+    paragraphClass: 'body',
+    h1Text: 'Title',
+    h2Text: 'Subtitle',
+    paragraphText: 'Write your post here...'
   }
 
   get update() {
@@ -31,29 +28,19 @@ export default class Placeholder extends Element {
 
   getDecoration(node: Node, pos: number) {
     let option
+    let className
+    let text
 
-    const prefix = node.childCount === 0 ? 'empty' : ''
+    const suffix = node.childCount === 0 ? '-empty' : ''
+    const typePrefix = node.attrs.level ? `h${node.attrs.level}` : 'paragraph'
 
-    switch (node.type.name) {
-      case 'heading':
-        option = {
-          class: this.options[`${prefix}H${node.attrs.level}Class`],
-          'data-empty-text': this.options[`${prefix}H${node.attrs.level}Text`]
-        }
-        break
+    className = this.options[`${typePrefix}Class`] + suffix
+    text = this.options[`${typePrefix}Text`]
 
-      case 'paragraph':
-        option = {
-          class: this.options[`${prefix}BodyClass`],
-          'data-empty-text': this.options[`${prefix}BodyText`]
-        }
-        break
-
-      default:
-        break
-    }
-
-    return Decoration.node(pos, pos + node.nodeSize, option)
+    return Decoration.node(pos, pos + node.nodeSize, {
+      class: className,
+      'data-empty-text': text
+    })
   }
 
   get plugins() {
@@ -79,10 +66,10 @@ export default class Placeholder extends Element {
               }
 
               const isTitle = firstChild === node && node.attrs.level === 1
-              const isSubtitle = secondChild === node && node.attrs.level === 2
+              const isExcerpt = secondChild === node && node.attrs.level === 2
               const isEmptyBody = secondChild === node && node.type.name === 'paragraph'
 
-              if (isTitle || (isSubtitle || isEmptyBody)) {
+              if (isTitle || (isExcerpt || isEmptyBody)) {
                 decorations.push(this.getDecoration(node, pos))
               }
             })

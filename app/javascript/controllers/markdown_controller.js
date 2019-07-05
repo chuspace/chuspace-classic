@@ -7,6 +7,7 @@ import { Controller } from 'stimulus'
 
 export default class extends Controller {
   connect() {
+    let index = 0
     this.element.querySelectorAll('pre').forEach(codeNode => {
       const mode = codeNode.childNodes[0].className
       const content = codeNode.textContent
@@ -16,7 +17,7 @@ export default class extends Controller {
         instance.setOption('mode', mode)
         setTimeout(() => {
           instance.refresh()
-        }, 100)
+        }, index * 10)
       }
 
       const div = document.createElement('div')
@@ -30,6 +31,8 @@ export default class extends Controller {
         `,
         div
       )
+
+      index++
     })
   }
 }

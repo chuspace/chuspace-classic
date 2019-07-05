@@ -16,7 +16,8 @@ ActiveRecord::Schema.define(version: 2019_06_01_073804) do
 
   create_table 'posts', force: :cascade do |t|
     t.string 'title'
-    t.string 'slug'
+    t.string 'subtitle'
+    t.string 'slug', null: false
     t.text 'excerpt'
     t.text 'body'
     t.bigint 'author_id', null: false
@@ -30,9 +31,10 @@ ActiveRecord::Schema.define(version: 2019_06_01_073804) do
     t.datetime 'updated_at', precision: 6, null: false
     t.index %w[ancestry], name: 'index_posts_on_ancestry'
     t.index %w[author_id], name: 'index_posts_on_author_id'
-    t.index %w[blob_path], name: 'index_posts_on_blob_path', unique: true
+    t.index %w[blob_path repository_id], name: 'index_posts_on_blob_path_and_repository_id', unique: true
     t.index %w[published_at], name: 'index_posts_on_published_at'
     t.index %w[repository_id], name: 'index_posts_on_repository_id'
+    t.index %w[slug repository_id], name: 'index_posts_on_slug_and_repository_id'
     t.index %w[status], name: 'index_posts_on_status'
     t.index %w[topics], name: 'index_posts_on_topics', using: :gin
   end

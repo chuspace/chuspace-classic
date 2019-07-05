@@ -37,6 +37,7 @@ class Repository < ApplicationRecord
   has_many :posts, dependent: :destroy
 
   delegate :lookup, :checkout, :empty?, :bare?, :index, to: :rugged
+  delegate :tree, to: :commit
 
   def commit
     lookup(commit_sha)
@@ -88,7 +89,11 @@ class Repository < ApplicationRecord
     rugged.merge_base(from, to)
   end
 
-  def commit(action: :add, message: nil, content:, path:)
+  def blob_at(path:)
+    blobs.find { |blob| blob.path == path }
+  end
+
+  def create_commit(action: :add, message: nil, content:, path:)
     message ||=
       case action
       when :add

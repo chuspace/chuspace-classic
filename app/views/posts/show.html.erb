@@ -1,3 +1,8 @@
 <div class='w-1/2 mx-auto chu-editor mt-10' data-controller="markdown">
-  <%= @post.body_html %>
+  <% if @post.author == Current.user %>
+    <%= content_tag :p, 'You are viewing the unpublished version.', class: 'card card-default' if @post.outdated? %>
+    <%= @post.draft_body_html %>
+  <% else %>
+    <%= @post.body_html %>
+  <% end %>
 </div>

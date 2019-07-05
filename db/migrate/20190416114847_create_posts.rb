@@ -5,7 +5,10 @@ class CreatePosts < ActiveRecord::Migration[6.0]
   def change
     create_table :posts do |t|
       t.string :title
-      t.string :slug
+      t.string :subtitle
+
+      t.string :slug, null: false
+      t.index %i[slug repository_id]
 
       t.text :excerpt
       t.text :body
@@ -14,7 +17,7 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.index :author_id
 
       t.string :blob_path
-      t.index :blob_path, unique: true
+      t.index %i[blob_path repository_id], unique: true
 
       t.references :repository, foreign_key: true, null: false
 
