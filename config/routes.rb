@@ -13,10 +13,7 @@ Rails.application.routes.draw do
   resources :magic_logins, only: :index
 
   resources :users, path: 'u', param: :nickname
-
-  resources :posts, path: 'p', param: :slug do
-    resources :publish, only: %i[index create]
-  end
+  resources :posts, path: 'p', param: :slug
 
   resources :images, only: %i[create destroy]
 

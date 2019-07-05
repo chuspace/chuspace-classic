@@ -21,7 +21,7 @@
               <div class="mr-4 badge badge--grey"><%= @post.status.titlecase %></div>
               <div class="mr-4 badge badge--grey">Saved</div>
               <div class="mr-4 badge badge--grey">4 mins</div>
-              <%= link_to 'Publish', post_publish_index_path(@post), class: 'link link-green mr-4' %>
+              <%= link_to 'Publish', '#', class: 'link link--default', id: 'trigger' %>
             </div>
           <% end %>
 
