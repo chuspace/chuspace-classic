@@ -13,10 +13,10 @@ export default class Placeholder extends Element {
 
   options = {
     h1Class: 'title',
-    h2Class: 'excerpt',
+    h2Class: 'summary',
     paragraphClass: 'body',
     h1Text: 'Title',
-    h2Text: 'Subtitle',
+    h2Text: 'Summary',
     paragraphText: 'Write your post here...'
   }
 

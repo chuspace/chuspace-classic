@@ -1,5 +1,5 @@
 .title-empty::before,
-.excerpt-empty::before
+.summary-empty::before
   content: attr(data-empty-text)
   float: left
   color: #aaa
@@ -16,7 +16,7 @@
   font-style: italic
 
 .title,
-.excerpt
+.summary
   @apply relative
 
   &:hover, &:focus
@@ -29,5 +29,5 @@
       pointer-events: none
       font-style: italic
 
-.excerpt:hover::before
+.summary:hover::before
   content: 'Summary'
