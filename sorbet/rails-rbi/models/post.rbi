@@ -69,10 +69,10 @@ module Post::InstanceMethods
   def draft?(); end
 
   sig { returns(T.nilable(String)) }
-  def excerpt(); end
+  def summary(); end
 
   sig { params(value: T.nilable(String)).void }
-  def excerpt=(value); end
+  def summary=(value); end
 
   sig { returns(Integer) }
   def id(); end

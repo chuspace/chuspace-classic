@@ -7,39 +7,16 @@ import type { ModeType } from 'editor/modes/modes'
 import autoComplete from '@tarekraafat/autocomplete.js'
 import classNames from 'classnames'
 
-type Props = {
-  mode: string,
-  readOnly: boolean,
-  setMode: (mode: string) => Promise<any>
-}
-
-type State = {
-  mode: string,
-  showSwitcher: boolean
-}
-
-export default class LanguageSwitcher extends LitElement<Props, State> {
+export default class LanguageSwitcher extends LitElement {
   static get properties() {
     return {
       mode: { type: String, reflect: true },
-      setMode: { type: Function },
-      readonly: { type: String }
+      setMode: { type: Function }
     }
-  }
-
-  constructor(props: Props) {
-    super()
-    this.readonly = false
   }
 
   async connectedCallback() {
     await super.connectedCallback()
-
-    try {
-      this.readonly = JSON.parse(this.readonly)
-    } catch (e) {}
-
-    this.label = LANGUAGE_MODE_HASH[this.mode].name
     this.initAutocomplete()
   }
 
@@ -95,9 +72,11 @@ export default class LanguageSwitcher extends LitElement<Props, State> {
   }
 
   render() {
+    const { name } = LANGUAGE_MODE_HASH[this.mode]
+
     return html`
       <div class="code-editor-language-switcher-container mr-4">
-        <input type="text" value=${this.label} class="input input--slim w-full" />
+        <input type="text" value=${name} class="input input--slim w-full" />
       </div>
     `
   }

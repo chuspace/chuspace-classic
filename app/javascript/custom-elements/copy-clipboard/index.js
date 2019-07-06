@@ -5,7 +5,7 @@ import { LitElement, customElement, html } from 'lit-element'
 const SVG_RATIO = 0.81
 
 export default class CopyClipboard extends LitElement {
-  static properties() {
+  static get properties() {
     return {
       initClipboardJS: { type: Function }
     }

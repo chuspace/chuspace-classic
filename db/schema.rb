@@ -19,9 +19,8 @@ ActiveRecord::Schema.define(version: 2019_07_06_110353) do
 
   create_table "posts", force: :cascade do |t|
     t.string "title"
-    t.string "subtitle"
+    t.text "summary"
     t.string "slug", null: false
-    t.text "excerpt"
     t.text "body"
     t.bigint "author_id", null: false
     t.string "blob_path"

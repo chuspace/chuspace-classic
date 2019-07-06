@@ -14,6 +14,7 @@ import { Selection } from 'prosemirror-state'
 import { dropCursor } from 'prosemirror-dropcursor'
 import { gapCursor } from 'prosemirror-gapcursor'
 import { keymap } from 'prosemirror-keymap'
+import without from 'lodash/without'
 
 function arrowHandler(dir) {
   return (state, dispatch, view) => {
@@ -212,6 +213,14 @@ export default class Editor {
 
   getTitle() {
     return this.state.doc.firstChild.textContent
+  }
+
+  getSummary() {
+    const summaryNode = this.state.doc.content.content[1]
+    if (summaryNode.node && summaryNode.node.type.name === 'heading' && summaryNode.node.attrs.level === 2) {
+      return summaryNode.content
+    }
+    return null
   }
 
   destroy() {

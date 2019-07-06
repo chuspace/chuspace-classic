@@ -86,8 +86,13 @@ export default class ChuTopics extends LitElement {
 
   add(topic: string) {
     if (!topic) return
-    if (this.topics.length >= this.maxlength) return
     this.topics = this.topics.concat([topic])
+
+    if (this.topics.length >= this.maxlength) {
+      const input = this.querySelector('input')
+      input.setAttribute('disabled', true)
+      return
+    }
   }
 
   handleKeyDown(e: KeyboardEvent) {
@@ -99,6 +104,7 @@ export default class ChuTopics extends LitElement {
       case 8:
         if (input.value) return
         this.topics = without(this.topics, last(this.topics))
+        input.removeAttribute('disabled')
         break
       default:
         break
@@ -122,28 +128,23 @@ export default class ChuTopics extends LitElement {
 
       const input = this.querySelector('.chu-topics__input')
       input && input.focus()
+      input.removeAttribute('disabled')
     }
   }
 
   render() {
     return html`
-      <div class="chu-topics__container">
+      <label class="input__label mt-2" for="post_topics">Topics</label>
+      <div class="chu-topics__input__container">
+        <input class="chu-topics__input" name="post_topics" autocomplete="off" @keydown=${this.handleKeyDown} />
+      </div>
+      <div class="chu-topics__container mt-4">
         ${this.topics.map(
           tag =>
             html`<span class="chu-topics chu-topics__topic mr-2">
             ${tag} <svg-icon class='chu-topics__topic__icon' @click=${this.remove} name='x-circle' width='10' height='10' feather='true' color='none'>&#10005</svg-icon></span>
           `
         )}
-
-        <div class="chu-topics__input__container">
-          <input
-            class="chu-topics__input ${this.topics.length >= this.maxlength ? 'hidden' : ''}"
-            name="tags"
-            placeholder="Enter topic"
-            autocomplete="off"
-            @keydown=${this.handleKeyDown}
-          />
-        </div>
       </div>
     `
   }

@@ -89,6 +89,7 @@ export default class ChuEditor extends LitElement {
   get payload() {
     return {
       title: this.editor.getTitle(),
+      summary: this.editor.getSummary(),
       body: this.editor.getMarkdown()
     }
   }

@@ -13,9 +13,9 @@ class Post < ApplicationRecord
   enum status: { draft: 0, published: 1, archived: 2 }
 
   validates_presence_of :slug, :status, :blob_path
-  validates :title, :subtitle, :slug, length: { in: 1..100 }, allow_blank: true
+  validates :title, :slug, length: { in: 1..100 }, allow_blank: true
   validates :slug, format: { with: Regexp.new('\A' + SLUG_FORMAT.source + '\z') }
-  validates :excerpt, :slug, length: { in: 0..140 }, allow_blank: true
+  validates :summary, :slug, length: { in: 0..140 }, allow_blank: true
   validates_uniqueness_of :slug, scope: %i[repository_id]
   validates_uniqueness_of :blob_path, scope: %i[repository_id]
   validates :topics, length: { maximum: 3 }, allow_blank: true

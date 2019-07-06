@@ -66,10 +66,10 @@ export default class Placeholder extends Element {
               }
 
               const isTitle = firstChild === node && node.attrs.level === 1
-              const isExcerpt = secondChild === node && node.attrs.level === 2
+              const isSummary = secondChild === node && node.attrs.level === 2
               const isEmptyBody = secondChild === node && node.type.name === 'paragraph'
 
-              if (isTitle || (isExcerpt || isEmptyBody)) {
+              if (isTitle || (isSummary || isEmptyBody)) {
                 decorations.push(this.getDecoration(node, pos))
               }
             })
