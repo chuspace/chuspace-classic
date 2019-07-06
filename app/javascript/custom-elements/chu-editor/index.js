@@ -35,6 +35,12 @@ export default class ChuEditor extends LitElement {
   connectedCallback() {
     super.connectedCallback()
 
+    try {
+      this.autofocus = JSON.parse(this.autofocus)
+    } catch (e) {
+      this.autofocus = false
+    }
+
     this.editor = new Editor({
       element: this,
       autoFocus: this.autofocus,

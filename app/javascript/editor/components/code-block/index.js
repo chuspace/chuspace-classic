@@ -96,11 +96,17 @@ export default class CodeEditor extends LitElement {
         <div class="code-editor-toolbar font-headings" contenteditable="false">
           ${Controls({ destroy: this.onDestroy })}
           <div class="code-editor-toolbar-menu" contenteditable="false">
-            <code-editor-language-switcher
-              mode=${this.mode}
-              readonly=${this.readonly}
-              .setMode=${this.setMode}
-            ></code-editor-language-switcher>
+            ${this.readonly
+              ? html`
+                  <div class="code-editor-language-badge badge--grey mr-4">${this.mode}</div>
+                `
+              : html`
+                  <code-editor-language-switcher
+                    mode=${this.mode}
+                    readonly=${this.readonly}
+                    .setMode=${this.setMode}
+                  ></code-editor-language-switcher>
+                `}
             <copy-clipboard .initClipboardJS=${this.initClipboardJS}></copy-clipboard>
           </div>
         </div>

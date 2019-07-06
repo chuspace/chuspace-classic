@@ -1,7 +1,1 @@
- <chu-editor
-  spellcheck="false"
-  url="<%= post_path(@post) %>"
-  method="PATCH"
-  content="<%= @post.draft_body %>"
-  id="<%= @post.slug %>">
-</chu-editor>
+<%= render 'form', url: post_path(@post), method: 'PATCH', content: @post.draft_body, id: @post.slug  %>

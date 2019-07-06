@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   resources :magic_logins, only: :index
 
+  resources :topics
   resources :users, path: 'u', param: :nickname
   resources :posts, path: 'p', param: :slug
 

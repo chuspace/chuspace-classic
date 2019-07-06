@@ -22,7 +22,7 @@ export default class SvgIcon extends LitElement {
         `<svg
           xmlns="http://www.w3.org/2000/svg"
           width="${this.width}" height="${this.height}"
-          viewBox="${`0 0 ${this.width} ${this.height}`}"
+          viewBox="0 0 24 24"
           fill="${this.color}"
         >
           ${icons[this.name]}
@@ -38,7 +38,7 @@ export default class SvgIcon extends LitElement {
           xmlns="http://www.w3.org/2000/svg"
           width="${this.width}"
           height="${this.height}"
-          viewBox="${`0 0 ${this.width} ${this.height}`}"
+          viewBox="0 0 24 24"
           fill="${this.color}"
           stroke="currentColor"
           stroke-width="2"

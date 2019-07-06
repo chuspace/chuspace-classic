@@ -80,6 +80,9 @@ gem 'redcarpet'
 gem 'sorbet-runtime'
 gem 'sorbet-rails'
 
+# Github data
+gem 'octokit'
+
 group :production do
   # Resource monitoring
   gem 'easymon'

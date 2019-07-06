@@ -1,0 +1,22 @@
+<%= simple_form_for @post, remote: true do |f| %>
+  <chu-editor
+    spellcheck="false"
+    url="<%= url %>"
+    method="PATCH"
+    content="<%= content %>"
+    id="<%= id %>"
+    autofocus="<%= defined?(autofocus) %>"
+  >
+    <%= f.input :title, as: :text, input_html: { class: 'hidden' }, label: false  %>
+    <%= f.input :excerpt, as: :text, input_html: { class: 'hidden' }, label: false  %>
+    <%= f.input :body, as: :text, input_html: { class: 'hidden' }, label: false  %>
+  </chu-editor>
+
+  <hr class='mt-16 block' />
+
+  <div class='mt-8'>
+    <chu-topics topics='<%= @post.topics %>' maxlength="3">
+      <%= f.input :topics, label: false, placeholder: 'Enter topics', input_html: { class: 'hidden' } %>
+    </chu-topics>
+  </div>
+<% end %>

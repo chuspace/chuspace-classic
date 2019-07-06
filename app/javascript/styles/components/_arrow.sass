@@ -1,14 +1,21 @@
-.tooltip-arrow
-  @apply block bg-black absolute z-50
-
-  width: 20px
-  height: 20px
-  transform: rotate(45deg) scale(.5)
-  top: 26px
-  left: calc(150px / 2 - 10px)
-
-  [direction='top']
-    top: -10px
-
-  &--grey
-    @apply bg-grey
+.arrow:not(:empty)
+  border: 1px solid theme('colors.grey-lighter')
+  &:after, &:before
+    bottom: 100%
+    left: 10%
+    border: solid transparent
+    content: " "
+    height: 0
+    width: 0
+    position: absolute
+    pointer-events: none
+  &:after
+    border-color: rgba(255, 255, 255, 0)
+    border-bottom-color: #fff
+    border-width: 10px
+    margin-left: -10px
+  &:before
+    border-color: rgba(204, 204, 204, 0)
+    border-bottom-color: theme('colors.grey-lighter')
+    border-width: 11px
+    margin-left: -11px

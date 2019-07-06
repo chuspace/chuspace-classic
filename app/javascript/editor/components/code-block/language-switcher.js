@@ -3,6 +3,8 @@
 import { LANGUAGE_MODE_HASH, MODES } from 'editor/modes'
 import { LitElement, customElement, html } from 'lit-element'
 
+import type { ModeType } from 'editor/modes/modes'
+import autoComplete from '@tarekraafat/autocomplete.js'
 import classNames from 'classnames'
 
 type Props = {
@@ -21,41 +23,71 @@ export default class LanguageSwitcher extends LitElement<Props, State> {
     return {
       mode: { type: String, reflect: true },
       setMode: { type: Function },
-      showSwitcher: { type: Boolean },
       readonly: { type: String }
     }
   }
 
   constructor(props: Props) {
     super()
-    this.showSwitcher = false
+    this.readonly = false
   }
 
-  toggleSwitcher = () => (this.showSwitcher = !this.showSwitcher)
-
-  connectedCallback() {
-    super.connectedCallback()
+  async connectedCallback() {
+    await super.connectedCallback()
 
     try {
       this.readonly = JSON.parse(this.readonly)
     } catch (e) {}
 
-    document.addEventListener('click', (e: MouseEvent) => {
-      const el = e.target
-      const toolbar = this.querySelector('.code-editor-language-switcher-container')
-      if (toolbar && el && toolbar.contains(el)) return
-      this.showSwitcher = false
+    this.label = LANGUAGE_MODE_HASH[this.mode].name
+    this.initAutocomplete()
+  }
+
+  get input() {
+    return this.querySelector('input')
+  }
+
+  initAutocomplete = () => {
+    if (this.autocompleteInstance) return
+
+    this.autocompleteInstance = new autoComplete({
+      data: {
+        src: MODES,
+        key: ['name'],
+        cache: false
+      },
+      placeHolder: 'Select language',
+      selector: () => this.input,
+      threshold: 0,
+      debounce: 300,
+      searchEngine: 'strict',
+      maxResults: 5,
+      highlight: true,
+      resultsList: {
+        render: true,
+        container: function(source) {
+          source.removeAttribute('id')
+          source.className = 'code-editor-language-switcher arrow'
+        },
+        destination: this.querySelector('.code-editor-language-switcher-container '),
+        position: 'beforeend',
+        element: 'ul'
+      },
+      resultItem: {
+        content: function(data, source) {
+          source.innerHTML = data.match
+          source.removeAttribute('id')
+        },
+        element: 'li'
+      },
+      onSelection: feedback => this.add(feedback.selection.value)
     })
   }
 
-  handleLanguageChange = (e: SyntheticInputEvent<HTMLElement>) => {
-    e.preventDefault()
-
-    this.mode = e.target.dataset.mode
+  add = (language: ModeType) => {
+    this.mode = language.mode
+    this.input.value = language.name
     this.setMode(this.mode)
-    this.showSwitcher = false
-
-    this.requestUpdate()
   }
 
   createRenderRoot() {
@@ -63,34 +95,11 @@ export default class LanguageSwitcher extends LitElement<Props, State> {
   }
 
   render() {
-    const { name } = LANGUAGE_MODE_HASH[this.mode]
-
-    return this.readonly
-      ? html`
-          <div class="code-editor-language-badge badge--grey mr-4">${this.mode}</div>
-        `
-      : html`
-          <div class="code-editor-language-switcher-container mr-4">
-            <input type="text" value=${name} class="input input--slim w-full" @focus=${this.toggleSwitcher} />
-            <ul
-              class=${classNames('code-editor-language-switcher', {
-                hidden: !this.showSwitcher
-              })}
-            >
-              ${MODES.map(
-                ({ name, mode }) => html`
-                  <li
-                    class=${classNames('code-editor-language-switcher-mode', { selected: mode === this.mode })}
-                    @click=${this.handleLanguageChange}
-                    data-mode=${mode}
-                  >
-                    ${name}
-                  </li>
-                `
-              )}
-            </ul>
-          </div>
-        `
+    return html`
+      <div class="code-editor-language-switcher-container mr-4">
+        <input type="text" value=${this.label} class="input input--slim w-full" />
+      </div>
+    `
   }
 }
 

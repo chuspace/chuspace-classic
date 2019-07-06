@@ -1,0 +1,43 @@
+chu-topics
+  @apply block pb-32
+  .chu-topics__container
+    @apply border border-blue flex items-center py-1 px-4 rounded text-base font-headings
+    height: 45px
+
+    &:hover, &:focus
+      box-shadow: 0 0 0 1px theme('colors.blue')
+
+
+  .chu-topics__topic
+    @apply px-2 py-1 rounded leading-tight font-headings bg-grey-lighter flex items-center
+
+    &__icon
+      @apply text-xs ml-2 text-grey font-bold cursor-pointer
+
+  .chu-topics__input__container
+    @apply relative
+    width: 250px
+
+    .chu-topics__input
+      @apply px-4 m-0 p-0
+      height: calc(100% - 0.2rem)
+
+      &:hover, &:focus
+        @apply outline-none appearance-none border-none shadow-none
+
+    .chu-topics__list
+      @apply absolute bg-white shadow-md list-none p-0 m-0 text-sm
+      top: 40px
+      width: inherit
+
+      li
+        @apply border-b border-grey-lighter p-2 cursor-pointer
+
+        &:hover
+          @apply bg-grey-lightest
+
+        &:last-child
+          @apply border-b-0
+
+      .chu-topics__topic__custom
+        @apply font-bold
