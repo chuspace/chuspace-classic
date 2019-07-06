@@ -13,9 +13,9 @@ class Post < ApplicationRecord
   enum status: { draft: 0, published: 1, archived: 2 }
 
   validates_presence_of :slug, :status, :blob_path
-  validates :title, :slug, length: { in: 1..100 }, allow_blank: true
+  validates_length_of :title, :slug, maximum: 100, allow_blank: true, allow_nil: true
   validates :slug, format: { with: Regexp.new('\A' + SLUG_FORMAT.source + '\z') }
-  validates :summary, :slug, length: { in: 0..140 }, allow_blank: true
+  validates :summary, :slug, length: { maximum: 140 }, allow_blank: true, allow_nil: true
   validates_uniqueness_of :slug, scope: %i[repository_id]
   validates_uniqueness_of :blob_path, scope: %i[repository_id]
   validates :topics, length: { maximum: 3 }, allow_blank: true
@@ -80,7 +80,7 @@ class Post < ApplicationRecord
 
   def title
     renderer = Redcarpet::Markdown.new(Redcarpet::Render::StripDown)
-    super || renderer.render(body || blob.safe_content)[0..100]
+    super || renderer.render(body || blob&.safe_content || '')[0..100]
   end
 
   private

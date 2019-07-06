@@ -97,9 +97,6 @@ export default class ChuEditor extends LitElement {
   autosave = debounce(
     () => {
       this.saving = true
-      const body = this.editor.getMarkdown()
-      const title = this.editor.getTitle()
-
       this.subscription.send(this.payload)
     },
     250,
@@ -112,7 +109,7 @@ export default class ChuEditor extends LitElement {
 
       fetch(this.url, {
         method: this.method,
-        body: JSON.stringify({ post: this.payload }),
+        body: JSON.stringify({ body: this.editor.getMarkdown() }),
         headers: {
           'Content-Type': 'application/json',
           'X-CSRF-TOKEN': Rails.csrfToken()

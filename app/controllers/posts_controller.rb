@@ -26,18 +26,20 @@ class PostsController < ApplicationController
     Post.transaction do
       author = Current.user
       repository = author.repository
-      post = repository.posts.build(post_params)
       next_post_id = repository.posts.maximum(:id)&.next || 1
-      post.assign_attributes(
+      post = repository.posts.build(
         author: author,
         slug: Digest::MD5.hexdigest("#{next_post_id}-#{Current.user.nickname}-post")[0..8],
         blob_path: "#{next_post_id}-post.md"
       )
 
       if post.save
-        repository.create_commit(message: params[:commit_message], content: post.body, path: post.blob_path)
+
+        repository.create_commit(message: params[:commit_message], content: post_params[:body], path: post.blob_path)
         render json: { redirect: edit_post_path(post), url: post_path(post), slug: post.slug }
       else
+        puts post.inspect
+        puts post.errors.messages
         render json: { errors: post.errors.full_messages }, status: 422
       end
     end
@@ -66,7 +68,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :summary, :slug, :topics, :published_at, :status, :parent)
+    params.require(:post).permit(:title, :summary, :slug, :topics, :published_at, :body, :status, :parent)
   end
 
   def find_post

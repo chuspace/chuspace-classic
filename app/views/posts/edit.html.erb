@@ -1,1 +1,25 @@
 <%= render 'form', url: post_path(@post), method: 'PATCH', content: @post.draft_body, id: @post.slug  %>
+
+<dialog id='publish-<%= @post.slug%>' class='dialog__full'>
+  <div class='container mt-32 relative'>
+    <%= link_to edit_post_url(@post) do %>
+      <svg-icon
+        class='absolute top-0 right-0'
+        name='x-circle'
+        feather='true'
+        color='none' width='24' height='24'>
+      </svg-icon>
+    <% end %>
+    <h3 class='border-b pb-2 inline-block'>Publish</h3>
+    <div class='card card--default w-2/3 mx-auto'>
+      <%= simple_form_for @post, remote: true do |f| %>
+        <%= f.input :title, input_html: { class: 'text-base' }  %>
+        <%= f.input :summary, as: :text, input_html: { class: 'text-base' }  %>
+        <chu-topics topics='<%= @post.topics %>' maxlength="3" class='w-full'>
+          <%= f.input :topics, placeholder: 'Add topics' %>
+        </chu-topics>
+        <%= f.submit 'Publish now', class: 'button button--active float-right mt-8 text-base' %>
+      <% end %>
+    </div>
+  </div>
+</dialog>
