@@ -1,14 +1,13 @@
 .arrow:not(:empty)
   border: 1px solid theme('colors.grey-lighter')
   &:after, &:before
+    @apply z-50 pointer-events-none absolute
     bottom: 100%
     left: 10%
     border: solid transparent
     content: " "
     height: 0
     width: 0
-    position: absolute
-    pointer-events: none
   &:after
     border-color: rgba(255, 255, 255, 0)
     border-bottom-color: #fff

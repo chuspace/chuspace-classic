@@ -6,8 +6,45 @@
   font-size: 22px
   color: rgba(0, 0, 0, 1)
   line-height: 1.5
-  margin-bottom: 50px
   outline: none
+
+  .title__empty::before,
+  .summary__empty::before,
+  .summary__empty
+    @apply italic pointer-events-none text-grey-light float-left
+    content: attr(data-empty-text)
+    height: 0
+
+  .body-empty::before
+    @apply italic pointer-events-none text-grey-light float-left
+    content: attr(data-empty-text)
+    height: 0
+
+  .summary__empty
+    @apply float-none
+    height: auto
+
+  .title,
+  .summary
+    @apply relative
+
+    &::before
+      @apply absolute text-sm border-r pr-2 italic pointer-events-none text-grey-light font-headings
+      content: 'Title'
+      top: calc(100% / 2 - 0.4rem)
+      right: 110%
+      visibility: hidden
+
+    &:hover, &:focus
+      &::before
+        visibility: visible
+
+    &--nohover
+      &::before
+        visibility: visible
+
+  .summary::before
+    content: 'Summary'
 
   blockquote
     @apply border-l-2 -ml-4 pl-4 mb-6

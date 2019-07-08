@@ -12,6 +12,7 @@ export default class SvgIcon extends LitElement {
       height: { type: Number },
       fontsize: { type: String },
       color: { type: String },
+      stroke: { type: String },
       feather: { type: String }
     }
   }
@@ -40,7 +41,7 @@ export default class SvgIcon extends LitElement {
           height="${this.height}"
           viewBox="0 0 24 24"
           fill="${this.color}"
-          stroke="currentColor"
+          stroke="${this.stroke}"
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
@@ -57,6 +58,7 @@ export default class SvgIcon extends LitElement {
     this.width = 20
     this.height = 20
     this.color = 'inherit'
+    this.stroke = 'currentColor'
 
     try {
       this.feather = JSON.parse(this.feather)

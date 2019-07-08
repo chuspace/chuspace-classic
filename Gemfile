@@ -74,7 +74,6 @@ gem 'rack-attack'
 gem 'fast_markdown', path: 'extensions/fast_markdown'
 gem 'fast_slug', path: 'extensions/fast_slug'
 gem 'faster_path'
-gem 'redcarpet'
 
 # Typechecking
 gem 'sorbet-runtime'

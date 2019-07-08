@@ -32,8 +32,8 @@ export default class ChuEditor extends LitElement {
     console.log('connected')
   }
 
-  connectedCallback() {
-    super.connectedCallback()
+  async connectedCallback() {
+    await super.connectedCallback()
 
     try {
       this.autofocus = JSON.parse(this.autofocus)
@@ -49,6 +49,8 @@ export default class ChuEditor extends LitElement {
       onChange: this.onChange,
       content: this.content || ''
     })
+
+    this.setPublishAttrs()
   }
 
   disconnectedCallback() {
@@ -56,6 +58,27 @@ export default class ChuEditor extends LitElement {
 
     ActioncableClient.unsubscribe('PostChannel')
     this.editor.destroy()
+  }
+
+  setPublishAttrs() {
+    const dialog = document.querySelector('dialog')
+
+    if (!dialog) return
+
+    const title = dialog.querySelector('#title')
+    const summary = dialog.querySelector('#summary')
+
+    if (!title || !summary) return
+
+    title.textContent = this.editor.getTitle()
+
+    if (this.editor.getSummary()) {
+      summary.textContent = this.editor.getSummary()
+      summary.classList.remove('summary__empty')
+    } else {
+      summary.textContent = "You haven't written a summary"
+      summary.classList.add('summary__empty')
+    }
   }
 
   updated = () => {
@@ -74,6 +97,8 @@ export default class ChuEditor extends LitElement {
   }
 
   onChange = () => {
+    this.setPublishAttrs()
+
     if (this.saving) return
     switch (this.method) {
       case 'POST':
@@ -88,8 +113,6 @@ export default class ChuEditor extends LitElement {
 
   get payload() {
     return {
-      title: this.editor.getTitle(),
-      summary: this.editor.getSummary(),
       body: this.editor.getMarkdown()
     }
   }
@@ -109,7 +132,7 @@ export default class ChuEditor extends LitElement {
 
       fetch(this.url, {
         method: this.method,
-        body: JSON.stringify({ body: this.editor.getMarkdown() }),
+        body: JSON.stringify(this.payload),
         headers: {
           'Content-Type': 'application/json',
           'X-CSRF-TOKEN': Rails.csrfToken()

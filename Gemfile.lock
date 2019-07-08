@@ -253,7 +253,6 @@ GEM
       thor (>= 0.20.3, < 2.0)
     rainbow (3.0.0)
     rake (12.3.2)
-    redcarpet (3.4.0)
     redis (4.1.2)
     regexp_parser (1.5.1)
     rspec-core (3.8.2)
@@ -398,7 +397,6 @@ DEPENDENCIES
   rack-proxy
   rails (>= 6.x)
   rails-controller-testing
-  redcarpet
   redis (>= 4.0)
   rspec_junit_formatter
   rubocop

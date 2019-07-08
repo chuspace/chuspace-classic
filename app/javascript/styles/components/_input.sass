@@ -1,61 +1,65 @@
-.input__container
-  @apply w-full mt-4
+.form_field__container
+  @apply mt-4
 
-  &:first-of-type
-    @apply mt-0
+  .input__label
+    @apply block text-sm font-bold
+    transition: color 0.5s ease
 
-.input__label
-  @apply mb-2 block text-sm font-bold
-  transition: color 0.5s ease
+    abbr
+      text-decoration: none
+      color: theme('colors.red')
 
-  abbr
-    text-decoration: none
-    color: theme('colors.red')
+  .input__container
+    @apply w-full relative
 
-.input__error,
-.input__hint
-  @apply mt-2 block text-xs text-grey-light
-  transition: color 0.5s ease
+    &::after
+      @apply border-b border-blue left-0 right-0 bottom-0 absolute pointer-events-none w-full block
+      content: ''
 
-.input__hint
-  @apply block
+    &:focus, &:hover
+      &::after
+        @apply border-b-2
 
-.input__error
-  @apply hidden
+    &--borderless
+      &::after
+        @apply border-none
 
 .input
-  @apply py-2 px-4 rounded border border-blue bg-white min-w-full text-base
+  @apply py-2 bg-white w-full text-base
   transition: border-color 0.5s ease
   box-sizing: border-box
 
   &:focus, &:hover
-    @apply outline-none appearance-none
-    box-shadow: 0 0 0 1px theme('colors.blue')
+    @apply outline-none appearance-none shadow-none
 
   &--slim
+    @apply text-sm shadow-md rounded
     padding: 0.2rem 0.5rem
 
-  &--borderless
-    @apply border-none
-
-    &:focus, &:hover
-      @apply outline-none appearance-none border-none shadow-none
-
-input-check
-  @apply block w-full
-
-.input__container--invalid
-  .input__label
-    @apply text-red
-
-  .input
-    @apply border-red
-
-    &:focus, &:hover
-      box-shadow: 0 0 0 1px theme('colors.red')
+  .input__error,
+  .input__hint
+    @apply mt-2 block text-xs text-grey-light
+    transition: color 0.5s ease
 
   .input__hint
-    @apply hidden
+    @apply block
 
   .input__error
-    @apply text-red block
+    @apply hidden
+
+  input-check
+    @apply block w-full
+
+  &--invalid
+    .input__label
+      @apply text-red
+
+    .input__container
+      &::after
+        @apply border-red border-b-2
+
+    .input__hint
+      @apply hidden
+
+    .input__error
+      @apply text-red block

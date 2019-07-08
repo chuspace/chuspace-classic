@@ -1,8 +1,6 @@
 # typed: ignore
 # frozen_string_literal: true
 
-require 'redcarpet/render_strip'
-
 class Post < ApplicationRecord
   SLUG_FORMAT = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 
@@ -71,29 +69,20 @@ class Post < ApplicationRecord
   end
 
   def draft_body_html
-    @draft_body_html ||= markdown_renderer.render(draft_body).html_safe
+    @draft_body_html ||= FastMarkdown.to_html(draft_body).html_safe
   end
 
   def body_html
-    @body_html ||= markdown_renderer.render(body).html_safe
+    @body_html ||= FastMarkdown.to_html(body).html_safe
   end
 
-  def title
-    renderer = Redcarpet::Markdown.new(Redcarpet::Render::StripDown)
-    super || renderer.render(body || blob&.safe_content || '')[0..100]
+  def body_title
+    FastMarkdown.title(body || blob&.safe_content || '')
   end
 
   private
 
   def markdown_renderer
-    @renderer ||=
-      Redcarpet::Markdown.new(
-        Redcarpet::Render::HTML.new(filter_html: true, safe_links_only: true),
-        fenced_code_blocks: true,
-        disable_indented_code_blocks: true,
-        autolink: true,
-        strikethrough: true,
-        space_after_headers: true
-      )
+    @renderer ||= CommonMarker.render_html('Hi *there*', :DEFAULT)
   end
 end

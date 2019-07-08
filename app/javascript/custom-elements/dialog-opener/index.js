@@ -11,12 +11,13 @@ export default class DialogOpener extends LitElement {
     }
   }
 
-  connectedCallback() {
-    super.connectedCallback()
+  async connectedCallback() {
+    await super.connectedCallback()
 
     this.dialogElement = document.getElementById(this.target)
+    if (!this.dialogElement) return
+
     this.dialog = new Dialog(this.dialogElement)
-    console.log(this.attributes)
     this.addEventListener('click', this.open)
 
     this.dialogElement.querySelector('svg-icon').addEventListener('click', this.close)

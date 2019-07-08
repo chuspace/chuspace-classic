@@ -217,9 +217,11 @@ export default class Editor {
 
   getSummary() {
     const summaryNode = this.state.doc.content.content[1]
-    if (summaryNode.node && summaryNode.node.type.name === 'heading' && summaryNode.node.attrs.level === 2) {
-      return summaryNode.content
+
+    if (summaryNode && summaryNode.type.name === 'heading' && summaryNode.attrs.level === 2) {
+      return summaryNode.textContent
     }
+
     return null
   }
 

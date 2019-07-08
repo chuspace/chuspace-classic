@@ -1,7 +1,7 @@
 en:
   form:
-    "yes": 'Yes'
-    "no": 'No'
+    'yes': 'Yes'
+    'no': 'No'
     required:
       text: required
       mark: '*'
@@ -14,9 +14,12 @@ en:
         nickname: Your username
     hints:
       defaults:
-        name: Nice to meet you
-        email: We’ll never share your email address with anyone
-        nickname: Should be all lowercase, unique, min 1 character, may have a single hyphen and no special characters.
+        name: nice to meet you
+        email: we’ll never share your email address with anyone
+        nickname: should be all lowercase, unique, min 1 character, may have a single hyphen and no special characters.
+
+      post:
+        topics: Add or change tags (up to 5) so readers know what your story is about
 
     placeholders:
       defaults:

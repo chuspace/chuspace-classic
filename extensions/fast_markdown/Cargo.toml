@@ -7,7 +7,7 @@ edition = "2018"
 [dependencies]
 rutie = "0.5.6"
 pulldown-cmark = "0.5.2"
-
+pulldown-cmark-to-cmark = "1.2.2"
 
 [lib]
 name = "fast_markdown"

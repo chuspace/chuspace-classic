@@ -11,8 +11,16 @@ export default class ChuTopics extends LitElement {
     return {
       topics: { type: Array },
       autofocus: { type: Boolean },
+      placeholder: { type: String },
+      hint: { type: String },
       maxlength: { type: Number }
     }
+  }
+
+  constructor() {
+    super()
+
+    this.placeHolder = 'Type something...'
   }
 
   createRenderRoot() {
@@ -24,6 +32,8 @@ export default class ChuTopics extends LitElement {
     this.initAutocomplete()
   }
 
+  isInvalid = (topic: string) => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(topic) == false
+
   initAutocomplete = () => {
     const input = this.querySelector('.chu-topics__input')
     if (this.autocompleteInstance) return
@@ -34,12 +44,12 @@ export default class ChuTopics extends LitElement {
           const source = await fetch(`/topics.json?q=${input.value}`)
           const data = await source.json()
 
-          return data
+          return data.filter(topic => this.topics.indexOf(topic.name) === -1)
         },
         key: ['name'],
         cache: false
       },
-      placeHolder: 'Type to add upto 3 topics...',
+      placeHolder: this.placeholder,
       selector: () => input,
       threshold: 1,
       debounce: 300,
@@ -52,7 +62,7 @@ export default class ChuTopics extends LitElement {
           source.removeAttribute('id')
           source.className = 'chu-topics__list arrow'
         },
-        destination: this.querySelector('.chu-topics__input__container'),
+        destination: this.querySelector('.chu-topics__autocomplete__container'),
         position: 'beforeend',
         element: 'ul'
       },
@@ -66,15 +76,21 @@ export default class ChuTopics extends LitElement {
       noResults: () => {
         const item = document.createElement('li')
         const list = document.querySelector('.chu-topics__list')
-        item.setAttribute('tabindex', '1')
-        item.innerHTML = `Not found. Create <span class='chu-topics__topic__custom'>${input.value.trim()}</span>`
-        list && list.appendChild(item)
-        item.addEventListener('click', (e: MouseEvent) => {
-          const customTopic = item.querySelector('.chu-topics__topic__custom')
-          customTopic && this.add(customTopic.textContent)
-          item.remove()
-          input.value = ''
-        })
+        const inputValue = input.value.trim()
+
+        if (this.isInvalid(inputValue)) return
+
+        if (this.topics.indexOf(inputValue) === -1) {
+          item.setAttribute('tabindex', '1')
+          item.innerHTML = `Not found. Create <span class='chu-topics__topic__custom'>${inputValue}</span>`
+          list && list.appendChild(item)
+          item.addEventListener('click', (e: MouseEvent) => {
+            const customTopic = item.querySelector('.chu-topics__topic__custom')
+            customTopic && this.add(customTopic.textContent)
+            item.remove()
+            input.value = ''
+          })
+        }
       },
       onSelection: feedback => {
         this.add(feedback.selection.value.name)
@@ -86,11 +102,14 @@ export default class ChuTopics extends LitElement {
 
   add(topic: string) {
     if (!topic) return
+    if (this.topics.indexOf(topic) !== -1) return
+    if (this.isInvalid(topic)) return
+
     this.topics = this.topics.concat([topic])
 
-    if (this.topics.length >= this.maxlength) {
+    if (this.topics.length === this.maxlength) {
       const input = this.querySelector('input')
-      input.setAttribute('disabled', true)
+      this.setAttribute('disabled', true)
       return
     }
   }
@@ -104,7 +123,7 @@ export default class ChuTopics extends LitElement {
       case 8:
         if (input.value) return
         this.topics = without(this.topics, last(this.topics))
-        input.removeAttribute('disabled')
+        this.removeAttribute('disabled')
         break
       default:
         break
@@ -128,23 +147,31 @@ export default class ChuTopics extends LitElement {
 
       const input = this.querySelector('.chu-topics__input')
       input && input.focus()
-      input.removeAttribute('disabled')
+      this.hasAttribute('disabled') && this.removeAttribute('disabled')
     }
   }
 
   render() {
     return html`
-      <label class="input__label mt-2" for="post_topics">Topics</label>
-      <div class="chu-topics__input__container">
-        <input class="chu-topics__input" name="post_topics" autocomplete="off" @keydown=${this.handleKeyDown} />
-      </div>
-      <div class="chu-topics__container mt-4">
-        ${this.topics.map(
-          tag =>
-            html`<span class="chu-topics chu-topics__topic mr-2">
+      <div class="form_field__container">
+        <div class="input__container">
+          <div class="chu-topics__container mt-4">
+            ${this.topics.map(
+              tag =>
+                html`<span class="chu-topics chu-topics__topic mr-2">
             ${tag} <svg-icon class='chu-topics__topic__icon' @click=${this.remove} name='x-circle' width='10' height='10' feather='true' color='none'>&#10005</svg-icon></span>
           `
-        )}
+            )}
+            <div class="chu-topics__autocomplete__container relative">
+              <input class="chu-topics__input" name="post_topics" autocomplete="off" @keydown=${this.handleKeyDown} />
+            </div>
+          </div>
+        </div>
+        ${this.hint
+          ? html`
+              <span class="input__hint">${this.hint}</span>
+            `
+          : ''}
       </div>
     `
   }

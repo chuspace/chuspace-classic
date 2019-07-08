@@ -6,16 +6,4 @@
   id="<%= defined?(id) ? id : nil %>"
   autofocus="<%= defined?(autofocus) %>"
 >
-  <noscript>
-    <%= simple_form_for @post, remote: true do |f| %>
-      <%= f.input :title, as: :text  %>
-      <%= f.input :summary, as: :text  %>
-      <%= f.input :body, as: :text  %>
-      <chu-topics topics='<%= @post.topics %>' maxlength="3">
-        <%= f.input :topics, placeholder: 'Add topics' %>
-      </chu-topics>
-
-      <%= f.submit 'Publish now', class: 'button button--active float-right mt-8 text-base' %>
-    <% end %>
-  </noscript>
 </chu-editor>

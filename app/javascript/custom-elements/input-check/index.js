@@ -22,7 +22,7 @@ export default class AutoValidateInput extends LitElement {
     this.boundCheck = debounce(this.check.bind(this), 300)
 
     if (this.input instanceof HTMLInputElement) {
-      this.inputContainer = this.querySelector('.input__container')
+      this.inputContainer = this.querySelector('.form_field__container')
       this.inputError = this.inputContainer.querySelector('.input__error')
 
       if (!this.inputError) {
@@ -92,9 +92,9 @@ export default class AutoValidateInput extends LitElement {
     this.inputError.textContent = text
 
     if (text) {
-      this.inputContainer.classList.add('input__container--invalid')
+      this.inputContainer.classList.add('form_field__container--invalid')
     } else {
-      this.inputContainer.classList.remove('input__container--invalid')
+      this.inputContainer.classList.remove('form_field__container--invalid')
     }
   }
 

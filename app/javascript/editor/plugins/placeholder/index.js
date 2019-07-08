@@ -1,7 +1,5 @@
 // @flow
 
-import './styles.sass'
-
 import { Decoration, DecorationSet, EditorView } from 'prosemirror-view'
 import { Node, Plugin } from 'prosemirror-state'
 
@@ -31,7 +29,7 @@ export default class Placeholder extends Element {
     let className
     let text
 
-    const suffix = node.childCount === 0 ? '-empty' : ''
+    const suffix = node.childCount === 0 ? '__empty' : ''
     const typePrefix = node.attrs.level ? `h${node.attrs.level}` : 'paragraph'
 
     className = this.options[`${typePrefix}Class`] + suffix
