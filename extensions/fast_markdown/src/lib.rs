@@ -31,9 +31,16 @@ methods!(
           unwrap()
           .to_string();
 
-        let events = Parser::new(&markdown_input).map(|event, range| {
+        let events = Parser::new(&markdown_input).into_offset_iter().map(|(event, range)| {
             match event {
+                Event::Start(Tag::Header(n)) => {
+                    println!("this is range: {:#?}", range);
+                    println!("this is range: {:#?}", n);
+
+                    return Event::Start(Tag::Header(n));
+                },
                 Event::End(Tag::Image(link_type, src, title)) => {
+                    println!("this is range: {:#?}", range);
                     if src.contains("//") {
                         return Event::End(Tag::Image(link_type, src, title));
                     };
