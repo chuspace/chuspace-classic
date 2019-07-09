@@ -8,6 +8,8 @@ class Post < ApplicationRecord
   belongs_to :repository
 
   has_ancestry
+  has_logidze
+
   enum status: { draft: 0, published: 1, archived: 2 }
 
   validates_presence_of :title, :slug, :status, :topics, :blob_path

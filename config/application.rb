@@ -33,5 +33,8 @@ module Chuspace
 
     # Configure rack attack
     config.middleware.use Rack::Attack unless Rails.env.test?
+
+    # Schema format
+    config.active_record.schema_format = :sql
   end
 end

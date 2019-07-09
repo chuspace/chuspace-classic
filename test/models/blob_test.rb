@@ -1,9 +1,9 @@
-# typed: ignore
+# typed: strong
 # frozen_string_literal: true
 
 require 'test_helper'
 
-class TopicsControllerTest < ActionDispatch::IntegrationTest
+class BlobTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

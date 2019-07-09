@@ -16,6 +16,10 @@ gem 'aws-sdk-s3'
 gem 'imgproxy'
 gem 'fastimage'
 gem 'mimemagic'
+
+# Logging
+gem 'logidze'
+
 #  Nested tree
 gem 'ancestry'
 

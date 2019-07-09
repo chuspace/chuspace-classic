@@ -8,20 +8,13 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.text :summary
 
       t.string :slug, null: false
-      t.index %i[slug repository_id]
+      t.index %i[slug author_id]
 
       t.text :body
 
+      t.references :blob, foreign_key: true, null: false
       t.bigint :author_id, foreign_key: true, null: false
       t.index :author_id
-
-      t.string :blob_path
-      t.index %i[blob_path repository_id], unique: true
-
-      t.string :blob_id
-      t.index :blob_id
-
-      t.references :repository, foreign_key: true, null: false
 
       t.string :ancestry
       t.index :ancestry

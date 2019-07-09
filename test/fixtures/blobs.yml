@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  slug: MyString
+  repository: one
+  author: one
+  oid: MyString
+  commit_sha: MyString
+  binary: false
+  path: MyString
+
+two:
+  slug: MyString
+  repository: two
+  author: two
+  oid: MyString
+  commit_sha: MyString
+  binary: false
+  path: MyString

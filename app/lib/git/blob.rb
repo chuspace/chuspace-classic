@@ -44,8 +44,6 @@ module Git
             id: blob.oid,
             slug: blob.oid,
             name: blob_entry[:name],
-            title: FastMarkdown.title(''),
-            summary: FastMarkdown.title(''),
             size: blob.size,
             path: path,
             body: body,
