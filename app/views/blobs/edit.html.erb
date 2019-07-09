@@ -1,8 +1,16 @@
-<%= render 'form', url: post_path(@post), method: 'PATCH', content: @post.draft_body, id: @post.slug  %>
+<chu-editor
+  spellcheck="false"
+  url="<%= blob_path(@blob) %>"
+  method="PATCH"
+  content="<%= @blob.content %>"
+  id="<%= @blob.slug %>"
+>
+</chu-editor>
 
-<dialog id='publish-<%= @post.slug%>' class='dialog__sm'>
+
+<dialog id='publish-<%= @blob.slug %>' class='dialog__sm'>
   <div class='container relative'>
-    <%= link_to edit_post_url(@post) do %>
+    <%= link_to edit_blob_url(@blob) do %>
       <svg-icon
         class='absolute top-0 right-0'
         name='x-circle'

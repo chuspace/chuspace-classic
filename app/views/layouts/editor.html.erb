@@ -13,14 +13,14 @@
         <nav class='flex justify-between items-center py-6'>
           <%= component 'logo', type: :badge %>
           <div class='flex-1 ml-4'>
-            <%= @post.author.name %>
+            <%= @blob.author.name %>
           </div>
 
           <div class='flex justify-end items-center flex-1 mr-4'>
-            <div class="mr-4 badge badge--grey"><%= @post.status.titlecase %></div>
+            <div class="mr-4 badge badge--grey">Draft</div>
             <div class="mr-4 badge badge--grey">Saved</div>
             <div class="mr-4 badge badge--grey">4 mins</div>
-            <dialog-opener class='link link-default' target='publish-<%= @post.slug%>'>Publish</dialog-opener>
+            <dialog-opener class='link link-default' target='publish-<%= @blob.slug%>'>Publish</dialog-opener>
           </div>
 
           <% if Current.user.present? %>

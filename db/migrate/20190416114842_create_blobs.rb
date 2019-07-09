@@ -16,7 +16,6 @@ class CreateBlobs < ActiveRecord::Migration[6.0]
       t.string :path, null: false
       t.index %i[path repository_id], unique: true
 
-      t.string :commit_sha, null: false
       t.boolean :binary, default: false
       t.index :binary
 

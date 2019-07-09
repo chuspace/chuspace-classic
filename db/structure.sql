@@ -312,7 +312,6 @@ CREATE TABLE public.blobs (
     slug character varying NOT NULL,
     oid character varying NOT NULL,
     path character varying NOT NULL,
-    commit_sha character varying NOT NULL,
     "binary" boolean DEFAULT false,
     mime_type character varying DEFAULT 'text/markdown'::character varying NOT NULL,
     repository_id bigint NOT NULL,
@@ -354,7 +353,6 @@ CREATE TABLE public.posts (
     blob_id bigint NOT NULL,
     author_id bigint NOT NULL,
     ancestry character varying,
-    status integer DEFAULT 0 NOT NULL,
     topics character varying[] DEFAULT '{}'::character varying[],
     published_at timestamp without time zone,
     created_at timestamp(6) without time zone NOT NULL,
@@ -724,13 +722,6 @@ CREATE INDEX index_posts_on_published_at ON public.posts USING btree (published_
 --
 
 CREATE INDEX index_posts_on_slug_and_author_id ON public.posts USING btree (slug, author_id);
-
-
---
--- Name: index_posts_on_status; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_posts_on_status ON public.posts USING btree (status);
 
 
 --

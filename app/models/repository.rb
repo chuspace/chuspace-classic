@@ -30,24 +30,18 @@ class Repository < ApplicationRecord
   before_validation :assign_default_attributes, on: :create
   before_create :create_git_repo, :create_git_hooks, :create_initial_commit_and_assign_commit_sha
   before_save :rename_git_repo, if: -> { !new_record? && path_changed? }
+
   after_destroy :destroy_git_repo
   after_rollback :destroy_git_repo, on: :create
 
   belongs_to :author, class_name: 'User'
-  has_many :posts, dependent: :destroy
+  has_many :blobs, dependent: :destroy
 
   delegate :lookup, :checkout, :empty?, :bare?, :index, to: :rugged
   delegate :tree, to: :commit
 
   def commit
     lookup(commit_sha)
-  end
-
-  def blobs
-    Git::Blob.all(self, commit_sha)
-  end
-
-  def post_blobs
   end
 
   def rugged
@@ -90,14 +84,6 @@ class Repository < ApplicationRecord
 
   def merge_base_commit(from, to)
     rugged.merge_base(from, to)
-  end
-
-  def blob_at(path:)
-    blobs.find { |blob| blob.path == path }
-  end
-
-  def find_blob(oid, commit_sha = commit_sha)
-    Git::Blob.find(self, oid, commit_sha)
   end
 
   def create_commit(action: :add, message: nil, content:, path:)

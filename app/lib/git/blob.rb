@@ -6,7 +6,7 @@ require 'mimemagic'
 module Git
   class Blob
     include ::EncodingHelper
-    attr_accessor :name, :title, :summary, :author, :path, :size, :body, :mode, :id, :binary
+    attr_accessor :id, :binary, :name, :path, :size, :content, :mode
 
     class << self
       def all(repository, commit_sha = nil)
@@ -38,18 +38,14 @@ module Git
         blob = repository.lookup(blob_entry[:oid])
 
         if blob
-          body = encode!(blob.content)
-
           Blob.new(
             id: blob.oid,
-            slug: blob.oid,
             name: blob_entry[:name],
             size: blob.size,
             path: path,
-            body: body,
+            content: encode!(blob.content),
             mode: blob_entry[:filemode].to_s(8),
-            binary: blob.binary?,
-            author: repository.author
+            binary: blob.binary?
           )
         end
       end
@@ -60,7 +56,7 @@ module Git
     end
 
     def initialize(options)
-      %w[id name title summary author path size body mode binary].each { |key| self.send("#{key}=", options[key.to_sym]) }
+      %w[id name path size content mode binary].each { |key| self.send("#{key}=", options[key.to_sym]) }
     end
 
     def binary?

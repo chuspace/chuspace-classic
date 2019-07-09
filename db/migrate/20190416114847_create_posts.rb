@@ -19,9 +19,6 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.string :ancestry
       t.index :ancestry
 
-      t.integer :status, default: 0, null: false
-      t.index :status
-
       t.string :topics, array: true, default: []
       t.index :topics, using: 'gin'
 
