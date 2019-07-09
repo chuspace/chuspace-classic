@@ -3,7 +3,7 @@
 
 class PostsController < ApplicationController
   before_action :authenticate!, only: %i[new create edit]
-  before_action :find_post, only: %i[show edit update]
+  before_action :find_blob, only: %i[edit update]
 
   layout 'editor', only: %i[new edit]
 
@@ -11,37 +11,35 @@ class PostsController < ApplicationController
     @posts = Post.all.limit(20).order(id: :desc)
   end
 
+  def drafts
+    published_posts = Post.published.pluck(:blob_id)
+    @drafts = Current.user.repository.blobs.reject { |b|  published_posts.include?(b.id) }
+  end
+
   def new
     @post = Post.new(author: Current.user, repository: Current.user.repository)
   end
 
   def show
-    # Permission logic
+    @post = Post.find_by(slug: params[:slug])
     redirect_to root_path if @post.blank?
   end
 
-  def edit; end
+  def edit
+  end
 
   def create
-    Post.transaction do
-      author = Current.user
-      repository = author.repository
-      next_post_id = repository.posts.maximum(:id)&.next || 1
-      post = repository.posts.build(
-        author: author,
-        slug: Digest::MD5.hexdigest("#{next_post_id}-#{Current.user.nickname}-post")[0..8],
-        blob_path: "#{next_post_id}-post.md"
-      )
+    repository = Current.user.repository
+    next_post_id = repository.posts.maximum(:id)&.next || 1
+    blob_id = Rugged::Repository.hash_data(post_params[:body], :blob)
 
-      if post.save
+    commit_sha = repository
+      .create_commit(message: params[:commit_message], content: post_params[:body], path: "#{next_post_id}-post.md")
 
-        repository.create_commit(message: params[:commit_message], content: post_params[:body], path: post.blob_path)
-        render json: { redirect: edit_post_path(post), url: post_path(post), slug: post.slug }
-      else
-        puts post.inspect
-        puts post.errors.messages
-        render json: { errors: post.errors.full_messages }, status: 422
-      end
+    if commit_sha
+      render json: { redirect: edit_post_path(slug: blob_id), url: post_path(slug: blob_id), slug: blob_id }
+    else
+      render json: { errors: post.errors.full_messages }, status: 422
     end
   end
 
@@ -68,10 +66,10 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :summary, :slug, :topics, :published_at, :body, :status, :parent)
+    params.require(:post).permit(:title, :summary, :topics, :published_at, :body, :status, :parent)
   end
 
-  def find_post
-    @post = Post.find_by(slug: params[:slug])
+  def find_blob
+    @post = Current.user.repository.find_blob(params[:slug])
   end
 end

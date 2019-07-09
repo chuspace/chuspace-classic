@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root to: 'users#show', constraints: PrivateRootConstraint.new, as: :authenticated_root
+  root to: 'posts#drafts', constraints: PrivateRootConstraint.new, as: :authenticated_root
   root to: 'pages#index'
 
   resources :signins, path: 'signin', only: %i[index create destroy]
@@ -13,8 +13,19 @@ Rails.application.routes.draw do
   resources :magic_logins, only: :index
 
   resources :topics
+
+  namespace :autocomplete do
+    resources :posts, only: :index
+    resources :topics, only: :index
+  end
+
   resources :users, path: 'u', param: :nickname
-  resources :posts, path: 'p', param: :slug
+
+  resources :posts, path: 'p', param: :slug do
+    collection do
+      get :drafts
+    end
+  end
 
   resources :images, only: %i[create destroy]
 

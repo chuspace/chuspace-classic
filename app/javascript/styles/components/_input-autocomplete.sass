@@ -1,11 +1,11 @@
-chu-topics
+input-autocomplete
   .form_field__container
     @apply mt-0 font-headings
 
-    .chu-topics__container
+    .autocomplete__container
       @apply flex items-center text-lg flex-wrap
 
-    .chu-topics__topic
+    .autocomplete__item
       @apply px-2 py-1 text-sm rounded leading-tight bg-grey-lighter flex items-center whitespace-no-wrap mb-1
 
       &__icon
@@ -15,7 +15,7 @@ chu-topics
       @apply relative
       width: 100%
 
-      .chu-topics__input
+      .autocomplete__input
         @apply text-base py-2 mb-1
 
         &:hover, &:focus
@@ -23,11 +23,11 @@ chu-topics
 
       &::before
         @apply absolute text-sm border-r pr-2 italic pointer-events-none text-grey-light font-headings
-        content: 'Topics'
+        content: attr(data-label)
         top: calc(100% / 2 - 0.4rem)
         right: 110%
 
-      .chu-topics__list
+      .autocomplete__list
         @apply absolute bg-white shadow-md list-none p-0 m-0 text-sm z-50
         top: 42px
         width: 250px
@@ -41,7 +41,7 @@ chu-topics
           &:last-child
             @apply border-b-0
 
-        .chu-topics__topic__custom
+        .autocomplete__item__custom
           @apply font-bold
 
   &[disabled]
@@ -51,5 +51,5 @@ chu-topics
       &:hover, &:focus
         @apply border-grey-lighter border-b
 
-    .chu-topics__input
+    .autocomplete__input
       @apply text-grey-lighter pointer-events-none

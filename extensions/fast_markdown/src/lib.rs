@@ -4,7 +4,7 @@ extern crate pulldown_cmark;
 extern crate pulldown_cmark_to_cmark;
 
 use rutie::{Module, Object, RString, VM};
-use pulldown_cmark::{ CowStr, Parser, Options, html, Event, Tag };
+use pulldown_cmark::{ CowStr, Parser, html, Event, Tag };
 use pulldown_cmark_to_cmark::fmt::cmark;
 use std::path::{ Path };
 
@@ -33,12 +33,6 @@ methods!(
 
         let events = Parser::new(&markdown_input).into_offset_iter().map(|(event, range)| {
             match event {
-                Event::Start(Tag::Header(n)) => {
-                    println!("this is range: {:#?}", range);
-                    println!("this is range: {:#?}", n);
-
-                    return Event::Start(Tag::Header(n));
-                },
                 Event::End(Tag::Image(link_type, src, title)) => {
                     println!("this is range: {:#?}", range);
                     if src.contains("//") {
@@ -94,8 +88,9 @@ methods!(
         let markdown_input = markdown.
           map_err(|e| VM::raise_ex(e) ).
           unwrap().to_string();
+
         let mut title = String::with_capacity(100);
-        let parser = Parser::new_ext(&markdown_input, Options::empty());
+        let parser = Parser::new(&markdown_input);
 
         for event in parser {
             if let Event::Text(text) = event {

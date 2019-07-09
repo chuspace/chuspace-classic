@@ -36,30 +36,30 @@
     @apply text-sm shadow-md rounded
     padding: 0.2rem 0.5rem
 
-  .input__error,
-  .input__hint
-    @apply mt-2 block text-xs text-grey-light
-    transition: color 0.5s ease
+.input__error,
+.input__hint
+  @apply mt-2 block text-xs text-grey-light
+  transition: color 0.5s ease
+
+.input__hint
+  @apply block
+
+.input__error
+  @apply hidden
+
+.form_field__container--invalid
+  .input__label
+    @apply text-red
+
+  .input__container
+    &::after
+      @apply border-red border-b-2
 
   .input__hint
-    @apply block
+    @apply hidden
 
   .input__error
-    @apply hidden
+    @apply text-red block
 
   input-check
     @apply block w-full
-
-  &--invalid
-    .input__label
-      @apply text-red
-
-    .input__container
-      &::after
-        @apply border-red border-b-2
-
-    .input__hint
-      @apply hidden
-
-    .input__error
-      @apply text-red block

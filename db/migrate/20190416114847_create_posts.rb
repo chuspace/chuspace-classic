@@ -18,6 +18,9 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.string :blob_path
       t.index %i[blob_path repository_id], unique: true
 
+      t.string :blob_id
+      t.index :blob_id
+
       t.references :repository, foreign_key: true, null: false
 
       t.string :ancestry

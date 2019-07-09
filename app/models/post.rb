@@ -10,14 +10,16 @@ class Post < ApplicationRecord
   has_ancestry
   enum status: { draft: 0, published: 1, archived: 2 }
 
-  validates_presence_of :slug, :status, :blob_path
-  validates_length_of :title, :slug, maximum: 100, allow_blank: true, allow_nil: true
+  validates_presence_of :title, :slug, :status, :topics, :blob_path
+  validates_length_of :title, :slug, maximum: 100
   validates :slug, format: { with: Regexp.new('\A' + SLUG_FORMAT.source + '\z') }
-  validates :summary, :slug, length: { maximum: 140 }, allow_blank: true, allow_nil: true
+  validates :summary, :slug, length: { maximum: 140 }
   validates_uniqueness_of :slug, scope: %i[repository_id]
   validates_uniqueness_of :blob_path, scope: %i[repository_id]
-  validates :topics, length: { maximum: 3 }, allow_blank: true
-  validates :published_at, date: { allow_nil: true }
+  validates :topics, length: { maximum: 3 }
+  validates :published_at, date: true
+
+  before_validation :assign_defaults
 
   alias repo repository
 
@@ -64,25 +66,7 @@ class Post < ApplicationRecord
     end
   end
 
-  def draft_body
-    blob.safe_content
-  end
-
-  def draft_body_html
-    @draft_body_html ||= FastMarkdown.to_html(draft_body).html_safe
-  end
-
   def body_html
     @body_html ||= FastMarkdown.to_html(body).html_safe
-  end
-
-  def body_title
-    FastMarkdown.title(body || blob&.safe_content || '')
-  end
-
-  private
-
-  def markdown_renderer
-    @renderer ||= CommonMarker.render_html('Hi *there*', :DEFAULT)
   end
 end

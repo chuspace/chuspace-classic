@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2019_07_06_110353) do
     t.text "body"
     t.bigint "author_id", null: false
     t.string "blob_path"
+    t.string "blob_id"
     t.bigint "repository_id", null: false
     t.string "ancestry"
     t.integer "status", default: 0, null: false
@@ -33,6 +34,7 @@ ActiveRecord::Schema.define(version: 2019_07_06_110353) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["ancestry"], name: "index_posts_on_ancestry"
     t.index ["author_id"], name: "index_posts_on_author_id"
+    t.index ["blob_id"], name: "index_posts_on_blob_id"
     t.index ["blob_path", "repository_id"], name: "index_posts_on_blob_path_and_repository_id", unique: true
     t.index ["published_at"], name: "index_posts_on_published_at"
     t.index ["repository_id"], name: "index_posts_on_repository_id"

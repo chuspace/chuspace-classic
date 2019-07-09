@@ -1,10 +1,4 @@
-class TopicsController < ApplicationController
-  def index
-    @topics = Topic.where("unaccent(topics.name) ILIKE unaccent('%#{params[:q]}%')")
+# frozen_string_literal: true
 
-    respond_to do |format|
-      format.html
-      format.json { render json: @topics.to_json }
-    end
-  end
+class TopicsController < ApplicationController
 end

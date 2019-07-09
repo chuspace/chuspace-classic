@@ -47,6 +47,9 @@ class Repository < ApplicationRecord
     Git::Blob.all(self, commit_sha)
   end
 
+  def post_blobs
+  end
+
   def rugged
     @rugged ||= Rugged::Repository.bare(path)
   rescue Rugged::RepositoryError, Rugged::OSError
@@ -91,6 +94,10 @@ class Repository < ApplicationRecord
 
   def blob_at(path:)
     blobs.find { |blob| blob.path == path }
+  end
+
+  def find_blob(oid, commit_sha = commit_sha)
+    Git::Blob.find(self, oid, commit_sha)
   end
 
   def create_commit(action: :add, message: nil, content:, path:)

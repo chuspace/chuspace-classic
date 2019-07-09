@@ -1,6 +1,6 @@
 export { default as AlertNotification } from './alert-notification'
 export { default as ChuEditor } from './chu-editor'
-export { default as ChuTopics } from './chu-topics'
+export { default as InputAutocomplete } from './input-autocomplete'
 export { default as ContentLoader } from './content-loader'
 export { default as CopyClipboard } from './copy-clipboard'
 export { default as DialogOpener } from './dialog-opener'

@@ -15,19 +15,33 @@
     <h3 class='border-b pb-2 inline-block text-lg'>Publish</h3>
 
     <div class='card card--default w-3/4 mx-auto'>
-      <%= simple_form_for @post, remote: true do |f| %>
-        <div class='chu-editor'>
-          <h1 id="title" class='title title--nohover text-4xl'></h1>
-          <h2 id="summary" class='summary summary--nohover text-grey-light mt-12'></h2>
-        </div>
+      <%= simple_form_for @post, remote: true, onkeydown: "return !event.keyCode === 13" do |f| %>
+        <h1 id="title" class='title title--nohover text-3xl'></h1>
+        <h2 id="summary" class='summary summary--nohover text-grey-light mt-8 text-2xl'></h2>
 
-        <chu-topics
-          topics='<%= @post.topics %>'
+        <input-autocomplete
+          url="<%= autocomplete_topics_url %>"
+          items='<%= @post.topics %>'
           maxlength="5"
-          placeholder="Add topics"
+          label="Topics"
+          keys="name"
+          placeholder="Type to add topics"
           hint="<%= t('form.hints.post.topics')%>"
+          class='w-full block mt-12'
+          noresults
+        >
+        </input-autocomplete>
+
+        <input-autocomplete
+          url="<%= autocomplete_posts_url %>"
+          items='[<%= @post.parent %>]'
+          maxlength="1"
+          label="Parent"
+          keys="slug"
+          placeholder="Type to select a post"
+          hint="<%= t('form.hints.post.parent')%>"
           class='w-full block mt-12'>
-        </chu-topics>
+        </input-autocomplete>
 
         <%= f.submit 'Publish now', class: 'button button--active float-right mt-8 text-base font-headings button--disabled' %>
       <% end %>
