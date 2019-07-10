@@ -1,9 +1,0 @@
-<section class='drafts-list mx-auto w-2/3 mt-20'>
-  <h1 class='mb-12'>Your posts</h1>
-  <%= render 'shared/post_navigation' %>
-  <% @blobs.each do |blob| %>
-    <%= link_to edit_blob_path(blob) do %>
-      <%= render 'blob_item', blob: blob %>
-    <% end %>
-  <% end %>
-</section>

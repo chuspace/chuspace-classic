@@ -3,19 +3,19 @@
 
 class AutosaveChannel < ApplicationCable::Channel
   def subscribed
-    @blob = current_user.repository.blobs.find_by(slug: params[:slug])
+    @post = current_user.repository.posts.find_by(slug: params[:slug])
 
-    if @blob.blank?
+    if @post.blank?
       reject
       stop_all_streams
     else
-      stream_from @blob
+      stream_from @post
     end
   end
 
   def receive(data)
-    @blob.repository.create_commit(content: data['body'], path: @blob.path, action: :update)
-    ActionCable.server.broadcast(@blob, { success: true }.to_json)
+    @post.repository.create_commit(content: data['body'], path: @post.blob_path, action: :update)
+    ActionCable.server.broadcast(@post, { success: true }.to_json)
   end
 
   def unsubscribed

@@ -35,14 +35,9 @@ class Repository < ApplicationRecord
   after_rollback :destroy_git_repo, on: :create
 
   belongs_to :author, class_name: 'User'
-  has_many :blobs, dependent: :destroy
 
   delegate :lookup, :checkout, :empty?, :bare?, :index, to: :rugged
   delegate :tree, to: :commit
-
-  def commit
-    lookup(commit_sha)
-  end
 
   def rugged
     @rugged ||= Rugged::Repository.bare(path)
@@ -60,6 +55,19 @@ class Repository < ApplicationRecord
     rugged.head
   rescue Rugged::ReferenceError
     nil
+  end
+
+  def commit
+    lookup(commit_sha)
+  end
+
+  def blobs
+    @blobs ||= Git::Blob.all(repository, commit_sha)
+  end
+
+  def blob_at(path:)
+    blob = rugged.blob_at(commit_sha, path)
+    Git::Blob.find(repository, blob.oid, commit_sha)
   end
 
   def size

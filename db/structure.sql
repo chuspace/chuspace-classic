@@ -303,44 +303,6 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
--- Name: blobs; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.blobs (
-    id bigint NOT NULL,
-    name character varying NOT NULL,
-    slug character varying NOT NULL,
-    oid character varying NOT NULL,
-    path character varying NOT NULL,
-    "binary" boolean DEFAULT false,
-    mime_type character varying DEFAULT 'text/markdown'::character varying NOT NULL,
-    repository_id bigint NOT NULL,
-    author_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: blobs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.blobs_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: blobs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.blobs_id_seq OWNED BY public.blobs.id;
-
-
---
 -- Name: posts; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -350,7 +312,7 @@ CREATE TABLE public.posts (
     summary text,
     slug character varying NOT NULL,
     body text,
-    blob_id bigint NOT NULL,
+    blob_path character varying,
     author_id bigint NOT NULL,
     ancestry character varying,
     topics character varying[] DEFAULT '{}'::character varying[],
@@ -535,13 +497,6 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
--- Name: blobs id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.blobs ALTER COLUMN id SET DEFAULT nextval('public.blobs_id_seq'::regclass);
-
-
---
 -- Name: posts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -582,14 +537,6 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
-
-
---
--- Name: blobs blobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.blobs
-    ADD CONSTRAINT blobs_pkey PRIMARY KEY (id);
 
 
 --
@@ -641,55 +588,6 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: index_blobs_on_author_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_blobs_on_author_id ON public.blobs USING btree (author_id);
-
-
---
--- Name: index_blobs_on_binary; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_blobs_on_binary ON public.blobs USING btree ("binary");
-
-
---
--- Name: index_blobs_on_name; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_blobs_on_name ON public.blobs USING btree (name);
-
-
---
--- Name: index_blobs_on_oid_and_repository_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_blobs_on_oid_and_repository_id ON public.blobs USING btree (oid, repository_id);
-
-
---
--- Name: index_blobs_on_path_and_repository_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_blobs_on_path_and_repository_id ON public.blobs USING btree (path, repository_id);
-
-
---
--- Name: index_blobs_on_repository_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_blobs_on_repository_id ON public.blobs USING btree (repository_id);
-
-
---
--- Name: index_blobs_on_slug_and_repository_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_blobs_on_slug_and_repository_id ON public.blobs USING btree (slug, repository_id);
-
-
---
 -- Name: index_posts_on_ancestry; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -704,10 +602,10 @@ CREATE INDEX index_posts_on_author_id ON public.posts USING btree (author_id);
 
 
 --
--- Name: index_posts_on_blob_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_posts_on_blob_path_and_author_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_posts_on_blob_id ON public.posts USING btree (blob_id);
+CREATE INDEX index_posts_on_blob_path_and_author_id ON public.posts USING btree (blob_path, author_id);
 
 
 --
@@ -830,27 +728,11 @@ CREATE TRIGGER logidze_on_posts BEFORE INSERT OR UPDATE ON public.posts FOR EACH
 
 
 --
--- Name: blobs fk_rails_8ea1738890; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.blobs
-    ADD CONSTRAINT fk_rails_8ea1738890 FOREIGN KEY (repository_id) REFERENCES public.repositories(id);
-
-
---
 -- Name: ssh_keys fk_rails_bacf7e1718; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ssh_keys
     ADD CONSTRAINT fk_rails_bacf7e1718 FOREIGN KEY (user_id) REFERENCES public.users(id);
-
-
---
--- Name: posts fk_rails_cba9308a63; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.posts
-    ADD CONSTRAINT fk_rails_cba9308a63 FOREIGN KEY (blob_id) REFERENCES public.blobs(id);
 
 
 --
@@ -863,7 +745,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180127181248'),
 ('20180127181249'),
 ('20190308201406'),
-('20190416114842'),
 ('20190416114847'),
 ('20190601073804'),
 ('20190706110353'),

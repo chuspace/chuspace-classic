@@ -12,7 +12,9 @@ class CreatePosts < ActiveRecord::Migration[6.0]
 
       t.text :body
 
-      t.references :blob, foreign_key: true, null: false
+      t.string :blob_path
+      t.index %i[blob_path author_id]
+
       t.bigint :author_id, foreign_key: true, null: false
       t.index :author_id
 

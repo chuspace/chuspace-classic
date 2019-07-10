@@ -12,7 +12,7 @@ module ApplicationHelper
       },
       { divider: true },
       { label: 'Profile', url: user_url(Current.user), options: {} },
-      { label: 'Write post', url: new_blob_url, options: {} },
+      { label: 'Write post', url: new_post_url, options: {} },
       { label: 'Settings', url: settings_url, options: {} },
       { divider: true },
       { label: 'Sign out', url: signin_url(Current.user), options: { method: :delete } }
