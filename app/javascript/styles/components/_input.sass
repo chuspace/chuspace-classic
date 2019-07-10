@@ -24,6 +24,13 @@
       &::after
         @apply border-none
 
+    &__label--floating
+      &::before
+        @apply absolute text-sm border-r pr-2 italic pointer-events-none text-grey-light font-headings
+        content: attr(data-label)
+        top: calc(100% / 2 - 0.4rem)
+        right: 110%
+
 .input
   @apply py-2 bg-white w-full text-base
   transition: border-color 0.5s ease

@@ -16,7 +16,7 @@ class Blob < ApplicationRecord
   delegate :content, to: :git_blob
 
   def git_blob
-    @git_blob ||= repository.lookup(oid)
+    @git_blob ||= repository.rugged.blob_at(repository.commit_sha, path)
   end
 
   def to_param

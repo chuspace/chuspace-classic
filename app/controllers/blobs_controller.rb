@@ -8,7 +8,7 @@ class BlobsController < ApplicationController
   layout 'editor', only: %i[new edit]
 
   def index
-    @blobs = Blob.all.limit(20).order(id: :desc)
+    @blobs = Blob.all.includes(:author, :repository).limit(20).order(id: :desc)
   end
 
   def new
@@ -24,8 +24,8 @@ class BlobsController < ApplicationController
       author = Current.user
       repository = author.repository
       next_blob_id = repository.blobs.maximum(:id)&.next || 1
-      name = "#{next_blob_id}-blob"
-      oid = Rugged::Repository.hash_data(blob_params[:body] || '', :blob)
+      name = "#{next_blob_id}-#{FastSlug.generate(FastMarkdown.title(blob_params[:body] || ''))}"
+      oid = Rugged::Repository.hash_data(blob_params[:body], :blob)
 
       blob = repository.blobs.build(
         author: author,
@@ -37,7 +37,7 @@ class BlobsController < ApplicationController
 
       if blob.save
         repository.create_commit(message: params[:commit_message], content: blob_params[:body], path: blob.path)
-        redirect_to edit_blob_path(blob)
+        render json: { redirect: edit_blob_path(blob), slug: blob.slug }
       else
         render :new
       end

@@ -10,7 +10,7 @@ SimpleForm.setup do |config|
 
     b.use :label, class: 'input__label'
 
-    b.wrapper tag: 'div', class: 'input__container' do |input|
+    b.wrapper :input_container, tag: 'div', class: 'input__container' do |input|
       input.use :html5
       input.use :placeholder
       input.optional :maxlength

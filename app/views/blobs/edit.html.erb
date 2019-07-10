@@ -4,6 +4,7 @@
   method="PATCH"
   content="<%= @blob.content %>"
   id="<%= @blob.slug %>"
+  class='chu-editor'
 >
 </chu-editor>
 
@@ -22,8 +23,8 @@
 
     <h3 class='border-b pb-2 inline-block text-lg'>Publish</h3>
 
-    <div class='card card--default w-3/4 mx-auto'>
-      <%= simple_form_for @post, remote: true, onkeydown: "return !event.keyCode === 13" do |f| %>
+    <div class='card card--default w-3/4 mx-auto mt-8'>
+      <%= simple_form_for @post, remote: true, onSubmit: "return !event.keyCode === 13" do |f| %>
         <h1 id="title" class='title title--nohover text-3xl'></h1>
         <h2 id="summary" class='summary summary--nohover text-grey-light mt-8 text-2xl'></h2>
 
@@ -34,7 +35,7 @@
           label="Topics"
           keys="name"
           placeholder="Type to add topics"
-          hint="<%= t('form.hints.post.topics')%>"
+          hint="<%= t('form.hints.post.topics') %>"
           class='w-full block mt-12'
           noresults
         >
@@ -47,11 +48,18 @@
           label="Parent"
           keys="slug"
           placeholder="Type to select a post"
-          hint="<%= t('form.hints.post.parent')%>"
+          hint="<%= t('form.hints.post.parent') %>"
           class='w-full block mt-12'>
         </input-autocomplete>
 
-        <%= f.submit 'Publish now', class: 'button button--active float-right mt-8 text-base font-headings button--disabled' %>
+        <%= f.input :commit_message,
+          as: :fake,
+          label: false,
+          hint: t('form.hints.post.commit_message'),
+          input_container_html: { class: 'input__container__label--floating', data: { label: 'Commit message' } }
+        %>
+
+        <%= f.submit 'Publish now', class: 'button button--active float-right mt-12 text-base button--disabled' %>
       <% end %>
     </div>
   </div>

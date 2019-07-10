@@ -15,7 +15,6 @@ export default class ChuEditor extends LitElement {
     return {
       url: { type: String, reflect: true },
       id: { type: String },
-      method: { type: String, reflect: true },
       content: { type: String },
       saving: { type: Boolean, reflect: true },
       autofocus: { type: Boolean }
@@ -24,12 +23,15 @@ export default class ChuEditor extends LitElement {
 
   onRecieved = (data: any) => {
     this.saving = false
-
     console.log(data)
   }
 
   onSubscribed = () => {
     console.log('connected')
+  }
+
+  get isPersisted() {
+    return !!this.id
   }
 
   async connectedCallback() {
@@ -50,17 +52,21 @@ export default class ChuEditor extends LitElement {
       content: this.content || ''
     })
 
-    this.setPublishAttrs()
+    window.onbeforeunload = () => (this.saving ? 'Are you sure you want to navigate away?' : null)
+
+    if (this.isPersisted) this.updatePublishDialog()
   }
 
   disconnectedCallback() {
     super.disconnectedCallback()
 
-    ActioncableClient.unsubscribe('PostChannel')
+    if (ActioncableClient.subscribedTo('AutosaveChannel')) ActioncableClient.unsubscribe('AutosaveChannel')
     this.editor.destroy()
+
+    window.onbeforeunload = null
   }
 
-  setPublishAttrs() {
+  updatePublishDialog() {
     const dialog = document.querySelector('dialog')
 
     if (!dialog) return
@@ -70,10 +76,10 @@ export default class ChuEditor extends LitElement {
 
     if (!title || !summary) return
 
-    title.textContent = this.editor.getTitle()
+    title.textContent = this.editor.title
 
-    if (this.editor.getSummary()) {
-      summary.textContent = this.editor.getSummary()
+    if (this.editor.summary) {
+      summary.textContent = this.editor.summary || ''
       summary.classList.remove('summary__empty')
     } else {
       summary.textContent = "You haven't written a summary"
@@ -82,10 +88,10 @@ export default class ChuEditor extends LitElement {
   }
 
   updated = () => {
-    if (this.method === 'PATCH') {
+    if (this.isPersisted) {
       this.subscription = ActioncableClient.subscribe(
         {
-          channel: 'PostChannel',
+          channel: 'AutosaveChannel',
           slug: this.id
         },
         {
@@ -97,42 +103,35 @@ export default class ChuEditor extends LitElement {
   }
 
   onChange = () => {
-    this.setPublishAttrs()
+    this.updatePublishDialog()
+    this.saving = true
 
-    if (this.saving) return
-    switch (this.method) {
-      case 'POST':
-        this.create()
-        break
-
-      default:
-        this.autosave()
-        break
+    if (this.isPersisted) {
+      this.autosave()
+    } else {
+      this.create()
     }
   }
 
   get payload() {
     return {
-      blob: { body: this.editor.getMarkdown() }
+      body: this.editor.content
     }
   }
 
   autosave = debounce(
     () => {
-      this.saving = true
       this.subscription.send(this.payload)
     },
-    250,
-    { maxWait: 1000 }
+    2000,
+    { maxWait: 2000 }
   )
 
   create = debounce(
     () => {
-      this.saving = true
-
       fetch(this.url, {
-        method: this.method,
-        body: JSON.stringify(this.payload),
+        method: 'POST',
+        body: JSON.stringify({ blob: this.payload }),
         headers: {
           'Content-Type': 'application/json',
           'X-CSRF-TOKEN': Rails.csrfToken()
@@ -140,11 +139,9 @@ export default class ChuEditor extends LitElement {
       })
         .then(response => response.json())
         .then(response => {
-          if (response.url) {
+          if (response.redirect) {
             window.history.pushState(null, 'Edit', response.redirect)
-            this.url = response.url
             this.id = response.slug
-            this.method = 'PATCH'
           }
           this.saving = false
           return response

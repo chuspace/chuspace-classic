@@ -161,7 +161,7 @@ export default class InputAutocomplete extends LitElement {
   render() {
     return html`
       <div class="form_field__container">
-        <div class="input__container" data-label="${this.label}">
+        <div class="input__container input__container__label--floating" data-label="${this.label}">
           <div class="autocomplete__container mt-4">
             ${this.items.map(
               tag =>

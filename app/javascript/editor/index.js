@@ -32,11 +32,17 @@ function arrowHandler(dir) {
   }
 }
 
+type Options = {
+  autoFocus: boolean,
+  element: HTMLElement,
+  content: string,
+  onChange: () => void
+}
+
 export default class Editor {
   options = {}
   element: HTMLElement
   keymaps: any
-  content: string
   inputRules: []
   pasteRules: []
   state: EditorState
@@ -46,7 +52,7 @@ export default class Editor {
   activeNodes: {}
   activeMarkAttrs: {}
 
-  constructor(options = {}) {
+  constructor(options: Options = {}) {
     this.options = options
     this.element = options.element
     this.keymaps = this.createKeymaps()
@@ -105,7 +111,7 @@ export default class Editor {
           ArrowDown: arrowHandler('down')
         }),
         keymap(baseKeymap),
-        dropCursor(this.options.dropCursor),
+        dropCursor(),
         gapCursor(),
         new Plugin({
           key: new PluginKey('editable'),
@@ -206,23 +212,23 @@ export default class Editor {
     )
   }
 
-  getMarkdown() {
+  get content() {
     const markdown = markdownSerializer.serialize(this.state.doc)
     return markdown
   }
 
-  getTitle() {
+  get title() {
     return this.state.doc.firstChild.textContent
   }
 
-  getSummary() {
+  get summary() {
     const summaryNode = this.state.doc.content.content[1]
 
     if (summaryNode && summaryNode.type.name === 'heading' && summaryNode.attrs.level === 2) {
       return summaryNode.textContent
     }
 
-    return null
+    return ''
   }
 
   destroy() {

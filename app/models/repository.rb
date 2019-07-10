@@ -104,8 +104,6 @@ class Repository < ApplicationRecord
         action: action,
         options: { commit: { message: message }, file: { content: content, path: path } }
       )
-
-    self.update(commit_sha: commit_sha)
   end
 
   private

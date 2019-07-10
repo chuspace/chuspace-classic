@@ -21,12 +21,6 @@ input-autocomplete
         &:hover, &:focus
           @apply outline-none appearance-none border-none shadow-none
 
-      &::before
-        @apply absolute text-sm border-r pr-2 italic pointer-events-none text-grey-light font-headings
-        content: attr(data-label)
-        top: calc(100% / 2 - 0.4rem)
-        right: 110%
-
       .autocomplete__list
         @apply absolute bg-white shadow-md list-none p-0 m-0 text-sm z-50
         top: 42px
