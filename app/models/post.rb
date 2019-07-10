@@ -2,12 +2,16 @@
 # frozen_string_literal: true
 
 class Post < ApplicationRecord
+  include AASM
+
   belongs_to :author, class_name: 'User'
 
   has_ancestry
   has_logidze
 
-  validates_presence_of :slug, :blob_path
+  enum status: { draft: 0, published: 1, archived: 2 }
+
+  validates_presence_of :slug, :blob_path, :status
   validates_presence_of :title, :summary, :topics, :body, :published_at, if: :published?
   validates_length_of :title, :slug, maximum: 100, if: :published?
   validates_length_of :summary, maximum: 140, if: :published?
@@ -18,6 +22,25 @@ class Post < ApplicationRecord
 
   validates :slug, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
   validates :published_at, date: true, if: :published?
+
+  delegate :content, to: :blob, prefix: true
+
+  aasm column: :status, enum: true do
+    state :draft, initial: true
+    state :published, :archived
+
+    event :publish do
+      transitions from: :draft, to: :published
+    end
+
+    event :archive do
+      transitions from: :published, to: :archived
+    end
+
+    event :unpublish do
+      transitions from: :published, to: :draft
+    end
+  end
 
   def blob
     @blob ||= author.repository.blob_at(path: blob_path)
@@ -40,6 +63,22 @@ class Post < ApplicationRecord
     else
       nil
     end
+  end
+
+  def title
+    super || FastMarkdown.title(blob.content)
+  end
+
+  def outdated?
+    Rugged::Repository.hash_data(body, :blob) != blob.id
+  end
+
+  def body_html
+    FastMarkdown.to_html(body).html_safe
+  end
+
+  def blob_html
+    FastMarkdown.to_html(blob_content).html_safe
   end
 
   def published?

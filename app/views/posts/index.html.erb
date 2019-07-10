@@ -1,11 +1,9 @@
 <div class='mx-auto w-2/3'>
   <section class='post-list mt-20'>
-    <%= render 'navigation' %>
+    <%= render 'shared/navigation' %>
 
     <% @posts.each do |post| %>
-      <%= link_to post_path(post) do %>
-        <%= render 'post_item', post: post %>
-      <% end %>
+      <%= render 'post', post: post %>
     <% end %>
   </section>
 </div>

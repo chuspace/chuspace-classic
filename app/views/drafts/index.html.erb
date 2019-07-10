@@ -1,0 +1,9 @@
+<div class='mx-auto w-2/3'>
+  <section class='post-list mt-20'>
+    <%= render partial: 'shared/navigation' %>
+
+    <% @drafts.each do |draft| %>
+      <%= render 'draft', draft: draft %>
+    <% end %>
+  </section>
+</div>

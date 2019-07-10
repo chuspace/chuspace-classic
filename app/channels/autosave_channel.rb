@@ -3,7 +3,7 @@
 
 class AutosaveChannel < ApplicationCable::Channel
   def subscribed
-    @post = current_user.repository.posts.find_by(slug: params[:slug])
+    @post = current_user.posts.find_by(slug: params[:slug])
 
     if @post.blank?
       reject
@@ -14,7 +14,7 @@ class AutosaveChannel < ApplicationCable::Channel
   end
 
   def receive(data)
-    @post.repository.create_commit(content: data['body'], path: @post.blob_path, action: :update)
+    current_user.repository.create_commit(content: data['body'], path: @post.blob_path, action: :update)
     ActionCable.server.broadcast(@post, { success: true }.to_json)
   end
 

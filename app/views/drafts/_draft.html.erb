@@ -1,0 +1,15 @@
+<%= link_to edit_post_path(draft) do %>
+  <article class='py-6'>
+    <div class='header'>
+      <h4 class='pb-4'>
+        <%= draft.title %>
+      </h4>
+    </div>
+
+    <div class='author mt-4'>
+      <p class='text-sm text-grey'>
+        By <span><%= draft.author.name %></span>
+      </p>
+    </div>
+  </article>
+<% end %>

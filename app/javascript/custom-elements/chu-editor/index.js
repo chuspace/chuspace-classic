@@ -131,7 +131,7 @@ export default class ChuEditor extends LitElement {
     () => {
       fetch(this.url, {
         method: 'POST',
-        body: JSON.stringify({ blob: this.payload }),
+        body: JSON.stringify({ post: this.payload }),
         headers: {
           'Content-Type': 'application/json',
           'X-CSRF-TOKEN': Rails.csrfToken()
@@ -139,13 +139,16 @@ export default class ChuEditor extends LitElement {
       })
         .then(response => response.json())
         .then(response => {
+          console.log(response)
+
           if (response.redirect) {
             window.history.pushState(null, 'Edit', response.redirect)
             this.id = response.slug
           }
-          this.saving = false
+
           return response
         })
+        .finally(() => (this.saving = false))
     },
     2000,
     { maxWait: 5000 }

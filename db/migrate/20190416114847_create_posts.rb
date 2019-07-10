@@ -15,6 +15,9 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.string :blob_path
       t.index %i[blob_path author_id]
 
+      t.integer :status, default: 0, null: false
+      t.index :status
+
       t.bigint :author_id, foreign_key: true, null: false
       t.index :author_id
 

@@ -28,7 +28,7 @@ class Repository < ApplicationRecord
   validates :name, :path, presence: true, uniqueness: true
 
   before_validation :assign_default_attributes, on: :create
-  before_create :create_git_repo, :create_git_hooks, :create_initial_commit_and_assign_commit_sha
+  before_create :create_git_repo, :create_git_hooks, :create_initial_commit
   before_save :rename_git_repo, if: -> { !new_record? && path_changed? }
 
   after_destroy :destroy_git_repo
@@ -58,16 +58,20 @@ class Repository < ApplicationRecord
   end
 
   def commit
-    lookup(commit_sha)
+    head&.target
+  end
+
+  def commit_sha
+    head&.target&.oid
   end
 
   def blobs
-    @blobs ||= Git::Blob.all(repository, commit_sha)
+    @blobs ||= Git::Blob.all(self, commit_sha)
   end
 
   def blob_at(path:)
     blob = rugged.blob_at(commit_sha, path)
-    Git::Blob.find(repository, blob.oid, commit_sha)
+    Git::Blob.find(self, blob.oid, commit_sha)
   end
 
   def size
@@ -105,13 +109,13 @@ class Repository < ApplicationRecord
         "Deleted #{path}"
       end
 
-    commit_sha =
-      Git::Commit.create(
-        repository: self,
-        committer: self.author,
-        action: action,
-        options: { commit: { message: message }, file: { content: content, path: path } }
-      )
+
+    Git::Commit.create(
+      repository: self,
+      committer: self.author,
+      action: action,
+      options: { commit: { message: message }, file: { content: content, path: path } }
+    )
   end
 
   private
@@ -155,13 +159,12 @@ class Repository < ApplicationRecord
     end
   end
 
-  def create_initial_commit_and_assign_commit_sha
-    self.commit_sha =
-      Git::Commit.create(
-        repository: self,
-        committer: author,
-        options: { commit: { message: 'Initial commit' }, file: { content: GITIGNORE, path: GITIGNORE_PATH } }
-      )
+  def create_initial_commit
+    Git::Commit.create(
+      repository: self,
+      committer: author,
+      options: { commit: { message: 'Initial commit' }, file: { content: GITIGNORE, path: GITIGNORE_PATH } }
+    )
   end
 
   def destroy_git_repo

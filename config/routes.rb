@@ -21,11 +21,14 @@ Rails.application.routes.draw do
 
   resources :users, path: 'u', param: :nickname
   resources :posts, path: 'p', param: :slug do
+    collection do
+      resources :drafts, only: :index
+    end
+
     resources :publish, only: :index
   end
 
   resources :images, only: %i[create destroy]
-
   resources :settings, only: :index
 
   namespace :settings do

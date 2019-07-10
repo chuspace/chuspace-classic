@@ -313,6 +313,7 @@ CREATE TABLE public.posts (
     slug character varying NOT NULL,
     body text,
     blob_path character varying,
+    status integer DEFAULT 0 NOT NULL,
     author_id bigint NOT NULL,
     ancestry character varying,
     topics character varying[] DEFAULT '{}'::character varying[],
@@ -351,7 +352,6 @@ CREATE TABLE public.repositories (
     name character varying DEFAULT 'blog'::character varying NOT NULL,
     full_name character varying NOT NULL,
     path character varying NOT NULL,
-    commit_sha character varying NOT NULL,
     author_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -623,6 +623,13 @@ CREATE INDEX index_posts_on_slug_and_author_id ON public.posts USING btree (slug
 
 
 --
+-- Name: index_posts_on_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_posts_on_status ON public.posts USING btree (status);
+
+
+--
 -- Name: index_posts_on_topics; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -634,13 +641,6 @@ CREATE INDEX index_posts_on_topics ON public.posts USING gin (topics);
 --
 
 CREATE INDEX index_repositories_on_author_id ON public.repositories USING btree (author_id);
-
-
---
--- Name: index_repositories_on_commit_sha; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_repositories_on_commit_sha ON public.repositories USING btree (commit_sha);
 
 
 --
