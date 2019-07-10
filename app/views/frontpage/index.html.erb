@@ -1,5 +1,5 @@
 <div class='mx-auto w-2/3'>
-  <section class='post-list mt-20'>
+  <section class='list mt-20'>
     <% if @posts.any? %>
       <% @posts.each do |post| %>
         <%= render 'posts/post', post: post %>
@@ -7,7 +7,7 @@
     <% else %>
       <div class='placeholder'>
         <h1 class='text-3xl'>No posts published yet</h1>
-        <%= link_to 'Write a post', new_post_path, class: 'button button--active mt-4 inline-block' %>
+        <%= link_to 'Write a post', new_post_path, class: 'button button--fill mt-4 inline-block' %>
       </div>
     <% end %>
   </section>

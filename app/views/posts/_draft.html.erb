@@ -1,16 +1,22 @@
-<%= link_to edit_post_path(draft) do %>
-  <article class='py-6'>
+<article class='list__item list__item--bordered'>
+  <%= link_to edit_post_path(draft) do %>
     <div class='header'>
-      <h4 class='pb-4'>
-        <%= draft.title %>
-      </h4>
-      <p class='text-grey'><%= draft.summary %></p>
+      <h3><%= draft.title %></h3>
+      <%= content_tag :p, draft.summary, class: 'text-grey tracking-normal text-sm leading-normal w-2/3 mt-2' %>
     </div>
+  <% end %>
 
-    <div class='author mt-4'>
-      <p class='text-sm text-grey'>
-        By <span><%= draft.author.name %></span>
-      </p>
-    </div>
-  </article>
-<% end %>
+  <div class='text-sm mt-4 flex items-center'>
+    <p class='text-grey mr-4'>
+      Last edited <%= distance_of_time_in_words_to_now(draft.updated_at) %> ago
+    </p>
+
+    <%= link_to 'Delete',
+      post_path(draft),
+      method: :delete,
+      remote: true,
+      class: 'link link--danger underline',
+      data: { confirm: 'Are you sure?' }
+    %>
+  </div>
+</article>

@@ -6,7 +6,7 @@
     <%= javascript_pack_tag 'application' %>
     <%= stylesheet_pack_tag 'application', media: 'all' %>
   </head>
-  <body class="application flex-body" data-controller='popper'>
+  <body class="flex-body" data-controller='popper'>
     <% flash.each do |key, value| %>
       <alert-notification
         level='<%= key %>'
@@ -15,9 +15,7 @@
       </alert-notification>
     <% end %>
 
-    <div class='container mx-auto'>
-      <%= render 'layouts/header' %>
-    </div>
+    <%= render 'layouts/header' %>
 
     <section class="content">
       <%= yield %>

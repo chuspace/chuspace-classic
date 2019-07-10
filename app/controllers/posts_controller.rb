@@ -3,7 +3,7 @@
 
 class PostsController < ApplicationController
   before_action :authenticate!, except: %i[show]
-  before_action :find_post, except: %i[index new]
+  before_action :find_post, except: %i[index new create]
 
   layout 'editor', only: %i[new edit]
 
@@ -12,7 +12,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    redirect_to root_path if @post.blank?
+    redirect_to edit_post_path(@post) if @post.draft?
   end
 
   def create
@@ -37,7 +37,7 @@ class PostsController < ApplicationController
 
   def destroy
     if @post.destroy
-      redirect_to root_path
+      redirect_to user_drafts_path(@post.author)
     else
       redirect_to post_path(@post)
     end
@@ -50,6 +50,6 @@ class PostsController < ApplicationController
   end
 
   def find_post
-    @post = Current.user.posts.find_by(slug: params[:slug])
+    @post = Current.user.posts.find_by!(slug: params[:slug])
   end
 end

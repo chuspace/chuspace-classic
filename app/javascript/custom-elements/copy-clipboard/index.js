@@ -2,6 +2,8 @@
 
 import { LitElement, customElement, html } from 'lit-element'
 
+import ClipboardJS from 'clipboard'
+
 const SVG_RATIO = 0.81
 
 export default class CopyClipboard extends LitElement {
@@ -11,10 +13,14 @@ export default class CopyClipboard extends LitElement {
     }
   }
 
-  connectedCallback() {
-    super.connectedCallback()
+  async connectedCallback() {
+    await super.connectedCallback()
 
-    this.initClipboardJS && this.initClipboardJS(this)
+    if (this.initClipboardJS) {
+      this.initClipboardJS(this)
+    } else {
+      new ClipboardJS(this)
+    }
   }
 
   createRenderRoot() {

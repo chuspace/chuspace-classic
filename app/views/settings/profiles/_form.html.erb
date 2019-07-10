@@ -1,12 +1,12 @@
 <%= simple_form_for @user, remote: true do |f| %>
   <div class='flex'>
     <div class='avatar w-1/3 mt-8'>
-      <%= component 'avatar', avatar: @user.avatar, initials: @user.initials, variant: :sm, css_class: 'mx-auto' %>
-      <%= f.input :avatar, as: :file, label: false, placeholder: 'Upload avatar' %>
+      <%= component 'avatar', avatar: @user.avatar, initials: @user.initials, variant: :xl, css_class: 'mx-auto' %>
+      <%= f.input :avatar, as: :file, label: false %>
     </div>
 
     <div class='form w-2/3'>
-      <%= f.input :name, placeholder: 'Your name' %>
+      <%= f.input :name, placeholder: 'Your name', autofocus: true %>
       <%= f.input :bio, placeholder: 'Bio', input_html: { data: { gramm: false } } %>
       <%= f.input :url, placeholder: 'Website' %>
       <%= f.input :location, placeholder: 'Location' %>
@@ -14,5 +14,8 @@
     </div>
   </div>
 
-  <%= f.submit('Submit', class: 'button button--active mt-8 float-right') %>
+  <div class='float-right mt-8'>
+    <%= f.submit 'Submit', class: 'button button--fill  mr-2 ' %>
+    <%= link_to 'Cancel', user_path(@user), class: 'button button--default inline-block' %>
+  </div>
 <% end %>

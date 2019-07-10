@@ -6,10 +6,10 @@
     </p>
   </section>
 
-  <section class='mt-4'>
+  <section class='mt-8'>
     <%= simple_form_for @user, url: signins_path do |f| %>
       <%= f.input :email, autofocus: true %>
-      <div class='flex items-center mt-4'>
+      <div class='flex items-center mt-8'>
         <%= f.button :button, 'Login' %>
         <%= link_to('Signup', root_path, class: 'link text-sm underline ml-4') %>
       </div>

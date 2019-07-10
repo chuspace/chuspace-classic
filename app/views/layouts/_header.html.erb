@@ -1,10 +1,12 @@
 <header>
-  <nav class='flex justify-between items-center py-6'>
+  <nav class='container flex justify-between items-center py-2'>
     <% if Current.user.present? %>
       <%= component 'logo', type: :badge %>
+      <%= @editor_header %>
       <%= render 'header/user'  %>
     <% else %>
       <%= component 'logo', type: :text %>
+      <%= @editor_header %>
       <%= render 'header/guest'  %>
     <% end %>
   </nav>

@@ -7,9 +7,11 @@ import { LitElement, customElement, html } from 'lit-element'
 import ActioncableClient from 'helpers/actioncable-client'
 import Editor from 'editor'
 import debounce from 'lodash/debounce'
+import readingTime from 'helpers/reading-time'
 
 export default class ChuEditor extends LitElement {
   editor: Editor
+  status: 'Saved'
 
   static get properties() {
     return {
@@ -66,6 +68,11 @@ export default class ChuEditor extends LitElement {
     window.onbeforeunload = null
   }
 
+  updateStatuses() {
+    const status = document.getElementById('editor-status')
+    status.textContent = this.saving ? 'Saving' : 'Saved'
+  }
+
   updatePublishDialog() {
     const dialog = document.querySelector('dialog')
 
@@ -88,6 +95,8 @@ export default class ChuEditor extends LitElement {
   }
 
   updated = () => {
+    this.updateStatuses()
+
     if (this.isPersisted) {
       this.subscription = ActioncableClient.subscribe(
         {
@@ -139,11 +148,10 @@ export default class ChuEditor extends LitElement {
       })
         .then(response => response.json())
         .then(response => {
-          console.log(response)
-
           if (response.redirect) {
             window.history.pushState(null, 'Edit', response.redirect)
             this.id = response.slug
+            this.requestUpdate()
           }
 
           return response

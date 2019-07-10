@@ -3,7 +3,7 @@
 
 class LogoComponent < Components::Component
   TYPES = {
-    badge: { css_class: 'logo--badge', label: 'C' }, text: { css_class: 'logo--text', label: 'Chuspace' }
+    badge: { css_class: 'logo--badge', label: 'C' }, text: { css_class: 'logo--text', label: 'Chuspace', version: 'axiom' }
   }.freeze
 
   attribute :type
@@ -18,6 +18,6 @@ class LogoComponent < Components::Component
   end
 
   def version
-    'axiom'
+    TYPES[type.to_sym][:version]
   end
 end

@@ -1,8 +1,10 @@
 <% if @posts.any? %>
-  <%= render partial: 'posts/post', collection: @posts %>
+  <div class='list'>
+    <%= render partial: 'posts/post', collection: @posts %>
+  </div>
 <% else %>
   <div class='placeholder'>
     <h1 class='text-3xl'>You haven't published any posts</h1>
-    <%= link_to 'Publish one', new_post_path, class: 'button button--active mt-4 inline-block' %>
+    <%= link_to 'Publish one', new_post_path, class: 'button button--fill mt-4 inline-block' %>
   </div>
 <% end %>

@@ -74,6 +74,10 @@ class Repository < ApplicationRecord
     Git::Blob.find(self, blob.oid, commit_sha)
   end
 
+  def ssh_path
+    "git@chuspace.com:#{full_name}.git"
+  end
+
   def size
     size = popen(%w[du -sk], path).first.strip.to_i
     (size.to_f / 1_024).round(2)

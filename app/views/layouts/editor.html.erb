@@ -7,32 +7,22 @@
     <%= stylesheet_pack_tag 'application', media: 'all' %>
   </head>
 
-  <body class="editor" data-controller="compose popper">
-    <div class='container mx-auto'>
-      <header>
-        <nav class='flex justify-between items-center py-6'>
-          <%= component 'logo', type: :badge %>
-          <div class='flex-1 ml-4'>
-            <%= @post.author.name %>
-          </div>
+  <body>
+    <% @editor_header = capture do %>
+      <div class='flex-1 ml-4'>
+        <%= @post.author.name %>
+      </div>
 
-          <div class='flex justify-end items-center flex-1 mr-4'>
-            <div class="mr-4 badge badge--grey">Draft</div>
-            <div class="mr-4 badge badge--grey">Saved</div>
-            <div class="mr-4 badge badge--grey">4 mins</div>
-            <dialog-opener class='link link-default' target='publish-<%= @post.slug %>'>Publish</dialog-opener>
-          </div>
+      <div class='flex justify-end items-center flex-1 mr-8'>
+        <div class="mr-4 badge badge--grey"><%= @post.status.titlecase %></div>
+        <div class="mr-4 badge badge--grey" id='editor-status'>Saved</div>
+        <dialog-opener class='button button--active button--slim' target='publish-<%= @post.slug %>'>Publish</dialog-opener>
+      </div>
+    <% end %>
 
-          <% if Current.user.present? %>
-            <%= render 'header/user'  %>
-          <% else %>
-            <%= render 'header/guest'  %>
-          <% end %>
-        </nav>
-      </header>
-    </div>
+    <%= render 'layouts/header' %>
 
-    <section class='w-1/2 mx-auto mt-12 pb-32'>
+    <section class='content w-1/2 mx-auto pb-32'>
       <%= yield %>
     </section>
   </body>

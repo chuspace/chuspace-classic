@@ -25,6 +25,8 @@ class Post < ApplicationRecord
 
   delegate :content, to: :blob, prefix: true
 
+  DEFAULT_TITLE = 'Untitled'
+
   aasm column: :status, enum: true do
     state :draft, initial: true
     state :published, :archived
@@ -66,11 +68,11 @@ class Post < ApplicationRecord
   end
 
   def title
-    super || FastMarkdown.title(blob.content)
+    super || FastMarkdown.title(blob.content).presence || DEFAULT_TITLE
   end
 
   def summary
-    super || FastMarkdown.title(blob.content[100..-1])
+    super || FastMarkdown.title(blob.content[100..-1] || '')
   end
 
   def outdated?
