@@ -1,28 +1,6 @@
-<%= form_with scope: :ssh_key, url: settings_ssh_keys_path, data: { target: 'ssh-keys.form', action: 'ajax:success->ssh-keys#onFormSubmit' } do |f| %>
-  <div class='input-container'>
-    <%= f.label :title, class: 'input-label block' %>
-    <%= f.text_field(
-      :title,
-      data: { target: 'ssh-keys.inputTitle' },
-      autocomplete: 'title',
-      placeholder: 'Key title',
-      autofocus: true,
-      class: 'input block mb-2'
-    ) %>
-    <span class="alert alert-error mb-2 text-left" data-target='ssh-keys.inputTitleError'></span>
-  </div>
-
-  <div class='input-container'>
-    <%= f.label :ssh_key, class: 'input-label block' %>
-    <%= f.text_area(
-      :key,
-      placeholder: 'Key',
-      rows: 4,
-      data: { gramm: false, target: 'ssh-keys.inputKey' },
-      class: 'input block mb-2'
-    ) %>
-    <span class="alert alert-error mb-2 text-left" data-target='ssh-keys.inputKeyError'></span>
-  </div>
+<%= simple_form_for @key, url: settings_ssh_keys_path, remote: true do |f| %>
+  <%= f.input :title, placeholder: 'Memorable name', autofocus: true %>
+  <%= f.input :key, placeholder: 'Key', input_html: { rows: 4, data: { gramm: false } } %>
 
   <%= f.submit('Submit', class: 'button mt-4', data: { target: 'ssh-keys.submit' },) %>
 <% end %>

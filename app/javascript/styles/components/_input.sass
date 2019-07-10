@@ -30,6 +30,9 @@
         content: attr(data-label)
         top: calc(100% / 2 - 0.4rem)
         right: 110%
+  &.file
+    .input__container::after
+      @apply border-none
 
 .input
   @apply py-2 bg-white w-full text-base
