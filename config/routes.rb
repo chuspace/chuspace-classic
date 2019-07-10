@@ -2,8 +2,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root to: 'posts#index', constraints: PrivateRootConstraint.new, as: :authenticated_root
-  root to: 'pages#index'
+  root to: 'frontpage#index', constraints: PrivateRootConstraint.new, as: :authenticated_root
+  root to: 'landingpage#index'
 
   resources :signins, path: 'signin', only: %i[index create destroy]
   resources :signups, path: 'signup', only: %i[index]
@@ -19,12 +19,11 @@ Rails.application.routes.draw do
     resources :topics, only: :index
   end
 
-  resources :users, path: 'u', param: :nickname
-  resources :posts, path: 'p', param: :slug do
-    collection do
-      resources :drafts, only: :index
-    end
+  resources :users, path: 'u', param: :nickname do
+    resources :drafts, only: :index, controller: :user_drafts
+  end
 
+  resources :posts, path: 'p', param: :slug do
     resources :publish, only: :index
   end
 

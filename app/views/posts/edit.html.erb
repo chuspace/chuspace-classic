@@ -2,7 +2,7 @@
   spellcheck="false"
   url="<%= post_path(@post) %>"
   method="PATCH"
-  content="<%= @post.body %>"
+  content="<%= @post.blob_content %>"
   id="<%= @post.slug %>"
   class='chu-editor'
 >
@@ -22,7 +22,6 @@
     <% end %>
 
     <h3 class='border-b pb-2 inline-block text-lg'>Publish</h3>
-
     <div class='card card--default w-3/4 mx-auto mt-8'>
       <%= simple_form_for @post, remote: true, onSubmit: "return !event.keyCode === 13" do |f| %>
         <h1 id="title" class='title title--nohover text-3xl'></h1>

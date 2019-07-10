@@ -1,0 +1,8 @@
+<% if @drafts.any? %>
+  <%= render partial: 'posts/draft', collection: @drafts %>
+<% else %>
+  <div class='placeholder'>
+    <h1 class='text-3xl'>You haven't started writing any posts</h1>
+    <%= link_to 'Start writing...', new_post_path, class: 'button button--active mt-4 inline-block' %>
+  </div>
+<% end %>

@@ -69,12 +69,16 @@ class Post < ApplicationRecord
     super || FastMarkdown.title(blob.content)
   end
 
+  def summary
+    super || FastMarkdown.title(blob.content[100..-1])
+  end
+
   def outdated?
-    Rugged::Repository.hash_data(body, :blob) != blob.id
+    Rugged::Repository.hash_data(body || '', :blob) != blob.id
   end
 
   def body_html
-    FastMarkdown.to_html(body).html_safe
+    FastMarkdown.to_html(body || '').html_safe
   end
 
   def blob_html

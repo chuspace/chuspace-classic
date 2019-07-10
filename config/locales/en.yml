@@ -39,7 +39,7 @@ en:
     guest:
       signin_cta: Got an account?
 
-  pages:
+  landingpage:
     index:
       heading: Blogging platform for developers
       intro: Chuspace is a collaborative blogging platform made for developers. Publish, learn and inspire using the same tools you use everyday.

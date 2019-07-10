@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chuspace</title>
+    <%= csrf_meta_tags %>
+    <%= javascript_pack_tag 'application' %>
+    <%= stylesheet_pack_tag 'application', media: 'all' %>
+  </head>
+
+  <body class="editor" data-controller="compose popper">
+    <div class='container mx-auto'>
+      <header>
+        <nav class='flex justify-between items-center py-6'>
+          <%= component 'logo', type: :badge %>
+
+          <% if Current.user.present? %>
+            <%= render 'header/user'  %>
+          <% else %>
+            <%= render 'header/guest'  %>
+          <% end %>
+        </nav>
+      </header>
+    </div>
+
+    <div class='w-1/2 mx-auto mt-12'>
+      <div class='sidebar flex justify-between items-center mb-5'>
+        <%= component 'avatar', avatar: @user.avatar, initials: @user.initials, variant: :xl %>
+
+        <div class='useral flex-1 pl-4 w-75'>
+          <h3 class='f4 lh-solid mb0 black-80'><%= @user.name %></h3>
+          <p class='lh-copy mv1 gray f5'><%= @user.company %></p>
+          <p class='lh-copy mt1 black-70 mb0'><%= @user.bio %></p>
+        </div>
+      </div>
+
+      <div class='posts mt-12'>
+        <ul class="list-reset tabs">
+          <li class="tabs-tab">
+            <%= link_to 'Published', user_path(@user), class: tabs_class(user_path(@user)) %>
+          </li>
+
+          <li class="tabs-tab">
+            <%= link_to 'Drafts', user_drafts_path(@user), class: tabs_class(user_drafts_path(@user)) %>
+          </li>
+        </ul>
+
+        <%= yield %>
+      </div>
+    </div>
+
+  </body>
+</html>

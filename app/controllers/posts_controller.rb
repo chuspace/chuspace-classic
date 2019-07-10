@@ -7,10 +7,6 @@ class PostsController < ApplicationController
 
   layout 'editor', only: %i[new edit]
 
-  def index
-    @posts = Post.published.limit(20).order(id: :desc)
-  end
-
   def new
     @post = Post.new(author: Current.user)
   end

@@ -1,7 +1,7 @@
 # typed: ignore
 # frozen_string_literal: true
 
-class PagesController < ApplicationController
+class LandingpageController < ApplicationController
   def index
     @user = User.new
   end
