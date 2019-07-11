@@ -3,8 +3,11 @@
   <head>
     <title>Chuspace</title>
     <%= csrf_meta_tags %>
-    <%= javascript_pack_tag 'application' %>
-    <%= stylesheet_pack_tag 'application', media: 'all' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="prefetch" href="<%= asset_pack_path('application.js') %>" as="style" />
+
+    <%= javascript_pack_tag 'application', defer: true, 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
