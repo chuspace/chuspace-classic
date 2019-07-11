@@ -6,7 +6,7 @@ class UserDraftsController < ApplicationController
   layout 'user'
 
   def index
-    @drafts = @user.posts.draft.limit(20).order(id: :desc)
+    @drafts = @user.posts.draft.includes(author: :repository).limit(20).order(id: :desc)
   end
 
   private

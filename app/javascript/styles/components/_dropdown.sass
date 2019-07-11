@@ -2,13 +2,19 @@
   @apply w-48 absolute bg-white border border-grey-lighter rounded-sm shadow mt-2 right-0
 
   .dropdown__divider
-    @apply border-t border-grey-lighter block
+    @apply border-t border-grey-lighter block mt-1 mb-1
 
   .dropdown__item
-    @apply py-2 px-4 block overflow-hidden whitespace-no-wrap truncate
+    @apply py-2 px-4 block text-sm
 
     &:last-child
-      @apply mb-0
+      @apply mb-1
+
+    &:first-child
+      @apply pt-4
+
+    .link
+      @apply text-grey-light
 
   &:after, &:before
     bottom: 100%

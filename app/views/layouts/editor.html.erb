@@ -8,18 +8,6 @@
   </head>
 
   <body>
-    <% @editor_header = capture do %>
-      <div class='flex-1 ml-4'>
-        <%= @post.author.name %>
-      </div>
-
-      <div class='flex justify-end items-center flex-1 mr-8'>
-        <div class="mr-4 badge badge--grey"><%= @post.status.titlecase %></div>
-        <div class="mr-4 badge badge--grey" id='editor-status'>Saved</div>
-        <dialog-opener class='button button--active button--slim' target='publish-<%= @post.slug %>'>Publish</dialog-opener>
-      </div>
-    <% end %>
-
     <%= render 'layouts/header' %>
 
     <section class='content w-1/2 mx-auto pb-32'>

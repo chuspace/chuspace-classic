@@ -70,7 +70,7 @@ export default class ChuEditor extends LitElement {
 
   updateStatuses() {
     const status = document.getElementById('editor-status')
-    status.textContent = this.saving ? 'Saving' : 'Saved'
+    status.textContent = this.saving ? 'Saving...' : 'Saved'
   }
 
   updatePublishDialog() {
@@ -95,9 +95,9 @@ export default class ChuEditor extends LitElement {
   }
 
   updated = () => {
-    this.updateStatuses()
-
     if (this.isPersisted) {
+      this.updateStatuses()
+
       this.subscription = ActioncableClient.subscribe(
         {
           channel: 'AutosaveChannel',

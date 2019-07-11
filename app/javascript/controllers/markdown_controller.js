@@ -8,6 +8,7 @@ import { Controller } from 'stimulus'
 export default class extends Controller {
   connect() {
     let index = 0
+
     this.element.querySelectorAll('pre').forEach(codeNode => {
       const mode = codeNode.childNodes[0].className.split('-')[1]
       const content = codeNode.textContent

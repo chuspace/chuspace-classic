@@ -1,3 +1,15 @@
+<% @editor_header = capture do %>
+  <div class='flex items-center ml-4'>
+    <div class="mr-4"><%= @post.author.name %></div>
+    <div class="mr-4 badge badge--grey"><%= @post.status.titlecase %></div>
+    <div class="mr-4 text-grey text-sm" id='editor-status'>Saved</div>
+  </div>
+
+  <div class='flex justify-end items-center flex-1 mr-8'>
+    <dialog-opener class='button button--active button--slim' target='publish-<%= @post.slug %>'>Publish</dialog-opener>
+  </div>
+<% end %>
+
 <chu-editor
   spellcheck="false"
   url="<%= post_path(@post) %>"
@@ -51,7 +63,7 @@
           class='w-full block mt-12'>
         </input-autocomplete>
 
-        <%= f.submit 'Publish now', class: 'button button--active float-right mt-12 text-base button--disabled' %>
+        <%= f.submit 'Publish now', class: 'button button--fill float-right mt-12 text-base button--disabled' %>
       <% end %>
     </div>
   </div>

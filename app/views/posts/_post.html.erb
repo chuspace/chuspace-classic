@@ -5,13 +5,22 @@
       <%= content_tag :p, post.summary, class: 'text-grey tracking-normal text-sm leading-normal w-2/3' %>
     </div>
 
-    <div class='author mt-4'>
-      <p class='text-sm text-grey'>
-        By <span><%= post.author.name %></span>
+    <div class='text-sm text-grey flex items-center'>
+      <p class='mr-4'>
+        Last edited <%= distance_of_time_in_words_to_now(post.updated_at) %> ago
       </p>
+      <p class='mr-4'>
+        Published at <time class='text-sm text-grey'><%= post.published_at  %></time>
+      </p>
+      <%= link_to 'Edit', edit_post_path(post), class: 'link link--active underline', %>
 
-      <time class='text-sm text-grey'><%= post.published_at  %></time>
-      <%= link_to 'Edit', edit_post_path(post) %>
+      <%= link_to 'Delete',
+        post_path(draft),
+        method: :delete,
+        remote: true,
+        class: 'link link--danger underline',
+        data: { confirm: 'Are you sure?' }
+      %>
     </div>
   </article>
 <% end %>
