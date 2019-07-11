@@ -31,7 +31,7 @@ SimpleForm.setup do |config|
   config.default_wrapper = :custom
 
   config.boolean_style = :nested
-  config.button_class = 'button button--active'
+  config.button_class = 'button button--fill'
   config.error_notification_tag = :div
   config.error_notification_class = 'alert alert__error'
   config.browser_validations = false
