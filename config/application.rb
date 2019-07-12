@@ -15,7 +15,6 @@ require 'active_support/core_ext/numeric/bytes'
 require 'rails/test_unit/railtie'
 
 Bundler.require(*Rails.groups)
-
 Dotenv::Railtie.load
 
 module Chuspace

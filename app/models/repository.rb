@@ -13,6 +13,7 @@ class Repository < ApplicationRecord
   GITIGNORE_PATH = '.gitignore'
   POSTS_PATH = 'posts/.keep'
   IMAGES_PATH = 'images/.keep'
+
   GITIGNORE = <<~STRING
     # Ignore everything
     *
@@ -60,11 +61,7 @@ class Repository < ApplicationRecord
   end
 
   def commit
-    head&.target
-  end
-
-  def commit_sha
-    head&.target&.oid
+    lookup(commit_sha)
   end
 
   def blobs
@@ -72,8 +69,7 @@ class Repository < ApplicationRecord
   end
 
   def blob_at(path:)
-    blob = rugged.blob_at(commit_sha, path)
-    Git::Blob.find(self, blob.oid, commit_sha)
+    Git::Blob.find(self, path, commit_sha)
   end
 
   def ssh_path
@@ -116,12 +112,14 @@ class Repository < ApplicationRecord
       end
 
 
-    Git::Commit.create(
+    self.commit_sha = Git::Commit.create(
       repository: self,
       committer: self.author,
       action: action,
       options: { commit: { message: message }, file: { content: content, path: path } }
     )
+
+    self.save
   end
 
   private
@@ -166,7 +164,7 @@ class Repository < ApplicationRecord
   end
 
   def add_gitignore
-    Git::Commit.create(
+    self.commit_sha = Git::Commit.create(
       repository: self,
       committer: author,
       options: { commit: { message: 'Add gitignore' }, file: { content: GITIGNORE, path: GITIGNORE_PATH } }
@@ -174,7 +172,7 @@ class Repository < ApplicationRecord
   end
 
   def add_images_folder
-    Git::Commit.create(
+    self.commit_sha = Git::Commit.create(
       repository: self,
       committer: author,
       options: { commit: { message: 'Add images' }, file: { content: '', path: IMAGES_PATH } }
@@ -182,7 +180,7 @@ class Repository < ApplicationRecord
   end
 
   def add_posts_folder
-    Git::Commit.create(
+    self.commit_sha = Git::Commit.create(
       repository: self,
       committer: author,
       options: { commit: { message: 'Add posts' }, file: { content: '', path: POSTS_PATH } }

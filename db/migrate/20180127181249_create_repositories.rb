@@ -16,6 +16,9 @@ class CreateRepositories < ActiveRecord::Migration[6.0]
       t.bigint :author_id, null: false, foreign_key: true
       t.index :author_id
 
+      t.string :commit_sha, null: false
+      t.index :commit_sha, unique: true
+
       t.timestamps
     end
   end

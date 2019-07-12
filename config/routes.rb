@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     resources :publish, only: :index
   end
 
-  resources :images, only: %i[create show destroy]
+  resources :images, only: %i[create destroy]
 
   resources :settings, only: :index
 
@@ -42,4 +42,7 @@ Rails.application.routes.draw do
   end
 
   mount Easymon::Engine => '/alive' if Rails.env.production?
+
+  # Image catch all route
+  get '*path', format: false, to: 'images#show', constraints: ImageConstraint.new
 end

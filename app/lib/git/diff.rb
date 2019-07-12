@@ -32,6 +32,7 @@ module Git
 
         options ||= {}
         actual_options = filter_diff_options(options)
+
         repo.diff(common_commit, head, actual_options, *paths)
       end
 

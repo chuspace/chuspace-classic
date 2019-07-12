@@ -17,8 +17,7 @@ class PostsController < ApplicationController
 
   def create
     Post.transaction do
-      next_post_id = Current.user.posts.maximum(:id)&.next || 1
-      name = "#{next_post_id}-#{FastSlug.generate(FastMarkdown.title(post_params[:body] || ''))}"
+      name = FastSlug.generate(FastMarkdown.title(post_params[:body])[0..50])
       oid = Rugged::Repository.hash_data(post_params[:body], :blob)
 
       @post = Current.user.posts.build(
@@ -28,11 +27,15 @@ class PostsController < ApplicationController
 
       if @post.save
         Current.user.repository.create_commit(content: post_params[:body], path: @post.blob_path)
+
         render json: { redirect: edit_post_path(@post), slug: @post.slug }
       else
-        render :new
+        render json: { created: false }, status: :unprocessable_entity
       end
     end
+
+  rescue TypeError
+    render json: { created: false }, status: :unprocessable_entity
   end
 
   def destroy

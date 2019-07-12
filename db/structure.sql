@@ -303,6 +303,40 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: images; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.images (
+    id bigint NOT NULL,
+    name character varying,
+    image_data jsonb,
+    blob_path character varying,
+    repository_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: images_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.images_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: images_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.images_id_seq OWNED BY public.images.id;
+
+
+--
 -- Name: posts; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -353,6 +387,7 @@ CREATE TABLE public.repositories (
     full_name character varying NOT NULL,
     path character varying NOT NULL,
     author_id bigint NOT NULL,
+    commit_sha character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -497,6 +532,13 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: images id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.images ALTER COLUMN id SET DEFAULT nextval('public.images_id_seq'::regclass);
+
+
+--
 -- Name: posts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -537,6 +579,14 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: images images_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.images
+    ADD CONSTRAINT images_pkey PRIMARY KEY (id);
 
 
 --
@@ -585,6 +635,13 @@ ALTER TABLE ONLY public.topics
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_images_on_repository_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_images_on_repository_id ON public.images USING btree (repository_id);
 
 
 --
@@ -641,6 +698,13 @@ CREATE INDEX index_posts_on_topics ON public.posts USING gin (topics);
 --
 
 CREATE INDEX index_repositories_on_author_id ON public.repositories USING btree (author_id);
+
+
+--
+-- Name: index_repositories_on_commit_sha; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_repositories_on_commit_sha ON public.repositories USING btree (commit_sha);
 
 
 --
@@ -728,6 +792,14 @@ CREATE TRIGGER logidze_on_posts BEFORE INSERT OR UPDATE ON public.posts FOR EACH
 
 
 --
+-- Name: images fk_rails_5fba8ffc00; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.images
+    ADD CONSTRAINT fk_rails_5fba8ffc00 FOREIGN KEY (repository_id) REFERENCES public.repositories(id);
+
+
+--
 -- Name: ssh_keys fk_rails_bacf7e1718; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -750,6 +822,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190706110353'),
 ('20190709114321'),
 ('20190709114322'),
-('20190709114442');
+('20190709114442'),
+('20190711213121');
 
 

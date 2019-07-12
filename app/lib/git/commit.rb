@@ -84,8 +84,6 @@ module Git
         committer_hash = { name: committer.name, email: committer.email, time: Time.now }
 
         branch = 'refs/heads/' + branch unless branch.start_with?('refs/')
-
-        filename = file[:path].to_s
         index = repository.index
 
         unless rugged.empty?
@@ -95,6 +93,8 @@ module Git
           index.read_tree(last_commit.tree)
           parents = [last_commit]
         end
+
+        filename = file[:path].to_s
 
         if action == :remove
           index.remove(filename)

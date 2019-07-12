@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 class UserDraftsController < ApplicationController
-  before_action :find_user
+  before_action :authenticate!, :find_user
   layout 'user'
 
   def index

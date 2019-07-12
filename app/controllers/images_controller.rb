@@ -24,6 +24,9 @@ class ImagesController < ApplicationController
   def show
     filename = request.path.chomp('/')
     response = Current.user.minio_client.get_object(key: filename, bucket: Current.user.nickname)
-    send_data response.body.read, type: response.content_type, disposition: :inline
+
+    if stale?(weak_etag: response.etag, last_modified: response.last_modified, public: true)
+      send_data response.body.read, type: response.content_type, disposition: :inline
+    end
   end
 end

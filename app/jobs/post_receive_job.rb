@@ -15,10 +15,10 @@ class PostReceiveJob < ApplicationJob
       return
     end
 
-    repository.transaction do
+    author.transaction do
       old_commit = repository.lookup(repository.commit_sha)
       new_commit = repository.lookup(commit_sha)
-      diff = old_commit.diff(new_commit)
+      diff = old_commit.diff(new_commit).find_similar!(all: true)
       blobs ||= Git::Blob.all(repository, commit_sha)
 
       diff.deltas.each do |delta|
@@ -27,31 +27,27 @@ class PostReceiveJob < ApplicationJob
 
         case delta.status
         when :added, :modified
-          create_or_update(git_blob) if git_blob
+          post = author.posts.find_or_initialize_by(blob_path: git_blob.path)
+          next_post_id = author.posts.maximum(:id)&.next || 1
+
+          post.assign_attributes(slug: git_blob.id[0..8]) if post.new_record?
+          post.save
+        when :renamed
+          author.posts.find_by(blob_path: delta.old_file[:path])&.update(blob_path: delta.new_file[:path])
         when :deleted
-          repository.posts.find_by(repository: repository, blob_path: delta.old_file[:path])&.destroy
+          author.posts.find_by(blob_path: delta.old_file[:path])&.destroy
         end
       end
 
-      # if repository.update(commit_sha: commit_sha)
-      #   Rails.logger.error(
-      #     "Repository sync success: commit-#{commit_sha} author-#{author.id} repository-#{repository.id}"
-      #   )
-      # else
-      #   Rails.logger.error(
-      #     "Repository sync failed: commit-#{commit_sha} author-#{author.id} repository-#{repository.id}"
-      #   )
-      # end
+      if repository.update(commit_sha: commit_sha)
+        Rails.logger.error(
+          "Repository sync success: commit-#{commit_sha} author-#{author.id} repository-#{repository.id}"
+        )
+      else
+        Rails.logger.error(
+          "Repository sync failed: commit-#{commit_sha} author-#{author.id} repository-#{repository.id}"
+        )
+      end
     end
-  end
-
-  private
-
-  def create_or_update(git_blob)
-    post = repository.posts.find_or_initialize_by(repository: repository, blob_path: git_blob.path)
-    next_post_id = repository.posts.maximum(:id)&.next || 1
-
-    post.assign_attributes(author: author, slug: Digest::MD5.hexdigest("#{next_post_id}-#{author.nickname}-post")[0..8])
-    post.save
   end
 end
