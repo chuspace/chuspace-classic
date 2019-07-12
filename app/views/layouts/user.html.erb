@@ -19,11 +19,16 @@
 
           <div class='flex-1 pl-4 w-75'>
             <h3><%= @user.name %></h3>
-            <div class='text-sm mt-1'>
-              <p><%= @user.bio %></p>
-              <span><%= @user.company %></span> | <span><%= @user.location %></span>
-            </div>
-            <%= link_to 'Website', @user.url, class: 'link link--active underline text-sm', target: '_blank', rel: 'noopener noreferer' if @user.url %>
+
+            <%= content_tag :p, @user.bio, class: 'text-sm mt-1' if @user.bio %>
+
+            <ul class='horizontal__list text-sm'>
+              <%= content_tag :li, @user.company if @user.company %>
+              <%= content_tag :li, @user.location if @user.location %>
+              <%= content_tag :li do %>
+                <%= link_to 'Website', @user.url, class: 'link link--active underline text-sm', target: '_blank', rel: 'noopener noreferer' if @user.url %>
+              <% end %>
+            </ul>
           </div>
 
           <%= link_to 'Edit profile', settings_profiles_path, class: 'button button--active inline-block'%>

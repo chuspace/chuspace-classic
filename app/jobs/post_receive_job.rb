@@ -33,15 +33,15 @@ class PostReceiveJob < ApplicationJob
         end
       end
 
-      if repository.update(commit_sha: commit_sha)
-        Rails.logger.error(
-          "Repository sync success: commit-#{commit_sha} author-#{author.id} repository-#{repository.id}"
-        )
-      else
-        Rails.logger.error(
-          "Repository sync failed: commit-#{commit_sha} author-#{author.id} repository-#{repository.id}"
-        )
-      end
+      # if repository.update(commit_sha: commit_sha)
+      #   Rails.logger.error(
+      #     "Repository sync success: commit-#{commit_sha} author-#{author.id} repository-#{repository.id}"
+      #   )
+      # else
+      #   Rails.logger.error(
+      #     "Repository sync failed: commit-#{commit_sha} author-#{author.id} repository-#{repository.id}"
+      #   )
+      # end
     end
   end
 

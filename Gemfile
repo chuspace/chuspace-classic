@@ -8,8 +8,10 @@ ruby '2.6.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '>= 6.x'
 gem 'bundler', '1.17.2'
+
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.x'
+gem 'strong_migrations'
 
 # File uploads
 gem 'aws-sdk-s3'
@@ -101,7 +103,6 @@ group :development, :test do
   gem 'rack-proxy'
   gem 'rack-mini-profiler'
 end
-
 
 group :development do
   gem 'web-console', '>= 3.3.0', require: false

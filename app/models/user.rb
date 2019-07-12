@@ -37,7 +37,7 @@ class User < ApplicationRecord
       super(path)
 
       content_type = MimeMagic.by_path(avatar).type
-      minio_client.put_object(key: avatar, content_type: content_type, bucket: nickname, body: avatar_blob.read)
+      minio_client.put_object(key: avatar_blob.original_filename, content_type: content_type, bucket: nickname, body: avatar_blob.read)
     when String
       path = "#{nickname}/#{avatar}"
       super(path)

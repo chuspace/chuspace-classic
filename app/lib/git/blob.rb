@@ -6,7 +6,7 @@ require 'mimemagic'
 module Git
   class Blob
     include ::EncodingHelper
-    attr_accessor :id, :binary, :name, :path, :size, :content, :mode
+    attr_accessor :id, :binary, :name, :path, :size, :content, :mode, :content_type
 
     class << self
       def all(repository, commit_sha = nil)
@@ -25,13 +25,8 @@ module Git
       end
 
       def find(repository, oid, commit_sha = nil)
-        tree = commit_sha ? repository.lookup(commit_sha).tree : repository.tree
-        blob_entry = tree.find { |entry| entry[:oid] == oid }
-        name = blob_entry[:name]
-
-        if supported?(name)
-          from(repository, blob_entry, File.join(name))
-        end
+        blobs = all(repository, commit_sha)
+        blobs.find { |blob| blob.id == oid }
       end
 
       def from(repository, blob_entry, path)
@@ -43,6 +38,7 @@ module Git
             name: blob_entry[:name],
             size: blob.size,
             path: path,
+            content_type: MimeMagic.by_path(name),
             content: encode!(blob.content),
             mode: blob_entry[:filemode].to_s(8),
             binary: blob.binary?
@@ -56,7 +52,7 @@ module Git
     end
 
     def initialize(options)
-      %w[id name path size content mode binary].each { |key| self.send("#{key}=", options[key.to_sym]) }
+      %w[id name path size content mode binary content_type].each { |key| self.send("#{key}=", options[key.to_sym]) }
     end
 
     def binary?
@@ -64,11 +60,11 @@ module Git
     end
 
     def io
-      StringIO.new(body)
+      StringIO.new(content)
     end
 
     def empty?
-      !body || body == ''
+      !content || content == ''
     end
   end
 end

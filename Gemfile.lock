@@ -299,6 +299,8 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     sshkey (2.0.0)
+    strong_migrations (0.4.0)
+      activerecord (>= 5)
     term-ansicolor (1.7.1)
       tins (~> 1.0)
     thermite (0.13.0)
@@ -391,6 +393,7 @@ DEPENDENCIES
   sorbet-rails
   sorbet-runtime
   sshkey
+  strong_migrations
   turbolinks
   turbolinks_render
   web-console (>= 3.3.0)

@@ -6,17 +6,19 @@
     </div>
   <% end %>
 
-  <div class='text-sm flex items-center'>
-    <p class='text-grey mr-4'>
+  <ul class='horizontal__list text-xs mt-2'>
+    <li class='text-grey'>
       Last edited <%= distance_of_time_in_words_to_now(draft.updated_at) %> ago
-    </p>
+    </li>
 
-    <%= link_to 'Delete',
-      post_path(draft),
-      method: :delete,
-      remote: true,
-      class: 'link link--danger underline',
-      data: { confirm: 'Are you sure?' }
-    %>
-  </div>
+    <li>
+      <%= link_to 'Delete',
+        post_path(draft),
+        method: :delete,
+        remote: true,
+        class: 'link link--danger underline',
+        data: { confirm: 'Are you sure?' }
+      %>
+    </li>
+  </ul>
 </article>

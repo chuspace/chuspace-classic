@@ -9,3 +9,14 @@
 
   .list__item--bordered
     @apply border-b border-grey-lighter
+
+.horizontal__list
+    li
+      list-style: none
+      display: inline
+
+      &:after
+        content: " \00b7"
+
+      &:last-child:after
+        content: none

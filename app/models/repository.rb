@@ -11,25 +11,27 @@ class Repository < ApplicationRecord
   CONTRIBUTIONS_REF = 'refs/heads/contributions'
   GLOBAL_HOOKS_DIRECTORY = Rails.root.join('bin', 'git-hooks')
   GITIGNORE_PATH = '.gitignore'
+  POSTS_PATH = 'posts/.keep'
+  IMAGES_PATH = 'images/.keep'
   GITIGNORE = <<~STRING
     # Ignore everything
     *
-
     # Allow
     !.gitignore
-    !*.md
-    !*.png
-    !*.gif
-    !*.jpeg
-    !*.jpg
+    !/posts
+    !/posts/*.md
     !/images
+    !/images/*.png
+    !/images/*.gif
+    !/images/*.jpeg
+    !/images/*.jpg
   STRING
 
   validates :name, :path, presence: true, uniqueness: true
 
   before_validation :assign_default_attributes, on: :create
-  before_create :create_git_repo, :create_git_hooks, :create_initial_commit
-  before_save :rename_git_repo, if: -> { !new_record? && path_changed? }
+  before_create :create_git_repo, :create_git_hooks, :add_gitignore, :add_images_folder, :add_posts_folder
+  after_save :rename_git_repo, if: -> { !new_record? && path_changed? }
 
   after_destroy :destroy_git_repo
   after_rollback :destroy_git_repo, on: :create
@@ -163,11 +165,27 @@ class Repository < ApplicationRecord
     end
   end
 
-  def create_initial_commit
+  def add_gitignore
     Git::Commit.create(
       repository: self,
       committer: author,
-      options: { commit: { message: 'Initial commit' }, file: { content: GITIGNORE, path: GITIGNORE_PATH } }
+      options: { commit: { message: 'Add gitignore' }, file: { content: GITIGNORE, path: GITIGNORE_PATH } }
+    )
+  end
+
+  def add_images_folder
+    Git::Commit.create(
+      repository: self,
+      committer: author,
+      options: { commit: { message: 'Add images' }, file: { content: '', path: IMAGES_PATH } }
+    )
+  end
+
+  def add_posts_folder
+    Git::Commit.create(
+      repository: self,
+      committer: author,
+      options: { commit: { message: 'Add posts' }, file: { content: '', path: POSTS_PATH } }
     )
   end
 

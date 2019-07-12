@@ -10,17 +10,20 @@ class ImagesController < ApplicationController
   def create
     repository = Current.user.repository
     uploaded_io = params[:image]
-    blob_name = uploaded_io.original_filename
-    blob_path = File.join('/', repository.name, blob_name)
+    blob_path = File.join('images', uploaded_io.original_filename)
+    absolute_blob_path = File.join('', blob_path)
     io = uploaded_io.read
-    content_type = MimeMagic.by_path(blob_name).type
+    content_type = MimeMagic.by_path(blob_path).type
 
-    repository.create_commit(content: io, message: "Added #{blob_name}", path: blob_name)
+    repository.create_commit(content: io, message: "Added #{blob_path}", path: blob_path)
+    Current.user.minio_client.put_object(key: blob_path, content_type: content_type, bucket: Current.user.nickname, body: io)
 
-    Current.user.minio_client.put_object(
-      key: repository.name, body: io, bucket: Current.user.nickname, content_type: content_type
-    )
+    render json: { url: absolute_blob_path }
+  end
 
-    render json: { url: blob_path }
+  def show
+    filename = request.path.chomp('/')
+    response = Current.user.minio_client.get_object(key: filename, bucket: Current.user.nickname)
+    send_data response.body.read, type: response.content_type, disposition: :inline
   end
 end

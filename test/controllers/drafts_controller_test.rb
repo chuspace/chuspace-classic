@@ -1,3 +1,6 @@
+# typed: ignore
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class DraftsControllerTest < ActionDispatch::IntegrationTest

@@ -23,7 +23,7 @@ class PostsController < ApplicationController
 
       @post = Current.user.posts.build(
         slug: oid[0..8],
-        blob_path: "#{name}.md"
+        blob_path: "posts/#{name}.md"
       )
 
       if @post.save

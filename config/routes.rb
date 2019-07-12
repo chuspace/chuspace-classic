@@ -27,7 +27,8 @@ Rails.application.routes.draw do
     resources :publish, only: :index
   end
 
-  resources :images, only: %i[create destroy]
+  resources :images, only: %i[create show destroy]
+
   resources :settings, only: :index
 
   namespace :settings do
