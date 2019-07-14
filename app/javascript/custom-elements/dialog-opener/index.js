@@ -29,7 +29,6 @@ export default class DialogOpener extends LitElement {
   }
 
   close = (e: MouseEvent) => {
-    e.preventDefault()
     this.dialog.hide()
   }
 

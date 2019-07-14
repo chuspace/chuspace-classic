@@ -16,8 +16,11 @@ gem 'strong_migrations'
 # File uploads
 gem 'aws-sdk-s3'
 gem 'imgproxy'
-gem 'fastimage'
 gem 'mimemagic'
+gem 'fastimage'
+gem 'image_processing'
+gem 'ruby-vips'
+gem 'shrine'
 
 # Logging
 gem 'logidze'
@@ -77,9 +80,9 @@ gem 'components', git: 'https://github.com/jensljungblad/components.git'
 gem 'rack-attack'
 
 # Rust extensions
-gem 'fast_markdown', path: 'extensions/fast_markdown'
 gem 'fast_slug', path: 'extensions/fast_slug'
 gem 'faster_path'
+gem 'commonmarker'
 
 # Typechecking
 gem 'sorbet-runtime'

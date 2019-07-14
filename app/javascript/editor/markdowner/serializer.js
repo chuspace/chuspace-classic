@@ -45,17 +45,11 @@ export default new MarkdownSerializer(
     },
 
     image(state, node) {
-      const [src, params] = node.attrs.src.split('#')
-      const imageParams = queryString.parse(params)
-      imageParams.align = node.attrs.align
-
       state.write(
         '![' +
           state.esc(node.attrs.alt || '') +
           '](' +
-          state.esc(src) +
-          '#' +
-          queryString.stringify(imageParams) +
+          state.esc(node.attrs.src) +
           (node.attrs.title ? ' ' + state.quote(node.attrs.title) : '') +
           ')'
       )

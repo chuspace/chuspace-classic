@@ -1,9 +1,8 @@
 # typed: ignore
 # frozen_string_literal: true
 
-require 'mimemagic'
-
 class User < ApplicationRecord
+  include AvatarUploader::Attachment.new(:avatar)
   include Trackable
 
   validates :email, presence: true, uniqueness: true, email: true
@@ -16,9 +15,10 @@ class User < ApplicationRecord
   has_many :ssh_keys, dependent: :destroy
   has_one :repository, dependent: :destroy, foreign_key: 'author_id', autosave: true
   has_many :posts, foreign_key: 'author_id', dependent: :destroy
+  has_many :images, dependent: :destroy
 
   after_create :create_bucket
-  before_destroy :delete_bucket
+  after_destroy :delete_bucket
 
   alias repo repository
 
@@ -28,22 +28,6 @@ class User < ApplicationRecord
 
   def initials
     name.gsub(/([[:upper:]])[[:lower:]]+/, '\1').tr(' ', '')
-  end
-
-  def avatar=(avatar_blob)
-    case avatar_blob
-    when ActionDispatch::Http::UploadedFile
-      path = "#{nickname}/#{avatar_blob.original_filename}"
-      super(path)
-
-      content_type = MimeMagic.by_path(avatar).type
-      minio_client.put_object(key: avatar_blob.original_filename, content_type: content_type, bucket: nickname, body: avatar_blob.read)
-    when String
-      path = "#{nickname}/#{avatar}"
-      super(path)
-    else
-      fail ArgumentError, 'Unsupported avatar'
-    end
   end
 
   def minio_client

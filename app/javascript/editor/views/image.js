@@ -19,19 +19,17 @@ export default class ImageView extends BaseView {
     render(
       html`
         <lazy-image
-          src=${this.node.attrs.src}
-          alt=${this.node.attrs.alt}
-          align=${this.node.attrs.align}
+          src=${this.node.attrs.src || ''}
+          alt=${this.node.attrs.alt || ''}
           editable="true"
-          title=${this.node.attrs.title || this.node.attrs.alt}
+          title=${this.node.attrs.title || this.node.attrs.alt || ''}
           .handleChange=${this.handleChange}
         ></lazy-image>
       `,
       this.containerNode
     )
 
-    this.dom = this.containerNode.children[0]
-    this.containerNode = this.dom
+    this.dom = this.containerNode
   }
 
   handleChange = (attrs: ?{ align: String, alt: string } = {}) => {

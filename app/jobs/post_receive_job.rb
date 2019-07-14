@@ -28,9 +28,8 @@ class PostReceiveJob < ApplicationJob
         case delta.status
         when :added, :modified
           post = author.posts.find_or_initialize_by(blob_path: git_blob.path)
-          next_post_id = author.posts.maximum(:id)&.next || 1
-
-          post.assign_attributes(slug: git_blob.id[0..8]) if post.new_record?
+          markdown = PostMarkdownService.call(content: git_blob.content)
+          post.assign_attributes(slug: markdown.slug) if post.new_record?
           post.save
         when :renamed
           author.posts.find_by(blob_path: delta.old_file[:path])&.update(blob_path: delta.new_file[:path])

@@ -5,6 +5,7 @@ class Post < ApplicationRecord
   include AASM
 
   belongs_to :author, class_name: 'User'
+  belongs_to :repository
 
   has_ancestry
   has_logidze
@@ -12,13 +13,13 @@ class Post < ApplicationRecord
   enum status: { draft: 0, published: 1, archived: 2 }
 
   validates_presence_of :slug, :blob_path, :status
-  validates_presence_of :title, :summary, :topics, :body, :published_at, if: :published?
+  validates_presence_of :title, :summary, :topics, :body, :published_at, :blob_id, if: :published?
   validates_length_of :title, :slug, maximum: 100, if: :published?
   validates_length_of :summary, maximum: 140, if: :published?
   validates_length_of :topics, maximum: 5, if: :published?
 
-  validates_uniqueness_of :slug, scope: %i[author_id]
-  validates_uniqueness_of :blob_path, scope: %i[author_id]
+  validates_uniqueness_of :slug, scope: %i[repository]
+  validates_uniqueness_of :blob_path, scope: %i[repository]
 
   validates :slug, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
   validates :published_at, date: true, if: :published?
@@ -26,6 +27,7 @@ class Post < ApplicationRecord
   delegate :content, to: :blob, prefix: true
 
   DEFAULT_TITLE = 'Untitled'
+  ROOT_PATH = 'posts/.keep'
 
   aasm column: :status, enum: true do
     state :draft, initial: true
@@ -45,7 +47,7 @@ class Post < ApplicationRecord
   end
 
   def blob
-    @blob ||= author.repository.blob_at(path: blob_path)
+    @blob ||= repository.blob_at(path: blob_path)
   end
 
   def to_param
@@ -67,20 +69,8 @@ class Post < ApplicationRecord
     end
   end
 
-  def title
-    super || FastMarkdown.title(blob.content).presence || DEFAULT_TITLE
-  end
-
-  def summary
-    super || FastMarkdown.title(blob.content[100..-1] || '')
-  end
-
-  def body_html
-    FastMarkdown.to_html(body || '').html_safe
-  end
-
   def outdated?
-    Rugged::Repository.hash_data(body || '', :blob) != blob.id
+    blob_id != blob.id
   end
 
   def published?

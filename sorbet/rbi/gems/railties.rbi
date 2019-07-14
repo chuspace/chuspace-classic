@@ -555,6 +555,9 @@ class Rails::Application::RoutesReloader
   def updated?(*args, &block); end
   def updater; end
 end
+class Rails::BacktraceCleaner < ActiveSupport::BacktraceCleaner
+  def initialize; end
+end
 class Rails::Application::DefaultMiddlewareStack
   def app; end
   def build_stack; end
@@ -686,9 +689,6 @@ class Rails::Generators::TestCase < ActiveSupport::TestCase
   include Rails::Generators::Testing::Assertions
   include Rails::Generators::Testing::Behaviour
   include Rails::Generators::Testing::SetupAndTeardown
-end
-class Rails::BacktraceCleaner < ActiveSupport::BacktraceCleaner
-  def initialize; end
 end
 class ActiveRecord::ExplainRegistry
   def self.collect?(*args, &block); end

@@ -1836,7 +1836,7 @@ class ActiveRecord::Migration
   def exec_migration(conn, direction); end
   def execute_block; end
   def initialize(name = nil, version = nil); end
-  def method_missing(method, *arguments, &block); end
+  def method_missing(method, *args, &block); end
   def migrate(direction); end
   def name; end
   def name=(arg0); end
@@ -2152,64 +2152,123 @@ module ActiveRecord::Tasks
 end
 class ActiveRecord::Railtie < Rails::Railtie
 end
-class ActiveRecord::LogSubscriber < ActiveSupport::LogSubscriber
-  def self.backtrace_cleaner; end
-  def self.backtrace_cleaner=(val); end
-  def self.backtrace_cleaner?; end
-  def self.reset_runtime; end
-  def self.runtime; end
-  def self.runtime=(value); end
+class ActiveRecord::AssociationNotFoundError < ActiveRecord::ConfigurationError
+  def initialize(record = nil, association_name = nil); end
 end
-module ActiveRecord::Railties
+class ActiveRecord::InverseOfAssociationNotFoundError < ActiveRecord::ActiveRecordError
+  def initialize(reflection = nil, associated_class = nil); end
 end
-module ActiveRecord::Railties::ControllerRuntime
-  def append_info_to_payload(payload); end
-  def cleanup_view_runtime; end
-  def db_runtime; end
-  def db_runtime=(arg0); end
-  def process_action(action, *args); end
+class ActiveRecord::HasManyThroughAssociationNotFoundError < ActiveRecord::ActiveRecordError
+  def initialize(owner_class_name = nil, reflection = nil); end
+end
+class ActiveRecord::HasManyThroughAssociationPolymorphicSourceError < ActiveRecord::ActiveRecordError
+  def initialize(owner_class_name = nil, reflection = nil, source_reflection = nil); end
+end
+class ActiveRecord::HasManyThroughAssociationPolymorphicThroughError < ActiveRecord::ActiveRecordError
+  def initialize(owner_class_name = nil, reflection = nil); end
+end
+class ActiveRecord::HasManyThroughAssociationPointlessSourceTypeError < ActiveRecord::ActiveRecordError
+  def initialize(owner_class_name = nil, reflection = nil, source_reflection = nil); end
+end
+class ActiveRecord::HasOneThroughCantAssociateThroughCollection < ActiveRecord::ActiveRecordError
+  def initialize(owner_class_name = nil, reflection = nil, through_reflection = nil); end
+end
+class ActiveRecord::HasOneAssociationPolymorphicThroughError < ActiveRecord::ActiveRecordError
+  def initialize(owner_class_name = nil, reflection = nil); end
+end
+class ActiveRecord::HasManyThroughSourceAssociationNotFoundError < ActiveRecord::ActiveRecordError
+  def initialize(reflection = nil); end
+end
+class ActiveRecord::HasManyThroughOrderError < ActiveRecord::ActiveRecordError
+  def initialize(owner_class_name = nil, reflection = nil, through_reflection = nil); end
+end
+class ActiveRecord::ThroughCantAssociateThroughHasOneOrManyReflection < ActiveRecord::ActiveRecordError
+  def initialize(owner = nil, reflection = nil); end
+end
+class ActiveRecord::AmbiguousSourceReflectionForThroughAssociation < ActiveRecord::ActiveRecordError
+  def initialize(klass, macro, association_name, options, possible_sources); end
+end
+class ActiveRecord::HasManyThroughCantAssociateThroughHasOneOrManyReflection < ActiveRecord::ThroughCantAssociateThroughHasOneOrManyReflection
+end
+class ActiveRecord::HasOneThroughCantAssociateThroughHasOneOrManyReflection < ActiveRecord::ThroughCantAssociateThroughHasOneOrManyReflection
+end
+class ActiveRecord::ThroughNestedAssociationsAreReadonly < ActiveRecord::ActiveRecordError
+  def initialize(owner = nil, reflection = nil); end
+end
+class ActiveRecord::HasManyThroughNestedAssociationsAreReadonly < ActiveRecord::ThroughNestedAssociationsAreReadonly
+end
+class ActiveRecord::HasOneThroughNestedAssociationsAreReadonly < ActiveRecord::ThroughNestedAssociationsAreReadonly
+end
+class ActiveRecord::EagerLoadPolymorphicError < ActiveRecord::ActiveRecordError
+  def initialize(reflection = nil); end
+end
+class ActiveRecord::DeleteRestrictionError < ActiveRecord::ActiveRecordError
+  def initialize(name = nil); end
+end
+module ActiveRecord::Associations
+  def association(name); end
+  def association_cached?(name); end
+  def association_instance_get(name); end
+  def association_instance_set(name, association); end
+  def clear_association_cache; end
+  def init_internals; end
+  def initialize_dup(*arg0); end
+  def reload(*arg0); end
+  def self.eager_load!; end
+  extend ActiveSupport::Autoload
   extend ActiveSupport::Concern
 end
-module ActiveRecord::Railties::ControllerRuntime::ClassMethods
-  def log_process_action(payload); end
+module ActiveRecord::Associations::Builder
 end
-module ActiveRecord::Railties::CollectionCacheAssociationLoading
-  def collection_with_template(*arg0); end
-  def collection_without_template(*arg0); end
-  def relation_from_options(cached: nil, partial: nil, collection: nil, **_); end
-  def setup(context, options, as, block); end
+module ActiveRecord::Associations::ClassMethods
+  def belongs_to(name, scope = nil, **options); end
+  def has_and_belongs_to_many(name, scope = nil, **options, &extension); end
+  def has_many(name, scope = nil, **options, &extension); end
+  def has_one(name, scope = nil, **options); end
 end
-class ActiveRecord::QueryCache
-  def self.complete(pools); end
-  def self.install_executor_hooks(executor = nil); end
-  def self.run; end
-end
-module ActiveRecord::QueryCache::ClassMethods
-  def cache(&block); end
-  def uncached(&block); end
-end
-class ActiveRecord::Result
-  def [](idx); end
-  def cast_values(type_overrides = nil); end
-  def collect!; end
-  def column_type(name, type_overrides = nil); end
-  def column_types; end
-  def columns; end
-  def each; end
-  def empty?; end
-  def first; end
-  def hash_rows; end
-  def includes_column?(name); end
-  def initialize(columns, rows, column_types = nil); end
-  def initialize_copy(other); end
-  def last; end
-  def length; end
-  def map!; end
-  def rows; end
-  def to_a; end
-  def to_ary; end
-  def to_hash; end
-  include Enumerable
+class ActiveRecord::Associations::Association
+  def association_scope; end
+  def build_record(attributes); end
+  def create!(attributes = nil, &block); end
+  def create(attributes = nil, &block); end
+  def creation_attributes; end
+  def extensions; end
+  def find_target; end
+  def find_target?; end
+  def foreign_key_for?(record); end
+  def foreign_key_present?; end
+  def initialize(owner, reflection); end
+  def initialize_attributes(record, except_from_scope_attributes = nil); end
+  def inverse_association_for(record); end
+  def inverse_reflection_for(record); end
+  def inversed_from(record); end
+  def inversed_from_queries(record); end
+  def invertible_for?(record); end
+  def klass; end
+  def load_target; end
+  def loaded!; end
+  def loaded?; end
+  def marshal_dump; end
+  def marshal_load(data); end
+  def options(*args, &block); end
+  def owner; end
+  def raise_on_type_mismatch!(record); end
+  def reflection; end
+  def reload(force = nil); end
+  def remove_inverse_instance(record); end
+  def reset; end
+  def reset_scope; end
+  def scope; end
+  def scope_for_create; end
+  def set_inverse_instance(record); end
+  def set_inverse_instance_from_queries(record); end
+  def set_owner_attributes(record); end
+  def skip_statement_cache?(scope); end
+  def stale_state; end
+  def stale_target?; end
+  def target; end
+  def target=(target); end
+  def target_scope; end
 end
 module ActiveRecord::AttributeDecorators
   extend ActiveSupport::Concern
@@ -2232,6 +2291,14 @@ module ActiveRecord::DefineCallbacks
 end
 module ActiveRecord::DefineCallbacks::ClassMethods
   include ActiveModel::Callbacks
+end
+class ActiveRecord::LogSubscriber < ActiveSupport::LogSubscriber
+  def self.backtrace_cleaner; end
+  def self.backtrace_cleaner=(val); end
+  def self.backtrace_cleaner?; end
+  def self.reset_runtime; end
+  def self.runtime; end
+  def self.runtime=(value); end
 end
 class ActiveRecord::ExplainRegistry
   def collect; end
@@ -2401,6 +2468,15 @@ module ActiveRecord::ConnectionHandling
   def retrieve_connection; end
   def swap_connection_handler(handler, &blk); end
   def with_handler(handler_key, &blk); end
+end
+class ActiveRecord::QueryCache
+  def self.complete(pools); end
+  def self.install_executor_hooks(executor = nil); end
+  def self.run; end
+end
+module ActiveRecord::QueryCache::ClassMethods
+  def cache(&block); end
+  def uncached(&block); end
 end
 module ActiveRecord::Querying
   def annotate(*args, &block); end
@@ -2718,34 +2794,6 @@ module ActiveRecord::Core::ClassMethods
   def relation; end
   def table_metadata; end
   def type_caster; end
-end
-class ActiveRecord::ConnectionAdapters::ConnectionSpecification
-  def adapter_method; end
-  def config; end
-  def initialize(name, config, adapter_method); end
-  def initialize_dup(original); end
-  def name; end
-  def to_hash; end
-end
-class ActiveRecord::ConnectionAdapters::ConnectionSpecification::ConnectionUrlResolver
-  def database_from_path; end
-  def initialize(url); end
-  def query_hash; end
-  def raw_config; end
-  def to_hash; end
-  def uri; end
-  def uri_parser; end
-end
-class ActiveRecord::ConnectionAdapters::ConnectionSpecification::Resolver
-  def build_configuration_sentence; end
-  def configurations; end
-  def initialize(configurations); end
-  def resolve(config_or_env, pool_name = nil); end
-  def resolve_connection(config_or_env, pool_name = nil); end
-  def resolve_hash_connection(spec); end
-  def resolve_symbol_connection(env_name, pool_name); end
-  def resolve_url_connection(url); end
-  def spec(config); end
 end
 class ActiveRecord::ConnectionTimeoutError < ActiveRecord::ConnectionNotEstablished
 end
@@ -3310,80 +3358,6 @@ module ActiveRecord::Callbacks
   def touch(*arg0); end
   extend ActiveSupport::Concern
 end
-class ActiveRecord::AssociationNotFoundError < ActiveRecord::ConfigurationError
-  def initialize(record = nil, association_name = nil); end
-end
-class ActiveRecord::InverseOfAssociationNotFoundError < ActiveRecord::ActiveRecordError
-  def initialize(reflection = nil, associated_class = nil); end
-end
-class ActiveRecord::HasManyThroughAssociationNotFoundError < ActiveRecord::ActiveRecordError
-  def initialize(owner_class_name = nil, reflection = nil); end
-end
-class ActiveRecord::HasManyThroughAssociationPolymorphicSourceError < ActiveRecord::ActiveRecordError
-  def initialize(owner_class_name = nil, reflection = nil, source_reflection = nil); end
-end
-class ActiveRecord::HasManyThroughAssociationPolymorphicThroughError < ActiveRecord::ActiveRecordError
-  def initialize(owner_class_name = nil, reflection = nil); end
-end
-class ActiveRecord::HasManyThroughAssociationPointlessSourceTypeError < ActiveRecord::ActiveRecordError
-  def initialize(owner_class_name = nil, reflection = nil, source_reflection = nil); end
-end
-class ActiveRecord::HasOneThroughCantAssociateThroughCollection < ActiveRecord::ActiveRecordError
-  def initialize(owner_class_name = nil, reflection = nil, through_reflection = nil); end
-end
-class ActiveRecord::HasOneAssociationPolymorphicThroughError < ActiveRecord::ActiveRecordError
-  def initialize(owner_class_name = nil, reflection = nil); end
-end
-class ActiveRecord::HasManyThroughSourceAssociationNotFoundError < ActiveRecord::ActiveRecordError
-  def initialize(reflection = nil); end
-end
-class ActiveRecord::HasManyThroughOrderError < ActiveRecord::ActiveRecordError
-  def initialize(owner_class_name = nil, reflection = nil, through_reflection = nil); end
-end
-class ActiveRecord::ThroughCantAssociateThroughHasOneOrManyReflection < ActiveRecord::ActiveRecordError
-  def initialize(owner = nil, reflection = nil); end
-end
-class ActiveRecord::AmbiguousSourceReflectionForThroughAssociation < ActiveRecord::ActiveRecordError
-  def initialize(klass, macro, association_name, options, possible_sources); end
-end
-class ActiveRecord::HasManyThroughCantAssociateThroughHasOneOrManyReflection < ActiveRecord::ThroughCantAssociateThroughHasOneOrManyReflection
-end
-class ActiveRecord::HasOneThroughCantAssociateThroughHasOneOrManyReflection < ActiveRecord::ThroughCantAssociateThroughHasOneOrManyReflection
-end
-class ActiveRecord::ThroughNestedAssociationsAreReadonly < ActiveRecord::ActiveRecordError
-  def initialize(owner = nil, reflection = nil); end
-end
-class ActiveRecord::HasManyThroughNestedAssociationsAreReadonly < ActiveRecord::ThroughNestedAssociationsAreReadonly
-end
-class ActiveRecord::HasOneThroughNestedAssociationsAreReadonly < ActiveRecord::ThroughNestedAssociationsAreReadonly
-end
-class ActiveRecord::EagerLoadPolymorphicError < ActiveRecord::ActiveRecordError
-  def initialize(reflection = nil); end
-end
-class ActiveRecord::DeleteRestrictionError < ActiveRecord::ActiveRecordError
-  def initialize(name = nil); end
-end
-module ActiveRecord::Associations
-  def association(name); end
-  def association_cached?(name); end
-  def association_instance_get(name); end
-  def association_instance_set(name, association); end
-  def clear_association_cache; end
-  def init_internals; end
-  def initialize_dup(*arg0); end
-  def reload(*arg0); end
-  def self.eager_load!; end
-  extend ActiveSupport::Autoload
-  extend ActiveSupport::Concern
-end
-module ActiveRecord::Associations::Builder
-end
-module ActiveRecord::Associations::ClassMethods
-  def belongs_to(name, scope = nil, **options); end
-  def has_and_belongs_to_many(name, scope = nil, **options, &extension); end
-  def has_many(name, scope = nil, **options, &extension); end
-  def has_one(name, scope = nil, **options); end
-end
 module ActiveRecord::AutosaveAssociation
   def _ensure_no_duplicate_errors; end
   def after_save_collection_association; end
@@ -3795,6 +3769,486 @@ class ActiveRecord::SuppressorRegistry
   def initialize; end
   def suppressed; end
   extend ActiveSupport::PerThreadRegistry
+end
+class ActiveRecord::Tasks::DatabaseAlreadyExists < StandardError
+end
+class ActiveRecord::Tasks::DatabaseNotSupported < StandardError
+end
+module ActiveRecord::Tasks::DatabaseTasks
+  def cache_dump_filename(namespace); end
+  def charset(*arguments); end
+  def charset_current(environment = nil, specification_name = nil); end
+  def check_protected_environments!; end
+  def check_schema_file(filename); end
+  def check_target_version; end
+  def class_for_adapter(adapter); end
+  def collation(*arguments); end
+  def collation_current(environment = nil, specification_name = nil); end
+  def create(*arguments); end
+  def create_all; end
+  def create_current(environment = nil); end
+  def current_config(options = nil); end
+  def current_config=(arg0); end
+  def database_configuration; end
+  def database_configuration=(arg0); end
+  def db_dir; end
+  def db_dir=(arg0); end
+  def drop(*arguments); end
+  def drop_all; end
+  def drop_current(environment = nil); end
+  def dump_filename(namespace, format = nil); end
+  def dump_schema_cache(conn, filename); end
+  def each_current_configuration(environment); end
+  def each_local_configuration; end
+  def env; end
+  def env=(arg0); end
+  def fixtures_path; end
+  def fixtures_path=(arg0); end
+  def for_each; end
+  def load_schema(configuration, format = nil, file = nil, environment = nil, spec_name = nil); end
+  def load_schema_current(format = nil, file = nil, environment = nil); end
+  def load_seed; end
+  def local_database?(configuration); end
+  def migrate; end
+  def migrate_status; end
+  def migrations_paths; end
+  def migrations_paths=(arg0); end
+  def purge(configuration); end
+  def purge_all; end
+  def purge_current(environment = nil); end
+  def raise_for_multi_db(environment = nil, command:); end
+  def register_task(pattern, task); end
+  def root; end
+  def root=(arg0); end
+  def schema_file(format = nil); end
+  def schema_file_type(format = nil); end
+  def seed_loader; end
+  def seed_loader=(arg0); end
+  def self.structure_dump_flags; end
+  def self.structure_dump_flags=(obj); end
+  def self.structure_load_flags; end
+  def self.structure_load_flags=(obj); end
+  def spec; end
+  def structure_dump(*arguments); end
+  def structure_load(*arguments); end
+  def target_version; end
+  def truncate_all(environment = nil); end
+  def truncate_tables(configuration); end
+  def verbose?; end
+  extend ActiveRecord::Tasks::DatabaseTasks
+end
+class ActiveRecord::Base
+  def __callbacks; end
+  def __callbacks?; end
+  def _before_commit_callbacks; end
+  def _before_commit_without_transaction_enrollment_callbacks; end
+  def _commit_callbacks; end
+  def _commit_without_transaction_enrollment_callbacks; end
+  def _create_callbacks; end
+  def _destroy_callbacks; end
+  def _find_callbacks; end
+  def _initialize_callbacks; end
+  def _reflections; end
+  def _reflections?; end
+  def _rollback_callbacks; end
+  def _rollback_without_transaction_enrollment_callbacks; end
+  def _run_before_commit_callbacks(&block); end
+  def _run_before_commit_without_transaction_enrollment_callbacks(&block); end
+  def _run_commit_callbacks(&block); end
+  def _run_commit_without_transaction_enrollment_callbacks(&block); end
+  def _run_create_callbacks(&block); end
+  def _run_destroy_callbacks(&block); end
+  def _run_find_callbacks(&block); end
+  def _run_initialize_callbacks(&block); end
+  def _run_rollback_callbacks(&block); end
+  def _run_rollback_without_transaction_enrollment_callbacks(&block); end
+  def _run_save_callbacks(&block); end
+  def _run_touch_callbacks(&block); end
+  def _run_update_callbacks(&block); end
+  def _run_validate_callbacks(&block); end
+  def _run_validation_callbacks(&block); end
+  def _save_callbacks; end
+  def _touch_callbacks; end
+  def _update_callbacks; end
+  def _validate_callbacks; end
+  def _validation_callbacks; end
+  def _validators; end
+  def _validators?; end
+  def aggregate_reflections; end
+  def aggregate_reflections?; end
+  def allow_unsafe_raw_sql; end
+  def attribute_aliases; end
+  def attribute_aliases?; end
+  def attribute_method_matchers; end
+  def attribute_method_matchers?; end
+  def cache_timestamp_format; end
+  def cache_timestamp_format?; end
+  def cache_versioning; end
+  def cache_versioning?; end
+  def collection_cache_versioning; end
+  def collection_cache_versioning?; end
+  def column_for_attribute(*args, &block); end
+  def default_connection_handler; end
+  def default_connection_handler?; end
+  def default_scope_override; end
+  def default_scopes; end
+  def default_timezone; end
+  def defined_enums; end
+  def defined_enums?; end
+  def dump_schema_after_migration; end
+  def dump_schemas; end
+  def error_on_ignored_order; end
+  def include_root_in_json; end
+  def include_root_in_json?; end
+  def index_nested_attribute_errors; end
+  def lock_optimistically; end
+  def lock_optimistically?; end
+  def logger; end
+  def model_name(*args, &block); end
+  def nested_attributes_options; end
+  def nested_attributes_options?; end
+  def partial_writes; end
+  def partial_writes?; end
+  def pluralize_table_names; end
+  def pluralize_table_names?; end
+  def primary_key_prefix_type; end
+  def record_timestamps; end
+  def record_timestamps=(val); end
+  def record_timestamps?; end
+  def schema_format; end
+  def self.__callbacks; end
+  def self.__callbacks=(val); end
+  def self.__callbacks?; end
+  def self._attr_readonly; end
+  def self._attr_readonly=(val); end
+  def self._attr_readonly?; end
+  def self._before_commit_callbacks; end
+  def self._before_commit_callbacks=(value); end
+  def self._before_commit_without_transaction_enrollment_callbacks; end
+  def self._before_commit_without_transaction_enrollment_callbacks=(value); end
+  def self._commit_callbacks; end
+  def self._commit_callbacks=(value); end
+  def self._commit_without_transaction_enrollment_callbacks; end
+  def self._commit_without_transaction_enrollment_callbacks=(value); end
+  def self._create_callbacks; end
+  def self._create_callbacks=(value); end
+  def self._destroy_callbacks; end
+  def self._destroy_callbacks=(value); end
+  def self._find_callbacks; end
+  def self._find_callbacks=(value); end
+  def self._initialize_callbacks; end
+  def self._initialize_callbacks=(value); end
+  def self._reflections; end
+  def self._reflections=(val); end
+  def self._reflections?; end
+  def self._rollback_callbacks; end
+  def self._rollback_callbacks=(value); end
+  def self._rollback_without_transaction_enrollment_callbacks; end
+  def self._rollback_without_transaction_enrollment_callbacks=(value); end
+  def self._save_callbacks; end
+  def self._save_callbacks=(value); end
+  def self._touch_callbacks; end
+  def self._touch_callbacks=(value); end
+  def self._update_callbacks; end
+  def self._update_callbacks=(value); end
+  def self._validate_callbacks; end
+  def self._validate_callbacks=(value); end
+  def self._validation_callbacks; end
+  def self._validation_callbacks=(value); end
+  def self._validators; end
+  def self._validators=(val); end
+  def self._validators?; end
+  def self.after_create(*args, **options, &block); end
+  def self.after_destroy(*args, **options, &block); end
+  def self.after_find(*args, **options, &block); end
+  def self.after_initialize(*args, **options, &block); end
+  def self.after_save(*args, **options, &block); end
+  def self.after_touch(*args, **options, &block); end
+  def self.after_update(*args, **options, &block); end
+  def self.aggregate_reflections; end
+  def self.aggregate_reflections=(val); end
+  def self.aggregate_reflections?; end
+  def self.allow_unsafe_raw_sql; end
+  def self.allow_unsafe_raw_sql=(obj); end
+  def self.around_create(*args, **options, &block); end
+  def self.around_destroy(*args, **options, &block); end
+  def self.around_save(*args, **options, &block); end
+  def self.around_update(*args, **options, &block); end
+  def self.attribute_aliases; end
+  def self.attribute_aliases=(val); end
+  def self.attribute_aliases?; end
+  def self.attribute_method_matchers; end
+  def self.attribute_method_matchers=(val); end
+  def self.attribute_method_matchers?; end
+  def self.attribute_type_decorations; end
+  def self.attribute_type_decorations=(val); end
+  def self.attribute_type_decorations?; end
+  def self.attributes_to_define_after_schema_loads; end
+  def self.attributes_to_define_after_schema_loads=(val); end
+  def self.attributes_to_define_after_schema_loads?; end
+  def self.before_create(*args, **options, &block); end
+  def self.before_destroy(*args, **options, &block); end
+  def self.before_save(*args, **options, &block); end
+  def self.before_update(*args, **options, &block); end
+  def self.belongs_to_required_by_default; end
+  def self.belongs_to_required_by_default=(obj); end
+  def self.cache_timestamp_format; end
+  def self.cache_timestamp_format=(val); end
+  def self.cache_timestamp_format?; end
+  def self.cache_versioning; end
+  def self.cache_versioning=(val); end
+  def self.cache_versioning?; end
+  def self.collection_cache_versioning; end
+  def self.collection_cache_versioning=(val); end
+  def self.collection_cache_versioning?; end
+  def self.configurations; end
+  def self.configurations=(config); end
+  def self.connection_handler; end
+  def self.connection_handler=(handler); end
+  def self.connection_handlers; end
+  def self.connection_handlers=(obj); end
+  def self.default_connection_handler; end
+  def self.default_connection_handler=(val); end
+  def self.default_connection_handler?; end
+  def self.default_scope_override; end
+  def self.default_scope_override=(val); end
+  def self.default_scopes; end
+  def self.default_scopes=(val); end
+  def self.default_timezone; end
+  def self.default_timezone=(obj); end
+  def self.defined_enums; end
+  def self.defined_enums=(val); end
+  def self.defined_enums?; end
+  def self.dump_schema_after_migration; end
+  def self.dump_schema_after_migration=(obj); end
+  def self.dump_schemas; end
+  def self.dump_schemas=(obj); end
+  def self.error_on_ignored_order; end
+  def self.error_on_ignored_order=(obj); end
+  def self.implicit_order_column; end
+  def self.implicit_order_column=(val); end
+  def self.implicit_order_column?; end
+  def self.include_root_in_json; end
+  def self.include_root_in_json=(val); end
+  def self.include_root_in_json?; end
+  def self.index_nested_attribute_errors; end
+  def self.index_nested_attribute_errors=(obj); end
+  def self.internal_metadata_table_name; end
+  def self.internal_metadata_table_name=(val); end
+  def self.internal_metadata_table_name?; end
+  def self.local_stored_attributes; end
+  def self.local_stored_attributes=(arg0); end
+  def self.lock_optimistically; end
+  def self.lock_optimistically=(val); end
+  def self.lock_optimistically?; end
+  def self.logger; end
+  def self.logger=(obj); end
+  def self.maintain_test_schema; end
+  def self.maintain_test_schema=(obj); end
+  def self.nested_attributes_options; end
+  def self.nested_attributes_options=(val); end
+  def self.nested_attributes_options?; end
+  def self.partial_writes; end
+  def self.partial_writes=(val); end
+  def self.partial_writes?; end
+  def self.pluralize_table_names; end
+  def self.pluralize_table_names=(val); end
+  def self.pluralize_table_names?; end
+  def self.primary_key_prefix_type; end
+  def self.primary_key_prefix_type=(obj); end
+  def self.reading_role; end
+  def self.reading_role=(obj); end
+  def self.record_timestamps; end
+  def self.record_timestamps=(val); end
+  def self.record_timestamps?; end
+  def self.schema_format; end
+  def self.schema_format=(obj); end
+  def self.schema_migrations_table_name; end
+  def self.schema_migrations_table_name=(val); end
+  def self.schema_migrations_table_name?; end
+  def self.skip_time_zone_conversion_for_attributes; end
+  def self.skip_time_zone_conversion_for_attributes=(val); end
+  def self.skip_time_zone_conversion_for_attributes?; end
+  def self.store_full_sti_class; end
+  def self.store_full_sti_class=(val); end
+  def self.store_full_sti_class?; end
+  def self.table_name_prefix; end
+  def self.table_name_prefix=(val); end
+  def self.table_name_prefix?; end
+  def self.table_name_suffix; end
+  def self.table_name_suffix=(val); end
+  def self.table_name_suffix?; end
+  def self.time_zone_aware_attributes; end
+  def self.time_zone_aware_attributes=(obj); end
+  def self.time_zone_aware_types; end
+  def self.time_zone_aware_types=(val); end
+  def self.time_zone_aware_types?; end
+  def self.timestamped_migrations; end
+  def self.timestamped_migrations=(obj); end
+  def self.verbose_query_logs; end
+  def self.verbose_query_logs=(obj); end
+  def self.warn_on_records_fetched_greater_than; end
+  def self.warn_on_records_fetched_greater_than=(obj); end
+  def self.writing_role; end
+  def self.writing_role=(obj); end
+  def skip_time_zone_conversion_for_attributes; end
+  def skip_time_zone_conversion_for_attributes?; end
+  def store_full_sti_class; end
+  def store_full_sti_class?; end
+  def table_name_prefix; end
+  def table_name_prefix?; end
+  def table_name_suffix; end
+  def table_name_suffix?; end
+  def time_zone_aware_attributes; end
+  def time_zone_aware_types; end
+  def time_zone_aware_types?; end
+  def timestamped_migrations; end
+  def type_for_attribute(*args, &block); end
+  def validation_context; end
+  def validation_context=(arg0); end
+  def verbose_query_logs; end
+  def warn_on_records_fetched_greater_than; end
+  extend ActiveModel::AttributeMethods::ClassMethods
+  extend ActiveModel::Callbacks
+  extend ActiveModel::Conversion::ClassMethods
+  extend ActiveModel::Naming
+  extend ActiveModel::Naming
+  extend ActiveModel::Naming
+  extend ActiveModel::SecurePassword::ClassMethods
+  extend ActiveModel::Translation
+  extend ActiveModel::Validations::Callbacks::ClassMethods
+  extend ActiveModel::Validations::ClassMethods
+  extend ActiveModel::Validations::HelperMethods
+  extend ActiveRecord::Aggregations::ClassMethods
+  extend ActiveRecord::Associations::ClassMethods
+  extend ActiveRecord::AttributeDecorators::ClassMethods
+  extend ActiveRecord::AttributeMethods::ClassMethods
+  extend ActiveRecord::AttributeMethods::PrimaryKey::ClassMethods
+  extend ActiveRecord::AttributeMethods::Read::ClassMethods
+  extend ActiveRecord::AttributeMethods::Serialization::ClassMethods
+  extend ActiveRecord::AttributeMethods::TimeZoneConversion::ClassMethods
+  extend ActiveRecord::AttributeMethods::Write::ClassMethods
+  extend ActiveRecord::Attributes::ClassMethods
+  extend ActiveRecord::AutosaveAssociation::ClassMethods
+  extend ActiveRecord::ConnectionHandling
+  extend ActiveRecord::Core::ClassMethods
+  extend ActiveRecord::CounterCache::ClassMethods
+  extend ActiveRecord::DefineCallbacks::ClassMethods
+  extend ActiveRecord::Delegation::DelegateCache
+  extend ActiveRecord::DynamicMatchers
+  extend ActiveRecord::Enum
+  extend ActiveRecord::Explain
+  extend ActiveRecord::Inheritance::ClassMethods
+  extend ActiveRecord::Integration::ClassMethods
+  extend ActiveRecord::Locking::Optimistic::ClassMethods
+  extend ActiveRecord::ModelSchema::ClassMethods
+  extend ActiveRecord::NestedAttributes::ClassMethods
+  extend ActiveRecord::NoTouching::ClassMethods
+  extend ActiveRecord::Persistence::ClassMethods
+  extend ActiveRecord::QueryCache::ClassMethods
+  extend ActiveRecord::Querying
+  extend ActiveRecord::ReadonlyAttributes::ClassMethods
+  extend ActiveRecord::Reflection::ClassMethods
+  extend ActiveRecord::Sanitization::ClassMethods
+  extend ActiveRecord::Scoping::ClassMethods
+  extend ActiveRecord::Scoping::Default::ClassMethods
+  extend ActiveRecord::Scoping::Named::ClassMethods
+  extend ActiveRecord::SecureToken::ClassMethods
+  extend ActiveRecord::Store::ClassMethods
+  extend ActiveRecord::Suppressor::ClassMethods
+  extend ActiveRecord::Timestamp::ClassMethods
+  extend ActiveRecord::Transactions::ClassMethods
+  extend ActiveRecord::Translation
+  extend ActiveRecord::Validations::ClassMethods
+  extend ActiveSupport::Benchmarkable
+  extend ActiveSupport::Callbacks::ClassMethods
+  extend ActiveSupport::DescendantsTracker
+  extend ActiveSupport::DescendantsTracker
+  include ActiveModel::AttributeMethods
+  include ActiveModel::AttributeMethods
+  include ActiveModel::Conversion
+  include ActiveModel::Dirty
+  include ActiveModel::SecurePassword
+  include ActiveModel::Serializers::JSON
+  include ActiveModel::Validations
+  include ActiveModel::Validations::Callbacks
+  include ActiveModel::Validations::HelperMethods
+  include ActiveRecord::Associations
+  include ActiveRecord::AttributeAssignment
+  include ActiveRecord::AttributeDecorators
+  include ActiveRecord::AttributeMethods
+  include ActiveRecord::AttributeMethods::BeforeTypeCast
+  include ActiveRecord::AttributeMethods::Dirty
+  include ActiveRecord::AttributeMethods::PrimaryKey
+  include ActiveRecord::AttributeMethods::Query
+  include ActiveRecord::AttributeMethods::Read
+  include ActiveRecord::AttributeMethods::Serialization
+  include ActiveRecord::AttributeMethods::TimeZoneConversion
+  include ActiveRecord::AttributeMethods::Write
+  include ActiveRecord::Attributes
+  include ActiveRecord::AutosaveAssociation
+  include ActiveRecord::Base::GeneratedAssociationMethods
+  include ActiveRecord::Base::GeneratedAttributeMethods
+  include ActiveRecord::Callbacks
+  include ActiveRecord::Core
+  include ActiveRecord::CounterCache
+  include ActiveRecord::DefineCallbacks
+  include ActiveRecord::Inheritance
+  include ActiveRecord::Integration
+  include ActiveRecord::Locking::Optimistic
+  include ActiveRecord::Locking::Pessimistic
+  include ActiveRecord::ModelSchema
+  include ActiveRecord::NestedAttributes
+  include ActiveRecord::NoTouching
+  include ActiveRecord::Persistence
+  include ActiveRecord::ReadonlyAttributes
+  include ActiveRecord::Reflection
+  include ActiveRecord::Sanitization
+  include ActiveRecord::Scoping
+  include ActiveRecord::Scoping::Default
+  include ActiveRecord::Scoping::Named
+  include ActiveRecord::SecureToken
+  include ActiveRecord::Serialization
+  include ActiveRecord::Store
+  include ActiveRecord::Suppressor
+  include ActiveRecord::Timestamp
+  include ActiveRecord::TouchLater
+  include ActiveRecord::Transactions
+  include ActiveRecord::Validations
+  include ActiveSupport::Callbacks
+  include ActiveSupport::Callbacks
+end
+module ActiveRecord::Base::GeneratedAttributeMethods
+end
+module ActiveRecord::Base::GeneratedAssociationMethods
+end
+class ActiveRecord::ConnectionAdapters::ConnectionSpecification
+  def adapter_method; end
+  def config; end
+  def initialize(name, config, adapter_method); end
+  def initialize_dup(original); end
+  def name; end
+  def to_hash; end
+end
+class ActiveRecord::ConnectionAdapters::ConnectionSpecification::ConnectionUrlResolver
+  def database_from_path; end
+  def initialize(url); end
+  def query_hash; end
+  def raw_config; end
+  def to_hash; end
+  def uri; end
+  def uri_parser; end
+end
+class ActiveRecord::ConnectionAdapters::ConnectionSpecification::Resolver
+  def build_configuration_sentence; end
+  def configurations; end
+  def initialize(configurations); end
+  def resolve(config_or_env, pool_name = nil); end
+  def resolve_connection(config_or_env, pool_name = nil); end
+  def resolve_hash_connection(spec); end
+  def resolve_symbol_connection(env_name, pool_name); end
+  def resolve_url_connection(url); end
+  def spec(config); end
 end
 class ActiveRecord::ConnectionAdapters::StatementPool
   def [](key); end
@@ -4560,6 +5014,25 @@ class ActiveRecord::ConnectionAdapters::PostgreSQLAdapter::StatementPool < Activ
   def initialize(connection, max); end
   def next_key; end
 end
+module ActiveRecord::Railties
+end
+module ActiveRecord::Railties::ControllerRuntime
+  def append_info_to_payload(payload); end
+  def cleanup_view_runtime; end
+  def db_runtime; end
+  def db_runtime=(arg0); end
+  def process_action(action, *args); end
+  extend ActiveSupport::Concern
+end
+module ActiveRecord::Railties::ControllerRuntime::ClassMethods
+  def log_process_action(payload); end
+end
+module ActiveRecord::Railties::CollectionCacheAssociationLoading
+  def collection_with_template(*arg0); end
+  def collection_without_template(*arg0); end
+  def relation_from_options(cached: nil, partial: nil, collection: nil, **_); end
+  def setup(context, options, as, block); end
+end
 module ActiveRecord::FinderMethods
   def apply_join_dependency(eager_loading: nil); end
   def construct_relation_for_exists(conditions); end
@@ -4712,7 +5185,6 @@ class ActiveRecord::Relation
   extend ActiveRecord::Delegation::ClassMethods
   include ActiveRecord::FinderMethods
   include Enumerable
-  include SorbetRails::CustomFinderMethods
 end
 class ActiveRecord::Relation::HashMerger
   def hash; end
@@ -4956,393 +5428,28 @@ class ActiveRecord::Batches::BatchEnumerator
   def update_all(*args, &block); end
   include Enumerable
 end
-class ActiveRecord::Base
-  def __callbacks; end
-  def __callbacks?; end
-  def _before_commit_callbacks; end
-  def _before_commit_without_transaction_enrollment_callbacks; end
-  def _commit_callbacks; end
-  def _commit_without_transaction_enrollment_callbacks; end
-  def _create_callbacks; end
-  def _destroy_callbacks; end
-  def _find_callbacks; end
-  def _initialize_callbacks; end
-  def _reflections; end
-  def _reflections?; end
-  def _rollback_callbacks; end
-  def _rollback_without_transaction_enrollment_callbacks; end
-  def _run_before_commit_callbacks(&block); end
-  def _run_before_commit_without_transaction_enrollment_callbacks(&block); end
-  def _run_commit_callbacks(&block); end
-  def _run_commit_without_transaction_enrollment_callbacks(&block); end
-  def _run_create_callbacks(&block); end
-  def _run_destroy_callbacks(&block); end
-  def _run_find_callbacks(&block); end
-  def _run_initialize_callbacks(&block); end
-  def _run_rollback_callbacks(&block); end
-  def _run_rollback_without_transaction_enrollment_callbacks(&block); end
-  def _run_save_callbacks(&block); end
-  def _run_touch_callbacks(&block); end
-  def _run_update_callbacks(&block); end
-  def _run_validate_callbacks(&block); end
-  def _run_validation_callbacks(&block); end
-  def _save_callbacks; end
-  def _touch_callbacks; end
-  def _update_callbacks; end
-  def _validate_callbacks; end
-  def _validation_callbacks; end
-  def _validators; end
-  def _validators?; end
-  def aggregate_reflections; end
-  def aggregate_reflections?; end
-  def allow_unsafe_raw_sql; end
-  def attribute_aliases; end
-  def attribute_aliases?; end
-  def attribute_method_matchers; end
-  def attribute_method_matchers?; end
-  def cache_timestamp_format; end
-  def cache_timestamp_format?; end
-  def cache_versioning; end
-  def cache_versioning?; end
-  def collection_cache_versioning; end
-  def collection_cache_versioning?; end
-  def column_for_attribute(*args, &block); end
-  def default_connection_handler; end
-  def default_connection_handler?; end
-  def default_scope_override; end
-  def default_scopes; end
-  def default_timezone; end
-  def defined_enums; end
-  def defined_enums?; end
-  def dump_schema_after_migration; end
-  def dump_schemas; end
-  def error_on_ignored_order; end
-  def include_root_in_json; end
-  def include_root_in_json?; end
-  def index_nested_attribute_errors; end
-  def lock_optimistically; end
-  def lock_optimistically?; end
-  def logger; end
-  def model_name(*args, &block); end
-  def nested_attributes_options; end
-  def nested_attributes_options?; end
-  def partial_writes; end
-  def partial_writes?; end
-  def pluralize_table_names; end
-  def pluralize_table_names?; end
-  def primary_key_prefix_type; end
-  def record_timestamps; end
-  def record_timestamps=(val); end
-  def record_timestamps?; end
-  def schema_format; end
-  def self.__callbacks; end
-  def self.__callbacks=(val); end
-  def self.__callbacks?; end
-  def self._attr_readonly; end
-  def self._attr_readonly=(val); end
-  def self._attr_readonly?; end
-  def self._before_commit_callbacks; end
-  def self._before_commit_callbacks=(value); end
-  def self._before_commit_without_transaction_enrollment_callbacks; end
-  def self._before_commit_without_transaction_enrollment_callbacks=(value); end
-  def self._commit_callbacks; end
-  def self._commit_callbacks=(value); end
-  def self._commit_without_transaction_enrollment_callbacks; end
-  def self._commit_without_transaction_enrollment_callbacks=(value); end
-  def self._create_callbacks; end
-  def self._create_callbacks=(value); end
-  def self._destroy_callbacks; end
-  def self._destroy_callbacks=(value); end
-  def self._find_callbacks; end
-  def self._find_callbacks=(value); end
-  def self._initialize_callbacks; end
-  def self._initialize_callbacks=(value); end
-  def self._reflections; end
-  def self._reflections=(val); end
-  def self._reflections?; end
-  def self._rollback_callbacks; end
-  def self._rollback_callbacks=(value); end
-  def self._rollback_without_transaction_enrollment_callbacks; end
-  def self._rollback_without_transaction_enrollment_callbacks=(value); end
-  def self._save_callbacks; end
-  def self._save_callbacks=(value); end
-  def self._touch_callbacks; end
-  def self._touch_callbacks=(value); end
-  def self._update_callbacks; end
-  def self._update_callbacks=(value); end
-  def self._validate_callbacks; end
-  def self._validate_callbacks=(value); end
-  def self._validation_callbacks; end
-  def self._validation_callbacks=(value); end
-  def self._validators; end
-  def self._validators=(val); end
-  def self._validators?; end
-  def self.after_create(*args, **options, &block); end
-  def self.after_destroy(*args, **options, &block); end
-  def self.after_find(*args, **options, &block); end
-  def self.after_initialize(*args, **options, &block); end
-  def self.after_save(*args, **options, &block); end
-  def self.after_touch(*args, **options, &block); end
-  def self.after_update(*args, **options, &block); end
-  def self.aggregate_reflections; end
-  def self.aggregate_reflections=(val); end
-  def self.aggregate_reflections?; end
-  def self.allow_unsafe_raw_sql; end
-  def self.allow_unsafe_raw_sql=(obj); end
-  def self.around_create(*args, **options, &block); end
-  def self.around_destroy(*args, **options, &block); end
-  def self.around_save(*args, **options, &block); end
-  def self.around_update(*args, **options, &block); end
-  def self.attribute_aliases; end
-  def self.attribute_aliases=(val); end
-  def self.attribute_aliases?; end
-  def self.attribute_method_matchers; end
-  def self.attribute_method_matchers=(val); end
-  def self.attribute_method_matchers?; end
-  def self.attribute_type_decorations; end
-  def self.attribute_type_decorations=(val); end
-  def self.attribute_type_decorations?; end
-  def self.attributes_to_define_after_schema_loads; end
-  def self.attributes_to_define_after_schema_loads=(val); end
-  def self.attributes_to_define_after_schema_loads?; end
-  def self.before_create(*args, **options, &block); end
-  def self.before_destroy(*args, **options, &block); end
-  def self.before_save(*args, **options, &block); end
-  def self.before_update(*args, **options, &block); end
-  def self.belongs_to_required_by_default; end
-  def self.belongs_to_required_by_default=(obj); end
-  def self.cache_timestamp_format; end
-  def self.cache_timestamp_format=(val); end
-  def self.cache_timestamp_format?; end
-  def self.cache_versioning; end
-  def self.cache_versioning=(val); end
-  def self.cache_versioning?; end
-  def self.collection_cache_versioning; end
-  def self.collection_cache_versioning=(val); end
-  def self.collection_cache_versioning?; end
-  def self.configurations; end
-  def self.configurations=(config); end
-  def self.connection_handler; end
-  def self.connection_handler=(handler); end
-  def self.connection_handlers; end
-  def self.connection_handlers=(obj); end
-  def self.default_connection_handler; end
-  def self.default_connection_handler=(val); end
-  def self.default_connection_handler?; end
-  def self.default_scope_override; end
-  def self.default_scope_override=(val); end
-  def self.default_scopes; end
-  def self.default_scopes=(val); end
-  def self.default_timezone; end
-  def self.default_timezone=(obj); end
-  def self.defined_enums; end
-  def self.defined_enums=(val); end
-  def self.defined_enums?; end
-  def self.dump_schema_after_migration; end
-  def self.dump_schema_after_migration=(obj); end
-  def self.dump_schemas; end
-  def self.dump_schemas=(obj); end
-  def self.error_on_ignored_order; end
-  def self.error_on_ignored_order=(obj); end
-  def self.implicit_order_column; end
-  def self.implicit_order_column=(val); end
-  def self.implicit_order_column?; end
-  def self.include_root_in_json; end
-  def self.include_root_in_json=(val); end
-  def self.include_root_in_json?; end
-  def self.index_nested_attribute_errors; end
-  def self.index_nested_attribute_errors=(obj); end
-  def self.internal_metadata_table_name; end
-  def self.internal_metadata_table_name=(val); end
-  def self.internal_metadata_table_name?; end
-  def self.local_stored_attributes; end
-  def self.local_stored_attributes=(arg0); end
-  def self.lock_optimistically; end
-  def self.lock_optimistically=(val); end
-  def self.lock_optimistically?; end
-  def self.logger; end
-  def self.logger=(obj); end
-  def self.maintain_test_schema; end
-  def self.maintain_test_schema=(obj); end
-  def self.nested_attributes_options; end
-  def self.nested_attributes_options=(val); end
-  def self.nested_attributes_options?; end
-  def self.partial_writes; end
-  def self.partial_writes=(val); end
-  def self.partial_writes?; end
-  def self.pluralize_table_names; end
-  def self.pluralize_table_names=(val); end
-  def self.pluralize_table_names?; end
-  def self.primary_key_prefix_type; end
-  def self.primary_key_prefix_type=(obj); end
-  def self.reading_role; end
-  def self.reading_role=(obj); end
-  def self.record_timestamps; end
-  def self.record_timestamps=(val); end
-  def self.record_timestamps?; end
-  def self.schema_format; end
-  def self.schema_format=(obj); end
-  def self.schema_migrations_table_name; end
-  def self.schema_migrations_table_name=(val); end
-  def self.schema_migrations_table_name?; end
-  def self.skip_time_zone_conversion_for_attributes; end
-  def self.skip_time_zone_conversion_for_attributes=(val); end
-  def self.skip_time_zone_conversion_for_attributes?; end
-  def self.store_full_sti_class; end
-  def self.store_full_sti_class=(val); end
-  def self.store_full_sti_class?; end
-  def self.table_name_prefix; end
-  def self.table_name_prefix=(val); end
-  def self.table_name_prefix?; end
-  def self.table_name_suffix; end
-  def self.table_name_suffix=(val); end
-  def self.table_name_suffix?; end
-  def self.time_zone_aware_attributes; end
-  def self.time_zone_aware_attributes=(obj); end
-  def self.time_zone_aware_types; end
-  def self.time_zone_aware_types=(val); end
-  def self.time_zone_aware_types?; end
-  def self.timestamped_migrations; end
-  def self.timestamped_migrations=(obj); end
-  def self.verbose_query_logs; end
-  def self.verbose_query_logs=(obj); end
-  def self.warn_on_records_fetched_greater_than; end
-  def self.warn_on_records_fetched_greater_than=(obj); end
-  def self.writing_role; end
-  def self.writing_role=(obj); end
-  def skip_time_zone_conversion_for_attributes; end
-  def skip_time_zone_conversion_for_attributes?; end
-  def store_full_sti_class; end
-  def store_full_sti_class?; end
-  def table_name_prefix; end
-  def table_name_prefix?; end
-  def table_name_suffix; end
-  def table_name_suffix?; end
-  def time_zone_aware_attributes; end
-  def time_zone_aware_types; end
-  def time_zone_aware_types?; end
-  def timestamped_migrations; end
-  def type_for_attribute(*args, &block); end
-  def validation_context; end
-  def validation_context=(arg0); end
-  def verbose_query_logs; end
-  def warn_on_records_fetched_greater_than; end
-  extend ActiveModel::AttributeMethods::ClassMethods
-  extend ActiveModel::Callbacks
-  extend ActiveModel::Conversion::ClassMethods
-  extend ActiveModel::Naming
-  extend ActiveModel::Naming
-  extend ActiveModel::Naming
-  extend ActiveModel::SecurePassword::ClassMethods
-  extend ActiveModel::Translation
-  extend ActiveModel::Validations::Callbacks::ClassMethods
-  extend ActiveModel::Validations::ClassMethods
-  extend ActiveModel::Validations::HelperMethods
-  extend ActiveRecord::Aggregations::ClassMethods
-  extend ActiveRecord::Associations::ClassMethods
-  extend ActiveRecord::AttributeDecorators::ClassMethods
-  extend ActiveRecord::AttributeMethods::ClassMethods
-  extend ActiveRecord::AttributeMethods::PrimaryKey::ClassMethods
-  extend ActiveRecord::AttributeMethods::Read::ClassMethods
-  extend ActiveRecord::AttributeMethods::Serialization::ClassMethods
-  extend ActiveRecord::AttributeMethods::TimeZoneConversion::ClassMethods
-  extend ActiveRecord::AttributeMethods::Write::ClassMethods
-  extend ActiveRecord::Attributes::ClassMethods
-  extend ActiveRecord::AutosaveAssociation::ClassMethods
-  extend ActiveRecord::ConnectionHandling
-  extend ActiveRecord::Core::ClassMethods
-  extend ActiveRecord::CounterCache::ClassMethods
-  extend ActiveRecord::DefineCallbacks::ClassMethods
-  extend ActiveRecord::Delegation::DelegateCache
-  extend ActiveRecord::DynamicMatchers
-  extend ActiveRecord::Enum
-  extend ActiveRecord::Explain
-  extend ActiveRecord::Inheritance::ClassMethods
-  extend ActiveRecord::Integration::ClassMethods
-  extend ActiveRecord::Locking::Optimistic::ClassMethods
-  extend ActiveRecord::ModelSchema::ClassMethods
-  extend ActiveRecord::NestedAttributes::ClassMethods
-  extend ActiveRecord::NoTouching::ClassMethods
-  extend ActiveRecord::Persistence::ClassMethods
-  extend ActiveRecord::QueryCache::ClassMethods
-  extend ActiveRecord::Querying
-  extend ActiveRecord::ReadonlyAttributes::ClassMethods
-  extend ActiveRecord::Reflection::ClassMethods
-  extend ActiveRecord::Sanitization::ClassMethods
-  extend ActiveRecord::Scoping::ClassMethods
-  extend ActiveRecord::Scoping::Default::ClassMethods
-  extend ActiveRecord::Scoping::Named::ClassMethods
-  extend ActiveRecord::SecureToken::ClassMethods
-  extend ActiveRecord::Store::ClassMethods
-  extend ActiveRecord::Suppressor::ClassMethods
-  extend ActiveRecord::Timestamp::ClassMethods
-  extend ActiveRecord::Transactions::ClassMethods
-  extend ActiveRecord::Translation
-  extend ActiveRecord::Validations::ClassMethods
-  extend ActiveSupport::Benchmarkable
-  extend ActiveSupport::Callbacks::ClassMethods
-  extend ActiveSupport::DescendantsTracker
-  extend ActiveSupport::DescendantsTracker
-  extend Ancestry::HasAncestry
-  extend SorbetRails::CustomFinderMethods
-  include ActiveModel::AttributeMethods
-  include ActiveModel::AttributeMethods
-  include ActiveModel::Conversion
-  include ActiveModel::Dirty
-  include ActiveModel::SecurePassword
-  include ActiveModel::Serializers::JSON
-  include ActiveModel::Validations
-  include ActiveModel::Validations::Callbacks
-  include ActiveModel::Validations::HelperMethods
-  include ActiveRecord::Associations
-  include ActiveRecord::AttributeAssignment
-  include ActiveRecord::AttributeDecorators
-  include ActiveRecord::AttributeMethods
-  include ActiveRecord::AttributeMethods::BeforeTypeCast
-  include ActiveRecord::AttributeMethods::Dirty
-  include ActiveRecord::AttributeMethods::PrimaryKey
-  include ActiveRecord::AttributeMethods::Query
-  include ActiveRecord::AttributeMethods::Read
-  include ActiveRecord::AttributeMethods::Serialization
-  include ActiveRecord::AttributeMethods::TimeZoneConversion
-  include ActiveRecord::AttributeMethods::Write
-  include ActiveRecord::Attributes
-  include ActiveRecord::AutosaveAssociation
-  include ActiveRecord::Base::GeneratedAssociationMethods
-  include ActiveRecord::Base::GeneratedAttributeMethods
-  include ActiveRecord::Callbacks
-  include ActiveRecord::Core
-  include ActiveRecord::CounterCache
-  include ActiveRecord::DefineCallbacks
-  include ActiveRecord::Inheritance
-  include ActiveRecord::Integration
-  include ActiveRecord::Locking::Optimistic
-  include ActiveRecord::Locking::Pessimistic
-  include ActiveRecord::ModelSchema
-  include ActiveRecord::NestedAttributes
-  include ActiveRecord::NoTouching
-  include ActiveRecord::Persistence
-  include ActiveRecord::ReadonlyAttributes
-  include ActiveRecord::Reflection
-  include ActiveRecord::Sanitization
-  include ActiveRecord::Scoping
-  include ActiveRecord::Scoping::Default
-  include ActiveRecord::Scoping::Named
-  include ActiveRecord::SecureToken
-  include ActiveRecord::Serialization
-  include ActiveRecord::Store
-  include ActiveRecord::Suppressor
-  include ActiveRecord::Timestamp
-  include ActiveRecord::TouchLater
-  include ActiveRecord::Transactions
-  include ActiveRecord::Validations
-  include ActiveSupport::Callbacks
-  include ActiveSupport::Callbacks
-  include GlobalID::Identification
-end
-module ActiveRecord::Base::GeneratedAttributeMethods
-end
-module ActiveRecord::Base::GeneratedAssociationMethods
+class ActiveRecord::Result
+  def [](idx); end
+  def cast_values(type_overrides = nil); end
+  def collect!; end
+  def column_type(name, type_overrides = nil); end
+  def column_types; end
+  def columns; end
+  def each; end
+  def empty?; end
+  def first; end
+  def hash_rows; end
+  def includes_column?(name); end
+  def initialize(columns, rows, column_types = nil); end
+  def initialize_copy(other); end
+  def last; end
+  def length; end
+  def map!; end
+  def rows; end
+  def to_a; end
+  def to_ary; end
+  def to_hash; end
+  include Enumerable
 end
 class ActiveRecord::ConnectionAdapters::TransactionState
   def add_child(state); end
@@ -5857,129 +5964,4 @@ end
 class ActiveRecord::Fixture::FixtureError < StandardError
 end
 class ActiveRecord::Fixture::FormatError < ActiveRecord::Fixture::FixtureError
-end
-class ActiveRecord::Schema < ActiveRecord::Migration::Current
-  def define(info, &block); end
-  def self.define(info = nil, &block); end
-end
-module ActiveRecord::InternalMetadata::GeneratedAttributeMethods
-end
-class ActiveRecord::InternalMetadata < ActiveRecord::Base
-  def self.[](key); end
-  def self.[]=(key, value); end
-  def self._internal?; end
-  def self._validators; end
-  def self.attribute_type_decorations; end
-  def self.create_table; end
-  def self.defined_enums; end
-  def self.drop_table; end
-  def self.primary_key; end
-  def self.table_exists?; end
-  def self.table_name; end
-  include ActiveRecord::InternalMetadata::GeneratedAssociationMethods
-  include ActiveRecord::InternalMetadata::GeneratedAttributeMethods
-end
-module ActiveRecord::InternalMetadata::GeneratedAssociationMethods
-end
-class ActiveRecord::InternalMetadata::ActiveRecord_Relation < ActiveRecord::Relation
-  extend ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
-  include ActiveRecord::Delegation::ClassSpecificRelation
-  include ActiveRecord::InternalMetadata::GeneratedRelationMethods
-end
-module ActiveRecord::InternalMetadata::GeneratedRelationMethods
-end
-class ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
-  extend ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
-  include ActiveRecord::Delegation::ClassSpecificRelation
-  include ActiveRecord::InternalMetadata::GeneratedRelationMethods
-end
-class ActiveRecord::InternalMetadata::ActiveRecord_AssociationRelation < ActiveRecord::AssociationRelation
-  extend ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
-  include ActiveRecord::Delegation::ClassSpecificRelation
-  include ActiveRecord::InternalMetadata::GeneratedRelationMethods
-end
-class ActiveRecord::StatementCache
-  def bind_map; end
-  def execute(params, connection, &block); end
-  def initialize(query_builder, bind_map, klass); end
-  def klass; end
-  def query_builder; end
-  def self.create(connection, callable = nil, &block); end
-  def self.partial_query(values); end
-  def self.partial_query_collector; end
-  def self.query(sql); end
-  def self.unsupported_value?(value); end
-end
-class ActiveRecord::StatementCache::Substitute
-end
-class ActiveRecord::StatementCache::Query
-  def initialize(sql); end
-  def sql_for(binds, connection); end
-end
-class ActiveRecord::StatementCache::PartialQuery < ActiveRecord::StatementCache::Query
-  def initialize(values); end
-  def sql_for(binds, connection); end
-end
-class ActiveRecord::StatementCache::PartialQueryCollector
-  def <<(str); end
-  def add_bind(obj); end
-  def initialize; end
-  def value; end
-end
-class ActiveRecord::StatementCache::Params
-  def bind; end
-end
-class ActiveRecord::StatementCache::BindMap
-  def bind(values); end
-  def initialize(bound_attributes); end
-end
-module ActiveRecord::Migration::Compatibility
-  def self.find(version); end
-end
-class ActiveRecord::Migration::Compatibility::V5_2 < ActiveRecord::Migration::Current
-  def add_timestamps(table_name, **options); end
-  def change_table(table_name, **options); end
-  def command_recorder; end
-  def compatible_table_definition(t); end
-  def create_join_table(table_1, table_2, **options); end
-  def create_table(table_name, **options); end
-end
-module ActiveRecord::Migration::Compatibility::V5_2::TableDefinition
-  def timestamps(**options); end
-end
-module ActiveRecord::Migration::Compatibility::V5_2::CommandRecorder
-  def invert_change_column_comment(args); end
-  def invert_change_table_comment(args); end
-  def invert_transaction(args, &block); end
-end
-class ActiveRecord::Migration::Compatibility::V5_1 < ActiveRecord::Migration::Compatibility::V5_2
-  def change_column(table_name, column_name, type, options = nil); end
-  def create_table(table_name, options = nil); end
-end
-class ActiveRecord::Migration::Compatibility::V5_0 < ActiveRecord::Migration::Compatibility::V5_1
-  def add_belongs_to(table_name, ref_name, **options); end
-  def add_column(table_name, column_name, type, options = nil); end
-  def add_reference(table_name, ref_name, **options); end
-  def compatible_table_definition(t); end
-  def create_join_table(table_1, table_2, column_options: nil, **options); end
-  def create_table(table_name, options = nil); end
-end
-module ActiveRecord::Migration::Compatibility::V5_0::TableDefinition
-  def belongs_to(*args, **options); end
-  def primary_key(name, type = nil, **options); end
-  def references(*args, **options); end
-end
-class ActiveRecord::Migration::Compatibility::V4_2 < ActiveRecord::Migration::Compatibility::V5_0
-  def add_belongs_to(table_name, ref_name, **options); end
-  def add_reference(table_name, ref_name, **options); end
-  def add_timestamps(table_name, **options); end
-  def compatible_table_definition(t); end
-  def index_exists?(table_name, column_name, options = nil); end
-  def index_name_for_remove(table_name, options = nil); end
-  def remove_index(table_name, options = nil); end
-end
-module ActiveRecord::Migration::Compatibility::V4_2::TableDefinition
-  def belongs_to(*arg0, **options); end
-  def references(*arg0, **options); end
-  def timestamps(**options); end
 end

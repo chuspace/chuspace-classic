@@ -24,8 +24,7 @@ export default class Image extends Node {
         },
         title: {
           default: null
-        },
-        align: { default: 'none' }
+        }
       },
       inline: true,
       group: 'inline',
@@ -36,8 +35,7 @@ export default class Image extends Node {
           getAttrs: (dom: PMNode) => ({
             src: dom.getAttribute('src'),
             title: dom.getAttribute('title'),
-            alt: dom.getAttribute('alt'),
-            align: dom.getAttribute('align')
+            alt: dom.getAttribute('alt')
           })
         }
       ],

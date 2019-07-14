@@ -312,6 +312,7 @@ CREATE TABLE public.images (
     image_data jsonb,
     blob_path character varying,
     repository_id bigint NOT NULL,
+    user_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -349,6 +350,7 @@ CREATE TABLE public.posts (
     blob_path character varying,
     status integer DEFAULT 0 NOT NULL,
     author_id bigint NOT NULL,
+    repository_id bigint NOT NULL,
     ancestry character varying,
     topics character varying[] DEFAULT '{}'::character varying[],
     published_at timestamp without time zone,
@@ -496,7 +498,7 @@ CREATE TABLE public.users (
     name character varying DEFAULT ''::character varying NOT NULL,
     email character varying DEFAULT ''::character varying NOT NULL,
     nickname character varying DEFAULT ''::character varying NOT NULL,
-    avatar jsonb,
+    avatar_data jsonb,
     auth_token character varying DEFAULT ''::character varying NOT NULL,
     bio character varying,
     company character varying,
@@ -638,10 +640,24 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: index_images_on_blob_path_and_repository_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_images_on_blob_path_and_repository_id ON public.images USING btree (blob_path, repository_id);
+
+
+--
 -- Name: index_images_on_repository_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_images_on_repository_id ON public.images USING btree (repository_id);
+
+
+--
+-- Name: index_images_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_images_on_user_id ON public.images USING btree (user_id);
 
 
 --
@@ -659,10 +675,10 @@ CREATE INDEX index_posts_on_author_id ON public.posts USING btree (author_id);
 
 
 --
--- Name: index_posts_on_blob_path_and_author_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_posts_on_blob_path_and_repository_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_posts_on_blob_path_and_author_id ON public.posts USING btree (blob_path, author_id);
+CREATE INDEX index_posts_on_blob_path_and_repository_id ON public.posts USING btree (blob_path, repository_id);
 
 
 --
@@ -673,10 +689,17 @@ CREATE INDEX index_posts_on_published_at ON public.posts USING btree (published_
 
 
 --
--- Name: index_posts_on_slug_and_author_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_posts_on_repository_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_posts_on_slug_and_author_id ON public.posts USING btree (slug, author_id);
+CREATE INDEX index_posts_on_repository_id ON public.posts USING btree (repository_id);
+
+
+--
+-- Name: index_posts_on_slug_and_repository_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_posts_on_slug_and_repository_id ON public.posts USING btree (slug, repository_id);
 
 
 --
@@ -792,6 +815,14 @@ CREATE TRIGGER logidze_on_posts BEFORE INSERT OR UPDATE ON public.posts FOR EACH
 
 
 --
+-- Name: images fk_rails_19cd822056; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.images
+    ADD CONSTRAINT fk_rails_19cd822056 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: images fk_rails_5fba8ffc00; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -805,6 +836,14 @@ ALTER TABLE ONLY public.images
 
 ALTER TABLE ONLY public.ssh_keys
     ADD CONSTRAINT fk_rails_bacf7e1718 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: posts fk_rails_d359178d0f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.posts
+    ADD CONSTRAINT fk_rails_d359178d0f FOREIGN KEY (repository_id) REFERENCES public.repositories(id);
 
 
 --
@@ -823,6 +862,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190709114321'),
 ('20190709114322'),
 ('20190709114442'),
-('20190711213121');
+('20190713162331');
 
 

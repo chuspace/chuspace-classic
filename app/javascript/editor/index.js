@@ -36,6 +36,7 @@ type Options = {
   autoFocus: boolean,
   element: HTMLElement,
   content: string,
+  editable: boolean,
   onChange: () => void
 }
 
@@ -87,7 +88,7 @@ export default class Editor {
     return manager.commands({
       schema: schema,
       view: this.view,
-      editable: true
+      editable: !!this.options.editable
     })
   }
 
@@ -116,7 +117,7 @@ export default class Editor {
         new Plugin({
           key: new PluginKey('editable'),
           props: {
-            editable: () => true
+            editable: () => !!this.options.editable
           }
         }),
         new Plugin({
@@ -133,6 +134,7 @@ export default class Editor {
   createView() {
     const view = new EditorView(this.element, {
       state: this.state,
+      editable: () => !!this.options.editable,
       dispatchTransaction: this.dispatchTransaction.bind(this),
       nodeViews: {
         code_block: (node, view, getPos) => new CodeBlockView({ node, view, getPos }),

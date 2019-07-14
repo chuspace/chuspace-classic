@@ -27,17 +27,14 @@ export default new MarkdownParser(schema, markdownit('commonmark', { html: false
   image: {
     node: 'image',
     getAttrs: tok => {
-      const [src, params] = tok.attrGet('src').split('#')
       return {
-        src: src,
-        align: queryString.parse(params).align,
+        src: tok.attrGet('src'),
         title: tok.attrGet('title') || null,
         alt: (tok.children[0] && tok.children[0].content) || null
       }
     }
   },
   hardbreak: { node: 'hard_break' },
-
   em: { mark: 'em' },
   strong: { mark: 'strong' },
   link: {

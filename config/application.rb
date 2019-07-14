@@ -35,5 +35,11 @@ module Chuspace
 
     # Schema format
     config.active_record.schema_format = :sql
+
+    # Setup default urls
+    config.action_mailer.asset_host = 'http://assets.chuspace.com'
+    config.hosts << 'chuspace.com'
+    config.default_url_options = { host: 'chuspace.com' }
+    Rails.application.routes.default_url_options[:host] = 'chuspace.com'
   end
 end

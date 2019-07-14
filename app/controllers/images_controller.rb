@@ -8,25 +8,45 @@ class ImagesController < ApplicationController
   layout 'editor', only: %i[new edit]
 
   def create
-    repository = Current.user.repository
-    uploaded_io = params[:image]
-    blob_path = File.join('images', uploaded_io.original_filename)
-    absolute_blob_path = File.join('', blob_path)
-    io = uploaded_io.read
-    content_type = MimeMagic.by_path(blob_path).type
+    uploaded_file = params[:image]
+    dirname = FasterPath.dirname(Image::ROOT_PATH)
+    io = uploaded_file.read
+    name = uploaded_file.original_filename
+    blob_path = FasterPath.plus(dirname, name)
+    image = Current.user.images.build(user: Current.user, name: name, blob_path: blob_path, repository: Current.user.repository, image: params[:image])
 
-    repository.create_commit(content: io, message: "Added #{blob_path}", path: blob_path)
-    Current.user.minio_client.put_object(key: blob_path, content_type: content_type, bucket: Current.user.nickname, body: io)
-
-    render json: { url: absolute_blob_path }
+    if image.save
+      Current.user.repository.create_commit(content: io, message: "Added #{blob_path}", path: blob_path)
+      render json: { url: FasterPath.plus('/', blob_path) }
+    else
+      render json: { created: false }, status: :unprocessable_entity
+    end
   end
 
   def show
-    filename = request.path.chomp('/')
-    response = Current.user.minio_client.get_object(key: filename, bucket: Current.user.nickname)
+    image = Current.user.images.find_by(blob_path: request.path[1..-1])
 
-    if stale?(weak_etag: response.etag, last_modified: response.last_modified, public: true)
-      send_data response.body.read, type: response.content_type, disposition: :inline
+    if image
+      redirect_to image.image.imgproxy_url(**builder_options)
+    else
+      raise ActionController::RoutingError.new('Not Found')
     end
+  end
+
+  def blob_params
+    params.permit(:path, :width, :quality)
+  end
+
+  def builder_options
+    options = {}
+
+    if blob_params[:width]
+      options[:width] = blob_params[:width]
+      options[:resizing_type] = :fill
+    end
+
+    options[:quality] = blob_params[:quality] + '%' if blob_params[:quality]
+
+    options
   end
 end

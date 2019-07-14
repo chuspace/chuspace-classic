@@ -1,16 +1,3 @@
-<% @editor_header = capture do %>
-  <div class='flex items-center ml-4'>
-    <div class="mr-4"><%= @post.author.name %></div>
-    <div class="mr-4 badge badge--grey"><%= @post.status.titlecase %></div>
-    <div class="mr-4 text-grey text-sm" id='editor-status'>Saved</div>
-  </div>
-
-  <div class='flex justify-end items-center flex-1 mr-8'>
-    <dialog-opener class='button button--active button--slim mr-2' target='publish-<%= @post.slug %>'>Publish</dialog-opener>
-    <%= link_to 'Delete', post_path(@post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'button button--danger button--slim' %>
-  </div>
-<% end %>
-
 <chu-editor
   spellcheck="false"
   url="<%= post_path(@post) %>"
@@ -18,27 +5,29 @@
   content="<%= @post.blob_content %>"
   id="<%= @post.slug %>"
   class='chu-editor'
+  editable
 >
 </chu-editor>
 
-
 <dialog id='publish-<%= @post.slug %>' class='dialog__sm'>
   <div class='container relative'>
-    <%= link_to edit_post_url(@post) do %>
-      <svg-icon
-        class='absolute top-0 right-0'
-        name='x-circle'
-        feather='true'
-        stroke='rgba(0, 0, 0, 0.5)'
-        color='none' width='24' height='24'>
-      </svg-icon>
-    <% end %>
+    <svg-icon
+      class='absolute top-0 right-0'
+      name='x-circle'
+      feather='true'
+      stroke='rgba(0, 0, 0, 0.5)'
+      color='none' width='24' height='24'>
+    </svg-icon>
 
     <h3 class='border-b pb-2 inline-block text-lg'>Publish</h3>
     <div class='card card--default w-3/4 mx-auto mt-8'>
-      <%= simple_form_for @post, remote: true, onSubmit: "return !event.keyCode === 13" do |f| %>
-        <h1 id="title" class='title title--nohover text-3xl'></h1>
-        <h2 id="summary" class='summary summary--nohover text-grey-light mt-8 text-2xl'></h2>
+      <%= simple_form_for @post, url: post_publish_index_path(@post), method: :post, remote: true, onSubmit: "return !event.keyCode === 13" do |f| %>
+        <h1 id="post_title" class='title title--nohover text-3xl'></h1>
+        <h2 id="post_summary" class='summary summary--nohover text-grey-light mt-8 text-2xl'></h2>
+
+        <%= f.input :title, as: :hidden, readonly: true, disabled: true %>
+        <%= f.input :summary, as: :hidden, readonly: true, disabled: true %>
+        <%= f.input :body, as: :hidden, readonly: true, disabled: true %>
 
         <input-autocomplete
           url="<%= autocomplete_topics_url %>"
@@ -64,7 +53,7 @@
           class='w-full block mt-12'>
         </input-autocomplete>
 
-        <%= f.submit 'Publish now', class: 'button button--fill float-right mt-12 text-base button--disabled' %>
+        <%= f.submit 'Publish now', class: 'button button--fill float-right mt-12 text-base' %>
       <% end %>
     </div>
   </div>

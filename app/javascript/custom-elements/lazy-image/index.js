@@ -1,13 +1,20 @@
 // @flow
 
+import 'lazysizes/plugins/blur-up/ls.blur-up'
+
 import { LitElement, customElement, html } from 'lit-element'
+
+import lazySizes from 'lazysizes'
+import queryString from 'query-string'
+
+lazySizes.cfg.lazyClass = 'lazy'
+lazySizes.cfg.blurupMode = 'auto'
 
 export default class LazyImage extends LitElement {
   static get properties() {
     return {
       src: { type: String },
       alt: { type: String },
-      align: { type: String, reflect: true },
       editable: { type: String }
     }
   }
@@ -42,34 +49,33 @@ export default class LazyImage extends LitElement {
     return this
   }
 
-  setAlign = (e: Event) => {
-    e.preventDefault()
-    // $FlowFixMe
-    this.align = e.currentTarget.dataset.align
-    this.handleChange({ align: this.align, alt: this.alt })
-  }
-
   onCaptionChange = (e: Event) => {
     // $FlowFixMe
     this.alt = e.target.value
-    this.handleChange({ align: this.align, alt: this.alt })
+    this.handleChange({ alt: this.alt })
   }
 
   render() {
+    const srcImage = `${this.src}?${queryString.stringify({
+      quality: 100,
+      width: 800
+    })}`
+
+    const placeholderImage = `${this.src}?${queryString.stringify({
+      quality: 1,
+      width: 800
+    })}`
+
     return html`
       <div class="image-container">
-        ${this.editable
-          ? html`
-              <div class="image-toolbar">
-                <svg-icon name="image-left" color="#fff" @click=${this.setAlign} data-align="left"></svg-icon>
-                <svg-icon name="image-center" color="#fff" @click=${this.setAlign} data-align="middle"></svg-icon>
-                <svg-icon name="image-right" color="#fff" @click=${this.setAlign} data-align="right"></svg-icon>
-                <svg-icon name="image-full" color="#fff" @click=${this.setAlign} data-align="none"></svg-icon>
-                <div class="tooltip-arrow"></div>
-              </div>
-            `
-          : null}
-        <img alt=${this.alt} src=${this.src} @click=${this.selectNode} />
+        <img
+          alt=${this.alt}
+          data-lowsrc=${placeholderImage}
+          data-src=${srcImage}
+          data-sizes="auto"
+          @click=${this.selectNode}
+          class="lazy"
+        />
         ${this.editable
           ? html`<figcaption contentEditable="false">
           <input

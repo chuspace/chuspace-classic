@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/faker/all/faker.rbi
 #
-# faker-1.9.4
+# faker-1.9.6
 module Faker
 end
 module Faker::Base58
@@ -420,6 +420,7 @@ class Faker::Esport < Faker::Base
   def self.team; end
 end
 class Faker::File < Faker::Base
+  def self.dir(segment_count = nil, root = nil, directory_separator = nil); end
   def self.extension; end
   def self.file_name(dir = nil, name = nil, ext = nil, directory_separator = nil); end
   def self.mime_type; end
@@ -659,13 +660,15 @@ class Faker::NationalHealthService < Faker::Base
   def self.check_digit(number = nil); end
 end
 class Faker::Number < Faker::Base
+  def self._deprecated_decimal_part(digits = nil); end
+  def self._deprecated_leading_zero_number(digits = nil); end
   def self.between(from = nil, to = nil); end
   def self.decimal(l_digits = nil, r_digits = nil); end
-  def self.decimal_part(digits = nil); end
+  def self.decimal_part(*args, &block); end
   def self.digit; end
   def self.greater_than_zero(number); end
   def self.hexadecimal(digits = nil); end
-  def self.leading_zero_number(digits = nil); end
+  def self.leading_zero_number(*args, &block); end
   def self.less_than_zero(number); end
   def self.negative(from = nil, to = nil); end
   def self.non_zero_digit; end

@@ -1,44 +1,33 @@
 lazy-image
 	@apply whitespace-no-wrap relative block
 
-	&[align='left']
-		@apply float-left mr-4 w-1/2
-
-	&[align='right']
-		@apply float-right mr-4 w-1/2
-
-	&[align='middle']
-		@apply float-none w-1/2 mx-auto
-
-	.image-toolbar
-		@apply absolute flex justify-between items-center rounded mx-auto py-2 px-4 bg-black z-50 invisible
-		width: 150px
-		top: -45px
-		left: calc(50% - 100px / 2)
-		height: 36px
-
 	.image-container
 		@apply float-none relative
-
-		.lazy
-			display: block
-			border: 0
-			opacity: 0
-
-			&:not(.initial)
-				transition: opacity 1s
-
-			&.initial,
-			&.loaded,
-			&.error
-				opacity: 1
-
-			&:not([src])
-				visibility: hidden
 
 	&.selected, &:hover
 		box-shadow: 0 0 0 3px theme('colors.blue')
 
-	&.selected
-		.image-toolbar
-			@apply visible
+	img
+		width: 800px
+		min-height: 400px
+		&.ls-blur-up-is-loading, &.lazyload:not([src])
+			visibility: hidden
+
+	.ls-blur-up-img
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+		display: block
+		font-family: "blur-up: auto", "object-fit: cover"
+		object-fit: cover
+
+	.ls-blur-up-img
+		filter: blur(10px)
+		opacity: 1
+		transition: opacity 200ms, filter 300ms
+
+		&.ls-inview.ls-original-loaded
+			opacity: 0
+			filter: blur(5px)

@@ -373,9 +373,9 @@ end
 module ActionView::Helpers::TextHelper
   def concat(string); end
   def current_cycle(name = nil); end
-  def cut_summary_part(part_position, part, separator, options); end
+  def cut_excerpt_part(part_position, part, separator, options); end
   def cycle(first_value, *values); end
-  def summary(text, phrase, options = nil); end
+  def excerpt(text, phrase, options = nil); end
   def get_cycle(name); end
   def highlight(text, phrases, options = nil); end
   def pluralize(count, singular, plural_arg = nil, plural: nil, locale: nil); end

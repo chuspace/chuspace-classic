@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/aws-sdk-s3/all/aws-sdk-s3.rbi
 #
-# aws-sdk-s3-1.43.0
+# aws-sdk-s3-1.45.0
 module Aws::S3
 end
 module Aws::S3::Types
@@ -407,6 +407,8 @@ class Anonymous_Struct_170 < Struct
   def sse_customer_algorithm=(_); end
   def sse_customer_key_md5; end
   def sse_customer_key_md5=(_); end
+  def ssekms_encryption_context; end
+  def ssekms_encryption_context=(_); end
   def ssekms_key_id; end
   def ssekms_key_id=(_); end
   def version_id; end
@@ -482,6 +484,8 @@ class Anonymous_Struct_171 < Struct
   def sse_customer_key=(_); end
   def sse_customer_key_md5; end
   def sse_customer_key_md5=(_); end
+  def ssekms_encryption_context; end
+  def ssekms_encryption_context=(_); end
   def ssekms_key_id; end
   def ssekms_key_id=(_); end
   def storage_class; end
@@ -592,6 +596,8 @@ class Anonymous_Struct_177 < Struct
   def sse_customer_algorithm=(_); end
   def sse_customer_key_md5; end
   def sse_customer_key_md5=(_); end
+  def ssekms_encryption_context; end
+  def ssekms_encryption_context=(_); end
   def ssekms_key_id; end
   def ssekms_key_id=(_); end
   def upload_id; end
@@ -649,6 +655,8 @@ class Anonymous_Struct_178 < Struct
   def sse_customer_key=(_); end
   def sse_customer_key_md5; end
   def sse_customer_key_md5=(_); end
+  def ssekms_encryption_context; end
+  def ssekms_encryption_context=(_); end
   def ssekms_key_id; end
   def ssekms_key_id=(_); end
   def storage_class; end
@@ -3370,6 +3378,8 @@ class Anonymous_Struct_352 < Struct
   def sse_customer_algorithm=(_); end
   def sse_customer_key_md5; end
   def sse_customer_key_md5=(_); end
+  def ssekms_encryption_context; end
+  def ssekms_encryption_context=(_); end
   def ssekms_key_id; end
   def ssekms_key_id=(_); end
   def version_id; end
@@ -3433,6 +3443,8 @@ class Anonymous_Struct_353 < Struct
   def sse_customer_key=(_); end
   def sse_customer_key_md5; end
   def sse_customer_key_md5=(_); end
+  def ssekms_encryption_context; end
+  def ssekms_encryption_context=(_); end
   def ssekms_key_id; end
   def ssekms_key_id=(_); end
   def storage_class; end

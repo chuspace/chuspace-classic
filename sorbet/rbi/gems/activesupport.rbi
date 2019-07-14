@@ -1865,6 +1865,87 @@ end
 module ActiveSupport::Benchmarkable
   def benchmark(message = nil, options = nil); end
 end
+class ActiveSupport::Subscriber
+  def self.add_event_subscriber(event); end
+  def self.attach_to(namespace, subscriber = nil, notifier = nil); end
+  def self.detach_from(namespace, notifier = nil); end
+  def self.find_attached_subscriber; end
+  def self.invalid_event?(event); end
+  def self.method_added(event); end
+  def self.namespace; end
+  def self.notifier; end
+  def self.pattern_subscribed?(pattern); end
+  def self.prepare_pattern(event); end
+  def self.remove_event_subscriber(event); end
+  def self.subscriber; end
+  def self.subscribers; end
+end
+class ActiveSupport::SubscriberQueueRegistry
+  def get_queue(queue_key); end
+  def initialize; end
+  extend ActiveSupport::PerThreadRegistry
+end
+class ActiveSupport::LogSubscriber < ActiveSupport::Subscriber
+  def self.colorize_logging; end
+  def self.colorize_logging=(obj); end
+  def self.flush_all!; end
+  def self.log_subscribers; end
+  def self.logger; end
+  def self.logger=(arg0); end
+end
+class ActiveSupport::BacktraceCleaner
+  def add_filter(&block); end
+  def add_gem_filter; end
+  def add_gem_silencer; end
+  def add_silencer(&block); end
+  def add_stdlib_silencer; end
+  def clean(backtrace, kind = nil); end
+  def filter(backtrace, kind = nil); end
+  def filter_backtrace(backtrace); end
+  def initialize; end
+  def noise(backtrace); end
+  def remove_filters!; end
+  def remove_silencers!; end
+  def silence(backtrace); end
+end
+class ActiveSupport::ParameterFilter
+  def compiled_filter; end
+  def filter(params); end
+  def filter_param(key, value); end
+  def initialize(filters = nil, mask: nil); end
+end
+class ActiveSupport::ParameterFilter::CompiledFilter
+  def blocks; end
+  def call(params, parents = nil, original_params = nil); end
+  def deep_regexps; end
+  def initialize(regexps, deep_regexps, blocks, mask:); end
+  def regexps; end
+  def self.compile(filters, mask:); end
+  def value_for_key(key, value, parents = nil, original_params = nil); end
+end
+class ActiveSupport::ArrayInquirer < Array
+  def any?(*candidates); end
+  def method_missing(name, *args); end
+  def respond_to_missing?(name, include_private = nil); end
+end
+module ActiveSupport::RangeWithFormat
+  def to_default_s(format = nil); end
+  def to_formatted_s(format = nil); end
+  def to_s(format = nil); end
+end
+module ActiveSupport::CompareWithRange
+  def ===(value); end
+  def cover?(value); end
+  def include?(value); end
+end
+module ActiveSupport::IncludeTimeWithZone
+  def include?(value); end
+end
+module ActiveSupport::EachTimeWithZone
+  def each(&block); end
+  def ensure_iteration_allowed; end
+  def step(n = nil, &block); end
+end
 module Module::Concerning
   def concern(topic, &module_definition); end
   def concerning(topic, &block); end
@@ -1896,67 +1977,6 @@ module ActiveSupport::TaggedLogging::Formatter
   def push_tags(*tags); end
   def tagged(*tags); end
   def tags_text; end
-end
-class ActiveSupport::ParameterFilter
-  def compiled_filter; end
-  def filter(params); end
-  def filter_param(key, value); end
-  def initialize(filters = nil, mask: nil); end
-end
-class ActiveSupport::ParameterFilter::CompiledFilter
-  def blocks; end
-  def call(params, parents = nil, original_params = nil); end
-  def deep_regexps; end
-  def initialize(regexps, deep_regexps, blocks, mask:); end
-  def regexps; end
-  def self.compile(filters, mask:); end
-  def value_for_key(key, value, parents = nil, original_params = nil); end
-end
-module ActiveSupport::RangeWithFormat
-  def to_default_s(format = nil); end
-  def to_formatted_s(format = nil); end
-  def to_s(format = nil); end
-end
-module ActiveSupport::CompareWithRange
-  def ===(value); end
-  def cover?(value); end
-  def include?(value); end
-end
-module ActiveSupport::IncludeTimeWithZone
-  def include?(value); end
-end
-module ActiveSupport::EachTimeWithZone
-  def each(&block); end
-  def ensure_iteration_allowed; end
-  def step(n = nil, &block); end
-end
-class ActiveSupport::Subscriber
-  def self.add_event_subscriber(event); end
-  def self.attach_to(namespace, subscriber = nil, notifier = nil); end
-  def self.detach_from(namespace, notifier = nil); end
-  def self.find_attached_subscriber; end
-  def self.invalid_event?(event); end
-  def self.method_added(event); end
-  def self.namespace; end
-  def self.notifier; end
-  def self.pattern_subscribed?(pattern); end
-  def self.prepare_pattern(event); end
-  def self.remove_event_subscriber(event); end
-  def self.subscriber; end
-  def self.subscribers; end
-end
-class ActiveSupport::SubscriberQueueRegistry
-  def get_queue(queue_key); end
-  def initialize; end
-  extend ActiveSupport::PerThreadRegistry
-end
-class ActiveSupport::LogSubscriber < ActiveSupport::Subscriber
-  def self.colorize_logging; end
-  def self.colorize_logging=(obj); end
-  def self.flush_all!; end
-  def self.log_subscribers; end
-  def self.logger; end
-  def self.logger=(arg0); end
 end
 class ActiveSupport::ExecutionWrapper
   def __callbacks; end
@@ -2059,17 +2079,12 @@ class ActiveSupport::FileUpdateChecker
   def updated_at(paths); end
   def watched; end
 end
-class ActiveSupport::ArrayInquirer < Array
-  def any?(*candidates); end
-  def method_missing(name, *args); end
-  def respond_to_missing?(name, include_private = nil); end
-end
 module ActiveSupport::NumericWithFormat
   def to_s(format = nil, options = nil); end
 end
 class File < IO
-  def self.empty?(arg0); end
-  def self.split(arg0); end
+  def self.atomic_write(file_name, temp_dir = nil); end
+  def self.probe_stat_in(dir); end
 end
 module ActiveSupport::MarshalWithAutoloading
   def load(source, proc = nil); end
@@ -2196,21 +2211,6 @@ class ActiveSupport::Cache::Strategy::LocalCache::Middleware
   def local_cache_key; end
   def name; end
   def new(app); end
-end
-class ActiveSupport::BacktraceCleaner
-  def add_filter(&block); end
-  def add_gem_filter; end
-  def add_gem_silencer; end
-  def add_silencer(&block); end
-  def add_stdlib_silencer; end
-  def clean(backtrace, kind = nil); end
-  def filter(backtrace, kind = nil); end
-  def filter_backtrace(backtrace); end
-  def initialize; end
-  def noise(backtrace); end
-  def remove_filters!; end
-  def remove_silencers!; end
-  def silence(backtrace); end
 end
 class ActiveSupport::Cache::MemoryStore < ActiveSupport::Cache::Store
   def cached_size(key, entry); end

@@ -11,8 +11,6 @@ class Repository < ApplicationRecord
   CONTRIBUTIONS_REF = 'refs/heads/contributions'
   GLOBAL_HOOKS_DIRECTORY = Rails.root.join('bin', 'git-hooks')
   GITIGNORE_PATH = '.gitignore'
-  POSTS_PATH = 'posts/.keep'
-  IMAGES_PATH = 'images/.keep'
 
   GITIGNORE = <<~STRING
     # Ignore everything
@@ -31,7 +29,7 @@ class Repository < ApplicationRecord
   validates :name, :path, presence: true, uniqueness: true
 
   before_validation :assign_default_attributes, on: :create
-  before_create :create_git_repo, :create_git_hooks, :add_gitignore, :add_images_folder, :add_posts_folder
+  after_create :create_git_repo, :create_git_hooks, :add_gitignore, :add_images_folder, :add_posts_folder
   after_save :rename_git_repo, if: -> { !new_record? && path_changed? }
 
   after_destroy :destroy_git_repo
@@ -111,7 +109,6 @@ class Repository < ApplicationRecord
         "Deleted #{path}"
       end
 
-
     self.commit_sha = Git::Commit.create(
       repository: self,
       committer: self.author,
@@ -175,7 +172,7 @@ class Repository < ApplicationRecord
     self.commit_sha = Git::Commit.create(
       repository: self,
       committer: author,
-      options: { commit: { message: 'Add images' }, file: { content: '', path: IMAGES_PATH } }
+      options: { commit: { message: 'Add images' }, file: { content: '', path: Image::ROOT_PATH } }
     )
   end
 
@@ -183,7 +180,7 @@ class Repository < ApplicationRecord
     self.commit_sha = Git::Commit.create(
       repository: self,
       committer: author,
-      options: { commit: { message: 'Add posts' }, file: { content: '', path: POSTS_PATH } }
+      options: { commit: { message: 'Add posts' }, file: { content: '', path: Post::ROOT_PATH } }
     )
   end
 

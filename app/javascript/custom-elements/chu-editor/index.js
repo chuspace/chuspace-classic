@@ -18,6 +18,7 @@ export default class ChuEditor extends LitElement {
       url: { type: String, reflect: true },
       id: { type: String },
       content: { type: String },
+      editable: { type: Boolean },
       saving: { type: Boolean, reflect: true },
       autofocus: { type: Boolean }
     }
@@ -32,31 +33,19 @@ export default class ChuEditor extends LitElement {
     console.log('connected')
   }
 
-  get isPersisted() {
-    return !!this.id
-  }
-
   async connectedCallback() {
     await super.connectedCallback()
-
-    try {
-      this.autofocus = JSON.parse(this.autofocus)
-    } catch (e) {
-      this.autofocus = false
-    }
 
     this.editor = new Editor({
       element: this,
       autoFocus: this.autofocus,
-      editable: true,
+      editable: this.editable,
       placeholder: 'Write your post',
       onChange: this.onChange,
       content: this.content || ''
     })
 
-    window.onbeforeunload = () => (this.saving ? 'Are you sure you want to navigate away?' : null)
-
-    if (this.isPersisted) this.updatePublishDialog()
+    if (this.id) this.updatePublishDialog()
   }
 
   disconnectedCallback() {
@@ -68,35 +57,49 @@ export default class ChuEditor extends LitElement {
     window.onbeforeunload = null
   }
 
-  updateStatuses() {
-    const status = document.getElementById('editor-status')
-    status.textContent = this.saving ? 'Saving...' : 'Saved'
-  }
-
   updatePublishDialog() {
     const dialog = document.querySelector('dialog')
 
     if (!dialog) return
 
-    const title = dialog.querySelector('#title')
-    const summary = dialog.querySelector('#summary')
+    const title = dialog.querySelectorAll('#post_title')
+    const summary = dialog.querySelectorAll('#post_summary')
+    const body = dialog.querySelector('#post_body')
 
-    if (!title || !summary) return
+    if (!title || !summary || !body) return
 
-    title.textContent = this.editor.title
+    title.forEach(titleNode => {
+      if (titleNode instanceof HTMLInputElement) titleNode.value = this.editor.title
+      if (titleNode instanceof HTMLHeadingElement) titleNode.textContent = this.editor.title
+    })
 
-    if (this.editor.summary) {
-      summary.textContent = this.editor.summary || ''
-      summary.classList.remove('summary__empty')
-    } else {
-      summary.textContent = "You haven't written a summary"
-      summary.classList.add('summary__empty')
-    }
+    body.textContent = this.editor.content
+
+    summary.forEach(summaryNode => {
+      if (summaryNode instanceof HTMLInputElement) summaryNode.value = this.editor.summary
+      if (summaryNode instanceof HTMLHeadingElement) {
+        if (this.editor.summary) {
+          summaryNode.textContent = this.editor.summary || ''
+          summaryNode.classList.remove('summary__empty')
+        } else {
+          summaryNode.textContent = "You haven't written a summary"
+          summaryNode.classList.add('summary__empty')
+        }
+      }
+    })
+  }
+
+  updateStatuses() {
+    const status = document.getElementById('editor-status')
+    if (status) status.textContent = this.saving ? 'Saving...' : 'Saved'
   }
 
   updated = () => {
-    if (this.isPersisted) {
+    if (this.editable && this.id) {
+      window.onbeforeunload = () => (this.saving ? 'Are you sure you want to navigate away?' : null)
+
       this.updateStatuses()
+      if (this.editor) this.updatePublishDialog()
 
       this.subscription = ActioncableClient.subscribe(
         {
@@ -112,10 +115,10 @@ export default class ChuEditor extends LitElement {
   }
 
   onChange = () => {
-    this.updatePublishDialog()
+    if (this.saving) return
     this.saving = true
 
-    if (this.isPersisted) {
+    if (this.id) {
       this.autosave()
     } else {
       this.create()
@@ -147,11 +150,13 @@ export default class ChuEditor extends LitElement {
         }
       })
         .then(response => response.json())
-        .then(response => {
+        .then(async response => {
           if (response.redirect) {
             window.history.pushState(null, 'Edit', response.redirect)
             this.id = response.slug
-            this.requestUpdate()
+            await this.requestUpdate()
+            const header = document.getElementById('post_header')
+            if (header) header.innerHTML = response.header
           }
 
           return response
@@ -159,7 +164,7 @@ export default class ChuEditor extends LitElement {
         .finally(() => (this.saving = false))
     },
     2000,
-    { maxWait: 5000 }
+    { maxWait: 2000 }
   )
 
   createRenderRoot() {

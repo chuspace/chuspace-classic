@@ -17,29 +17,30 @@ class PostsController < ApplicationController
 
   def create
     Post.transaction do
-      name = FastSlug.generate(FastMarkdown.title(post_params[:body])[0..50])
-      oid = Rugged::Repository.hash_data(post_params[:body], :blob)
+      markdown = PostMarkdownService.call(content: post_params[:body])
+      post = Current.user.posts.build(repository: Current.user.repository, slug: markdown.slug, blob_path: markdown.blob_path)
 
-      @post = Current.user.posts.build(
-        slug: oid[0..8],
-        blob_path: "posts/#{name}.md"
-      )
-
-      if @post.save
-        Current.user.repository.create_commit(content: post_params[:body], path: @post.blob_path)
-
-        render json: { redirect: edit_post_path(@post), slug: @post.slug }
+      if post.save
+        Current.user.repository.create_commit(content: markdown.content, path: post.blob_path)
+        render json: {
+          redirect: edit_post_path(post),
+          slug: post.slug,
+          header: render_to_string(
+            partial: 'posts/header',
+            formats: :html,
+            layout: false,
+            locals: { post: post }
+          )
+        }
       else
         render json: { created: false }, status: :unprocessable_entity
       end
     end
-
-  rescue TypeError
-    render json: { created: false }, status: :unprocessable_entity
   end
 
   def destroy
     if @post.destroy
+      Current.user.repository.create_commit(content: '', path: @post.blob_path, action: :remove)
       redirect_to user_drafts_path(@post.author)
     else
       redirect_to post_path(@post)

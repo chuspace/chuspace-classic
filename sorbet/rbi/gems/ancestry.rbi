@@ -105,6 +105,9 @@ module Ancestry::HasAncestry
   def acts_as_tree(*args); end
   def has_ancestry(options = nil); end
 end
+class ActiveRecord::Base
+  extend Ancestry::HasAncestry
+end
 module Ancestry::MaterializedPath
   def ancestor_conditions(object); end
   def child_conditions(object); end

@@ -1,16 +1,9 @@
-<% @editor_header = capture do %>
-  <div class='flex-1 ml-4'>
-    <%= @post.author.name %>
-  </div>
-
-  <div class="mr-4 badge badge--grey"><%= @post.status.titlecase %></div>
-<% end %>
-
 <chu-editor
   spellcheck="false"
   url="<%= posts_path %>"
   method="POST"
   class='chu-editor'
   autofocus
+  editable
 >
 </chu-editor>

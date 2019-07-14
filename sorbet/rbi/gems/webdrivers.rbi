@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/webdrivers/all/webdrivers.rbi
 #
-# webdrivers-4.0.1
+# webdrivers-4.1.0
 module Webdrivers
   def self.cache_time; end
   def self.cache_time=(arg0); end
@@ -57,18 +57,17 @@ class Webdrivers::System
   def self.bitsize; end
   def self.cache_version(file_name, version); end
   def self.cached_version(file_name); end
-  def self.call(cmd); end
+  def self.call(process, arg = nil); end
   def self.decompress_file(tempfile, file_name, target); end
   def self.delete(file); end
   def self.download(url, target); end
   def self.download_file(url, target); end
-  def self.escape_path(path); end
   def self.exists?(file); end
   def self.install_dir; end
   def self.platform; end
   def self.untarbz2_file(filename); end
   def self.untargz_file(source, target); end
-  def self.unzip_file(filename); end
+  def self.unzip_file(filename, driver_name); end
   def self.valid_cache?(file_name); end
 end
 class Webdrivers::ConnectionError < StandardError
@@ -94,14 +93,17 @@ end
 class Webdrivers::ChromeFinder
   def self.linux_location; end
   def self.linux_version(location); end
+  def self.location; end
   def self.mac_location; end
   def self.mac_version(location); end
+  def self.user_defined_location; end
   def self.version; end
   def self.win_location; end
   def self.win_version(location); end
 end
 class Webdrivers::Chromedriver < Webdrivers::Common
   def self.base_url; end
+  def self.browser_version; end
   def self.chrome_version; end
   def self.current_version; end
   def self.download_url; end
@@ -119,6 +121,26 @@ class Webdrivers::Geckodriver < Webdrivers::Common
   def self.file_name; end
   def self.latest_version; end
   def self.platform_ext; end
+end
+class Webdrivers::EdgeFinder
+  def self.linux_location; end
+  def self.linux_version(location); end
+  def self.location; end
+  def self.mac_location; end
+  def self.mac_version(location); end
+  def self.user_defined_location; end
+  def self.version; end
+  def self.win_location; end
+  def self.win_version(location); end
+end
+class Webdrivers::Edgedriver < Webdrivers::Chromedriver
+  def self.base_url; end
+  def self.browser_version; end
+  def self.download_url; end
+  def self.failed_to_find_message(version); end
+  def self.file_name; end
+  def self.latest_point_release(version); end
+  def self.remove; end
 end
 class Webdrivers::IEdriver < Webdrivers::Common
   def self.base_url; end

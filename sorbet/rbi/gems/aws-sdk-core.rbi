@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/aws-sdk-core/all/aws-sdk-core.rbi
 #
-# aws-sdk-core-3.57.0
+# aws-sdk-core-3.59.0
 module Seahorse
 end
 module Seahorse::Util
@@ -706,6 +706,16 @@ class Aws::AssumeRoleCredentials
   include Aws::CredentialProvider
   include Aws::RefreshingCredentials
 end
+class Aws::AssumeRoleWebIdentityCredentials
+  def _session_name; end
+  def _token_from_file(path); end
+  def client; end
+  def initialize(options = nil); end
+  def refresh; end
+  def self.assume_role_web_identity_options; end
+  include Aws::CredentialProvider
+  include Aws::RefreshingCredentials
+end
 class Aws::Credentials
   def access_key_id; end
   def credentials; end
@@ -717,6 +727,7 @@ class Aws::Credentials
 end
 class Aws::CredentialProviderChain
   def assume_role_credentials(options); end
+  def assume_role_web_identity_credentials(options); end
   def assume_role_with_profile(prof, region); end
   def env_credentials(options); end
   def envar(keys); end
@@ -863,6 +874,9 @@ end
 class Aws::Errors::MissingCredentialsError < RuntimeError
   def initialize(*args); end
 end
+class Aws::Errors::MissingWebIdentityTokenFile < RuntimeError
+  def initialize(*args); end
+end
 class Aws::Errors::InvalidProcessCredentialsPayload < RuntimeError
 end
 class Aws::Errors::MissingRegionError < ArgumentError
@@ -954,6 +968,7 @@ end
 class Aws::SharedConfig
   def assume_role_credentials_from_config(opts = nil); end
   def assume_role_from_profile(cfg, profile, opts, chain_config); end
+  def assume_role_web_identity_credentials_from_config(profile); end
   def config_enabled?; end
   def config_path; end
   def credentials(opts = nil); end

@@ -1,13 +1,11 @@
 .logo
-  @apply text-3xl
+  @apply text-2xl font-bold inline-block
 
-  &--text
-    @apply text-grey-darkest font-bold text-2xl
+  &__badge
+    @apply bg-grey-lighter text-black pl-2
 
-  &--badge
-    @apply rounded-sm text-grey-darkest border font-bold flex items-center justify-center leading-none
-    width: 42px
-    height: 42px
+    &--black
+      @apply bg-black px-2 text-white
 
   &__version
-    @apply text-grey font-sans text-xs
+    @apply text-grey text-xs
