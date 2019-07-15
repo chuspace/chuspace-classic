@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/shrine/all/shrine.rbi
 #
-# shrine-2.18.0
+# shrine-2.18.1
 class Shrine
   def self.version; end
   extend Shrine::ClassMethods

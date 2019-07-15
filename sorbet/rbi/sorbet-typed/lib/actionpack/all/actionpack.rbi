@@ -5,7 +5,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/edit/master/lib/actionpack/all/actionpack.rbi
 #
-# typed: ignore
+# typed: strong
 
 class ActionDispatch::Routing::RouteSet
   sig {params(blk: T.proc.bind(ActionDispatch::Routing::Mapper).void).void}

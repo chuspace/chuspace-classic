@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rack-attack/all/rack-attack.rbi
 #
-# rack-attack-6.0.0
+# rack-attack-6.1.0
 class Rack::Attack
   def blocklisted?(*args, &block); end
   def call(env); end

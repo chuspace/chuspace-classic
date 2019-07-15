@@ -5,7 +5,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/edit/master/lib/activerecord/all/activerecord.rbi
 #
-# typed: ignore
+# typed: false
 
 VariadicUntypedFunction = T.type_alias(
   T.any(
