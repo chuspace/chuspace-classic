@@ -679,7 +679,7 @@ CREATE INDEX index_posts_on_author_id ON public.posts USING btree (author_id);
 -- Name: index_posts_on_blob_path_and_repository_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_posts_on_blob_path_and_repository_id ON public.posts USING btree (blob_path, repository_id);
+CREATE UNIQUE INDEX index_posts_on_blob_path_and_repository_id ON public.posts USING btree (blob_path, repository_id);
 
 
 --
@@ -700,7 +700,7 @@ CREATE INDEX index_posts_on_repository_id ON public.posts USING btree (repositor
 -- Name: index_posts_on_slug_and_repository_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_posts_on_slug_and_repository_id ON public.posts USING btree (slug, repository_id);
+CREATE UNIQUE INDEX index_posts_on_slug_and_repository_id ON public.posts USING btree (slug, repository_id);
 
 
 --
@@ -816,6 +816,14 @@ CREATE TRIGGER logidze_on_posts BEFORE INSERT OR UPDATE ON public.posts FOR EACH
 
 
 --
+-- Name: posts fk_rails_04d13ef8c7; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.posts
+    ADD CONSTRAINT fk_rails_04d13ef8c7 FOREIGN KEY (author_id) REFERENCES public.users(id);
+
+
+--
 -- Name: images fk_rails_19cd822056; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -829,6 +837,14 @@ ALTER TABLE ONLY public.images
 
 ALTER TABLE ONLY public.images
     ADD CONSTRAINT fk_rails_5fba8ffc00 FOREIGN KEY (repository_id) REFERENCES public.repositories(id);
+
+
+--
+-- Name: repositories fk_rails_73e1e26d06; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.repositories
+    ADD CONSTRAINT fk_rails_73e1e26d06 FOREIGN KEY (author_id) REFERENCES public.users(id);
 
 
 --

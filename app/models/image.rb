@@ -8,5 +8,5 @@ class Image < ApplicationRecord
   db_belongs_to :repository
   db_belongs_to :user
 
-  validates_db_uniqueness_of :blob_path, scope: %i[repository]
+  validates_db_uniqueness_of :blob_path, scope: %i[repository_id]
 end

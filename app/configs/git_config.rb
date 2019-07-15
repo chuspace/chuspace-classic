@@ -1,14 +1,15 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 class GitConfig
   extend T::Sig
 
+  sig { returns(Hash) }
   attr_reader :config
 
-  sig { returns(GitConfig) }
+  sig { returns(Hash) }
   def initialize
-    @config = Rails.application.config_for(:git)
+    @config = T.let(Rails.application.config_for(:git), Hash)
   end
 
   sig { returns(String) }
@@ -23,19 +24,22 @@ class GitConfig
 
   sig { returns(Pathname) }
   def storage_path
-    @storage_path ||= @config['storage_path']
-    fail StandardError, 'No storage configured' if @storage_path.nil?
+    storage_path ||= T.let(config['storage_path'], String)
 
-    Pathname.new(@storage_path)
+    if storage_path.nil?
+      fail StandardError, 'No storage configured'
+    else
+      Pathname.new(storage_path)
+    end
   end
 
-  sig { returns(Integer) }
+  sig { returns(String) }
   def log_level
-    @config['log_level'] ||= 'INFO'
+    config['log_level'] ||= 'INFO'
   end
 
   sig { returns(String) }
   def log_file
-    Rails.root.join(@config['log_file'])
+    Rails.root.join(config['log_file'])
   end
 end

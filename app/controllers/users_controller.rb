@@ -48,6 +48,6 @@ class UsersController < ApplicationController
   end
 
   def find_user
-    @user = User.find_by(nickname: params[:nickname]) || Current.user
+    @user = User.find_by!(nickname: params[:nickname])
   end
 end

@@ -9,7 +9,7 @@ class User < ApplicationRecord
   validates_db_uniqueness_of :email
   validates :name, :nickname, presence: true
   validates_db_uniqueness_of :nickname
-  validates length: { in: 1..39 }, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
+  validates :nickname, length: { in: 1..39 }, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
 
   has_secure_token :auth_token
 

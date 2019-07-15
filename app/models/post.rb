@@ -18,8 +18,8 @@ class Post < ApplicationRecord
   validates_length_of :summary, maximum: 140, if: :published?
   validates_length_of :topics, maximum: 5, if: :published?
 
-  validates_db_uniqueness_of :slug, scope: %i[repository]
-  validates_db_uniqueness_of :blob_path, scope: %i[repository]
+  validates_db_uniqueness_of :slug, scope: %i[repository_id]
+  validates_db_uniqueness_of :blob_path, scope: %i[repository_id]
 
   validates :slug, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
   validates :published_at, date: true, if: :published?
