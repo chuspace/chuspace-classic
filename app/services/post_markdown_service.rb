@@ -1,4 +1,4 @@
-# typed: ignore
+# typed: true
 # frozen_string_literal: true
 
 class PostMarkdownService
@@ -12,8 +12,9 @@ class PostMarkdownService
     @markdown_doc ||= CommonMarker.render_doc(content || '')
   end
 
-  def self.call(*attrs)
-    new(*attrs)
+  sig { params(content: T.nilable(String)).returns(PostMarkdownService) }
+  def self.call(content: content)
+    new(content: content)
   end
 
   sig { returns(T.nilable(String)) }

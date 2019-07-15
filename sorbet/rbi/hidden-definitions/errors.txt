@@ -979,12 +979,12 @@
 # wrong constant name <Class:NullSessionHash>
 # wrong constant name handle_unverified_request
 # wrong constant name initialize
-# uninitialized constant #<Class:0x00007feaf9ac5be8>::DOMAIN_REGEXP
-# uninitialized constant #<Class:0x00007feaf9ac5be8>::Elem
+# uninitialized constant #<Class:0x00007fbea9454178>::DOMAIN_REGEXP
+# uninitialized constant #<Class:0x00007fbea9454178>::Elem
 # wrong constant name write
 # wrong constant name <static-init>
-# uninitialized constant #<Class:0x00007feaf9ac5d28>::Elem
-# uninitialized constant #<Class:0x00007feaf9ac5d28>::Unspecified
+# uninitialized constant #<Class:0x00007fbea9454a88>::Elem
+# uninitialized constant #<Class:0x00007fbea9454a88>::Unspecified
 # wrong constant name initialize
 # wrong constant name <static-init>
 # wrong constant name <static-init>
@@ -2662,16 +2662,16 @@
 # wrong constant name rolledback?
 # wrong constant name <static-init>
 # wrong constant name collect?
-# uninitialized constant #<Class:0x00007feb011d9220>::ACTIONS
-# uninitialized constant #<Class:0x00007feb011d9220>::CALLBACKS
-# uninitialized constant #<Class:0x00007feb011d9220>::CALLBACK_FILTER_TYPES
-# uninitialized constant #<Class:0x00007feb011d9220>::CALL_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007fbead39b480>::ACTIONS
+# uninitialized constant #<Class:0x00007fbead39b480>::CALLBACKS
+# uninitialized constant #<Class:0x00007fbead39b480>::CALLBACK_FILTER_TYPES
+# uninitialized constant #<Class:0x00007fbead39b480>::CALL_COMPILABLE_REGEXP
 # wrong constant name <Class:GeneratedAssociationMethods>
 # wrong constant name <Class:GeneratedAttributeMethods>
-# uninitialized constant #<Class:0x00007feb011d9220>::MAX_PASSWORD_LENGTH_ALLOWED
-# uninitialized constant #<Class:0x00007feb011d9220>::NAME_COMPILABLE_REGEXP
-# uninitialized constant #<Class:0x00007feb011d9220>::RESTRICTED_CLASS_METHODS
-# uninitialized constant #<Class:0x00007feb011d9220>::UNASSIGNABLE_KEYS
+# uninitialized constant #<Class:0x00007fbead39b480>::MAX_PASSWORD_LENGTH_ALLOWED
+# uninitialized constant #<Class:0x00007fbead39b480>::NAME_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007fbead39b480>::RESTRICTED_CLASS_METHODS
+# uninitialized constant #<Class:0x00007fbead39b480>::UNASSIGNABLE_KEYS
 # wrong constant name <static-init>
 # wrong constant name <static-init>
 # wrong constant name <static-init>
@@ -7906,16 +7906,16 @@
 # wrong constant name setup
 # wrong constant name start
 # wrong constant name version
-# uninitialized constant #<Class:0x00007feaf90d4940>::ACTIONS
-# uninitialized constant #<Class:0x00007feaf90d4940>::CALLBACKS
-# uninitialized constant #<Class:0x00007feaf90d4940>::CALLBACK_FILTER_TYPES
-# uninitialized constant #<Class:0x00007feaf90d4940>::CALL_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007fbea4e329b0>::ACTIONS
+# uninitialized constant #<Class:0x00007fbea4e329b0>::CALLBACKS
+# uninitialized constant #<Class:0x00007fbea4e329b0>::CALLBACK_FILTER_TYPES
+# uninitialized constant #<Class:0x00007fbea4e329b0>::CALL_COMPILABLE_REGEXP
 # wrong constant name <Class:GeneratedAssociationMethods>
 # wrong constant name <Class:GeneratedAttributeMethods>
-# uninitialized constant #<Class:0x00007feaf90d4940>::MAX_PASSWORD_LENGTH_ALLOWED
-# uninitialized constant #<Class:0x00007feaf90d4940>::NAME_COMPILABLE_REGEXP
-# uninitialized constant #<Class:0x00007feaf90d4940>::RESTRICTED_CLASS_METHODS
-# uninitialized constant #<Class:0x00007feaf90d4940>::UNASSIGNABLE_KEYS
+# uninitialized constant #<Class:0x00007fbea4e329b0>::MAX_PASSWORD_LENGTH_ALLOWED
+# uninitialized constant #<Class:0x00007fbea4e329b0>::NAME_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007fbea4e329b0>::RESTRICTED_CLASS_METHODS
+# uninitialized constant #<Class:0x00007fbea4e329b0>::UNASSIGNABLE_KEYS
 # wrong constant name autosave_associated_records_for_repository
 # wrong constant name autosave_associated_records_for_user
 # wrong constant name build_repository
@@ -10206,22 +10206,22 @@
 # wrong constant name write$1
 # undefined singleton method `glob$1' for `Pathname'
 # wrong constant name glob$1
-# uninitialized constant #<Class:0x00007feafbb8c188>::ACTIONS
-# uninitialized constant #<Class:0x00007feafbb8c188>::ANCESTRY_DELIMITER
-# uninitialized constant #<Class:0x00007feafbb8c188>::BEFORE_LAST_SAVE_SUFFIX
-# uninitialized constant #<Class:0x00007feafbb8c188>::CALLBACKS
-# uninitialized constant #<Class:0x00007feafbb8c188>::CALLBACK_FILTER_TYPES
-# uninitialized constant #<Class:0x00007feafbb8c188>::CALL_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007fbea9258a68>::ACTIONS
+# uninitialized constant #<Class:0x00007fbea9258a68>::ANCESTRY_DELIMITER
+# uninitialized constant #<Class:0x00007fbea9258a68>::BEFORE_LAST_SAVE_SUFFIX
+# uninitialized constant #<Class:0x00007fbea9258a68>::CALLBACKS
+# uninitialized constant #<Class:0x00007fbea9258a68>::CALLBACK_FILTER_TYPES
+# uninitialized constant #<Class:0x00007fbea9258a68>::CALL_COMPILABLE_REGEXP
 # wrong constant name <Class:GeneratedAssociationMethods>
 # wrong constant name <Class:GeneratedAttributeMethods>
-# uninitialized constant #<Class:0x00007feafbb8c188>::IN_DATABASE_SUFFIX
-# uninitialized constant #<Class:0x00007feafbb8c188>::MAX_PASSWORD_LENGTH_ALLOWED
-# uninitialized constant #<Class:0x00007feafbb8c188>::NAME_COMPILABLE_REGEXP
-# uninitialized constant #<Class:0x00007feafbb8c188>::NO_VALUE
-# uninitialized constant #<Class:0x00007feafbb8c188>::RESTRICTED_CLASS_METHODS
-# uninitialized constant #<Class:0x00007feafbb8c188>::TIME_FACTOR
-# uninitialized constant #<Class:0x00007feafbb8c188>::UNASSIGNABLE_KEYS
-# uninitialized constant #<Class:0x00007feafbb8c188>::VERSION
+# uninitialized constant #<Class:0x00007fbea9258a68>::IN_DATABASE_SUFFIX
+# uninitialized constant #<Class:0x00007fbea9258a68>::MAX_PASSWORD_LENGTH_ALLOWED
+# uninitialized constant #<Class:0x00007fbea9258a68>::NAME_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007fbea9258a68>::NO_VALUE
+# uninitialized constant #<Class:0x00007fbea9258a68>::RESTRICTED_CLASS_METHODS
+# uninitialized constant #<Class:0x00007fbea9258a68>::TIME_FACTOR
+# uninitialized constant #<Class:0x00007fbea9258a68>::UNASSIGNABLE_KEYS
+# uninitialized constant #<Class:0x00007fbea9258a68>::VERSION
 # wrong constant name ancestry_base_class
 # wrong constant name ancestry_base_class=
 # wrong constant name ancestry_column
@@ -10294,22 +10294,10 @@
 # wrong constant name default_url_options
 # wrong constant name default_url_options=
 # wrong constant name default_url_options?
-# wrong constant name initialize
-# wrong constant name <static-init>
 # wrong constant name _routes
 # wrong constant name default_url_options
 # wrong constant name default_url_options=
 # wrong constant name default_url_options?
-# wrong constant name blob_path
-# wrong constant name body_html
-# wrong constant name content
-# wrong constant name initialize
-# wrong constant name markdown_doc
-# wrong constant name slug
-# wrong constant name summary
-# wrong constant name title
-# wrong constant name <static-init>
-# wrong constant name call
 # uninitialized constant PostReceiveJob::CALLBACK_FILTER_TYPES
 # wrong constant name author
 # wrong constant name commit_sha
@@ -11861,19 +11849,11 @@
 # wrong constant name initialize
 # wrong constant name <static-init>
 # wrong constant name <Class:ActiveSupportRedisStoreProxy>
-# wrong constant name <Class:DalliProxy>
 # wrong constant name <Class:MemCacheStoreProxy>
 # wrong constant name <Class:RedisCacheStoreProxy>
 # wrong constant name <Class:RedisProxy>
 # wrong constant name <Class:RedisStoreProxy>
 # wrong constant name increment
-# wrong constant name read
-# wrong constant name write
-# wrong constant name <static-init>
-# wrong constant name handle?
-# wrong constant name delete
-# wrong constant name increment
-# wrong constant name initialize
 # wrong constant name read
 # wrong constant name write
 # wrong constant name <static-init>
@@ -12713,18 +12693,18 @@
 # wrong constant name compile$2
 # wrong constant name last_match$2
 # wrong constant name union
-# uninitialized constant #<Class:0x00007feaf90be528>::ACTIONS
-# uninitialized constant #<Class:0x00007feaf90be528>::CALLBACKS
-# uninitialized constant #<Class:0x00007feaf90be528>::CALLBACK_FILTER_TYPES
-# uninitialized constant #<Class:0x00007feaf90be528>::CALL_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007fbea4e13010>::ACTIONS
+# uninitialized constant #<Class:0x00007fbea4e13010>::CALLBACKS
+# uninitialized constant #<Class:0x00007fbea4e13010>::CALLBACK_FILTER_TYPES
+# uninitialized constant #<Class:0x00007fbea4e13010>::CALL_COMPILABLE_REGEXP
 # wrong constant name <Class:GeneratedAssociationMethods>
 # wrong constant name <Class:GeneratedAttributeMethods>
 # wrong constant name <Class:InvalidRef>
-# uninitialized constant #<Class:0x00007feaf90be528>::MAX_PASSWORD_LENGTH_ALLOWED
-# uninitialized constant #<Class:0x00007feaf90be528>::NAME_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007fbea4e13010>::MAX_PASSWORD_LENGTH_ALLOWED
+# uninitialized constant #<Class:0x00007fbea4e13010>::NAME_COMPILABLE_REGEXP
 # wrong constant name <Class:NoRepository>
-# uninitialized constant #<Class:0x00007feaf90be528>::RESTRICTED_CLASS_METHODS
-# uninitialized constant #<Class:0x00007feaf90be528>::UNASSIGNABLE_KEYS
+# uninitialized constant #<Class:0x00007fbea4e13010>::RESTRICTED_CLASS_METHODS
+# uninitialized constant #<Class:0x00007fbea4e13010>::UNASSIGNABLE_KEYS
 # wrong constant name author_hash
 # wrong constant name autosave_associated_records_for_author
 # wrong constant name bare?
@@ -14407,16 +14387,16 @@
 # uninitialized constant SortedSet::InspectKey
 # wrong constant name initialize
 # wrong constant name setup
-# uninitialized constant #<Class:0x00007feaf90ff708>::ACTIONS
-# uninitialized constant #<Class:0x00007feaf90ff708>::CALLBACKS
-# uninitialized constant #<Class:0x00007feaf90ff708>::CALLBACK_FILTER_TYPES
-# uninitialized constant #<Class:0x00007feaf90ff708>::CALL_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007fbea4e58bb0>::ACTIONS
+# uninitialized constant #<Class:0x00007fbea4e58bb0>::CALLBACKS
+# uninitialized constant #<Class:0x00007fbea4e58bb0>::CALLBACK_FILTER_TYPES
+# uninitialized constant #<Class:0x00007fbea4e58bb0>::CALL_COMPILABLE_REGEXP
 # wrong constant name <Class:GeneratedAssociationMethods>
 # wrong constant name <Class:GeneratedAttributeMethods>
-# uninitialized constant #<Class:0x00007feaf90ff708>::MAX_PASSWORD_LENGTH_ALLOWED
-# uninitialized constant #<Class:0x00007feaf90ff708>::NAME_COMPILABLE_REGEXP
-# uninitialized constant #<Class:0x00007feaf90ff708>::RESTRICTED_CLASS_METHODS
-# uninitialized constant #<Class:0x00007feaf90ff708>::UNASSIGNABLE_KEYS
+# uninitialized constant #<Class:0x00007fbea4e58bb0>::MAX_PASSWORD_LENGTH_ALLOWED
+# uninitialized constant #<Class:0x00007fbea4e58bb0>::NAME_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007fbea4e58bb0>::RESTRICTED_CLASS_METHODS
+# uninitialized constant #<Class:0x00007fbea4e58bb0>::UNASSIGNABLE_KEYS
 # wrong constant name autosave_associated_records_for_user
 # wrong constant name build_user
 # wrong constant name create_user
@@ -14873,16 +14853,16 @@
 # uninitialized constant Tomlrb::GeneratedParser::Racc_Runtime_Type
 # uninitialized constant Tomlrb::GeneratedParser::Racc_Runtime_Version
 # uninitialized constant Tomlrb::GeneratedParser::Racc_YY_Parse_Method
-# uninitialized constant #<Class:0x00007feafbf07fb0>::ACTIONS
-# uninitialized constant #<Class:0x00007feafbf07fb0>::CALLBACKS
-# uninitialized constant #<Class:0x00007feafbf07fb0>::CALLBACK_FILTER_TYPES
-# uninitialized constant #<Class:0x00007feafbf07fb0>::CALL_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007fbeab86b7f0>::ACTIONS
+# uninitialized constant #<Class:0x00007fbeab86b7f0>::CALLBACKS
+# uninitialized constant #<Class:0x00007fbeab86b7f0>::CALLBACK_FILTER_TYPES
+# uninitialized constant #<Class:0x00007fbeab86b7f0>::CALL_COMPILABLE_REGEXP
 # wrong constant name <Class:GeneratedAssociationMethods>
 # wrong constant name <Class:GeneratedAttributeMethods>
-# uninitialized constant #<Class:0x00007feafbf07fb0>::MAX_PASSWORD_LENGTH_ALLOWED
-# uninitialized constant #<Class:0x00007feafbf07fb0>::NAME_COMPILABLE_REGEXP
-# uninitialized constant #<Class:0x00007feafbf07fb0>::RESTRICTED_CLASS_METHODS
-# uninitialized constant #<Class:0x00007feafbf07fb0>::UNASSIGNABLE_KEYS
+# uninitialized constant #<Class:0x00007fbeab86b7f0>::MAX_PASSWORD_LENGTH_ALLOWED
+# uninitialized constant #<Class:0x00007fbeab86b7f0>::NAME_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007fbeab86b7f0>::RESTRICTED_CLASS_METHODS
+# uninitialized constant #<Class:0x00007fbeab86b7f0>::UNASSIGNABLE_KEYS
 # wrong constant name name=
 # wrong constant name <static-init>
 # wrong constant name <static-init>
@@ -15087,16 +15067,16 @@
 # wrong constant name value
 # wrong constant name <static-init>
 # wrong constant name <static-init>
-# uninitialized constant #<Class:0x00007feafbf77bd0>::ACTIONS
-# uninitialized constant #<Class:0x00007feafbf77bd0>::CALLBACKS
-# uninitialized constant #<Class:0x00007feafbf77bd0>::CALLBACK_FILTER_TYPES
-# uninitialized constant #<Class:0x00007feafbf77bd0>::CALL_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007fbea9622f68>::ACTIONS
+# uninitialized constant #<Class:0x00007fbea9622f68>::CALLBACKS
+# uninitialized constant #<Class:0x00007fbea9622f68>::CALLBACK_FILTER_TYPES
+# uninitialized constant #<Class:0x00007fbea9622f68>::CALL_COMPILABLE_REGEXP
 # wrong constant name <Class:GeneratedAssociationMethods>
 # wrong constant name <Class:GeneratedAttributeMethods>
-# uninitialized constant #<Class:0x00007feafbf77bd0>::MAX_PASSWORD_LENGTH_ALLOWED
-# uninitialized constant #<Class:0x00007feafbf77bd0>::NAME_COMPILABLE_REGEXP
-# uninitialized constant #<Class:0x00007feafbf77bd0>::RESTRICTED_CLASS_METHODS
-# uninitialized constant #<Class:0x00007feafbf77bd0>::UNASSIGNABLE_KEYS
+# uninitialized constant #<Class:0x00007fbea9622f68>::MAX_PASSWORD_LENGTH_ALLOWED
+# uninitialized constant #<Class:0x00007fbea9622f68>::NAME_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007fbea9622f68>::RESTRICTED_CLASS_METHODS
+# uninitialized constant #<Class:0x00007fbea9622f68>::UNASSIGNABLE_KEYS
 # wrong constant name after_add_for_images
 # wrong constant name after_add_for_images=
 # wrong constant name after_add_for_images?

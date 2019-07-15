@@ -4680,9 +4680,6 @@ end
 class ActionView::Template::Inline
 end
 
-class ActionView::Template::LegacyTemplate
-end
-
 class ActionView::Template::RawFile
   def format(); end
 
@@ -6517,9 +6514,6 @@ module ActiveRecord::AttributeMethods::TimeZoneConversion::ClassMethods
   extend ::T::Sig
 end
 
-class ActiveRecord::AttributeMethods::TimeZoneConversion::TimeZoneConverter
-end
-
 module ActiveRecord::AttributeMethods::TimeZoneConversion
   extend ::T::Sig
 end
@@ -6715,9 +6709,6 @@ end
 
 module ActiveRecord::ConnectionAdapters::PostgreSQL::SchemaStatements
   extend ::T::Sig
-end
-
-class ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
 end
 
 module ActiveRecord::ConnectionAdapters::PostgreSQL::Utils
@@ -7049,9 +7040,6 @@ end
 module ActiveRecord::LegacyYamlAdapter
   extend ::T::Sig
   def self.convert(klass, coder); end
-end
-
-class ActiveRecord::Locking::LockingType
 end
 
 module ActiveRecord::Locking::Optimistic
@@ -8037,13 +8025,7 @@ module ActiveRecord::Type::Internal
   extend ::T::Sig
 end
 
-class ActiveRecord::Type::Serialized
-end
-
 ActiveRecord::Type::String = ActiveModel::Type::String
-
-class ActiveRecord::Type::Time::Value
-end
 
 module ActiveRecord::Type
   extend ::T::Sig
@@ -28598,8 +28580,6 @@ class PostHtmlRenderer
   def default_url_options=(val); end
 
   def default_url_options?(); end
-
-  def initialize(); end
 end
 
 class PostHtmlRenderer
@@ -28610,28 +28590,6 @@ class PostHtmlRenderer
   def self.default_url_options=(val); end
 
   def self.default_url_options?(); end
-end
-
-class PostMarkdownService
-  def blob_path(*args, &blk); end
-
-  def body_html(*args, &blk); end
-
-  def content(); end
-
-  def initialize(*args, &blk); end
-
-  def markdown_doc(); end
-
-  def slug(*args, &blk); end
-
-  def summary(*args, &blk); end
-
-  def title(*args, &blk); end
-end
-
-class PostMarkdownService
-  def self.call(*attrs); end
 end
 
 class PostReceiveJob
@@ -31968,22 +31926,6 @@ class Rack::Attack::StoreProxy::ActiveSupportRedisStoreProxy
 end
 
 class Rack::Attack::StoreProxy::ActiveSupportRedisStoreProxy
-  def self.handle?(store); end
-end
-
-class Rack::Attack::StoreProxy::DalliProxy
-  def delete(key); end
-
-  def increment(key, amount, options=T.unsafe(nil)); end
-
-  def initialize(client); end
-
-  def read(key); end
-
-  def write(key, value, options=T.unsafe(nil)); end
-end
-
-class Rack::Attack::StoreProxy::DalliProxy
   def self.handle?(store); end
 end
 
@@ -41646,9 +41588,6 @@ end
 
 module Zip::NullInputStream
   extend ::T::Sig
-end
-
-class Zip::StreamableStream
 end
 
 module Zip::TraditionalEncryption

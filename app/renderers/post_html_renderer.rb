@@ -1,9 +1,7 @@
-# typed: ignore
+# typed: true
 # frozen_string_literal: true
 
 class PostHtmlRenderer < CommonMarker::HtmlRenderer
-  include Rails.application.routes.url_helpers
-
   extend T::Sig
 
   def initialize
@@ -21,11 +19,18 @@ class PostHtmlRenderer < CommonMarker::HtmlRenderer
 
   def link(node)
     if url_or_mailto?(node.url)
-      super
+      out('<a href="', post_url.nil? ? '' : escape_href(post_url), '"')
+      if node.title && !node.title.empty?
+        out(' title="', escape_html(node.title), '"')
+      end
+      out(' target="', '_blank', '"')
+      out(' rel="', 'noopener noreferrer', '"')
+      out('>', :children, '</a>')
     else
       blob_path = node.url.start_with?('/') ? node.url[1..-1] : node.url
-      post = Current.user.posts.find_by(blob_path: blob_path)
-      post_url = post ? post_url(post) : node.url
+      blob_path_with_extension = FasterPath.extname(blob_path).blank? ? blob_path + '.md' : blob_path
+      post = Current.user.posts.find_by(blob_path: blob_path_with_extension)
+      post_url = post ? Rails.application.routes.url_helpers.post_url(post) : node.url
 
       out('<a href="', post_url.nil? ? '' : escape_href(post_url), '"')
       if node.title && !node.title.empty?
