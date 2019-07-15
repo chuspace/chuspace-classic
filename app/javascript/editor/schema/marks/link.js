@@ -7,6 +7,7 @@ import { pasteRule, removeMark, updateMark } from 'editor/commands'
 import { Mark } from 'editor/base'
 import { Mark as PMMark } from 'prosemirror-model'
 import { getMarkRange } from 'editor/helpers'
+import isUrl from 'is-url'
 
 const LINK_INPUT_REGEX = /(^|[^!])\[(.*?)\]\((\S+)\)(\s)$/
 export default class Link extends Mark {
@@ -32,14 +33,23 @@ export default class Link extends Mark {
           })
         }
       ],
-      toDOM: (mark: PMMark) => [
-        'a',
-        {
-          ...mark.attrs,
-          rel: 'noopener noreferrer nofollow'
-        },
-        0
-      ]
+      toDOM: (mark: PMMark) => {
+        const linkAttrs = isUrl(mark.attrs.href)
+          ? {
+              rel: 'noopener noreferrer nofollow',
+              target: '_blank'
+            }
+          : {}
+
+        return [
+          'a',
+          {
+            ...mark.attrs,
+            ...linkAttrs
+          },
+          0
+        ]
+      }
     }
   }
 

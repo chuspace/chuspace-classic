@@ -19,13 +19,14 @@ class PostHtmlRenderer < CommonMarker::HtmlRenderer
 
   def link(node)
     if url_or_mailto?(node.url)
-      out('<a href="', post_url.nil? ? '' : escape_href(post_url), '"')
+      out('<a href="', node.url.nil? ? '' : escape_href(node.url), '"')
       if node.title && !node.title.empty?
         out(' title="', escape_html(node.title), '"')
       end
       out(' target="', '_blank', '"')
       out(' rel="', 'noopener noreferrer', '"')
       out('>', :children, '</a>')
+
     else
       blob_path = node.url.start_with?('/') ? node.url[1..-1] : node.url
       blob_path_with_extension = FasterPath.extname(blob_path).blank? ? blob_path + '.md' : blob_path
@@ -62,6 +63,7 @@ class PostHtmlRenderer < CommonMarker::HtmlRenderer
   private
 
   def url_or_mailto?(url_str)
-    url_str.kind_of?(URI::HTTP) || url_str.kind_of?(URI::HTTPS) || url_str.kind_of?(URI::MailTo)
+    url = URI.parse(url_str)
+    T.unsafe(url.kind_of?(URI::HTTP)) || T.unsafe(url.kind_of?(URI::HTTPS)) || T.unsafe(url.kind_of?(URI::MailTo))
   end
 end

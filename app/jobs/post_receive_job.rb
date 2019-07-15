@@ -18,7 +18,7 @@ class PostReceiveJob < ApplicationJob
     author.transaction do
       old_commit = repository.lookup(repository.commit_sha)
       new_commit = repository.lookup(commit_sha)
-      diff = old_commit.diff(new_commit).find_similar!(all: true)
+      diff = old_commit.diff(new_commit).find_similar!(renames: true)
       blobs ||= Git::Blob.all(repository, commit_sha)
 
       diff.deltas.each do |delta|
