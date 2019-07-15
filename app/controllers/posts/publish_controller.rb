@@ -7,10 +7,15 @@ class Posts::PublishController < ApplicationController
 
   layout 'editor', only: :index
 
+  def index
+    @published_posts = Current.user.posts.where.not(id: @post.id)
+  end
+
   def create
-    @post.topics = publish_params[:topics]
+    @post.topics = publish_params[:topics]&.split(',')
     @post.parent = publish_params[:parent]
     @post.blob_id = @post.blob.id
+    @post.assign_attributes(slug: @markdown.slug, body_html: @markdown.body_html, published_at: Time.now)
 
     if @post.save
       @post.publish! if @post.may_publish?
@@ -23,12 +28,12 @@ class Posts::PublishController < ApplicationController
   private
 
   def publish_params
-    params.require(:post).permit(:parent, topics: [])
+    params.require(:post).permit(:parent, :topics)
   end
 
   def assign_attributes
-    markdown = PostMarkdownService.call(content: @post.blob_content)
-    @post.assign_attributes(title: markdown.title, summary: markdown.summary, slug: markdown.slug, body_html: markdown.body_html, published_at: Time.now)
+    @markdown = PostMarkdownService.call(content: @post.blob_content)
+    @post.assign_attributes(title: @markdown.title, summary: @markdown.summary)
   end
 
   def find_post

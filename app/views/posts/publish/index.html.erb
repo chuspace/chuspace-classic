@@ -32,30 +32,17 @@
               </span>
             <% end %>
           </div>
-          <div class='input__container input__container__label--floating' data-label='Topics'>
-            <input type='text' placeholder="Type to add topics" class = "input autocomplete__input" >
+
+          <div class='form_field__container'>
+            <div class='input__container input__container__label--floating' data-label='Topics'>
+              <input type='text' placeholder="Type to add topics" class = "input autocomplete__input" >
+            </div>
           </div>
-          <%= f.input :topics, as: :hidden, input_html: { id: 'selections__input', multiple: true } %>
+
+          <%= f.input :topics, as: :hidden, input_html: { id: 'selections__input' }, wrapper: false %>
         </input-autocomplete>
 
-        <input-autocomplete
-          url="<%= autocomplete_posts_url %>"
-          items='[<%= @post.parent %>]'
-          maxlength="1"
-          keys="slug"
-          class='w-full block mt-12'
-        >
-          <div class='autocomplete__selections'>
-            <% if @post.parent %>
-              <span class="autocomplete__item mr-2">
-                <%= @post.parent.title %>
-                <svg-icon class='autocomplete__item__icon' name='x-circle' width='10' height='10' feather='true' color='none'>&#10005</svg-icon>
-              </span>
-            <% end %>
-          </div>
-          <%= f.input :parent, label: false, placeholder: "Type to select a post", input_html: { class: "autocomplete__input" }, input_container_html: { class: 'input__container__label--floating', data: { label: 'Parent' } } %>
-          <%= f.input :parent, as: :hidden, input_html: { id: 'selections__input' } %>
-        </input-autocomplete>
+        <%= f.input :parent, label: false, collection: @published_posts, input_container_html: { class: 'input__container__label--floating', data: { label: 'Parent post' } }, prompt: "Choose a parent post" %>
 
         <%= f.submit 'Publish now', class: 'button button--fill float-right mt-12 text-base' %>
       <% end %>

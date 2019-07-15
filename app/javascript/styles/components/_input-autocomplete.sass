@@ -1,6 +1,7 @@
 input-autocomplete
   .autocomplete__selections
-    @apply flex items-center
+    @apply flex items-center flex-wrap
+
   .autocomplete__list
     @apply absolute bg-white shadow-md list-none p-0 m-0 text-sm z-50
     top: 42px
@@ -25,9 +26,6 @@ input-autocomplete
       @apply text-xs ml-2 text-grey font-bold cursor-pointer
 
   .input__container
-    @apply relative
-    width: 100%
-
     .autocomplete__input
       @apply text-base py-2 mb-1
 
@@ -41,5 +39,5 @@ input-autocomplete
       &:hover, &:focus
         @apply border-grey-lighter border-b
 
-      .autocomplete__input
-        @apply text-grey-lighter pointer-events-none
+    input
+      @apply text-grey-lighter pointer-events-none

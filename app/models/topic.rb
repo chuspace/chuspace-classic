@@ -8,4 +8,8 @@ class Topic < ApplicationRecord
   def name=(val)
     super(val&.parameterize)
   end
+
+  def to_param
+    name
+  end
 end

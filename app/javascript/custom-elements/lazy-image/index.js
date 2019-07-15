@@ -4,6 +4,8 @@ import 'lazysizes/plugins/blur-up/ls.blur-up'
 
 import { LitElement, customElement, html } from 'lit-element'
 
+import { ifDefined } from 'lit-html/directives/if-defined'
+import isUrl from 'is-url'
 import lazySizes from 'lazysizes'
 import queryString from 'query-string'
 
@@ -70,8 +72,8 @@ export default class LazyImage extends LitElement {
       <div class="image-container">
         <img
           alt=${this.alt}
-          data-lowsrc=${placeholderImage}
-          data-src=${srcImage}
+          data-lowsrc="${ifDefined(isUrl(this.src) ? undefined : placeholderImage)}"
+          data-src="${ifDefined(isUrl(this.src) ? this.src : srcImage)}"
           data-sizes="auto"
           @click=${this.selectNode}
           class="lazy"

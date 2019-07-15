@@ -12,10 +12,7 @@ Rails.application.routes.draw do
 
   resources :magic_logins, only: :index
 
-  resources :topics
-
   namespace :autocomplete do
-    resources :posts, only: :index
     resources :topics, only: :index
   end
 

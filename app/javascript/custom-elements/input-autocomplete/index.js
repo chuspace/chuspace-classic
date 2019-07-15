@@ -120,7 +120,7 @@ export default class InputAutocomplete extends LitElement {
     this.triggerChange()
 
     if (this.items.length === this.maxlength) {
-      this.setAtsetribute('disabled', true)
+      this.setAttribute('disabled', true)
       return
     }
   }
@@ -137,7 +137,8 @@ export default class InputAutocomplete extends LitElement {
   }
 
   triggerChange() {
-    this.selectionsInput.value = this.items
+    console.log(this.items)
+    this.selectionsInput.value = this.items.join(',')
     this.selectionsInput.onchange && this.selectionsInput.onchange()
   }
 
@@ -165,7 +166,7 @@ export default class InputAutocomplete extends LitElement {
     }
   }
 
-  remove(e: MouseEvent) {
+  remove = (e: MouseEvent) => {
     if (!(e.currentTarget instanceof HTMLElement)) {
       return
     }
@@ -173,11 +174,11 @@ export default class InputAutocomplete extends LitElement {
     const itemsNode = e.currentTarget.closest('.autocomplete__item')
 
     if (itemsNode) {
-      const items = itemsNode.textContent.trim()
-      const index = this.items.indexOf(items)
+      const item = itemsNode.textContent.trim()
+      const index = this.items.indexOf(item)
 
       if (index > -1) {
-        this.items = without(this.items, items)
+        this.items = without(this.items, item)
         this.renderItems()
         this.triggerChange()
       }
