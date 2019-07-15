@@ -5,10 +5,11 @@ class User < ApplicationRecord
   include AvatarUploader::Attachment.new(:avatar)
   include Trackable
 
-  validates :email, presence: true, uniqueness: true, email: true
-  validates :name, presence: true
-  validates :nickname,
-            presence: true, uniqueness: true, length: { in: 1..39 }, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
+  validates :email, presence: true, email: true
+  validates_db_uniqueness_of :email
+  validates :name, :nickname, presence: true
+  validates_db_uniqueness_of :nickname
+  validates length: { in: 1..39 }, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
 
   has_secure_token :auth_token
 

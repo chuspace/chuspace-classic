@@ -1,42 +1,38 @@
 input-autocomplete
-  .form_field__container
-    @apply mt-0 font-headings
+  .autocomplete__selections
+    @apply flex items-center
+  .autocomplete__list
+    @apply absolute bg-white shadow-md list-none p-0 m-0 text-sm z-50
+    top: 42px
+    width: 250px
 
-    .autocomplete__container
-      @apply flex items-center text-lg flex-wrap
+    li
+      @apply border-b border-grey-lighter p-2 cursor-pointer
 
-    .autocomplete__item
-      @apply px-2 py-1 text-sm rounded leading-tight bg-grey-lighter flex items-center whitespace-no-wrap mb-1
+      &:hover
+        @apply bg-grey-lightest
 
-      &__icon
-        @apply text-xs ml-2 text-grey font-bold cursor-pointer
+      &:last-child
+        @apply border-b-0
 
-    .input__container
-      @apply relative
-      width: 100%
+  .autocomplete__item__custom
+      @apply font-bold
 
-      .autocomplete__input
-        @apply text-base py-2 mb-1
+  .autocomplete__item
+    @apply px-2 py-1 text-sm rounded leading-tight bg-grey-lighter flex items-center whitespace-no-wrap mb-1
 
-        &:hover, &:focus
-          @apply outline-none appearance-none border-none shadow-none
+    &__icon
+      @apply text-xs ml-2 text-grey font-bold cursor-pointer
 
-      .autocomplete__list
-        @apply absolute bg-white shadow-md list-none p-0 m-0 text-sm z-50
-        top: 42px
-        width: 250px
+  .input__container
+    @apply relative
+    width: 100%
 
-        li
-          @apply border-b border-grey-lighter p-2 cursor-pointer
+    .autocomplete__input
+      @apply text-base py-2 mb-1
 
-          &:hover
-            @apply bg-grey-lightest
-
-          &:last-child
-            @apply border-b-0
-
-        .autocomplete__item__custom
-          @apply font-bold
+      &:hover, &:focus
+        @apply outline-none appearance-none border-none shadow-none
 
   &[disabled]
     .input__container::after
@@ -45,5 +41,5 @@ input-autocomplete
       &:hover, &:focus
         @apply border-grey-lighter border-b
 
-    .autocomplete__input
-      @apply text-grey-lighter pointer-events-none
+      .autocomplete__input
+        @apply text-grey-lighter pointer-events-none

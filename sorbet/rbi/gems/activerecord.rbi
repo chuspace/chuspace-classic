@@ -2152,123 +2152,49 @@ module ActiveRecord::Tasks
 end
 class ActiveRecord::Railtie < Rails::Railtie
 end
-class ActiveRecord::AssociationNotFoundError < ActiveRecord::ConfigurationError
-  def initialize(record = nil, association_name = nil); end
-end
-class ActiveRecord::InverseOfAssociationNotFoundError < ActiveRecord::ActiveRecordError
-  def initialize(reflection = nil, associated_class = nil); end
-end
-class ActiveRecord::HasManyThroughAssociationNotFoundError < ActiveRecord::ActiveRecordError
-  def initialize(owner_class_name = nil, reflection = nil); end
-end
-class ActiveRecord::HasManyThroughAssociationPolymorphicSourceError < ActiveRecord::ActiveRecordError
-  def initialize(owner_class_name = nil, reflection = nil, source_reflection = nil); end
-end
-class ActiveRecord::HasManyThroughAssociationPolymorphicThroughError < ActiveRecord::ActiveRecordError
-  def initialize(owner_class_name = nil, reflection = nil); end
-end
-class ActiveRecord::HasManyThroughAssociationPointlessSourceTypeError < ActiveRecord::ActiveRecordError
-  def initialize(owner_class_name = nil, reflection = nil, source_reflection = nil); end
-end
-class ActiveRecord::HasOneThroughCantAssociateThroughCollection < ActiveRecord::ActiveRecordError
-  def initialize(owner_class_name = nil, reflection = nil, through_reflection = nil); end
-end
-class ActiveRecord::HasOneAssociationPolymorphicThroughError < ActiveRecord::ActiveRecordError
-  def initialize(owner_class_name = nil, reflection = nil); end
-end
-class ActiveRecord::HasManyThroughSourceAssociationNotFoundError < ActiveRecord::ActiveRecordError
-  def initialize(reflection = nil); end
-end
-class ActiveRecord::HasManyThroughOrderError < ActiveRecord::ActiveRecordError
-  def initialize(owner_class_name = nil, reflection = nil, through_reflection = nil); end
-end
-class ActiveRecord::ThroughCantAssociateThroughHasOneOrManyReflection < ActiveRecord::ActiveRecordError
-  def initialize(owner = nil, reflection = nil); end
-end
-class ActiveRecord::AmbiguousSourceReflectionForThroughAssociation < ActiveRecord::ActiveRecordError
-  def initialize(klass, macro, association_name, options, possible_sources); end
-end
-class ActiveRecord::HasManyThroughCantAssociateThroughHasOneOrManyReflection < ActiveRecord::ThroughCantAssociateThroughHasOneOrManyReflection
-end
-class ActiveRecord::HasOneThroughCantAssociateThroughHasOneOrManyReflection < ActiveRecord::ThroughCantAssociateThroughHasOneOrManyReflection
-end
-class ActiveRecord::ThroughNestedAssociationsAreReadonly < ActiveRecord::ActiveRecordError
-  def initialize(owner = nil, reflection = nil); end
-end
-class ActiveRecord::HasManyThroughNestedAssociationsAreReadonly < ActiveRecord::ThroughNestedAssociationsAreReadonly
-end
-class ActiveRecord::HasOneThroughNestedAssociationsAreReadonly < ActiveRecord::ThroughNestedAssociationsAreReadonly
-end
-class ActiveRecord::EagerLoadPolymorphicError < ActiveRecord::ActiveRecordError
-  def initialize(reflection = nil); end
-end
-class ActiveRecord::DeleteRestrictionError < ActiveRecord::ActiveRecordError
-  def initialize(name = nil); end
-end
-module ActiveRecord::Associations
-  def association(name); end
-  def association_cached?(name); end
-  def association_instance_get(name); end
-  def association_instance_set(name, association); end
-  def clear_association_cache; end
-  def init_internals; end
-  def initialize_dup(*arg0); end
-  def reload(*arg0); end
-  def self.eager_load!; end
-  extend ActiveSupport::Autoload
+module ActiveRecord::Validations
+  def default_validation_context; end
+  def perform_validations(options = nil); end
+  def raise_validation_error; end
+  def save!(options = nil); end
+  def save(options = nil); end
+  def valid?(context = nil); end
+  def validate(context = nil); end
   extend ActiveSupport::Concern
+  include ActiveModel::Validations
 end
-module ActiveRecord::Associations::Builder
+class ActiveRecord::Validations::AssociatedValidator < ActiveModel::EachValidator
+  def valid_object?(record); end
+  def validate_each(record, attribute, value); end
 end
-module ActiveRecord::Associations::ClassMethods
-  def belongs_to(name, scope = nil, **options); end
-  def has_and_belongs_to_many(name, scope = nil, **options, &extension); end
-  def has_many(name, scope = nil, **options, &extension); end
-  def has_one(name, scope = nil, **options); end
+module ActiveRecord::Validations::ClassMethods
+  def validates_absence_of(*attr_names); end
+  def validates_associated(*attr_names); end
+  def validates_length_of(*attr_names); end
+  def validates_presence_of(*attr_names); end
+  def validates_size_of(*attr_names); end
+  def validates_uniqueness_of(*attr_names); end
 end
-class ActiveRecord::Associations::Association
-  def association_scope; end
-  def build_record(attributes); end
-  def create!(attributes = nil, &block); end
-  def create(attributes = nil, &block); end
-  def creation_attributes; end
-  def extensions; end
-  def find_target; end
-  def find_target?; end
-  def foreign_key_for?(record); end
-  def foreign_key_present?; end
-  def initialize(owner, reflection); end
-  def initialize_attributes(record, except_from_scope_attributes = nil); end
-  def inverse_association_for(record); end
-  def inverse_reflection_for(record); end
-  def inversed_from(record); end
-  def inversed_from_queries(record); end
-  def invertible_for?(record); end
-  def klass; end
-  def load_target; end
-  def loaded!; end
-  def loaded?; end
-  def marshal_dump; end
-  def marshal_load(data); end
-  def options(*args, &block); end
-  def owner; end
-  def raise_on_type_mismatch!(record); end
-  def reflection; end
-  def reload(force = nil); end
-  def remove_inverse_instance(record); end
-  def reset; end
-  def reset_scope; end
-  def scope; end
-  def scope_for_create; end
-  def set_inverse_instance(record); end
-  def set_inverse_instance_from_queries(record); end
-  def set_owner_attributes(record); end
-  def skip_statement_cache?(scope); end
-  def stale_state; end
-  def stale_target?; end
-  def target; end
-  def target=(target); end
-  def target_scope; end
+class ActiveRecord::Validations::UniquenessValidator < ActiveModel::EachValidator
+  def build_relation(klass, attribute, value); end
+  def find_finder_class_for(record); end
+  def initialize(options); end
+  def map_enum_attribute(klass, attribute, value); end
+  def scope_relation(record, relation); end
+  def validate_each(record, attribute, value); end
+end
+class ActiveRecord::Validations::PresenceValidator < ActiveModel::Validations::PresenceValidator
+  def validate_each(record, attribute, association_or_value); end
+end
+class ActiveRecord::Validations::AbsenceValidator < ActiveModel::Validations::AbsenceValidator
+  def validate_each(record, attribute, association_or_value); end
+end
+class ActiveRecord::Validations::LengthValidator < ActiveModel::Validations::LengthValidator
+  def validate_each(record, attribute, association_or_value); end
+end
+class ActiveRecord::RecordInvalid < ActiveRecord::ActiveRecordError
+  def initialize(record = nil); end
+  def record; end
 end
 module ActiveRecord::AttributeDecorators
   extend ActiveSupport::Concern
@@ -3144,50 +3070,6 @@ module ActiveRecord::Integration::ClassMethods
   def collection_cache_key(collection = nil, timestamp_column = nil); end
   def to_param(method_name = nil); end
 end
-module ActiveRecord::Validations
-  def default_validation_context; end
-  def perform_validations(options = nil); end
-  def raise_validation_error; end
-  def save!(options = nil); end
-  def save(options = nil); end
-  def valid?(context = nil); end
-  def validate(context = nil); end
-  extend ActiveSupport::Concern
-  include ActiveModel::Validations
-end
-class ActiveRecord::Validations::AssociatedValidator < ActiveModel::EachValidator
-  def valid_object?(record); end
-  def validate_each(record, attribute, value); end
-end
-module ActiveRecord::Validations::ClassMethods
-  def validates_absence_of(*attr_names); end
-  def validates_associated(*attr_names); end
-  def validates_length_of(*attr_names); end
-  def validates_presence_of(*attr_names); end
-  def validates_size_of(*attr_names); end
-  def validates_uniqueness_of(*attr_names); end
-end
-class ActiveRecord::Validations::UniquenessValidator < ActiveModel::EachValidator
-  def build_relation(klass, attribute, value); end
-  def find_finder_class_for(record); end
-  def initialize(options); end
-  def map_enum_attribute(klass, attribute, value); end
-  def scope_relation(record, relation); end
-  def validate_each(record, attribute, value); end
-end
-class ActiveRecord::Validations::PresenceValidator < ActiveModel::Validations::PresenceValidator
-  def validate_each(record, attribute, association_or_value); end
-end
-class ActiveRecord::Validations::AbsenceValidator < ActiveModel::Validations::AbsenceValidator
-  def validate_each(record, attribute, association_or_value); end
-end
-class ActiveRecord::Validations::LengthValidator < ActiveModel::Validations::LengthValidator
-  def validate_each(record, attribute, association_or_value); end
-end
-class ActiveRecord::RecordInvalid < ActiveRecord::ActiveRecordError
-  def initialize(record = nil); end
-  def record; end
-end
 module ActiveRecord::CounterCache
   def _create_record(attribute_names = nil); end
   def destroy_row; end
@@ -3357,6 +3239,80 @@ module ActiveRecord::Callbacks
   def increment!(attribute, by = nil, touch: nil); end
   def touch(*arg0); end
   extend ActiveSupport::Concern
+end
+class ActiveRecord::AssociationNotFoundError < ActiveRecord::ConfigurationError
+  def initialize(record = nil, association_name = nil); end
+end
+class ActiveRecord::InverseOfAssociationNotFoundError < ActiveRecord::ActiveRecordError
+  def initialize(reflection = nil, associated_class = nil); end
+end
+class ActiveRecord::HasManyThroughAssociationNotFoundError < ActiveRecord::ActiveRecordError
+  def initialize(owner_class_name = nil, reflection = nil); end
+end
+class ActiveRecord::HasManyThroughAssociationPolymorphicSourceError < ActiveRecord::ActiveRecordError
+  def initialize(owner_class_name = nil, reflection = nil, source_reflection = nil); end
+end
+class ActiveRecord::HasManyThroughAssociationPolymorphicThroughError < ActiveRecord::ActiveRecordError
+  def initialize(owner_class_name = nil, reflection = nil); end
+end
+class ActiveRecord::HasManyThroughAssociationPointlessSourceTypeError < ActiveRecord::ActiveRecordError
+  def initialize(owner_class_name = nil, reflection = nil, source_reflection = nil); end
+end
+class ActiveRecord::HasOneThroughCantAssociateThroughCollection < ActiveRecord::ActiveRecordError
+  def initialize(owner_class_name = nil, reflection = nil, through_reflection = nil); end
+end
+class ActiveRecord::HasOneAssociationPolymorphicThroughError < ActiveRecord::ActiveRecordError
+  def initialize(owner_class_name = nil, reflection = nil); end
+end
+class ActiveRecord::HasManyThroughSourceAssociationNotFoundError < ActiveRecord::ActiveRecordError
+  def initialize(reflection = nil); end
+end
+class ActiveRecord::HasManyThroughOrderError < ActiveRecord::ActiveRecordError
+  def initialize(owner_class_name = nil, reflection = nil, through_reflection = nil); end
+end
+class ActiveRecord::ThroughCantAssociateThroughHasOneOrManyReflection < ActiveRecord::ActiveRecordError
+  def initialize(owner = nil, reflection = nil); end
+end
+class ActiveRecord::AmbiguousSourceReflectionForThroughAssociation < ActiveRecord::ActiveRecordError
+  def initialize(klass, macro, association_name, options, possible_sources); end
+end
+class ActiveRecord::HasManyThroughCantAssociateThroughHasOneOrManyReflection < ActiveRecord::ThroughCantAssociateThroughHasOneOrManyReflection
+end
+class ActiveRecord::HasOneThroughCantAssociateThroughHasOneOrManyReflection < ActiveRecord::ThroughCantAssociateThroughHasOneOrManyReflection
+end
+class ActiveRecord::ThroughNestedAssociationsAreReadonly < ActiveRecord::ActiveRecordError
+  def initialize(owner = nil, reflection = nil); end
+end
+class ActiveRecord::HasManyThroughNestedAssociationsAreReadonly < ActiveRecord::ThroughNestedAssociationsAreReadonly
+end
+class ActiveRecord::HasOneThroughNestedAssociationsAreReadonly < ActiveRecord::ThroughNestedAssociationsAreReadonly
+end
+class ActiveRecord::EagerLoadPolymorphicError < ActiveRecord::ActiveRecordError
+  def initialize(reflection = nil); end
+end
+class ActiveRecord::DeleteRestrictionError < ActiveRecord::ActiveRecordError
+  def initialize(name = nil); end
+end
+module ActiveRecord::Associations
+  def association(name); end
+  def association_cached?(name); end
+  def association_instance_get(name); end
+  def association_instance_set(name, association); end
+  def clear_association_cache; end
+  def init_internals; end
+  def initialize_dup(*arg0); end
+  def reload(*arg0); end
+  def self.eager_load!; end
+  extend ActiveSupport::Autoload
+  extend ActiveSupport::Concern
+end
+module ActiveRecord::Associations::Builder
+end
+module ActiveRecord::Associations::ClassMethods
+  def belongs_to(name, scope = nil, **options); end
+  def has_and_belongs_to_many(name, scope = nil, **options, &extension); end
+  def has_many(name, scope = nil, **options, &extension); end
+  def has_one(name, scope = nil, **options); end
 end
 module ActiveRecord::AutosaveAssociation
   def _ensure_no_duplicate_errors; end
@@ -4221,6 +4177,50 @@ end
 module ActiveRecord::Base::GeneratedAttributeMethods
 end
 module ActiveRecord::Base::GeneratedAssociationMethods
+end
+class ActiveRecord::Associations::Association
+  def association_scope; end
+  def build_record(attributes); end
+  def create!(attributes = nil, &block); end
+  def create(attributes = nil, &block); end
+  def creation_attributes; end
+  def extensions; end
+  def find_target; end
+  def find_target?; end
+  def foreign_key_for?(record); end
+  def foreign_key_present?; end
+  def initialize(owner, reflection); end
+  def initialize_attributes(record, except_from_scope_attributes = nil); end
+  def inverse_association_for(record); end
+  def inverse_reflection_for(record); end
+  def inversed_from(record); end
+  def inversed_from_queries(record); end
+  def invertible_for?(record); end
+  def klass; end
+  def load_target; end
+  def loaded!; end
+  def loaded?; end
+  def marshal_dump; end
+  def marshal_load(data); end
+  def options(*args, &block); end
+  def owner; end
+  def raise_on_type_mismatch!(record); end
+  def reflection; end
+  def reload(force = nil); end
+  def remove_inverse_instance(record); end
+  def reset; end
+  def reset_scope; end
+  def scope; end
+  def scope_for_create; end
+  def set_inverse_instance(record); end
+  def set_inverse_instance_from_queries(record); end
+  def set_owner_attributes(record); end
+  def skip_statement_cache?(scope); end
+  def stale_state; end
+  def stale_target?; end
+  def target; end
+  def target=(target); end
+  def target_scope; end
 end
 class ActiveRecord::ConnectionAdapters::ConnectionSpecification
   def adapter_method; end

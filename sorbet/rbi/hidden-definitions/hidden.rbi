@@ -13318,6 +13318,63 @@ class Data
   extend ::T::Sig
 end
 
+module DatabaseValidations
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class DatabaseValidations::Adapters::BaseAdapter
+  ADAPTER = ::T.let(nil, ::T.untyped)
+  SUPPORTED_OPTIONS = ::T.let(nil, ::T.untyped)
+end
+
+class DatabaseValidations::Adapters::MysqlAdapter
+  ADAPTER = ::T.let(nil, ::T.untyped)
+  SUPPORTED_OPTIONS = ::T.let(nil, ::T.untyped)
+end
+
+class DatabaseValidations::Adapters::PostgresqlAdapter
+  ADAPTER = ::T.let(nil, ::T.untyped)
+  SUPPORTED_OPTIONS = ::T.let(nil, ::T.untyped)
+end
+
+class DatabaseValidations::Adapters::SqliteAdapter
+  ADAPTER = ::T.let(nil, ::T.untyped)
+  SUPPORTED_OPTIONS = ::T.let(nil, ::T.untyped)
+end
+
+module DatabaseValidations::Adapters
+  extend ::T::Sig
+end
+
+class DatabaseValidations::BelongsToOptions
+  VALIDATOR_MESSAGE = ::T.let(nil, ::T.untyped)
+end
+
+module DatabaseValidations::ClassMethods
+  extend ::T::Sig
+end
+
+module DatabaseValidations::Errors
+  extend ::T::Sig
+end
+
+module DatabaseValidations::Helpers
+  extend ::T::Sig
+end
+
+module DatabaseValidations::Rescuer
+  extend ::T::Sig
+end
+
+class DatabaseValidations::UniquenessOptions
+  CUSTOM_OPTIONS = ::T.let(nil, ::T.untyped)
+  DEFAULT_OPTIONS = ::T.let(nil, ::T.untyped)
+end
+
+module DatabaseValidations
+  extend ::T::Sig
+end
+
 class Date
   include ::ActiveSupport::ToJsonWithActiveSupportEncoder
   DATE_FORMATS = ::T.let(nil, ::T.untyped)
@@ -24011,17 +24068,13 @@ class Net::HTTPBadResponse
   extend ::T::Sig
 end
 
+Net::HTTPClientError::EXCEPTION_TYPE = Net::HTTPServerException
+
 class Net::HTTPClientError
   extend ::T::Sig
 end
 
-class Net::HTTPClientError
-end
-
-Net::HTTPClientErrorCode::EXCEPTION_TYPE = Net::HTTPServerException
-
-class Net::HTTPClientError
-end
+Net::HTTPClientErrorCode = Net::HTTPClientError
 
 Net::HTTPClientException = Net::HTTPServerException
 
@@ -24117,13 +24170,7 @@ class Net::HTTPInformation
   extend ::T::Sig
 end
 
-class Net::HTTPInformation
-end
-
-Net::HTTPInformationCode::EXCEPTION_TYPE = Net::HTTPError
-
-class Net::HTTPInformation
-end
+Net::HTTPInformationCode = Net::HTTPInformation
 
 class Net::HTTPInsufficientStorage
   extend ::T::Sig
@@ -24259,17 +24306,13 @@ end
 class Net::HTTPRangeNotSatisfiable
 end
 
+Net::HTTPRedirection::EXCEPTION_TYPE = Net::HTTPRetriableError
+
 class Net::HTTPRedirection
   extend ::T::Sig
 end
 
-class Net::HTTPRedirection
-end
-
-Net::HTTPRedirectionCode::EXCEPTION_TYPE = Net::HTTPRetriableError
-
-class Net::HTTPRedirection
-end
+Net::HTTPRedirectionCode = Net::HTTPRedirection
 
 class Net::HTTPRequest
   extend ::T::Sig
@@ -24320,17 +24363,13 @@ class Net::HTTPSeeOther
   extend ::T::Sig
 end
 
+Net::HTTPServerError::EXCEPTION_TYPE = Net::HTTPFatalError
+
 class Net::HTTPServerError
   extend ::T::Sig
 end
 
-class Net::HTTPServerError
-end
-
-Net::HTTPServerErrorCode::EXCEPTION_TYPE = Net::HTTPFatalError
-
-class Net::HTTPServerError
-end
+Net::HTTPServerErrorCode = Net::HTTPServerError
 
 class Net::HTTPServerException
   extend ::T::Sig
@@ -24350,17 +24389,13 @@ Net::HTTPSession::ProxyMod = Net::HTTP::ProxyDelta
 class Net::HTTP
 end
 
+Net::HTTPSuccess::EXCEPTION_TYPE = Net::HTTPError
+
 class Net::HTTPSuccess
   extend ::T::Sig
 end
 
-class Net::HTTPSuccess
-end
-
-Net::HTTPSuccessCode::EXCEPTION_TYPE = Net::HTTPError
-
-class Net::HTTPSuccess
-end
+Net::HTTPSuccessCode = Net::HTTPSuccess
 
 class Net::HTTPSwitchProtocol
   extend ::T::Sig
@@ -28572,26 +28607,6 @@ class Post
   def self.with_log_data(*args); end
 end
 
-class PostHtmlRenderer
-  include ::ActionDispatch::Routing::UrlFor
-  include ::ActionDispatch::Routing::PolymorphicRoutes
-  def default_url_options(); end
-
-  def default_url_options=(val); end
-
-  def default_url_options?(); end
-end
-
-class PostHtmlRenderer
-  def self._routes(); end
-
-  def self.default_url_options(); end
-
-  def self.default_url_options=(val); end
-
-  def self.default_url_options?(); end
-end
-
 class PostReceiveJob
   def author(); end
 
@@ -28609,6 +28624,7 @@ module Posts
 end
 
 class Posts::PublishController
+  include ::ActionView::Layouts::ClassMethods::LayoutConditions
   def create(); end
 end
 
@@ -31915,6 +31931,7 @@ class Rack::Attack::Safelist
 end
 
 module Rack::Attack::StoreProxy
+  PROXIES = ::T.let(nil, ::T.untyped)
 end
 
 class Rack::Attack::StoreProxy::ActiveSupportRedisStoreProxy
@@ -31926,6 +31943,22 @@ class Rack::Attack::StoreProxy::ActiveSupportRedisStoreProxy
 end
 
 class Rack::Attack::StoreProxy::ActiveSupportRedisStoreProxy
+  def self.handle?(store); end
+end
+
+class Rack::Attack::StoreProxy::DalliProxy
+  def delete(key); end
+
+  def increment(key, amount, options=T.unsafe(nil)); end
+
+  def initialize(client); end
+
+  def read(key); end
+
+  def write(key, value, options=T.unsafe(nil)); end
+end
+
+class Rack::Attack::StoreProxy::DalliProxy
   def self.handle?(store); end
 end
 
@@ -31971,6 +32004,7 @@ end
 
 module Rack::Attack::StoreProxy
   extend ::T::Sig
+  def self.build(store); end
 end
 
 class Rack::Attack::Throttle
@@ -40049,6 +40083,11 @@ end
 
 class TracePoint
   extend ::T::Sig
+end
+
+class Traceroute
+  VERSION = ::T.let(nil, ::T.untyped)
+  WILDCARD_ROUTES = ::T.let(nil, ::T.untyped)
 end
 
 module Trackable

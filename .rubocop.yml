@@ -1,5 +1,7 @@
+require:
+  - rubocop-performance
+  - database_validations/rubocop/cops
 
-require: rubocop-performance
 AllCops:
   TargetRubyVersion: 2.6.3
   # RuboCop has a bunch of cops enabled by default. This setting tells RuboCop
@@ -78,10 +80,10 @@ Layout/SpaceAroundOperators:
   Enabled: true
 
 Layout/SpaceBeforeComma:
-    Enabled: true
+  Enabled: true
 
 Layout/SpaceBeforeFirstArg:
-    Enabled: true
+  Enabled: true
 
 Style/DefWithParentheses:
   Enabled: true

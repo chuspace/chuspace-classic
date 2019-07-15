@@ -4,8 +4,8 @@
 class Post < ApplicationRecord
   include AASM
 
-  belongs_to :author, class_name: 'User'
-  belongs_to :repository
+  db_belongs_to :author, class_name: 'User'
+  db_belongs_to :repository
 
   has_ancestry
   has_logidze
@@ -13,13 +13,13 @@ class Post < ApplicationRecord
   enum status: { draft: 0, published: 1, archived: 2 }
 
   validates_presence_of :slug, :blob_path, :status
-  validates_presence_of :title, :summary, :topics, :body, :published_at, :blob_id, if: :published?
+  validates_presence_of :title, :summary, :topics, :body_html, :published_at, :blob_id, if: :published?
   validates_length_of :title, :slug, maximum: 100, if: :published?
   validates_length_of :summary, maximum: 140, if: :published?
   validates_length_of :topics, maximum: 5, if: :published?
 
-  validates_uniqueness_of :slug, scope: %i[repository]
-  validates_uniqueness_of :blob_path, scope: %i[repository]
+  validates_db_uniqueness_of :slug, scope: %i[repository]
+  validates_db_uniqueness_of :blob_path, scope: %i[repository]
 
   validates :slug, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
   validates :published_at, date: true, if: :published?

@@ -3,24 +3,32 @@
 
 class Posts::PublishController < ApplicationController
   before_action :authenticate!
-  before_action :find_post, only: %i[index create]
+  before_action :find_post, :assign_attributes, only: %i[index create]
+
+  layout 'editor', only: :index
 
   def create
-    markdown = PostMarkdownService.call(content: @post.blob_content)
-    @post.topics = publish_params[:topics]&.split(',')
+    @post.topics = publish_params[:topics]
     @post.parent = publish_params[:parent]
+    @post.blob_id = @post.blob.id
 
-    if @post.update(title: markdown.title, summary: markdown.summary, slug: markdown.slug, body_html: markdown.body_html, published_at: Time.now)
+    if @post.save
+      @post.publish! if @post.may_publish?
       redirect_to post_path(@post)
     else
-      redirect_to edit_post_path(@post)
+      render :index
     end
   end
 
   private
 
   def publish_params
-    params.require(:post).permit(:topics, :published_at, :parent)
+    params.require(:post).permit(:parent, topics: [])
+  end
+
+  def assign_attributes
+    markdown = PostMarkdownService.call(content: @post.blob_content)
+    @post.assign_attributes(title: markdown.title, summary: markdown.summary, slug: markdown.slug, body_html: markdown.body_html, published_at: Time.now)
   end
 
   def find_post

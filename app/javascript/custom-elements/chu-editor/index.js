@@ -44,8 +44,6 @@ export default class ChuEditor extends LitElement {
       onChange: this.onChange,
       content: this.content || ''
     })
-
-    if (this.id) this.updatePublishDialog()
   }
 
   disconnectedCallback() {
@@ -55,27 +53,6 @@ export default class ChuEditor extends LitElement {
     this.editor.destroy()
 
     window.onbeforeunload = null
-  }
-
-  updatePublishDialog() {
-    const dialog = document.querySelector('dialog')
-
-    if (!dialog) return
-
-    const title = dialog.querySelector('#post_title')
-    const summary = dialog.querySelector('#post_summary')
-
-    if (!title || !summary) return
-
-    title.textContent = this.editor.title
-
-    if (this.editor.summary) {
-      summary.textContent = this.editor.summary || ''
-      summary.classList.remove('summary__empty')
-    } else {
-      summary.textContent = "You haven't written a summary"
-      summary.classList.add('summary__empty')
-    }
   }
 
   updateStatuses() {
@@ -88,7 +65,6 @@ export default class ChuEditor extends LitElement {
       window.onbeforeunload = () => (this.saving ? 'Are you sure you want to navigate away?' : null)
 
       this.updateStatuses()
-      if (this.editor) this.updatePublishDialog()
 
       this.subscription = ActioncableClient.subscribe(
         {

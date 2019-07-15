@@ -1,0 +1,64 @@
+<dialog id='publish-<%= @post.slug %>' class='dialog__sm' open>
+  <div class='container relative'>
+    <%= link_to edit_post_path(@post) do %>
+      <svg-icon
+        class='absolute top-0 right-0'
+        name='x-circle'
+        feather='true'
+        stroke='rgba(0, 0, 0, 0.5)'
+        color='none' width='24' height='24'>
+      </svg-icon>
+    <% end %>
+
+    <h3 class='border-b pb-2 inline-block text-lg'>Publish</h3>
+    <div class='card card--default w-3/4 mx-auto mt-8'>
+      <%= simple_form_for @post, scope: :post, url: post_publish_index_path(@post), method: :post, remote: true do |f| %>
+        <h1 class='title title--nohover text-3xl'><%= @post.title %></h1>
+        <h2 class='summary summary--nohover text-grey-light mt-8 text-2xl'><%= @post.summary %></h2>
+
+        <input-autocomplete
+          url="<%= autocomplete_topics_url %>"
+          items='<%= @post.topics || [] %>'
+          maxlength="5"
+          keys="name"
+          class='w-full block mt-12'
+          noresults
+        >
+          <div class='autocomplete__selections'>
+            <% @post.topics&.each do |topic| %>
+              <span class="autocomplete__item mr-2">
+                <%= topic %>
+                <svg-icon class='autocomplete__item__icon' name='x-circle' width='10' height='10' feather='true' color='none'>&#10005</svg-icon>
+              </span>
+            <% end %>
+          </div>
+          <div class='input__container input__container__label--floating' data-label='Topics'>
+            <input type='text' placeholder="Type to add topics" class = "input autocomplete__input" >
+          </div>
+          <%= f.input :topics, as: :hidden, input_html: { id: 'selections__input', multiple: true } %>
+        </input-autocomplete>
+
+        <input-autocomplete
+          url="<%= autocomplete_posts_url %>"
+          items='[<%= @post.parent %>]'
+          maxlength="1"
+          keys="slug"
+          class='w-full block mt-12'
+        >
+          <div class='autocomplete__selections'>
+            <% if @post.parent %>
+              <span class="autocomplete__item mr-2">
+                <%= @post.parent.title %>
+                <svg-icon class='autocomplete__item__icon' name='x-circle' width='10' height='10' feather='true' color='none'>&#10005</svg-icon>
+              </span>
+            <% end %>
+          </div>
+          <%= f.input :parent, label: false, placeholder: "Type to select a post", input_html: { class: "autocomplete__input" }, input_container_html: { class: 'input__container__label--floating', data: { label: 'Parent' } } %>
+          <%= f.input :parent, as: :hidden, input_html: { id: 'selections__input' } %>
+        </input-autocomplete>
+
+        <%= f.submit 'Publish now', class: 'button button--fill float-right mt-12 text-base' %>
+      <% end %>
+    </div>
+  </div>
+</dialog>

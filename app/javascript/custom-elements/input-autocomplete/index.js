@@ -4,19 +4,20 @@ import { LitElement, customElement, html } from 'lit-element'
 
 import autoComplete from '@tarekraafat/autocomplete.js'
 import last from 'lodash/last'
+import { render } from 'lit-html'
 import without from 'lodash/without'
 
 export default class InputAutocomplete extends LitElement {
+  input: HTMLInputElement = this.querySelector('input')
+  selectionsInput: HTMLInputElement = this.querySelector('#selections__input')
+  selectionsContainer: HTMLElement = this.querySelector('.autocomplete__selections')
+  container: HTMLElement = this.querySelector('.input__container')
+
   static get properties() {
     return {
-      items: { type: Array },
+      items: { type: Array, reflect: true },
       url: { type: String },
-      autofocus: { type: Boolean },
-      label: { types: String },
-      name: { types: String },
       keys: { types: String },
-      placeholder: { type: String },
-      hint: { type: String },
       maxlength: { type: Number },
       noresults: { type: Boolean }
     }
@@ -35,19 +36,19 @@ export default class InputAutocomplete extends LitElement {
 
   async connectedCallback() {
     await super.connectedCallback()
+    this.renderItems()
     this.initAutocomplete()
   }
 
   isInvalid = (items: string) => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(items) == false
 
   initAutocomplete = () => {
-    const input = this.querySelector('.autocomplete__input')
     if (this.autocompleteInstance) return
 
     this.autocompleteInstance = new autoComplete({
       data: {
         src: async () => {
-          const source = await fetch(`${this.url}?q=${input.value}`)
+          const source = await fetch(`${this.url}?q=${this.input.value}`)
           const data = await source.json()
 
           return data.filter(items => this.items.indexOf(items[this.keys]) === -1)
@@ -56,7 +57,7 @@ export default class InputAutocomplete extends LitElement {
         cache: false
       },
       placeHolder: this.placeholder,
-      selector: () => input,
+      selector: () => this.input,
       threshold: 1,
       debounce: 300,
       searchEngine: 'strict',
@@ -68,7 +69,7 @@ export default class InputAutocomplete extends LitElement {
           source.removeAttribute('id')
           source.className = 'autocomplete__list arrow'
         },
-        destination: this.querySelector('.autocomplete__container'),
+        destination: this.container,
         position: 'beforeend',
         element: 'ul'
       },
@@ -83,7 +84,7 @@ export default class InputAutocomplete extends LitElement {
         if (this.noresults) {
           const item = document.createElement('li')
           const list = this.querySelector('.autocomplete__list')
-          const inputValue = input.value.trim()
+          const inputValue = this.input.value.trim()
 
           if (this.isInvalid(inputValue)) return
 
@@ -95,15 +96,15 @@ export default class InputAutocomplete extends LitElement {
               const customTopic = item.querySelector('.autocomplete__item__custom')
               customTopic && this.add(customTopic.textContent)
               item.remove()
-              input.value = ''
+              this.input.value = ''
             })
           }
         }
       },
       onSelection: feedback => {
         this.add(feedback.selection.value[this.keys])
-        input.value = ''
-        input.focus()
+        this.input.value = ''
+        this.input.focus()
       }
     })
   }
@@ -115,21 +116,47 @@ export default class InputAutocomplete extends LitElement {
 
     this.items = this.items.concat([items])
 
+    this.renderItems()
+    this.triggerChange()
+
     if (this.items.length === this.maxlength) {
-      const input = this.querySelector('input')
-      this.setAttribute('disabled', true)
+      this.setAtsetribute('disabled', true)
       return
     }
   }
 
+  renderItems() {
+    this.selectionsContainer.innerHTML = ''
+
+    this.items.forEach(label => {
+      const spanNode = document.createElement('span')
+      this.selectionsContainer.append(spanNode)
+
+      render(this.renderItem(label), spanNode)
+    })
+  }
+
+  triggerChange() {
+    this.selectionsInput.value = this.items
+    this.selectionsInput.onchange && this.selectionsInput.onchange()
+  }
+
+  renderItem(label: string) {
+    return html`
+      <span class="autocomplete__item mr-2">
+        ${label}
+        <svg-icon class='autocomplete__item__icon' @click=${this.remove} name='x-circle' width='10' height='10' feather='true' color='none'>&#10005</svg-icon>
+      </span>
+    `
+  }
+
   handleKeyDown(e: KeyboardEvent) {
-    const input = this.querySelector('input')
     switch (e.keyCode) {
       case 13:
         e.preventDefault()
         break
       case 8:
-        if (input.value) return
+        if (this.input.value) return
         this.items = without(this.items, last(this.items))
         this.removeAttribute('disabled')
         break
@@ -151,38 +178,13 @@ export default class InputAutocomplete extends LitElement {
 
       if (index > -1) {
         this.items = without(this.items, items)
+        this.renderItems()
+        this.triggerChange()
       }
 
-      const input = this.querySelector('.autocomplete__input')
-      input && input.focus()
+      this.input && this.input.focus()
       this.hasAttribute('disabled') && this.removeAttribute('disabled')
     }
-  }
-
-  render() {
-    return html`
-      <div class="form_field__container">
-        <div class="input__container input__container__label--floating" data-label="${this.label}">
-          <div class="autocomplete__container mt-4">
-            ${this.items.map(
-              tag =>
-                html`<span class="autocomplete__item mr-2">
-            ${tag} <svg-icon class='autocomplete__item__icon' @click=${this.remove} name='x-circle' width='10' height='10' feather='true' color='none'>&#10005</svg-icon></span>
-          `
-            )}
-            <div class="autocomplete__container relative">
-              <input type="hidden" value=${this.items} name="${this.name}" />
-              <input class="autocomplete__input" autocomplete="off" @keydown=${this.handleKeyDown} />
-            </div>
-          </div>
-        </div>
-        ${this.hint
-          ? html`
-              <span class="input__hint">${this.hint}</span>
-            `
-          : ''}
-      </div>
-    `
   }
 }
 

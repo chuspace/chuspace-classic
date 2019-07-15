@@ -1,13 +1,21 @@
 <div class='flex items-center flex-1' id='post_header'>
-  <div class='flex-1 flex items-center ml-8'>
-    <div class="mr-4 badge badge--grey"><%= post.status.titlecase %></div>
-    <div class="text-grey text-sm" id='editor-status'>Saved</div>
-  </div>
+  <% if params[:action] == 'new' || params[:action] == 'edit' %>
+    <div class='flex-1 flex items-center ml-8'>
+      <div class="mr-4 badge badge--grey"><%= post.status.titlecase %></div>
+      <div class="text-grey text-sm" id='editor-status'>Saved</div>
+    </div>
 
-  <% if post.slug %>
+    <% if post.slug %>
+      <div class='flex justify-end items-center flex-1 mr-8'>
+        <%= link_to 'Publish', post_publish_index_path(post), class: 'button button--active button--slim mr-2' %>
+        <%= link_to 'Delete', post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'button button--danger button--slim' %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <% if post.published? && params[:action] == 'show' %>
     <div class='flex justify-end items-center flex-1 mr-8'>
-      <dialog-opener class='button button--active button--slim mr-2' target='publish-<%= post.slug %>'>Publish</dialog-opener>
-      <%= link_to 'Delete', post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'button button--danger button--slim' %>
+      <%= link_to 'Edit', edit_post_path(post), class: 'button button--active button--slim mr-2' %>
     </div>
   <% end %>
 </div>

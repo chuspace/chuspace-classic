@@ -1,23 +1,25 @@
-<%= link_to post_path(post), class: 'list__item list__item--bordered' do %>
+<%= content_tag :div, class: 'list__item list__item--bordered' do %>
   <article>
-    <div class='header'>
-      <h4><%= post.title %></h4>
-      <%= content_tag :p, post.summary, class: 'text-grey tracking-normal text-sm leading-normal w-2/3' %>
-    </div>
+    <%= link_to post_path(post) do %>
+      <div class='header'>
+        <h4><%= post.title %></h4>
+        <%= content_tag :p, post.summary, class: 'text-grey tracking-normal text-sm leading-normal mt-2' %>
+      </div>
+    <% end %>
 
-    <ul class='horizontal__list text-xs mt-2'>
+    <ul class='horizontal__list text-xs mt-4'>
       <li>
         Last edited <%= distance_of_time_in_words_to_now(post.updated_at) %> ago
       </li>
       <li>
-        Published at <time class='text-sm text-grey'><%= post.published_at  %></time>
+        Published at <time><%= distance_of_time_in_words_to_now(post.published_at) %></time>
       </li>
       <li>
-        <%= link_to 'Edit', edit_post_path(post), class: 'link link--active underline', %>
+        <%= link_to 'Edit', edit_post_path(post), class: 'link link--active underline' %>
       </li>
       <li>
         <%= link_to 'Delete',
-          post_path(draft),
+          post_path(post),
           method: :delete,
           remote: true,
           class: 'link link--danger underline',

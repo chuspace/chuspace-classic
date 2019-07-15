@@ -12,6 +12,7 @@ gem 'bundler', '1.17.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.x'
 gem 'strong_migrations'
+gem 'database_validations'
 
 # File uploads
 gem 'aws-sdk-s3'
@@ -21,6 +22,9 @@ gem 'fastimage'
 gem 'image_processing'
 gem 'ruby-vips'
 gem 'shrine'
+
+# App config
+gem 'anyway_config', '2.0.0.pre'
 
 # Logging
 gem 'logidze'
@@ -120,8 +124,8 @@ group :development do
   gem 'pry-rails'
   # Fake data
   gem 'faker'
-
   gem 'sorbet'
+  gem 'database_consistency', require: false
 end
 
 group :test do

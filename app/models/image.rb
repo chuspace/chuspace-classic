@@ -5,8 +5,8 @@ class Image < ApplicationRecord
   include ImageUploader::Attachment.new(:image)
   ROOT_PATH = 'images/.keep'
 
-  belongs_to :repository
-  belongs_to :user
+  db_belongs_to :repository
+  db_belongs_to :user
 
-  validates_uniqueness_of :blob_path, scope: %i[repository]
+  validates_db_uniqueness_of :blob_path, scope: %i[repository]
 end

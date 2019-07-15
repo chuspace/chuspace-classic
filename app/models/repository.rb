@@ -26,16 +26,17 @@ class Repository < ApplicationRecord
     !/images/*.jpg
   STRING
 
-  validates :name, :path, presence: true, uniqueness: true
+  validates :name, :path, presence: true
+  validates_db_uniqueness_of :name, :path
 
   before_validation :assign_default_attributes, on: :create
-  after_create :create_git_repo, :create_git_hooks, :add_gitignore, :add_images_folder, :add_posts_folder
+  before_create :create_git_repo, :create_git_hooks, :add_gitignore, :add_images_folder, :add_posts_folder
   after_save :rename_git_repo, if: -> { !new_record? && path_changed? }
 
   after_destroy :destroy_git_repo
   after_rollback :destroy_git_repo, on: :create
 
-  belongs_to :author, class_name: 'User'
+  db_belongs_to :author, class_name: 'User'
 
   delegate :lookup, :checkout, :empty?, :bare?, :index, to: :rugged
   delegate :tree, to: :commit
