@@ -7,8 +7,10 @@ class Posts::PublishController < ApplicationController
 
   def create
     markdown = PostMarkdownService.call(content: @post.blob_content)
+    @post.topics = publish_params[:topics]&.split(',')
+    @post.parent = publish_params[:parent]
 
-    if @post.update(title: markdown.title, summary: markdown.summary, slug: markdown.slug, body_html: markdown.body_html, **publish_params)
+    if @post.update(title: markdown.title, summary: markdown.summary, slug: markdown.slug, body_html: markdown.body_html, published_at: Time.now)
       redirect_to post_path(@post)
     else
       redirect_to edit_post_path(@post)

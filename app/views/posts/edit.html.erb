@@ -21,13 +21,9 @@
 
     <h3 class='border-b pb-2 inline-block text-lg'>Publish</h3>
     <div class='card card--default w-3/4 mx-auto mt-8'>
-      <%= simple_form_for @post, url: post_publish_index_path(@post), method: :post, remote: true, onSubmit: "return !event.keyCode === 13" do |f| %>
+      <%= simple_form_for @post, scope: :post, url: post_publish_index_path(@post), method: :post, remote: true do |f| %>
         <h1 id="post_title" class='title title--nohover text-3xl'></h1>
         <h2 id="post_summary" class='summary summary--nohover text-grey-light mt-8 text-2xl'></h2>
-
-        <%= f.input :title, as: :hidden, readonly: true, disabled: true %>
-        <%= f.input :summary, as: :hidden, readonly: true, disabled: true %>
-        <%= f.input :body, as: :hidden, readonly: true, disabled: true %>
 
         <input-autocomplete
           url="<%= autocomplete_topics_url %>"
@@ -35,6 +31,7 @@
           maxlength="5"
           label="Topics"
           keys="name"
+          name="post[topics][]"
           placeholder="Type to add topics"
           hint="<%= t('form.hints.post.topics') %>"
           class='w-full block mt-12'
@@ -48,6 +45,7 @@
           maxlength="1"
           label="Parent"
           keys="slug"
+          name="post[parent]"
           placeholder="Type to select a post"
           hint="<%= t('form.hints.post.parent') %>"
           class='w-full block mt-12'>

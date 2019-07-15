@@ -13,6 +13,7 @@ export default class InputAutocomplete extends LitElement {
       url: { type: String },
       autofocus: { type: Boolean },
       label: { types: String },
+      name: { types: String },
       keys: { types: String },
       placeholder: { type: String },
       hint: { type: String },
@@ -170,6 +171,7 @@ export default class InputAutocomplete extends LitElement {
           `
             )}
             <div class="autocomplete__container relative">
+              <input type="hidden" value=${this.items} name="${this.name}" />
               <input class="autocomplete__input" autocomplete="off" @keydown=${this.handleKeyDown} />
             </div>
           </div>

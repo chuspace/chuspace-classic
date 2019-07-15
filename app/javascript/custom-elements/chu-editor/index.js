@@ -62,31 +62,20 @@ export default class ChuEditor extends LitElement {
 
     if (!dialog) return
 
-    const title = dialog.querySelectorAll('#post_title')
-    const summary = dialog.querySelectorAll('#post_summary')
-    const body = dialog.querySelector('#post_body')
+    const title = dialog.querySelector('#post_title')
+    const summary = dialog.querySelector('#post_summary')
 
-    if (!title || !summary || !body) return
+    if (!title || !summary) return
 
-    title.forEach(titleNode => {
-      if (titleNode instanceof HTMLInputElement) titleNode.value = this.editor.title
-      if (titleNode instanceof HTMLHeadingElement) titleNode.textContent = this.editor.title
-    })
+    title.textContent = this.editor.title
 
-    body.textContent = this.editor.content
-
-    summary.forEach(summaryNode => {
-      if (summaryNode instanceof HTMLInputElement) summaryNode.value = this.editor.summary
-      if (summaryNode instanceof HTMLHeadingElement) {
-        if (this.editor.summary) {
-          summaryNode.textContent = this.editor.summary || ''
-          summaryNode.classList.remove('summary__empty')
-        } else {
-          summaryNode.textContent = "You haven't written a summary"
-          summaryNode.classList.add('summary__empty')
-        }
-      }
-    })
+    if (this.editor.summary) {
+      summary.textContent = this.editor.summary || ''
+      summary.classList.remove('summary__empty')
+    } else {
+      summary.textContent = "You haven't written a summary"
+      summary.classList.add('summary__empty')
+    }
   }
 
   updateStatuses() {
