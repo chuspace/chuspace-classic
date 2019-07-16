@@ -18,6 +18,7 @@ export default class ChuEditor extends LitElement {
       url: { type: String, reflect: true },
       id: { type: String },
       content: { type: String },
+      channel: { type: String },
       editable: { type: Boolean },
       saving: { type: Boolean, reflect: true },
       autofocus: { type: Boolean }
@@ -68,8 +69,8 @@ export default class ChuEditor extends LitElement {
 
       this.subscription = ActioncableClient.subscribe(
         {
-          channel: 'AutosaveChannel',
-          slug: this.id
+          channel: this.channel,
+          id: this.id
         },
         {
           connected: this.onSubscribed,

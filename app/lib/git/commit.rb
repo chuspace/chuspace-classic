@@ -76,7 +76,7 @@ module Git
         rugged = repository.rugged
         file = options[:file]
         commit = options[:commit]
-        branch = 'master'
+        branch = commit[:branch] || 'master'
         parents = []
         mode = 0o100644
 
@@ -88,6 +88,7 @@ module Git
 
         unless rugged.empty?
           rugged_ref = rugged.references[branch]
+          puts rugged_ref.inspect
           raise Repository::InvalidRef.new('Invalid branch name') unless rugged_ref
           last_commit = rugged_ref.target
           index.read_tree(last_commit.tree)

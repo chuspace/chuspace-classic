@@ -40,7 +40,7 @@ module Git
             path: path,
             commit_sha: repository.commit_sha,
             content_type: MimeMagic.by_path(name),
-            content: encode!(blob.content),
+            content: blob.content,
             mode: blob_entry[:filemode].to_s(8),
             binary: blob.binary?
           )
@@ -54,6 +54,7 @@ module Git
 
     def initialize(options)
       %w[id name path commit_sha size content mode binary content_type].each { |key| self.send("#{key}=", options[key.to_sym]) }
+      @content = encode!(content)
     end
 
     def binary?

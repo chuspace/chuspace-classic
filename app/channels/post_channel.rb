@@ -1,7 +1,7 @@
 # typed: ignore
 # frozen_string_literal: true
 
-class AutosaveChannel < ApplicationCable::Channel
+class PostChannel < ApplicationCable::Channel
   def subscribed
     @post = current_user.posts.find_by(slug: params[:slug])
 

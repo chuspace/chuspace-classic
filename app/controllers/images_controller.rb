@@ -24,7 +24,7 @@ class ImagesController < ApplicationController
   end
 
   def show
-    image = Current.user.images.find_by(blob_path: request.path[1..-1])
+    image = Image.find_by(blob_path: request.path[1..-1])
 
     if image
       redirect_to image.image.imgproxy_url(**builder_options)

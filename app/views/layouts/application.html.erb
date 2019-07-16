@@ -3,6 +3,7 @@
   <head>
     <title>Chuspace</title>
     <%= csrf_meta_tags %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/diff_match_patch/20121119/diff_match_patch.js"></script>
     <link rel="prefetch" href="<%= asset_pack_path('application.js') %>" as="style" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= javascript_pack_tag 'application', defer: true, 'data-turbolinks-track': 'reload' %>

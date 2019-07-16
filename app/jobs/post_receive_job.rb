@@ -16,7 +16,7 @@ class PostReceiveJob < ApplicationJob
     end
 
     author.transaction do
-      old_commit = repository.lookup(repository.commit_sha)
+      old_commit = repository.lookup(repository.last_synced_commit_sha)
       new_commit = repository.lookup(commit_sha)
       diff = old_commit.diff(new_commit).find_similar!(renames: true)
       blobs ||= Git::Blob.all(repository, commit_sha)
@@ -38,7 +38,7 @@ class PostReceiveJob < ApplicationJob
         end
       end
 
-      if repository.update(commit_sha: commit_sha)
+      if repository.update(last_synced_commit_sha: last_synced_commit_sha)
         Rails.logger.error(
           "Repository sync success: commit-#{commit_sha} author-#{author.id} repository-#{repository.id}"
         )

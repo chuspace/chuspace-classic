@@ -54,6 +54,6 @@ class PostsController < ApplicationController
   end
 
   def find_post
-    @post = Current.user.posts.find_by!(slug: params[:slug])
+    @post = Post.find_by!(slug: params[:slug])
   end
 end

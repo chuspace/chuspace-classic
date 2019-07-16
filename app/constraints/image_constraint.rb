@@ -5,6 +5,6 @@ require 'mimemagic'
 
 class ImageConstraint
   def matches?(request)
-    true
+    MimeMagic.by_path(request.path)&.image?
   end
 end

@@ -303,6 +303,41 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: contributions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.contributions (
+    id bigint NOT NULL,
+    contributor_id bigint NOT NULL,
+    post_id bigint NOT NULL,
+    branch_name character varying NOT NULL,
+    commit_sha character varying NOT NULL,
+    status integer DEFAULT 0 NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: contributions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.contributions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: contributions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.contributions_id_seq OWNED BY public.contributions.id;
+
+
+--
 -- Name: images; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -535,6 +570,13 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: contributions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contributions ALTER COLUMN id SET DEFAULT nextval('public.contributions_id_seq'::regclass);
+
+
+--
 -- Name: images id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -582,6 +624,14 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: contributions contributions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contributions
+    ADD CONSTRAINT contributions_pkey PRIMARY KEY (id);
 
 
 --
@@ -638,6 +688,41 @@ ALTER TABLE ONLY public.topics
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_contributions_on_branch_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_contributions_on_branch_name ON public.contributions USING btree (branch_name);
+
+
+--
+-- Name: index_contributions_on_commit_sha; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_contributions_on_commit_sha ON public.contributions USING btree (commit_sha);
+
+
+--
+-- Name: index_contributions_on_contributor_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_contributions_on_contributor_id ON public.contributions USING btree (contributor_id);
+
+
+--
+-- Name: index_contributions_on_post_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_contributions_on_post_id ON public.contributions USING btree (post_id);
+
+
+--
+-- Name: index_contributions_on_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_contributions_on_status ON public.contributions USING btree (status);
 
 
 --
@@ -832,6 +917,14 @@ ALTER TABLE ONLY public.images
 
 
 --
+-- Name: contributions fk_rails_303c48879d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contributions
+    ADD CONSTRAINT fk_rails_303c48879d FOREIGN KEY (post_id) REFERENCES public.posts(id);
+
+
+--
 -- Name: images fk_rails_5fba8ffc00; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -853,6 +946,14 @@ ALTER TABLE ONLY public.repositories
 
 ALTER TABLE ONLY public.ssh_keys
     ADD CONSTRAINT fk_rails_bacf7e1718 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: contributions fk_rails_cc7fe741c8; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contributions
+    ADD CONSTRAINT fk_rails_cc7fe741c8 FOREIGN KEY (contributor_id) REFERENCES public.users(id);
 
 
 --
@@ -879,6 +980,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190709114321'),
 ('20190709114322'),
 ('20190709114442'),
-('20190713162331');
+('20190713162331'),
+('20190716075119');
 
 

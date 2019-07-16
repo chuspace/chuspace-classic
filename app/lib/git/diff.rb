@@ -29,7 +29,7 @@ module Git
         options ||= {}
         actual_options = filter_diff_options(options)
 
-        repo.diff(common_commit, head, actual_options, *paths)
+        repo.rugged.diff(common_commit, head, actual_options, *paths)
       end
 
       # Return a copy of the +options+ hash containing only keys that can be

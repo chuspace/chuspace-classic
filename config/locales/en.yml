@@ -17,6 +17,10 @@ en:
               invalid: should be all lowercase, unique, min 10 character, may have a single hyphen and no special characters.
             topics:
               too_long: maximum %{count} topics allowed
+        contribution:
+          attributes:
+            post:
+              no_contribution_possible: is not a published post. You can only contribute to published posts.
 
   login_mailer:
     send_magic_login:

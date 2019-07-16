@@ -15,8 +15,8 @@ class CreateRepositories < ActiveRecord::Migration[6.0]
 
       t.references :author, index: true, null: false, foreign_key: { to_table: :users }
 
-      t.string :commit_sha, null: false
-      t.index :commit_sha, unique: true
+      t.string :last_synced_commit_sha, null: false
+      t.index :last_synced_commit_sha, unique: true
 
       t.timestamps
     end

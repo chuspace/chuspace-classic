@@ -7,8 +7,7 @@ class Repository < ApplicationRecord
 
   DEFAULT_NAME = 'blog'
   START_REF = 'HEAD'
-  DEFAULT_REF = 'refs/heads/master'
-  CONTRIBUTIONS_REF = 'refs/heads/contributions'
+  DEFAULT_BRANCH = 'master'
   GLOBAL_HOOKS_DIRECTORY = Rails.root.join('bin', 'git-hooks')
   GITIGNORE_PATH = '.gitignore'
 
@@ -26,9 +25,9 @@ class Repository < ApplicationRecord
     !/images/*.jpg
   STRING
 
-  validates :name, :path, presence: true
+  validates :name, :path, :last_synced_commit_sha, presence: true
   validates_db_uniqueness_of :name, scope: :author_id
-  validates_db_uniqueness_of :path
+  validates_db_uniqueness_of :path, :last_synced_commit_sha
 
   before_validation :assign_default_attributes, on: :create
   before_create :create_git_repo, :create_git_hooks, :add_gitignore, :add_images_folder, :add_posts_folder
@@ -39,7 +38,7 @@ class Repository < ApplicationRecord
 
   db_belongs_to :author, class_name: 'User', foreign_key: :author_id
 
-  delegate :lookup, :checkout, :empty?, :bare?, :index, to: :rugged
+  delegate :lookup, :checkout, :empty?, :bare?, :index, :branches, to: :rugged
   delegate :tree, to: :commit
 
   def rugged
@@ -64,12 +63,20 @@ class Repository < ApplicationRecord
     lookup(commit_sha)
   end
 
-  def blobs
-    @blobs ||= Git::Blob.all(self, commit_sha)
+  def commit_sha
+    head&.target&.oid
   end
 
-  def blob_at(path:)
-    Git::Blob.find(self, path, commit_sha)
+  def blobs(sha: commit_sha)
+    @blobs ||= Git::Blob.all(self, sha)
+  end
+
+  def blob_at(path:, sha: commit_sha)
+    Git::Blob.find(self, path, sha)
+  end
+
+  def find_branch(name:)
+    branches.find { |branch| branch.name == name }
   end
 
   def ssh_path
@@ -100,7 +107,7 @@ class Repository < ApplicationRecord
     rugged.merge_base(from, to)
   end
 
-  def create_commit(action: :add, message: nil, content:, path:)
+  def create_commit(action: :add, message: nil, content:, path:, branch: DEFAULT_BRANCH)
     message ||=
       case action
       when :add
@@ -111,14 +118,19 @@ class Repository < ApplicationRecord
         "Deleted #{path}"
       end
 
-    self.commit_sha = Git::Commit.create(
+    commit_sha = Git::Commit.create(
       repository: self,
       committer: self.author,
       action: action,
-      options: { commit: { message: message }, file: { content: content, path: path } }
+      options: { commit: { message: message, branch: branch }, file: { content: content, path: path } }
     )
 
-    self.save
+    if branch == DEFAULT_BRANCH
+      self.commit_sha = commit_sha
+      self.save
+    end
+
+    commit_sha
   end
 
   private
