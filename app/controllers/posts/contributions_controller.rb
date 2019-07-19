@@ -3,7 +3,7 @@
 
 class Posts::ContributionsController < ApplicationController
   before_action :authenticate!, :find_post
-  layout 'editor', only: :edit
+  layout 'editor', only: %i[edit show]
 
   def show
     @contribution = @post.contributions.find(params[:id])

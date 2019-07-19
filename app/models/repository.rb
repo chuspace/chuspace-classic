@@ -25,9 +25,9 @@ class Repository < ApplicationRecord
     !/images/*.jpg
   STRING
 
-  validates :name, :path, :last_synced_commit_sha, presence: true
+  validates :name, :path, presence: true
   validates_db_uniqueness_of :name, scope: :author_id
-  validates_db_uniqueness_of :path, :last_synced_commit_sha
+  validates_db_uniqueness_of :path
 
   before_validation :assign_default_attributes, on: :create
   before_create :create_git_repo, :create_git_hooks, :add_gitignore, :add_images_folder, :add_posts_folder

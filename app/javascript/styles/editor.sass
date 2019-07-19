@@ -28,6 +28,22 @@
   .title
     @apply mb-2
 
+  .insertion
+    @apply bg-green-lightest text-green-darkest max-w-full whitespace-normal
+
+    pre
+      @apply p-4 overflow-x-auto text-base
+
+    *
+      background: inherit
+      color: inherit
+
+  .deletion
+    @apply bg-red-lightest line-through text-red max-w-full whitespace-normal
+    *
+      background: inherit
+      color: inherit
+
   ul, ol
     @apply ml-8 mb-6 list-disc
 

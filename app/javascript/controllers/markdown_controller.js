@@ -2,7 +2,6 @@
 
 import { html, render } from 'lit-html'
 
-import { CodeBlock } from 'editor/components'
 import { Controller } from 'stimulus'
 
 export default class extends Controller {

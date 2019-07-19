@@ -215,6 +215,8 @@ export default class CodeBlockView extends BaseView {
    */
   update = (node: ProsemirrorNode<Schema>) => {
     if (node.type !== this.node.type) return false
+    if (!this.cm) return false
+
     this.node = node
     let change = computeChange(this.cm.getValue(), node.textContent)
     if (change) {

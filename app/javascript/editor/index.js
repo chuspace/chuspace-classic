@@ -1,6 +1,8 @@
 // @flow
 
+import { Change, ChangeSet, Span, simplifyChanges } from 'prosemirror-changeset'
 import { CodeBlockView, ImageView } from 'editor/views'
+import { Decoration, DecorationSet } from 'prosemirror-view'
 import { EditorState, Plugin, PluginKey, Transaction } from 'prosemirror-state'
 import { baseKeymap, selectParentNode } from 'prosemirror-commands'
 import { getMarkAttrs, isMarkActive, isNodeActive } from 'editor/helpers'
@@ -8,12 +10,16 @@ import { inputRules, undoInputRule } from 'prosemirror-inputrules'
 import { manager, schema } from 'editor/schema'
 import { markdownParser, markdownSerializer } from 'editor/markdowner'
 
+import { DOMSerializer } from 'prosemirror-model'
 import { EditorView } from 'prosemirror-view'
 import { Schema } from 'prosemirror-model'
 import { Selection } from 'prosemirror-state'
+import { Transform } from 'prosemirror-transform'
 import { dropCursor } from 'prosemirror-dropcursor'
 import { gapCursor } from 'prosemirror-gapcursor'
+import get from 'lodash/get'
 import { keymap } from 'prosemirror-keymap'
+import { recreateTransform } from '@manuscripts/prosemirror-recreate-steps'
 import without from 'lodash/without'
 
 function arrowHandler(dir) {
@@ -35,6 +41,7 @@ function arrowHandler(dir) {
 type Options = {
   autoFocus: boolean,
   element: HTMLElement,
+  original: string,
   content: string,
   editable: boolean,
   onChange: () => void
@@ -92,54 +99,153 @@ export default class Editor {
     })
   }
 
-  createState() {
+  get plugins() {
+    return [
+      ...manager.plugins,
+      inputRules({
+        rules: this.inputRules
+      }),
+      ...this.pasteRules,
+      ...this.keymaps,
+      keymap({
+        Backspace: undoInputRule,
+        Escape: selectParentNode,
+        ArrowLeft: arrowHandler('left'),
+        ArrowRight: arrowHandler('right'),
+        ArrowUp: arrowHandler('up'),
+        ArrowDown: arrowHandler('down')
+      }),
+      keymap(baseKeymap),
+      dropCursor(),
+      gapCursor(),
+      new Plugin({
+        key: new PluginKey('editable'),
+        props: {
+          editable: () => !!this.options.editable
+        }
+      }),
+      new Plugin({
+        props: {
+          attributes: {
+            tabindex: 0
+          }
+        }
+      })
+    ]
+  }
+
+  _computeDiffDocument() {
+    // based on https://gitlab.com/mpapp-public/prosemirror-recreate-steps/blob/master/demo/history/index.js
+
+    // recreate transform back to base doc
+    let baseDoc = markdownParser.parse(this.options.original)
+    let revisionDoc = markdownParser.parse(this.options.content)
+    let tr = recreateTransform(revisionDoc, baseDoc, true, true)
+
+    // create decorations corresponding to the changes
+    let decorations = []
+    let changeSet = ChangeSet.create(revisionDoc).addSteps(tr.doc, tr.mapping.maps)
+    let changes = simplifyChanges(changeSet.changes, tr.doc)
+
+    function isCodeBlock(slice) {
+      return get(slice.content, 'content[0].type.name') === 'code_block'
+    }
+
+    let index = 0
+
+    // deletion
+    function findDeleteEndIndex(startIndex) {
+      for (let i = startIndex; i < changes.length; i++) {
+        // if we are at the end then that's the end index
+        if (i === changes.length - 1) return i
+        // if the next change is discontinuous then this is the end index
+        if (changes[i].toB + 1 !== changes[i + 1].fromB) return i
+      }
+    }
+
+    while (index < changes.length) {
+      let endIndex = findDeleteEndIndex(index)
+      decorations.push(Decoration.inline(changes[index].fromB, changes[endIndex].toB, { class: 'deletion' }, {}))
+      index = endIndex + 1
+    }
+
+    // insertion
+    function findInsertEndIndex(startIndex) {
+      for (let i = startIndex; i < changes.length; i++) {
+        // if we are at the end then that's the end index
+        if (i === changes.length - 1) return i
+        // if the next change is discontinuous then this is the end index
+        if (changes[i].toA + 1 !== changes[i + 1].fromA) return i
+      }
+    }
+    index = 0
+    while (index < changes.length) {
+      let endIndex = findInsertEndIndex(index)
+
+      // apply the insertion
+      let slice = revisionDoc.slice(changes[index].fromA, changes[endIndex].toA)
+      let span = document.createElement('span')
+      span.setAttribute('class', 'insertion')
+      span.appendChild(DOMSerializer.fromSchema(schema).serializeFragment(slice.content))
+      decorations.push(
+        Decoration.widget(changes[index].toB, span, {
+          marks: []
+        })
+      )
+
+      index = endIndex + 1
+    }
+
+    // plugin to apply diff decorations
+    const decorationSet = DecorationSet.create(tr.doc, decorations)
+    let decosPlugin = new Plugin({
+      key: new PluginKey('diffs'),
+      props: {
+        decorations() {
+          return decorationSet
+        }
+      }
+    })
+
+    // return
+    return {
+      doc: tr.doc,
+      plugins: [decosPlugin]
+    }
+  }
+
+  createState = () => {
+    let doc = markdownParser.parse(this.options.content)
+    let plugins = this.plugins
+
+    if (this.options.original) {
+      let diff = this._computeDiffDocument()
+      doc = diff.doc
+      plugins = plugins.concat(diff.plugins)
+    }
+
     return EditorState.create({
       schema: schema,
-      doc: markdownParser.parse(this.options.content),
-      plugins: [
-        ...manager.plugins,
-        inputRules({
-          rules: this.inputRules
-        }),
-        ...this.pasteRules,
-        ...this.keymaps,
-        keymap({
-          Backspace: undoInputRule,
-          Escape: selectParentNode,
-          ArrowLeft: arrowHandler('left'),
-          ArrowRight: arrowHandler('right'),
-          ArrowUp: arrowHandler('up'),
-          ArrowDown: arrowHandler('down')
-        }),
-        keymap(baseKeymap),
-        dropCursor(),
-        gapCursor(),
-        new Plugin({
-          key: new PluginKey('editable'),
-          props: {
-            editable: () => !!this.options.editable
-          }
-        }),
-        new Plugin({
-          props: {
-            attributes: {
-              tabindex: 0
-            }
-          }
-        })
-      ]
+      doc: doc,
+      plugins
     })
   }
 
   createView() {
+    let nodeViews = {
+      code_block: (node, view, getPos) => new CodeBlockView({ node, view, getPos }),
+      image: (node, view, getPos) => new ImageView({ node, view, getPos })
+    }
+
+    if (this.options.original) {
+      nodeViews = {}
+    }
+
     const view = new EditorView(this.element, {
       state: this.state,
       editable: () => !!this.options.editable,
       dispatchTransaction: this.dispatchTransaction.bind(this),
-      nodeViews: {
-        code_block: (node, view, getPos) => new CodeBlockView({ node, view, getPos }),
-        image: (node, view, getPos) => new ImageView({ node, view, getPos })
-      }
+      nodeViews
     })
 
     view.dom.style.whiteSpace = 'pre-wrap'
