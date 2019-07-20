@@ -21,6 +21,7 @@ class Posts::PublishController < ApplicationController
       @post.publish! if @post.may_publish?
       redirect_to post_path(@post)
     else
+      puts @post.errors.full_messages
       render :index
     end
   end

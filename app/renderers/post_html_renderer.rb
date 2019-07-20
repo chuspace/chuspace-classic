@@ -7,11 +7,18 @@ class PostHtmlRenderer < CommonMarker::HtmlRenderer
   def initialize
     super
     @headerid = 1
+    @count = 0
   end
 
   def header(node)
+    header_class = if @count == 1 && node.header_level == 1
+      'title'
+    elsif @count == 2 && node.header_level == 2
+      'summary'
+    end
+
     block do
-      out('<h', node.header_level, ' id="', @headerid, '">',
+      out('<h', node.header_level, ' id="', @headerid, '" class="', header_class, '">',
                :children, '</h', node.header_level, '>')
       @headerid += 1
     end
@@ -58,6 +65,11 @@ class PostHtmlRenderer < CommonMarker::HtmlRenderer
       end
       out(' />')
     end
+  end
+
+  def render(node)
+    @count += 1 if node.type == :header
+    super(node)
   end
 
   private

@@ -1,21 +1,21 @@
-.title__empty::before,
-.summary__empty::before,
-.summary__empty
+.title__label__empty::before,
+.summary__label__empty::before,
+.summary__label__empty
   @apply italic pointer-events-none text-grey-light float-left
   content: attr(data-empty-text)
   height: 0
 
-.body__empty::before
+.body__label__empty::before
   @apply italic pointer-events-none text-grey-light float-left
   content: attr(data-empty-text)
   height: 0
 
-.summary__empty
+.summary__label__empty
   @apply float-none
   height: auto
 
-.title,
-.summary
+.title__label,
+.summary__label
   @apply relative
 
   &::before
@@ -33,7 +33,8 @@
     &::before
       visibility: visible
 
-.summary
+.summary__label
   @apply text-grey
+
   &::before
     content: 'Summary'

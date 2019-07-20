@@ -77,4 +77,8 @@ class Post < ApplicationRecord
   def published?
     published_at.present?
   end
+
+  def formatted_published_at
+    published_at.strftime('%b %d, %Y')
+  end
 end

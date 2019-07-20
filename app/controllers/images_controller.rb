@@ -13,10 +13,14 @@ class ImagesController < ApplicationController
     io = uploaded_file.read
     name = uploaded_file.original_filename
     blob_path = FasterPath.plus(dirname, name)
-    image = Current.user.images.build(user: Current.user, name: name, blob_path: blob_path, repository: Current.user.repository, image: params[:image])
+    image = Current.user.images.find_or_initialize_by(user: Current.user, name: name, blob_path: blob_path, repository: Current.user.repository)
+
+    if image.new_record?
+      image.image = params[:image]
+      Current.user.repository.create_commit(content: io, message: "Added #{blob_path}", path: blob_path)
+    end
 
     if image.save
-      Current.user.repository.create_commit(content: io, message: "Added #{blob_path}", path: blob_path)
       render json: { url: FasterPath.plus('/', blob_path) }
     else
       render json: { created: false }, status: :unprocessable_entity

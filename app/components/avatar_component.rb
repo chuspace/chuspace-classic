@@ -12,6 +12,7 @@ class AvatarComponent < Components::Component
   }.freeze
 
   attribute :avatar
+  attribute :css_class, default: 'avatar'
   attribute :variant, default: :sm
   attribute :initials
   attribute :options, default: {}
@@ -26,6 +27,7 @@ class AvatarComponent < Components::Component
     classes = [DEFAULT_CSS_CLASS]
     classes << 'avatar__badge' if avatar.blank?
     classes << VARIANTS[variant][:class]
+    classes << css_class
     classes.join(' ')
   end
 

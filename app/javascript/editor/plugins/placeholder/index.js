@@ -10,9 +10,9 @@ export default class Placeholder extends Element {
   name = 'placeholder'
 
   options = {
-    h1Class: 'title',
-    h2Class: 'summary',
-    paragraphClass: 'body',
+    h1Class: 'title__label',
+    h2Class: 'summary__label',
+    paragraphClass: 'body__label',
     h1Text: 'Title',
     h2Text: 'Summary',
     paragraphText: 'Write your post here...'
@@ -65,7 +65,7 @@ export default class Placeholder extends Element {
 
               const isTitle = firstChild === node && node.attrs.level === 1
               const isSummary = secondChild === node && node.attrs.level === 2
-              const isEmptyBody = secondChild === node && node.type.name === 'paragraph'
+              const isEmptyBody = secondChild === node && node.type.name === 'paragraph' && doc.childCount <= 3
 
               if (isTitle || (isSummary || isEmptyBody)) {
                 decorations.push(this.getDecoration(node, pos))

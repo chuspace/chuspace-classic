@@ -8,7 +8,7 @@ class CheckEmailsController < ApplicationController
     if @user.valid_attributes?(:email)
       head :ok
     else
-      render html: @user.errors.messages[:email].to_sentence.html_safe, status: :unprocessable_entity
+      render html: @user.errors.full_messages_for(:email).to_sentence.html_safe, status: :unprocessable_entity
     end
   end
 end

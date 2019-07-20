@@ -13,8 +13,10 @@
     <h3 class='border-b pb-2 inline-block text-lg'>Publish</h3>
     <div class='card card--default w-3/4 mx-auto mt-8'>
       <%= simple_form_for @post, scope: :post, url: post_publish_index_path(@post), method: :post, remote: true do |f| %>
-        <h1 class='title title--nohover text-3xl'><%= @post.title %></h1>
-        <h2 class='summary summary--nohover text-grey-light mt-8 text-2xl'><%= @post.summary %></h2>
+        <h1 class='title__label title__label--nohover text-3xl'><%= @post.title %></h1>
+        <%= content_tag :span, @post.errors.full_messages_for(:title).to_sentence, class: 'input__error text-red block' if @post.errors.include?(:title) %>
+        <h2 class='summary__label summary__label--nohover text-grey-light mt-8 text-2xl'><%= @post.summary %></h2>
+        <%= content_tag :span, @post.errors.full_messages_for(:summary).to_sentence, class: 'input__error text-red block' if @post.errors.include?(:summary) %>
 
         <input-autocomplete
           url="<%= autocomplete_topics_url %>"
@@ -42,7 +44,7 @@
           <%= f.input :topics, as: :hidden, input_html: { id: 'selections__input' }, wrapper: false %>
         </input-autocomplete>
 
-        <%= f.input :parent, label: false, collection: @published_posts, input_container_html: { class: 'input__container__label--floating', data: { label: 'Parent post' } }, prompt: "Choose a parent post" %>
+        <%= f.input :parent, label: false, collection: @published_posts, value_method: :slug, label_method: :slug, input_container_html: { class: 'input__container__label--floating', data: { label: 'Parent post' } }, prompt: "Choose a parent post" %>
 
         <%= f.submit 'Publish now', class: 'button button--fill float-right mt-12 text-base' %>
       <% end %>

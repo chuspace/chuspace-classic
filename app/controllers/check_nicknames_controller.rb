@@ -8,7 +8,7 @@ class CheckNicknamesController < ApplicationController
     if user.valid_attributes?(:nickname)
       head :ok
     else
-      render html: user.errors.messages[:nickname].to_sentence.html_safe, status: :unprocessable_entity
+      render html: user.errors.full_messages_for(:nickname).to_sentence.html_safe, status: :unprocessable_entity
     end
   end
 end
