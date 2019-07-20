@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  contributor: one
+  editor: one
   post: one
   branch: MyString
   status: 1
 
 two:
-  contributor: two
+  editor: two
   post: two
   branch: MyString
   status: 1

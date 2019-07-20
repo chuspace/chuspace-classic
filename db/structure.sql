@@ -303,12 +303,12 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
--- Name: contributions; Type: TABLE; Schema: public; Owner: -
+-- Name: editions; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.contributions (
+CREATE TABLE public.editions (
     id bigint NOT NULL,
-    contributor_id bigint NOT NULL,
+    editor_id bigint NOT NULL,
     post_id bigint NOT NULL,
     branch_name character varying NOT NULL,
     commit_sha character varying NOT NULL,
@@ -319,10 +319,10 @@ CREATE TABLE public.contributions (
 
 
 --
--- Name: contributions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: editions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.contributions_id_seq
+CREATE SEQUENCE public.editions_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -331,10 +331,10 @@ CREATE SEQUENCE public.contributions_id_seq
 
 
 --
--- Name: contributions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: editions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.contributions_id_seq OWNED BY public.contributions.id;
+ALTER SEQUENCE public.editions_id_seq OWNED BY public.editions.id;
 
 
 --
@@ -570,10 +570,10 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
--- Name: contributions id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: editions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.contributions ALTER COLUMN id SET DEFAULT nextval('public.contributions_id_seq'::regclass);
+ALTER TABLE ONLY public.editions ALTER COLUMN id SET DEFAULT nextval('public.editions_id_seq'::regclass);
 
 
 --
@@ -627,11 +627,11 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 
 --
--- Name: contributions contributions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: editions editions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.contributions
-    ADD CONSTRAINT contributions_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.editions
+    ADD CONSTRAINT editions_pkey PRIMARY KEY (id);
 
 
 --
@@ -691,38 +691,38 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: index_contributions_on_branch_name; Type: INDEX; Schema: public; Owner: -
+-- Name: index_editions_on_branch_name; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_contributions_on_branch_name ON public.contributions USING btree (branch_name);
-
-
---
--- Name: index_contributions_on_commit_sha; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_contributions_on_commit_sha ON public.contributions USING btree (commit_sha);
+CREATE UNIQUE INDEX index_editions_on_branch_name ON public.editions USING btree (branch_name);
 
 
 --
--- Name: index_contributions_on_contributor_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_editions_on_commit_sha; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_contributions_on_contributor_id ON public.contributions USING btree (contributor_id);
-
-
---
--- Name: index_contributions_on_post_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_contributions_on_post_id ON public.contributions USING btree (post_id);
+CREATE INDEX index_editions_on_commit_sha ON public.editions USING btree (commit_sha);
 
 
 --
--- Name: index_contributions_on_status; Type: INDEX; Schema: public; Owner: -
+-- Name: index_editions_on_editor_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_contributions_on_status ON public.contributions USING btree (status);
+CREATE INDEX index_editions_on_editor_id ON public.editions USING btree (editor_id);
+
+
+--
+-- Name: index_editions_on_post_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_editions_on_post_id ON public.editions USING btree (post_id);
+
+
+--
+-- Name: index_editions_on_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_editions_on_status ON public.editions USING btree (status);
 
 
 --
@@ -917,19 +917,19 @@ ALTER TABLE ONLY public.images
 
 
 --
--- Name: contributions fk_rails_303c48879d; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.contributions
-    ADD CONSTRAINT fk_rails_303c48879d FOREIGN KEY (post_id) REFERENCES public.posts(id);
-
-
---
 -- Name: images fk_rails_5fba8ffc00; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.images
     ADD CONSTRAINT fk_rails_5fba8ffc00 FOREIGN KEY (repository_id) REFERENCES public.repositories(id);
+
+
+--
+-- Name: editions fk_rails_66ff8848eb; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.editions
+    ADD CONSTRAINT fk_rails_66ff8848eb FOREIGN KEY (post_id) REFERENCES public.posts(id);
 
 
 --
@@ -941,19 +941,19 @@ ALTER TABLE ONLY public.repositories
 
 
 --
+-- Name: editions fk_rails_790d074ed3; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.editions
+    ADD CONSTRAINT fk_rails_790d074ed3 FOREIGN KEY (editor_id) REFERENCES public.users(id);
+
+
+--
 -- Name: ssh_keys fk_rails_bacf7e1718; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.ssh_keys
     ADD CONSTRAINT fk_rails_bacf7e1718 FOREIGN KEY (user_id) REFERENCES public.users(id);
-
-
---
--- Name: contributions fk_rails_cc7fe741c8; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.contributions
-    ADD CONSTRAINT fk_rails_cc7fe741c8 FOREIGN KEY (contributor_id) REFERENCES public.users(id);
 
 
 --

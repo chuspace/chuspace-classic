@@ -2,7 +2,7 @@
   <% if params[:action] == 'new' || params[:action] == 'edit' %>
     <div class='flex-1 flex items-center ml-8'>
       <div class="mr-4 badge badge--grey"><%= post.status.titlecase %></div>
-      <div class="text-grey text-sm" id='editor-status'>Saved</div>
+      <div class="text-grey text-sm" id='editor-status'><%= post.persisted? ? 'Saved' : 'New' %></div>
     </div>
 
     <% if post.slug %>

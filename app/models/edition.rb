@@ -1,10 +1,10 @@
 # typed: false
 # frozen_string_literal: true
 
-class Contribution < ApplicationRecord
+class Edition < ApplicationRecord
   include AASM
 
-  db_belongs_to :contributor, class_name: 'User', foreign_key: 'contributor_id'
+  db_belongs_to :editor, class_name: 'User', foreign_key: 'editor_id'
   db_belongs_to :post
 
   enum status: { opened: 0, merged: 1, closed: 2 }
@@ -52,6 +52,6 @@ class Contribution < ApplicationRecord
   private
 
   def must_be_for_published_post
-    errors.add(:post, :no_contribution_possible) unless post.published?
+    errors.add(:post, :no_edition_possible) unless post.published?
   end
 end

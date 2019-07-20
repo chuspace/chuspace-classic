@@ -3,7 +3,7 @@
 
 require 'test_helper'
 
-class ContributionTest < ActiveSupport::TestCase
+class Posts::EditionsControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end

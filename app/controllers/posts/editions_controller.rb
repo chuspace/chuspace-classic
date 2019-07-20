@@ -6,25 +6,25 @@ class Posts::ContributionsController < ApplicationController
   layout 'editor', only: %i[edit show]
 
   def show
-    @contribution = @post.contributions.find(params[:id])
+    @edition = @post.editions.find(params[:id])
   end
 
   def edit
-    @contribution = @post.contributions.find(params[:id])
+    @edition = @post.editions.find(params[:id])
   end
 
   def create
-    @contribution = Current.user.contributions.build(post: @post)
-    branch_name = "contribution_#{Current.user.nickname}_#{@post.id}"
+    @edition = Current.user.editions.build(post: @post)
+    branch_name = "edition_#{Current.user.nickname}_#{@post.id}"
     branch = @post.repository.branches.create(branch_name, @post.repository.commit_sha)
 
-    @contribution.assign_attributes(
+    @edition.assign_attributes(
       branch_name: branch.name,
       commit_sha: branch.target
     )
 
-    if @contribution.save!
-      redirect_to edit_post_contribution_path(@post, @contribution)
+    if @edition.save!
+      redirect_to edit_post_edition_path(@post, @edition)
     else
       redirect_to post_path(@post)
     end

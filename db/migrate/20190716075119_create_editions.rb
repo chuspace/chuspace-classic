@@ -1,10 +1,10 @@
 # typed: true
 # frozen_string_literal: true
 
-class CreateContributions < ActiveRecord::Migration[6.0]
+class CreateEditions < ActiveRecord::Migration[6.0]
   def change
-    create_table :contributions do |t|
-      t.references :contributor, index: true, null: false, foreign_key: { to_table: :users }
+    create_table :editions do |t|
+      t.references :editor, index: true, null: false, foreign_key: { to_table: :users }
       t.references :post, index: true, null: false, foreign_key: true
 
       t.string :branch_name, null: false

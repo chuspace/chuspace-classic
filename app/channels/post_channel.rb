@@ -3,7 +3,7 @@
 
 class PostChannel < ApplicationCable::Channel
   def subscribed
-    @post = current_user.posts.find_by(slug: params[:slug])
+    @post = current_user.posts.find_by(slug: params[:id])
 
     if @post.blank?
       reject

@@ -1,12 +1,22 @@
-<div class='w-1/2 mx-auto' data-controller="markdown">
-  <%= content_tag :p, 'You are viewing the unpublished version.', class: 'card card-default' if @post.author == Current.user && @post.outdated? %>
-  <div class='chu-editor'>
-    <%= @post.body_html.html_safe %>
+<div class='flex container' data-controller="markdown">
+  <div class='author mt-24 text-center'>
+    <div class='mx-auto'>
+      <%= component 'avatar', avatar: @post.author.avatar, initials: @post.author.initials, variant: :md %>
+    </div>
+    <h3 class='text-base mt-4'><%= @post.author.name %></h3>
   </div>
 
-  <ul class='list-none flex p-0 m-0'>
-    <% @post.topics.each do |topic| %>
-      <li class='list-none badge badge--grey mr-2'><%= topic %></li>
-    <% end %>
-  </ul>
+  <div class='post-body w-3/4 mx-auto'>
+    <%= content_tag :p, 'You are viewing the unpublished version.', class: 'card card-default' if @post.author == Current.user && @post.outdated? %>
+
+    <div class='chu-editor'>
+      <%= @post.body_html.html_safe %>
+    </div>
+
+    <ul class='list-none flex p-0 m-0'>
+      <% @post.topics.each do |topic| %>
+        <li class='list-none badge badge--grey mr-2'><%= topic %></li>
+      <% end %>
+    </ul>
+  </div>
 </div>
