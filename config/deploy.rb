@@ -8,7 +8,7 @@ lock '~> 3.11.0'
 
 set :application, 'chuspace'
 set :repo_url, 'git@github.com:gauravtiwari/chuspace.git'
-
+set :env_file, ".env.#{fetch(:rails_env)}"
 # Default branch is :master
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
@@ -40,3 +40,5 @@ set :keep_releases, 5
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
+
+before 'dotenv:read', 'dotenv:check', 'dotenv:setup'
