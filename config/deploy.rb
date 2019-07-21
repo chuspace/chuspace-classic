@@ -10,6 +10,7 @@ set :application, 'chuspace'
 set :repo_url, 'git@github.com:gauravtiwari/chuspace.git'
 set :env_file, ".env.#{fetch(:rails_env)}"
 set :nodenv_type, :user
+set :nodenv_node, '10.16.0'
 # Default branch is :master
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
