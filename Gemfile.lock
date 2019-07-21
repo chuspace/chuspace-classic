@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/gauravtiwari/capistrano3-nodenv.git
-  revision: 0cfef261ef97cfd45aa393061ad696fc3e800f6f
+  revision: de1702cbfc6623b412340746d3059cc234b920d8
   specs:
     capistrano-nodenv (1.0.0)
       capistrano (~> 3.1)
