@@ -11,7 +11,7 @@ require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 require 'capistrano/dotenv'
 
-Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }
+Dir.glob('lib/capistrano/tasks/**/*.rake').each { |r| import r }
 
 install_plugin Capistrano::SCM::Git
 
