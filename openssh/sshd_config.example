@@ -1,13 +1,13 @@
 
-HostKey /home/chuspace/openssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_rsa_key
 
-AuthorizedKeysCommandUser gaurav
-AuthorizedKeysCommand /home/chuspace/bin/git_shell_authorize %u %k
+AuthorizedKeysCommandUser git
+AuthorizedKeysCommand /etc/chuspace/mobius auth %k
 AuthorizedKeysFile none
 
-AllowUsers gaurav
+AllowUsers git
 AuthenticationMethods publickey
-ListenAddress 127.0.0.1:2222
+ListenAddress 127.0.0.1:22
 LogLevel VERBOSE
 PasswordAuthentication no
 AllowAgentForwarding no
@@ -22,4 +22,4 @@ Protocol 2
 StrictModes yes
 UsePAM no
 
-PidFile /home/chuspace/tmp/pids/sshd.pid
+PidFile /home/deploy/chuspace.com/tmp/pids/sshd.pid

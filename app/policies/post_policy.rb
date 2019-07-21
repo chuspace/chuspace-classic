@@ -1,3 +1,6 @@
+# typed: true
+  # frozen_string_literal: true
+
   class PostPolicy < ApplicationPolicy
     def edit?(action = '')
       action != 'edit' && record.persisted? && user == record.author
