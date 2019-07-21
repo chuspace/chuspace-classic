@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/gauravtiwari/capistrano3-nodenv.git
+  revision: eefc2fe8d69e76c5cf599e7ed0129d98af1ed773
+  specs:
+    capistrano-nodenv (1.0.0)
+      capistrano (~> 3.1)
+      sshkit (~> 1.3)
+
+GIT
   remote: https://github.com/jensljungblad/components.git
   revision: 1ec768424130f349ee0b58b8065e7b9fe5a5b6bd
   specs:
@@ -393,6 +401,7 @@ DEPENDENCIES
   capistrano
   capistrano-bundler
   capistrano-dotenv
+  capistrano-nodenv!
   capistrano-rails
   capistrano-rbenv
   capistrano-systemd-multiservice
