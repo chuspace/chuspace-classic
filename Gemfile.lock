@@ -14,13 +14,6 @@ GIT
       rack-proxy (>= 0.6.1)
       railties (>= 4.2)
 
-PATH
-  remote: extensions/fast_slug
-  specs:
-    fast_slug (0.1.0)
-      rutie (>= 0.0.3)
-      thermite
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -106,6 +99,7 @@ GEM
       aws-sigv4 (~> 1.1)
     aws-sigv4 (1.1.0)
       aws-eventstream (~> 1.0, >= 1.0.2)
+    babosa (1.0.2)
     bindex (0.8.1)
     bootsnap (1.4.4)
       msgpack (~> 1.0)
@@ -303,7 +297,6 @@ GEM
       ffi (~> 1.9)
     rubyzip (1.2.3)
     rugged (0.28.2)
-    rutie (0.0.4)
     sawyer (0.8.2)
       addressable (>= 2.3.5)
       faraday (> 0.8, < 2.0)
@@ -392,6 +385,7 @@ DEPENDENCIES
   anyway_config (= 2.0.0.pre)
   awesome_print
   aws-sdk-s3
+  babosa
   bootsnap (>= 1.1.0)
   brakeman
   bundler (= 1.17.2)
@@ -413,7 +407,6 @@ DEPENDENCIES
   dotenv-rails
   easymon
   faker
-  fast_slug!
   faster_path
   fastimage
   hiredis

@@ -84,9 +84,11 @@ gem 'components', git: 'https://github.com/jensljungblad/components.git'
 gem 'rack-attack'
 
 # Rust extensions
-gem 'fast_slug', path: 'extensions/fast_slug'
 gem 'faster_path'
 gem 'commonmarker'
+
+# Friendly urls
+gem 'babosa'
 
 # Typechecking
 gem 'sorbet-runtime'

@@ -55,14 +55,18 @@ class Post < ApplicationRecord
     slug
   end
 
+  def slug=(val)
+    super(val&.to_slug&.to_ascii&.normalize&.to_s)
+  end
+
   def topics=(val)
-    super(val&.map { |topic| FastSlug.generate(topic) })
+    super(val&.map { |topic| topic&.to_slug&.to_ascii&.normalize&.to_s })
   end
 
   def parent=(val)
     case val
     when String
-      super(Post.find_by_slug(FastSlug.generate(val)))
+      super(Post.find_by_slug(val))
     when Post
       val
     else

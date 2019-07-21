@@ -25,7 +25,7 @@ class PostMarkdownService
 
   sig { returns(T.nilable(String)) }
   def slug
-    FastSlug.generate(title || content[0..100])
+    (title || content[0..100])&.to_slug&.to_ascii&.normalize&.to_s
   end
 
   sig { returns(T.nilable(String)) }
