@@ -139,7 +139,7 @@ group :development do
   gem 'capistrano3-puma',   require: false
   gem 'capistrano-systemd-multiservice', require: false
   gem 'capistrano-dotenv', require: false
-  gem 'capistrano-yarn', require: false
+  gem 'capistrano-nodenv', require: false
 end
 
 group :test do
