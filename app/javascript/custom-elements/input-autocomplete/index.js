@@ -137,8 +137,7 @@ export default class InputAutocomplete extends LitElement {
   }
 
   triggerChange() {
-    console.log(this.items)
-    this.selectionsInput.value = this.items.join(',')
+    this.selectionsInput.value = this.items
     this.selectionsInput.onchange && this.selectionsInput.onchange()
   }
 

@@ -15,13 +15,16 @@ class Posts::PublishController < ApplicationController
     @post.topics = publish_params[:topics]&.split(',')
     @post.parent = publish_params[:parent]
     @post.blob_id = @post.blob.id
-    @post.assign_attributes(slug: @markdown.slug, body_html: @markdown.body_html, published_at: Time.now)
+    @post.assign_attributes(slug: @markdown.slug, body_html: @markdown.body_html)
+
+    if @post.may_publish?
+      @post.publish
+      @post.assign_attributes(published_at: Time.now)
+    end
 
     if @post.save
-      @post.publish! if @post.may_publish?
       redirect_to post_path(@post)
     else
-      puts @post.errors.full_messages
       render :index
     end
   end

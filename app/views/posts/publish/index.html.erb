@@ -41,11 +41,10 @@
             </div>
           </div>
 
-          <%= f.input :topics, as: :hidden, input_html: { id: 'selections__input' }, wrapper: false %>
+          <%= f.input :topics, as: :hidden, input_html: { id: 'selections__input', value: @post.topics_list }, wrapper: false %>
         </input-autocomplete>
 
-        <%= f.input :parent, label: false, collection: @published_posts, value_method: :slug, label_method: :slug, input_container_html: { class: 'input__container__label--floating', data: { label: 'Parent post' } }, prompt: "Choose a parent post" %>
-
+        <%= f.input :parent, label: false, collection: @published_posts, selected: @post.parent&.slug, value_method: :slug, label_method: :slug, input_container_html: { class: 'input__container__label--floating', data: { label: 'Parent post' } }, prompt: "Choose a parent post" %>
         <%= f.submit 'Publish now', class: 'button button--fill float-right mt-12 text-base' %>
       <% end %>
     </div>

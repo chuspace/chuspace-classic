@@ -81,4 +81,24 @@ class Post < ApplicationRecord
   def formatted_published_at
     published_at.strftime('%b %d, %Y')
   end
+
+  def topics_list
+    topics&.join(',')
+  end
+
+  def publish_label
+    published? ? 'Republish' : 'Publish'
+  end
+
+  def status_label
+    new_record? ? 'New' : 'Saved'
+  end
+
+  def tree
+    post_tree = [self] + ancestors.published + descendants.published
+
+    Post.sort_by_ancestry(post_tree) do |a, b|
+      [a.published_at, a.title] <=> [b.published_at, b.title]
+    end
+  end
 end

@@ -27,9 +27,9 @@ class PostsController < ApplicationController
           slug: post.slug,
           header: render_to_string(
             partial: 'posts/header',
-            formats: :html,
+            format: :html,
             layout: false,
-            locals: { post: post }
+            locals: { post: post, params: params }
           )
         }
       else

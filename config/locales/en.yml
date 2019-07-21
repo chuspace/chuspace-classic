@@ -66,3 +66,10 @@ en:
 
   magic_login:
     expired: Login link expired! Please request a new one.
+
+  pundit:
+    default: 'You cannot perform this action.'
+    post_policy:
+      update?: 'You cannot edit this post!'
+      show?: 'You cannot view this post!'
+      create?: 'You cannot create posts!'

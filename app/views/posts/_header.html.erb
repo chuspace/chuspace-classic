@@ -1,21 +1,13 @@
 <div class='flex items-center flex-1' id='post_header'>
-  <% if params[:action] == 'new' || params[:action] == 'edit' %>
-    <div class='flex-1 flex items-center ml-8'>
-      <div class="mr-4 badge badge--grey"><%= post.status.titlecase %></div>
-      <div class="text-grey text-sm" id='editor-status'><%= post.persisted? ? 'Saved' : 'New' %></div>
-    </div>
+  <div class='flex-1 flex items-center ml-8'>
+    <div class="mr-4 badge badge--grey"><%= post.status.titlecase %></div>
+    <div class="text-grey text-sm" id='editor-status'><%= post.status_label %></div>
+  </div>
 
-    <% if post.slug %>
-      <div class='flex justify-end items-center flex-1 mr-8'>
-        <%= link_to 'Publish', post_publish_index_path(post), class: 'button button--active button--slim mr-2' %>
-        <%= link_to 'Delete', post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'button button--danger button--slim' %>
-      </div>
-    <% end %>
-  <% end %>
-
-  <% if post.published? && params[:action] == 'show' %>
-    <div class='flex justify-end items-center flex-1 mr-8'>
-      <%= link_to 'Edit', edit_post_path(post), class: 'button button--active button--slim mr-2' if Current.user && @post.author == Current.user  %>
-    </div>
-  <% end %>
+  <div class='flex justify-end items-center flex-1 mr-8'>
+    <%= link_to post.publish_label, post_publish_index_path(post), class: 'button button--active button--slim mr-2' if policy(post).publish?(params[:action]) %>
+    <%= link_to 'Edit', edit_post_path(post), class: 'button button--active button--slim mr-2' if policy(post).edit?(params[:action]) %>
+    <%= link_to 'Delete', post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'button button--danger button--slim' if policy(post).destroy?(params[:action]) %>
+    <%= link_to 'Contribute', post_editions_path(post), method: :post, class: 'button button--active button--slim mr-2' if policy(post).contribute?(params[:action])  %>
+  </div>
 </div>

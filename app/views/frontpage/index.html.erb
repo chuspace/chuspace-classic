@@ -1,5 +1,12 @@
-<div class='mx-auto w-2/3'>
+<div class='mx-auto w-1/2'>
   <section class='list mt-20'>
+    <ul class="list-reset tabs">
+      <li class="tabs__tab tabs__tab--active">
+        All Posts
+      </li>
+    </ul>
+
+
     <% if @posts.any? %>
       <% @posts.each do |post| %>
         <%= render 'posts/post', post: post %>
