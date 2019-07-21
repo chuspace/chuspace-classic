@@ -1,3 +1,6 @@
+# typed: strong
+# frozen_string_literal: true
+
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.
