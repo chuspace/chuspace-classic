@@ -130,16 +130,6 @@ group :development do
   gem 'faker'
   gem 'sorbet'
   gem 'database_consistency', require: false
-
-  # Deployment
-  gem 'capistrano',         require: false
-  gem 'capistrano-rbenv',     require: false
-  gem 'capistrano-rails',   require: false
-  gem 'capistrano-bundler', require: false
-  gem 'capistrano3-puma',   require: false
-  gem 'capistrano-systemd-multiservice', require: false
-  gem 'capistrano-dotenv', require: false
-  gem 'capistrano-nodenv', github: 'gauravtiwari/capistrano3-nodenv', require: false
 end
 
 group :test do
