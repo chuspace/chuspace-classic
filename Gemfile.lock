@@ -1,4 +1,10 @@
 GIT
+  remote: https://github.com/gauravtiwari/tomo.git
+  revision: 0543d18d8bcaf148e1dd96b93d354851d655a36a
+  specs:
+    tomo (0.3.0)
+
+GIT
   remote: https://github.com/jensljungblad/components.git
   revision: 1ec768424130f349ee0b58b8065e7b9fe5a5b6bd
   specs:
@@ -13,11 +19,6 @@ GIT
       activesupport (>= 4.2)
       rack-proxy (>= 0.6.1)
       railties (>= 4.2)
-
-PATH
-  remote: /Users/gaurav/oss/tomo
-  specs:
-    tomo (0.3.0)
 
 GEM
   remote: https://rubygems.org/

@@ -129,7 +129,7 @@ group :development do
   gem 'faker'
   gem 'sorbet'
   gem 'database_consistency', require: false
-  gem 'tomo', path: '/Users/gaurav/oss/tomo', require: false
+  gem 'tomo', github: 'gauravtiwari/tomo', require: false
 end
 
 group :test do

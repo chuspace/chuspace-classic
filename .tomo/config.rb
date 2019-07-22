@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-
 # typed: false
+
 plugin 'git'
 plugin 'env'
 plugin 'bundler'
