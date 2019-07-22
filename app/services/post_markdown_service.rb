@@ -13,7 +13,7 @@ class PostMarkdownService
   end
 
   sig { params(content: T.nilable(String)).returns(PostMarkdownService) }
-  def self.call(content: content)
+  def self.call(content:)
     new(content: content)
   end
 
