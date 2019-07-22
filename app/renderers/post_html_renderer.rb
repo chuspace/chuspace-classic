@@ -36,7 +36,7 @@ class PostHtmlRenderer < CommonMarker::HtmlRenderer
 
     else
       blob_path = node.url.start_with?('/') ? node.url[1..-1] : node.url
-      blob_path_with_extension = FasterPath.extname(blob_path).blank? ? blob_path + '.md' : blob_path
+      blob_path_with_extension = File.extname(blob_path).blank? ? blob_path + '.md' : blob_path
       post = Current.user.posts.find_by(blob_path: blob_path_with_extension)
       post_url = post ? Rails.application.routes.url_helpers.post_url(post) : node.url
 

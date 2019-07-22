@@ -147,10 +147,6 @@ GEM
       i18n (>= 0.7)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
-    faster_path (0.3.10)
-      bundler (~> 1.12)
-      rake (~> 12.3)
-      thermite (= 0.13.0)
     fastimage (2.1.5)
     ffi (1.11.1)
     globalid (0.4.2)
@@ -181,7 +177,6 @@ GEM
     mini_portile2 (2.4.0)
     mini_scheduler (0.11.0)
       sidekiq
-    minitar (0.8)
     minitest (5.11.3)
     msgpack (1.3.0)
     multipart-post (2.1.1)
@@ -311,14 +306,9 @@ GEM
       activerecord (>= 5)
     term-ansicolor (1.7.1)
       tins (~> 1.0)
-    thermite (0.13.0)
-      minitar (~> 0.5)
-      rake (>= 10)
-      tomlrb (~> 1.2)
     thor (0.20.3)
     thread_safe (0.3.6)
     tins (1.21.0)
-    tomlrb (1.2.8)
     turbolinks (5.2.0)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -371,7 +361,6 @@ DEPENDENCIES
   dotenv-rails
   easymon
   faker
-  faster_path
   fastimage
   hiredis
   image_processing

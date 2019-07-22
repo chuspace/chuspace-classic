@@ -48,7 +48,7 @@ module Git
       end
 
       def supported?(name)
-        FasterPath.extname(name) == '.md' || MimeMagic.by_path(name)&.image?
+        File.extname(name) == '.md' || MimeMagic.by_path(name)&.image?
       end
     end
 

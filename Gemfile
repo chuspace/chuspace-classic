@@ -83,8 +83,7 @@ gem 'components', git: 'https://github.com/jensljungblad/components.git'
 # Security
 gem 'rack-attack'
 
-# Rust extensions
-gem 'faster_path'
+# Markdown
 gem 'commonmarker'
 
 # Friendly urls

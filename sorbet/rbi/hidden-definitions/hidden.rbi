@@ -7254,80 +7254,12 @@ end
 class ActiveRecord::Migration::CommandRecorder
 end
 
-module ActiveRecord::Migration::Compatibility
-end
-
-class ActiveRecord::Migration::Compatibility::V4_2
-  def index_exists?(table_name, column_name, options=T.unsafe(nil)); end
-
-  def remove_index(table_name, options=T.unsafe(nil)); end
-end
-
-module ActiveRecord::Migration::Compatibility::V4_2::TableDefinition
-  def belongs_to(*_, **options); end
-
-  def references(*_, **options); end
-
-  def timestamps(**options); end
-end
-
 module ActiveRecord::Migration::Compatibility::V4_2::TableDefinition
   extend ::T::Sig
 end
 
-class ActiveRecord::Migration::Compatibility::V4_2
-end
-
-class ActiveRecord::Migration::Compatibility::V5_0
-  def add_belongs_to(table_name, ref_name, **options); end
-
-  def add_column(table_name, column_name, type, options=T.unsafe(nil)); end
-
-  def add_reference(table_name, ref_name, **options); end
-
-  def create_join_table(table_1, table_2, column_options: T.unsafe(nil), **options); end
-end
-
-module ActiveRecord::Migration::Compatibility::V5_0::TableDefinition
-  def belongs_to(*args, **options); end
-
-  def primary_key(name, type=T.unsafe(nil), **options); end
-
-  def references(*args, **options); end
-end
-
 module ActiveRecord::Migration::Compatibility::V5_0::TableDefinition
   extend ::T::Sig
-end
-
-class ActiveRecord::Migration::Compatibility::V5_0
-end
-
-class ActiveRecord::Migration::Compatibility::V5_1
-  def change_column(table_name, column_name, type, options=T.unsafe(nil)); end
-
-  def create_table(table_name, options=T.unsafe(nil)); end
-end
-
-class ActiveRecord::Migration::Compatibility::V5_1
-end
-
-class ActiveRecord::Migration::Compatibility::V5_2
-  def add_timestamps(table_name, **options); end
-
-  def change_table(table_name, **options); end
-
-  def create_join_table(table_1, table_2, **options); end
-
-  def create_table(table_name, **options); end
-end
-
-module ActiveRecord::Migration::Compatibility::V5_2::CommandRecorder
-  def invert_change_column_comment(args); end
-
-  def invert_change_table_comment(args); end
-
-  def invert_transaction(args, &block); end
 end
 
 module ActiveRecord::Migration::Compatibility::V5_2::CommandRecorder
@@ -7335,21 +7267,13 @@ module ActiveRecord::Migration::Compatibility::V5_2::CommandRecorder
 end
 
 module ActiveRecord::Migration::Compatibility::V5_2::TableDefinition
-  def timestamps(**options); end
-end
-
-module ActiveRecord::Migration::Compatibility::V5_2::TableDefinition
   extend ::T::Sig
-end
-
-class ActiveRecord::Migration::Compatibility::V5_2
 end
 
 ActiveRecord::Migration::Compatibility::V6_0 = ActiveRecord::Migration::Current
 
 module ActiveRecord::Migration::Compatibility
   extend ::T::Sig
-  def self.find(version); end
 end
 
 module ActiveRecord::Migration::JoinTable
@@ -9240,6 +9164,66 @@ module Ancestry
   extend ::T::Sig
 end
 
+module Anyway
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class Anyway::Config
+  include ::Anyway::Rails::Config
+end
+
+module Anyway::DynamicConfig::ClassMethods
+  extend ::T::Sig
+end
+
+module Anyway::DynamicConfig
+  extend ::T::Sig
+end
+
+module Anyway::Ext::DeepDup
+  extend ::T::Sig
+end
+
+module Anyway::Ext::DeepFreeze
+  extend ::T::Sig
+end
+
+module Anyway::Ext::Hash
+  extend ::T::Sig
+end
+
+module Anyway::Ext::StringSerialize
+  ARRAY_RXP = ::T.let(nil, ::T.untyped)
+end
+
+module Anyway::Ext::StringSerialize
+  extend ::T::Sig
+end
+
+module Anyway::Ext
+  extend ::T::Sig
+end
+
+module Anyway::OptparseConfig::ClassMethods
+  extend ::T::Sig
+end
+
+module Anyway::OptparseConfig
+  extend ::T::Sig
+end
+
+module Anyway::Rails::Config
+  extend ::T::Sig
+end
+
+module Anyway::Rails
+  extend ::T::Sig
+end
+
+module Anyway
+  extend ::T::Sig
+end
+
 class AppUploader
   include ::ImageProcessing::Vips
   include ::Shrine::Plugins::PrettyLocation::InstanceMethods
@@ -9319,6 +9303,7 @@ class ApplicationController
   include ::ParamsSanitizer
   include ::Authentication
   include ::SetCurrentRequestDetails
+  include ::Pundit
   def t(*args, &block); end
 end
 
@@ -9354,7 +9339,7 @@ class ApplicationPolicy
 
   def index?(); end
 
-  def initialize(user, record); end
+  def initialize(user=T.unsafe(nil), record); end
 
   def new?(); end
 
@@ -9370,7 +9355,7 @@ class ApplicationPolicy
 end
 
 class ApplicationPolicy::Scope
-  def initialize(user, scope); end
+  def initialize(user=T.unsafe(nil), scope); end
 
   def resolve(); end
 
@@ -9535,13 +9520,6 @@ end
 module Autocomplete
 end
 
-class Autocomplete::PostsController
-  def index(); end
-end
-
-class Autocomplete::PostsController
-end
-
 class Autocomplete::TopicsController
   def index(); end
 end
@@ -9553,15 +9531,10 @@ module Autocomplete
   extend ::T::Sig
 end
 
-class AutosaveChannel
-  def receive(data); end
-end
-
-class AutosaveChannel
-end
-
 class AvatarComponent
   def avatar(); end
+
+  def css_class(); end
 
   def css_classes(); end
 
@@ -10767,6 +10740,157 @@ module Aws
   extend ::T::Sig
 end
 
+module Babosa
+  STRIPPABLE = ::T.let(nil, ::T.untyped)
+end
+
+class Babosa::Transliterator::Base
+  APPROXIMATIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Babosa::Transliterator::Bulgarian
+  APPROXIMATIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Babosa::Transliterator::Bulgarian
+end
+
+class Babosa::Transliterator::Cyrillic
+  APPROXIMATIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Babosa::Transliterator::Cyrillic
+end
+
+class Babosa::Transliterator::Danish
+  APPROXIMATIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Babosa::Transliterator::Danish
+end
+
+class Babosa::Transliterator::German
+  APPROXIMATIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Babosa::Transliterator::German
+end
+
+class Babosa::Transliterator::Greek
+  APPROXIMATIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Babosa::Transliterator::Greek
+end
+
+class Babosa::Transliterator::Latin
+  APPROXIMATIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Babosa::Transliterator::Latin
+end
+
+class Babosa::Transliterator::Macedonian
+  APPROXIMATIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Babosa::Transliterator::Macedonian
+end
+
+class Babosa::Transliterator::Norwegian
+  APPROXIMATIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Babosa::Transliterator::Norwegian
+end
+
+class Babosa::Transliterator::Romanian
+  APPROXIMATIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Babosa::Transliterator::Romanian
+end
+
+class Babosa::Transliterator::Russian
+  APPROXIMATIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Babosa::Transliterator::Russian
+end
+
+class Babosa::Transliterator::Serbian
+  APPROXIMATIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Babosa::Transliterator::Serbian
+end
+
+class Babosa::Transliterator::Spanish
+  APPROXIMATIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Babosa::Transliterator::Spanish
+end
+
+class Babosa::Transliterator::Swedish
+  APPROXIMATIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Babosa::Transliterator::Swedish
+end
+
+class Babosa::Transliterator::Ukrainian
+  APPROXIMATIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Babosa::Transliterator::Ukrainian
+end
+
+class Babosa::Transliterator::Vietnamese
+  APPROXIMATIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Babosa::Transliterator::Vietnamese
+end
+
+module Babosa::Transliterator
+  extend ::T::Sig
+end
+
+module Babosa::UTF8::ActiveSupportProxy
+  extend ::T::Sig
+end
+
+module Babosa::UTF8::DumbProxy
+  def downcase(string); end
+
+  def normalize_utf8(string); end
+
+  def upcase(string); end
+end
+
+module Babosa::UTF8::DumbProxy
+  extend ::Babosa::UTF8::Proxy
+  extend ::Babosa::UTF8::DumbProxy
+  extend ::T::Sig
+end
+
+module Babosa::UTF8::Proxy
+  CP1252 = ::T.let(nil, ::T.untyped)
+end
+
+module Babosa::UTF8::Proxy
+  extend ::T::Sig
+end
+
+module Babosa::UTF8
+  extend ::T::Sig
+end
+
+module Babosa
+  extend ::T::Sig
+end
+
 module Base64
   extend ::T::Sig
 end
@@ -11224,10 +11348,6 @@ module Bundler::FileUtils
 end
 
 class Bundler::GemHelper
-  include ::Rake::DSL
-  include ::Rake::FileUtilsExt
-  include ::FileUtils
-  include ::FileUtils::StreamUtils_
   def allowed_push_host(); end
 
   def already_tagged?(); end
@@ -11362,6 +11482,10 @@ end
 class Bundler::Graph
 end
 
+class Bundler::Index
+  include ::Enumerable
+end
+
 class Bundler::Injector
   def initialize(deps, options=T.unsafe(nil)); end
 
@@ -11415,6 +11539,14 @@ end
 
 module Bundler::Molinillo::Delegates
   extend ::T::Sig
+end
+
+class Bundler::Molinillo::DependencyGraph
+  include ::Enumerable
+end
+
+class Bundler::Molinillo::DependencyGraph::Log
+  extend ::Enumerable
 end
 
 module Bundler::Molinillo::SpecificationProvider
@@ -11709,6 +11841,10 @@ end
 
 module Bundler::SharedHelpers
   extend ::T::Sig
+end
+
+class Bundler::SpecSet
+  include ::Enumerable
 end
 
 class Bundler::UI::RGProxy
@@ -13280,6 +13416,9 @@ module Crass
   extend ::T::Sig
 end
 
+class CreateEditions
+end
+
 class Current
   def user=(user); end
 end
@@ -13761,6 +13900,105 @@ module Easymon
   extend ::T::Sig
 end
 
+class Edition
+  include ::Edition::GeneratedAttributeMethods
+  include ::Edition::GeneratedAssociationMethods
+  include ::AASM::Persistence::ActiveRecordPersistence
+  include ::AASM::Persistence::Base
+  include ::AASM::Persistence::ORM
+  include ::AASM::Persistence::ActiveRecordPersistence::InstanceMethods
+  include ::DatabaseValidations::Rescuer
+  def autosave_associated_records_for_editor(*args); end
+
+  def autosave_associated_records_for_post(*args); end
+
+  def close(*args, &block); end
+
+  def close!(*args, &block); end
+
+  def may_close?(*args); end
+
+  def may_merge?(*args); end
+
+  def may_open?(*args); end
+
+  def merge(*args, &block); end
+
+  def merge!(*args, &block); end
+
+  def open(*args, &block); end
+
+  def open!(*args, &block); end
+
+  def valid_without_database_validations?(context=T.unsafe(nil)); end
+  STATE_CLOSED = ::T.let(nil, ::T.untyped)
+  STATE_MERGED = ::T.let(nil, ::T.untyped)
+  STATE_OPENED = ::T.let(nil, ::T.untyped)
+end
+
+module Edition::GeneratedAssociationMethods
+  def build_editor(*args, &block); end
+
+  def build_post(*args, &block); end
+
+  def create_editor(*args, &block); end
+
+  def create_editor!(*args, &block); end
+
+  def create_post(*args, &block); end
+
+  def create_post!(*args, &block); end
+
+  def editor(); end
+
+  def editor=(value); end
+
+  def post(); end
+
+  def post=(value); end
+
+  def reload_editor(); end
+
+  def reload_post(); end
+end
+
+module Edition::GeneratedAssociationMethods
+  extend ::T::Sig
+end
+
+module Edition::GeneratedAttributeMethods
+end
+
+module Edition::GeneratedAttributeMethods
+  extend ::Mutex_m
+  extend ::T::Sig
+end
+
+class Edition
+  extend ::AASM::Persistence::Base::ClassMethods
+  extend ::AASM::Persistence::ActiveRecordPersistence::ClassMethods
+  def self.closed(*args); end
+
+  def self.merged(*args); end
+
+  def self.not_closed(*args); end
+
+  def self.not_merged(*args); end
+
+  def self.not_opened(*args); end
+
+  def self.opened(*args); end
+
+  def self.statuses(); end
+end
+
+class EditionChannel
+  def receive(data); end
+end
+
+class EditionChannel
+end
+
 class EmailValidator
 end
 
@@ -13865,19 +14103,12 @@ class EncodingError
 end
 
 module EncodingHelper
-  ENCODING_CONFIDENCE_THRESHOLD = ::T.let(nil, ::T.untyped)
-end
-
-module EncodingHelper::ClassMethods
   def detect(blob); end
 
   def encode!(blob); end
 
   def encode_utf8(blob); end
-end
-
-module EncodingHelper::ClassMethods
-  extend ::T::Sig
+  ENCODING_CONFIDENCE_THRESHOLD = ::T.let(nil, ::T.untyped)
 end
 
 module EncodingHelper
@@ -15391,28 +15622,6 @@ module FastImage::StreamUtil
   extend ::T::Sig
 end
 
-module FastSlug
-  extend ::T::Sig
-  def self.generate(*_); end
-end
-
-module FasterPath
-  FFI_LIBRARY = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module FasterPath::RefineFile
-  extend ::T::Sig
-end
-
-module FasterPath::RefinePathname
-  extend ::T::Sig
-end
-
-module FasterPath
-  extend ::T::Sig
-end
-
 module Fcntl
   FD_CLOEXEC = ::T.let(nil, ::T.untyped)
   F_DUPFD = ::T.let(nil, ::T.untyped)
@@ -15461,355 +15670,6 @@ class FiberError
   extend ::T::Sig
 end
 
-module Fiddle
-  ALIGN_CHAR = ::T.let(nil, ::T.untyped)
-  ALIGN_DOUBLE = ::T.let(nil, ::T.untyped)
-  ALIGN_FLOAT = ::T.let(nil, ::T.untyped)
-  ALIGN_INT = ::T.let(nil, ::T.untyped)
-  ALIGN_INTPTR_T = ::T.let(nil, ::T.untyped)
-  ALIGN_LONG = ::T.let(nil, ::T.untyped)
-  ALIGN_LONG_LONG = ::T.let(nil, ::T.untyped)
-  ALIGN_PTRDIFF_T = ::T.let(nil, ::T.untyped)
-  ALIGN_SHORT = ::T.let(nil, ::T.untyped)
-  ALIGN_SIZE_T = ::T.let(nil, ::T.untyped)
-  ALIGN_SSIZE_T = ::T.let(nil, ::T.untyped)
-  ALIGN_UINTPTR_T = ::T.let(nil, ::T.untyped)
-  ALIGN_VOIDP = ::T.let(nil, ::T.untyped)
-  BUILD_RUBY_PLATFORM = ::T.let(nil, ::T.untyped)
-  NULL = ::T.let(nil, ::T.untyped)
-  RTLD_GLOBAL = ::T.let(nil, ::T.untyped)
-  RTLD_LAZY = ::T.let(nil, ::T.untyped)
-  RTLD_NOW = ::T.let(nil, ::T.untyped)
-  RUBY_FREE = ::T.let(nil, ::T.untyped)
-  SIZEOF_CHAR = ::T.let(nil, ::T.untyped)
-  SIZEOF_DOUBLE = ::T.let(nil, ::T.untyped)
-  SIZEOF_FLOAT = ::T.let(nil, ::T.untyped)
-  SIZEOF_INT = ::T.let(nil, ::T.untyped)
-  SIZEOF_INTPTR_T = ::T.let(nil, ::T.untyped)
-  SIZEOF_LONG = ::T.let(nil, ::T.untyped)
-  SIZEOF_LONG_LONG = ::T.let(nil, ::T.untyped)
-  SIZEOF_PTRDIFF_T = ::T.let(nil, ::T.untyped)
-  SIZEOF_SHORT = ::T.let(nil, ::T.untyped)
-  SIZEOF_SIZE_T = ::T.let(nil, ::T.untyped)
-  SIZEOF_SSIZE_T = ::T.let(nil, ::T.untyped)
-  SIZEOF_UINTPTR_T = ::T.let(nil, ::T.untyped)
-  SIZEOF_VOIDP = ::T.let(nil, ::T.untyped)
-  TYPE_CHAR = ::T.let(nil, ::T.untyped)
-  TYPE_DOUBLE = ::T.let(nil, ::T.untyped)
-  TYPE_FLOAT = ::T.let(nil, ::T.untyped)
-  TYPE_INT = ::T.let(nil, ::T.untyped)
-  TYPE_INTPTR_T = ::T.let(nil, ::T.untyped)
-  TYPE_LONG = ::T.let(nil, ::T.untyped)
-  TYPE_LONG_LONG = ::T.let(nil, ::T.untyped)
-  TYPE_PTRDIFF_T = ::T.let(nil, ::T.untyped)
-  TYPE_SHORT = ::T.let(nil, ::T.untyped)
-  TYPE_SIZE_T = ::T.let(nil, ::T.untyped)
-  TYPE_SSIZE_T = ::T.let(nil, ::T.untyped)
-  TYPE_UINTPTR_T = ::T.let(nil, ::T.untyped)
-  TYPE_VOID = ::T.let(nil, ::T.untyped)
-  TYPE_VOIDP = ::T.let(nil, ::T.untyped)
-  WINDOWS = ::T.let(nil, ::T.untyped)
-end
-
-module Fiddle::CParser
-  def parse_ctype(ty, tymap=T.unsafe(nil)); end
-
-  def parse_signature(signature, tymap=T.unsafe(nil)); end
-
-  def parse_struct_signature(signature, tymap=T.unsafe(nil)); end
-end
-
-module Fiddle::CParser
-  extend ::T::Sig
-end
-
-class Fiddle::CStruct
-end
-
-class Fiddle::CStruct
-  def self.entity_class(); end
-end
-
-module Fiddle::CStructBuilder
-end
-
-module Fiddle::CStructBuilder
-  extend ::T::Sig
-  def self.create(klass, types, members); end
-end
-
-class Fiddle::CStructEntity
-  include ::Fiddle::PackInfo
-  include ::Fiddle::ValueUtil
-  def [](name); end
-
-  def []=(name, val); end
-
-  def assign_names(members); end
-
-  def initialize(addr, types, func=T.unsafe(nil)); end
-
-  def set_ctypes(types); end
-
-  def to_s(); end
-end
-
-class Fiddle::CStructEntity
-  def self.malloc(types, func=T.unsafe(nil)); end
-
-  def self.size(types); end
-end
-
-class Fiddle::CUnion
-end
-
-class Fiddle::CUnion
-  def self.entity_class(); end
-end
-
-class Fiddle::CUnionEntity
-end
-
-class Fiddle::CUnionEntity
-end
-
-class Fiddle::Closure
-  def args(); end
-
-  def ctype(); end
-
-  def initialize(*_); end
-
-  def to_i(); end
-end
-
-class Fiddle::Closure::BlockCaller
-  def call(*args); end
-
-  def initialize(ctype, args, abi=T.unsafe(nil), &block); end
-end
-
-class Fiddle::Closure::BlockCaller
-end
-
-class Fiddle::Closure
-end
-
-class Fiddle::CompositeHandler
-  def [](symbol); end
-
-  def handlers(); end
-
-  def initialize(handlers); end
-
-  def sym(symbol); end
-end
-
-class Fiddle::CompositeHandler
-end
-
-class Fiddle::DLError
-end
-
-class Fiddle::DLError
-end
-
-class Fiddle::Function
-  def abi(); end
-
-  def call(*_); end
-
-  def initialize(*_); end
-
-  def name(); end
-
-  def ptr(); end
-
-  def to_i(); end
-  DEFAULT = ::T.let(nil, ::T.untyped)
-  STDCALL = ::T.let(nil, ::T.untyped)
-end
-
-class Fiddle::Function
-end
-
-class Fiddle::Handle
-  def [](_); end
-
-  def close(); end
-
-  def close_enabled?(); end
-
-  def disable_close(); end
-
-  def enable_close(); end
-
-  def initialize(*_); end
-
-  def sym(_); end
-
-  def to_i(); end
-  DEFAULT = ::T.let(nil, ::T.untyped)
-  NEXT = ::T.let(nil, ::T.untyped)
-  RTLD_GLOBAL = ::T.let(nil, ::T.untyped)
-  RTLD_LAZY = ::T.let(nil, ::T.untyped)
-  RTLD_NOW = ::T.let(nil, ::T.untyped)
-end
-
-class Fiddle::Handle
-  def self.[](_); end
-
-  def self.sym(_); end
-end
-
-module Fiddle::Importer
-  include ::Fiddle
-  include ::Fiddle::CParser
-  def [](name); end
-
-  def bind(signature, *opts, &blk); end
-
-  def bind_function(name, ctype, argtype, call_type=T.unsafe(nil), &block); end
-
-  def create_value(ty, val=T.unsafe(nil)); end
-
-  def dlload(*libs); end
-
-  def extern(signature, *opts); end
-
-  def handler(); end
-
-  def import_function(name, ctype, argtype, call_type=T.unsafe(nil)); end
-
-  def import_symbol(name); end
-
-  def import_value(ty, addr); end
-
-  def sizeof(ty); end
-
-  def struct(signature); end
-
-  def typealias(alias_type, orig_type); end
-
-  def union(signature); end
-
-  def value(ty, val=T.unsafe(nil)); end
-end
-
-module Fiddle::Importer
-  extend ::Fiddle::Importer
-  extend ::Fiddle
-  extend ::Fiddle::CParser
-  extend ::T::Sig
-end
-
-module Fiddle::PackInfo
-  ALIGN_MAP = ::T.let(nil, ::T.untyped)
-  PACK_MAP = ::T.let(nil, ::T.untyped)
-  SIZE_MAP = ::T.let(nil, ::T.untyped)
-end
-
-module Fiddle::PackInfo
-  extend ::T::Sig
-  def self.align(addr, align); end
-end
-
-class Fiddle::Packer
-  include ::Fiddle::PackInfo
-  def initialize(types); end
-
-  def pack(ary); end
-
-  def size(); end
-
-  def unpack(ary); end
-end
-
-class Fiddle::Packer
-  def self.[](*types); end
-end
-
-class Fiddle::Pointer
-  def +(_); end
-
-  def +@(); end
-
-  def -(_); end
-
-  def -@(); end
-
-  def [](*_); end
-
-  def []=(*_); end
-
-  def free(); end
-
-  def free=(free); end
-
-  def initialize(*_); end
-
-  def null?(); end
-
-  def ptr(); end
-
-  def ref(); end
-
-  def size(); end
-
-  def size=(size); end
-
-  def to_i(); end
-
-  def to_int(); end
-
-  def to_s(*_); end
-
-  def to_str(*_); end
-
-  def to_value(); end
-end
-
-class Fiddle::Pointer
-  def self.[](_); end
-
-  def self.malloc(*_); end
-
-  def self.to_ptr(_); end
-end
-
-module Fiddle::ValueUtil
-  def signed_value(val, ty); end
-
-  def unsigned_value(val, ty); end
-
-  def wrap_arg(arg, ty, funcs=T.unsafe(nil), &block); end
-
-  def wrap_args(args, tys, funcs, &block); end
-end
-
-module Fiddle::ValueUtil
-  extend ::T::Sig
-end
-
-module Fiddle
-  extend ::T::Sig
-  def self.dlopen(library); end
-
-  def self.dlunwrap(_); end
-
-  def self.dlwrap(_); end
-
-  def self.free(_); end
-
-  def self.last_error(); end
-
-  def self.last_error=(error); end
-
-  def self.malloc(_); end
-
-  def self.realloc(_, _1); end
-end
-
 class File
   Separator = ::T.let(nil, ::T.untyped)
 end
@@ -15829,7 +15689,7 @@ end
 
 class File
   extend ::T::Sig
-  def self.empty?(_); end
+  def self.atomic_write(file_name, temp_dir=T.unsafe(nil)); end
 
   def self.exists?(_); end
 
@@ -15837,9 +15697,9 @@ class File
 
   def self.mkfifo(*_); end
 
-end
+  def self.probe_stat_in(dir); end
 
-FileList = Rake::FileList
+end
 
 module FileTest
   extend ::T::Sig
@@ -20331,9 +20191,6 @@ module Gem
   def self.write_binary(path, data); end
 end
 
-module Git
-end
-
 class Git::Blob
   include ::EncodingHelper
   def binary(); end
@@ -20382,7 +20239,6 @@ class Git::Blob
 end
 
 class Git::Blob
-  extend ::EncodingHelper::ClassMethods
   def self.all(repository, commit_sha=T.unsafe(nil)); end
 
   def self.find(repository, path, commit_sha=T.unsafe(nil)); end
@@ -20390,43 +20246,6 @@ class Git::Blob
   def self.from(repository, blob_entry, path); end
 
   def self.supported?(name); end
-end
-
-class Git::Branch
-  include ::EncodingHelper
-  def branch_count(); end
-
-  def branch_names(); end
-
-  def branches(); end
-
-  def create(start_point: T.unsafe(nil)); end
-
-  def delete(); end
-
-  def dereferenced_target(); end
-
-  def exists?(); end
-
-  def find(name); end
-
-  def initialize(repository, name, target); end
-
-  def local_branches(); end
-
-  def name(); end
-
-  def rugged(); end
-
-  def target(); end
-  DEFAULT_BRANCH = ::T.let(nil, ::T.untyped)
-end
-
-class Git::Branch
-  extend ::EncodingHelper::ClassMethods
-  def self.dereference_object(object); end
-
-  def self.extract_branch_name(str); end
 end
 
 class Git::Commit
@@ -20485,7 +20304,6 @@ class Git::Commit
 end
 
 class Git::Commit
-  extend ::EncodingHelper::ClassMethods
   def self.create(repository:, committer:, options:, action: T.unsafe(nil)); end
 
   def self.diff_from_parent(rugged_commit, options=T.unsafe(nil)); end
@@ -20493,25 +20311,6 @@ class Git::Commit
   def self.find(repo, commit_id=T.unsafe(nil)); end
 
   def self.last(repo); end
-end
-
-class Git::Config
-  def app_url(); end
-
-  def config(); end
-
-  def log_file(); end
-
-  def log_level(); end
-
-  def ssh_user(); end
-
-  def storage_path(); end
-  APP_ROOT = ::T.let(nil, ::T.untyped)
-  ROOT_PATH = ::T.let(nil, ::T.untyped)
-end
-
-class Git::Config
 end
 
 class Git::Diff
@@ -20582,21 +20381,9 @@ class Git::Diff::TimeoutError
 end
 
 class Git::Diff
-  extend ::EncodingHelper::ClassMethods
   def self.between(repo, head, base, options=T.unsafe(nil), *paths); end
 
   def self.filter_diff_options(options, default_options=T.unsafe(nil)); end
-end
-
-class Git::Storage
-end
-
-class Git::Storage
-end
-
-module Git
-  extend ::T::Sig
-  def self.config(); end
 end
 
 module GlobalID::Identification
@@ -20699,7 +20486,7 @@ end
 
 class Hash
   extend ::T::Sig
-  def self.from_trusted_xml(xml); end
+  def self.from_xml(xml, disallowed_types=T.unsafe(nil)); end
 end
 
 HashWithIndifferentAccess = ActiveSupport::HashWithIndifferentAccess
@@ -22105,9 +21892,12 @@ end
 class Image
   include ::Image::GeneratedAttributeMethods
   include ::Image::GeneratedAssociationMethods
+  include ::DatabaseValidations::Rescuer
   def autosave_associated_records_for_repository(*args); end
 
   def autosave_associated_records_for_user(*args); end
+
+  def valid_without_database_validations?(context=T.unsafe(nil)); end
   ROOT_PATH = ::T.let(nil, ::T.untyped)
 end
 
@@ -23696,7 +23486,37 @@ module MiniScheduler
   extend ::T::Sig
 end
 
-MiniTest = Minitest
+module Minitest
+end
+
+MiniTest::Assertions = Minitest::Assertions
+
+MiniTest::Expectations = Minitest::Expectations
+
+MiniTest::Guard = Minitest::Guard
+
+MiniTest::Reportable = Minitest::Reportable
+
+MiniTest::Runnable = Minitest::Runnable
+
+class Minitest::Spec
+end
+
+module Minitest::Spec::DSL
+end
+
+MiniTest::Spec::DSL::InstanceMethods = Minitest::Spec::DSL::InstanceMethods
+
+module Minitest::Spec::DSL
+end
+
+class Minitest::Spec
+end
+
+MiniTest::Test = Minitest::Test
+
+module Minitest
+end
 
 module Minitest
   ENCS = ::T.let(nil, ::T.untyped)
@@ -28439,12 +28259,25 @@ class Post
   include ::AASM::Persistence::Base
   include ::AASM::Persistence::ORM
   include ::AASM::Persistence::ActiveRecordPersistence::InstanceMethods
+  include ::DatabaseValidations::Rescuer
   include ::Ancestry::InstanceMethods
   include ::Ancestry::MaterializedPath::InstanceMethods
   include ::Logidze::Model
   include ::Logidze::IgnoreLogData
   include ::Logidze::IgnoreLogData::MissingAttributePatch
   include ::Logidze::IgnoreLogData::DefaultScopePatch
+  def after_add_for_editions(); end
+
+  def after_add_for_editions=(val); end
+
+  def after_add_for_editions?(); end
+
+  def after_remove_for_editions(); end
+
+  def after_remove_for_editions=(val); end
+
+  def after_remove_for_editions?(); end
+
   def ancestry_base_class(); end
 
   def ancestry_base_class=(obj); end
@@ -28459,11 +28292,27 @@ class Post
 
   def autosave_associated_records_for_author(*args); end
 
+  def autosave_associated_records_for_editions(*args); end
+
   def autosave_associated_records_for_repository(*args); end
+
+  def before_add_for_editions(); end
+
+  def before_add_for_editions=(val); end
+
+  def before_add_for_editions?(); end
+
+  def before_remove_for_editions(); end
+
+  def before_remove_for_editions=(val); end
+
+  def before_remove_for_editions?(); end
 
   def blob(); end
 
   def blob_content(*args, &block); end
+
+  def formatted_published_at(); end
 
   def log_version(*args, &block); end
 
@@ -28483,15 +28332,29 @@ class Post
 
   def publish!(*args, &block); end
 
+  def publish_label(); end
+
+  def slug=(val); end
+
+  def status_label(); end
+
   def topics=(val); end
+
+  def topics_list(); end
 
   def touch_ancestors(); end
 
   def touch_ancestors=(obj); end
 
+  def tree(); end
+
   def unpublish(*args, &block); end
 
   def unpublish!(*args, &block); end
+
+  def valid_without_database_validations?(context=T.unsafe(nil)); end
+
+  def validate_associated_records_for_editions(*args); end
   DEFAULT_TITLE = ::T.let(nil, ::T.untyped)
   ROOT_PATH = ::T.let(nil, ::T.untyped)
   STATE_ARCHIVED = ::T.let(nil, ::T.untyped)
@@ -28515,6 +28378,14 @@ module Post::GeneratedAssociationMethods
   def create_repository(*args, &block); end
 
   def create_repository!(*args, &block); end
+
+  def edition_ids(); end
+
+  def edition_ids=(ids); end
+
+  def editions(); end
+
+  def editions=(value); end
 
   def reload_author(); end
 
@@ -28546,7 +28417,19 @@ class Post
   extend ::Logidze::Model::ClassMethods
   extend ::Logidze::IgnoreLogData::ClassMethods
   extend ::Logidze::IgnoreLogData::DefaultScopePatch::ClassMethods
+  def self.after_add_for_editions(); end
+
+  def self.after_add_for_editions=(val); end
+
+  def self.after_add_for_editions?(); end
+
   def self.after_depth(*args); end
+
+  def self.after_remove_for_editions(); end
+
+  def self.after_remove_for_editions=(val); end
+
+  def self.after_remove_for_editions?(); end
 
   def self.ancestors_of(*args); end
 
@@ -28562,7 +28445,19 @@ class Post
 
   def self.at_depth(*args); end
 
+  def self.before_add_for_editions(); end
+
+  def self.before_add_for_editions=(val); end
+
+  def self.before_add_for_editions?(); end
+
   def self.before_depth(*args); end
+
+  def self.before_remove_for_editions(); end
+
+  def self.before_remove_for_editions=(val); end
+
+  def self.before_remove_for_editions?(); end
 
   def self.children_of(*args); end
 
@@ -28607,6 +28502,16 @@ class Post
   def self.with_log_data(*args); end
 end
 
+class PostChannel
+  def receive(data); end
+end
+
+class PostChannel
+end
+
+class PostPolicy
+end
+
 class PostReceiveJob
   def author(); end
 
@@ -28620,12 +28525,11 @@ end
 class PostReceiveJob
 end
 
-module Posts
-end
-
 class Posts::PublishController
   include ::ActionView::Layouts::ClassMethods::LayoutConditions
   def create(); end
+
+  def index(); end
 end
 
 class Posts::PublishController
@@ -33342,38 +33246,7 @@ module Rails
   extend ::T::Sig
 end
 
-module Rake
-  EARLY = ::T.let(nil, ::T.untyped)
-  EMPTY_TASK_ARGS = ::T.let(nil, ::T.untyped)
-  LATE = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class Rake::Application
-  DEFAULT_RAKEFILES = ::T.let(nil, ::T.untyped)
-end
-
-module Rake::Backtrace
-  SUPPRESSED_PATHS = ::T.let(nil, ::T.untyped)
-  SUPPRESSED_PATHS_RE = ::T.let(nil, ::T.untyped)
-  SUPPRESS_PATTERN = ::T.let(nil, ::T.untyped)
-  SYS_KEYS = ::T.let(nil, ::T.untyped)
-  SYS_PATHS = ::T.let(nil, ::T.untyped)
-end
-
-module Rake::Backtrace
-  extend ::T::Sig
-end
-
 module Rake::Cloneable
-  extend ::T::Sig
-end
-
-module Rake::DSL
-  include ::FileUtils::StreamUtils_
-end
-
-module Rake::DSL
   extend ::T::Sig
 end
 
@@ -33398,68 +33271,9 @@ module Rake::FileUtilsExt
   extend ::T::Sig
 end
 
-class Rake::InvocationChain
-  EMPTY = ::T.let(nil, ::T.untyped)
-end
-
-module Rake::InvocationExceptionMixin
-  extend ::T::Sig
-end
-
-class Rake::LinkedList
-  EMPTY = ::T.let(nil, ::T.untyped)
-end
-
-module Rake::PrivateReader::ClassMethods
-  extend ::T::Sig
-end
-
-module Rake::PrivateReader
-  extend ::T::Sig
-end
-
-class Rake::Promise
-  NOT_SET = ::T.let(nil, ::T.untyped)
-end
-
-class Rake::Scope
-  EMPTY = ::T.let(nil, ::T.untyped)
-end
-
-class Rake::TaskLib
-  include ::FileUtils::StreamUtils_
-end
-
-module Rake::TaskManager
-  extend ::T::Sig
-end
-
-module Rake::TraceOutput
-  extend ::T::Sig
-end
-
-module Rake::Version
-  BUILD = ::T.let(nil, ::T.untyped)
-  MAJOR = ::T.let(nil, ::T.untyped)
-  MINOR = ::T.let(nil, ::T.untyped)
-  NUMBERS = ::T.let(nil, ::T.untyped)
-  OTHER = ::T.let(nil, ::T.untyped)
-end
-
-module Rake::Version
-  extend ::T::Sig
-end
-
-module Rake::Win32
-  extend ::T::Sig
-end
-
 module Rake
-  extend ::FileUtils::StreamUtils_
   extend ::T::Sig
 end
-
-RakeFileUtils = Rake::FileUtilsExt
 
 class Random
   include ::ActiveSupport::ToJsonWithActiveSupportEncoder
@@ -34481,25 +34295,32 @@ end
 class Repository
   include ::Repository::GeneratedAttributeMethods
   include ::Repository::GeneratedAssociationMethods
+  include ::DatabaseValidations::Rescuer
   def author_hash(); end
 
   def autosave_associated_records_for_author(*args); end
 
   def bare?(*args, &block); end
 
-  def blob_at(path:); end
+  def blob_at(path:, sha: T.unsafe(nil)); end
 
-  def blobs(); end
+  def blobs(sha: T.unsafe(nil)); end
+
+  def branches(*args, &block); end
 
   def checkout(*args, &block); end
 
   def commit(); end
 
-  def create_commit(content:, path:, action: T.unsafe(nil), message: T.unsafe(nil)); end
+  def commit_sha(); end
+
+  def create_commit(content:, path:, action: T.unsafe(nil), message: T.unsafe(nil), branch: T.unsafe(nil)); end
 
   def empty?(*args, &block); end
 
   def exists?(); end
+
+  def find_branch(name:); end
 
   def head(); end
 
@@ -34520,9 +34341,10 @@ class Repository
   def ssh_path(); end
 
   def tree(*args, &block); end
-  CONTRIBUTIONS_REF = ::T.let(nil, ::T.untyped)
+
+  def valid_without_database_validations?(context=T.unsafe(nil)); end
+  DEFAULT_BRANCH = ::T.let(nil, ::T.untyped)
   DEFAULT_NAME = ::T.let(nil, ::T.untyped)
-  DEFAULT_REF = ::T.let(nil, ::T.untyped)
   GITIGNORE = ::T.let(nil, ::T.untyped)
   GITIGNORE_PATH = ::T.let(nil, ::T.untyped)
   GLOBAL_HOOKS_DIRECTORY = ::T.let(nil, ::T.untyped)
@@ -39092,7 +38914,10 @@ end
 class SshKey
   include ::SshKey::GeneratedAttributeMethods
   include ::SshKey::GeneratedAssociationMethods
+  include ::DatabaseValidations::Rescuer
   def autosave_associated_records_for_user(*args); end
+
+  def valid_without_database_validations?(context=T.unsafe(nil)); end
 end
 
 module SshKey::GeneratedAssociationMethods
@@ -39494,14 +39319,6 @@ class Tempfile::Remover
 end
 
 class Tempfile::Remover
-end
-
-class Thermite::Config
-  DEFAULT_TAG_REGEX = ::T.let(nil, ::T.untyped)
-end
-
-module Thermite
-  extend ::T::Sig
 end
 
 class Thread
@@ -40008,43 +39825,13 @@ module Timeout
   extend ::T::Sig
 end
 
-module Tomlrb
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class Tomlrb::GeneratedParser
-  Racc_arg = ::T.let(nil, ::T.untyped)
-  Racc_debug_parser = ::T.let(nil, ::T.untyped)
-  Racc_token_to_s_table = ::T.let(nil, ::T.untyped)
-end
-
-class Tomlrb::Scanner
-  COMMENT = ::T.let(nil, ::T.untyped)
-  DATETIME = ::T.let(nil, ::T.untyped)
-  FALSE = ::T.let(nil, ::T.untyped)
-  FLOAT = ::T.let(nil, ::T.untyped)
-  IDENTIFIER = ::T.let(nil, ::T.untyped)
-  INTEGER = ::T.let(nil, ::T.untyped)
-  SPACE = ::T.let(nil, ::T.untyped)
-  STRING_BASIC = ::T.let(nil, ::T.untyped)
-  STRING_LITERAL = ::T.let(nil, ::T.untyped)
-  STRING_LITERAL_MULTI = ::T.let(nil, ::T.untyped)
-  STRING_MULTI = ::T.let(nil, ::T.untyped)
-  TRUE = ::T.let(nil, ::T.untyped)
-end
-
-class Tomlrb::StringUtils
-  SPECIAL_CHARS = ::T.let(nil, ::T.untyped)
-end
-
-module Tomlrb
-  extend ::T::Sig
-end
-
 class Topic
   include ::Topic::GeneratedAttributeMethods
   include ::Topic::GeneratedAssociationMethods
+  include ::DatabaseValidations::Rescuer
   def name=(val); end
+
+  def valid_without_database_validations?(context=T.unsafe(nil)); end
 end
 
 module Topic::GeneratedAssociationMethods
@@ -40083,11 +39870,6 @@ end
 
 class TracePoint
   extend ::T::Sig
-end
-
-class Traceroute
-  VERSION = ::T.let(nil, ::T.untyped)
-  WILDCARD_ROUTES = ::T.let(nil, ::T.untyped)
 end
 
 module Trackable
@@ -40557,6 +40339,13 @@ class User
   include ::User::GeneratedAttributeMethods
   include ::User::GeneratedAssociationMethods
   include ::Trackable
+  include ::DatabaseValidations::Rescuer
+  def after_add_for_contributions(); end
+
+  def after_add_for_contributions=(val); end
+
+  def after_add_for_contributions?(); end
+
   def after_add_for_images(); end
 
   def after_add_for_images=(val); end
@@ -40574,6 +40363,12 @@ class User
   def after_add_for_ssh_keys=(val); end
 
   def after_add_for_ssh_keys?(); end
+
+  def after_remove_for_contributions(); end
+
+  def after_remove_for_contributions=(val); end
+
+  def after_remove_for_contributions?(); end
 
   def after_remove_for_images(); end
 
@@ -40593,6 +40388,8 @@ class User
 
   def after_remove_for_ssh_keys?(); end
 
+  def autosave_associated_records_for_contributions(*args); end
+
   def autosave_associated_records_for_images(*args); end
 
   def autosave_associated_records_for_posts(*args); end
@@ -40600,6 +40397,12 @@ class User
   def autosave_associated_records_for_repository(); end
 
   def autosave_associated_records_for_ssh_keys(*args); end
+
+  def before_add_for_contributions(); end
+
+  def before_add_for_contributions=(val); end
+
+  def before_add_for_contributions?(); end
 
   def before_add_for_images(); end
 
@@ -40618,6 +40421,12 @@ class User
   def before_add_for_ssh_keys=(val); end
 
   def before_add_for_ssh_keys?(); end
+
+  def before_remove_for_contributions(); end
+
+  def before_remove_for_contributions=(val); end
+
+  def before_remove_for_contributions?(); end
 
   def before_remove_for_images(); end
 
@@ -40645,6 +40454,10 @@ class User
 
   def repo(); end
 
+  def valid_without_database_validations?(context=T.unsafe(nil)); end
+
+  def validate_associated_records_for_contributions(*args); end
+
   def validate_associated_records_for_images(*args); end
 
   def validate_associated_records_for_posts(*args); end
@@ -40656,6 +40469,14 @@ end
 
 module User::GeneratedAssociationMethods
   def build_repository(*args, &block); end
+
+  def contribution_ids(); end
+
+  def contribution_ids=(ids); end
+
+  def contributions(); end
+
+  def contributions=(value); end
 
   def create_repository(*args, &block); end
 
@@ -40705,6 +40526,12 @@ module User::GeneratedAttributeMethods
 end
 
 class User
+  def self.after_add_for_contributions(); end
+
+  def self.after_add_for_contributions=(val); end
+
+  def self.after_add_for_contributions?(); end
+
   def self.after_add_for_images(); end
 
   def self.after_add_for_images=(val); end
@@ -40722,6 +40549,12 @@ class User
   def self.after_add_for_ssh_keys=(val); end
 
   def self.after_add_for_ssh_keys?(); end
+
+  def self.after_remove_for_contributions(); end
+
+  def self.after_remove_for_contributions=(val); end
+
+  def self.after_remove_for_contributions?(); end
 
   def self.after_remove_for_images(); end
 
@@ -40741,6 +40574,12 @@ class User
 
   def self.after_remove_for_ssh_keys?(); end
 
+  def self.before_add_for_contributions(); end
+
+  def self.before_add_for_contributions=(val); end
+
+  def self.before_add_for_contributions?(); end
+
   def self.before_add_for_images(); end
 
   def self.before_add_for_images=(val); end
@@ -40758,6 +40597,12 @@ class User
   def self.before_add_for_ssh_keys=(val); end
 
   def self.before_add_for_ssh_keys?(); end
+
+  def self.before_remove_for_contributions(); end
+
+  def self.before_remove_for_contributions=(val); end
+
+  def self.before_remove_for_contributions?(); end
 
   def self.before_remove_for_images(); end
 

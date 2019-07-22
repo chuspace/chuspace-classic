@@ -30,8 +30,8 @@ class PostMarkdownService
 
   sig { returns(T.nilable(String)) }
   def blob_path
-    dirname = FasterPath.dirname(Post::ROOT_PATH)
-    blob_path = FasterPath.plus(dirname, "#{slug}.md")
+    dirname = File.dirname(Post::ROOT_PATH)
+    blob_path = File.join(dirname, "#{slug}.md")
   end
 
   sig { returns(T.nilable(String)) }

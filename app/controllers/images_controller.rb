@@ -9,10 +9,10 @@ class ImagesController < ApplicationController
 
   def create
     uploaded_file = params[:image]
-    dirname = FasterPath.dirname(Image::ROOT_PATH)
+    dirname = File.dirname(Image::ROOT_PATH)
     io = uploaded_file.read
     name = uploaded_file.original_filename
-    blob_path = FasterPath.plus(dirname, name)
+    blob_path = File.join(dirname, name)
     image = Current.user.images.find_or_initialize_by(user: Current.user, name: name, blob_path: blob_path, repository: Current.user.repository)
 
     if image.new_record?
@@ -21,7 +21,7 @@ class ImagesController < ApplicationController
     end
 
     if image.save
-      render json: { url: FasterPath.plus('/', blob_path) }
+      render json: { url: File.join('/', blob_path) }
     else
       render json: { created: false }, status: :unprocessable_entity
     end

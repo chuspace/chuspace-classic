@@ -11,9 +11,6 @@ test:
   storage_path: /tmp/repositories/
   log_file: log/test-git-shell.log
 
-staging:
-  <<: *default
-
 production:
   <<: *default
-  storage_path: /mnt/repositories/
+  storage_path: <%= ENV['GIT_STORAGE_URL'] %>

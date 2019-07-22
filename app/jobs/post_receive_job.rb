@@ -22,7 +22,7 @@ class PostReceiveJob < ApplicationJob
       blobs ||= Git::Blob.all(repository, commit_sha)
 
       diff.deltas.each do |delta|
-        next unless FasterPath.extname(delta.new_file[:path] || delta.old_file[:path]).end_with?('.md')
+        next unless File.extname(delta.new_file[:path] || delta.old_file[:path]).end_with?('.md')
         git_blob = blobs.find { |blob| blob.id == delta.new_file[:oid] }
 
         case delta.status
