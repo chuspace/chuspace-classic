@@ -21,9 +21,6 @@ gem 'mimemagic'
 gem 'fastimage'
 gem 'shrine'
 
-# App config
-gem 'anyway_config', '2.0.0.pre'
-
 # Logging
 gem 'logidze'
 

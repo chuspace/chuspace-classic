@@ -84,7 +84,6 @@ GEM
       public_suffix (>= 2.0.2, < 4.0)
     ancestry (3.0.7)
       activerecord (>= 3.2.0)
-    anyway_config (2.0.0.pre)
     ast (2.4.0)
     awesome_print (1.8.0)
     aws-eventstream (1.0.3)
@@ -342,7 +341,6 @@ PLATFORMS
 DEPENDENCIES
   aasm
   ancestry
-  anyway_config (= 2.0.0.pre)
   awesome_print
   aws-sdk-s3
   babosa
