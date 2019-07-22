@@ -2,8 +2,6 @@
 # frozen_string_literal: true
 
 class AppUploader < Shrine
-  include ImageProcessing::Vips
-
   plugin :pretty_location
   plugin :activerecord
   plugin :add_metadata

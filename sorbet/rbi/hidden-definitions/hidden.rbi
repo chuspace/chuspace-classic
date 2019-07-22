@@ -9225,7 +9225,6 @@ module Anyway
 end
 
 class AppUploader
-  include ::ImageProcessing::Vips
   include ::Shrine::Plugins::PrettyLocation::InstanceMethods
   include ::Shrine::Plugins::AddMetadata::InstanceMethods
   include ::Shrine::Plugins::StoreDimensions::InstanceMethods
@@ -14901,235 +14900,6 @@ end
 class ExitCalledError
 end
 
-module FFI
-  CURRENT_PROCESS = ::T.let(nil, ::T.untyped)
-  SizeTypes = ::T.let(nil, ::T.untyped)
-  TYPE_BOOL = ::T.let(nil, ::T.untyped)
-  TYPE_BUFFER_IN = ::T.let(nil, ::T.untyped)
-  TYPE_BUFFER_INOUT = ::T.let(nil, ::T.untyped)
-  TYPE_BUFFER_OUT = ::T.let(nil, ::T.untyped)
-  TYPE_FLOAT32 = ::T.let(nil, ::T.untyped)
-  TYPE_FLOAT64 = ::T.let(nil, ::T.untyped)
-  TYPE_INT16 = ::T.let(nil, ::T.untyped)
-  TYPE_INT32 = ::T.let(nil, ::T.untyped)
-  TYPE_INT64 = ::T.let(nil, ::T.untyped)
-  TYPE_INT8 = ::T.let(nil, ::T.untyped)
-  TYPE_LONG = ::T.let(nil, ::T.untyped)
-  TYPE_LONGDOUBLE = ::T.let(nil, ::T.untyped)
-  TYPE_POINTER = ::T.let(nil, ::T.untyped)
-  TYPE_STRING = ::T.let(nil, ::T.untyped)
-  TYPE_UINT16 = ::T.let(nil, ::T.untyped)
-  TYPE_UINT32 = ::T.let(nil, ::T.untyped)
-  TYPE_UINT64 = ::T.let(nil, ::T.untyped)
-  TYPE_UINT8 = ::T.let(nil, ::T.untyped)
-  TYPE_ULONG = ::T.let(nil, ::T.untyped)
-  TYPE_VARARGS = ::T.let(nil, ::T.untyped)
-  TYPE_VOID = ::T.let(nil, ::T.untyped)
-  TypeDefs = ::T.let(nil, ::T.untyped)
-  USE_THIS_PROCESS_AS_LIBRARY = ::T.let(nil, ::T.untyped)
-end
-
-FFI::CallbackInfo = FFI::FunctionType
-
-module FFI::DataConverter
-  extend ::T::Sig
-end
-
-class FFI::DynamicLibrary
-  RTLD_ALL_MASK = ::T.let(nil, ::T.untyped)
-  RTLD_BINDING_MASK = ::T.let(nil, ::T.untyped)
-  RTLD_DEEPBIND = ::T.let(nil, ::T.untyped)
-  RTLD_FIRST = ::T.let(nil, ::T.untyped)
-  RTLD_GLOBAL = ::T.let(nil, ::T.untyped)
-  RTLD_LAZY = ::T.let(nil, ::T.untyped)
-  RTLD_LOCAL = ::T.let(nil, ::T.untyped)
-  RTLD_LOCATION_MASK = ::T.let(nil, ::T.untyped)
-  RTLD_MEMBER = ::T.let(nil, ::T.untyped)
-  RTLD_NODELETE = ::T.let(nil, ::T.untyped)
-  RTLD_NOLOAD = ::T.let(nil, ::T.untyped)
-  RTLD_NOW = ::T.let(nil, ::T.untyped)
-end
-
-FFI::FunctionInfo = FFI::FunctionType
-
-module FFI::IO
-  extend ::T::Sig
-end
-
-module FFI::LastError
-  extend ::T::Sig
-end
-
-module FFI::Library
-  CURRENT_PROCESS = ::T.let(nil, ::T.untyped)
-  FlagsMap = ::T.let(nil, ::T.untyped)
-  LIBC = ::T.let(nil, ::T.untyped)
-end
-
-module FFI::Library
-  extend ::T::Sig
-end
-
-FFI::NativeLibrary = FFI::DynamicLibrary
-
-module FFI::NativeType
-  BOOL = ::T.let(nil, ::T.untyped)
-  BUFFER_IN = ::T.let(nil, ::T.untyped)
-  BUFFER_INOUT = ::T.let(nil, ::T.untyped)
-  BUFFER_OUT = ::T.let(nil, ::T.untyped)
-  FLOAT32 = ::T.let(nil, ::T.untyped)
-  FLOAT64 = ::T.let(nil, ::T.untyped)
-  INT16 = ::T.let(nil, ::T.untyped)
-  INT32 = ::T.let(nil, ::T.untyped)
-  INT64 = ::T.let(nil, ::T.untyped)
-  INT8 = ::T.let(nil, ::T.untyped)
-  LONG = ::T.let(nil, ::T.untyped)
-  LONGDOUBLE = ::T.let(nil, ::T.untyped)
-  POINTER = ::T.let(nil, ::T.untyped)
-  STRING = ::T.let(nil, ::T.untyped)
-  UINT16 = ::T.let(nil, ::T.untyped)
-  UINT32 = ::T.let(nil, ::T.untyped)
-  UINT64 = ::T.let(nil, ::T.untyped)
-  UINT8 = ::T.let(nil, ::T.untyped)
-  ULONG = ::T.let(nil, ::T.untyped)
-  VARARGS = ::T.let(nil, ::T.untyped)
-  VOID = ::T.let(nil, ::T.untyped)
-end
-
-module FFI::NativeType
-  extend ::T::Sig
-end
-
-class FFI::NullPointerError
-end
-
-class FFI::NullPointerError
-end
-
-module FFI::Platform
-  ADDRESS_ALIGN = ::T.let(nil, ::T.untyped)
-  ADDRESS_SIZE = ::T.let(nil, ::T.untyped)
-  ARCH = ::T.let(nil, ::T.untyped)
-  BIG_ENDIAN = ::T.let(nil, ::T.untyped)
-  BYTE_ORDER = ::T.let(nil, ::T.untyped)
-  CONF_DIR = ::T.let(nil, ::T.untyped)
-  CPU = ::T.let(nil, ::T.untyped)
-  DOUBLE_ALIGN = ::T.let(nil, ::T.untyped)
-  DOUBLE_SIZE = ::T.let(nil, ::T.untyped)
-  FLOAT_ALIGN = ::T.let(nil, ::T.untyped)
-  FLOAT_SIZE = ::T.let(nil, ::T.untyped)
-  INT16_ALIGN = ::T.let(nil, ::T.untyped)
-  INT16_SIZE = ::T.let(nil, ::T.untyped)
-  INT32_ALIGN = ::T.let(nil, ::T.untyped)
-  INT32_SIZE = ::T.let(nil, ::T.untyped)
-  INT64_ALIGN = ::T.let(nil, ::T.untyped)
-  INT64_SIZE = ::T.let(nil, ::T.untyped)
-  INT8_ALIGN = ::T.let(nil, ::T.untyped)
-  INT8_SIZE = ::T.let(nil, ::T.untyped)
-  IS_BSD = ::T.let(nil, ::T.untyped)
-  IS_FREEBSD = ::T.let(nil, ::T.untyped)
-  IS_GNU = ::T.let(nil, ::T.untyped)
-  IS_LINUX = ::T.let(nil, ::T.untyped)
-  IS_MAC = ::T.let(nil, ::T.untyped)
-  IS_NETBSD = ::T.let(nil, ::T.untyped)
-  IS_OPENBSD = ::T.let(nil, ::T.untyped)
-  IS_SOLARIS = ::T.let(nil, ::T.untyped)
-  IS_WINDOWS = ::T.let(nil, ::T.untyped)
-  LIBC = ::T.let(nil, ::T.untyped)
-  LIBPREFIX = ::T.let(nil, ::T.untyped)
-  LIBSUFFIX = ::T.let(nil, ::T.untyped)
-  LITTLE_ENDIAN = ::T.let(nil, ::T.untyped)
-  LONG_ALIGN = ::T.let(nil, ::T.untyped)
-  LONG_SIZE = ::T.let(nil, ::T.untyped)
-  NAME = ::T.let(nil, ::T.untyped)
-  OS = ::T.let(nil, ::T.untyped)
-  OSVERSION = ::T.let(nil, ::T.untyped)
-end
-
-module FFI::Platform
-  extend ::T::Sig
-end
-
-class FFI::Pointer
-  NULL = ::T.let(nil, ::T.untyped)
-  SIZE = ::T.let(nil, ::T.untyped)
-end
-
-class FFI::Struct::InlineArray
-  include ::Enumerable
-end
-
-class FFI::StructLayout::Number
-end
-
-class FFI::StructLayout::Number
-end
-
-class FFI::StructLayout::Pointer
-end
-
-class FFI::StructLayout::Pointer
-end
-
-class FFI::StructLayout::String
-end
-
-class FFI::StructLayout::String
-end
-
-class FFI::StructLayoutBuilder
-  NUMBER_TYPES = ::T.let(nil, ::T.untyped)
-end
-
-class FFI::Type
-  BOOL = ::T.let(nil, ::T.untyped)
-  BUFFER_IN = ::T.let(nil, ::T.untyped)
-  BUFFER_INOUT = ::T.let(nil, ::T.untyped)
-  BUFFER_OUT = ::T.let(nil, ::T.untyped)
-  CHAR = ::T.let(nil, ::T.untyped)
-  DOUBLE = ::T.let(nil, ::T.untyped)
-  FLOAT = ::T.let(nil, ::T.untyped)
-  FLOAT32 = ::T.let(nil, ::T.untyped)
-  FLOAT64 = ::T.let(nil, ::T.untyped)
-  INT = ::T.let(nil, ::T.untyped)
-  INT16 = ::T.let(nil, ::T.untyped)
-  INT32 = ::T.let(nil, ::T.untyped)
-  INT64 = ::T.let(nil, ::T.untyped)
-  INT8 = ::T.let(nil, ::T.untyped)
-  LONG = ::T.let(nil, ::T.untyped)
-  LONGDOUBLE = ::T.let(nil, ::T.untyped)
-  LONG_LONG = ::T.let(nil, ::T.untyped)
-  POINTER = ::T.let(nil, ::T.untyped)
-  SCHAR = ::T.let(nil, ::T.untyped)
-  SHORT = ::T.let(nil, ::T.untyped)
-  SINT = ::T.let(nil, ::T.untyped)
-  SLONG = ::T.let(nil, ::T.untyped)
-  SLONG_LONG = ::T.let(nil, ::T.untyped)
-  SSHORT = ::T.let(nil, ::T.untyped)
-  STRING = ::T.let(nil, ::T.untyped)
-  UCHAR = ::T.let(nil, ::T.untyped)
-  UINT = ::T.let(nil, ::T.untyped)
-  UINT16 = ::T.let(nil, ::T.untyped)
-  UINT32 = ::T.let(nil, ::T.untyped)
-  UINT64 = ::T.let(nil, ::T.untyped)
-  UINT8 = ::T.let(nil, ::T.untyped)
-  ULONG = ::T.let(nil, ::T.untyped)
-  ULONG_LONG = ::T.let(nil, ::T.untyped)
-  USHORT = ::T.let(nil, ::T.untyped)
-  VARARGS = ::T.let(nil, ::T.untyped)
-  VOID = ::T.let(nil, ::T.untyped)
-end
-
-FFI::Type::Array = FFI::ArrayType
-
-FFI::Type::Function = FFI::FunctionType
-
-FFI::Type::Struct = FFI::StructByValue
-
-module FFI
-  extend ::T::Sig
-end
-
 module Faker
   VERSION = ::T.let(nil, ::T.untyped)
 end
@@ -16078,43 +15848,6 @@ module GC
   def self.verify_internal_consistency(); end
 
   def self.verify_transient_heap_internal_consistency(); end
-end
-
-module GLib
-  GLIB_TO_SEVERITY = ::T.let(nil, ::T.untyped)
-  G_FREE = ::T.let(nil, ::T.untyped)
-  LOG_FLAG_FATAL = ::T.let(nil, ::T.untyped)
-  LOG_FLAG_RECURSION = ::T.let(nil, ::T.untyped)
-  LOG_HANDLER = ::T.let(nil, ::T.untyped)
-  LOG_LEVEL_CRITICAL = ::T.let(nil, ::T.untyped)
-  LOG_LEVEL_DEBUG = ::T.let(nil, ::T.untyped)
-  LOG_LEVEL_ERROR = ::T.let(nil, ::T.untyped)
-  LOG_LEVEL_INFO = ::T.let(nil, ::T.untyped)
-  LOG_LEVEL_MESSAGE = ::T.let(nil, ::T.untyped)
-  LOG_LEVEL_WARNING = ::T.let(nil, ::T.untyped)
-end
-
-module GLib
-  extend ::T::Sig
-end
-
-module GObject
-  GBOOL_TYPE = ::T.let(nil, ::T.untyped)
-  GDOUBLE_TYPE = ::T.let(nil, ::T.untyped)
-  GENUM_TYPE = ::T.let(nil, ::T.untyped)
-  GFLAGS_TYPE = ::T.let(nil, ::T.untyped)
-  GINT_TYPE = ::T.let(nil, ::T.untyped)
-  GOBJECT_TYPE = ::T.let(nil, ::T.untyped)
-  GSTR_TYPE = ::T.let(nil, ::T.untyped)
-  GUINT64_TYPE = ::T.let(nil, ::T.untyped)
-end
-
-module GObject::GObject::GObjectLayout
-  extend ::T::Sig
-end
-
-module GObject
-  extend ::T::Sig
 end
 
 module Gem
@@ -21128,8 +20861,6 @@ class IO
 
   def self.foreach(*_); end
 
-  def self.open(*_); end
-
   def self.pipe(*_); end
 
 end
@@ -21947,233 +21678,6 @@ class ImageConstraint
 end
 
 class ImageConstraint
-end
-
-module ImageProcessing
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module ImageProcessing::Chainable
-  DEFAULT_OPTIONS = ::T.let(nil, ::T.untyped)
-end
-
-module ImageProcessing::Chainable
-  extend ::T::Sig
-end
-
-module ImageProcessing::MiniMagick
-end
-
-class ImageProcessing::MiniMagick::Processor
-  def append(*args); end
-
-  def composite(overlay=T.unsafe(nil), mask: T.unsafe(nil), mode: T.unsafe(nil), gravity: T.unsafe(nil), offset: T.unsafe(nil), args: T.unsafe(nil), **options, &block); end
-
-  def define(options); end
-
-  def limits(options); end
-
-  def magick(); end
-
-  def resize_and_pad(width, height, background: T.unsafe(nil), gravity: T.unsafe(nil), **options); end
-
-  def resize_to_fill(width, height, gravity: T.unsafe(nil), **options); end
-
-  def resize_to_fit(width, height, **options); end
-
-  def resize_to_limit(width, height, **options); end
-
-  def rotate(degrees, background: T.unsafe(nil)); end
-  SHARPEN_PARAMETERS = ::T.let(nil, ::T.untyped)
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS
-  def +(*values); end
-
-  def <<(arg); end
-
-  def args(); end
-
-  def call(*args); end
-
-  def canvas(value=T.unsafe(nil)); end
-
-  def clone(*args); end
-
-  def command(); end
-
-  def executable(); end
-
-  def gradient(value=T.unsafe(nil)); end
-
-  def initialize(name, options=T.unsafe(nil)); end
-
-  def logo(value=T.unsafe(nil)); end
-
-  def merge!(new_args); end
-
-  def method_missing(name, *args); end
-
-  def name(); end
-
-  def pango(value=T.unsafe(nil)); end
-
-  def pattern(value=T.unsafe(nil)); end
-
-  def plasma(value=T.unsafe(nil)); end
-
-  def radial_gradient(value=T.unsafe(nil)); end
-
-  def rose(value=T.unsafe(nil)); end
-
-  def stack(); end
-
-  def stdin(); end
-
-  def stdout(); end
-
-  def text(value=T.unsafe(nil)); end
-
-  def xc(value=T.unsafe(nil)); end
-  CREATION_OPERATORS = ::T.let(nil, ::T.untyped)
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Animate
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Animate
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Compare
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Compare
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Composite
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Composite
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Conjure
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Conjure
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Convert
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Convert
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Display
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Display
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Identify
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Identify
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Import
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Import
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Magick
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Magick
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Mogrify
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Mogrify
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::MogrifyRestricted
-  def format(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::MogrifyRestricted
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Montage
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Montage
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Stream
-  def initialize(*args); end
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS::Stream
-end
-
-class ImageProcessing::MiniMagick::Processor::ACCUMULATOR_CLASS
-  def self.new(*args); end
-
-  def self.option_methods(); end
-end
-
-module ImageProcessing::MiniMagick::Processor::Utils
-end
-
-module ImageProcessing::MiniMagick::Processor::Utils
-  extend ::T::Sig
-  def self.apply_define(magick, options); end
-
-  def self.apply_options(magick, define: T.unsafe(nil), **options); end
-
-  def self.disallow_split_layers!(destination_path); end
-end
-
-class ImageProcessing::MiniMagick::Processor
-  def self.load_image(path_or_magick, page: T.unsafe(nil), geometry: T.unsafe(nil), auto_orient: T.unsafe(nil), **options); end
-
-  def self.save_image(magick, destination_path, allow_splitting: T.unsafe(nil), **options); end
-end
-
-module ImageProcessing::MiniMagick
-  extend ::ImageProcessing::Chainable
-  extend ::T::Sig
-  def self.valid_image?(file); end
-end
-
-class ImageProcessing::Pipeline
-  DEFAULT_FORMAT = ::T.let(nil, ::T.untyped)
-end
-
-module ImageProcessing::Vips
-end
-
-module ImageProcessing::Vips
-  extend ::ImageProcessing::Chainable
-  extend ::T::Sig
-  def self.valid_image?(file); end
-end
-
-module ImageProcessing
-  extend ::T::Sig
 end
 
 class ImageUploader
@@ -23486,37 +22990,7 @@ module MiniScheduler
   extend ::T::Sig
 end
 
-module Minitest
-end
-
-MiniTest::Assertions = Minitest::Assertions
-
-MiniTest::Expectations = Minitest::Expectations
-
-MiniTest::Guard = Minitest::Guard
-
-MiniTest::Reportable = Minitest::Reportable
-
-MiniTest::Runnable = Minitest::Runnable
-
-class Minitest::Spec
-end
-
-module Minitest::Spec::DSL
-end
-
-MiniTest::Spec::DSL::InstanceMethods = Minitest::Spec::DSL::InstanceMethods
-
-module Minitest::Spec::DSL
-end
-
-class Minitest::Spec
-end
-
-MiniTest::Test = Minitest::Test
-
-module Minitest
-end
+MiniTest = Minitest
 
 module Minitest
   ENCS = ::T.let(nil, ::T.untyped)
@@ -25861,16 +25335,6 @@ class OpenStruct
 end
 
 class OpenStruct
-  extend ::T::Sig
-end
-
-module OpenURI::OpenRead
-  def open(*rest, &block); end
-
-  def read(options=T.unsafe(nil)); end
-end
-
-module OpenURI::OpenRead
   extend ::T::Sig
 end
 
@@ -31835,7 +31299,6 @@ class Rack::Attack::Safelist
 end
 
 module Rack::Attack::StoreProxy
-  PROXIES = ::T.let(nil, ::T.untyped)
 end
 
 class Rack::Attack::StoreProxy::ActiveSupportRedisStoreProxy
@@ -31847,22 +31310,6 @@ class Rack::Attack::StoreProxy::ActiveSupportRedisStoreProxy
 end
 
 class Rack::Attack::StoreProxy::ActiveSupportRedisStoreProxy
-  def self.handle?(store); end
-end
-
-class Rack::Attack::StoreProxy::DalliProxy
-  def delete(key); end
-
-  def increment(key, amount, options=T.unsafe(nil)); end
-
-  def initialize(client); end
-
-  def read(key); end
-
-  def write(key, value, options=T.unsafe(nil)); end
-end
-
-class Rack::Attack::StoreProxy::DalliProxy
   def self.handle?(store); end
 end
 
@@ -31908,7 +31355,6 @@ end
 
 module Rack::Attack::StoreProxy
   extend ::T::Sig
-  def self.build(store); end
 end
 
 class Rack::Attack::Throttle
@@ -39977,9 +39423,6 @@ module URI::Escape
 end
 
 class URI::FTP
-  include ::OpenURI::OpenRead
-  def buffer_open(buf, proxy, options); end
-
   def set_typecode(v); end
 
   def typecode(); end
@@ -40141,9 +39584,6 @@ class URI::Generic
 end
 
 class URI::HTTP
-  include ::OpenURI::OpenRead
-  def buffer_open(buf, proxy, options); end
-
   def request_uri(); end
 end
 
@@ -40639,56 +40079,6 @@ class UsersController
 end
 
 class UsersController
-end
-
-module Vips
-  ARGUMENT_CONSTRUCT = ::T.let(nil, ::T.untyped)
-  ARGUMENT_DEPRECATED = ::T.let(nil, ::T.untyped)
-  ARGUMENT_FLAGS = ::T.let(nil, ::T.untyped)
-  ARGUMENT_INPUT = ::T.let(nil, ::T.untyped)
-  ARGUMENT_MODIFY = ::T.let(nil, ::T.untyped)
-  ARGUMENT_OUTPUT = ::T.let(nil, ::T.untyped)
-  ARGUMENT_REQUIRED = ::T.let(nil, ::T.untyped)
-  ARGUMENT_SET_ALWAYS = ::T.let(nil, ::T.untyped)
-  ARGUMENT_SET_ONCE = ::T.let(nil, ::T.untyped)
-  ARRAY_DOUBLE_TYPE = ::T.let(nil, ::T.untyped)
-  ARRAY_IMAGE_TYPE = ::T.let(nil, ::T.untyped)
-  ARRAY_INT_TYPE = ::T.let(nil, ::T.untyped)
-  BAND_FORMAT_TYPE = ::T.let(nil, ::T.untyped)
-  BLEND_MODE_TYPE = ::T.let(nil, ::T.untyped)
-  BLOB_TYPE = ::T.let(nil, ::T.untyped)
-  CODING_TYPE = ::T.let(nil, ::T.untyped)
-  IMAGE_TYPE = ::T.let(nil, ::T.untyped)
-  INTERPRETATION_TYPE = ::T.let(nil, ::T.untyped)
-  LIBRARY_VERSION = ::T.let(nil, ::T.untyped)
-  LOG_DOMAIN = ::T.let(nil, ::T.untyped)
-  MAX_COORD = ::T.let(nil, ::T.untyped)
-  OPERATION_DEPRECATED = ::T.let(nil, ::T.untyped)
-  OPERATION_FLAGS = ::T.let(nil, ::T.untyped)
-  OPERATION_NOCACHE = ::T.let(nil, ::T.untyped)
-  OPERATION_SEQUENTIAL = ::T.let(nil, ::T.untyped)
-  REFSTR_TYPE = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module Vips::Image::ImageLayout
-  extend ::T::Sig
-end
-
-module Vips::Interpolate::InterpolateLayout
-  extend ::T::Sig
-end
-
-module Vips::Object::ObjectLayout
-  extend ::T::Sig
-end
-
-module Vips::Operation::OperationLayout
-  extend ::T::Sig
-end
-
-module Vips
-  extend ::T::Sig
 end
 
 Visitor = Psych::Visitors::Visitor
@@ -41678,7 +41068,6 @@ class Zlib::GzipReader
 end
 
 class Zlib::GzipReader
-  def self.open(*_); end
 end
 
 class Zlib::GzipWriter
@@ -41702,7 +41091,6 @@ class Zlib::GzipWriter
 end
 
 class Zlib::GzipWriter
-  def self.open(*_); end
 end
 
 class Zlib::Inflate

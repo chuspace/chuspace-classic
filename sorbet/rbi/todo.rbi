@@ -11,3 +11,4 @@ module ::Anonymous_Delegator_418; end
 module ::Anonymous_Delegator_8; end
 module ::Anonymous_Delegator_9; end
 module ActionMailer::Base::Mail::Message; end
+module ActiveRecord::CollectionCacheKey; end
