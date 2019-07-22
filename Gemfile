@@ -19,8 +19,6 @@ gem 'aws-sdk-s3'
 gem 'imgproxy'
 gem 'mimemagic'
 gem 'fastimage'
-gem 'image_processing'
-gem 'ruby-vips'
 gem 'shrine'
 
 # App config
