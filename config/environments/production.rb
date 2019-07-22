@@ -71,6 +71,7 @@ Rails.application.configure do
 
   config.hosts << 'chuspace.com'
   config.hosts << 'localhost'
+  config.hosts << '0.0.0.0'
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
