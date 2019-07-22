@@ -7,7 +7,7 @@ plugin 'bundler'
 plugin 'rails'
 plugin 'puma'
 plugin 'rbenv'
-plugin './plugins/nodenv.rb'
+plugin 'nodenv'
 
 host 'chu@chuspace.com'
 
