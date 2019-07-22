@@ -1,59 +1,32 @@
 SET statement_timeout = 0;
 SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
+
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
-SET row_security = off;
 
---
--- Name: hstore; Type: EXTENSION; Schema: -; Owner: -
---
+-- Name: hstore; Type: EXTENSION
 
 CREATE EXTENSION IF NOT EXISTS hstore WITH SCHEMA public;
 
+-- Name: EXTENSION hstore; Type: COMMENT
 
---
--- Name: EXTENSION hstore; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs';
-
-
---
--- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
---
+-- Name: pg_trgm; Type: EXTENSION
 
 CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
 
+-- Name: EXTENSION pg_trgm; Type: COMMENT
 
---
--- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
-
-
---
--- Name: unaccent; Type: EXTENSION; Schema: -; Owner: -
---
+-- Name: unaccent; Type: EXTENSION
 
 CREATE EXTENSION IF NOT EXISTS unaccent WITH SCHEMA public;
 
+-- Name: EXTENSION unaccent; Type: COMMENT
 
---
--- Name: EXTENSION unaccent; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION unaccent IS 'text search dictionary that removes accents';
-
-
---
--- Name: logidze_compact_history(jsonb); Type: FUNCTION; Schema: public; Owner: -
---
+-- Name: logidze_compact_history(jsonb); Type: FUNCTION
 
 CREATE FUNCTION public.logidze_compact_history(log_data jsonb) RETURNS jsonb
     LANGUAGE plpgsql
@@ -86,10 +59,7 @@ CREATE FUNCTION public.logidze_compact_history(log_data jsonb) RETURNS jsonb
           END;
         $$;
 
-
---
--- Name: logidze_exclude_keys(jsonb, text[]); Type: FUNCTION; Schema: public; Owner: -
---
+-- Name: logidze_exclude_keys(jsonb, text[]); Type: FUNCTION
 
 CREATE FUNCTION public.logidze_exclude_keys(obj jsonb, VARIADIC keys text[]) RETURNS jsonb
     LANGUAGE plpgsql
@@ -107,10 +77,7 @@ CREATE FUNCTION public.logidze_exclude_keys(obj jsonb, VARIADIC keys text[]) RET
           END;
         $$;
 
-
---
--- Name: logidze_logger(); Type: FUNCTION; Schema: public; Owner: -
---
+-- Name: logidze_logger(); Type: FUNCTION
 
 CREATE FUNCTION public.logidze_logger() RETURNS trigger
     LANGUAGE plpgsql
@@ -234,10 +201,7 @@ CREATE FUNCTION public.logidze_logger() RETURNS trigger
           END;
           $$;
 
-
---
--- Name: logidze_snapshot(jsonb, text, text[]); Type: FUNCTION; Schema: public; Owner: -
---
+-- Name: logidze_snapshot(jsonb, text, text[]); Type: FUNCTION
 
 CREATE FUNCTION public.logidze_snapshot(item jsonb, ts_column text, blacklist text[] DEFAULT '{}'::text[]) RETURNS jsonb
     LANGUAGE plpgsql
@@ -259,10 +223,7 @@ CREATE FUNCTION public.logidze_snapshot(item jsonb, ts_column text, blacklist te
           END;
         $$;
 
-
---
--- Name: logidze_version(bigint, jsonb, timestamp with time zone, text[]); Type: FUNCTION; Schema: public; Owner: -
---
+-- Name: logidze_version(bigint, jsonb, timestamp with time zone, text[]); Type: FUNCTION
 
 CREATE FUNCTION public.logidze_version(v bigint, data jsonb, ts timestamp with time zone, blacklist text[] DEFAULT '{}'::text[]) RETURNS jsonb
     LANGUAGE plpgsql
@@ -285,14 +246,11 @@ CREATE FUNCTION public.logidze_version(v bigint, data jsonb, ts timestamp with t
           END;
         $$;
 
-
 SET default_tablespace = '';
 
 SET default_with_oids = false;
 
---
--- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
---
+-- Name: ar_internal_metadata; Type: TABLE
 
 CREATE TABLE public.ar_internal_metadata (
     key character varying NOT NULL,
@@ -301,13 +259,10 @@ CREATE TABLE public.ar_internal_metadata (
     updated_at timestamp(6) without time zone NOT NULL
 );
 
-
---
--- Name: editions; Type: TABLE; Schema: public; Owner: -
---
+-- Name: editions; Type: TABLE
 
 CREATE TABLE public.editions (
-    id bigint NOT NULL,
+    id BIGSERIAL PRIMARY KEY,
     editor_id bigint NOT NULL,
     post_id bigint NOT NULL,
     branch_name character varying NOT NULL,
@@ -317,32 +272,10 @@ CREATE TABLE public.editions (
     updated_at timestamp(6) without time zone NOT NULL
 );
 
-
---
--- Name: editions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.editions_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: editions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.editions_id_seq OWNED BY public.editions.id;
-
-
---
--- Name: images; Type: TABLE; Schema: public; Owner: -
---
+-- Name: images; Type: TABLE
 
 CREATE TABLE public.images (
-    id bigint NOT NULL,
+    id BIGSERIAL PRIMARY KEY,
     name character varying,
     image_data jsonb,
     blob_path character varying,
@@ -352,32 +285,10 @@ CREATE TABLE public.images (
     updated_at timestamp(6) without time zone NOT NULL
 );
 
-
---
--- Name: images_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.images_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: images_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.images_id_seq OWNED BY public.images.id;
-
-
---
--- Name: posts; Type: TABLE; Schema: public; Owner: -
---
+-- Name: posts; Type: TABLE
 
 CREATE TABLE public.posts (
-    id bigint NOT NULL,
+    id BIGSERIAL PRIMARY KEY,
     title character varying,
     summary text,
     slug character varying NOT NULL,
@@ -395,32 +306,10 @@ CREATE TABLE public.posts (
     log_data jsonb
 );
 
-
---
--- Name: posts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.posts_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: posts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.posts_id_seq OWNED BY public.posts.id;
-
-
---
--- Name: repositories; Type: TABLE; Schema: public; Owner: -
---
+-- Name: repositories; Type: TABLE
 
 CREATE TABLE public.repositories (
-    id bigint NOT NULL,
+    id BIGSERIAL PRIMARY KEY,
     name character varying DEFAULT 'blog'::character varying NOT NULL,
     full_name character varying NOT NULL,
     path character varying NOT NULL,
@@ -430,41 +319,16 @@ CREATE TABLE public.repositories (
     updated_at timestamp(6) without time zone NOT NULL
 );
 
-
---
--- Name: repositories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.repositories_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: repositories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.repositories_id_seq OWNED BY public.repositories.id;
-
-
---
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
---
+-- Name: schema_migrations; Type: TABLE
 
 CREATE TABLE public.schema_migrations (
     version character varying NOT NULL
 );
 
-
---
--- Name: ssh_keys; Type: TABLE; Schema: public; Owner: -
---
+-- Name: ssh_keys; Type: TABLE
 
 CREATE TABLE public.ssh_keys (
-    id bigint NOT NULL,
+    id BIGSERIAL PRIMARY KEY,
     title character varying,
     key text NOT NULL,
     fingerprint character varying NOT NULL,
@@ -474,63 +338,19 @@ CREATE TABLE public.ssh_keys (
     updated_at timestamp(6) without time zone NOT NULL
 );
 
-
---
--- Name: ssh_keys_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.ssh_keys_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: ssh_keys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.ssh_keys_id_seq OWNED BY public.ssh_keys.id;
-
-
---
--- Name: topics; Type: TABLE; Schema: public; Owner: -
---
+-- Name: topics; Type: TABLE
 
 CREATE TABLE public.topics (
-    id bigint NOT NULL,
+    id BIGSERIAL PRIMARY KEY,
     name character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
 
-
---
--- Name: topics_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.topics_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: topics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.topics_id_seq OWNED BY public.topics.id;
-
-
---
--- Name: users; Type: TABLE; Schema: public; Owner: -
---
+-- Name: users; Type: TABLE
 
 CREATE TABLE public.users (
-    id bigint NOT NULL,
+    id BIGSERIAL PRIMARY KEY,
     name character varying DEFAULT ''::character varying NOT NULL,
     email character varying DEFAULT ''::character varying NOT NULL,
     nickname character varying DEFAULT ''::character varying NOT NULL,
@@ -549,424 +369,173 @@ CREATE TABLE public.users (
     updated_at timestamp without time zone NOT NULL
 );
 
-
---
--- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.users_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
-
-
---
--- Name: editions id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.editions ALTER COLUMN id SET DEFAULT nextval('public.editions_id_seq'::regclass);
-
-
---
--- Name: images id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.images ALTER COLUMN id SET DEFAULT nextval('public.images_id_seq'::regclass);
-
-
---
--- Name: posts id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.posts ALTER COLUMN id SET DEFAULT nextval('public.posts_id_seq'::regclass);
-
-
---
--- Name: repositories id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.repositories ALTER COLUMN id SET DEFAULT nextval('public.repositories_id_seq'::regclass);
-
-
---
--- Name: ssh_keys id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.ssh_keys ALTER COLUMN id SET DEFAULT nextval('public.ssh_keys_id_seq'::regclass);
-
-
---
--- Name: topics id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.topics ALTER COLUMN id SET DEFAULT nextval('public.topics_id_seq'::regclass);
-
-
---
--- Name: users id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
-
-
---
--- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
-
-
---
--- Name: editions editions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.editions
-    ADD CONSTRAINT editions_pkey PRIMARY KEY (id);
-
-
---
--- Name: images images_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.images
-    ADD CONSTRAINT images_pkey PRIMARY KEY (id);
-
-
---
--- Name: posts posts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.posts
-    ADD CONSTRAINT posts_pkey PRIMARY KEY (id);
-
-
---
--- Name: repositories repositories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.repositories
-    ADD CONSTRAINT repositories_pkey PRIMARY KEY (id);
-
-
---
--- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
 
 ALTER TABLE ONLY public.schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
 
-
---
--- Name: ssh_keys ssh_keys_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.ssh_keys
-    ADD CONSTRAINT ssh_keys_pkey PRIMARY KEY (id);
-
-
---
--- Name: topics topics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.topics
-    ADD CONSTRAINT topics_pkey PRIMARY KEY (id);
-
-
---
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
-
-
---
--- Name: index_editions_on_branch_name; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_editions_on_branch_name; Type: INDEX
 
 CREATE UNIQUE INDEX index_editions_on_branch_name ON public.editions USING btree (branch_name);
 
-
---
--- Name: index_editions_on_commit_sha; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_editions_on_commit_sha; Type: INDEX
 
 CREATE INDEX index_editions_on_commit_sha ON public.editions USING btree (commit_sha);
 
-
---
--- Name: index_editions_on_editor_id; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_editions_on_editor_id; Type: INDEX
 
 CREATE INDEX index_editions_on_editor_id ON public.editions USING btree (editor_id);
 
-
---
--- Name: index_editions_on_post_id; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_editions_on_post_id; Type: INDEX
 
 CREATE INDEX index_editions_on_post_id ON public.editions USING btree (post_id);
 
-
---
--- Name: index_editions_on_status; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_editions_on_status; Type: INDEX
 
 CREATE INDEX index_editions_on_status ON public.editions USING btree (status);
 
-
---
--- Name: index_images_on_blob_path_and_repository_id; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_images_on_blob_path_and_repository_id; Type: INDEX
 
 CREATE UNIQUE INDEX index_images_on_blob_path_and_repository_id ON public.images USING btree (blob_path, repository_id);
 
-
---
--- Name: index_images_on_repository_id; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_images_on_repository_id; Type: INDEX
 
 CREATE INDEX index_images_on_repository_id ON public.images USING btree (repository_id);
 
-
---
--- Name: index_images_on_user_id; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_images_on_user_id; Type: INDEX
 
 CREATE INDEX index_images_on_user_id ON public.images USING btree (user_id);
 
-
---
--- Name: index_posts_on_ancestry; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_posts_on_ancestry; Type: INDEX
 
 CREATE INDEX index_posts_on_ancestry ON public.posts USING btree (ancestry);
 
-
---
--- Name: index_posts_on_author_id; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_posts_on_author_id; Type: INDEX
 
 CREATE INDEX index_posts_on_author_id ON public.posts USING btree (author_id);
 
-
---
--- Name: index_posts_on_blob_path_and_repository_id; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_posts_on_blob_path_and_repository_id; Type: INDEX
 
 CREATE UNIQUE INDEX index_posts_on_blob_path_and_repository_id ON public.posts USING btree (blob_path, repository_id);
 
-
---
--- Name: index_posts_on_published_at; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_posts_on_published_at; Type: INDEX
 
 CREATE INDEX index_posts_on_published_at ON public.posts USING btree (published_at);
 
-
---
--- Name: index_posts_on_repository_id; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_posts_on_repository_id; Type: INDEX
 
 CREATE INDEX index_posts_on_repository_id ON public.posts USING btree (repository_id);
 
-
---
--- Name: index_posts_on_slug_and_repository_id; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_posts_on_slug_and_repository_id; Type: INDEX
 
 CREATE UNIQUE INDEX index_posts_on_slug_and_repository_id ON public.posts USING btree (slug, repository_id);
 
-
---
--- Name: index_posts_on_status; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_posts_on_status; Type: INDEX
 
 CREATE INDEX index_posts_on_status ON public.posts USING btree (status);
 
-
---
--- Name: index_posts_on_topics; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_posts_on_topics; Type: INDEX
 
 CREATE INDEX index_posts_on_topics ON public.posts USING gin (topics);
 
-
---
--- Name: index_repositories_on_author_id; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_repositories_on_author_id; Type: INDEX
 
 CREATE INDEX index_repositories_on_author_id ON public.repositories USING btree (author_id);
 
-
---
--- Name: index_repositories_on_commit_sha; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_repositories_on_commit_sha; Type: INDEX
 
 CREATE UNIQUE INDEX index_repositories_on_commit_sha ON public.repositories USING btree (commit_sha);
 
-
---
--- Name: index_repositories_on_full_name; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_repositories_on_full_name; Type: INDEX
 
 CREATE UNIQUE INDEX index_repositories_on_full_name ON public.repositories USING btree (full_name);
 
-
---
--- Name: index_repositories_on_name_and_author_id; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_repositories_on_name_and_author_id; Type: INDEX
 
 CREATE UNIQUE INDEX index_repositories_on_name_and_author_id ON public.repositories USING btree (name, author_id);
 
-
---
--- Name: index_repositories_on_path; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_repositories_on_path; Type: INDEX
 
 CREATE UNIQUE INDEX index_repositories_on_path ON public.repositories USING btree (path);
 
-
---
--- Name: index_ssh_keys_on_fingerprint; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_ssh_keys_on_fingerprint; Type: INDEX
 
 CREATE UNIQUE INDEX index_ssh_keys_on_fingerprint ON public.ssh_keys USING btree (fingerprint);
 
-
---
--- Name: index_ssh_keys_on_key; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_ssh_keys_on_key; Type: INDEX
 
 CREATE UNIQUE INDEX index_ssh_keys_on_key ON public.ssh_keys USING btree (key);
 
-
---
--- Name: index_ssh_keys_on_last_used; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_ssh_keys_on_last_used; Type: INDEX
 
 CREATE INDEX index_ssh_keys_on_last_used ON public.ssh_keys USING btree (last_used);
 
-
---
--- Name: index_ssh_keys_on_user_id; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_ssh_keys_on_user_id; Type: INDEX
 
 CREATE INDEX index_ssh_keys_on_user_id ON public.ssh_keys USING btree (user_id);
 
-
---
--- Name: index_topics_on_name; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_topics_on_name; Type: INDEX
 
 CREATE UNIQUE INDEX index_topics_on_name ON public.topics USING btree (name);
 
-
---
--- Name: index_users_on_auth_token; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_users_on_auth_token; Type: INDEX
 
 CREATE UNIQUE INDEX index_users_on_auth_token ON public.users USING btree (auth_token);
 
-
---
--- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_users_on_email; Type: INDEX
 
 CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
 
-
---
--- Name: index_users_on_nickname; Type: INDEX; Schema: public; Owner: -
---
+-- Name: index_users_on_nickname; Type: INDEX
 
 CREATE UNIQUE INDEX index_users_on_nickname ON public.users USING btree (nickname);
 
-
---
--- Name: posts logidze_on_posts; Type: TRIGGER; Schema: public; Owner: -
---
+-- Name: posts logidze_on_posts; Type: TRIGGER
 
 CREATE TRIGGER logidze_on_posts BEFORE INSERT OR UPDATE ON public.posts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE PROCEDURE public.logidze_logger('5', 'updated_at', '{id, title, summary, body, author_id, blob_path, blob_id, repository_id, ancestry, status, topics, published_at, created_at, updated_at}');
 
-
---
--- Name: posts fk_rails_04d13ef8c7; Type: FK CONSTRAINT; Schema: public; Owner: -
---
+-- Name: posts fk_rails_04d13ef8c7; Type: FK CONSTRAINT
 
 ALTER TABLE ONLY public.posts
     ADD CONSTRAINT fk_rails_04d13ef8c7 FOREIGN KEY (author_id) REFERENCES public.users(id);
 
-
---
--- Name: images fk_rails_19cd822056; Type: FK CONSTRAINT; Schema: public; Owner: -
---
+-- Name: images fk_rails_19cd822056; Type: FK CONSTRAINT
 
 ALTER TABLE ONLY public.images
     ADD CONSTRAINT fk_rails_19cd822056 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
-
---
--- Name: images fk_rails_5fba8ffc00; Type: FK CONSTRAINT; Schema: public; Owner: -
---
+-- Name: images fk_rails_5fba8ffc00; Type: FK CONSTRAINT
 
 ALTER TABLE ONLY public.images
     ADD CONSTRAINT fk_rails_5fba8ffc00 FOREIGN KEY (repository_id) REFERENCES public.repositories(id);
 
-
---
--- Name: editions fk_rails_66ff8848eb; Type: FK CONSTRAINT; Schema: public; Owner: -
---
+-- Name: editions fk_rails_66ff8848eb; Type: FK CONSTRAINT
 
 ALTER TABLE ONLY public.editions
     ADD CONSTRAINT fk_rails_66ff8848eb FOREIGN KEY (post_id) REFERENCES public.posts(id);
 
-
---
--- Name: repositories fk_rails_73e1e26d06; Type: FK CONSTRAINT; Schema: public; Owner: -
---
+-- Name: repositories fk_rails_73e1e26d06; Type: FK CONSTRAINT
 
 ALTER TABLE ONLY public.repositories
     ADD CONSTRAINT fk_rails_73e1e26d06 FOREIGN KEY (author_id) REFERENCES public.users(id);
 
-
---
--- Name: editions fk_rails_790d074ed3; Type: FK CONSTRAINT; Schema: public; Owner: -
---
+-- Name: editions fk_rails_790d074ed3; Type: FK CONSTRAINT
 
 ALTER TABLE ONLY public.editions
     ADD CONSTRAINT fk_rails_790d074ed3 FOREIGN KEY (editor_id) REFERENCES public.users(id);
 
-
---
--- Name: ssh_keys fk_rails_bacf7e1718; Type: FK CONSTRAINT; Schema: public; Owner: -
---
+-- Name: ssh_keys fk_rails_bacf7e1718; Type: FK CONSTRAINT
 
 ALTER TABLE ONLY public.ssh_keys
     ADD CONSTRAINT fk_rails_bacf7e1718 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
-
---
--- Name: posts fk_rails_d359178d0f; Type: FK CONSTRAINT; Schema: public; Owner: -
---
+-- Name: posts fk_rails_d359178d0f; Type: FK CONSTRAINT
 
 ALTER TABLE ONLY public.posts
     ADD CONSTRAINT fk_rails_d359178d0f FOREIGN KEY (repository_id) REFERENCES public.repositories(id);
 
-
---
 -- PostgreSQL database dump complete
---
 
 SET search_path TO "$user", public;
 
@@ -982,5 +551,3 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190709114442'),
 ('20190713162331'),
 ('20190716075119');
-
-

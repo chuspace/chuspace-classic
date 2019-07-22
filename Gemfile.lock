@@ -69,6 +69,8 @@ GEM
     activerecord (6.0.0.rc1)
       activemodel (= 6.0.0.rc1)
       activesupport (= 6.0.0.rc1)
+    activerecord-clean-db-structure (0.3.0)
+      activerecord (>= 4.2)
     activestorage (6.0.0.rc1)
       actionpack (= 6.0.0.rc1)
       activejob (= 6.0.0.rc1)
@@ -340,6 +342,7 @@ PLATFORMS
 
 DEPENDENCIES
   aasm
+  activerecord-clean-db-structure
   ancestry
   awesome_print
   aws-sdk-s3
