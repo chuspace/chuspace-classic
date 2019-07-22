@@ -1,7 +1,7 @@
 # typed: false
 # frozen_string_literal: true
 
-class Posts::ContributionsController < ApplicationController
+class Posts::EditionsController < ApplicationController
   before_action :authenticate!, :find_post
   layout 'editor', only: %i[edit show]
 
