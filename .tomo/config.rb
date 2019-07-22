@@ -47,7 +47,7 @@ setup do
   run 'bundler:upgrade_bundler'
   run 'bundler:install'
   run 'rails:db_create'
-  run 'rails:db_structure_load'
+  run 'SAFETY_ASSURED=1 rails:db_structure_load'
   run 'rails:db_seed'
 end
 
