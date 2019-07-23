@@ -1,16 +1,16 @@
-<%= simple_form_for user, remote: true do |f| %>
+<%= simple_form_for user, url: '/no-signup-allowed', remote: true do |f| %>
   <%= f.input :name, autofocus: true %>
 
-  <input-check class='mt-2' url="<%= check_nicknames_path %>">
+  <input-check class='mt-2'>
     <%= f.input :nickname %>
   </input-check>
 
-  <input-check class='mt-2' url="<%= check_emails_path %>">
+  <input-check class='mt-2'>
     <%= f.input :email %>
   </input-check>
 
   <div class='flex items-center mt-4'>
     <%= f.button :button, 'Sign up for Chuspace' %>
-    <%= link_to('Signin', signins_path, class: 'link link--default text-sm underline ml-4') %>
+    <%# <%= link_to('Signin', signins_path, class: 'link link--default text-sm underline ml-4') %> %>
   </div>
 <% end %>
