@@ -9,7 +9,7 @@ plugin 'puma'
 plugin 'rbenv'
 plugin 'nodenv'
 
-host 'chu@chuspace.com'
+host 'chu@104.248.167.213'
 
 set application: 'chuspace'
 set deploy_to: '/home/chu/chuspace.com'
