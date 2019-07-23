@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # typed: false
 
 plugin 'git'
@@ -9,7 +10,7 @@ plugin 'puma'
 plugin 'rbenv'
 plugin 'nodenv'
 
-host 'chu@104.248.167.213'
+host 'chu@chuspace.com'
 
 set application: 'chuspace'
 set deploy_to: '/home/chu/chuspace.com'
