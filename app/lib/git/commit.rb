@@ -1,3 +1,4 @@
+# typed: ignore
 # frozen_string_literal: true
 
 module Git
@@ -75,7 +76,7 @@ module Git
         rugged = repository.rugged
         file = options[:file]
         commit = options[:commit]
-        branch = 'master'
+        branch = commit[:branch] || 'master'
         parents = []
         mode = 0o100644
 
@@ -83,37 +84,39 @@ module Git
         committer_hash = { name: committer.name, email: committer.email, time: Time.now }
 
         branch = 'refs/heads/' + branch unless branch.start_with?('refs/')
+        index = repository.index
 
-        filename = file[:path].to_s
-
-        unless repository.empty?
+        unless rugged.empty?
           rugged_ref = rugged.references[branch]
+          puts rugged_ref.inspect
           raise Repository::InvalidRef.new('Invalid branch name') unless rugged_ref
           last_commit = rugged_ref.target
-          repository.index.read_tree(last_commit.tree)
+          index.read_tree(last_commit.tree)
           parents = [last_commit]
         end
 
+        filename = file[:path].to_s
+
         if action == :remove
-          repository.index.remove(filename)
+          index.remove(filename)
         else
-          file_entry = repository.index.get(filename)
+          file_entry = index.get(filename)
 
           if action == :rename
             old_path_name = file[:previous_path].to_s
             old_filename = old_path_name.to_s
-            file_entry = repository.index.get(old_filename)
-            repository.index.remove(old_filename) unless file_entry.blank?
+            old_file_entry = index.get(old_filename)
+            index.remove(old_filename) unless old_file_entry.blank?
           end
 
           mode = file_entry[:mode] if file_entry && file_entry[:mode]
           content = file[:content]
           oid = rugged.write(content, :blob)
-          repository.index.add(path: filename, oid: oid, mode: mode)
+          index.add(path: filename, oid: oid, mode: mode)
         end
 
         opts = {}
-        opts[:tree] = repository.index.write_tree(rugged)
+        opts[:tree] = index.write_tree(rugged)
         opts[:author] = author_hash
         opts[:committer] = committer_hash
         opts[:message] = commit[:message]

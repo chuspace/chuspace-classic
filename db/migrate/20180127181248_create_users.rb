@@ -1,8 +1,9 @@
+# typed: ignore
 # frozen_string_literal: true
 
 class CreateUsers < ActiveRecord::Migration[5.2]
   def change
-    create_table :users, force: :cascade do |t|
+    create_table :users do |t|
       t.string :name, null: false, default: ''
 
       t.string :email, null: false, default: ''
@@ -11,12 +12,12 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :nickname, null: false, default: ''
       t.index :nickname, unique: true
 
-      t.string :avatar_data
+      t.jsonb :avatar_data
 
       t.string :auth_token, null: false, default: ''
       t.index :auth_token, unique: true
 
-      t.text :bio
+      t.string :bio
       t.string :company
       t.string :location
       t.string :url

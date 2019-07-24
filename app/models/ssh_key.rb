@@ -1,10 +1,11 @@
+# typed: ignore
 # frozen_string_literal: true
 
 class SshKey < ApplicationRecord
-  belongs_to :user
+  db_belongs_to :user
 
-  validates_presence_of :title, :fingerprint
-  validates :key, presence: true, uniqueness: { message: :nonunique_key }
+  validates_presence_of :title, :fingerprint, :key
+  validates_db_uniqueness_of :key, message: :nonunique_key
   validate :ssh_key_format, on: :create
 
   before_validation :assign_fingerprint

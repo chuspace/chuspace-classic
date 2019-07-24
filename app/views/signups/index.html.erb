@@ -9,23 +9,7 @@
     </div>
 
     <div class='mt-8'>
-      <%= simple_form_for @user, remote: true do |f| %>
-        <%= f.hidden_field :code, name: :code, value: @invite.code %>
-        <%= f.input :name, class: 'mt-2' %>
-
-        <input-check class='mt-2' url="<%= check_nicknames_path %>">
-          <%= f.input :nickname, class: 'mt-2' %>
-        </input-check>
-
-        <input-check class='mt-2' url="<%= check_signup_email_path %>">
-          <%= f.input :email, class: 'mt-2' %>
-        </input-check>
-
-        <div class='flex items-center mt-4'>
-          <%= f.button :button, 'Signup' %>
-          <%= link_to('Signin', signins_path, class: 'link link--default text-sm underline ml-4') %>
-        </div>
-      <% end %>
+      <%= render 'signups/form', user: @user %>
     </div>
   </div>
 </div>

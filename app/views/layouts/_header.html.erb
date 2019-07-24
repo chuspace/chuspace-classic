@@ -1,11 +1,7 @@
 <header>
-  <nav class='flex justify-between items-center py-6'>
-    <% if Current.user.present? %>
-      <%= component 'logo', type: :badge %>
-      <%= render 'header/user'  %>
-    <% else %>
-      <%= component 'logo', type: :text %>
-      <%= render 'header/guest'  %>
-    <% end %>
+  <nav class='container flex justify-between items-center py-2'>
+    <%= component 'logo', type: Current.user.present? ? :badge : :full %>
+    <%= render partial: 'posts/header', locals: { post: @post } if @post %>
+    <%= render "header/#{Current.user.present? ? 'user' : 'guest'}"  %>
   </nav>
 </header>

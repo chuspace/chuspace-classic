@@ -1,3 +1,4 @@
+# typed: ignore
 # frozen_string_literal: true
 
 module ApplicationHelper
@@ -5,16 +6,18 @@ module ApplicationHelper
     [
       {
         label: "Signed in as <strong>#{Current.user.nickname}</strong>",
-        url: profile_url(Current.user),
+        url: user_path(Current.user),
         active: true,
         options: { css_class: 'whitespace-normal' }
       },
       { divider: true },
-      { label: 'Profile', url: profile_url(Current.user), options: {} },
-      { label: 'Write post', url: new_post_url, options: {} },
-      { label: 'Settings', url: settings_url, options: {} },
+      { label: 'Profile', url: user_path(Current.user), options: {} },
+      { label: 'Write post', url: new_post_path, options: {} },
+      { label: 'Your git repository', url: settings_repositories_path, options: {} },
+      { label: 'Your posts', url: user_path(Current.user), options: {} },
+      { label: 'Settings', url: settings_path, options: {} },
       { divider: true },
-      { label: 'Sign out', url: signin_url(Current.user), options: { method: :delete } }
+      { label: 'Sign out', url: signin_path(Current.user), options: { method: :delete } }
     ].map { |hash| OpenStruct.new(hash) }.freeze
   end
 end

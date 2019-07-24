@@ -1,4 +1,4 @@
-<div class="w-3/5 mx-auto mt-16">
+<div class="w-1/2 mx-auto mt-16">
   <%= render 'settings/navigation' %>
 
   <div class="ssh">
@@ -10,35 +10,13 @@
         </p>
       </div>
       <div>
-        <%= link_to 'Add new key', new_settings_ssh_key_path, class: 'button block' %>
+        <%= link_to 'Add new key', new_settings_ssh_key_path, class: 'button button--active block' %>
       </div>
     </div>
 
-    <div class="mt-16 border-t border-grey-lighter">
+    <div class="list border-t border-grey-lighter">
       <% if @user.ssh_keys.any? %>
-        <% @user.ssh_keys.each do |key| %>
-          <div class="border-b pb-2 border-grey-lighter">
-            <div class="flex justify-between items-center my-4">
-              <div>
-                <strong><%= key.title %></strong>
-                <small class="block mt-2">
-                  Added <%= key.created_at.to_formatted_s(:long) %> |
-                  <%= key.last_used ? "Last used #{time_ago_in_words(key.last_used, include_seconds: true)} ago" : 'Never used'  %>
-                </small>
-              </div>
-              <code><%= key.fingerprint %></code>
-              <%= link_to(
-                'Delete',
-                settings_ssh_key_path(key),
-                method: :delete,
-                remote: true,
-                class: 'button',
-                data: { confirm: 'Are you sure?' }
-              )
-              %>
-            </div>
-          </div>
-        <% end %>
+        <%= render partial: 'ssh_key', collection: @user.ssh_keys %>
       <% else %>
         <h3 class='text-secondary text-center mt-8'>No ssh keys added</h3>
       <% end %>

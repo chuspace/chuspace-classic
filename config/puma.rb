@@ -1,3 +1,4 @@
+# typed: ignore
 # frozen_string_literal: true
 
 workers Integer(ENV['WEB_CONCURRENCY'] || 2)

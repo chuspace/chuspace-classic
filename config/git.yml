@@ -1,0 +1,16 @@
+default: &default
+  user: git
+  storage_path: /Users/gaurav/.chuspace/repositories/
+  log_file: log/git-shell.log
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  storage_path: /tmp/repositories/
+  log_file: log/test-git-shell.log
+
+production:
+  <<: *default
+  storage_path: <%= ENV['GIT_STORAGE_URL'] %>

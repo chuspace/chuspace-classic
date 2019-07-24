@@ -18,6 +18,8 @@ module.system.node.resolve_dirname=app/javascript
 module.system.node.resolve_dirname=app/javascript/flow-types
 module.system.node.resolve_dirname=app/javascript/controller
 module.system.node.resolve_dirname=app/javascript/editor
+module.system.node.resolve_dirname=app/javascript/custom-elements
+module.system.node.resolve_dirname=app/javascript/helpers
 module.system.node.resolve_dirname=app/javascript/styles
 
 esproposal.class_static_fields=enable

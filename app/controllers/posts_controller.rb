@@ -1,76 +1,59 @@
+# typed: ignore
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
-  before_action :authenticate!, only: %i[new create]
-  before_action :find_post, except: :index
+  before_action :authenticate!, except: %i[show]
+  before_action :find_post, except: %i[index new create]
 
-  layout 'editor', only: :new
+  layout 'editor', only: %i[new edit]
 
-  def index
-    @posts = Post.all.limit(20).order(id: :desc)
+  def new
+    @post = Post.new(author: Current.user)
   end
 
   def show
-    @post = Post.find_by(slug: params[:slug])
-    redirect_to root_path if @post.blank?
-  end
-
-  def edit
+    redirect_to edit_post_path(@post) if @post.draft?
   end
 
   def create
     Post.transaction do
-      author = Current.user
-      repository = author.repository
-      post = repository.posts.build(post_params)
-      post.assign_attributes(author: author, blob_path: blob_params[:path])
+      markdown = PostMarkdownService.call(content: post_params[:body])
+      post = Current.user.posts.build(repository: Current.user.repository, slug: markdown.slug, blob_path: markdown.blob_path)
 
       if post.save
-        repository.commit(message: params[:commit_message], content: blob_params[:blob], path: blob_params[:path])
-        redirect_to post_show_path(Current.user, post)
+        Current.user.repository.create_commit(content: markdown.content, path: post.blob_path)
+        render json: {
+          redirect: edit_post_path(post),
+          slug: post.slug,
+          header: render_to_string(
+            partial: 'posts/header',
+            format: :html,
+            layout: false,
+            locals: { post: post, params: params }
+          )
+        }
       else
-        render json: { errors: post.errors.full_messages }, status: 422
+        render json: { created: false }, status: :unprocessable_entity
       end
-    end
-  end
-
-  def update
-    @post.assign_attributes(post_params)
-
-    if @post.save
-      @post.repository.commit(message: params[:commit_message], content: blob_params[:body], path: blob_params[:path])
-
-      redirect_to post_show_path(nickname: Current.user.nickname, slug: @post.slug)
-    else
-      render json: { errors: post.errors.full_messages }
     end
   end
 
   def destroy
     if @post.destroy
-      @post.repository.commit(committer: Current.user, message: params[:commit_message])
-
-      redirect_to root_path
+      Current.user.repository.create_commit(content: '', path: @post.blob_path, action: :remove)
+      redirect_to user_drafts_path(@post.author)
     else
-      redirect_to post_show_path(nickname: Current.user.nickname, slug: @post.slug)
+      redirect_to post_path(@post)
     end
   end
 
   private
 
   def post_params
-    params.require(:post).permit(:title, :slug, :excerpt, :topics, :published_at, :status, :parent)
-  end
-
-  def blob_params
-    attrs = params.require(:post).permit(:title, :slug, :body)
-    {
-      path: (attrs[:slug] || FastSlug.generate(attrs[:title]) || SecureRandom.uuid) + '.md',
-      blob: attrs[:body]
-    }.freeze
+    params.require(:post).permit(:body)
   end
 
   def find_post
-    @post = Post.find_by(slug: params[:id])
+    @post = Post.find_by!(slug: params[:slug])
   end
 end

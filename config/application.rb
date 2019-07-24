@@ -1,3 +1,4 @@
+# typed: ignore
 # frozen_string_literal: true
 
 require_relative 'boot'
@@ -14,6 +15,7 @@ require 'active_support/core_ext/numeric/bytes'
 require 'rails/test_unit/railtie'
 
 Bundler.require(*Rails.groups)
+Dotenv::Railtie.load
 
 module Chuspace
   class Application < Rails::Application
@@ -30,5 +32,14 @@ module Chuspace
 
     # Configure rack attack
     config.middleware.use Rack::Attack unless Rails.env.test?
+
+    # Schema format
+    config.active_record.schema_format = :sql
+
+    # Setup default urls
+    config.action_mailer.asset_host = 'http://assets.chuspace.com'
+    config.hosts << 'chuspace.com'
+    config.default_url_options = { host: 'chuspace.com' }
+    Rails.application.routes.default_url_options[:host] = 'chuspace.com'
   end
 end

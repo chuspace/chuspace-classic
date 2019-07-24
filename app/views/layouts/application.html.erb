@@ -3,14 +3,21 @@
   <head>
     <title>Chuspace</title>
     <%= csrf_meta_tags %>
-    <%= javascript_pack_tag 'application' %>
-    <%= stylesheet_pack_tag 'application', media: 'all' %>
+    <link rel="prefetch" href="<%= asset_pack_path('application.js') %>" as="style" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= javascript_pack_tag 'application', defer: true, 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   </head>
+  <body class="flex-body" data-controller='popper'>
+    <% flash.each do |key, value| %>
+      <alert-notification
+        level='<%= key %>'
+        message='<%= value %>'
+        class="alert-container animated fast fadeInDown">
+      </alert-notification>
+    <% end %>
 
-  <body class="application flex-body">
-    <div class='container mx-auto'>
-      <%= render 'layouts/header' %>
-    </div>
+    <%= render 'layouts/header' %>
 
     <section class="content">
       <%= yield %>
@@ -19,17 +26,5 @@
     <div class='container mx-auto'>
       <%= render 'layouts/footer' %>
     </div>
-
-    <div class="animated alert-container fast bounceInRight" data-controller="alerts">
-      <% flash.each do |key, value| %>
-        <div class="<%= flash_message_class(key) %>">
-          <div class="p-4 ">
-            <%= value %>
-          </div>
-        </div>
-      <% end %>
-    </div>
-
-    <%= javascript_pack_tag 'custom-elements' %>
   </body>
 </html>

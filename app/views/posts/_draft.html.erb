@@ -1,0 +1,24 @@
+<article class='list__item list__item--bordered'>
+  <%= link_to edit_post_path(draft) do %>
+    <div class='header'>
+      <h3><%= draft.title %></h3>
+      <%= content_tag :p, draft.summary, class: 'text-grey tracking-normal text-sm leading-normal w-2/3 mt-2' %>
+    </div>
+  <% end %>
+
+  <ul class='horizontal__list text-xs mt-2'>
+    <li class='text-grey'>
+      Last edited <%= distance_of_time_in_words_to_now(draft.updated_at) %> ago
+    </li>
+
+    <li>
+      <%= link_to 'Delete',
+        post_path(draft),
+        method: :delete,
+        remote: true,
+        class: 'link link--danger underline',
+        data: { confirm: 'Are you sure?' }
+      %>
+    </li>
+  </ul>
+</article>

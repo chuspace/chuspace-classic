@@ -3,31 +3,17 @@
   <head>
     <title>Chuspace</title>
     <%= csrf_meta_tags %>
-    <%= javascript_pack_tag 'application' %>
-    <%= stylesheet_pack_tag 'application', media: 'all' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="prefetch" href="<%= asset_pack_path('application.js') %>" as="style" />
+
+    <%= javascript_pack_tag 'application', defer: true, 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body class="editor">
-    <div class='container mx-auto'>
-      <header>
-        <nav class='flex justify-between items-center py-6'>
-          <%= component 'logo', type: :badge %>
+  <body>
+    <%= render 'layouts/header' %>
 
-          <div class='flex justify-end items-center flex-1 mr-4'>
-            <%= link_to 'Save as draft', '#', class: 'link link-default mr-4', data: { action: 'click->compose#saveDraft', url: posts_path } %>
-            <%= link_to 'Publish', '#', class: 'link link-green mr-4', data: { action: 'click->compose#publish'} %>
-          </div>
-
-          <% if Current.user.present? %>
-            <%= render 'header/user'  %>
-          <% else %>
-            <%= render 'header/guest'  %>
-          <% end %>
-        </nav>
-      </header>
-    </div>
-
-    <section class="content">
+    <section class='content w-1/2 mx-auto pb-32'>
       <%= yield %>
     </section>
   </body>

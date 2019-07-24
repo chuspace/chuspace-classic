@@ -1,0 +1,10 @@
+<chu-editor
+  spellcheck="false"
+  url="<%= post_edition_path(@post, @edition) %>"
+  method="PATCH"
+  content="<%= @edition.blob_content %>"
+  id="<%= @edition.id %>"
+  channel='EditionChannel'
+  editable
+>
+</chu-editor>

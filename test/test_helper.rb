@@ -1,6 +1,7 @@
+# typed: ignore
 # frozen_string_literal: true
 
-ENV['RAILS_ENV'] ||= 'test'
+ENV['RAILS_ENV'] = 'test'
 
 require_relative '../config/environment'
 require 'rails/test_help'
@@ -14,7 +15,6 @@ SimpleCov.start 'rails' do
 end
 
 class ActiveSupport::TestCase
-  parallelize(workers: 4)
   fixtures :all
 
   teardown { FileUtils.rm_rf(Git.config.storage_path) }

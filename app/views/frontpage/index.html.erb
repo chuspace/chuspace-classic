@@ -1,0 +1,21 @@
+<div class='mx-auto w-1/2'>
+  <section class='list mt-20'>
+    <ul class="list-reset tabs">
+      <li class="tabs__tab tabs__tab--active">
+        All Posts
+      </li>
+    </ul>
+
+
+    <% if @posts.any? %>
+      <% @posts.each do |post| %>
+        <%= render 'posts/post', post: post %>
+      <% end %>
+    <% else %>
+      <div class='placeholder'>
+        <h1 class='text-3xl'>No posts published yet</h1>
+        <%= link_to 'Write a post', new_post_path, class: 'button button--fill mt-4 inline-block' %>
+      </div>
+    <% end %>
+  </section>
+</div>

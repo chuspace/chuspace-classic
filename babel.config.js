@@ -39,12 +39,6 @@ module.exports = function(api) {
     ].filter(Boolean),
     plugins: [
       require('babel-plugin-macros'),
-      [
-        require('@babel/plugin-transform-react-jsx').default,
-        {
-          pragma: 'h'
-        }
-      ],
       require('@babel/plugin-syntax-dynamic-import').default,
       isTestEnv && require('babel-plugin-dynamic-import-node'),
       [require('@babel/plugin-proposal-decorators').default, { legacy: true }],
@@ -84,7 +78,8 @@ module.exports = function(api) {
             helpers: './app/javascript/helpers',
             decorators: './app/javascript/decorators',
             styles: './app/javascript/styles',
-            components: './app/components'
+            editor: './app/javascript/editor',
+            'custom-elements': './app/javascript/custom-elements'
           }
         }
       ]

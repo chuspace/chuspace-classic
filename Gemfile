@@ -6,19 +6,24 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 6.0.0.rc1', '<= 6.1'
+gem 'rails', '>= 6.x'
 gem 'bundler', '1.17.2'
+
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.x'
+gem 'strong_migrations'
+gem 'database_validations'
+gem 'activerecord-clean-db-structure'
 
 # File uploads
 gem 'aws-sdk-s3'
+gem 'imgproxy'
+gem 'mimemagic'
 gem 'fastimage'
-gem 'image_processing'
-gem 'ruby-vips'
 gem 'shrine'
-gem 'mime-types'
-gem 'marcel'
+
+# Logging
+gem 'logidze'
 
 #  Nested tree
 gem 'ancestry'
@@ -74,13 +79,21 @@ gem 'components', git: 'https://github.com/jensljungblad/components.git'
 # Security
 gem 'rack-attack'
 
-# Rust extensions
-gem 'fast_markdown', path: 'fast_markdown'
-gem 'fast_slug', path: 'fast_slug'
-gem 'faster_path'
+# Markdown
+gem 'commonmarker'
 
-# Link previews
-gem 'onebox'
+# Friendly urls
+gem 'babosa'
+
+# Typechecking
+gem 'sorbet-runtime'
+gem 'sorbet-rails'
+
+# Github data
+gem 'octokit'
+
+# environment variables
+gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 group :production do
   # Resource monitoring
@@ -93,9 +106,9 @@ group :development, :test do
   gem 'rspec_junit_formatter'
   gem 'coveralls', require: false
   gem 'minitest'
-  gem 'dotenv-rails'
+  gem 'rack-proxy'
+  gem 'rack-mini-profiler'
 end
-
 
 group :development do
   gem 'web-console', '>= 3.3.0', require: false
@@ -110,11 +123,9 @@ group :development do
   gem 'pry-rails'
   # Fake data
   gem 'faker'
-  # Profiler
-  gem 'rack-mini-profiler', require: false
-  gem 'memory_profiler', require: false
-
-  # gem 'sorbet'
+  gem 'sorbet'
+  gem 'database_consistency', require: false
+  gem 'tomo', github: 'gauravtiwari/tomo', require: false
 end
 
 group :test do

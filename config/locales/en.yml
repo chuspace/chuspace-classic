@@ -17,23 +17,16 @@ en:
               invalid: should be all lowercase, unique, min 10 character, may have a single hyphen and no special characters.
             topics:
               too_long: maximum %{count} topics allowed
+        edition:
+          attributes:
+            post:
+              no_edition_possible: is not a published post. You can only make edition for published posts.
 
   login_mailer:
     send_magic_login:
       subject: Log in to Chuspace
       link_request: You don’t need a password to access your Chuspace account. Just click the secure link below.
       heading: Log in to Chuspace
-
-  invite_mailer:
-    notify_invitee:
-      subject: Thanks for registering
-      body: We will let you know once we are ready
-      heading: Thanks for registering your interest
-
-    send_rsvp:
-      subject: Welcome to Chuspace
-      body: Please use this link to signup
-      heading: Click to signup
 
   settings:
     ssh_keys:
@@ -46,19 +39,14 @@ en:
     create:
       success: Welcome aboard! we have sent you an email with login link.
 
-  invites:
-    create:
-      success: We have received your invite request.
-
   header:
     guest:
       signin_cta: Got an account?
 
-  pages:
+  landingpage:
     index:
       heading: Blogging platform for developers
       intro: Chuspace is a collaborative blogging platform made for developers. Publish, learn and inspire using the same tools you use everyday.
-      invite_cta: Signup and get early access to developer preview
 
   signups:
     index:
@@ -78,3 +66,10 @@ en:
 
   magic_login:
     expired: Login link expired! Please request a new one.
+
+  pundit:
+    default: 'You cannot perform this action.'
+    post_policy:
+      update?: 'You cannot edit this post!'
+      show?: 'You cannot view this post!'
+      create?: 'You cannot create posts!'

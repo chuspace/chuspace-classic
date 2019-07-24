@@ -6,16 +6,16 @@ namespace :chuspace do
     APP_BIN_DIR = Rails.root.join('bin')
     GIT_HOOKS_DIR = APP_BIN_DIR.join('git-hooks')
 
-    MOBIUS_ROOT = Rails.root.join('mobius')
+    MOBIUS_ROOT = Rails.root.join('extensions', 'mobius')
     MOBIUS_SRC = MOBIUS_ROOT.join('src')
     MOBIUS_BINARIES = %w[mobius/hooks/pre_receive mobius/hooks/post_receive mobius]
-    RUST_BINARIES = %w[fast_slug fast_markdown]
+    RUST_BINARIES = %w[extensions/fast_slug extensions/fast_markdown]
 
     FileUtils.mkdir_p(GIT_HOOKS_DIR)
 
     MOBIUS_BINARIES.each do |binary|
       binary_src_path = MOBIUS_SRC.join("#{binary}.cr")
-      binary_name = FasterPath.basename(binary).dasherize
+      binary_name = File.basename(binary).dasherize
 
       system "cd #{MOBIUS_ROOT} && crystal build #{binary_src_path} --release -p --no-debug -o #{binary_name}"
       binary_path = MOBIUS_ROOT.join(binary_name)

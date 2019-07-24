@@ -1,0 +1,33 @@
+lazy-image
+	@apply whitespace-no-wrap relative block
+
+	.image-container
+		@apply float-none relative
+
+	&.selected, &:hover
+		box-shadow: 0 0 0 3px theme('colors.blue')
+
+	img
+		width: 800px
+		min-height: 400px
+		&.ls-blur-up-is-loading, &.lazyload:not([src])
+			visibility: hidden
+
+	.ls-blur-up-img
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+		display: block
+		font-family: "blur-up: auto", "object-fit: cover"
+		object-fit: cover
+
+	.ls-blur-up-img
+		filter: blur(10px)
+		opacity: 1
+		transition: opacity 200ms, filter 300ms
+
+		&.ls-inview.ls-original-loaded
+			opacity: 0
+			filter: blur(5px)

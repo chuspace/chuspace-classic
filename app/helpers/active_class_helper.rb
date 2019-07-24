@@ -1,8 +1,14 @@
+# typed: false
 # frozen_string_literal: true
 
 module ActiveClassHelper
-  def tabs_class(controller)
-    default_class = 'tabs-tab-link'
-    current_page?(controller: controller) ? default_class + ' tabs-tab-active' : default_class
+  def tabs_class(path)
+    default_class = 'tabs__tab'
+    current_page?(path) ? default_class + ' tabs__tab--active' : default_class
+  end
+
+  def link_class(path)
+    default_class = 'link link--default'
+    current_page?(path) ? default_class + ' link--active font-bold' : default_class
   end
 end

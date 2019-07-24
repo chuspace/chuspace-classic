@@ -1,3 +1,4 @@
+# typed: ignore
 # frozen_string_literal: true
 
 class Settings::SshKeysController < ApplicationController
@@ -13,12 +14,12 @@ class Settings::SshKeysController < ApplicationController
   end
 
   def create
-    key = Current.user.ssh_keys.build(key_params)
+    @key = Current.user.ssh_keys.build(key_params)
 
-    if key.save
+    if @key.save
       redirect_to settings_ssh_keys_path, notice: t('settings.ssh_keys.create.success')
     else
-      render json: { errors: key.api_validation_errors }
+      render :new
     end
   end
 

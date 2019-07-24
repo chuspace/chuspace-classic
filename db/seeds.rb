@@ -1,11 +1,10 @@
+# typed: ignore
 # frozen_string_literal: true
 
 return unless Rails.env.development?
 
 fetched = 0
 total_count = nil
-page = 1
-requests = 0
 
 client = Octokit::Client.new(access_token: '84d476ccf244aff5f5bd5f51f006952785f9f883')
 queries = [
@@ -18,13 +17,21 @@ queries = [
   'ruby',
   'javascript',
   'go',
-  'python'
+  'python',
+  'c',
+  'c++',
+  'rust'
 ]
 
 queries.each do |query|
-  loop do
-    sleep 60 if requests > 0 && requests % 30 == 0
+  page = 1
+  fetched = 0
+  requests = 0
 
+  loop do
+    sleep 10 if requests > 0 && requests % 5 == 0
+
+    puts 'making query ' + query.to_s + page.to_s
     client.send(
       :search,
       'search/topics',
@@ -42,9 +49,9 @@ queries.each do |query|
     records = items.map { |item| { name: item.name, created_at: Time.now, updated_at: Time.now } }
     Topic.insert_all(records) if records.any?
 
-    break if total_count <= fetched
+    break if total_count < fetched
   rescue Octokit::UnprocessableEntity
-    next
+    break
   end
 end
 
@@ -68,7 +75,7 @@ end
 #         author: u,
 #         repository: repo,
 #         blob_name: slug + '.md',
-#         excerpt: Faker::Lorem.paragraph(100),
+#         summary: Faker::Lorem.paragraph(100),
 #         body: Faker::Lorem.paragraphs(100).join("\n"),
 #         topics: Faker::Lorem.words(4),
 #         status: %w[published draft archived].sample,

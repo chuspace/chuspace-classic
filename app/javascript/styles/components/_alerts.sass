@@ -1,16 +1,18 @@
 .alert-container
-  @apply absolute
-  bottom: 50px
+  @apply absolute w-full text-center z-50
+  height: 50px
+  top: 0
   right: 0
 
 .alert
   @apply block text-base font-bold
 
-.alert-info
-  @apply text-blue bg-blue-lighter
+.alert--notice,
+.alert--notice
+  @apply text-blue-dark bg-blue-lightest
 
-.alert-error
-  @apply text-red
+.alert--error
+  @apply text-red-dark bg-red-lightest
 
-.alert-success
-  @apply text-green
+.alert--success
+  @apply text-green-dark bg-green-lightest

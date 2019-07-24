@@ -20,6 +20,10 @@ html, body
   height: 100%
   @apply flex flex-col
 
+.content
+  @apply pb-32
+  margin-top: 60px
+
 h1, h2, h3, h4, h5, h6, strong
   @apply font-headings
   line-height: 1.15
@@ -27,46 +31,19 @@ h1, h2, h3, h4, h5, h6, strong
 code, pre
   @apply font-code
 
-.chu-editor
-  @apply font-content
-  letter-spacing: 0.015em
-  font-weight: 400
-  font-style: normal
-  font-size: 22px
-  color: rgba(0, 0, 0, 1)
-  line-height: 1.5
-  margin-bottom: 50px
-
-  blockquote
-    strong
-      font-style: italic
-
-  p
-    margin-bottom: 1rem
-
-  h1, h2, h3, h4, h5, h6, strong
-    margin-bottom: 1rem
-    @apply font-content
-
-
 ::-webkit-scrollbar
   width: 0px
   background: transparent
 
-
 .dialog-open
   overflow: hidden
 
-
 dialog::backdrop, dialog + .backdrop
-  background-color: rgba(255, 255, 255, 0.65)
+  background-color: rgba(0, 0, 0, 0.3)
 
 input
   font-family: inherit
   appearance: none
-
-.chu-editor
-  outline: none
 
 select:-webkit-autofill,
 textarea:-webkit-autofill,
@@ -98,3 +75,6 @@ summary
 
 button
   font-family: inherit
+
+input[type='file']
+  color: transparent

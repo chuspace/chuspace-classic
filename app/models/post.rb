@@ -1,68 +1,108 @@
+# typed: ignore
 # frozen_string_literal: true
 
 class Post < ApplicationRecord
-  SLUG_FORMAT = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+  include AASM
 
-  belongs_to :author, class_name: 'User'
-  belongs_to :repository
+  db_belongs_to :author, class_name: 'User'
+  db_belongs_to :repository
+  has_many :editions, dependent: :destroy
 
   has_ancestry
+  has_logidze
+
   enum status: { draft: 0, published: 1, archived: 2 }
 
-  validates_presence_of :title, :slug, :status
-  validates :title, :slug, length: { in: 10..100 }
-  validates :slug, format: { with: Regexp.new('\A' + SLUG_FORMAT.source + '\z') }
-  validates :excerpt, :slug, length: { in: 0..140 }, allow_blank: true
-  validates_uniqueness_of :slug, scope: %i[author_id]
-  validates :topics, length: { maximum: 3 }, allow_blank: true
-  validates :published_at, date: { allow_nil: true }
+  validates_presence_of :slug, :blob_path, :status
+  validates_presence_of :title, :summary, :topics, :body_html, :published_at, :blob_id, if: :published?
+  validates_length_of :title, :slug, maximum: 100, if: :published?
+  validates_length_of :summary, maximum: 140, if: :published?
+  validates_length_of :topics, maximum: 5, if: :published?
 
-  delegate :safe_content, to: :blob, allow_nil: true
+  validates_db_uniqueness_of :slug, scope: %i[repository_id]
+  validates_db_uniqueness_of :blob_path, scope: %i[repository_id]
 
-  before_validation :assign_slug
+  validates :slug, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
+  validates :published_at, date: true, if: :published?
 
-  alias repo repository
+  delegate :content, to: :blob, prefix: true
 
-  def self.url_for(blob_path)
-    blob_path = blob_path[1..-1] if blob_path.starts_with?('/')
-    post = find_by(blob_path: blob_path)
+  DEFAULT_TITLE = 'Untitled'
+  ROOT_PATH = 'posts/.keep'
 
-    if post
-      author = post.author
-      Rails.application.routes.url_helpers.post_show_path(author, post)
-    else
-      blob_path
+  aasm column: :status, enum: true do
+    state :draft, initial: true
+    state :published, :archived
+
+    event :publish do
+      transitions from: :draft, to: :published
+    end
+
+    event :archive do
+      transitions from: :published, to: :archived
+    end
+
+    event :unpublish do
+      transitions from: :published, to: :draft
     end
   end
 
   def blob
-    Git::Blob.all(repository, repository.commit_sha).find { |blob| blob.path == blob_path }
+    @blob ||= repository.blob_at(path: blob_path)
   end
 
   def to_param
     slug
   end
 
+  def slug=(val)
+    super(val&.to_slug&.to_ascii&.normalize&.to_s)
+  end
+
   def topics=(val)
-    super(val&.map { |topic| Slug.generate(topic) })
+    super(val&.map { |topic| topic&.to_slug&.to_ascii&.normalize&.to_s })
   end
 
   def parent=(val)
     case val
-    when String then super(Post.find_by_slug(Slug.generate(val)))
-    when Post then val
-    else nil
+    when String
+      super(Post.find_by_slug(val))
+    when Post
+      val
+    else
+      nil
     end
   end
 
-  def body_html
-    @body_html ||= FastMarkdown.to_html(safe_content).html_safe
+  def outdated?
+    blob_id != blob.id
   end
 
-  private
+  def published?
+    published_at.present?
+  end
 
-  def assign_slug
-    self.title = FastMarkdown.title(safe_content || '') if title.blank?
-    self.slug = title ? FastSlug.generate(title) : SecureRandom.uuid if slug.blank? || slug_changed?
+  def formatted_published_at
+    published_at.strftime('%b %d, %Y')
+  end
+
+  def topics_list
+    topics&.join(',')
+  end
+
+  def publish_label
+    published? ? 'Republish' : 'Publish'
+  end
+
+  def status_label
+    new_record? ? 'New' : 'Saved'
+  end
+
+  def tree
+    post_tree = [self] + ancestors.published + descendants.published
+
+    Post.sort_by_ancestry(post_tree) do |a, b|
+      [a.published_at, a.title] <=> [b.published_at, b.title]
+    end
   end
 end

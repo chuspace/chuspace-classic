@@ -1,3 +1,4 @@
+# typed: ignore
 # frozen_string_literal: true
 
 Rails.application.configure do
@@ -16,14 +17,14 @@ Rails.application.configure do
   config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
   config.cache_store =
-    :redis_cache_store, { driver: :hiredis, url: ENV.fetch('REDIS_CACHE_URL', RedisClient.config[:default_url]) }
+    :redis_cache_store, { driver: :hiredis, url: ENV.fetch('REDIS_URL', RedisClient.config[:default_url]) }
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  # config.action_controller.asset_host = 'http://assets.example.com'
+  # config.action_controller.asset_host = 'http://assets.chuspace.com'
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
@@ -31,11 +32,11 @@ Rails.application.configure do
 
   # Mount Action Cable outside main process or domain
   # config.action_cable.mount_path = nil
-  # config.action_cable.url = 'wss://example.com/cable'
-  # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
+  config.action_cable.url = 'wss://chuspace.com/cable'
+  config.action_cable.allowed_request_origins = [ 'https://chuspace.com', /https:\/\/chuspace.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  # config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -67,6 +68,10 @@ Rails.application.configure do
     authentication: :plain,
     enable_starttls_auto: true
   }
+
+  config.hosts << 'chuspace.com'
+  config.hosts << 'localhost'
+  config.hosts << '0.0.0.0'
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

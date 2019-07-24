@@ -1,14 +1,22 @@
 .list
   @apply p-0 m-0
 
-  .list-item
-    @apply py-4
+  .list__item
+    @apply py-4 block
 
-  .list-item-flex
+  .list__item--flex
     @apply flex justify-between items-center flex-wrap
 
-  .list-item-bordered
+  .list__item--bordered
     @apply border-b border-grey-lighter
 
-    &:first-child
-      @apply border-t
+.horizontal__list
+    li
+      list-style: none
+      display: inline
+
+      &:after
+        content: " \00b7"
+
+      &:last-child:after
+        content: none

@@ -38,7 +38,6 @@ rspec_failures.txt
 # Git
 authorized_keys.lock
 tags
-git.yml
 
 # git
 git-storage
@@ -62,5 +61,5 @@ bin/mobius
 bin/git-hooks/*
 
 # Env
-.env
+.env*
 public/uploads

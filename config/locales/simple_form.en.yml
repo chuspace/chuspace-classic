@@ -1,7 +1,7 @@
 en:
   form:
-    "yes": 'Yes'
-    "no": 'No'
+    'yes': 'Yes'
+    'no': 'No'
     required:
       text: required
       mark: '*'
@@ -14,9 +14,15 @@ en:
         nickname: Your username
     hints:
       defaults:
-        name: Nice to meet you
-        email: We’ll never share your email address with anyone
-        nickname: Should be all lowercase, unique, min 1 character, may have a single hyphen and no special characters.
+        name: nice to meet you
+        email: we’ll never share your email address with anyone
+        nickname: should be all lowercase, unique, min 1 character, may have a single hyphen and no special characters.
+        key: It must begin with 'ssh-ed25519', 'ssh-rsa', 'ssh-dss', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', or 'ecdsa-sha2-nistp521'. Please paste public key only.
+
+      post:
+        topics: Add or change tags (up to 5) so readers know what your story is about
+        parent: Select a parent post (optional) so readers can read previous posts
+        commit_message: Write a commit message that describes this change (optional)
 
     placeholders:
       defaults:

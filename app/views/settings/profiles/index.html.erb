@@ -1,4 +1,4 @@
-<div class="w-3/5 mx-auto mt-16">
+<div class="w-1/2 mx-auto mt-16">
   <%= render 'settings/navigation' %>
 
   <div class="profile" data-controller="profile">
@@ -9,9 +9,8 @@
       </p>
     </div>
 
-    <div class="form">
+    <div class="form border-t border-grey-lighter">
       <%= render 'form', user: @user %>
-      <div class="alert alert-success" data-target='profile.formSuccess'></div>
     </div>
   </div>
 </div>

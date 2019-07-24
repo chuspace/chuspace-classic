@@ -1,61 +1,21 @@
-<%= form_with model: @user, local: true do |f| %>
- <div class='input-container'>
-    <%= f.label :avatar, class: 'input-label block' %>
-    <%= component 'avatar', avatar_url: @user.avatar_url(:sm), initials: @user.initials, variant: :sm %>
-    <%= f.file_field(
-      :avatar,
-      class: 'input block mt-2'
-    ) %>
+<%= simple_form_for @user, remote: true do |f| %>
+  <div class='flex'>
+    <div class='avatar w-1/3 mt-8'>
+      <%= component 'avatar', avatar: @user.avatar, initials: @user.initials, variant: :xl, css_class: 'mx-auto' %>
+      <%= f.input :avatar, as: :file, label: false %>
+    </div>
+
+    <div class='form w-2/3'>
+      <%= f.input :name, placeholder: 'Your name', autofocus: true %>
+      <%= f.input :bio, placeholder: 'Bio', input_html: { data: { gramm: false } } %>
+      <%= f.input :url, placeholder: 'Website' %>
+      <%= f.input :location, placeholder: 'Location' %>
+      <%= f.input :company, placeholder: 'Company' %>
+    </div>
   </div>
 
-  <div class='input-container'>
-    <%= f.label :name, class: 'input-label block' %>
-    <%= f.text_field(
-      :name,
-      autocomplete: 'name',
-      placeholder: 'Full name',
-      autofocus: true,
-      class: 'input block'
-    ) %>
+  <div class='float-right mt-8'>
+    <%= f.submit 'Submit', class: 'button button--fill  mr-2 ' %>
+    <%= link_to 'Cancel', user_path(@user), class: 'button button--default inline-block' %>
   </div>
-
-  <div class='input-container'>
-    <%= f.label :bio, class: 'input-label block' %>
-    <%= f.text_area(
-      :bio,
-      placeholder: 'Bio',
-      rows: 4,
-      data: { gramm: false },
-      class: 'input block'
-    ) %>
-  </div>
-
-  <div class='input-container'>
-    <%= f.label :url, class: 'input-label block' %>
-    <%= f.text_field(
-      :url,
-      placeholder: 'Blog or websie url',
-      class: 'input block'
-    ) %>
-  </div>
-
-  <div class='input-container'>
-    <%= f.label :location, class: 'input-label block' %>
-    <%= f.text_field(
-      :location,
-      placeholder: 'Your location',
-      class: 'input block'
-    ) %>
-  </div>
-
-  <div class='input-container'>
-    <%= f.label :company, class: 'input-label block' %>
-    <%= f.text_field(
-      :company,
-      placeholder: 'Company',
-      class: 'input block'
-    ) %>
-  </div>
-
-  <%= f.submit('Submit', class: 'btn btn-black mt-4') %>
 <% end %>

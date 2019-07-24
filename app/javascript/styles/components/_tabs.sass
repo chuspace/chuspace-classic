@@ -1,14 +1,11 @@
 .tabs
   @apply flex border-b border-grey-lighter
 
-  .tabs-tab
-    @apply block mr-10 pb-6
+  .tabs__tab
+    @apply block mr-6 pb-2 text-grey
+
+    &--active
+      @apply text-blue font-semibold border-b border-blue
 
     &:last-child
       @apply mr-0
-
-    .tabs-tab-link
-      @apply text-grey
-
-      &.tabs-tab-active
-        @apply text-green font-semibold

@@ -1,3 +1,4 @@
+# typed: ignore
 # frozen_string_literal: true
 
 class AvatarComponent < Components::Component
@@ -10,7 +11,8 @@ class AvatarComponent < Components::Component
     xl: { size: 120, class: 'avatar--xl' }
   }.freeze
 
-  attribute :avatar_url
+  attribute :avatar
+  attribute :css_class, default: 'avatar'
   attribute :variant, default: :sm
   attribute :initials
   attribute :options, default: {}
@@ -23,16 +25,21 @@ class AvatarComponent < Components::Component
 
   def css_classes
     classes = [DEFAULT_CSS_CLASS]
-    classes << 'avatar__badge' if avatar_url.blank?
+    classes << 'avatar__badge' if avatar.blank?
     classes << VARIANTS[variant][:class]
+    classes << css_class
     classes.join(' ')
   end
 
   def render
-    avatar_url.blank? ? initials_badge : image
+    avatar.blank? ? initials_badge : image
   end
 
   private
+
+  def avatar_url
+    avatar.imgproxy_url(width: size, height: size, resizing_type: :fill, sharpen: 0.5)
+  end
 
   def initials_badge
     @view.content_tag(:div, initials, class: css_classes, **options)

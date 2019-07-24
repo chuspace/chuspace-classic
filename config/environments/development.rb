@@ -1,6 +1,5 @@
+# typed: ignore
 # frozen_string_literal: true
-
-Rails.application.routes.default_url_options = { host: 'chuspace.test' }
 
 Rails.application.configure do
   # Verifies that versions and hashed value of the package contents in the project's package.json
@@ -39,12 +38,14 @@ Rails.application.configure do
 
   # Use mailcatcher for delivery. View emails at http://localhost:1080/
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = { host: 'chuspace.test', port: 1_025 }
-  config.action_mailer.asset_host = 'http://chuspace.test'
-  config.hosts << 'chuspace.test'
+  config.action_mailer.smtp_settings = { host: 'localhost:5000', port: 1_025 }
+  config.action_mailer.asset_host = 'http://localhost:5000'
+  config.hosts << 'localhost:5000'
+  config.default_url_options = { host: 'localhost:5000' }
+  Rails.application.routes.default_url_options[:host] = 'localhost:5000'
 
   # Set default urls
-  config.action_mailer.default_url_options = { host: 'chuspace.test' }
+  config.action_mailer.default_url_options = { host: 'localhost:5000' }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
