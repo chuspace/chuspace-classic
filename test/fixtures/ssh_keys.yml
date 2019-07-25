@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: Mac
+  key: <%= SSHKey.generate.ssh_public_key %>
+  user: one
+  last_used: Time.now
+
+two:
+  title: Mac
+  key: <%= SSHKey.generate.ssh_public_key %>
+  user: two
+  last_used: Time.now

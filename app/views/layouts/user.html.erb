@@ -15,7 +15,7 @@
     <div class='content w-1/2 mx-auto'>
       <div class='pt-16'>
         <div class='flex justify-between items-center mb-5'>
-          <%= component 'avatar', avatar: @user.avatar, initials: @user.initials, variant: :xl %>
+          <%= component 'avatar', avatar: @user.s3_avatar_url, initials: @user.initials, variant: :xl %>
 
           <div class='flex-1 pl-4 w-75'>
             <h3><%= @user.name %></h3>

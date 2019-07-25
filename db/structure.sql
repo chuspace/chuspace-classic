@@ -277,7 +277,6 @@ CREATE TABLE public.editions (
 CREATE TABLE public.images (
     id BIGSERIAL PRIMARY KEY,
     name character varying,
-    image_data jsonb,
     blob_path character varying,
     repository_id bigint NOT NULL,
     user_id bigint NOT NULL,
@@ -354,7 +353,7 @@ CREATE TABLE public.users (
     name character varying DEFAULT ''::character varying NOT NULL,
     email character varying DEFAULT ''::character varying NOT NULL,
     nickname character varying DEFAULT ''::character varying NOT NULL,
-    avatar_data jsonb,
+    avatar character varying,
     auth_token character varying DEFAULT ''::character varying NOT NULL,
     bio character varying,
     company character varying,
@@ -395,9 +394,13 @@ CREATE INDEX index_editions_on_post_id ON public.editions USING btree (post_id);
 
 CREATE INDEX index_editions_on_status ON public.editions USING btree (status);
 
--- Name: index_images_on_blob_path_and_repository_id; Type: INDEX
+-- Name: index_images_on_blob_path; Type: INDEX
 
-CREATE UNIQUE INDEX index_images_on_blob_path_and_repository_id ON public.images USING btree (blob_path, repository_id);
+CREATE UNIQUE INDEX index_images_on_blob_path ON public.images USING btree (blob_path);
+
+-- Name: index_images_on_name_and_repository_id; Type: INDEX
+
+CREATE UNIQUE INDEX index_images_on_name_and_repository_id ON public.images USING btree (name, repository_id);
 
 -- Name: index_images_on_repository_id; Type: INDEX
 
@@ -551,3 +554,4 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190709114442'),
 ('20190713162331'),
 ('20190716075119');
+

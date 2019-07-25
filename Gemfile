@@ -20,7 +20,6 @@ gem 'aws-sdk-s3'
 gem 'imgproxy'
 gem 'mimemagic'
 gem 'fastimage'
-gem 'shrine'
 
 # Logging
 gem 'logidze'

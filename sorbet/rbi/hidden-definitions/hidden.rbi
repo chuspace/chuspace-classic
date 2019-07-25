@@ -7983,6 +7983,10 @@ module ActiveRecord
   extend ::T::Sig
 end
 
+module ActiveRecordCleanDbStructure
+  extend ::T::Sig
+end
+
 module ActiveSupport::ActionableError
   extend ::T::Sig
 end
@@ -9164,114 +9168,6 @@ module Ancestry
   extend ::T::Sig
 end
 
-module Anyway
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class Anyway::Config
-  include ::Anyway::Rails::Config
-end
-
-module Anyway::DynamicConfig::ClassMethods
-  extend ::T::Sig
-end
-
-module Anyway::DynamicConfig
-  extend ::T::Sig
-end
-
-module Anyway::Ext::DeepDup
-  extend ::T::Sig
-end
-
-module Anyway::Ext::DeepFreeze
-  extend ::T::Sig
-end
-
-module Anyway::Ext::Hash
-  extend ::T::Sig
-end
-
-module Anyway::Ext::StringSerialize
-  ARRAY_RXP = ::T.let(nil, ::T.untyped)
-end
-
-module Anyway::Ext::StringSerialize
-  extend ::T::Sig
-end
-
-module Anyway::Ext
-  extend ::T::Sig
-end
-
-module Anyway::OptparseConfig::ClassMethods
-  extend ::T::Sig
-end
-
-module Anyway::OptparseConfig
-  extend ::T::Sig
-end
-
-module Anyway::Rails::Config
-  extend ::T::Sig
-end
-
-module Anyway::Rails
-  extend ::T::Sig
-end
-
-module Anyway
-  extend ::T::Sig
-end
-
-class AppUploader
-  include ::Shrine::Plugins::PrettyLocation::InstanceMethods
-  include ::Shrine::Plugins::AddMetadata::InstanceMethods
-  include ::Shrine::Plugins::StoreDimensions::InstanceMethods
-  include ::Shrine::Plugins::DeleteRaw::InstanceMethods
-  include ::Shrine::Plugins::Hooks::InstanceMethods
-  include ::Shrine::Plugins::Logging::InstanceMethods
-end
-
-class AppUploader::Attacher
-  include ::Shrine::Plugins::Activerecord::AttacherMethods
-  include ::Shrine::Plugins::ValidationHelpers::AttacherMethods
-  include ::Shrine::Plugins::DeletePromoted::AttacherMethods
-  include ::Shrine::Plugins::RestoreCachedData::AttacherMethods
-  include ::Shrine::Plugins::CachedAttachmentData::AttacherMethods
-  include ::Shrine::Plugins::Recache::AttacherMethods
-  include ::Shrine::Plugins::DefaultStorage::AttacherMethods
-end
-
-class AppUploader::Attacher
-  extend ::Shrine::Plugins::Activerecord::AttacherClassMethods
-  extend ::Shrine::Plugins::ValidationHelpers::AttacherClassMethods
-end
-
-class AppUploader::Attachment
-  include ::Shrine::Plugins::Activerecord::AttachmentMethods
-  include ::Shrine::Plugins::CachedAttachmentData::AttachmentMethods
-end
-
-class AppUploader::Attachment
-end
-
-class AppUploader::UploadedFile
-  include ::Shrine::Plugins::StoreDimensions::FileMethods
-  include ::Shrine::Plugins::RefreshMetadata::FileMethods
-end
-
-class AppUploader::UploadedFile
-end
-
-class AppUploader
-  extend ::Shrine::Plugins::AddMetadata::ClassMethods
-  extend ::Shrine::Plugins::StoreDimensions::ClassMethods
-  extend ::Shrine::Plugins::DynamicStorage::ClassMethods
-  extend ::Shrine::Plugins::Logging::ClassMethods
-  def self.s3_options(); end
-end
-
 module ApplicationCable
 end
 
@@ -9549,30 +9445,6 @@ class AvatarComponent
 end
 
 class AvatarComponent
-end
-
-class AvatarUploader
-end
-
-class AvatarUploader::Attacher
-end
-
-class AvatarUploader::Attacher
-end
-
-class AvatarUploader::Attachment
-end
-
-class AvatarUploader::Attachment
-end
-
-class AvatarUploader::UploadedFile
-end
-
-class AvatarUploader::UploadedFile
-end
-
-class AvatarUploader
 end
 
 module AwesomeMethodArray
@@ -13379,15 +13251,6 @@ class ConnectionPool::Wrapper
   METHODS = ::T.let(nil, ::T.untyped)
 end
 
-class ContentDisposition
-  ATTACHMENT = ::T.let(nil, ::T.untyped)
-  DEFAULT_TO_ASCII = ::T.let(nil, ::T.untyped)
-  INLINE = ::T.let(nil, ::T.untyped)
-  RFC_5987_ESCAPED_CHAR = ::T.let(nil, ::T.untyped)
-  TRADITIONAL_ESCAPED_CHAR = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
 class Crass::Parser
   BLOCK_END_TOKENS = ::T.let(nil, ::T.untyped)
 end
@@ -13706,10 +13569,6 @@ module Dotenv::Substitutions
 end
 
 module Dotenv
-  extend ::T::Sig
-end
-
-module Down
   extend ::T::Sig
 end
 
@@ -21628,6 +21487,12 @@ class Image
 
   def autosave_associated_records_for_user(*args); end
 
+  def io(); end
+
+  def io=(io); end
+
+  def name=(file); end
+
   def valid_without_database_validations?(context=T.unsafe(nil)); end
   ROOT_PATH = ::T.let(nil, ::T.untyped)
 end
@@ -21678,30 +21543,6 @@ class ImageConstraint
 end
 
 class ImageConstraint
-end
-
-class ImageUploader
-end
-
-class ImageUploader::Attacher
-end
-
-class ImageUploader::Attacher
-end
-
-class ImageUploader::Attachment
-end
-
-class ImageUploader::Attachment
-end
-
-class ImageUploader::UploadedFile
-end
-
-class ImageUploader::UploadedFile
-end
-
-class ImageUploader
 end
 
 class ImagesController
@@ -22990,7 +22831,37 @@ module MiniScheduler
   extend ::T::Sig
 end
 
-MiniTest = Minitest
+module Minitest
+end
+
+MiniTest::Assertions = Minitest::Assertions
+
+MiniTest::Expectations = Minitest::Expectations
+
+MiniTest::Guard = Minitest::Guard
+
+MiniTest::Reportable = Minitest::Reportable
+
+MiniTest::Runnable = Minitest::Runnable
+
+class Minitest::Spec
+end
+
+module Minitest::Spec::DSL
+end
+
+MiniTest::Spec::DSL::InstanceMethods = Minitest::Spec::DSL::InstanceMethods
+
+module Minitest::Spec::DSL
+end
+
+class Minitest::Spec
+end
+
+MiniTest::Test = Minitest::Test
+
+module Minitest
+end
 
 module Minitest
   ENCS = ::T.let(nil, ::T.untyped)
@@ -27989,6 +27860,10 @@ end
 class PostReceiveJob
 end
 
+class Posts::EditionsController
+  include ::ActionView::Layouts::ClassMethods::LayoutConditions
+end
+
 class Posts::PublishController
   include ::ActionView::Layouts::ClassMethods::LayoutConditions
   def create(); end
@@ -31299,6 +31174,7 @@ class Rack::Attack::Safelist
 end
 
 module Rack::Attack::StoreProxy
+  PROXIES = ::T.let(nil, ::T.untyped)
 end
 
 class Rack::Attack::StoreProxy::ActiveSupportRedisStoreProxy
@@ -31310,6 +31186,22 @@ class Rack::Attack::StoreProxy::ActiveSupportRedisStoreProxy
 end
 
 class Rack::Attack::StoreProxy::ActiveSupportRedisStoreProxy
+  def self.handle?(store); end
+end
+
+class Rack::Attack::StoreProxy::DalliProxy
+  def delete(key); end
+
+  def increment(key, amount, options=T.unsafe(nil)); end
+
+  def initialize(client); end
+
+  def read(key); end
+
+  def write(key, value, options=T.unsafe(nil)); end
+end
+
+class Rack::Attack::StoreProxy::DalliProxy
   def self.handle?(store); end
 end
 
@@ -31355,6 +31247,7 @@ end
 
 module Rack::Attack::StoreProxy
   extend ::T::Sig
+  def self.build(store); end
 end
 
 class Rack::Attack::Throttle
@@ -36757,303 +36650,6 @@ module Shellwords
   def self.split(line); end
 end
 
-class Shrine
-  include ::Shrine::Plugins::DetermineMimeType::InstanceMethods
-  IO_METHODS = ::T.let(nil, ::T.untyped)
-end
-
-module Shrine::Attacher::InstanceMethods
-  extend ::T::Sig
-end
-
-module Shrine::Attachment::InstanceMethods
-  extend ::T::Sig
-end
-
-module Shrine::ClassMethods
-  extend ::T::Sig
-end
-
-module Shrine::InstanceMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Activerecord::AttacherClassMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Activerecord::AttacherMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Activerecord::AttachmentMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Activerecord
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::AddMetadata
-end
-
-module Shrine::Plugins::AddMetadata::ClassMethods
-  def add_metadata(name=T.unsafe(nil), **options, &block); end
-
-  def metadata_method(*names); end
-end
-
-module Shrine::Plugins::AddMetadata::ClassMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::AddMetadata::InstanceMethods
-  def extract_metadata(io, context=T.unsafe(nil)); end
-end
-
-module Shrine::Plugins::AddMetadata::InstanceMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::AddMetadata
-  extend ::T::Sig
-  def self.configure(uploader); end
-end
-
-module Shrine::Plugins::CachedAttachmentData::AttacherMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::CachedAttachmentData::AttachmentMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::CachedAttachmentData
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::DefaultStorage::AttacherMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::DefaultStorage
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::DeletePromoted::AttacherMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::DeletePromoted
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::DeleteRaw::InstanceMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::DeleteRaw
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::DetermineMimeType::ClassMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::DetermineMimeType::InstanceMethods
-  extend ::T::Sig
-end
-
-class Shrine::Plugins::DetermineMimeType::MimeTypeAnalyzer
-  MAGIC_NUMBER = ::T.let(nil, ::T.untyped)
-  SUPPORTED_TOOLS = ::T.let(nil, ::T.untyped)
-end
-
-module Shrine::Plugins::DetermineMimeType
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::DynamicStorage::ClassMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::DynamicStorage
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Hooks
-end
-
-module Shrine::Plugins::Hooks::InstanceMethods
-  def after_delete(*_); end
-
-  def after_process(*_); end
-
-  def after_store(*_); end
-
-  def after_upload(*_); end
-
-  def around_delete(*args); end
-
-  def around_process(*args); end
-
-  def around_store(*args); end
-
-  def around_upload(*args); end
-
-  def before_delete(*_); end
-
-  def before_process(*_); end
-
-  def before_store(*_); end
-
-  def before_upload(*_); end
-
-  def delete(io, context=T.unsafe(nil)); end
-
-  def store(io, context=T.unsafe(nil)); end
-
-  def upload(io, context=T.unsafe(nil)); end
-end
-
-module Shrine::Plugins::Hooks::InstanceMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Hooks
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Logging::ClassMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Logging::InstanceMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Logging
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::PrettyLocation::InstanceMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::PrettyLocation
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Recache
-end
-
-module Shrine::Plugins::Recache::AttacherMethods
-  def recache(); end
-
-  def save(); end
-end
-
-module Shrine::Plugins::Recache::AttacherMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::Recache
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::RefreshMetadata
-end
-
-module Shrine::Plugins::RefreshMetadata::FileMethods
-  def refresh_metadata!(context=T.unsafe(nil)); end
-end
-
-module Shrine::Plugins::RefreshMetadata::FileMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::RefreshMetadata
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::RestoreCachedData::AttacherMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::RestoreCachedData
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::StoreDimensions::ClassMethods
-  extend ::T::Sig
-end
-
-class Shrine::Plugins::StoreDimensions::DimensionsAnalyzer
-  SUPPORTED_TOOLS = ::T.let(nil, ::T.untyped)
-end
-
-module Shrine::Plugins::StoreDimensions::FileMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::StoreDimensions::InstanceMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::StoreDimensions
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::ValidationHelpers
-  DEFAULT_MESSAGES = ::T.let(nil, ::T.untyped)
-  FILESIZE_UNITS = ::T.let(nil, ::T.untyped)
-  PRETTY_FILESIZE = ::T.let(nil, ::T.untyped)
-end
-
-module Shrine::Plugins::ValidationHelpers::AttacherClassMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::ValidationHelpers::AttacherMethods
-  extend ::T::Sig
-end
-
-module Shrine::Plugins::ValidationHelpers
-  extend ::T::Sig
-end
-
-module Shrine::Plugins
-  extend ::T::Sig
-end
-
-module Shrine::Storage
-  extend ::T::Sig
-end
-
-class Shrine::UploadedFile
-  include ::Imgproxy::Extensions::Shrine
-end
-
-module Shrine::UploadedFile::InstanceMethods
-  extend ::T::Sig
-end
-
-module Shrine::VERSION
-  MAJOR = ::T.let(nil, ::T.untyped)
-  MINOR = ::T.let(nil, ::T.untyped)
-  PRE = ::T.let(nil, ::T.untyped)
-  STRING = ::T.let(nil, ::T.untyped)
-  TINY = ::T.let(nil, ::T.untyped)
-end
-
-module Shrine::VERSION
-  extend ::T::Sig
-end
-
-class Shrine
-  extend ::Shrine::Plugins::DetermineMimeType::ClassMethods
-end
-
 module Sidekiq
   DEFAULTS = ::T.let(nil, ::T.untyped)
   DEFAULT_WORKER_OPTIONS = ::T.let(nil, ::T.untyped)
@@ -39773,294 +39369,6 @@ class UrlValidator
 end
 
 class UrlValidator
-end
-
-class User
-  include ::User::GeneratedAttributeMethods
-  include ::User::GeneratedAssociationMethods
-  include ::Trackable
-  include ::DatabaseValidations::Rescuer
-  def after_add_for_contributions(); end
-
-  def after_add_for_contributions=(val); end
-
-  def after_add_for_contributions?(); end
-
-  def after_add_for_images(); end
-
-  def after_add_for_images=(val); end
-
-  def after_add_for_images?(); end
-
-  def after_add_for_posts(); end
-
-  def after_add_for_posts=(val); end
-
-  def after_add_for_posts?(); end
-
-  def after_add_for_ssh_keys(); end
-
-  def after_add_for_ssh_keys=(val); end
-
-  def after_add_for_ssh_keys?(); end
-
-  def after_remove_for_contributions(); end
-
-  def after_remove_for_contributions=(val); end
-
-  def after_remove_for_contributions?(); end
-
-  def after_remove_for_images(); end
-
-  def after_remove_for_images=(val); end
-
-  def after_remove_for_images?(); end
-
-  def after_remove_for_posts(); end
-
-  def after_remove_for_posts=(val); end
-
-  def after_remove_for_posts?(); end
-
-  def after_remove_for_ssh_keys(); end
-
-  def after_remove_for_ssh_keys=(val); end
-
-  def after_remove_for_ssh_keys?(); end
-
-  def autosave_associated_records_for_contributions(*args); end
-
-  def autosave_associated_records_for_images(*args); end
-
-  def autosave_associated_records_for_posts(*args); end
-
-  def autosave_associated_records_for_repository(); end
-
-  def autosave_associated_records_for_ssh_keys(*args); end
-
-  def before_add_for_contributions(); end
-
-  def before_add_for_contributions=(val); end
-
-  def before_add_for_contributions?(); end
-
-  def before_add_for_images(); end
-
-  def before_add_for_images=(val); end
-
-  def before_add_for_images?(); end
-
-  def before_add_for_posts(); end
-
-  def before_add_for_posts=(val); end
-
-  def before_add_for_posts?(); end
-
-  def before_add_for_ssh_keys(); end
-
-  def before_add_for_ssh_keys=(val); end
-
-  def before_add_for_ssh_keys?(); end
-
-  def before_remove_for_contributions(); end
-
-  def before_remove_for_contributions=(val); end
-
-  def before_remove_for_contributions?(); end
-
-  def before_remove_for_images(); end
-
-  def before_remove_for_images=(val); end
-
-  def before_remove_for_images?(); end
-
-  def before_remove_for_posts(); end
-
-  def before_remove_for_posts=(val); end
-
-  def before_remove_for_posts?(); end
-
-  def before_remove_for_ssh_keys(); end
-
-  def before_remove_for_ssh_keys=(val); end
-
-  def before_remove_for_ssh_keys?(); end
-
-  def initials(); end
-
-  def minio_client(); end
-
-  def regenerate_auth_token(); end
-
-  def repo(); end
-
-  def valid_without_database_validations?(context=T.unsafe(nil)); end
-
-  def validate_associated_records_for_contributions(*args); end
-
-  def validate_associated_records_for_images(*args); end
-
-  def validate_associated_records_for_posts(*args); end
-
-  def validate_associated_records_for_repository(*args); end
-
-  def validate_associated_records_for_ssh_keys(*args); end
-end
-
-module User::GeneratedAssociationMethods
-  def build_repository(*args, &block); end
-
-  def contribution_ids(); end
-
-  def contribution_ids=(ids); end
-
-  def contributions(); end
-
-  def contributions=(value); end
-
-  def create_repository(*args, &block); end
-
-  def create_repository!(*args, &block); end
-
-  def image_ids(); end
-
-  def image_ids=(ids); end
-
-  def images(); end
-
-  def images=(value); end
-
-  def post_ids(); end
-
-  def post_ids=(ids); end
-
-  def posts(); end
-
-  def posts=(value); end
-
-  def reload_repository(); end
-
-  def repository(); end
-
-  def repository=(value); end
-
-  def ssh_key_ids(); end
-
-  def ssh_key_ids=(ids); end
-
-  def ssh_keys(); end
-
-  def ssh_keys=(value); end
-end
-
-module User::GeneratedAssociationMethods
-  extend ::T::Sig
-end
-
-module User::GeneratedAttributeMethods
-end
-
-module User::GeneratedAttributeMethods
-  extend ::Mutex_m
-  extend ::T::Sig
-end
-
-class User
-  def self.after_add_for_contributions(); end
-
-  def self.after_add_for_contributions=(val); end
-
-  def self.after_add_for_contributions?(); end
-
-  def self.after_add_for_images(); end
-
-  def self.after_add_for_images=(val); end
-
-  def self.after_add_for_images?(); end
-
-  def self.after_add_for_posts(); end
-
-  def self.after_add_for_posts=(val); end
-
-  def self.after_add_for_posts?(); end
-
-  def self.after_add_for_ssh_keys(); end
-
-  def self.after_add_for_ssh_keys=(val); end
-
-  def self.after_add_for_ssh_keys?(); end
-
-  def self.after_remove_for_contributions(); end
-
-  def self.after_remove_for_contributions=(val); end
-
-  def self.after_remove_for_contributions?(); end
-
-  def self.after_remove_for_images(); end
-
-  def self.after_remove_for_images=(val); end
-
-  def self.after_remove_for_images?(); end
-
-  def self.after_remove_for_posts(); end
-
-  def self.after_remove_for_posts=(val); end
-
-  def self.after_remove_for_posts?(); end
-
-  def self.after_remove_for_ssh_keys(); end
-
-  def self.after_remove_for_ssh_keys=(val); end
-
-  def self.after_remove_for_ssh_keys?(); end
-
-  def self.before_add_for_contributions(); end
-
-  def self.before_add_for_contributions=(val); end
-
-  def self.before_add_for_contributions?(); end
-
-  def self.before_add_for_images(); end
-
-  def self.before_add_for_images=(val); end
-
-  def self.before_add_for_images?(); end
-
-  def self.before_add_for_posts(); end
-
-  def self.before_add_for_posts=(val); end
-
-  def self.before_add_for_posts?(); end
-
-  def self.before_add_for_ssh_keys(); end
-
-  def self.before_add_for_ssh_keys=(val); end
-
-  def self.before_add_for_ssh_keys?(); end
-
-  def self.before_remove_for_contributions(); end
-
-  def self.before_remove_for_contributions=(val); end
-
-  def self.before_remove_for_contributions?(); end
-
-  def self.before_remove_for_images(); end
-
-  def self.before_remove_for_images=(val); end
-
-  def self.before_remove_for_images?(); end
-
-  def self.before_remove_for_posts(); end
-
-  def self.before_remove_for_posts=(val); end
-
-  def self.before_remove_for_posts?(); end
-
-  def self.before_remove_for_ssh_keys(); end
-
-  def self.before_remove_for_ssh_keys=(val); end
-
-  def self.before_remove_for_ssh_keys?(); end
 end
 
 class UserDraftsController

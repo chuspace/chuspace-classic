@@ -3,11 +3,11 @@
 one:
   editor: one
   post: one
-  branch: MyString
+  branch_name: MyString
   status: 1
 
 two:
   editor: two
   post: two
-  branch: MyString
+  branch_name: MyString
   status: 1

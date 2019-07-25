@@ -10,17 +10,15 @@ class ImagesController < ApplicationController
   def create
     uploaded_file = params[:image]
     dirname = File.dirname(Image::ROOT_PATH)
-    io = uploaded_file.read
     name = uploaded_file.original_filename
     blob_path = File.join(dirname, name)
-    image = Current.user.images.find_or_initialize_by(user: Current.user, name: name, blob_path: blob_path, repository: Current.user.repository)
 
-    if image.new_record?
-      image.image = params[:image]
-      Current.user.repository.create_commit(content: io, message: "Added #{blob_path}", path: blob_path)
-    end
+    image = Current.user.images.find_or_initialize_by(name: name, blob_path: blob_path, repository: Current.user.repository)
+    S3Service.upload_image(io: uploaded_file, filename: blob_path, bucket: Current.user.nickname)
+    commit_message = image.new_record? ? "Added #{blob_path}" : "Updated #{blob_path}"
 
     if image.save
+      Current.user.repository.create_commit(content: uploaded_file.read, message: commit_message, path: blob_path)
       render json: { url: File.join('/', blob_path) }
     else
       render json: { created: false }, status: :unprocessable_entity
@@ -31,11 +29,13 @@ class ImagesController < ApplicationController
     image = Image.find_by(blob_path: request.path[1..-1])
 
     if image
-      redirect_to image.image.imgproxy_url(**builder_options)
+      redirect_to image.image_url(builder_options)
     else
       raise ActionController::RoutingError.new('Not Found')
     end
   end
+
+  private
 
   def blob_params
     params.permit(:path, :width, :quality)

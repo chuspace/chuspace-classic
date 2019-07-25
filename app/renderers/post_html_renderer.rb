@@ -54,7 +54,7 @@ class PostHtmlRenderer < CommonMarker::HtmlRenderer
     else
       blob_path = node.url.start_with?('/') ? node.url[1..-1] : node.url
       image = Current.user.images.find_by(blob_path: blob_path)
-      image_url = image ? image.image.imgproxy_url(width: 800, resizing_type: :fill) : node.url
+      image_url = image ? image.image_url(width: 800, resizing_type: :fill) : node.url
 
       out('<img src="', escape_href(image_url), '"')
       plain do

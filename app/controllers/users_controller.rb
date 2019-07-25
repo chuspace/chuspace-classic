@@ -25,16 +25,26 @@ class UsersController < ApplicationController
   end
 
   def update
-    user = Current.user
-    user.assign_attributes(update_params)
+    @user = Current.user
+    @user.assign_attributes(update_params.except(:avatar))
+    avatar = params[:user][:avatar]
 
-    if user.save
-      flash[:notice] = 'Profile successfully updated'
-    else
-      flast[:notice] = 'Something went wrong'
+    if avatar && avatar.is_a?(ActionDispatch::Http::UploadedFile)
+      image = FastImage.new(avatar.tempfile)
+      puts image.size.inspect
+      @user.errors.add(:avatar, :invalid_type) unless S3Service::ALLOWED_TYPES.include?(image.type)
+      @user.errors.add(:avatar, :invalid_size) if true
+
+      S3Service.upload_image(io: avatar, filename: avatar.original_filename, bucket: @user.nickname)
+      @user.avatar = "#{@user.nickname}/#{avatar.original_filename}"
     end
 
-    redirect_to settings_profiles_path
+    if @user.save
+      flash[:notice] = 'Profile successfully updated'
+      redirect_to settings_profiles_path
+    else
+      render 'settings/profile'
+    end
   end
 
   private

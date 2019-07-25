@@ -1,9 +1,7 @@
-
 default:
   name: Gaurav Tiwari
   email: gaurav@chuspace.com
   nickname: gaurav
-  avatar: <%= Rails.root.join('test/fixtures/files/avatar.jpeg') %>
   bio: Lorem ipsum
   company: chuspace
   location: Earth
@@ -14,7 +12,6 @@ parul:
   name: Parul Singh
   email: parul@chuspace.com
   nickname: parul
-  avatar: <%= Rails.root.join('test/fixtures/files/avatar.jpeg') %>
   bio: I am a rockstar
   company: chuspace
   location: Earth

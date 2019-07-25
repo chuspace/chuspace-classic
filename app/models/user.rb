@@ -2,8 +2,9 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  include AvatarUploader::Attachment.new(:avatar)
   include Trackable
+
+  AVATAR_MAX_SIZE = 5.megabytes
 
   validates :email, presence: true, email: true
   validates_db_uniqueness_of :email
@@ -19,8 +20,13 @@ class User < ApplicationRecord
   has_many :images, dependent: :destroy
   has_many :contributions, foreign_key: 'editor_id', class_name: 'Edition', dependent: :destroy
 
-  after_create :create_bucket
-  after_destroy :delete_bucket
+  after_create do
+    S3Service.create_bucket(bucket: nickname)
+  rescue Aws::S3::Errors::BucketAlreadyOwnedByYou
+    true
+  end
+
+  after_destroy -> { S3Service.delete_bucket(bucket: nickname) }
 
   alias repo repository
 
@@ -32,19 +38,11 @@ class User < ApplicationRecord
     name.gsub(/([[:upper:]])[[:lower:]]+/, '\1').tr(' ', '')
   end
 
-  def minio_client
-    @minio_client ||= Aws::S3::Client.new
+  def avatar_url(**options)
+    Imgproxy.url_for(s3_avatar_url, **options)
   end
 
-  private
-
-  def create_bucket
-    minio_client.create_bucket(bucket: nickname)
-  rescue Aws::S3::Errors::BucketAlreadyOwnedByYou
-    true
-  end
-
-  def delete_bucket
-    minio_client.delete_bucket(bucket: nickname)
+  def s3_avatar_url
+    "s3://#{avatar}"
   end
 end

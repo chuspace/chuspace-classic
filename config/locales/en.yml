@@ -11,6 +11,19 @@ en:
             key:
               invalid_key: is invalid. It must begin with 'ssh-ed25519', 'ssh-rsa', 'ssh-dss', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', or 'ecdsa-sha2-nistp521'. Please paste public key only.
               nonunique_key: is already taken
+
+        user:
+          attributes:
+            avatar:
+              invalid_type: is invalid. Please upload 'gif', 'png', 'jpg' images only.
+              invalid_size: is invalid. Please upload images size up to 5 MB.
+
+        image:
+          attributes:
+            name:
+              invalid_type: is invalid. Please upload 'gif', 'png', 'jpg' images only.
+              invalid_size: is invalid. Please upload images size up to 25 MB.
+
         post:
           attributes:
             slug:
