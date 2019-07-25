@@ -1,7 +1,8 @@
 chuspace: bundle exec rails s
 webpacker: dotenv -f ".env.development" bundle exec ./bin/webpack-dev-server
 # sshd: sudo /usr/sbin/sshd -e -D -f /Users/gaurav/personal/chuspace/openssh/sshd_config
-# lerna: lerna run --parallel transpile
 sidekiq: dotenv -f ".env.development" bundle exec sidekiq -C config/sidekiq.yml
 imgproxy: dotenv -f ".env.development" imgproxy
 minio: dotenv -f ".env.development" minio server /Users/gaurav/personal/chuspace/public/uploads
+anycable-go: anycable-go --headers=cookie,origin --host=localhost --port=3334
+anycable: dotenv -f ".env.development" bundle exec anycable

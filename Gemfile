@@ -38,8 +38,7 @@ gem 'webpacker', github: 'rails/webpacker'
 
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '>= 4.0'
-
-# caching
+gem 'anycable-rails'
 gem 'hiredis'
 
 # Auth

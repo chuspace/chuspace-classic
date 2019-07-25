@@ -6,7 +6,6 @@
       </li>
     </ul>
 
-
     <% if @posts.any? %>
       <% @posts.each do |post| %>
         <%= render 'posts/post', post: post %>

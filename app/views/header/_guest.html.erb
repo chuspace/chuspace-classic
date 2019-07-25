@@ -1,8 +1,4 @@
 <div class='flex items-center'>
   <span class='mr-2'><%= t('.signin_cta') %></span>
-  <% if Rails.env.production? %>
-    <%= link_to 'Sign in', '/no-signin-folks-for-now', class: 'link link--default font-bold underline' %>
-  <% else %>
-    <%= link_to 'Sign in', signins_url, class: 'link link--default font-bold underline' %>
-  <% end %>
+  <%= link_to 'Sign in', signins_url, class: 'link link--default font-bold underline' %>
 </div>

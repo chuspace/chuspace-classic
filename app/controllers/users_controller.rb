@@ -10,48 +10,28 @@ class UsersController < ApplicationController
     @posts = @user.posts.published.includes(:author).limit(20).order(id: :desc)
   end
 
-  def create
-    User.transaction do
-      @user = User.new(create_params)
-
-      if @user.save
-        @user.create_repository
-        LoginMailer.with(user: @user).send_magic_login.deliver_later
-        redirect_to root_path, notice: t('users.create.success')
-      else
-        render 'signups/index'
-      end
-    end
-  end
-
   def update
     @user = Current.user
     @user.assign_attributes(update_params.except(:avatar))
     avatar = params[:user][:avatar]
+    @user.avatar_blob = avatar.tempfile
 
-    if avatar && avatar.is_a?(ActionDispatch::Http::UploadedFile)
-      image = FastImage.new(avatar.tempfile)
-      puts image.size.inspect
-      @user.errors.add(:avatar, :invalid_type) unless S3Service::ALLOWED_TYPES.include?(image.type)
-      @user.errors.add(:avatar, :invalid_size) if true
-
-      S3Service.upload_image(io: avatar, filename: avatar.original_filename, bucket: @user.nickname)
-      @user.avatar = "#{@user.nickname}/#{avatar.original_filename}"
+    if avatar && @user.valid?
+      S3Service.upload_image(io: avatar, filename: avatar.original_filename, bucket: @user.s3_bucket_name)
+      @user.avatar = avatar.original_filename
+      @user.avatar_blob = nil
     end
 
     if @user.save
       flash[:notice] = 'Profile successfully updated'
       redirect_to settings_profiles_path
     else
-      render 'settings/profile'
+      @user = Current.user.reload
+      render 'settings/profiles/index', layout: 'application'
     end
   end
 
   private
-
-  def create_params
-    params.require(:user).permit(:email, :name, :nickname)
-  end
 
   def update_params
     params.require(:user).permit(:email, :name, :bio, :url, :location, :company, :avatar)

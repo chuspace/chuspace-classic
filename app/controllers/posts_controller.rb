@@ -26,7 +26,7 @@ class PostsController < ApplicationController
           redirect: edit_post_path(post),
           slug: post.slug,
           header: render_to_string(
-            partial: 'posts/header',
+            partial: 'posts/header/edit',
             format: :html,
             layout: false,
             locals: { post: post, params: params }

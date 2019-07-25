@@ -9,3 +9,5 @@
   editable
 >
 </chu-editor>
+
+<%= render 'posts/publish', post: @post if params[:controller] == 'posts/publish' %>

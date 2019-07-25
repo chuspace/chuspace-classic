@@ -15,6 +15,11 @@ class S3Service
     client.put_object(key: filename, content_type: content_type, bucket: bucket, body: io.read)
   end
 
+  sig { params(filename: String, bucket: String).returns(Seahorse::Client::Response) }
+  def self.remove_image(filename:, bucket:)
+    client.delete_object(key: filename, bucket: bucket)
+  end
+
   sig { params(bucket: String).returns(Seahorse::Client::Response) }
   def self.create_bucket(bucket:)
     client.create_bucket(bucket: bucket)

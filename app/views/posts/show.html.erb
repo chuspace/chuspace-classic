@@ -31,7 +31,12 @@
   </div>
 
   <div class='post__body w-3/4 mx-auto'>
-    <%= content_tag :p, 'You are viewing the unpublished version.', class: 'card card-default' if @post.author == Current.user && @post.outdated? %>
+    <% if policy(@post).publish? %>
+      <div class='flex justify-between items-center card card-default'>
+        <%= content_tag :p, 'You have made some changes to this post.' %>
+        <%= link_to 'Republish', post_publish_index_path(@post), class: 'button button--fill' %>
+      </div>
+    <% end %>
 
     <div class='chu-editor'>
       <%= @post.body_html.html_safe %>

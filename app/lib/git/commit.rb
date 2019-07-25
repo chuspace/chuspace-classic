@@ -88,7 +88,6 @@ module Git
 
         unless rugged.empty?
           rugged_ref = rugged.references[branch]
-          puts rugged_ref.inspect
           raise Repository::InvalidRef.new('Invalid branch name') unless rugged_ref
           last_commit = rugged_ref.target
           index.read_tree(last_commit.tree)

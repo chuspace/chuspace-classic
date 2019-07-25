@@ -9,6 +9,7 @@ class Posts::PublishController < ApplicationController
 
   def index
     @published_posts = Current.user.posts.where.not(id: @post.id)
+    render 'posts/edit'
   end
 
   def create

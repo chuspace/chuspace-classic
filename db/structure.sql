@@ -394,13 +394,9 @@ CREATE INDEX index_editions_on_post_id ON public.editions USING btree (post_id);
 
 CREATE INDEX index_editions_on_status ON public.editions USING btree (status);
 
--- Name: index_images_on_blob_path; Type: INDEX
+-- Name: index_images_on_blob_path_and_repository_id; Type: INDEX
 
-CREATE UNIQUE INDEX index_images_on_blob_path ON public.images USING btree (blob_path);
-
--- Name: index_images_on_name_and_repository_id; Type: INDEX
-
-CREATE UNIQUE INDEX index_images_on_name_and_repository_id ON public.images USING btree (name, repository_id);
+CREATE UNIQUE INDEX index_images_on_blob_path_and_repository_id ON public.images USING btree (blob_path, repository_id);
 
 -- Name: index_images_on_repository_id; Type: INDEX
 

@@ -2,14 +2,16 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  include Trackable
+  include Trackable, HasS3Bucket
 
   AVATAR_MAX_SIZE = 5.megabytes
+  attr_accessor :avatar_blob
 
   validates :email, presence: true, email: true
   validates_db_uniqueness_of :email
   validates :name, :nickname, presence: true
   validates_db_uniqueness_of :nickname
+  validate :should_have_correct_avatar_mime_type_size, if: -> { avatar_blob.present? }
   validates :nickname, length: { in: 1..39 }, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
 
   has_secure_token :auth_token
@@ -20,13 +22,7 @@ class User < ApplicationRecord
   has_many :images, dependent: :destroy
   has_many :contributions, foreign_key: 'editor_id', class_name: 'Edition', dependent: :destroy
 
-  after_create do
-    S3Service.create_bucket(bucket: nickname)
-  rescue Aws::S3::Errors::BucketAlreadyOwnedByYou
-    true
-  end
-
-  after_destroy -> { S3Service.delete_bucket(bucket: nickname) }
+  after_save :purge_old_avatar, if:  -> { saved_change_to_attribute?(:avatar) && attribute_before_last_save(:avatar) }
 
   alias repo repository
 
@@ -42,7 +38,14 @@ class User < ApplicationRecord
     Imgproxy.url_for(s3_avatar_url, **options)
   end
 
-  def s3_avatar_url
-    "s3://#{avatar}"
+  private
+
+  def should_have_correct_avatar_mime_type_size
+    errors.add(:avatar, :invalid_type) unless MimeMagic.by_magic(avatar_blob).image?
+    errors.add(:avatar, :invalid_size) if avatar_blob.size > AVATAR_MAX_SIZE
+  end
+
+  def purge_old_avatar
+    S3Service.remove_image(filename: attribute_before_last_save(:avatar), bucket: s3_bucket_name)
   end
 end

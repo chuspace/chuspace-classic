@@ -59,14 +59,12 @@ en:
   landingpage:
     index:
       heading: Blogging platform for developers
-      intro: Chuspace is a collaborative blogging platform made for developers. Publish, learn and inspire using the same tools you use everyday.
+      intro: Chuspace is a blogging platform built on Git. Publish, learn and collaborate using the tools you love and use everyday.
 
   signups:
     index:
       heading: Join Chuspace
-      intro: The best way to blog using the tools you love and use everyday
-      code_invalid: Your signup code is invalid. Please use the code sent in your email to signup.
-      code_accepted: Looks like you have already joined. Please login
+      intro: Blogging platform for developers
 
   signins:
     index:

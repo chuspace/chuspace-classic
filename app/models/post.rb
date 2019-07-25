@@ -74,6 +74,14 @@ class Post < ApplicationRecord
     end
   end
 
+  def title
+    super || draft.title || DEFAULT_TITLE
+  end
+
+  def summary
+    super || draft.summary
+  end
+
   def outdated?
     blob_id != blob.id
   end
@@ -104,5 +112,9 @@ class Post < ApplicationRecord
     Post.sort_by_ancestry(post_tree) do |a, b|
       [a.published_at, a.title] <=> [b.published_at, b.title]
     end
+  end
+
+  def draft
+    @draft ||= PostMarkdownService.call(content: blob.content)
   end
 end

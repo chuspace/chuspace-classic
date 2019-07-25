@@ -2,20 +2,20 @@
   # frozen_string_literal: true
 
   class PostPolicy < ApplicationPolicy
-    def edit?(action = '')
-      action != 'edit' && record.persisted? && user == record.author
+    def edit?
+      record.persisted? && user == record.author
     end
 
-    def contribute?(action = '')
-      action == 'show' && record.published? && user != record.author
+    def contribute?
+      record.published? && user != record.author
     end
 
-    def destroy?(action = '')
-      action == 'edit' && edit?
+    def destroy?
+      edit?
     end
 
-    def publish?(action = '')
-      action == 'edit' && edit?
+    def publish?
+      edit? && record.outdated?
     end
 
     def show?

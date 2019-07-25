@@ -12,7 +12,7 @@ SimpleForm.setup do |config|
 
     b.wrapper :input_container, tag: 'div', class: 'input__container' do |input|
       input.use :html5
-      input.use :placeholder
+      input.optional :placeholder
       input.optional :maxlength
       input.optional :minlength
       input.optional :pattern
