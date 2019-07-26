@@ -4,10 +4,8 @@
 module Mobius
   class PostReceiveController < BaseController
     def create
-      PostReceiveJob.perform_later(
-        author_id: params[:author_id], repository_id: params[:repository_id], commit_sha: params[:commit_sha]
-      )
-
+      payload = params.except(:token)
+      DeliveryBoy.deliver_async(payload.to_json, topic: 'repositories', partition_key: "repository_#{params[:repository_id]}_#{params[:author_id]}")
       self.status = 200
     end
   end

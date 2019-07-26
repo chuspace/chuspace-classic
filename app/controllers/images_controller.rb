@@ -8,18 +8,20 @@ class ImagesController < ApplicationController
   layout 'editor', only: %i[new edit]
 
   def create
-    image = Current.user.images.find_or_initialize_by(image_blob: params[:image], repository: Current.user.repository)
+    image_blob = params[:image]
+    name = image_blob.original_filename
+    blob_path = File.join(Image::ROOT_DIRNAME, name)
 
+    image = Current.user.images.find_or_initialize_by(blob_path: blob_path, repository: Current.user.repository)
+    image.image_blob = image_blob
+    image.name = name
 
     if image.valid?
-      commit_message = image.new_record? ? "Added #{blob_path}" : "Updated #{blob_path}"
-      user.repository.create_commit(content: io.read, message: commit_message, path: blob_path)
+      image.create_commit
       image.save
 
       render json: { url: image.blob_url }
     else
-      puts image.errors.inspect
-
       render json: { created: false }, status: :unprocessable_entity
     end
   end

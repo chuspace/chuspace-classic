@@ -1000,6 +1000,7 @@ class ActionView::Base
   extend ActionView::Helpers::SanitizeHelper::ClassMethods
   extend ActionView::Helpers::SanitizeHelper::ClassMethods
   extend ActionView::Helpers::UrlHelper::ClassMethods
+  include ActionCable::Helpers::ActionCableHelper
   include ActionView::Helpers
   include ActionView::Helpers::AssetTagHelper
   include ActionView::Helpers::FormHelper

@@ -69,37 +69,41 @@ class ActionCable::Server::Configuration
   def worker_pool_size; end
   def worker_pool_size=(arg0); end
 end
-class ActionCable::Server::Worker
-  def __callbacks; end
-  def __callbacks?; end
-  def _run_work_callbacks(&block); end
-  def _work_callbacks; end
-  def async_exec(receiver, *args, connection:, &block); end
-  def async_invoke(receiver, method, *args, connection: nil, &block); end
-  def connection; end
-  def connection=(obj); end
-  def executor; end
-  def halt; end
-  def initialize(max_size: nil); end
-  def invoke(receiver, method, *args, connection:, &block); end
-  def logger; end
-  def self.__callbacks; end
-  def self.__callbacks=(val); end
-  def self.__callbacks?; end
-  def self._work_callbacks; end
-  def self._work_callbacks=(value); end
-  def self.connection; end
-  def self.connection=(obj); end
-  def stopping?; end
-  def work(connection); end
-  extend ActiveSupport::Callbacks::ClassMethods
-  extend ActiveSupport::DescendantsTracker
-  include ActionCable::Server::Worker::ActiveRecordConnectionManagement
-  include ActiveSupport::Callbacks
+class ActionCable::Server::Base
+  def call(env); end
+  def config; end
+  def connection_identifiers; end
+  def disconnect(identifiers); end
+  def event_loop; end
+  def initialize(config: nil); end
+  def logger(*args, &block); end
+  def mutex; end
+  def pubsub; end
+  def remote_connections; end
+  def restart; end
+  def self.config; end
+  def self.config=(obj); end
+  def self.logger; end
+  def worker_pool; end
+  include ActionCable::Server::Broadcasting
+  include ActionCable::Server::Connections
 end
-module ActionCable::Server::Worker::ActiveRecordConnectionManagement
-  def with_database_connections; end
-  extend ActiveSupport::Concern
+module ActionCable::Connection
+  extend ActiveSupport::Autoload
+end
+class ActionCable::Connection::Subscriptions
+  def add(data); end
+  def connection; end
+  def execute_command(data); end
+  def find(data); end
+  def identifiers; end
+  def initialize(connection); end
+  def logger(*args, &block); end
+  def perform_action(data); end
+  def remove(data); end
+  def remove_subscription(subscription); end
+  def subscriptions; end
+  def unsubscribe_from_all; end
 end
 module ActionCable::Channel
   extend ActiveSupport::Autoload
@@ -176,7 +180,7 @@ class ActionCable::Channel::Base
   def initialize(connection, identifier, params = nil); end
   def logger(*args, &block); end
   def params; end
-  def perform_action(data); end
+  def perform_action(*arg0); end
   def periodic_timers=(val); end
   def processable_action?(action); end
   def reject; end
@@ -224,22 +228,127 @@ class ActionCable::Channel::Base
   include ActiveSupport::Callbacks
   include ActiveSupport::Rescuable
 end
-class ActionCable::Server::Base
-  def call(env); end
-  def config; end
-  def connection_identifiers; end
-  def disconnect(identifiers); end
-  def event_loop; end
-  def initialize(config: nil); end
-  def logger(*args, &block); end
-  def mutex; end
-  def pubsub; end
-  def remote_connections; end
-  def restart; end
-  def self.config; end
-  def self.config=(obj); end
-  def self.logger; end
+module ActionCable::Connection::Identification
+  def connection_gid(ids); end
+  def connection_identifier; end
+  extend ActiveSupport::Concern
+end
+module ActionCable::Connection::Identification::ClassMethods
+  def identified_by(*identifiers); end
+end
+module ActionCable::Connection::InternalChannel
+  def internal_channel; end
+  def process_internal_message(message); end
+  def subscribe_to_internal_channel; end
+  def unsubscribe_from_internal_channel; end
+  extend ActiveSupport::Concern
+end
+module ActionCable::Connection::Authorization
+  def reject_unauthorized_connection; end
+end
+class ActionCable::Connection::Authorization::UnauthorizedError < StandardError
+end
+class ActionCable::Connection::Base
+  def allow_request_origin?; end
+  def beat; end
+  def close; end
+  def cookies; end
+  def decode(websocket_message); end
+  def dispatch_websocket_message(websocket_message); end
+  def encode(cable_message); end
+  def env; end
+  def event_loop(*args, &block); end
+  def finished_request_message(reason = nil); end
+  def handle_close; end
+  def handle_open; end
+  def identifiers; end
+  def identifiers=(val); end
+  def identifiers?; end
+  def initialize(socket, identifiers: nil, subscriptions: nil); end
+  def invalid_request_message; end
+  def logger; end
+  def message_buffer; end
+  def new_tagged_logger; end
+  def on_close(reason, code); end
+  def on_error(message); end
+  def on_message(message); end
+  def on_open; end
+  def process; end
+  def protocol; end
+  def pubsub(*args, &block); end
+  def receive(websocket_message); end
+  def request; end
+  def respond_to_invalid_request; end
+  def respond_to_successful_request; end
+  def self.identifiers; end
+  def self.identifiers=(val); end
+  def self.identifiers?; end
+  def send_async(method, *arguments); end
+  def send_welcome_message; end
+  def server; end
+  def started_request_message; end
+  def statistics; end
+  def subscriptions; end
+  def successful_request_message; end
+  def transmit(cable_message); end
+  def websocket; end
   def worker_pool; end
-  include ActionCable::Server::Broadcasting
-  include ActionCable::Server::Connections
+  extend ActionCable::Connection::Identification::ClassMethods
+  include ActionCable::Connection::Authorization
+  include ActionCable::Connection::Identification
+  include ActionCable::Connection::InternalChannel
+end
+class ActionCable::RemoteConnections
+  def initialize(server); end
+  def server; end
+  def where(identifier); end
+end
+class ActionCable::RemoteConnections::RemoteConnection
+  def disconnect; end
+  def identifiers; end
+  def identifiers=(val); end
+  def identifiers?; end
+  def initialize(server, ids); end
+  def self.identifiers; end
+  def self.identifiers=(val); end
+  def self.identifiers?; end
+  def server; end
+  def set_identifier_instance_vars(ids); end
+  def valid_identifiers?(ids); end
+  extend ActionCable::Connection::Identification::ClassMethods
+  include ActionCable::Connection::Identification
+end
+class ActionCable::RemoteConnections::RemoteConnection::InvalidIdentifiersError < StandardError
+end
+class ActionCable::Server::Worker
+  def __callbacks; end
+  def __callbacks?; end
+  def _run_work_callbacks(&block); end
+  def _work_callbacks; end
+  def async_exec(receiver, *args, connection:, &block); end
+  def async_invoke(receiver, method, *args, connection: nil, &block); end
+  def connection; end
+  def connection=(obj); end
+  def executor; end
+  def halt; end
+  def initialize(max_size: nil); end
+  def invoke(receiver, method, *args, connection:, &block); end
+  def logger; end
+  def self.__callbacks; end
+  def self.__callbacks=(val); end
+  def self.__callbacks?; end
+  def self._work_callbacks; end
+  def self._work_callbacks=(value); end
+  def self.connection; end
+  def self.connection=(obj); end
+  def stopping?; end
+  def work(connection); end
+  extend ActiveSupport::Callbacks::ClassMethods
+  extend ActiveSupport::DescendantsTracker
+  include ActionCable::Server::Worker::ActiveRecordConnectionManagement
+  include ActiveSupport::Callbacks
+end
+module ActionCable::Server::Worker::ActiveRecordConnectionManagement
+  def with_database_connections; end
+  extend ActiveSupport::Concern
 end

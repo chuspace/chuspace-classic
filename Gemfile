@@ -51,8 +51,8 @@ gem 'aasm'
 gem 'oj'
 
 # Jobs
-gem 'sidekiq'
-gem 'mini_scheduler'
+gem 'racecar'
+gem 'delivery_boy'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false

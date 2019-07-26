@@ -2083,8 +2083,8 @@ module ActiveSupport::NumericWithFormat
   def to_s(format = nil, options = nil); end
 end
 class File < IO
-  def self.empty?(arg0); end
-  def self.split(arg0); end
+  def self.atomic_write(file_name, temp_dir = nil); end
+  def self.probe_stat_in(dir); end
 end
 module ActiveSupport::MarshalWithAutoloading
   def load(source, proc = nil); end
@@ -2212,6 +2212,18 @@ class ActiveSupport::Cache::Strategy::LocalCache::Middleware
   def name; end
   def new(app); end
 end
+module ActiveSupport::Rescuable
+  def handler_for_rescue(exception); end
+  def rescue_with_handler(exception); end
+  extend ActiveSupport::Concern
+end
+module ActiveSupport::Rescuable::ClassMethods
+  def constantize_rescue_handler_class(class_or_name); end
+  def find_rescue_handler(exception); end
+  def handler_for_rescue(exception, object: nil); end
+  def rescue_from(*klasses, with: nil, &block); end
+  def rescue_with_handler(exception, object: nil, visited_exceptions: nil); end
+end
 class ActiveSupport::Cache::MemoryStore < ActiveSupport::Cache::Store
   def cached_size(key, entry); end
   def cleanup(options = nil); end
@@ -2234,16 +2246,4 @@ class ActiveSupport::Digest
   def self.hash_digest_class; end
   def self.hash_digest_class=(klass); end
   def self.hexdigest(arg); end
-end
-module ActiveSupport::Rescuable
-  def handler_for_rescue(exception); end
-  def rescue_with_handler(exception); end
-  extend ActiveSupport::Concern
-end
-module ActiveSupport::Rescuable::ClassMethods
-  def constantize_rescue_handler_class(class_or_name); end
-  def find_rescue_handler(exception); end
-  def handler_for_rescue(exception, object: nil); end
-  def rescue_from(*klasses, with: nil, &block); end
-  def rescue_with_handler(exception, object: nil, visited_exceptions: nil); end
 end

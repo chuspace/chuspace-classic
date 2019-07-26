@@ -13,10 +13,12 @@ module Mobius
         "Content-Type" => "application/json"
       }
 
-      getter commit_sha : String
+      getter old_commit_sha : String
+      getter new_commit_sha : String
+      getter ref : String
 
       def initialize
-        _, @commit_sha, ref = STDIN.gets_to_end.split(" ", remove_empty: true)
+        @old_commit_sha, @new_commit_sha, ref = STDIN.gets_to_end.split(" ", remove_empty: true)
         exit 0 unless ref.try &.strip == DEFAULT_REF
       end
 
@@ -33,7 +35,9 @@ module Mobius
             "token" => token,
             "repository_id" => repo_id,
             "author_id" => user_id,
-            "commit_sha" => commit_sha
+            "old_commit_sha" => old_commit_sha,
+            "new_commit_sha" => new_commit_sha,
+            "ref" => ref
           }
         )
       end

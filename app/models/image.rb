@@ -13,12 +13,15 @@ class Image < ApplicationRecord
 
   validates_presence_of :name, :blob_path
   validates_db_uniqueness_of :blob_path, scope: %i[repository_id]
-  validate :should_have_correct_mime_type_and_size, if: -> { image_blob.present? }
+  validate :should_have_correct_mime_type_and_size
 
-  before_validation :assign_metadata_from_blob, on: %i[create update]
-  before_save :upload_image, if: -> { image_blob.present? }
+  before_save :upload_image
   after_save :purge_old_image, if:  -> { saved_change_to_attribute?(:image) && attribute_before_last_save(:image) }
   after_destroy :purge_image
+
+  def blob
+    @blob ||= repository.rugged.blob_at(repository.commit_sha, blob_path)
+  end
 
   def blob_url
     File.join('/', blob_path)
@@ -32,20 +35,12 @@ class Image < ApplicationRecord
     Imgproxy.url_for(s3_url, **options)
   end
 
-  private
-
-  def assign_metadata_from_blob
-    case image_blob
-    when ActionDispatch::Http::UploadedFile
-      self.name = image_blob.original_filename
-      self.blob_path = File.join(ROOT_DIRNAME, name)
-    when Git::Blob
-      self.name = image_blob.name
-      self.blob_path = File.join(ROOT_DIRNAME, name)
-    else
-      errors.add(:name, :invalid_type)
-    end
+  def create_commit
+    commit_message = persisted? ? "Updated #{blob_path}" : "Added #{blob_path}"
+    repository.create_commit(content: image_blob.read, message: commit_message, path: blob_path)
   end
+
+  private
 
   def upload_image
     S3Service.upload_image(io: image_blob, filename: blob_path, bucket: user.nickname)

@@ -1,13 +1,16 @@
-# typed: ignore
+# typed: false
 # frozen_string_literal: true
 
-class PostReceiveJob < ApplicationJob
-  queue_as :critical
-  attr_reader :repository, :author, :commit_sha
+class PostReceiveConsumer < Racecar::Consumer
+  subscribes_to 'repositories'
 
-  def perform(author_id:, repository_id:, commit_sha:)
+  attr_reader :repository, :author, :old_commit_sha, :new_commit_sha, :ref
+
+  def process(message)
     @author = User.find_by(id: author_id)
-    @commit_sha = commit_sha
+    @old_commit_sha = old_commit_sha
+    @new_commit_sha = new_commit_sha
+    @ref = ref
     @repository = Repository.find_by(id: repository_id, author: author)
 
     unless repository
@@ -16,10 +19,11 @@ class PostReceiveJob < ApplicationJob
     end
 
     author.transaction do
-      old_commit = repository.lookup(repository.last_synced_commit_sha)
-      new_commit = repository.lookup(commit_sha)
+      old_commit = repository.lookup(old_commit_sha)
+      new_commit = repository.lookup(new_commit_sha)
+
       diff = old_commit.diff(new_commit).find_similar!(renames: true)
-      blobs ||= Git::Blob.all(repository, commit_sha)
+      blobs ||= Git::Blob.all(repository, new_commit_sha)
 
       diff.deltas.each do |delta|
         next unless File.extname(delta.new_file[:path] || delta.old_file[:path]).end_with?('.md')
@@ -36,16 +40,6 @@ class PostReceiveJob < ApplicationJob
         when :deleted
           author.posts.find_by(blob_path: delta.old_file[:path])&.destroy
         end
-      end
-
-      if repository.update(last_synced_commit_sha: last_synced_commit_sha)
-        Rails.logger.error(
-          "Repository sync success: commit-#{commit_sha} author-#{author.id} repository-#{repository.id}"
-        )
-      else
-        Rails.logger.error(
-          "Repository sync failed: commit-#{commit_sha} author-#{author.id} repository-#{repository.id}"
-        )
       end
     end
   end

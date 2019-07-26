@@ -24,9 +24,6 @@ module Chuspace
     config.generators.system_tests = nil
     config.autoloader == :zeitwerk
 
-    # Configure sidekiq as background job adapter on staging and production
-    config.active_job.queue_adapter = :sidekiq
-
     # Setup custom path for mailer previews
     config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
 

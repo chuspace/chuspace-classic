@@ -313,7 +313,7 @@ CREATE TABLE public.repositories (
     full_name character varying NOT NULL,
     path character varying NOT NULL,
     author_id bigint NOT NULL,
-    commit_sha character varying NOT NULL,
+    last_synced_commit_sha character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -442,13 +442,13 @@ CREATE INDEX index_posts_on_topics ON public.posts USING gin (topics);
 
 CREATE INDEX index_repositories_on_author_id ON public.repositories USING btree (author_id);
 
--- Name: index_repositories_on_commit_sha; Type: INDEX
-
-CREATE UNIQUE INDEX index_repositories_on_commit_sha ON public.repositories USING btree (commit_sha);
-
 -- Name: index_repositories_on_full_name; Type: INDEX
 
 CREATE UNIQUE INDEX index_repositories_on_full_name ON public.repositories USING btree (full_name);
+
+-- Name: index_repositories_on_last_synced_commit_sha; Type: INDEX
+
+CREATE UNIQUE INDEX index_repositories_on_last_synced_commit_sha ON public.repositories USING btree (last_synced_commit_sha);
 
 -- Name: index_repositories_on_name_and_author_id; Type: INDEX
 

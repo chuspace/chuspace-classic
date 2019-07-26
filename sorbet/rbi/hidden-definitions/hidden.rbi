@@ -519,9 +519,6 @@ module ActionCable::Channel
   extend ::T::Sig
 end
 
-module ActionCable::Connection
-end
-
 module ActionCable::Connection::Assertions
   def assert_reject_connection(&block); end
 end
@@ -531,79 +528,11 @@ module ActionCable::Connection::Assertions
 end
 
 module ActionCable::Connection::Authorization
-  def reject_unauthorized_connection(); end
-end
-
-class ActionCable::Connection::Authorization::UnauthorizedError
-end
-
-class ActionCable::Connection::Authorization::UnauthorizedError
-end
-
-module ActionCable::Connection::Authorization
   extend ::T::Sig
 end
 
 class ActionCable::Connection::Base
-  include ::ActionCable::Connection::Identification
-  include ::ActionCable::Connection::InternalChannel
-  include ::ActionCable::Connection::Authorization
-  def beat(); end
-
-  def close(reason: T.unsafe(nil), reconnect: T.unsafe(nil)); end
-
-  def dispatch_websocket_message(websocket_message); end
-
-  def env(); end
-
-  def event_loop(*args, &block); end
-
-  def identifiers(); end
-
-  def identifiers=(val); end
-
-  def identifiers?(); end
-
-  def initialize(server, env, coder: T.unsafe(nil)); end
-
-  def logger(); end
-
-  def on_close(reason, code); end
-
-  def on_error(message); end
-
-  def on_message(message); end
-
-  def on_open(); end
-
-  def process(); end
-
-  def protocol(); end
-
-  def pubsub(*args, &block); end
-
-  def receive(websocket_message); end
-
-  def send_async(method, *arguments); end
-
-  def server(); end
-
-  def statistics(); end
-
-  def subscriptions(); end
-
-  def transmit(cable_message); end
-
-  def worker_pool(); end
-end
-
-class ActionCable::Connection::Base
-  extend ::ActionCable::Connection::Identification::ClassMethods
-  def self.identifiers(); end
-
-  def self.identifiers=(val); end
-
-  def self.identifiers?(); end
+  LOG_TAGS_IDENTIFIER = ::T.let(nil, ::T.untyped)
 end
 
 class ActionCable::Connection::ClientSocket
@@ -642,28 +571,15 @@ class ActionCable::Connection::ClientSocket
   def self.secure_request?(env); end
 end
 
-module ActionCable::Connection::Identification
-  def connection_identifier(); end
-end
-
-module ActionCable::Connection::Identification::ClassMethods
-  def identified_by(*identifiers); end
-end
-
 module ActionCable::Connection::Identification::ClassMethods
   extend ::T::Sig
 end
 
 module ActionCable::Connection::Identification
-  extend ::ActiveSupport::Concern
   extend ::T::Sig
 end
 
 module ActionCable::Connection::InternalChannel
-end
-
-module ActionCable::Connection::InternalChannel
-  extend ::ActiveSupport::Concern
   extend ::T::Sig
 end
 
@@ -716,29 +632,6 @@ class ActionCable::Connection::StreamEventLoop
 end
 
 class ActionCable::Connection::StreamEventLoop
-end
-
-class ActionCable::Connection::Subscriptions
-  def add(data); end
-
-  def execute_command(data); end
-
-  def identifiers(); end
-
-  def initialize(connection); end
-
-  def logger(*args, &block); end
-
-  def perform_action(data); end
-
-  def remove(data); end
-
-  def remove_subscription(subscription); end
-
-  def unsubscribe_from_all(); end
-end
-
-class ActionCable::Connection::Subscriptions
 end
 
 class ActionCable::Connection::TaggedLoggerProxy
@@ -835,7 +728,6 @@ class ActionCable::Connection::WebSocket
 end
 
 module ActionCable::Connection
-  extend ::ActiveSupport::Autoload
   extend ::T::Sig
 end
 
@@ -847,46 +739,8 @@ module ActionCable::Helpers
   extend ::T::Sig
 end
 
-class ActionCable::RemoteConnections
-  def initialize(server); end
-
-  def server(); end
-
-  def where(identifier); end
-end
-
 class ActionCable::RemoteConnections::RemoteConnection
   include ::ActionCable::Connection::InternalChannel
-  include ::ActionCable::Connection::Identification
-  def disconnect(); end
-
-  def identifiers(); end
-
-  def identifiers=(val); end
-
-  def identifiers?(); end
-
-  def initialize(server, ids); end
-
-  def server(); end
-end
-
-class ActionCable::RemoteConnections::RemoteConnection::InvalidIdentifiersError
-end
-
-class ActionCable::RemoteConnections::RemoteConnection::InvalidIdentifiersError
-end
-
-class ActionCable::RemoteConnections::RemoteConnection
-  extend ::ActionCable::Connection::Identification::ClassMethods
-  def self.identifiers(); end
-
-  def self.identifiers=(val); end
-
-  def self.identifiers?(); end
-end
-
-class ActionCable::RemoteConnections
 end
 
 module ActionCable::Server::Broadcasting
@@ -4120,7 +3974,6 @@ end
 class ActionView::Base
   include ::ActionView::Context
   include ::ERB::Util
-  include ::ActionCable::Helpers::ActionCableHelper
   include ::Webpacker::Helper
   NULL = ::T.let(nil, ::T.untyped)
 end
@@ -5302,46 +5155,6 @@ class ActiveJob::QueueAdapters::InlineAdapter
 end
 
 class ActiveJob::QueueAdapters::InlineAdapter
-end
-
-class ActiveJob::QueueAdapters::SidekiqAdapter
-  def enqueue(job); end
-
-  def enqueue_at(job, timestamp); end
-end
-
-class ActiveJob::QueueAdapters::SidekiqAdapter::JobWrapper
-  include ::Sidekiq::Worker
-  def perform(job_data); end
-
-  def sidekiq_options_hash(); end
-
-  def sidekiq_options_hash=(sidekiq_options_hash); end
-
-  def sidekiq_retries_exhausted_block(); end
-
-  def sidekiq_retries_exhausted_block=(sidekiq_retries_exhausted_block); end
-
-  def sidekiq_retry_in_block(); end
-
-  def sidekiq_retry_in_block=(sidekiq_retry_in_block); end
-end
-
-class ActiveJob::QueueAdapters::SidekiqAdapter::JobWrapper
-  def self.sidekiq_options_hash(); end
-
-  def self.sidekiq_options_hash=(val); end
-
-  def self.sidekiq_retries_exhausted_block(); end
-
-  def self.sidekiq_retries_exhausted_block=(val); end
-
-  def self.sidekiq_retry_in_block(); end
-
-  def self.sidekiq_retry_in_block=(val); end
-end
-
-class ActiveJob::QueueAdapters::SidekiqAdapter
 end
 
 class ActiveJob::QueueAdapters::TestAdapter
@@ -9165,6 +8978,128 @@ module Ancestry::MaterializedPath
 end
 
 module Ancestry
+  extend ::T::Sig
+end
+
+module AnyCable
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module AnyCable::BroadcastAdapters
+  extend ::T::Sig
+end
+
+class AnyCable::CommandMessage
+  include ::Google::Protobuf::MessageExts
+end
+
+class AnyCable::CommandResponse
+  include ::Google::Protobuf::MessageExts
+end
+
+module AnyCable::Compatibility
+  extend ::T::Sig
+end
+
+class AnyCable::Config
+  SENTINEL_RXP = ::T.let(nil, ::T.untyped)
+end
+
+class AnyCable::ConnectionRequest
+  include ::Google::Protobuf::MessageExts
+end
+
+class AnyCable::ConnectionResponse
+  include ::Google::Protobuf::MessageExts
+end
+
+class AnyCable::DisconnectRequest
+  include ::Google::Protobuf::MessageExts
+end
+
+class AnyCable::DisconnectResponse
+  include ::Google::Protobuf::MessageExts
+end
+
+module AnyCable::ExceptionsHandling
+  extend ::T::Sig
+end
+
+class AnyCable::HealthServer
+  FAILURE_RESPONSE = ::T.let(nil, ::T.untyped)
+  SUCCESS_RESPONSE = ::T.let(nil, ::T.untyped)
+end
+
+module AnyCable::RPC
+  extend ::T::Sig
+end
+
+module AnyCable::Rails
+  ADAPTER_ALIASES = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module AnyCable::Rails::Middlewares
+  extend ::T::Sig
+end
+
+module AnyCable::Rails
+  extend ::T::Sig
+end
+
+module AnyCable::Refinements::Subscriptions
+  extend ::T::Sig
+end
+
+module AnyCable::Refinements
+  extend ::T::Sig
+end
+
+module AnyCable::Status
+  ERROR = ::T.let(nil, ::T.untyped)
+  FAILURE = ::T.let(nil, ::T.untyped)
+  SUCCESS = ::T.let(nil, ::T.untyped)
+end
+
+module AnyCable::Status
+  extend ::T::Sig
+end
+
+module AnyCable
+  extend ::T::Sig
+end
+
+Anycable = AnyCable
+
+module Anyway
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module Anyway::Ext::DeepDup
+  extend ::T::Sig
+end
+
+module Anyway::Ext::DeepFreeze
+  extend ::T::Sig
+end
+
+module Anyway::Ext::Hash
+  extend ::T::Sig
+end
+
+module Anyway::Ext::StringSerialize
+  ARRAY_RXP = ::T.let(nil, ::T.untyped)
+end
+
+module Anyway::Ext::StringSerialize
+  extend ::T::Sig
+end
+
+module Anyway::Ext
+  extend ::T::Sig
+end
+
+module Anyway
   extend ::T::Sig
 end
 
@@ -13242,15 +13177,6 @@ end
 
 ConditionVariable = Thread::ConditionVariable
 
-class ConnectionPool
-  DEFAULTS = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class ConnectionPool::Wrapper
-  METHODS = ::T.let(nil, ::T.untyped)
-end
-
 class Crass::Parser
   BLOCK_END_TOKENS = ::T.let(nil, ::T.untyped)
 end
@@ -13461,12 +13387,34 @@ class Delegator
   def self.public_api(); end
 end
 
+module DeliveryBoy
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module DeliveryBoy
+  extend ::T::Sig
+end
+
 module DidYouMean
   extend ::T::Sig
 end
 
 class Digest::Base
   extend ::T::Sig
+end
+
+class Digest::CRC
+  INIT_CRC = ::T.let(nil, ::T.untyped)
+  TABLE = ::T.let(nil, ::T.untyped)
+  WIDTH = ::T.let(nil, ::T.untyped)
+  XOR_MASK = ::T.let(nil, ::T.untyped)
+end
+
+class Digest::CRC32
+  INIT_CRC = ::T.let(nil, ::T.untyped)
+  TABLE = ::T.let(nil, ::T.untyped)
+  WIDTH = ::T.let(nil, ::T.untyped)
+  XOR_MASK = ::T.let(nil, ::T.untyped)
 end
 
 class Digest::Class
@@ -15318,15 +15266,13 @@ end
 
 class File
   extend ::T::Sig
-  def self.atomic_write(file_name, temp_dir=T.unsafe(nil)); end
+  def self.empty?(_); end
 
   def self.exists?(_); end
 
   def self.lutime(*_); end
 
   def self.mkfifo(*_); end
-
-  def self.probe_stat_in(dir); end
 
 end
 
@@ -15707,6 +15653,199 @@ module GC
   def self.verify_internal_consistency(); end
 
   def self.verify_transient_heap_internal_consistency(); end
+end
+
+module GRPC
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class GRPC::ActiveCall
+  include ::GRPC::Core::CallOps
+end
+
+class GRPC::BadStatus
+  include ::GRPC::Core::StatusCodes
+end
+
+class GRPC::BidiCall
+  include ::GRPC::Core::CallOps
+  include ::GRPC::Core::StatusCodes
+  END_OF_READS = ::T.let(nil, ::T.untyped)
+  END_OF_WRITES = ::T.let(nil, ::T.untyped)
+end
+
+class GRPC::ClientStub
+  include ::GRPC::Core::StatusCodes
+  DEFAULT_TIMEOUT = ::T.let(nil, ::T.untyped)
+end
+
+class GRPC::Core::CallError
+end
+
+class GRPC::Core::CallError
+end
+
+module GRPC::Core::CallOps
+  RECV_CLOSE_ON_SERVER = ::T.let(nil, ::T.untyped)
+  RECV_INITIAL_METADATA = ::T.let(nil, ::T.untyped)
+  RECV_MESSAGE = ::T.let(nil, ::T.untyped)
+  RECV_STATUS_ON_CLIENT = ::T.let(nil, ::T.untyped)
+  SEND_CLOSE_FROM_CLIENT = ::T.let(nil, ::T.untyped)
+  SEND_INITIAL_METADATA = ::T.let(nil, ::T.untyped)
+  SEND_MESSAGE = ::T.let(nil, ::T.untyped)
+  SEND_STATUS_FROM_SERVER = ::T.let(nil, ::T.untyped)
+end
+
+module GRPC::Core::CallOps
+  extend ::T::Sig
+end
+
+class GRPC::Core::Channel
+  ENABLE_CENSUS = ::T.let(nil, ::T.untyped)
+  MAX_CONCURRENT_STREAMS = ::T.let(nil, ::T.untyped)
+  MAX_MESSAGE_LENGTH = ::T.let(nil, ::T.untyped)
+  SSL_TARGET = ::T.let(nil, ::T.untyped)
+end
+
+module GRPC::Core::ConnectivityStates
+  CONNECTING = ::T.let(nil, ::T.untyped)
+  FATAL_FAILURE = ::T.let(nil, ::T.untyped)
+  IDLE = ::T.let(nil, ::T.untyped)
+  READY = ::T.let(nil, ::T.untyped)
+  TRANSIENT_FAILURE = ::T.let(nil, ::T.untyped)
+end
+
+module GRPC::Core::ConnectivityStates
+  extend ::T::Sig
+end
+
+class GRPC::Core::MetadataArray
+end
+
+class GRPC::Core::MetadataArray
+end
+
+module GRPC::Core::MetadataKeys
+  COMPRESSION_REQUEST_ALGORITHM = ::T.let(nil, ::T.untyped)
+end
+
+module GRPC::Core::MetadataKeys
+  extend ::T::Sig
+end
+
+class GRPC::Core::OutOfTime
+end
+
+class GRPC::Core::OutOfTime
+end
+
+module GRPC::Core::PropagateMasks
+  CANCELLATION = ::T.let(nil, ::T.untyped)
+  CENSUS_STATS_CONTEXT = ::T.let(nil, ::T.untyped)
+  CENSUS_TRACING_CONTEXT = ::T.let(nil, ::T.untyped)
+  DEADLINE = ::T.let(nil, ::T.untyped)
+  DEFAULTS = ::T.let(nil, ::T.untyped)
+end
+
+module GRPC::Core::PropagateMasks
+  extend ::T::Sig
+end
+
+module GRPC::Core::RpcErrors
+  ALREADY_ACCEPTED = ::T.let(nil, ::T.untyped)
+  ALREADY_FINISHED = ::T.let(nil, ::T.untyped)
+  ALREADY_INVOKED = ::T.let(nil, ::T.untyped)
+  ERROR = ::T.let(nil, ::T.untyped)
+  ErrorMessages = ::T.let(nil, ::T.untyped)
+  INVALID_FLAGS = ::T.let(nil, ::T.untyped)
+  NOT_INVOKED = ::T.let(nil, ::T.untyped)
+  NOT_ON_CLIENT = ::T.let(nil, ::T.untyped)
+  NOT_ON_SERVER = ::T.let(nil, ::T.untyped)
+  OK = ::T.let(nil, ::T.untyped)
+  TOO_MANY_OPERATIONS = ::T.let(nil, ::T.untyped)
+end
+
+module GRPC::Core::RpcErrors
+  extend ::T::Sig
+end
+
+module GRPC::Core::StatusCodes
+  ABORTED = ::T.let(nil, ::T.untyped)
+  ALREADY_EXISTS = ::T.let(nil, ::T.untyped)
+  CANCELLED = ::T.let(nil, ::T.untyped)
+  DATA_LOSS = ::T.let(nil, ::T.untyped)
+  DEADLINE_EXCEEDED = ::T.let(nil, ::T.untyped)
+  FAILED_PRECONDITION = ::T.let(nil, ::T.untyped)
+  INTERNAL = ::T.let(nil, ::T.untyped)
+  INVALID_ARGUMENT = ::T.let(nil, ::T.untyped)
+  NOT_FOUND = ::T.let(nil, ::T.untyped)
+  OK = ::T.let(nil, ::T.untyped)
+  OUT_OF_RANGE = ::T.let(nil, ::T.untyped)
+  PERMISSION_DENIED = ::T.let(nil, ::T.untyped)
+  RESOURCE_EXHAUSTED = ::T.let(nil, ::T.untyped)
+  UNAUTHENTICATED = ::T.let(nil, ::T.untyped)
+  UNAVAILABLE = ::T.let(nil, ::T.untyped)
+  UNIMPLEMENTED = ::T.let(nil, ::T.untyped)
+  UNKNOWN = ::T.let(nil, ::T.untyped)
+end
+
+module GRPC::Core::StatusCodes
+  extend ::T::Sig
+end
+
+module GRPC::Core::TimeConsts
+  INFINITE_FUTURE = ::T.let(nil, ::T.untyped)
+  INFINITE_PAST = ::T.let(nil, ::T.untyped)
+  ZERO = ::T.let(nil, ::T.untyped)
+end
+
+module GRPC::Core::TimeConsts
+  extend ::T::Sig
+end
+
+module GRPC::Core::WriteFlags
+  BUFFER_HINT = ::T.let(nil, ::T.untyped)
+  NO_COMPRESS = ::T.let(nil, ::T.untyped)
+end
+
+module GRPC::Core::WriteFlags
+  extend ::T::Sig
+end
+
+module GRPC::Core
+  extend ::T::Sig
+end
+
+module GRPC::DefaultLogger
+  LOGGER = ::T.let(nil, ::T.untyped)
+end
+
+module GRPC::DefaultLogger
+  extend ::T::Sig
+end
+
+module GRPC::GenericService
+  extend ::T::Sig
+end
+
+class GRPC::Pool
+  DEFAULT_KEEP_ALIVE = ::T.let(nil, ::T.untyped)
+end
+
+class GRPC::RpcDesc
+  include ::GRPC::Core::StatusCodes
+end
+
+class GRPC::RpcServer
+  include ::GRPC::Core::CallOps
+  DEFAULT_MAX_WAITING_REQUESTS = ::T.let(nil, ::T.untyped)
+  DEFAULT_POLL_PERIOD = ::T.let(nil, ::T.untyped)
+  DEFAULT_POOL_SIZE = ::T.let(nil, ::T.untyped)
+  SIGNAL_CHECK_PERIOD = ::T.let(nil, ::T.untyped)
+end
+
+module GRPC
+  extend ::T::Sig
 end
 
 module Gem
@@ -20025,6 +20164,92 @@ module GlobalID::Locator
   def self.use(app, locator=T.unsafe(nil), &locator_block); end
 end
 
+class Google::Protobuf::Descriptor
+  include ::Enumerable
+end
+
+class Google::Protobuf::EnumDescriptor
+  include ::Enumerable
+end
+
+module Google::Protobuf::Internal
+  extend ::T::Sig
+end
+
+class Google::Protobuf::Map
+  include ::Enumerable
+end
+
+module Google::Protobuf::MessageExts
+  extend ::T::Sig
+end
+
+class Google::Protobuf::OneofDescriptor
+  include ::Enumerable
+end
+
+class Google::Protobuf::RepeatedField
+  include ::Enumerable
+end
+
+module Google::Protobuf
+  extend ::T::Sig
+end
+
+module Google
+  extend ::T::Sig
+end
+
+Grpc::Health::Checker::HealthCheckResponse = Grpc::Health::V1::HealthCheckResponse
+
+Grpc::Health::Checker::StatusCodes = GRPC::Core::StatusCodes
+
+module Grpc::Health::V1::Health
+  extend ::T::Sig
+end
+
+class Grpc::Health::V1::HealthCheckRequest
+  include ::Google::Protobuf::MessageExts
+end
+
+class Grpc::Health::V1::HealthCheckResponse
+  include ::Google::Protobuf::MessageExts
+end
+
+module Grpc::Health::V1::HealthCheckResponse::ServingStatus
+  NOT_SERVING = ::T.let(nil, ::T.untyped)
+  SERVICE_UNKNOWN = ::T.let(nil, ::T.untyped)
+  SERVING = ::T.let(nil, ::T.untyped)
+  UNKNOWN = ::T.let(nil, ::T.untyped)
+end
+
+module Grpc::Health::V1::HealthCheckResponse::ServingStatus
+  extend ::T::Sig
+end
+
+module Grpc::Health::V1
+  extend ::T::Sig
+end
+
+module Grpc::Health
+  extend ::T::Sig
+end
+
+module Grpc
+  extend ::T::Sig
+end
+
+module HasS3Bucket
+  def s3_avatar_url(); end
+
+  def s3_bucket_name(); end
+end
+
+module HasS3Bucket
+  extend ::ActiveSupport::Concern
+  extend ::T::Sig
+end
+
 class Hash
   include ::ActiveSupport::ToJsonWithActiveSupportEncoder
   include ::JSON::Ext::Generator::GeneratorMethods::Hash
@@ -21487,13 +21712,23 @@ class Image
 
   def autosave_associated_records_for_user(*args); end
 
-  def io(); end
+  def blob(); end
 
-  def io=(io); end
+  def blob_url(); end
 
-  def name=(file); end
+  def create_commit(); end
+
+  def image_blob(); end
+
+  def image_blob=(image_blob); end
+
+  def image_url(**options); end
+
+  def s3_url(); end
 
   def valid_without_database_validations?(context=T.unsafe(nil)); end
+  MAX_SIZE = ::T.let(nil, ::T.untyped)
+  ROOT_DIRNAME = ::T.let(nil, ::T.untyped)
   ROOT_PATH = ::T.let(nil, ::T.untyped)
 end
 
@@ -21547,10 +21782,6 @@ end
 
 class ImagesController
   include ::ActionView::Layouts::ClassMethods::LayoutConditions
-  def blob_params(); end
-
-  def builder_options(); end
-
   def create(); end
 
   def show(); end
@@ -21954,6 +22185,194 @@ end
 
 JSONTree = Psych::Visitors::JSONTree
 
+module Kafka
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class Kafka::AsyncProducer
+  THREAD_MUTEX = ::T.let(nil, ::T.untyped)
+end
+
+module Kafka::BrokerUri
+  DEFAULT_PORT = ::T.let(nil, ::T.untyped)
+  URI_SCHEMES = ::T.let(nil, ::T.untyped)
+end
+
+module Kafka::BrokerUri
+  extend ::T::Sig
+end
+
+module Kafka::Compression
+  CODECS_BY_ID = ::T.let(nil, ::T.untyped)
+  CODECS_BY_NAME = ::T.let(nil, ::T.untyped)
+end
+
+module Kafka::Compression
+  extend ::T::Sig
+end
+
+class Kafka::Connection
+  CONNECT_TIMEOUT = ::T.let(nil, ::T.untyped)
+  IDLE_TIMEOUT = ::T.let(nil, ::T.untyped)
+  SOCKET_TIMEOUT = ::T.let(nil, ::T.untyped)
+end
+
+class Kafka::FetchedBatchGenerator
+  ABORTED_TRANSACTION_SIGNAL = ::T.let(nil, ::T.untyped)
+  COMMITTED_TRANSACTION_SIGNAL = ::T.let(nil, ::T.untyped)
+end
+
+class Kafka::Instrumenter
+  NAMESPACE = ::T.let(nil, ::T.untyped)
+end
+
+class Kafka::OffsetManager
+  DEFAULT_RETENTION_TIME = ::T.let(nil, ::T.untyped)
+end
+
+module Kafka::Protocol
+  ADD_OFFSETS_TO_TXN_API = ::T.let(nil, ::T.untyped)
+  ADD_PARTITIONS_TO_TXN_API = ::T.let(nil, ::T.untyped)
+  ALTER_CONFIGS_API = ::T.let(nil, ::T.untyped)
+  APIS = ::T.let(nil, ::T.untyped)
+  API_VERSIONS_API = ::T.let(nil, ::T.untyped)
+  COORDINATOR_TYPE_GROUP = ::T.let(nil, ::T.untyped)
+  COORDINATOR_TYPE_TRANSACTION = ::T.let(nil, ::T.untyped)
+  CREATE_PARTITIONS_API = ::T.let(nil, ::T.untyped)
+  CREATE_TOPICS_API = ::T.let(nil, ::T.untyped)
+  DELETE_TOPICS_API = ::T.let(nil, ::T.untyped)
+  DESCRIBE_CONFIGS_API = ::T.let(nil, ::T.untyped)
+  DESCRIBE_GROUPS_API = ::T.let(nil, ::T.untyped)
+  END_TXN_API = ::T.let(nil, ::T.untyped)
+  ERRORS = ::T.let(nil, ::T.untyped)
+  FETCH_API = ::T.let(nil, ::T.untyped)
+  FIND_COORDINATOR_API = ::T.let(nil, ::T.untyped)
+  HEARTBEAT_API = ::T.let(nil, ::T.untyped)
+  INIT_PRODUCER_ID_API = ::T.let(nil, ::T.untyped)
+  JOIN_GROUP_API = ::T.let(nil, ::T.untyped)
+  LEAVE_GROUP_API = ::T.let(nil, ::T.untyped)
+  LIST_GROUPS_API = ::T.let(nil, ::T.untyped)
+  LIST_OFFSET_API = ::T.let(nil, ::T.untyped)
+  OFFSET_COMMIT_API = ::T.let(nil, ::T.untyped)
+  OFFSET_FETCH_API = ::T.let(nil, ::T.untyped)
+  PRODUCE_API = ::T.let(nil, ::T.untyped)
+  REPLICA_ID = ::T.let(nil, ::T.untyped)
+  RESOURCE_TYPES = ::T.let(nil, ::T.untyped)
+  RESOURCE_TYPE_ANY = ::T.let(nil, ::T.untyped)
+  RESOURCE_TYPE_CLUSTER = ::T.let(nil, ::T.untyped)
+  RESOURCE_TYPE_DELEGATION_TOKEN = ::T.let(nil, ::T.untyped)
+  RESOURCE_TYPE_GROUP = ::T.let(nil, ::T.untyped)
+  RESOURCE_TYPE_TOPIC = ::T.let(nil, ::T.untyped)
+  RESOURCE_TYPE_TRANSACTIONAL_ID = ::T.let(nil, ::T.untyped)
+  RESOURCE_TYPE_UNKNOWN = ::T.let(nil, ::T.untyped)
+  SASL_HANDSHAKE_API = ::T.let(nil, ::T.untyped)
+  SYNC_GROUP_API = ::T.let(nil, ::T.untyped)
+  TOPIC_METADATA_API = ::T.let(nil, ::T.untyped)
+  TXN_OFFSET_COMMIT_API = ::T.let(nil, ::T.untyped)
+end
+
+class Kafka::Protocol::FetchRequest
+  ISOLATION_READ_COMMITTED = ::T.let(nil, ::T.untyped)
+  ISOLATION_READ_UNCOMMITTED = ::T.let(nil, ::T.untyped)
+end
+
+class Kafka::Protocol::FetchResponse
+  MAGIC_BYTE_LENGTH = ::T.let(nil, ::T.untyped)
+  MAGIC_BYTE_OFFSET = ::T.let(nil, ::T.untyped)
+end
+
+class Kafka::Protocol::JoinGroupRequest
+  PROTOCOL_TYPE = ::T.let(nil, ::T.untyped)
+end
+
+class Kafka::Protocol::ListOffsetRequest
+  ISOLATION_READ_COMMITTED = ::T.let(nil, ::T.untyped)
+  ISOLATION_READ_UNCOMMITTED = ::T.let(nil, ::T.untyped)
+end
+
+class Kafka::Protocol::Message
+  MAGIC_BYTE = ::T.let(nil, ::T.untyped)
+end
+
+class Kafka::Protocol::OffsetCommitRequest
+  DEFAULT_RETENTION_TIME = ::T.let(nil, ::T.untyped)
+end
+
+class Kafka::Protocol::ProduceRequest
+  API_MIN_VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class Kafka::Protocol::RecordBatch
+  CODEC_ID_MASK = ::T.let(nil, ::T.untyped)
+  IN_TRANSACTION_MASK = ::T.let(nil, ::T.untyped)
+  IS_CONTROL_BATCH_MASK = ::T.let(nil, ::T.untyped)
+  MAGIC_BYTE = ::T.let(nil, ::T.untyped)
+  RECORD_BATCH_OVERHEAD = ::T.let(nil, ::T.untyped)
+  TIMESTAMP_TYPE_MASK = ::T.let(nil, ::T.untyped)
+end
+
+class Kafka::Protocol::RequestMessage
+  API_VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class Kafka::Protocol::SaslHandshakeRequest
+  SUPPORTED_MECHANISMS = ::T.let(nil, ::T.untyped)
+end
+
+module Kafka::Protocol
+  extend ::T::Sig
+end
+
+class Kafka::Sasl::Gssapi
+  GSSAPI_CONFIDENTIALITY = ::T.let(nil, ::T.untyped)
+  GSSAPI_IDENT = ::T.let(nil, ::T.untyped)
+end
+
+class Kafka::Sasl::OAuth
+  OAUTH_IDENT = ::T.let(nil, ::T.untyped)
+end
+
+class Kafka::Sasl::Plain
+  PLAIN_IDENT = ::T.let(nil, ::T.untyped)
+end
+
+class Kafka::Sasl::Scram
+  MECHANISMS = ::T.let(nil, ::T.untyped)
+end
+
+module Kafka::Sasl
+  extend ::T::Sig
+end
+
+module Kafka::SslContext
+  CLIENT_CERT_DELIMITER = ::T.let(nil, ::T.untyped)
+end
+
+module Kafka::SslContext
+  extend ::T::Sig
+end
+
+class Kafka::TransactionManager
+  DEFAULT_TRANSACTION_TIMEOUT = ::T.let(nil, ::T.untyped)
+  TRANSACTION_RESULT_ABORT = ::T.let(nil, ::T.untyped)
+  TRANSACTION_RESULT_COMMIT = ::T.let(nil, ::T.untyped)
+end
+
+class Kafka::TransactionStateMachine
+  ABORTING_TRANSACTION = ::T.let(nil, ::T.untyped)
+  COMMITTING_TRANSACTION = ::T.let(nil, ::T.untyped)
+  ERROR = ::T.let(nil, ::T.untyped)
+  IN_TRANSACTION = ::T.let(nil, ::T.untyped)
+  READY = ::T.let(nil, ::T.untyped)
+  STATES = ::T.let(nil, ::T.untyped)
+  TRANSITIONS = ::T.let(nil, ::T.untyped)
+  UNINITIALIZED = ::T.let(nil, ::T.untyped)
+end
+
+module Kafka
+  extend ::T::Sig
+end
+
 module Kernel
   def gem(dep, *reqs); end
 
@@ -21986,6 +22405,29 @@ class KeyError
 end
 
 class KeyError
+  extend ::T::Sig
+end
+
+module KingKonf
+  TYPES = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module KingKonf::Decoder
+  extend ::T::Sig
+end
+
+module KingKonf::DurationDecoder
+  PART = ::T.let(nil, ::T.untyped)
+  UNITS = ::T.let(nil, ::T.untyped)
+  VALID_DURATION = ::T.let(nil, ::T.untyped)
+end
+
+module KingKonf::DurationDecoder
+  extend ::T::Sig
+end
+
+module KingKonf
   extend ::T::Sig
 end
 
@@ -22793,75 +23235,7 @@ module MiniMime
   extend ::T::Sig
 end
 
-class MiniScheduler::DistributedMutex
-  BASE_SLEEP_DURATION = ::T.let(nil, ::T.untyped)
-  MAX_POLLING_ATTEMPTS = ::T.let(nil, ::T.untyped)
-  MAX_SLEEP_DURATION = ::T.let(nil, ::T.untyped)
-end
-
-module MiniScheduler::Schedule
-  extend ::T::Sig
-end
-
-class MiniScheduler::Stat
-  include ::MiniScheduler::Stat::GeneratedAttributeMethods
-  include ::MiniScheduler::Stat::GeneratedAssociationMethods
-end
-
-module MiniScheduler::Stat::GeneratedAssociationMethods
-end
-
-module MiniScheduler::Stat::GeneratedAssociationMethods
-  extend ::T::Sig
-end
-
-module MiniScheduler::Stat::GeneratedAttributeMethods
-end
-
-module MiniScheduler::Stat::GeneratedAttributeMethods
-  extend ::Mutex_m
-  extend ::T::Sig
-end
-
-class MiniScheduler::Stat
-  def self.purge_old(); end
-end
-
-module MiniScheduler
-  extend ::T::Sig
-end
-
-module Minitest
-end
-
-MiniTest::Assertions = Minitest::Assertions
-
-MiniTest::Expectations = Minitest::Expectations
-
-MiniTest::Guard = Minitest::Guard
-
-MiniTest::Reportable = Minitest::Reportable
-
-MiniTest::Runnable = Minitest::Runnable
-
-class Minitest::Spec
-end
-
-module Minitest::Spec::DSL
-end
-
-MiniTest::Spec::DSL::InstanceMethods = Minitest::Spec::DSL::InstanceMethods
-
-module Minitest::Spec::DSL
-end
-
-class Minitest::Spec
-end
-
-MiniTest::Test = Minitest::Test
-
-module Minitest
-end
+MiniTest = Minitest
 
 module Minitest
   ENCS = ::T.let(nil, ::T.untyped)
@@ -27647,6 +28021,8 @@ class Post
 
   def blob_content(*args, &block); end
 
+  def draft(); end
+
   def formatted_published_at(); end
 
   def log_version(*args, &block); end
@@ -27672,6 +28048,10 @@ class Post
   def slug=(val); end
 
   def status_label(); end
+
+  def summary(); end
+
+  def title(); end
 
   def topics=(val); end
 
@@ -27844,15 +28224,23 @@ end
 class PostChannel
 end
 
+module PostHelper
+  extend ::T::Sig
+end
+
 class PostPolicy
 end
 
 class PostReceiveJob
   def author(); end
 
-  def commit_sha(); end
+  def new_commit_sha(); end
+
+  def old_commit_sha(); end
 
   def perform(author_id:, repository_id:, commit_sha:); end
+
+  def ref(); end
 
   def repository(); end
 end
@@ -31028,6 +31416,10 @@ class Racc::Parser
 end
 
 module Racc
+  extend ::T::Sig
+end
+
+module Racecar
   extend ::T::Sig
 end
 
@@ -36650,47 +37042,6 @@ module Shellwords
   def self.split(line); end
 end
 
-module Sidekiq
-  DEFAULTS = ::T.let(nil, ::T.untyped)
-  DEFAULT_WORKER_OPTIONS = ::T.let(nil, ::T.untyped)
-  FAKE_INFO = ::T.let(nil, ::T.untyped)
-  LICENSE = ::T.let(nil, ::T.untyped)
-  NAME = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module Sidekiq::ExceptionHandler
-  extend ::T::Sig
-end
-
-module Sidekiq::Extensions::PsychAutoload
-  extend ::T::Sig
-end
-
-module Sidekiq::Extensions
-  extend ::T::Sig
-end
-
-class Sidekiq::Logging::Pretty
-  SPACE = ::T.let(nil, ::T.untyped)
-end
-
-module Sidekiq::Logging
-  extend ::T::Sig
-end
-
-module Sidekiq::Middleware
-  extend ::T::Sig
-end
-
-module Sidekiq::Worker
-  extend ::T::Sig
-end
-
-module Sidekiq
-  extend ::T::Sig
-end
-
 module Signal
   extend ::T::Sig
 end
@@ -36717,6 +37068,8 @@ class SigninsController
 end
 
 class SignupsController
+  def create(); end
+
   def index(); end
 end
 
@@ -38867,6 +39220,12 @@ module Timeout
   extend ::T::Sig
 end
 
+class TmpChannelArgs
+end
+
+class TmpChannelArgs
+end
+
 class Topic
   include ::Topic::GeneratedAttributeMethods
   include ::Topic::GeneratedAssociationMethods
@@ -39371,6 +39730,300 @@ end
 class UrlValidator
 end
 
+class User
+  include ::User::GeneratedAttributeMethods
+  include ::User::GeneratedAssociationMethods
+  include ::HasS3Bucket
+  include ::Trackable
+  include ::DatabaseValidations::Rescuer
+  def after_add_for_contributions(); end
+
+  def after_add_for_contributions=(val); end
+
+  def after_add_for_contributions?(); end
+
+  def after_add_for_images(); end
+
+  def after_add_for_images=(val); end
+
+  def after_add_for_images?(); end
+
+  def after_add_for_posts(); end
+
+  def after_add_for_posts=(val); end
+
+  def after_add_for_posts?(); end
+
+  def after_add_for_ssh_keys(); end
+
+  def after_add_for_ssh_keys=(val); end
+
+  def after_add_for_ssh_keys?(); end
+
+  def after_remove_for_contributions(); end
+
+  def after_remove_for_contributions=(val); end
+
+  def after_remove_for_contributions?(); end
+
+  def after_remove_for_images(); end
+
+  def after_remove_for_images=(val); end
+
+  def after_remove_for_images?(); end
+
+  def after_remove_for_posts(); end
+
+  def after_remove_for_posts=(val); end
+
+  def after_remove_for_posts?(); end
+
+  def after_remove_for_ssh_keys(); end
+
+  def after_remove_for_ssh_keys=(val); end
+
+  def after_remove_for_ssh_keys?(); end
+
+  def autosave_associated_records_for_contributions(*args); end
+
+  def autosave_associated_records_for_images(*args); end
+
+  def autosave_associated_records_for_posts(*args); end
+
+  def autosave_associated_records_for_repository(); end
+
+  def autosave_associated_records_for_ssh_keys(*args); end
+
+  def avatar_blob(); end
+
+  def avatar_blob=(avatar_blob); end
+
+  def avatar_url(**options); end
+
+  def before_add_for_contributions(); end
+
+  def before_add_for_contributions=(val); end
+
+  def before_add_for_contributions?(); end
+
+  def before_add_for_images(); end
+
+  def before_add_for_images=(val); end
+
+  def before_add_for_images?(); end
+
+  def before_add_for_posts(); end
+
+  def before_add_for_posts=(val); end
+
+  def before_add_for_posts?(); end
+
+  def before_add_for_ssh_keys(); end
+
+  def before_add_for_ssh_keys=(val); end
+
+  def before_add_for_ssh_keys?(); end
+
+  def before_remove_for_contributions(); end
+
+  def before_remove_for_contributions=(val); end
+
+  def before_remove_for_contributions?(); end
+
+  def before_remove_for_images(); end
+
+  def before_remove_for_images=(val); end
+
+  def before_remove_for_images?(); end
+
+  def before_remove_for_posts(); end
+
+  def before_remove_for_posts=(val); end
+
+  def before_remove_for_posts?(); end
+
+  def before_remove_for_ssh_keys(); end
+
+  def before_remove_for_ssh_keys=(val); end
+
+  def before_remove_for_ssh_keys?(); end
+
+  def initials(); end
+
+  def regenerate_auth_token(); end
+
+  def repo(); end
+
+  def valid_without_database_validations?(context=T.unsafe(nil)); end
+
+  def validate_associated_records_for_contributions(*args); end
+
+  def validate_associated_records_for_images(*args); end
+
+  def validate_associated_records_for_posts(*args); end
+
+  def validate_associated_records_for_repository(*args); end
+
+  def validate_associated_records_for_ssh_keys(*args); end
+  AVATAR_MAX_SIZE = ::T.let(nil, ::T.untyped)
+end
+
+module User::GeneratedAssociationMethods
+  def build_repository(*args, &block); end
+
+  def contribution_ids(); end
+
+  def contribution_ids=(ids); end
+
+  def contributions(); end
+
+  def contributions=(value); end
+
+  def create_repository(*args, &block); end
+
+  def create_repository!(*args, &block); end
+
+  def image_ids(); end
+
+  def image_ids=(ids); end
+
+  def images(); end
+
+  def images=(value); end
+
+  def post_ids(); end
+
+  def post_ids=(ids); end
+
+  def posts(); end
+
+  def posts=(value); end
+
+  def reload_repository(); end
+
+  def repository(); end
+
+  def repository=(value); end
+
+  def ssh_key_ids(); end
+
+  def ssh_key_ids=(ids); end
+
+  def ssh_keys(); end
+
+  def ssh_keys=(value); end
+end
+
+module User::GeneratedAssociationMethods
+  extend ::T::Sig
+end
+
+module User::GeneratedAttributeMethods
+end
+
+module User::GeneratedAttributeMethods
+  extend ::Mutex_m
+  extend ::T::Sig
+end
+
+class User
+  def self.after_add_for_contributions(); end
+
+  def self.after_add_for_contributions=(val); end
+
+  def self.after_add_for_contributions?(); end
+
+  def self.after_add_for_images(); end
+
+  def self.after_add_for_images=(val); end
+
+  def self.after_add_for_images?(); end
+
+  def self.after_add_for_posts(); end
+
+  def self.after_add_for_posts=(val); end
+
+  def self.after_add_for_posts?(); end
+
+  def self.after_add_for_ssh_keys(); end
+
+  def self.after_add_for_ssh_keys=(val); end
+
+  def self.after_add_for_ssh_keys?(); end
+
+  def self.after_remove_for_contributions(); end
+
+  def self.after_remove_for_contributions=(val); end
+
+  def self.after_remove_for_contributions?(); end
+
+  def self.after_remove_for_images(); end
+
+  def self.after_remove_for_images=(val); end
+
+  def self.after_remove_for_images?(); end
+
+  def self.after_remove_for_posts(); end
+
+  def self.after_remove_for_posts=(val); end
+
+  def self.after_remove_for_posts?(); end
+
+  def self.after_remove_for_ssh_keys(); end
+
+  def self.after_remove_for_ssh_keys=(val); end
+
+  def self.after_remove_for_ssh_keys?(); end
+
+  def self.before_add_for_contributions(); end
+
+  def self.before_add_for_contributions=(val); end
+
+  def self.before_add_for_contributions?(); end
+
+  def self.before_add_for_images(); end
+
+  def self.before_add_for_images=(val); end
+
+  def self.before_add_for_images?(); end
+
+  def self.before_add_for_posts(); end
+
+  def self.before_add_for_posts=(val); end
+
+  def self.before_add_for_posts?(); end
+
+  def self.before_add_for_ssh_keys(); end
+
+  def self.before_add_for_ssh_keys=(val); end
+
+  def self.before_add_for_ssh_keys?(); end
+
+  def self.before_remove_for_contributions(); end
+
+  def self.before_remove_for_contributions=(val); end
+
+  def self.before_remove_for_contributions?(); end
+
+  def self.before_remove_for_images(); end
+
+  def self.before_remove_for_images=(val); end
+
+  def self.before_remove_for_images?(); end
+
+  def self.before_remove_for_posts(); end
+
+  def self.before_remove_for_posts=(val); end
+
+  def self.before_remove_for_posts?(); end
+
+  def self.before_remove_for_ssh_keys(); end
+
+  def self.before_remove_for_ssh_keys=(val); end
+
+  def self.before_remove_for_ssh_keys?(); end
+end
+
 class UserDraftsController
   def index(); end
 end
@@ -39379,8 +40032,6 @@ class UserDraftsController
 end
 
 class UsersController
-  def create(); end
-
   def show(); end
 
   def update(); end
@@ -40170,6 +40821,9 @@ end
 
 module Zip::NullInputStream
   extend ::T::Sig
+end
+
+class Zip::StreamableStream
 end
 
 module Zip::TraditionalEncryption

@@ -118,19 +118,12 @@ class Repository < ApplicationRecord
         "Deleted #{path}"
       end
 
-    commit_sha = Git::Commit.create(
+    Git::Commit.create(
       repository: self,
       committer: self.author,
       action: action,
       options: { commit: { message: message, branch: branch }, file: { content: content, path: path } }
     )
-
-    if branch == DEFAULT_BRANCH
-      self.commit_sha = commit_sha
-      self.save
-    end
-
-    commit_sha
   end
 
   private
@@ -175,7 +168,7 @@ class Repository < ApplicationRecord
   end
 
   def add_gitignore
-    self.commit_sha = Git::Commit.create(
+    Git::Commit.create(
       repository: self,
       committer: author,
       options: { commit: { message: 'Add gitignore' }, file: { content: GITIGNORE, path: GITIGNORE_PATH } }
@@ -183,7 +176,7 @@ class Repository < ApplicationRecord
   end
 
   def add_images_folder
-    self.commit_sha = Git::Commit.create(
+    Git::Commit.create(
       repository: self,
       committer: author,
       options: { commit: { message: 'Add images' }, file: { content: '', path: Image::ROOT_PATH } }
@@ -191,7 +184,7 @@ class Repository < ApplicationRecord
   end
 
   def add_posts_folder
-    self.commit_sha = Git::Commit.create(
+    Git::Commit.create(
       repository: self,
       committer: author,
       options: { commit: { message: 'Add posts' }, file: { content: '', path: Post::ROOT_PATH } }
