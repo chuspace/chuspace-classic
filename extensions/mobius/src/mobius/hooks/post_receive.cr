@@ -18,7 +18,7 @@ module Mobius
       getter ref : String
 
       def initialize
-        @old_commit_sha, @new_commit_sha, ref = STDIN.gets_to_end.split(" ", remove_empty: true)
+        @old_commit_sha, @new_commit_sha, @ref = STDIN.gets_to_end.split(" ", remove_empty: true)
         exit 0 unless ref.try &.strip == DEFAULT_REF
       end
 

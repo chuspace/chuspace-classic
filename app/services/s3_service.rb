@@ -4,20 +4,23 @@
 class S3Service
   extend T::Sig
 
-  ALLOWED_TYPES = %i[png gif jpeg]
+  ALLOWED_TYPES = %i[png gif jpeg jpg]
   MAX_SIZE = 15.megabytes
 
   sig { params(io: T.untyped, filename: String, bucket: String, size: T.nilable(Integer)).returns(Seahorse::Client::Response) }
-  def self.upload_image(io:, filename:, bucket:, size: MAX_SIZE)
-    fail TypeError, 'Invalid file' unless io.respond_to?(:read)
-
+  def self.upload(io:, filename:, bucket:, size: MAX_SIZE)
     content_type = MimeMagic.by_path(filename).type
-    client.put_object(key: filename, content_type: content_type, bucket: bucket, body: io.read)
+    client.put_object(key: filename, content_type: content_type, bucket: bucket, body: io)
   end
 
   sig { params(filename: String, bucket: String).returns(Seahorse::Client::Response) }
-  def self.remove_image(filename:, bucket:)
+  def self.remove(filename:, bucket:)
     client.delete_object(key: filename, bucket: bucket)
+  end
+
+  sig { params(filename: String, bucket: String).returns(Seahorse::Client::Response) }
+  def self.get(filename:, bucket:)
+    client.get_object(key: filename, bucket: bucket)
   end
 
   sig { params(bucket: String).returns(Seahorse::Client::Response) }

@@ -1,0 +1,11 @@
+[Unit]
+Description=Image resizing and processing server
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/imgproxy
+Restart=always
+EnvironmentFile=-/etc/environment
+[Install]
+WantedBy=multi-user.target

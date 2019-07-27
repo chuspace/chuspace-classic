@@ -9,28 +9,24 @@ class ImagesController < ApplicationController
 
   def create
     image_blob = params[:image]
-    name = image_blob.original_filename
-    blob_path = File.join(Image::ROOT_DIRNAME, name)
+    name = image_blob.original_filename.to_slug&.to_ascii&.to_s
+    blob_path = File.join('images', name)
+    blob = Current.user.repository.create_blob(path: blob_path, content: image_blob.read)
+    puts blob.object.inspect
 
-    image = Current.user.images.find_or_initialize_by(blob_path: blob_path, repository: Current.user.repository)
-    image.image_blob = image_blob
-    image.name = name
-
-    if image.valid?
-      image.create_commit
-      image.save
-
-      render json: { url: image.blob_url }
+    if blob.persisted?
+      render json: { created: true, url: File.join('/', blob_path) }
     else
-      render json: { created: false }, status: :unprocessable_entity
+      render json: { message: blob.errors.full_messages.to_sentence, created: false }, status: :unprocessable_entity
     end
   end
 
   def show
-    image = Image.find_by(blob_path: request.path[1..-1])
+    image = Current.user.repository.blob_at(path: request.path[1..-1])
 
     if image
-      redirect_to image.image_url(builder_options)
+      expires_in 1.year, public: true
+      send_data image.content
     else
       raise ActionController::RoutingError.new('Not Found')
     end

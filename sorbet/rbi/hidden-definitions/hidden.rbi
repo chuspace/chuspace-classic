@@ -9148,12 +9148,6 @@ module ApplicationHelper
   extend ::T::Sig
 end
 
-class ApplicationJob
-end
-
-class ApplicationJob
-end
-
 class ApplicationMailer
 end
 
@@ -13395,8 +13389,137 @@ module DeliveryBoy
   extend ::T::Sig
 end
 
+class DidYouMean::ClassNameChecker
+  include ::ActiveSupport::ToJsonWithActiveSupportEncoder
+  def class_name(); end
+
+  def class_names(); end
+
+  def corrections(); end
+
+  def initialize(exception); end
+
+  def scopes(); end
+end
+
+class DidYouMean::ClassNameChecker
+  extend ::T::Sig
+end
+
+module DidYouMean::Correctable
+  def corrections(); end
+
+  def original_message(); end
+
+  def spell_checker(); end
+
+  def to_s(); end
+end
+
+module DidYouMean::Correctable
+  extend ::T::Sig
+end
+
+module DidYouMean::Jaro
+  extend ::T::Sig
+  def self.distance(str1, str2); end
+end
+
+module DidYouMean::JaroWinkler
+  extend ::T::Sig
+  def self.distance(str1, str2); end
+end
+
+class DidYouMean::KeyErrorChecker
+  def corrections(); end
+
+  def initialize(key_error); end
+end
+
+class DidYouMean::KeyErrorChecker
+end
+
+module DidYouMean::Levenshtein
+  extend ::T::Sig
+  def self.distance(str1, str2); end
+
+  def self.min3(a, b, c); end
+end
+
+class DidYouMean::MethodNameChecker
+  include ::ActiveSupport::ToJsonWithActiveSupportEncoder
+  def corrections(); end
+
+  def initialize(exception); end
+
+  def method_name(); end
+
+  def method_names(); end
+
+  def receiver(); end
+  RB_RESERVED_WORDS = ::T.let(nil, ::T.untyped)
+end
+
+class DidYouMean::MethodNameChecker
+  extend ::T::Sig
+end
+
+class DidYouMean::NullChecker
+  include ::ActiveSupport::ToJsonWithActiveSupportEncoder
+  def corrections(); end
+
+  def initialize(*_); end
+end
+
+class DidYouMean::NullChecker
+  extend ::T::Sig
+end
+
+class DidYouMean::PlainFormatter
+  def message_for(corrections); end
+end
+
+class DidYouMean::PlainFormatter
+end
+
+class DidYouMean::SpellChecker
+  include ::ActiveSupport::ToJsonWithActiveSupportEncoder
+  def correct(input); end
+
+  def initialize(dictionary:); end
+end
+
+class DidYouMean::SpellChecker
+  extend ::T::Sig
+end
+
+class DidYouMean::VariableNameChecker
+  include ::ActiveSupport::ToJsonWithActiveSupportEncoder
+  def corrections(); end
+
+  def cvar_names(); end
+
+  def initialize(exception); end
+
+  def ivar_names(); end
+
+  def lvar_names(); end
+
+  def method_names(); end
+
+  def name(); end
+  RB_RESERVED_WORDS = ::T.let(nil, ::T.untyped)
+end
+
+class DidYouMean::VariableNameChecker
+  extend ::T::Sig
+end
+
 module DidYouMean
   extend ::T::Sig
+  def self.formatter(); end
+
+  def self.formatter=(formatter); end
 end
 
 class Digest::Base
@@ -20303,7 +20426,7 @@ end
 
 class Hash
   extend ::T::Sig
-  def self.from_xml(xml, disallowed_types=T.unsafe(nil)); end
+  def self.try_convert(_); end
 end
 
 HashWithIndifferentAccess = ActiveSupport::HashWithIndifferentAccess
@@ -21704,75 +21827,6 @@ module IRB
   def self.version(); end
 end
 
-class Image
-  include ::Image::GeneratedAttributeMethods
-  include ::Image::GeneratedAssociationMethods
-  include ::DatabaseValidations::Rescuer
-  def autosave_associated_records_for_repository(*args); end
-
-  def autosave_associated_records_for_user(*args); end
-
-  def blob(); end
-
-  def blob_url(); end
-
-  def create_commit(); end
-
-  def image_blob(); end
-
-  def image_blob=(image_blob); end
-
-  def image_url(**options); end
-
-  def s3_url(); end
-
-  def valid_without_database_validations?(context=T.unsafe(nil)); end
-  MAX_SIZE = ::T.let(nil, ::T.untyped)
-  ROOT_DIRNAME = ::T.let(nil, ::T.untyped)
-  ROOT_PATH = ::T.let(nil, ::T.untyped)
-end
-
-module Image::GeneratedAssociationMethods
-  def build_repository(*args, &block); end
-
-  def build_user(*args, &block); end
-
-  def create_repository(*args, &block); end
-
-  def create_repository!(*args, &block); end
-
-  def create_user(*args, &block); end
-
-  def create_user!(*args, &block); end
-
-  def reload_repository(); end
-
-  def reload_user(); end
-
-  def repository(); end
-
-  def repository=(value); end
-
-  def user(); end
-
-  def user=(value); end
-end
-
-module Image::GeneratedAssociationMethods
-  extend ::T::Sig
-end
-
-module Image::GeneratedAttributeMethods
-end
-
-module Image::GeneratedAttributeMethods
-  extend ::Mutex_m
-  extend ::T::Sig
-end
-
-class Image
-end
-
 class ImageConstraint
   def matches?(request); end
 end
@@ -22399,6 +22453,7 @@ module Kernel
 end
 
 class KeyError
+  include ::DidYouMean::Correctable
   def key(); end
 
   def receiver(); end
@@ -23477,6 +23532,7 @@ module NIO
 end
 
 class NameError
+  include ::DidYouMean::Correctable
   def name(); end
 
   def receiver(); end
@@ -23567,6 +23623,8 @@ end
 module Net::HTTP::ProxyDelta
   extend ::T::Sig
 end
+
+Net::HTTP::ProxyMod = Net::HTTP::ProxyDelta
 
 class Net::HTTP::Put
   extend ::T::Sig
@@ -23918,15 +23976,7 @@ class Net::HTTPServiceUnavailable
   extend ::T::Sig
 end
 
-class Net::HTTP
-end
-
-Net::HTTPSession::ProxyDelta = Net::HTTP::ProxyDelta
-
-Net::HTTPSession::ProxyMod = Net::HTTP::ProxyDelta
-
-class Net::HTTP
-end
+Net::HTTPSession = Net::HTTP
 
 Net::HTTPSuccess::EXCEPTION_TYPE = Net::HTTPError
 
@@ -24153,6 +24203,7 @@ class NoMemoryError
 end
 
 class NoMethodError
+  include ::DidYouMean::Correctable
   def args(); end
 
   def private_call?(); end
@@ -28231,23 +28282,6 @@ end
 class PostPolicy
 end
 
-class PostReceiveJob
-  def author(); end
-
-  def new_commit_sha(); end
-
-  def old_commit_sha(); end
-
-  def perform(author_id:, repository_id:, commit_sha:); end
-
-  def ref(); end
-
-  def repository(); end
-end
-
-class PostReceiveJob
-end
-
 class Posts::EditionsController
   include ::ActionView::Layouts::ClassMethods::LayoutConditions
 end
@@ -31566,7 +31600,6 @@ class Rack::Attack::Safelist
 end
 
 module Rack::Attack::StoreProxy
-  PROXIES = ::T.let(nil, ::T.untyped)
 end
 
 class Rack::Attack::StoreProxy::ActiveSupportRedisStoreProxy
@@ -31631,15 +31664,8 @@ class Rack::Attack::StoreProxy::RedisProxy
   def self.handle?(store); end
 end
 
-class Rack::Attack::StoreProxy::RedisStoreProxy
-end
-
-class Rack::Attack::StoreProxy::RedisStoreProxy
-end
-
 module Rack::Attack::StoreProxy
   extend ::T::Sig
-  def self.build(store); end
 end
 
 class Rack::Attack::Throttle
@@ -40821,9 +40847,6 @@ end
 
 module Zip::NullInputStream
   extend ::T::Sig
-end
-
-class Zip::StreamableStream
 end
 
 module Zip::TraditionalEncryption

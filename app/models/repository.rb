@@ -10,6 +10,8 @@ class Repository < ApplicationRecord
   DEFAULT_BRANCH = 'master'
   GLOBAL_HOOKS_DIRECTORY = Rails.root.join('bin', 'git-hooks')
   GITIGNORE_PATH = '.gitignore'
+  IMAGES_ROOT = 'images'
+  POSTS_ROOT = 'posts'
 
   GITIGNORE = <<~STRING
     # Ignore everything
@@ -59,20 +61,28 @@ class Repository < ApplicationRecord
     nil
   end
 
-  def commit
-    lookup(commit_sha)
-  end
-
   def commit_sha
     head&.target&.oid
   end
 
-  def blobs(sha: commit_sha)
-    @blobs ||= Git::Blob.all(self, sha)
+  def commit(sha: commit_sha)
+    lookup(sha)
+  end
+
+  def blobs
+    Blob.all(repository: self, commit_sha: commit_sha)
   end
 
   def blob_at(path:, sha: commit_sha)
-    Git::Blob.find(self, path, sha)
+    Blob.find(repository: self, path: path, commit_sha: commit_sha)
+  end
+
+  def new_blob(options = {})
+    Blob.new(repository: self, **options)
+  end
+
+  def create_blob(path:, content:, commit_message: nil)
+    Blob.new(repository: self, path: path).save(io: content, commit_message: commit_message)
   end
 
   def find_branch(name:)
@@ -168,27 +178,17 @@ class Repository < ApplicationRecord
   end
 
   def add_gitignore
-    Git::Commit.create(
-      repository: self,
-      committer: author,
-      options: { commit: { message: 'Add gitignore' }, file: { content: GITIGNORE, path: GITIGNORE_PATH } }
-    )
+    create_blob(path: GITIGNORE_PATH, content: GITIGNORE, commit_message: 'Add gitignore')
   end
 
   def add_images_folder
-    Git::Commit.create(
-      repository: self,
-      committer: author,
-      options: { commit: { message: 'Add images' }, file: { content: '', path: Image::ROOT_PATH } }
-    )
+    path = File.join(Image::ROOT_PATH, IMAGES_ROOT)
+    create_blob(path: path, content: '', commit_message: 'Add images folder')
   end
 
   def add_posts_folder
-    Git::Commit.create(
-      repository: self,
-      committer: author,
-      options: { commit: { message: 'Add posts' }, file: { content: '', path: Post::ROOT_PATH } }
-    )
+    path = File.join(Image::ROOT_PATH, ROOT_PATH)
+    create_blob(path: path, content: '', commit_message: 'Add posts folder')
   end
 
   def destroy_git_repo

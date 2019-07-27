@@ -28,7 +28,6 @@ class Post < ApplicationRecord
   delegate :content, to: :blob, prefix: true
 
   DEFAULT_TITLE = 'Untitled'
-  ROOT_PATH = 'posts/.keep'
 
   aasm column: :status, enum: true do
     state :draft, initial: true
@@ -83,7 +82,7 @@ class Post < ApplicationRecord
   end
 
   def outdated?
-    blob_id != blob.id
+    blob_id != blob.oid
   end
 
   def published?

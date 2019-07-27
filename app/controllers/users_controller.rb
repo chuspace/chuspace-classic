@@ -14,10 +14,10 @@ class UsersController < ApplicationController
     @user = Current.user
     @user.assign_attributes(update_params.except(:avatar))
     avatar = params[:user][:avatar]
-    @user.avatar_blob = avatar.tempfile
 
     if avatar && @user.valid?
-      S3Service.upload_image(io: avatar, filename: avatar.original_filename, bucket: @user.s3_bucket_name)
+      @user.avatar_blob = avatar.tempfile
+      S3Service.upload_image(io: avatar.read, filename: avatar.original_filename, bucket: @user.s3_bucket_name)
       @user.avatar = avatar.original_filename
       @user.avatar_blob = nil
     end

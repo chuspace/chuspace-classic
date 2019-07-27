@@ -18,10 +18,11 @@ class PostsController < ApplicationController
   def create
     Post.transaction do
       markdown = PostMarkdownService.call(content: post_params[:body])
-      post = Current.user.posts.build(repository: Current.user.repository, slug: markdown.slug, blob_path: markdown.blob_path)
+      blob = Current.user.repository.create_blob(path: markdown.blob_path, content: markdown.content)
 
-      if post.save
-        Current.user.repository.create_commit(content: markdown.content, path: post.blob_path)
+      if blob.persisted?
+        post = Current.user.posts.create(repository: Current.user.repository, slug: blob.oid[0..8], blob_path: markdown.blob_path)
+
         render json: {
           redirect: edit_post_path(post),
           slug: post.slug,
@@ -33,7 +34,7 @@ class PostsController < ApplicationController
           )
         }
       else
-        render json: { created: false }, status: :unprocessable_entity
+        render json: { created: false, message: blob.errors.full_messages.to_sentence }, status: :unprocessable_entity
       end
     end
   end

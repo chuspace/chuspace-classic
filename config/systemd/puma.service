@@ -1,0 +1,15 @@
+# Just an example!
+
+[Unit]
+Description=Puma HTTP Server
+After=network.target
+
+[Service]
+Type=simple
+User=app
+WorkingDirectory=/home/chu/chuspace.com/current
+ExecStart=/home/chu/.rbenv/versions/2.5.5/bin/ruby -S bundle exec puma -C puma.rb
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

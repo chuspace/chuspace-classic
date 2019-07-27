@@ -14,6 +14,7 @@ class CreateRepositories < ActiveRecord::Migration[6.0]
       t.index :path, unique: true
 
       t.references :author, index: true, null: false, foreign_key: { to_table: :users }
+      t.integer :posts_count, null: false, default: 0
 
       t.timestamps
     end

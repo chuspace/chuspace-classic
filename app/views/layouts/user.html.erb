@@ -17,8 +17,10 @@
             <ul class='horizontal__list text-sm'>
               <%= content_tag :li, @user.company unless @user.company.blank? %>
               <%= content_tag :li, @user.location unless @user.location.blank? %>
-              <%= content_tag :li unless @user.url.blank? do %>
-                <%= link_to 'Website', @user.url, class: 'link link--active underline text-sm', target: '_blank', rel: 'noopener noreferer' %>
+              <% unless @user.url.blank? %>
+                <%= content_tag :li do %>
+                  <%= link_to 'Website', @user.url, class: 'link link--active underline text-sm', target: '_blank', rel: 'noopener noreferer' %>
+                <% end %>
               <% end %>
             </ul>
           </div>

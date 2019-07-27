@@ -17,6 +17,8 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :auth_token, null: false, default: ''
       t.index :auth_token, unique: true
 
+      t.integer :posts_count, null: false, default: 0
+
       t.string :bio
       t.string :company
       t.string :location

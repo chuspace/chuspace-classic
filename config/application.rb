@@ -5,7 +5,7 @@ require_relative 'boot'
 require 'rails'
 # Pick the frameworks you want:
 require 'active_model/railtie'
-require 'active_job/railtie'
+#  require 'active_job/railtie'
 require 'active_record/railtie'
 require 'action_controller/railtie'
 require 'action_mailer/railtie'
@@ -32,11 +32,5 @@ module Chuspace
 
     # Schema format
     config.active_record.schema_format = :sql
-
-    # Setup default urls
-    config.action_mailer.asset_host = 'http://assets.chuspace.com'
-    config.hosts << 'chuspace.com'
-    config.default_url_options = { host: 'chuspace.com' }
-    Rails.application.routes.default_url_options[:host] = 'chuspace.com'
   end
 end

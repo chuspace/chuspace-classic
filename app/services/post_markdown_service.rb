@@ -19,13 +19,33 @@ class PostMarkdownService
 
   sig { returns(T.nilable(String)) }
   def title
-    title_node = markdown_doc.first
-    string_content_for(title_node) if title?(title_node)
+    title = nil
+
+    markdown_doc.each do |node|
+      title = string_content_for(node) if title?(node) || node.type == :header || node.type == :paragraph
+      break if title.present?
+    end
+
+    title
+  end
+
+  sig { returns(T.nilable(String)) }
+  def summary
+    summary = nil
+
+    markdown_doc.each do |node|
+      next if title?(node) || string_content_for(node) == title
+
+      summary = string_content_for(node) if summary?(node) || node.type == :header || node.type == :paragraph
+      break if summary.present?
+    end
+
+    summary
   end
 
   sig { returns(T.nilable(String)) }
   def slug
-    (title || content[0..100])&.to_slug&.to_ascii&.normalize&.to_s
+    title&.to_slug&.to_ascii&.normalize&.to_s
   end
 
   sig { returns(T.nilable(String)) }
@@ -35,27 +55,21 @@ class PostMarkdownService
   end
 
   sig { returns(T.nilable(String)) }
-  def summary
-    summary_node = markdown_doc.to_a.second
-    string_content_for(summary_node) if summary?(summary_node)
-  end
-
-  sig { params(node: CommonMarker::Node).returns(T::Boolean) }
-  def title?(node)
-    markdown_doc.first == node && node.type == :header && node.header_level == 1
-  end
-
-  sig { params(node: CommonMarker::Node).returns(T::Boolean) }
-  def summary?(node)
-    markdown_doc.to_a.second == node && node.type == :header && node.header_level == 2
-  end
-
-  sig { returns(T.nilable(String)) }
   def body_html
     PostHtmlRenderer.new.render(markdown_doc)
   end
 
   private
+
+  sig { params(node: CommonMarker::Node).returns(T::Boolean) }
+  def title?(node)
+    node.type == :header && node.header_level == 1
+  end
+
+  sig { params(node: CommonMarker::Node).returns(T::Boolean) }
+  def summary?(node)
+    node.type == :header && node.header_level == 2
+  end
 
   sig { params(node: CommonMarker::Node, content: String).returns(String) }
   def string_content_for(node, content = '')

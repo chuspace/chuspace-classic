@@ -1,0 +1,18 @@
+[Unit]
+Description=AnyCable WebSocket Server
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/anycable-go
+Restart=always
+LimitNOFILE = infinity
+Environment=ANYCABLE_HOST=localhost
+Environment=ANYCABLE_PORT=8081
+Environment=ANYCABLE_PATH=/cable
+Environment=ANYCABLE_REDIS_URL=redis://localhost:6379/5
+Environment=ANYCABLE_REDIS_CHANNEL=__anycable__
+Environment=ANYCABLE_METRICS_HTTP=/metrics
+
+[Install]
+WantedBy=multi-user.target

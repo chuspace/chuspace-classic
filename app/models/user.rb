@@ -38,6 +38,11 @@ class User < ApplicationRecord
     Imgproxy.url_for(s3_avatar_url, **options)
   end
 
+  def drafts
+    published_blob_paths ||= posts.pluck(:blob_path)
+    repository.blobs.select { |blob| published_blob_paths.exclude?(blob.path) && blob.post? }
+  end
+
   private
 
   def should_have_correct_avatar_mime_type_size

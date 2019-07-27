@@ -9,7 +9,6 @@ namespace :chuspace do
     MOBIUS_ROOT = Rails.root.join('extensions', 'mobius')
     MOBIUS_SRC = MOBIUS_ROOT.join('src')
     MOBIUS_BINARIES = %w[mobius/hooks/pre_receive mobius/hooks/post_receive mobius]
-    RUST_BINARIES = %w[extensions/fast_slug extensions/fast_markdown]
 
     FileUtils.mkdir_p(GIT_HOOKS_DIR)
 
@@ -30,12 +29,5 @@ namespace :chuspace do
     end
 
     puts "Compiled mobius binaries to #{APP_BIN_DIR}"
-
-    RUST_BINARIES.each do |binary|
-      system "cd #{Rails.root}/#{binary} && bundle exec rake"
-      system "cd #{Rails.root}"
-    end
-
-    puts 'Compiled rust gems'
   end
 end

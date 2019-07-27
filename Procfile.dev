@@ -1,5 +1,5 @@
 chuspace: bundle exec rails s
-webpacker: dotenv -f ".env.development" bundle exec ./bin/webpack-dev-server
+webpacker: dotenv -f ".env.development" ./bin/webpack-dev-server
 imgproxy: dotenv -f ".env.development" imgproxy
 minio: dotenv -f ".env.development" minio server /Users/gaurav/personal/chuspace/public/uploads
 anycable-go: anycable-go --headers=cookie,origin --host=localhost --port=3334

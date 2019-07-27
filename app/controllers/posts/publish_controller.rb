@@ -8,14 +8,15 @@ class Posts::PublishController < ApplicationController
   layout 'editor', only: :index
 
   def index
-    @published_posts = Current.user.posts.where.not(id: @post.id)
+    @published_posts = Current.user.posts.where.not(blob_path: @blob.blob_path)
+
     render 'posts/edit'
   end
 
   def create
     @post.topics = publish_params[:topics]&.split(',')
     @post.parent = publish_params[:parent]
-    @post.blob_id = @post.blob.id
+    @post.blob_id = @blob.blob.id
     @post.assign_attributes(slug: @markdown.slug, body_html: @markdown.body_html)
 
     if @post.may_publish?
@@ -37,11 +38,12 @@ class Posts::PublishController < ApplicationController
   end
 
   def assign_attributes
-    @markdown = PostMarkdownService.call(content: @post.blob_content)
+    @markdown = PostMarkdownService.call(content: @blob.content)
+    @post = Current.user.posts.build(repository: Current.user.repository)
     @post.assign_attributes(title: @markdown.title, summary: @markdown.summary)
   end
 
   def find_post
-    @post = Current.user.posts.find_by(slug: params[:post_slug])
+    @blob = Current.user.repository.blobs.find { |blob| blob.name == params[:post_slug] }
   end
 end
