@@ -18,7 +18,7 @@ gem 'activerecord-clean-db-structure'
 # File uploads
 gem 'aws-sdk-s3'
 gem 'imgproxy'
-gem 'mimemagic'
+gem 'mini_mime'
 gem 'fastimage'
 
 # Logging

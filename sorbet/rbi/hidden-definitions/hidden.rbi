@@ -10825,6 +10825,155 @@ class Binding
   extend ::T::Sig
 end
 
+class Blob
+  include ::ActiveModel::Validations
+  include ::ActiveSupport::Callbacks
+  include ::ActiveModel::Validations::HelperMethods
+  include ::ActiveModel::Conversion
+  include ::ActiveModel::Model
+  include ::ActiveModel::AttributeAssignment
+  include ::ActiveModel::ForbiddenAttributesProtection
+  include ::ActiveModel::AttributeMethods
+  include ::EncodingHelper
+  def __callbacks(); end
+
+  def __callbacks?(); end
+
+  def _create_callbacks(); end
+
+  def _run_create_callbacks(&block); end
+
+  def _run_update_callbacks(&block); end
+
+  def _run_validate_callbacks(&block); end
+
+  def _update_callbacks(); end
+
+  def _validate_callbacks(); end
+
+  def _validators(); end
+
+  def _validators?(); end
+
+  def attribute_aliases(); end
+
+  def attribute_aliases?(); end
+
+  def attribute_method_matchers(); end
+
+  def attribute_method_matchers?(); end
+
+  def author(*args, &block); end
+
+  def binary?(*args, &block); end
+
+  def commit_sha(); end
+
+  def commit_sha=(commit_sha); end
+
+  def content(); end
+
+  def empty?(); end
+
+  def extname(); end
+
+  def io(); end
+
+  def mime(); end
+
+  def model_name(*args, &block); end
+
+  def name(); end
+
+  def object(); end
+
+  def oid(*args, &block); end
+
+  def outdated?(); end
+
+  def path(); end
+
+  def path=(path); end
+
+  def post(); end
+
+  def post?(); end
+
+  def published?(); end
+
+  def repository(); end
+
+  def repository=(repository); end
+
+  def save(io:, commit_message: T.unsafe(nil)); end
+
+  def size(*args, &block); end
+
+  def summary(); end
+
+  def validation_context(); end
+  EXTENSIONS = ::T.let(nil, ::T.untyped)
+  MAX_IMAGE_SIZE = ::T.let(nil, ::T.untyped)
+  MAX_POST_SIZE = ::T.let(nil, ::T.untyped)
+  SAFELISTED = ::T.let(nil, ::T.untyped)
+end
+
+class Blob
+  extend ::ActiveModel::Validations::ClassMethods
+  extend ::ActiveModel::Callbacks
+  extend ::ActiveSupport::DescendantsTracker
+  extend ::ActiveModel::Translation
+  extend ::ActiveModel::Naming
+  extend ::ActiveModel::Validations::HelperMethods
+  extend ::ActiveModel::Conversion::ClassMethods
+  extend ::ActiveModel::AttributeMethods::ClassMethods
+  def self.__callbacks(); end
+
+  def self.__callbacks=(val); end
+
+  def self.__callbacks?(); end
+
+  def self._create_callbacks(); end
+
+  def self._create_callbacks=(value); end
+
+  def self._update_callbacks(); end
+
+  def self._update_callbacks=(value); end
+
+  def self._validate_callbacks(); end
+
+  def self._validate_callbacks=(value); end
+
+  def self._validators(); end
+
+  def self._validators=(val); end
+
+  def self._validators?(); end
+
+  def self.after_create(*args, **options, &block); end
+
+  def self.after_update(*args, **options, &block); end
+
+  def self.all(repository:, commit_sha: T.unsafe(nil)); end
+
+  def self.attribute_aliases(); end
+
+  def self.attribute_aliases=(val); end
+
+  def self.attribute_aliases?(); end
+
+  def self.attribute_method_matchers(); end
+
+  def self.attribute_method_matchers=(val); end
+
+  def self.attribute_method_matchers?(); end
+
+  def self.find(repository:, path:, commit_sha: T.unsafe(nil)); end
+
+  def self.valid?(name); end
+end
+
 module Bootsnap
   VERSION = ::T.let(nil, ::T.untyped)
 end
@@ -15389,13 +15538,13 @@ end
 
 class File
   extend ::T::Sig
-  def self.empty?(_); end
-
   def self.exists?(_); end
 
   def self.lutime(*_); end
 
   def self.mkfifo(*_); end
+
+  def self.probe_stat_in(dir); end
 
 end
 
@@ -20045,63 +20194,6 @@ module Gem
   def self.write_binary(path, data); end
 end
 
-class Git::Blob
-  include ::EncodingHelper
-  def binary(); end
-
-  def binary=(binary); end
-
-  def binary?(); end
-
-  def commit_sha(); end
-
-  def commit_sha=(commit_sha); end
-
-  def content(); end
-
-  def content=(content); end
-
-  def content_type(); end
-
-  def content_type=(content_type); end
-
-  def empty?(); end
-
-  def id(); end
-
-  def id=(id); end
-
-  def initialize(options); end
-
-  def io(); end
-
-  def mode(); end
-
-  def mode=(mode); end
-
-  def name(); end
-
-  def name=(name); end
-
-  def path(); end
-
-  def path=(path); end
-
-  def size(); end
-
-  def size=(size); end
-end
-
-class Git::Blob
-  def self.all(repository, commit_sha=T.unsafe(nil)); end
-
-  def self.find(repository, path, commit_sha=T.unsafe(nil)); end
-
-  def self.from(repository, blob_entry, path); end
-
-  def self.supported?(name); end
-end
-
 class Git::Commit
   include ::EncodingHelper
   def author_email(); end
@@ -23257,13 +23349,6 @@ end
 
 module Mime
   extend ::T::Sig
-end
-
-class MimeMagic
-  EXTENSIONS = ::T.let(nil, ::T.untyped)
-  MAGIC = ::T.let(nil, ::T.untyped)
-  TYPES = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
 end
 
 module MiniMime
@@ -28122,7 +28207,6 @@ class Post
 
   def validate_associated_records_for_editions(*args); end
   DEFAULT_TITLE = ::T.let(nil, ::T.untyped)
-  ROOT_PATH = ::T.let(nil, ::T.untyped)
   STATE_ARCHIVED = ::T.let(nil, ::T.untyped)
   STATE_DRAFT = ::T.let(nil, ::T.untyped)
   STATE_PUBLISHED = ::T.let(nil, ::T.untyped)
@@ -31600,6 +31684,7 @@ class Rack::Attack::Safelist
 end
 
 module Rack::Attack::StoreProxy
+  PROXIES = ::T.let(nil, ::T.untyped)
 end
 
 class Rack::Attack::StoreProxy::ActiveSupportRedisStoreProxy
@@ -31664,8 +31749,15 @@ class Rack::Attack::StoreProxy::RedisProxy
   def self.handle?(store); end
 end
 
+class Rack::Attack::StoreProxy::RedisStoreProxy
+end
+
+class Rack::Attack::StoreProxy::RedisStoreProxy
+end
+
 module Rack::Attack::StoreProxy
   extend ::T::Sig
+  def self.build(store); end
 end
 
 class Rack::Attack::Throttle
@@ -34061,15 +34153,17 @@ class Repository
 
   def blob_at(path:, sha: T.unsafe(nil)); end
 
-  def blobs(sha: T.unsafe(nil)); end
+  def blobs(); end
 
   def branches(*args, &block); end
 
   def checkout(*args, &block); end
 
-  def commit(); end
+  def commit(sha: T.unsafe(nil)); end
 
   def commit_sha(); end
+
+  def create_blob(path:, content:, commit_message: T.unsafe(nil)); end
 
   def create_commit(content:, path:, action: T.unsafe(nil), message: T.unsafe(nil), branch: T.unsafe(nil)); end
 
@@ -34086,6 +34180,8 @@ class Repository
   def lookup(*args, &block); end
 
   def merge_base_commit(from, to); end
+
+  def new_blob(options=T.unsafe(nil)); end
 
   def rev_parse_target(revspec); end
 
@@ -34105,6 +34201,8 @@ class Repository
   GITIGNORE = ::T.let(nil, ::T.untyped)
   GITIGNORE_PATH = ::T.let(nil, ::T.untyped)
   GLOBAL_HOOKS_DIRECTORY = ::T.let(nil, ::T.untyped)
+  IMAGES_ROOT = ::T.let(nil, ::T.untyped)
+  POSTS_ROOT = ::T.let(nil, ::T.untyped)
   START_REF = ::T.let(nil, ::T.untyped)
 end
 
@@ -39873,6 +39971,8 @@ class User
   def before_remove_for_ssh_keys=(val); end
 
   def before_remove_for_ssh_keys?(); end
+
+  def drafts(); end
 
   def initials(); end
 

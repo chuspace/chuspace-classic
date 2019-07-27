@@ -1,10 +1,8 @@
 # typed: ignore
 # frozen_string_literal: true
 
-require 'mimemagic'
-
 class ImageConstraint
   def matches?(request)
-    MimeMagic.by_path(request.path)&.image?
+    MiniMime.lookup_by_filename(request.path)&.content_type&.include?('image')
   end
 end

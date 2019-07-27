@@ -374,7 +374,7 @@ DEPENDENCIES
   hiredis
   imgproxy
   logidze
-  mimemagic
+  mini_mime
   minitest
   octokit
   oj

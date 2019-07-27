@@ -18,10 +18,12 @@ class PostsController < ApplicationController
   def create
     Post.transaction do
       markdown = PostMarkdownService.call(content: post_params[:body])
-      blob = Current.user.repository.create_blob(path: markdown.blob_path, content: markdown.content)
+      slug = markdown.title&.to_slug&.to_ascii&.normalize&.to_s
+      blob_path = File.join(Repository::POSTS_ROOT, "#{slug}.md")
+      blob = Current.user.repository.create_blob(path: blob_path, content: markdown.content)
 
       if blob.persisted?
-        post = Current.user.posts.create(repository: Current.user.repository, slug: blob.oid[0..8], blob_path: markdown.blob_path)
+        post = Current.user.posts.create(repository: Current.user.repository, slug: blob.oid[0..8], blob_path: blob_path)
 
         render json: {
           redirect: edit_post_path(post),
@@ -40,8 +42,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    if @post.destroy
-      Current.user.repository.create_commit(content: '', path: @post.blob_path, action: :remove)
+    if @post.blob.destroy && @post.destroy
       redirect_to user_drafts_path(@post.author)
     else
       redirect_to post_path(@post)

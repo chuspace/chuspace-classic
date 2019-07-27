@@ -1,4 +1,4 @@
-# typed: true
+# typed: false
 # frozen_string_literal: true
 
 class PostMarkdownService
@@ -41,17 +41,6 @@ class PostMarkdownService
     end
 
     summary
-  end
-
-  sig { returns(T.nilable(String)) }
-  def slug
-    title&.to_slug&.to_ascii&.normalize&.to_s
-  end
-
-  sig { returns(T.nilable(String)) }
-  def blob_path
-    dirname = File.dirname(Post::ROOT_PATH)
-    blob_path = File.join(dirname, "#{slug}.md")
   end
 
   sig { returns(T.nilable(String)) }

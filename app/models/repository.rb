@@ -32,7 +32,7 @@ class Repository < ApplicationRecord
   validates_db_uniqueness_of :path
 
   before_validation :assign_default_attributes, on: :create
-  before_create :create_git_repo, :create_git_hooks, :add_gitignore, :add_images_folder, :add_posts_folder
+  after_save :create_git_repo, :create_git_hooks, :add_gitignore, :add_images_folder, :add_posts_folder
   after_save :rename_git_repo, if: -> { !new_record? && path_changed? }
 
   after_destroy :destroy_git_repo
@@ -77,12 +77,8 @@ class Repository < ApplicationRecord
     Blob.find(repository: self, path: path, commit_sha: commit_sha)
   end
 
-  def new_blob(options = {})
-    Blob.new(repository: self, **options)
-  end
-
   def create_blob(path:, content:, commit_message: nil)
-    Blob.new(repository: self, path: path).save(io: content, commit_message: commit_message)
+    Blob.create(repository: self, path: path, content: content, commit_message: commit_message)
   end
 
   def find_branch(name:)
@@ -182,12 +178,12 @@ class Repository < ApplicationRecord
   end
 
   def add_images_folder
-    path = File.join(Image::ROOT_PATH, IMAGES_ROOT)
+    path = File.join(IMAGES_ROOT, '.keep')
     create_blob(path: path, content: '', commit_message: 'Add images folder')
   end
 
   def add_posts_folder
-    path = File.join(Image::ROOT_PATH, ROOT_PATH)
+    path = File.join(POSTS_ROOT, '.keep')
     create_blob(path: path, content: '', commit_message: 'Add posts folder')
   end
 

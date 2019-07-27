@@ -1,10 +1,8 @@
 # typed: ignore
 # frozen_string_literal: true
 
-require 'mimemagic'
-
 class ImagesController < ApplicationController
-  before_action :authenticate!, only: %i[new create]
+  before_action :authenticate!
   layout 'editor', only: %i[new edit]
 
   def create
@@ -12,7 +10,6 @@ class ImagesController < ApplicationController
     name = image_blob.original_filename.to_slug&.to_ascii&.to_s
     blob_path = File.join('images', name)
     blob = Current.user.repository.create_blob(path: blob_path, content: image_blob.read)
-    puts blob.object.inspect
 
     if blob.persisted?
       render json: { created: true, url: File.join('/', blob_path) }
@@ -30,24 +27,5 @@ class ImagesController < ApplicationController
     else
       raise ActionController::RoutingError.new('Not Found')
     end
-  end
-
-  private
-
-  def blob_params
-    params.permit(:path, :width, :quality)
-  end
-
-  def builder_options
-    options = {}
-
-    if blob_params[:width]
-      options[:width] = blob_params[:width]
-      options[:resizing_type] = :fill
-    end
-
-    options[:quality] = blob_params[:quality] + '%' if blob_params[:quality]
-
-    options
   end
 end

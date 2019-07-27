@@ -12,3 +12,5 @@ module ::Anonymous_Delegator_8; end
 module ::Anonymous_Delegator_9; end
 module ActionMailer::Base::Mail::Message; end
 module ActiveRecord::CollectionCacheKey; end
+module Post::ROOT_PATH; end
+module S3Service::MimeMagic; end

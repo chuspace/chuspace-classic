@@ -58,26 +58,9 @@ export default class LazyImage extends LitElement {
   }
 
   render() {
-    const srcImage = `${this.src}?${queryString.stringify({
-      quality: 100,
-      width: 800
-    })}`
-
-    const placeholderImage = `${this.src}?${queryString.stringify({
-      quality: 1,
-      width: 800
-    })}`
-
     return html`
-      <div class="image-container">
-        <img
-          alt=${this.alt}
-          data-lowsrc="${ifDefined(isUrl(this.src) ? undefined : placeholderImage)}"
-          data-src="${ifDefined(isUrl(this.src) ? this.src : srcImage)}"
-          data-sizes="auto"
-          @click=${this.selectNode}
-          class="lazy"
-        />
+      <figure class="image-container">
+        <img alt=${this.alt} data-src="${this.src}" data-sizes="auto" @click=${this.selectNode} class="lazy" />
         ${this.editable
           ? html`<figcaption contentEditable="false">
           <input
@@ -91,7 +74,7 @@ export default class LazyImage extends LitElement {
         </div>
       </figcaption>`
           : null}
-      </div>
+      </figure>
     `
   }
 }

@@ -1,8 +1,6 @@
 # typed: ignore
 # frozen_string_literal: true
 
-require 'mimemagic'
-
 class Blob
   include ::EncodingHelper, ActiveModel::AttributeMethods, ActiveModel::Model
   extend ActiveModel::Callbacks
@@ -12,10 +10,10 @@ class Blob
   EXTENSIONS = %w[.jpg .png .jpeg .gif .md]
   SAFELISTED = %w[.gitignore .keep]
 
-  attr_accessor :path, :repository, :commit_sha
+  attr_accessor :path, :repository, :content, :commit_sha
   attr_reader :name, :extname, :object
 
-  validates :name, :path, :repository, presence: true
+  validates :name, :path, :repository, :content, presence: true
   validates :name, format: { with: /\A^[a-zA-Z0-9_-]*$\z/i }
   validates_length_of :name, maximum: 100
   validate :should_have_correct_content_type
@@ -38,7 +36,6 @@ class Blob
 
       tree.walk_blobs(:postorder) do |root, blob_entry|
         name = blob_entry[:name]
-        next unless valid?(name)
 
         path = root.blank? ? name : File.join(root, name)
         blobs << find(repository: repository, path: path, commit_sha: commit_sha)
@@ -52,17 +49,19 @@ class Blob
       blob.persisted? ? blob : nil
     end
 
+    def create(repository:, path:, content:, commit_message: nil)
+      Blob.new(repository: repository, path: path).save(io: content, commit_message: commit_message)
+    end
+
     def valid?(name)
-      mime = MimeMagic.by_path(name)
       extname = File.extname(name).downcase
-      (mime&.image? || mime&.text?) && EXTENSIONS.include?(extname)
+      EXTENSIONS.include?(extname)
     end
   end
 
   def initialize(attributes = {})
     super
 
-    @path ||= ''
     @name = File.basename(path || '', '.*')
     @extname = File.extname(path || '').downcase
     @commit_sha ||= repository.commit_sha
@@ -73,10 +72,7 @@ class Blob
   end
 
   def object
-    @object ||= repository.rugged.blob_at(commit_sha, path)
-  end
-
-  def summary
+    @object ||= path && commit_sha ? repository.rugged.blob_at(commit_sha, path) : nil
   end
 
   def content
@@ -95,34 +91,38 @@ class Blob
     !!oid
   end
 
-  def post
-    @post ||= author.posts.find_by(blob_path: path)
-  end
-
-  def outdated?
-    post&.blob_id != oid
-  end
-
-  def published?
-    post&.published?
-  end
-
-  def post?
-    mime.text? && extname == '.md'
-  end
-
   def save(io:, commit_message: nil)
+    @content = encode!(io)
+
     if valid? && Rugged::Repository.hash_data(io, :blob) != oid
       commit_message ||= persisted? ? "Updated #{path}" : "Added #{path}"
-      repository.create_commit(content: io, message: commit_message, path: path)
-      reload
+      @commit_sha = repository.create_commit(content: content, message: commit_message, path: path)
+      @object = nil
     end
 
     self
   end
 
+  def destroy(commit_message: nil)
+    if persisted?
+      @commit_sha = repository.create_commit(path: path, message: commit_message, content: nil, action: :remove)
+      @object = nil
+      true
+    else
+      false
+    end
+  end
+
   def mime
-    MimeMagic.by_path(path)
+    MiniMime.lookup_by_filename(path)
+  end
+
+  def post?
+    mime&.content_type == 'text/markdown' && mime&.extension == 'md'
+  end
+
+  def image?
+    mime&.content_type&.include?('image')
   end
 
   private
@@ -132,23 +132,20 @@ class Blob
   end
 
   def should_have_correct_content_type
-    errors.add(:content, :invalid_content_type) unless mime.image? || mime&.text?
+    errors.add(:content, :invalid_content_type) unless image? || post?
   end
 
   def should_have_correct_content_size
-    case mime.mediatype
-    when :image
-      errors.add(:content, :invalid_size) if size > MAX_IMAGE_SIZE
-    when :text
-      errors.add(:content, :invalid_size) if size > MAX_POST_SIZE
+    size = content.bytesize
+
+    if image?
+      errors.add(:content, :invalid_size, size: MAX_IMAGE_SIZE, type: 'an image') if size > MAX_IMAGE_SIZE
+    elsif post?
+      errors.add(:content, :invalid_size, size: MAX_POST_SIZE, type: 'a post') if size > MAX_POST_SIZE
     end
   end
 
   def should_have_correct_extname
     errors.add(:name, :invalid_extname) unless EXTENSIONS.include?(extname)
-  end
-
-  def reload
-    @object = nil
   end
 end
