@@ -9,7 +9,7 @@ class S3Service
 
   sig { params(io: T.untyped, filename: String, bucket: String, size: T.nilable(Integer)).returns(Seahorse::Client::Response) }
   def self.upload(io:, filename:, bucket:, size: MAX_SIZE)
-    content_type = MimeMagic.by_path(filename).type
+    content_type = MiniMime.lookup_by_filename(filename)&.content_type
     client.put_object(key: filename, content_type: content_type, bucket: bucket, body: io)
   end
 

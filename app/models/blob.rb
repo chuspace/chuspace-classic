@@ -122,7 +122,7 @@ class Blob
   end
 
   def s3_url
-    File.join('s3://', path)
+    File.join('s3://', author.nickname, path)
   end
 
   private
@@ -146,7 +146,7 @@ class Blob
   end
 
   def sync_to_s3(action: :upload)
-    payload = { io: io, path: path, bucket: repository.author.nickname, action: action }.freeze
-    DeliveryBoy.deliver_async(payload.to_json, topic: 'blobs', partition_key: "repository_#{repository.id]}}")
+    payload = { path: path, repository_id: repository.id, action: action }.freeze
+    DeliveryBoy.deliver_async(payload.to_json, topic: 'blobs', partition_key: "repository_#{repository.id}}")
   end
 end

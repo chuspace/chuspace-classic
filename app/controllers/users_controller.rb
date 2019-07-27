@@ -17,7 +17,7 @@ class UsersController < ApplicationController
 
     if avatar && @user.valid?
       @user.avatar_blob = avatar.tempfile
-      S3Service.upload_image(io: avatar.read, filename: avatar.original_filename, bucket: @user.s3_bucket_name)
+      S3Service.upload(io: avatar.read, filename: avatar.original_filename, bucket: @user.s3_bucket_name)
       @user.avatar = avatar.original_filename
       @user.avatar_blob = nil
     end
