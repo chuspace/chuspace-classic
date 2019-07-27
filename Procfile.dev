@@ -5,3 +5,4 @@ minio: dotenv -f ".env.development" minio server /Users/gaurav/personal/chuspace
 anycable-go: anycable-go --headers=cookie,origin --host=localhost --port=3334
 anycable: dotenv -f ".env.development" bundle exec anycable
 racecar-process-commits: dotenv -f ".env.development" bundle exec racecar PostReceiveConsumer
+racecar-process-s3: dotenv -f ".env.development" bundle exec racecar S3UploaderConsumer

@@ -20,12 +20,6 @@ class Blob
   validate :should_have_correct_content_size
   validate :should_have_correct_extname, unless: -> { SAFELISTED.include?(name) }
 
-  define_model_callbacks :create, only: :after
-  define_model_callbacks :update, only: :after
-
-  after_create :sync
-  after_update :sync
-
   delegate :oid, :binary?, :size, to: :object, allow_nil: true
   delegate :author, to: :repository
 
@@ -98,6 +92,7 @@ class Blob
       commit_message ||= persisted? ? "Updated #{path}" : "Added #{path}"
       @commit_sha = repository.create_commit(content: content, message: commit_message, path: path)
       @object = nil
+      sync_to_s3
     end
 
     self
@@ -107,6 +102,7 @@ class Blob
     if persisted?
       @commit_sha = repository.create_commit(path: path, message: commit_message, content: nil, action: :remove)
       @object = nil
+      sync_to_s3(action: :remove)
       true
     else
       false
@@ -125,11 +121,11 @@ class Blob
     mime&.content_type&.include?('image')
   end
 
-  private
-
-  def sync
-    S3Service.upload(io: io, filename: path, bucket: repository.author.nickname)
+  def s3_url
+    File.join('s3://', path)
   end
+
+  private
 
   def should_have_correct_content_type
     errors.add(:content, :invalid_content_type) unless image? || post?
@@ -147,5 +143,10 @@ class Blob
 
   def should_have_correct_extname
     errors.add(:name, :invalid_extname) unless EXTENSIONS.include?(extname)
+  end
+
+  def sync_to_s3(action: :upload)
+    payload = { io: io, path: path, bucket: repository.author.nickname, action: action }.freeze
+    DeliveryBoy.deliver_async(payload.to_json, topic: 'blobs', partition_key: "repository_#{repository.id]}}")
   end
 end
