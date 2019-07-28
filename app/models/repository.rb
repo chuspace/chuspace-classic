@@ -130,6 +130,8 @@ class Repository < ApplicationRecord
       action: action,
       options: { commit: { message: message, branch: branch }, file: { content: content, path: path } }
     )
+
+    Rails.logger.info("<#{message}> to <#{branch}>")
   end
 
   private

@@ -14,13 +14,13 @@ class Posts::EditionsController < ApplicationController
   end
 
   def create
-    @edition = Current.user.editions.build(post: @post)
+    @edition = Current.user.contributions.build(post: @post)
     branch_name = "edition_#{Current.user.nickname}_#{@post.id}"
     branch = @post.repository.branches.create(branch_name, @post.repository.commit_sha)
 
     @edition.assign_attributes(
       branch_name: branch.name,
-      commit_sha: branch.target
+      commit_sha: @post.repository.commit_sha
     )
 
     if @edition.save!

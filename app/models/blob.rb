@@ -85,12 +85,12 @@ class Blob
     !!oid
   end
 
-  def save(io:, commit_message: nil)
+  def save(io:, branch: Repository::DEFAULT_BRANCH, commit_message: nil)
     @content = encode!(io)
 
     if valid? && Rugged::Repository.hash_data(io, :blob) != oid
       commit_message ||= persisted? ? "Updated #{path}" : "Added #{path}"
-      @commit_sha = repository.create_commit(content: content, message: commit_message, path: path)
+      @commit_sha = repository.create_commit(content: content, message: commit_message, branch: branch, path: path)
       @object = nil
       sync_to_s3
     end
@@ -98,9 +98,9 @@ class Blob
     self
   end
 
-  def destroy(commit_message: nil)
+  def destroy(branch: Repository::DEFAULT_BRANCH, commit_message: nil)
     if persisted?
-      @commit_sha = repository.create_commit(path: path, message: commit_message, content: nil, action: :remove)
+      @commit_sha = repository.create_commit(path: path, message: commit_message, content: nil, branch: branch, action: :remove)
       @object = nil
       sync_to_s3(action: :remove)
       true

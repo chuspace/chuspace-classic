@@ -16,6 +16,8 @@ class Edition < ApplicationRecord
   delegate :repository, to: :post
   delegate :content, to: :blob, prefix: true
 
+  after_destroy :delete_branch
+
   aasm column: :status, enum: true do
     state :opened, initial: true
     state :merged, :closed
@@ -42,7 +44,7 @@ class Edition < ApplicationRecord
   end
 
   def blob
-    @blob ||= post.repository.blob_at(path: post.blob_path, sha: branch.target_id)
+    @blob ||= repository.blob_at(path: post.blob_path, sha: branch.target_id)
   end
 
   def branch
@@ -53,5 +55,9 @@ class Edition < ApplicationRecord
 
   def must_be_for_published_post
     errors.add(:post, :no_edition_possible) unless post.published?
+  end
+
+  def delete_branch
+    repository.branches.delete(branch_name)
   end
 end
