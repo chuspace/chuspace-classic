@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/oj/all/oj.rbi
 #
-# oj-3.7.12
+# oj-3.8.1
 module Oj
   def add_to_json(*arg0); end
   def compat_load(*arg0); end
@@ -111,6 +111,7 @@ class Oj::ScHandler
   def initialize; end
 end
 class Oj::StringWriter
+  def as_json; end
   def new(*arg0); end
   def pop; end
   def pop_all; end
@@ -119,6 +120,7 @@ class Oj::StringWriter
   def push_key(arg0); end
   def push_object(*arg0); end
   def push_value(*arg0); end
+  def raw_json; end
   def reset; end
   def self.new(*arg0); end
   def to_s; end

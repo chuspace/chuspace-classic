@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 class Repository < ApplicationRecord
+  include Commitable
   class NoRepository < StandardError; end
   class InvalidRef < StandardError; end
 
@@ -69,16 +70,16 @@ class Repository < ApplicationRecord
     lookup(sha)
   end
 
-  def blobs
-    Blob.all(repository: self, commit_sha: commit_sha)
+  def blobs(sha: commit_sha)
+    Blob.all(repository: self, commit_sha: sha)
   end
 
   def blob_at(path:, sha: commit_sha)
-    Blob.find(repository: self, path: path, commit_sha: commit_sha)
+    Blob.find(repository: self, path: path, commit_sha: sha)
   end
 
-  def create_blob(path:, content:, commit_message: nil)
-    Blob.create(repository: self, path: path, content: content, commit_message: commit_message)
+  def create_blob(path:, content:, commit_message: nil, branch: DEFAULT_BRANCH)
+    Blob.create(repository: self, path: path, content: content, commit_message: commit_message, branch: branch)
   end
 
   def find_branch(name:)
@@ -94,8 +95,8 @@ class Repository < ApplicationRecord
     (size.to_f / 1_024).round(2)
   end
 
-  def author_hash
-    { name: author.name, email: author.email, nickname: author.nickname }.freeze
+  def commit_hash(user: author)
+    { name: user.name, email: user.email, nickname: user.nickname, time: Time.now }.freeze
   end
 
   def sha_from_ref(ref)
@@ -113,25 +114,10 @@ class Repository < ApplicationRecord
     rugged.merge_base(from, to)
   end
 
-  def create_commit(action: :add, message: nil, content:, path:, branch: DEFAULT_BRANCH)
-    message ||=
-      case action
-      when :add
-        "Created #{path}"
-      when :update
-        "Updated #{path}"
-      when :remove
-        "Deleted #{path}"
-      end
-
-    Git::Commit.create(
-      repository: self,
-      committer: self.author,
-      action: action,
-      options: { commit: { message: message, branch: branch }, file: { content: content, path: path } }
-    )
-
-    Rails.logger.info("<#{message}> to <#{branch}>")
+  def create_commit(options:, action: :add)
+    sha = Git::Commit.create(repository: self, action: action, options: options)
+    Rails.logger.info("Committed <#{sha}> to <#{name}>")
+    sha
   end
 
   private

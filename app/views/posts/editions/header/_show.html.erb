@@ -1,0 +1,12 @@
+<div class='flex items-center flex-1'>
+  <div class='flex-1 flex items-center ml-8'>
+    <%= component 'status_badge', state: edition.status, css_class: 'mr-4 font-bold uppercase' %>
+  </div>
+
+  <div class='flex justify-end items-center flex-1 mr-8'>
+    <%= link_to 'Edit', edit_post_edition_path(post, edition), class: 'button button--active button--slim mr-2' if policy(edition).edit? %>
+    <%= content_tag :div, 'Merge conflicts', class: 'mr-4' if !edition.mergeable?  %>
+    <%= link_to 'Close', edit_post_edition_path(post, edition), class: 'button button--danger button--slim mr-2' if policy(edition).close? %>
+    <%= link_to 'Merge', merge_post_edition_path(post, edition), method: :post, class: 'button button--fill button--slim mr-2' if policy(edition).merge?  %>
+  </div>
+</div>

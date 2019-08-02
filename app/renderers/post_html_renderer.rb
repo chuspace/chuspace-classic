@@ -1,4 +1,4 @@
-# typed: true
+# typed: false
 # frozen_string_literal: true
 
 class PostHtmlRenderer < CommonMarker::HtmlRenderer
@@ -50,11 +50,17 @@ class PostHtmlRenderer < CommonMarker::HtmlRenderer
 
   def image(node)
     if url_or_mailto?(node.url)
-      super
+      super(node)
     else
+      image_url = node.url
       blob_path = node.url.start_with?('/') ? node.url[1..-1] : node.url
-      image = Current.user.repository.blob_at(path: blob_path)
-      image_url = image ? Imgproxy.url_for(image.s3_url, width: 800, resizing_type: :fill) : node.url
+      blob = Current.user.repository.blob_at(path: blob_path)
+
+      if blob.persisted?
+        payload = { path: blob.path, repository_id: Current.user.repository.id, action: :upload }.freeze
+        DeliveryBoy.deliver_async(payload.to_json, topic: 'blobs', partition_key: "repository_#{Current.user.repository.id}}")
+        image_url = Imgproxy.url_for("s3://#{Current.user.nickname}/#{blob.path}", width: 800, resizing_type: :fill)
+      end
 
       out('<img src="', escape_href(image_url), '"')
       plain do

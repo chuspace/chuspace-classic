@@ -7,7 +7,7 @@ class Edition < ApplicationRecord
   db_belongs_to :editor, class_name: 'User', foreign_key: 'editor_id'
   db_belongs_to :post
 
-  enum status: { opened: 0, merged: 1, closed: 2 }
+  enum status: { draft: 0, open: 1, merged: 2, closed: 3 }
 
   validates_db_uniqueness_of :branch_name
   validates_presence_of :status
@@ -19,19 +19,21 @@ class Edition < ApplicationRecord
   after_destroy :delete_branch
 
   aasm column: :status, enum: true do
-    state :opened, initial: true
-    state :merged, :closed
+    state :draft, initial: true
+    state :open, :merged, :closed
+
+    event :open do
+      transitions from: :draft, to: :open
+      transitions from: :closed, to: :open
+    end
 
     event :merge do
-      transitions from: :opened, to: :merged
+      transitions from: :open, to: :merged
     end
 
     event :close do
-      transitions from: :opened, to: :merged
-    end
-
-    event :open do
-      transitions from: :closed, to: :opened
+      transitions from: :open, to: :closed
+      transitions from: :open, to: :draft
     end
   end
 
@@ -49,6 +51,10 @@ class Edition < ApplicationRecord
 
   def branch
     @branch ||= repository.find_branch(name: branch_name)
+  end
+
+  def mergeable?
+    repository.merge_index(commit).present?
   end
 
   private

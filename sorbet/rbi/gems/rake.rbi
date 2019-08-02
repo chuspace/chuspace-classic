@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rake/all/rake.rbi
 #
-# rake-12.3.2
+# rake-12.3.3
 module Rake
   def self.each_dir_parent(dir); end
   def self.from_pathname(path); end

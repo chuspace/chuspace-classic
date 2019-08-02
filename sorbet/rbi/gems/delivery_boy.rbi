@@ -7,16 +7,19 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/delivery_boy/all/delivery_boy.rbi
 #
-# delivery_boy-0.2.7
+# delivery_boy-0.2.8
 module DeliveryBoy
   def self.config; end
   def self.configure; end
   def self.deliver(value, topic:, **options); end
   def self.deliver_async!(value, topic:, **options); end
   def self.deliver_async(value, topic:, **options); end
+  def self.deliver_messages; end
   def self.instance; end
   def self.logger; end
   def self.logger=(arg0); end
+  def self.produce!(value, topic:, **options); end
+  def self.produce(value, topic:, **options); end
   def self.shutdown; end
   def self.test_mode!; end
   def self.testing; end
@@ -27,9 +30,11 @@ class DeliveryBoy::Instance
   def config; end
   def deliver(value, topic:, **options); end
   def deliver_async!(value, topic:, **options); end
+  def deliver_messages; end
   def initialize(config, logger); end
   def kafka; end
   def logger; end
+  def produce(value, topic:, **options); end
   def producer_options; end
   def shutdown; end
   def sync_producer; end
@@ -39,8 +44,10 @@ class DeliveryBoy::Fake
   def clear; end
   def deliver(value, topic:, key: nil, partition: nil, partition_key: nil, create_time: nil); end
   def deliver_async!(value, topic:, key: nil, partition: nil, partition_key: nil, create_time: nil); end
+  def deliver_messages; end
   def initialize; end
   def messages_for(topic); end
+  def produce(value, topic:, key: nil, partition: nil, partition_key: nil, create_time: nil); end
   def shutdown; end
 end
 class DeliveryBoy::Fake::FakeMessage < Struct
@@ -92,6 +99,8 @@ class DeliveryBoy::Config < KingKonf::Config
   def delivery_interval=(value); end
   def delivery_threshold; end
   def delivery_threshold=(value); end
+  def log_level; end
+  def log_level=(value); end
   def max_buffer_bytesize; end
   def max_buffer_bytesize=(value); end
   def max_buffer_size; end
@@ -108,6 +117,9 @@ class DeliveryBoy::Config < KingKonf::Config
   def sasl_gssapi_keytab=(value); end
   def sasl_gssapi_principal; end
   def sasl_gssapi_principal=(value); end
+  def sasl_over_ssl; end
+  def sasl_over_ssl=(value); end
+  def sasl_over_ssl?; end
   def sasl_plain_authzid; end
   def sasl_plain_authzid=(value); end
   def sasl_plain_password; end
@@ -133,6 +145,9 @@ class DeliveryBoy::Config < KingKonf::Config
   def ssl_client_cert=(value); end
   def ssl_client_cert_key; end
   def ssl_client_cert_key=(value); end
+  def ssl_verify_hostname; end
+  def ssl_verify_hostname=(value); end
+  def ssl_verify_hostname?; end
 end
 class DeliveryBoy::Railtie < Rails::Railtie
 end

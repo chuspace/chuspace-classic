@@ -1,3 +1,12 @@
 .badge
+  @apply px-2 py-1 rounded text-sm leading-tight font-headings
   &--grey
-    @apply px-2 py-1 rounded text-sm leading-tight font-headings bg-grey-lighter
+    @apply bg-grey-lighter
+  &--draft
+    @apply bg-grey-lighter
+  &--open
+    @apply bg-green text-white
+  &--closed
+    @apply bg-red text-white
+  &--merged
+    @apply bg-blue text-white

@@ -1,3 +1,6 @@
+# typed: false
+# frozen_string_literal: true
+
 class S3UploaderConsumer < Racecar::Consumer
   subscribes_to 'blobs'
 

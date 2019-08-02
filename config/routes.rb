@@ -21,7 +21,11 @@ Rails.application.routes.draw do
 
   resources :posts, path: 'p', param: :slug do
     resources :publish, only: %i[index create], module: 'posts'
-    resources :editions, module: 'posts'
+    resources :editions, module: 'posts' do
+      member do
+        post :merge
+      end
+    end
   end
 
   resources :images, only: %i[create destroy]

@@ -4,6 +4,7 @@
 class PostsController < ApplicationController
   before_action :authenticate!, except: %i[show]
   before_action :find_post, except: %i[index new create]
+  after_action :verify_authorized, only: %[new edit create]
 
   layout 'editor', only: %i[new edit]
 
@@ -13,6 +14,10 @@ class PostsController < ApplicationController
 
   def show
     redirect_to edit_post_path(@post) if @post.draft?
+  end
+
+  def edit
+    authorize @post
   end
 
   def create

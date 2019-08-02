@@ -52,35 +52,71 @@ class ActionController::Base
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def magic_logins_url(*args, **kwargs); end
 
+  # Sigs for route /autocomplete/topics(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def autocomplete_topics_path(*args, **kwargs); end
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def autocomplete_topics_url(*args, **kwargs); end
+
+  # Sigs for route /u/:user_nickname/drafts(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def user_drafts_path(*args, **kwargs); end
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def user_drafts_url(*args, **kwargs); end
+
   # Sigs for route /u(.:format)
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def users_path(*args, **kwargs); end
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def users_url(*args, **kwargs); end
 
-  # Sigs for route /u/new(.:format)
-  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def new_user_path(*args, **kwargs); end
-  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def new_user_url(*args, **kwargs); end
-
-  # Sigs for route /u/:id/edit(.:format)
+  # Sigs for route /u/:nickname/edit(.:format)
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def edit_user_path(*args, **kwargs); end
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def edit_user_url(*args, **kwargs); end
 
-  # Sigs for route /u/:id(.:format)
+  # Sigs for route /u/:nickname(.:format)
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def user_path(*args, **kwargs); end
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def user_url(*args, **kwargs); end
 
-  # Sigs for route /p/:post_id/publish(.:format)
+  # Sigs for route /p/:post_slug/publish(.:format)
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def post_publish_index_path(*args, **kwargs); end
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def post_publish_index_url(*args, **kwargs); end
+
+  # Sigs for route /p/:post_slug/editions/:id/merge(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def merge_post_edition_path(*args, **kwargs); end
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def merge_post_edition_url(*args, **kwargs); end
+
+  # Sigs for route /p/:post_slug/editions(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def post_editions_path(*args, **kwargs); end
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def post_editions_url(*args, **kwargs); end
+
+  # Sigs for route /p/:post_slug/editions/new(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def new_post_edition_path(*args, **kwargs); end
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def new_post_edition_url(*args, **kwargs); end
+
+  # Sigs for route /p/:post_slug/editions/:id/edit(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def edit_post_edition_path(*args, **kwargs); end
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def edit_post_edition_url(*args, **kwargs); end
+
+  # Sigs for route /p/:post_slug/editions/:id(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def post_edition_path(*args, **kwargs); end
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def post_edition_url(*args, **kwargs); end
 
   # Sigs for route /p(.:format)
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
@@ -94,13 +130,13 @@ class ActionController::Base
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def new_post_url(*args, **kwargs); end
 
-  # Sigs for route /p/:id/edit(.:format)
+  # Sigs for route /p/:slug/edit(.:format)
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def edit_post_path(*args, **kwargs); end
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def edit_post_url(*args, **kwargs); end
 
-  # Sigs for route /p/:id(.:format)
+  # Sigs for route /p/:slug(.:format)
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def post_path(*args, **kwargs); end
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
@@ -153,6 +189,12 @@ class ActionController::Base
   def settings_ssh_key_path(*args, **kwargs); end
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def settings_ssh_key_url(*args, **kwargs); end
+
+  # Sigs for route /settings/repository(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def settings_repositories_path(*args, **kwargs); end
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def settings_repositories_url(*args, **kwargs); end
 
   # Sigs for route /mobius/post_receive(.:format)
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }

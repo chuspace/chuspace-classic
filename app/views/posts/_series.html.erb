@@ -1,0 +1,13 @@
+<% if post.tree.size > 1 %>
+  <div class='post__ancestry mt-16 w-5/6'>
+    <h3 class='text-sm font-bold mb-4 border-b border-grey-lightest pb-2'>In this series:</h3>
+    <% post.tree.each do |post| %>
+      <%= link_to(
+        post.title,
+        post_path(post),
+        class: "#{link_class(post_path(post))} text-sm text-grey block mt-2 indent__#{post.depth}"
+      )
+      %>
+    <% end %>
+  </div>
+<% end %>

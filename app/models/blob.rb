@@ -1,7 +1,9 @@
-# typed: ignore
+# typed: true
 # frozen_string_literal: true
 
 class Blob
+  extend T::Sig
+
   include ::EncodingHelper, ActiveModel::AttributeMethods, ActiveModel::Model
   extend ActiveModel::Callbacks
 
@@ -18,12 +20,15 @@ class Blob
   validates_length_of :name, maximum: 100
   validate :should_have_correct_content_type
   validate :should_have_correct_content_size
-  validate :should_have_correct_extname, unless: -> { SAFELISTED.include?(name) }
+  validate :should_have_correct_extname, unless: :safelisted
 
   delegate :oid, :binary?, :size, to: :object, allow_nil: true
   delegate :author, to: :repository
 
   class << self
+    extend T::Sig
+
+    sig { params(repository: Repository, commit_sha: T.nilable(String)).returns(T::Array[Blob]) }
     def all(repository:, commit_sha: nil)
       blobs = []
       tree = commit_sha ? repository.lookup(commit_sha).tree : repository.tree
@@ -38,15 +43,18 @@ class Blob
       blobs
     end
 
+    sig { params(repository: Repository, path: String, commit_sha: T.nilable(String)).returns(T.nilable(Blob)) }
     def find(repository:, path:, commit_sha: nil)
       blob = new(repository: repository, path: path, commit_sha: commit_sha)
       blob.persisted? ? blob : nil
     end
 
-    def create(repository:, path:, content:, commit_message: nil)
-      Blob.new(repository: repository, path: path).save(io: content, commit_message: commit_message)
+    sig { params(repository: Repository, path: String, content: String, branch: String, committer: T.nilable(User), commit_message: T.nilable(String)).returns(Blob) }
+    def create(repository:, path:, content:, branch:, committer: nil, commit_message: nil)
+      Blob.new(repository: repository, path: path).save(io: content, committer: committer, commit_message: commit_message, branch: branch)
     end
 
+    sig { params(name: String).returns(T::Boolean) }
     def valid?(name)
       extname = File.extname(name).downcase
       EXTENSIONS.include?(extname)
@@ -65,70 +73,81 @@ class Blob
     name
   end
 
+  sig { returns(T.nilable(Rugged::Blob)) }
   def object
     @object ||= path && commit_sha ? repository.rugged.blob_at(commit_sha, path) : nil
   end
 
+  sig { returns(String) }
   def content
     @content ||= encode!(object&.content || '')
   end
 
+  sig { returns(T.any(StringIO, String)) }
   def io
     binary? ? content : StringIO.new(content)
   end
 
+  sig { returns(T::Boolean) }
   def empty?
     !content || content == ''
   end
 
+  sig { returns(T::Boolean) }
   def persisted?
     !!oid
   end
 
-  def save(io:, branch: Repository::DEFAULT_BRANCH, commit_message: nil)
+  sig { params(committer: T.nilable(User), io: String, branch: String, commit_message: T.nilable(String)).returns(Blob) }
+  def save(committer:, io:, branch: Repository::DEFAULT_BRANCH, commit_message: nil)
     @content = encode!(io)
 
-    if valid? && Rugged::Repository.hash_data(io, :blob) != oid
+    if valid? && Rugged::Repository.hash_data(content, :blob) != oid
       commit_message ||= persisted? ? "Updated #{path}" : "Added #{path}"
-      @commit_sha = repository.create_commit(content: content, message: commit_message, branch: branch, path: path)
+      options = { commit: { message: commit_message, branch: branch, committer: committer }, file: { content: content, path: path } }
+      @commit_sha = repository.create_commit(options: options)
       @object = nil
-      sync_to_s3
     end
 
     self
   end
 
-  def destroy(branch: Repository::DEFAULT_BRANCH, commit_message: nil)
+  sig { params(committer: T.nilable(User), branch: String, commit_message: T.nilable(String)).returns(T::Boolean) }
+  def destroy(committer:, branch: Repository::DEFAULT_BRANCH, commit_message: nil)
     if persisted?
-      @commit_sha = repository.create_commit(path: path, message: commit_message, content: nil, branch: branch, action: :remove)
+      commit_message ||= "Deleted #{path}"
+      options = { commit: { message: commit_message, branch: branch, committer: committer }, file: { content: content, path: path } }
+      @commit_sha = repository.create_commit(options: options, action: :remove)
       @object = nil
-      sync_to_s3(action: :remove)
       true
     else
       false
     end
   end
 
+  sig { returns(T.nilable(MiniMime::Info)) }
   def mime
     MiniMime.lookup_by_filename(path)
   end
 
+  sig { returns(T::Boolean) }
   def post?
     mime&.content_type == 'text/markdown' && mime&.extension == 'md'
   end
 
+  sig { returns(T::Boolean) }
   def image?
     mime&.content_type&.include?('image')
-  end
-
-  def s3_url
-    File.join('s3://', author.nickname, path)
   end
 
   private
 
   def should_have_correct_content_type
     errors.add(:content, :invalid_content_type) unless image? || post?
+  end
+
+  def safelisted
+    SAFELISTED.include?(name)
   end
 
   def should_have_correct_content_size
@@ -143,10 +162,5 @@ class Blob
 
   def should_have_correct_extname
     errors.add(:name, :invalid_extname) unless EXTENSIONS.include?(extname)
-  end
-
-  def sync_to_s3(action: :upload)
-    payload = { path: path, repository_id: repository.id, action: action }.freeze
-    DeliveryBoy.deliver_async(payload.to_json, topic: 'blobs', partition_key: "repository_#{repository.id}}")
   end
 end

@@ -1,7 +1,11 @@
 <header>
   <nav class='container flex justify-between items-center py-2'>
     <%= component 'logo', type: Current.user.present? ? :badge : :full %>
-    <%= post_header(@post) if @post %>
+    <% if params[:controller] == 'posts' || params[:controller] == 'posts/publish' %>
+      <%= post_header(@post) %>
+    <% elsif params[:controller] == 'posts/editions' %>
+      <%= edition_header(@post, @edition) %>
+    <% end %>
     <%= render "header/#{Current.user.present? ? 'user' : 'guest'}"  %>
   </nav>
 </header>

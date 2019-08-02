@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/webpacker/all/webpacker.rbi
 #
-# webpacker-2ee77e616fa7
+# webpacker-d410d0123e92
 class Webpacker::Instance
   def commands; end
   def compiler; end
@@ -47,6 +47,7 @@ class Webpacker::Configuration
   def extensions; end
   def extract_css?; end
   def fetch(key); end
+  def globbed_path_with_extensions(path); end
   def initialize(root_path:, config_path:, env:); end
   def load; end
   def public_manifest_path; end
@@ -57,6 +58,7 @@ class Webpacker::Configuration
   def root_path; end
   def source_entry_path; end
   def source_path; end
+  def source_path_globbed; end
   def webpack_compile_output?; end
 end
 class Webpacker::Manifest
@@ -153,7 +155,6 @@ class Webpacker::DevServerProxy < Rack::Proxy
   def initialize(app = nil, opts = nil); end
   def perform_request(env); end
   def public_output_uri_path; end
-  def rewrite_response(response); end
 end
 class Webpacker::Engine < Rails::Engine
 end

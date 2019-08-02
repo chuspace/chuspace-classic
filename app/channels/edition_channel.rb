@@ -9,7 +9,7 @@ class EditionChannel < ApplicationCable::Channel
 
   def receive(data)
     edition = current_user.contributions.find(params[:id])
-    edition.blob.save(io: data['body'], branch: edition.branch_name)
+    edition.blob.save(committer: current_user, io: data['body'], branch: edition.branch_name)
     ActionCable.server.broadcast("edition_#{edition.id}", { success: true }.to_json)
   end
 

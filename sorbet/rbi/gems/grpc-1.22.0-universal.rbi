@@ -339,7 +339,7 @@ class GRPC::ClientStub
   include GRPC::Core::StatusCodes
   include GRPC::Core::TimeConsts
 end
-class Anonymous_Struct_402 < Struct
+class Anonymous_Struct_404 < Struct
   def input; end
   def input=(_); end
   def marshal_method; end
@@ -355,7 +355,7 @@ class Anonymous_Struct_402 < Struct
   def unmarshal_method; end
   def unmarshal_method=(_); end
 end
-class GRPC::RpcDesc < Anonymous_Struct_402
+class GRPC::RpcDesc < Anonymous_Struct_404
   def arity_error(mth, want, msg); end
   def assert_arity_matches(mth); end
   def bidi_streamer?; end

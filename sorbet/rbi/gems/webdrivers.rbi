@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/webdrivers/all/webdrivers.rbi
 #
-# webdrivers-4.1.0
+# webdrivers-4.1.2
 module Webdrivers
   def self.cache_time; end
   def self.cache_time=(arg0); end
@@ -75,6 +75,8 @@ end
 class Webdrivers::VersionError < StandardError
 end
 class Webdrivers::NetworkError < StandardError
+end
+class Webdrivers::BrowserNotFound < StandardError
 end
 class Webdrivers::Common
   def self.binary_version; end

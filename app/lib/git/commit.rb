@@ -1,8 +1,10 @@
-# typed: ignore
+# typed: true
 # frozen_string_literal: true
 
 module Git
   class Commit
+    extend T::Sig
+
     include EncodingHelper
     attr_accessor :head, :refs
 
@@ -19,9 +21,7 @@ module Git
     def initialize(raw_commit, head = nil)
       raise 'Nil as raw commit passed' unless raw_commit
 
-      if raw_commit.is_a?(Hash)
-        init_from_hash(raw_commit)
-      elsif raw_commit.is_a?(Rugged::Commit)
+      if raw_commit.is_a?(Rugged::Commit)
         init_from_rugged(raw_commit)
       else
         raise "Invalid raw commit type: #{raw_commit.class}"
@@ -43,10 +43,19 @@ module Git
     end
 
     class << self
+      extend T::Sig
+
       def find(repo, commit_id = 'HEAD')
         return Commit.new(commit_id) if commit_id.is_a?(Rugged::Commit)
 
-        obj = commit_id.is_a?(String) ? repo.rev_parse_target(commit_id) : Branch.dereference_object(commit_id)
+        obj = case commit_id
+              when String
+                repo.rev_parse_target(commit_id)
+              when Rugged::Tag::Annotation
+                commit_id.target
+              else
+                commit_id
+        end
 
         return nil unless obj.is_a?(Rugged::Commit)
 
@@ -72,23 +81,36 @@ module Git
       #   }
       # }
 
-      def create(repository:, committer:, options:, action: :add)
+      sig { params(repository: Repository, options: {
+        file: {
+          content: String,
+          path: String
+        },
+        commit: {
+          message: String,
+          branch: String,
+          committer: T.nilable(User)
+        }
+      }, action: Symbol).returns(String) }
+      def create(repository:, options:, action: :add)
         rugged = repository.rugged
         file = options[:file]
         commit = options[:commit]
+        committer = commit[:committer]
         branch = commit[:branch] || 'master'
+        commit_message = commit[:message]
         parents = []
         mode = 0o100644
 
-        author_hash = repository.author_hash.merge(time: Time.now)
-        committer_hash = { name: committer.name, email: committer.email, time: Time.now }
+        author_hash = repository.commit_hash
+        committer_hash = committer ? repository.commit_hash(user: committer) : author_hash
 
         branch = 'refs/heads/' + branch unless branch.start_with?('refs/')
         index = repository.index
 
         unless rugged.empty?
           rugged_ref = rugged.references[branch]
-          raise Repository::InvalidRef.new('Invalid branch name') unless rugged_ref
+          fail Repository::InvalidRef, 'Invalid branch name' unless rugged_ref
           last_commit = rugged_ref.target
           index.read_tree(last_commit.tree)
           parents = [last_commit]
@@ -114,11 +136,20 @@ module Git
           index.add(path: filename, oid: oid, mode: mode)
         end
 
+        commit_message ||= case action
+                           when :add
+                             "Created #{filename}"
+                           when :update
+                             "Updated #{filename}"
+                           when :remove
+                             "Deleted #{filename}"
+        end
+
         opts = {}
         opts[:tree] = index.write_tree(rugged)
         opts[:author] = author_hash
         opts[:committer] = committer_hash
-        opts[:message] = commit[:message]
+        opts[:message] = commit_message
         opts[:parents] = parents
         opts[:update_ref] = branch
 
@@ -143,12 +174,6 @@ module Git
     end
 
     private
-
-    def init_from_hash(hash)
-      raw_commit = hash.symbolize_keys
-
-      serialize_keys.each { |key| send("#{key}=", raw_commit[key]) }
-    end
 
     def init_from_rugged(commit)
       author = commit.author

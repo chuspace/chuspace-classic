@@ -1,0 +1,19 @@
+<div class='flex items-center flex-1' id='post_header'>
+  <div class='flex-1 flex items-center ml-8'>
+    <div class="mr-4 badge badge--grey"><%= edition.status.titlecase %></div>
+    <div class="text-grey text-sm" id='editor-status'>Saved</div>
+  </div>
+
+  <div class='flex justify-end items-center flex-1 mr-8'>
+    <% if policy(edition).open? %>
+      <%= simple_form_for edition, remote: true, url: post_edition_path(post, edition) do |form| %>
+        <%= form.input :status, as: :hidden, input_html: { value: :open } %>
+        <%= form.button :button, 'Submit', class: 'button button--fill button--slim mr-2' %>
+      <% end %>
+    <% end %>
+
+    <%= link_to 'Preview', post_edition_path(post, edition), class: 'button button--active button--slim mr-2' if policy(edition).show? %>
+    <%= link_to 'Close', edit_post_edition_path(post, edition), class: 'button button--danger button--slim mr-2' if policy(edition).close? %>
+    <%= link_to 'Discard', post_edition_path(post, edition), method: :delete, data: { confirm: 'Are you sure?' }, class: 'button button--danger button--slim' if policy(edition).destroy? %>
+  </div>
+</div>

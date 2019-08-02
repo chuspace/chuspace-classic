@@ -7,10 +7,8 @@ module ::Anonymous_Delegator_11; end
 module ::Anonymous_Delegator_12; end
 module ::Anonymous_Delegator_13; end
 module ::Anonymous_Delegator_2; end
-module ::Anonymous_Delegator_420; end
+module ::Anonymous_Delegator_422; end
 module ::Anonymous_Delegator_8; end
 module ::Anonymous_Delegator_9; end
 module ActionMailer::Base::Mail::Message; end
 module ActiveRecord::CollectionCacheKey; end
-module Post::ROOT_PATH; end
-module S3Service::MimeMagic; end

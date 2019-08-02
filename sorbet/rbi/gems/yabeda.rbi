@@ -21,10 +21,10 @@ class Yabeda::Metric
   def get(labels = nil); end
   def values; end
   extend Dry::Initializer
-  include Anonymous_Module_404
+  include Anonymous_Module_406
   include Dry::Initializer::Mixin::Root
 end
-module Anonymous_Module_404
+module Anonymous_Module_406
   def __dry_initializer_config__; end
   def __dry_initializer_initialize__(name, *arg1, **__dry_initializer_options__); end
   def comment; end
@@ -34,7 +34,7 @@ module Anonymous_Module_404
   def unit; end
   extend Dry::Initializer::Mixin::Local
 end
-module Anonymous_Module_405
+module Anonymous_Module_407
   def __dry_initializer_config__; end
   def __dry_initializer_initialize__(name, *arg1, **__dry_initializer_options__); end
   extend Dry::Initializer::Mixin::Local
@@ -42,18 +42,18 @@ end
 class Yabeda::Counter < Yabeda::Metric
   def increment(tags, by: nil); end
   def values; end
-  include Anonymous_Module_405
+  include Anonymous_Module_407
 end
-module Anonymous_Module_406
+module Anonymous_Module_408
   def __dry_initializer_config__; end
   def __dry_initializer_initialize__(name, *arg1, **__dry_initializer_options__); end
   extend Dry::Initializer::Mixin::Local
 end
 class Yabeda::Gauge < Yabeda::Metric
   def set(tags, value); end
-  include Anonymous_Module_406
+  include Anonymous_Module_408
 end
-module Anonymous_Module_407
+module Anonymous_Module_409
   def __dry_initializer_config__; end
   def __dry_initializer_initialize__(name, *arg1, **__dry_initializer_options__); end
   def buckets; end
@@ -61,15 +61,15 @@ module Anonymous_Module_407
 end
 class Yabeda::Histogram < Yabeda::Metric
   def measure(tags, value); end
-  include Anonymous_Module_407
+  include Anonymous_Module_409
 end
 class Yabeda::Group
   def register_metric(metric); end
   extend Dry::Initializer
-  include Anonymous_Module_408
+  include Anonymous_Module_410
   include Dry::Initializer::Mixin::Root
 end
-module Anonymous_Module_408
+module Anonymous_Module_410
   def __dry_initializer_config__; end
   def __dry_initializer_initialize__(name, *arg1); end
   def name; end
@@ -86,10 +86,10 @@ class Yabeda::DSL::OptionBuilder
   def respond_to_missing?(method_name, _args); end
   def unknown_options; end
   extend Dry::Initializer
-  include Anonymous_Module_409
+  include Anonymous_Module_411
   include Dry::Initializer::Mixin::Root
 end
-module Anonymous_Module_409
+module Anonymous_Module_411
   def __dry_initializer_config__; end
   def __dry_initializer_initialize__(metric_klass, options, *arg2); end
   def metric_klass; end
@@ -102,10 +102,10 @@ class Yabeda::DSL::MetricBuilder
   def build(args, kwargs, group, &block); end
   def initialize_metric(params, options, group); end
   extend Dry::Initializer
-  include Anonymous_Module_410
+  include Anonymous_Module_412
   include Dry::Initializer::Mixin::Root
 end
-module Anonymous_Module_410
+module Anonymous_Module_412
   def __dry_initializer_config__; end
   def __dry_initializer_initialize__(metric_klass, *arg1); end
   def metric_klass; end
