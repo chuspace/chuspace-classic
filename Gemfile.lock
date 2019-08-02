@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/gauravtiwari/tomo.git
-  revision: 0543d18d8bcaf148e1dd96b93d354851d655a36a
+  revision: 139c8ce845078fada72b7f10e85e13948352dc91
   specs:
-    tomo (0.3.0)
+    tomo (0.4.0)
 
 GIT
   remote: https://github.com/jensljungblad/components.git
