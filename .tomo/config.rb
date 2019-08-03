@@ -10,7 +10,7 @@ plugin 'puma'
 plugin 'rbenv'
 plugin 'nodenv'
 
-host 'chuspace@chuspace.com'
+host 'chuspace@35.176.115.167'
 
 set application: 'chuspace'
 set deploy_to: '/home/chuspace/chuspace.com'
