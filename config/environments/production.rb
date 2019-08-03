@@ -70,7 +70,7 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
-  config.hosts << '172.26.0.139'
+  config.hosts << 'chuspace.com'
   config.hosts << 'localhost'
   config.hosts << '0.0.0.0'
 
