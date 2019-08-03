@@ -1,19 +1,12 @@
 # typed: ignore
 # frozen_string_literal: true
 
-return unless Rails.env.development?
-
 fetched = 0
 total_count = nil
 
 client = Octokit::Client.new(access_token: '84d476ccf244aff5f5bd5f51f006952785f9f883')
 queries = [
   'web framework',
-  'mobile framework',
-  'database',
-  'programming language',
-  'devops',
-  'server',
   'ruby',
   'javascript',
   'go',
@@ -54,36 +47,3 @@ queries.each do |query|
     break
   end
 end
-
-# ActiveRecord::Base.transaction do
-#   10.times do
-#     u = User.create(
-#       name: Faker::Name.unique.name,
-#       nickname: Faker::Internet.unique.username(8, %w[-]),
-#       email: Faker::Internet.unique.email
-#     )
-
-#     repo = u.create_repository
-
-#     10.times do
-#       sentence = Faker::Lorem.unique.sentence
-#       slug = Faker::Internet.slug(sentence, '-')
-
-#       post = Post.new(
-#         title: sentence,
-#         slug: slug,
-#         author: u,
-#         repository: repo,
-#         blob_name: slug + '.md',
-#         summary: Faker::Lorem.paragraph(100),
-#         body: Faker::Lorem.paragraphs(100).join("\n"),
-#         topics: Faker::Lorem.words(4),
-#         status: %w[published draft archived].sample,
-#         published_at: Time.now
-#       )
-
-#       post.repo.commit_sha = post.commit(committer: u)
-#       post.save
-#     end
-#   end
-# end
