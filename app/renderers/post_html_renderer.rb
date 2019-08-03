@@ -59,7 +59,7 @@ class PostHtmlRenderer < CommonMarker::HtmlRenderer
       if blob.persisted?
         payload = { path: blob.path, repository_id: Current.user.repository.id, action: :upload }.freeze
         DeliveryBoy.deliver_async(payload.to_json, topic: 'blobs', partition_key: "repository_#{Current.user.repository.id}}")
-        image_url = Imgproxy.url_for("s3://#{Current.user.nickname}/#{blob.path}", width: 800, resizing_type: :fill)
+        image_url = Imgproxy.url_for("s3://#{S3Service.bucket}/#{blob.path}", width: 800, resizing_type: :fill)
       end
 
       out('<img src="', escape_href(image_url), '"')

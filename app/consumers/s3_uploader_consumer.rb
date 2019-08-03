@@ -12,9 +12,9 @@ class S3UploaderConsumer < Racecar::Consumer
 
     case payload['action'].to_sym
     when :upload
-      S3Service.upload(io: blob.io, filename: blob.path, bucket: bucket)
+      S3Service.upload(io: blob.io, filename: blob.path)
     when :remove
-      S3Service.remove(filename: blob.path, bucket: bucket)
+      S3Service.remove(filename: blob.path)
     end
   end
 end

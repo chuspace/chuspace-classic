@@ -16619,8 +16619,6 @@ end
 
 module HasS3Bucket
   def s3_avatar_url(); end
-
-  def s3_bucket_name(); end
 end
 
 module HasS3Bucket
@@ -22048,12 +22046,6 @@ class PostChannel
 end
 
 class PostPolicy
-end
-
-module PostSidebar
-end
-
-module PostSidebar
 end
 
 module Posts

@@ -4,37 +4,28 @@
 class S3Service
   extend T::Sig
 
-  ALLOWED_TYPES = %i[png gif jpeg jpg]
-  MAX_SIZE = 15.megabytes
-
-  sig { params(io: T.untyped, filename: String, bucket: String, size: T.nilable(Integer)).returns(Seahorse::Client::Response) }
-  def self.upload(io:, filename:, bucket:, size: MAX_SIZE)
+  sig { params(io: T.untyped, filename: String).returns(Seahorse::Client::Response) }
+  def self.upload(io:, filename:)
     content_type = MiniMime.lookup_by_filename(filename)&.content_type
     client.put_object(key: filename, content_type: content_type, bucket: bucket, body: io)
   end
 
-  sig { params(filename: String, bucket: String).returns(Seahorse::Client::Response) }
-  def self.remove(filename:, bucket:)
+  sig { params(filename: String).returns(Seahorse::Client::Response) }
+  def self.remove(filename:)
     client.delete_object(key: filename, bucket: bucket)
   end
 
-  sig { params(filename: String, bucket: String).returns(Seahorse::Client::Response) }
-  def self.get(filename:, bucket:)
+  sig { params(filename: String).returns(Seahorse::Client::Response) }
+  def self.get(filename:)
     client.get_object(key: filename, bucket: bucket)
-  end
-
-  sig { params(bucket: String).returns(Seahorse::Client::Response) }
-  def self.create_bucket(bucket:)
-    client.create_bucket(bucket: bucket)
-  end
-
-  sig { params(bucket: String).returns(Seahorse::Client::Response) }
-  def self.delete_bucket(bucket:)
-    client.delete_bucket(bucket: bucket)
   end
 
   sig { returns(Aws::S3::Client) }
   def self.client
     @client ||= Aws::S3::Client.new
+  end
+
+  def self.bucket
+    ENV.fetch('AWS_S3_BUCKET')
   end
 end

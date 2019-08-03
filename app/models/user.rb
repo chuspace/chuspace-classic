@@ -50,6 +50,6 @@ class User < ApplicationRecord
   end
 
   def purge_old_avatar
-    S3Service.remove_image(filename: attribute_before_last_save(:avatar), bucket: s3_bucket_name)
+    S3Service.remove_image(filename: attribute_before_last_save(:avatar))
   end
 end
