@@ -22,4 +22,4 @@ Protocol 2
 StrictModes yes
 UsePAM no
 
-PidFile /home/deploy/chuspace.com/tmp/pids/sshd.pid
+PidFile /home/chuspace/chuspace.com/tmp/pids/sshd.pid
