@@ -6,7 +6,6 @@ class Post < ApplicationRecord
 
   db_belongs_to :author, class_name: 'User'
   db_belongs_to :repository
-  has_many :editions, dependent: :destroy
 
   has_ancestry
   has_logidze

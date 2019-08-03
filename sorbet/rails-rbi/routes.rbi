@@ -88,36 +88,6 @@ class ActionController::Base
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def post_publish_index_url(*args, **kwargs); end
 
-  # Sigs for route /p/:post_slug/editions/:id/merge(.:format)
-  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def merge_post_edition_path(*args, **kwargs); end
-  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def merge_post_edition_url(*args, **kwargs); end
-
-  # Sigs for route /p/:post_slug/editions(.:format)
-  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def post_editions_path(*args, **kwargs); end
-  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def post_editions_url(*args, **kwargs); end
-
-  # Sigs for route /p/:post_slug/editions/new(.:format)
-  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def new_post_edition_path(*args, **kwargs); end
-  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def new_post_edition_url(*args, **kwargs); end
-
-  # Sigs for route /p/:post_slug/editions/:id/edit(.:format)
-  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def edit_post_edition_path(*args, **kwargs); end
-  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def edit_post_edition_url(*args, **kwargs); end
-
-  # Sigs for route /p/:post_slug/editions/:id(.:format)
-  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def post_edition_path(*args, **kwargs); end
-  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def post_edition_url(*args, **kwargs); end
-
   # Sigs for route /p(.:format)
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def posts_path(*args, **kwargs); end

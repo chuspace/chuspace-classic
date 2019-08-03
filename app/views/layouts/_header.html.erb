@@ -3,8 +3,6 @@
     <%= component 'logo', type: Current.user.present? ? :badge : :full %>
     <% if params[:controller] == 'posts' || params[:controller] == 'posts/publish' %>
       <%= post_header(@post) %>
-    <% elsif params[:controller] == 'posts/editions' %>
-      <%= edition_header(@post, @edition) %>
     <% end %>
     <%= render "header/#{Current.user.present? ? 'user' : 'guest'}"  %>
   </nav>

@@ -5988,6 +5988,94 @@ end
 class ActiveRecord::Migration::CommandRecorder
 end
 
+class ActiveRecord::Migration::Compatibility::V4_2
+  def index_exists?(table_name, column_name, options=T.unsafe(nil)); end
+
+  def remove_index(table_name, options=T.unsafe(nil)); end
+end
+
+module ActiveRecord::Migration::Compatibility::V4_2::TableDefinition
+  def belongs_to(*_, **options); end
+
+  def references(*_, **options); end
+
+  def timestamps(**options); end
+end
+
+module ActiveRecord::Migration::Compatibility::V4_2::TableDefinition
+end
+
+class ActiveRecord::Migration::Compatibility::V4_2
+end
+
+class ActiveRecord::Migration::Compatibility::V5_0
+  def add_belongs_to(table_name, ref_name, **options); end
+
+  def add_column(table_name, column_name, type, options=T.unsafe(nil)); end
+
+  def add_reference(table_name, ref_name, **options); end
+
+  def create_join_table(table_1, table_2, column_options: T.unsafe(nil), **options); end
+end
+
+module ActiveRecord::Migration::Compatibility::V5_0::TableDefinition
+  def belongs_to(*args, **options); end
+
+  def primary_key(name, type=T.unsafe(nil), **options); end
+
+  def references(*args, **options); end
+end
+
+module ActiveRecord::Migration::Compatibility::V5_0::TableDefinition
+end
+
+class ActiveRecord::Migration::Compatibility::V5_0
+end
+
+class ActiveRecord::Migration::Compatibility::V5_1
+  def change_column(table_name, column_name, type, options=T.unsafe(nil)); end
+
+  def create_table(table_name, options=T.unsafe(nil)); end
+end
+
+class ActiveRecord::Migration::Compatibility::V5_1
+end
+
+class ActiveRecord::Migration::Compatibility::V5_2
+  def add_timestamps(table_name, **options); end
+
+  def change_table(table_name, **options); end
+
+  def create_join_table(table_1, table_2, **options); end
+
+  def create_table(table_name, **options); end
+end
+
+module ActiveRecord::Migration::Compatibility::V5_2::CommandRecorder
+  def invert_change_column_comment(args); end
+
+  def invert_change_table_comment(args); end
+
+  def invert_transaction(args, &block); end
+end
+
+module ActiveRecord::Migration::Compatibility::V5_2::CommandRecorder
+end
+
+module ActiveRecord::Migration::Compatibility::V5_2::TableDefinition
+  def timestamps(**options); end
+end
+
+module ActiveRecord::Migration::Compatibility::V5_2::TableDefinition
+end
+
+class ActiveRecord::Migration::Compatibility::V5_2
+end
+
+module ActiveRecord::Migration::Compatibility
+  def self.find(version); end
+end
+
 class ActiveRecord::Migrator
   MIGRATOR_SALT = ::T.let(nil, ::T.untyped)
 end
@@ -11020,101 +11108,6 @@ module ERB::Util
   HTML_ESCAPE_ONCE_REGEXP = ::T.let(nil, ::T.untyped)
   JSON_ESCAPE = ::T.let(nil, ::T.untyped)
   JSON_ESCAPE_REGEXP = ::T.let(nil, ::T.untyped)
-end
-
-class Edition
-  include ::Edition::GeneratedAttributeMethods
-  include ::Edition::GeneratedAssociationMethods
-  include ::AASM::Persistence::ActiveRecordPersistence
-  include ::AASM::Persistence::Base
-  include ::AASM::Persistence::ORM
-  include ::AASM::Persistence::ActiveRecordPersistence::InstanceMethods
-  include ::DatabaseValidations::Rescuer
-  def autosave_associated_records_for_editor(*args); end
-
-  def autosave_associated_records_for_post(*args); end
-
-  def close(*args, &block); end
-
-  def close!(*args, &block); end
-
-  def may_close?(*args); end
-
-  def may_merge?(*args); end
-
-  def may_open?(*args); end
-
-  def merge(*args, &block); end
-
-  def merge!(*args, &block); end
-
-  def open(*args, &block); end
-
-  def open!(*args, &block); end
-
-  def valid_without_database_validations?(context=T.unsafe(nil)); end
-  STATE_CLOSED = ::T.let(nil, ::T.untyped)
-  STATE_DRAFT = ::T.let(nil, ::T.untyped)
-  STATE_MERGED = ::T.let(nil, ::T.untyped)
-  STATE_OPEN = ::T.let(nil, ::T.untyped)
-end
-
-module Edition::GeneratedAssociationMethods
-  def build_editor(*args, &block); end
-
-  def build_post(*args, &block); end
-
-  def create_editor(*args, &block); end
-
-  def create_editor!(*args, &block); end
-
-  def create_post(*args, &block); end
-
-  def create_post!(*args, &block); end
-
-  def editor(); end
-
-  def editor=(value); end
-
-  def post(); end
-
-  def post=(value); end
-
-  def reload_editor(); end
-
-  def reload_post(); end
-end
-
-module Edition::GeneratedAssociationMethods
-end
-
-module Edition::GeneratedAttributeMethods
-end
-
-module Edition::GeneratedAttributeMethods
-  extend ::Mutex_m
-end
-
-class Edition
-  extend ::AASM::Persistence::Base::ClassMethods
-  extend ::AASM::Persistence::ActiveRecordPersistence::ClassMethods
-  def self.not_closed(*args); end
-
-  def self.not_draft(*args); end
-
-  def self.not_merged(*args); end
-
-  def self.not_open(*args); end
-end
-
-class EditionChannel
-  def receive(data); end
-end
-
-class EditionChannel
-end
-
-class EditionPolicy
 end
 
 class EmailValidator
@@ -21876,18 +21869,6 @@ class Post
   include ::Logidze::IgnoreLogData
   include ::Logidze::IgnoreLogData::MissingAttributePatch
   include ::Logidze::IgnoreLogData::DefaultScopePatch
-  def after_add_for_editions(); end
-
-  def after_add_for_editions=(val); end
-
-  def after_add_for_editions?(); end
-
-  def after_remove_for_editions(); end
-
-  def after_remove_for_editions=(val); end
-
-  def after_remove_for_editions?(); end
-
   def ancestry_base_class(); end
 
   def ancestry_base_class=(obj); end
@@ -21902,21 +21883,7 @@ class Post
 
   def autosave_associated_records_for_author(*args); end
 
-  def autosave_associated_records_for_editions(*args); end
-
   def autosave_associated_records_for_repository(*args); end
-
-  def before_add_for_editions(); end
-
-  def before_add_for_editions=(val); end
-
-  def before_add_for_editions?(); end
-
-  def before_remove_for_editions(); end
-
-  def before_remove_for_editions=(val); end
-
-  def before_remove_for_editions?(); end
 
   def blob(); end
 
@@ -21969,8 +21936,6 @@ class Post
   def unpublish!(*args, &block); end
 
   def valid_without_database_validations?(context=T.unsafe(nil)); end
-
-  def validate_associated_records_for_editions(*args); end
   DEFAULT_TITLE = ::T.let(nil, ::T.untyped)
   STATE_ARCHIVED = ::T.let(nil, ::T.untyped)
   STATE_DRAFT = ::T.let(nil, ::T.untyped)
@@ -21993,14 +21958,6 @@ module Post::GeneratedAssociationMethods
   def create_repository(*args, &block); end
 
   def create_repository!(*args, &block); end
-
-  def edition_ids(); end
-
-  def edition_ids=(ids); end
-
-  def editions(); end
-
-  def editions=(value); end
 
   def reload_author(); end
 
@@ -22030,19 +21987,7 @@ class Post
   extend ::Logidze::Model::ClassMethods
   extend ::Logidze::IgnoreLogData::ClassMethods
   extend ::Logidze::IgnoreLogData::DefaultScopePatch::ClassMethods
-  def self.after_add_for_editions(); end
-
-  def self.after_add_for_editions=(val); end
-
-  def self.after_add_for_editions?(); end
-
   def self.after_depth(*args); end
-
-  def self.after_remove_for_editions(); end
-
-  def self.after_remove_for_editions=(val); end
-
-  def self.after_remove_for_editions?(); end
 
   def self.ancestors_of(*args); end
 
@@ -22056,19 +22001,7 @@ class Post
 
   def self.at_depth(*args); end
 
-  def self.before_add_for_editions(); end
-
-  def self.before_add_for_editions=(val); end
-
-  def self.before_add_for_editions?(); end
-
   def self.before_depth(*args); end
-
-  def self.before_remove_for_editions(); end
-
-  def self.before_remove_for_editions=(val); end
-
-  def self.before_remove_for_editions?(); end
 
   def self.children_of(*args); end
 
@@ -22123,8 +22056,7 @@ end
 module PostSidebar
 end
 
-class Posts::EditionsController
-  include ::ActionView::Layouts::ClassMethods::LayoutConditions
+module Posts
 end
 
 class Posts::PublishController
@@ -22135,6 +22067,9 @@ class Posts::PublishController
 end
 
 class Posts::PublishController
+end
+
+module Posts
 end
 
 class PostsController
@@ -31078,12 +31013,6 @@ module SshKey::GeneratedAttributeMethods
   extend ::Mutex_m
 end
 
-class StatusBadgeComponent
-  def css_class(); end
-
-  def state(); end
-end
-
 class StopIteration
   def result(); end
 end
@@ -32180,12 +32109,6 @@ class User
   include ::HasS3Bucket
   include ::Trackable
   include ::DatabaseValidations::Rescuer
-  def after_add_for_contributions(); end
-
-  def after_add_for_contributions=(val); end
-
-  def after_add_for_contributions?(); end
-
   def after_add_for_images(); end
 
   def after_add_for_images=(val); end
@@ -32203,12 +32126,6 @@ class User
   def after_add_for_ssh_keys=(val); end
 
   def after_add_for_ssh_keys?(); end
-
-  def after_remove_for_contributions(); end
-
-  def after_remove_for_contributions=(val); end
-
-  def after_remove_for_contributions?(); end
 
   def after_remove_for_images(); end
 
@@ -32228,8 +32145,6 @@ class User
 
   def after_remove_for_ssh_keys?(); end
 
-  def autosave_associated_records_for_contributions(*args); end
-
   def autosave_associated_records_for_images(*args); end
 
   def autosave_associated_records_for_posts(*args); end
@@ -32243,12 +32158,6 @@ class User
   def avatar_blob=(avatar_blob); end
 
   def avatar_url(**options); end
-
-  def before_add_for_contributions(); end
-
-  def before_add_for_contributions=(val); end
-
-  def before_add_for_contributions?(); end
 
   def before_add_for_images(); end
 
@@ -32267,12 +32176,6 @@ class User
   def before_add_for_ssh_keys=(val); end
 
   def before_add_for_ssh_keys?(); end
-
-  def before_remove_for_contributions(); end
-
-  def before_remove_for_contributions=(val); end
-
-  def before_remove_for_contributions?(); end
 
   def before_remove_for_images(); end
 
@@ -32302,8 +32205,6 @@ class User
 
   def valid_without_database_validations?(context=T.unsafe(nil)); end
 
-  def validate_associated_records_for_contributions(*args); end
-
   def validate_associated_records_for_images(*args); end
 
   def validate_associated_records_for_posts(*args); end
@@ -32316,14 +32217,6 @@ end
 
 module User::GeneratedAssociationMethods
   def build_repository(*args, &block); end
-
-  def contribution_ids(); end
-
-  def contribution_ids=(ids); end
-
-  def contributions(); end
-
-  def contributions=(value); end
 
   def create_repository(*args, &block); end
 
@@ -32371,12 +32264,6 @@ module User::GeneratedAttributeMethods
 end
 
 class User
-  def self.after_add_for_contributions(); end
-
-  def self.after_add_for_contributions=(val); end
-
-  def self.after_add_for_contributions?(); end
-
   def self.after_add_for_images(); end
 
   def self.after_add_for_images=(val); end
@@ -32394,12 +32281,6 @@ class User
   def self.after_add_for_ssh_keys=(val); end
 
   def self.after_add_for_ssh_keys?(); end
-
-  def self.after_remove_for_contributions(); end
-
-  def self.after_remove_for_contributions=(val); end
-
-  def self.after_remove_for_contributions?(); end
 
   def self.after_remove_for_images(); end
 
@@ -32419,12 +32300,6 @@ class User
 
   def self.after_remove_for_ssh_keys?(); end
 
-  def self.before_add_for_contributions(); end
-
-  def self.before_add_for_contributions=(val); end
-
-  def self.before_add_for_contributions?(); end
-
   def self.before_add_for_images(); end
 
   def self.before_add_for_images=(val); end
@@ -32442,12 +32317,6 @@ class User
   def self.before_add_for_ssh_keys=(val); end
 
   def self.before_add_for_ssh_keys?(); end
-
-  def self.before_remove_for_contributions(); end
-
-  def self.before_remove_for_contributions=(val); end
-
-  def self.before_remove_for_contributions?(); end
 
   def self.before_remove_for_images(); end
 

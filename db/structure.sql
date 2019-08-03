@@ -259,19 +259,6 @@ CREATE TABLE public.ar_internal_metadata (
     updated_at timestamp(6) without time zone NOT NULL
 );
 
--- Name: editions; Type: TABLE
-
-CREATE TABLE public.editions (
-    id BIGSERIAL PRIMARY KEY,
-    editor_id bigint NOT NULL,
-    post_id bigint NOT NULL,
-    branch_name character varying NOT NULL,
-    commit_sha character varying NOT NULL,
-    status integer DEFAULT 0 NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
 -- Name: posts; Type: TABLE
 
 CREATE TABLE public.posts (
@@ -363,26 +350,6 @@ ALTER TABLE ONLY public.ar_internal_metadata
 ALTER TABLE ONLY public.schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
 
--- Name: index_editions_on_branch_name; Type: INDEX
-
-CREATE UNIQUE INDEX index_editions_on_branch_name ON public.editions USING btree (branch_name);
-
--- Name: index_editions_on_commit_sha; Type: INDEX
-
-CREATE INDEX index_editions_on_commit_sha ON public.editions USING btree (commit_sha);
-
--- Name: index_editions_on_editor_id; Type: INDEX
-
-CREATE INDEX index_editions_on_editor_id ON public.editions USING btree (editor_id);
-
--- Name: index_editions_on_post_id; Type: INDEX
-
-CREATE INDEX index_editions_on_post_id ON public.editions USING btree (post_id);
-
--- Name: index_editions_on_status; Type: INDEX
-
-CREATE INDEX index_editions_on_status ON public.editions USING btree (status);
-
 -- Name: index_posts_on_ancestry; Type: INDEX
 
 CREATE INDEX index_posts_on_ancestry ON public.posts USING btree (ancestry);
@@ -472,20 +439,10 @@ CREATE TRIGGER logidze_on_posts BEFORE INSERT OR UPDATE ON public.posts FOR EACH
 ALTER TABLE ONLY public.posts
     ADD CONSTRAINT fk_rails_04d13ef8c7 FOREIGN KEY (author_id) REFERENCES public.users(id);
 
--- Name: editions fk_rails_66ff8848eb; Type: FK CONSTRAINT
-
-ALTER TABLE ONLY public.editions
-    ADD CONSTRAINT fk_rails_66ff8848eb FOREIGN KEY (post_id) REFERENCES public.posts(id);
-
 -- Name: repositories fk_rails_73e1e26d06; Type: FK CONSTRAINT
 
 ALTER TABLE ONLY public.repositories
     ADD CONSTRAINT fk_rails_73e1e26d06 FOREIGN KEY (author_id) REFERENCES public.users(id);
-
--- Name: editions fk_rails_790d074ed3; Type: FK CONSTRAINT
-
-ALTER TABLE ONLY public.editions
-    ADD CONSTRAINT fk_rails_790d074ed3 FOREIGN KEY (editor_id) REFERENCES public.users(id);
 
 -- Name: ssh_keys fk_rails_bacf7e1718; Type: FK CONSTRAINT
 
@@ -510,6 +467,5 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190706110353'),
 ('20190709114321'),
 ('20190709114322'),
-('20190709114442'),
-('20190716075119');
+('20190709114442');
 

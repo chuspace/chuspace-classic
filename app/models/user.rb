@@ -20,7 +20,6 @@ class User < ApplicationRecord
   has_one :repository, dependent: :destroy, foreign_key: 'author_id', autosave: true
   has_many :posts, foreign_key: 'author_id', dependent: :destroy
   has_many :images, dependent: :destroy
-  has_many :contributions, foreign_key: 'editor_id', class_name: 'Edition', dependent: :destroy
 
   after_save :purge_old_avatar, if:  -> { saved_change_to_attribute?(:avatar) && attribute_before_last_save(:avatar) }
 

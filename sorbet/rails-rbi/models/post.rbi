@@ -189,12 +189,6 @@ class Post
   sig { params(value: ::User).void }
   def author=(value); end
 
-  sig { returns(::Edition::ActiveRecord_Associations_CollectionProxy) }
-  def editions(); end
-
-  sig { params(value: T.any(T::Array[::Edition], ::Edition::ActiveRecord_Associations_CollectionProxy)).void }
-  def editions=(value); end
-
   sig { returns(::Repository) }
   def repository(); end
 

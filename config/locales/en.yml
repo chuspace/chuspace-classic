@@ -24,10 +24,6 @@ en:
               invalid: should be all lowercase, unique, min 10 character, may have a single hyphen and no special characters.
             topics:
               too_long: maximum %{count} topics allowed
-        edition:
-          attributes:
-            post:
-              no_edition_possible: is not a published post. You can only make edition for published posts.
 
   activemodel:
     errors:
