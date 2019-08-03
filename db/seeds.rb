@@ -43,7 +43,7 @@ queries.each do |query|
     Topic.insert_all(records) if records.any?
 
     break if total_count < fetched
-  rescue Octokit::UnprocessableEntity
+  rescue Octokit::UnprocessableEntity, Octokit::TooManyRequests
     break
   end
 end
