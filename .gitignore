@@ -56,10 +56,6 @@ yarn-debug.log*
 .yarn-integrity
 dump.rdb
 
-# Binaries
-bin/mobius
-bin/git-hooks/*
-
 # Env
 .env*
 public/uploads
