@@ -4,9 +4,9 @@
 require 'aws-sdk-s3'
 
 Aws.config.update(
-  endpoint: ENV.fetch('S3_ENDPOINT'),
+  endpoint: Rails.env.development? ? ENV.fetch('S3_ENDPOINT') : nil,
   access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID'),
   secret_access_key: ENV.fetch('AWS_SECRET_ACCESS_KEY'),
-  force_path_style: true,
+  force_path_style: Rails.env.development?,
   region: ENV.fetch('AWS_REGION')
 )
