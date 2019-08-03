@@ -130,12 +130,12 @@ class Blob
     MiniMime.lookup_by_filename(path)
   end
 
-  sig { returns(T::Boolean) }
+  sig { returns(T.nilable(T::Boolean)) }
   def post?
     mime&.content_type == 'text/markdown' && mime&.extension == 'md'
   end
 
-  sig { returns(T::Boolean) }
+  sig { returns(T.nilable(T::Boolean)) }
   def image?
     mime&.content_type&.include?('image')
   end

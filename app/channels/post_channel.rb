@@ -9,7 +9,7 @@ class PostChannel < ApplicationCable::Channel
 
   def receive(data)
     post = current_user.posts.find_by(slug: params[:id])
-    post.blob.save(io: data['body'])
+    post.blob.save(io: data['body'], committer: current_user)
     ActionCable.server.broadcast("post_#{post.id}", { success: true }.to_json)
   end
 
