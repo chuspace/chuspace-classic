@@ -1,14 +1,14 @@
-# Just an example!
-
 [Unit]
 Description=Puma HTTP Server
 After=network.target
+Requires=/home/chuspace/chuspace.com/current/tmp/sockets/puma.socket
 
 [Service]
 Type=simple
-User=app
-WorkingDirectory=/home/chu/chuspace.com/current
-ExecStart=/home/chu/.rbenv/versions/2.5.5/bin/ruby -S bundle exec puma -C puma.rb
+User=chuspace
+WorkingDirectory=/home/chuspace/chuspace.com/current
+EnvironmentFile=/home/chuspace/chuspace.com/current/env
+ExecStart=/home/chuspace/.rbenv/bin/rbenv exec bundle exec puma -C /home/chuspace/chuspace.com/current/config/puma.rb
 Restart=always
 
 [Install]

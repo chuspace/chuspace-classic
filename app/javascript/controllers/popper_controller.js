@@ -47,6 +47,7 @@ export default class PopperController extends Controller {
       window.iframely.extendOptions({ api_key: '376392514861f59ada33d2', omit_script: 1, omit_css: 1, iframe: 1 })
 
     const postBody = document.querySelector('.chu-editor')
+    if (!postBody) return
     const links = Array.from(postBody.querySelectorAll('a'))
 
     const INITIAL_CONTENT = `<div class='flex' style="margin:5px 0;">

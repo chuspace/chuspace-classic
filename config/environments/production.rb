@@ -62,7 +62,7 @@ Rails.application.configure do
 
   config.action_mailer.smtp_settings = {
     domain: 'notifications.chuspace.com',
-    username: ENV['SMTP_USERNAME'],
+    user_name: ENV['SMTP_USERNAME'],
     password: ENV['SMTP_PASSWORD'],
     address: 'smtp.sparkpostmail.com',
     port: 587,
