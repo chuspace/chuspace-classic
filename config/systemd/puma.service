@@ -7,7 +7,7 @@ Requires=/home/chuspace/chuspace.com/current/tmp/sockets/puma.socket
 Type=simple
 User=chuspace
 WorkingDirectory=/home/chuspace/chuspace.com/current
-EnvironmentFile=/home/chuspace/chuspace.com/current/env
+EnvironmentFile=/home/chuspace/chuspace.com/current/.env
 ExecStart=/home/chuspace/.rbenv/bin/rbenv exec bundle exec puma -C /home/chuspace/chuspace.com/current/config/puma.rb
 Restart=always
 
