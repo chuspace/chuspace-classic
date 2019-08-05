@@ -7,7 +7,7 @@
 
 if Rails.env.production?
   Rails.application.config.content_security_policy do |p|
-    p.default_src :self, :https, '*.example.com'
+    p.default_src :self, :https, '*.chuspace.com'
     p.font_src    :self, :https, :data
     p.img_src     :self, :https, :data
     p.object_src  :none
