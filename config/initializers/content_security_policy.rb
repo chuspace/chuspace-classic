@@ -7,9 +7,9 @@
 
 if Rails.env.production?
   Rails.application.config.content_security_policy do |p|
-    p.default_src :self, :https
+    p.default_src :self, :https, '*.example.com'
     p.font_src    :self, :https, :data
-    # p.img_src     :self, :https, :data
+    p.img_src     :self, :https, :data
     p.object_src  :none
     p.script_src  :self, :https, :unsafe_inline
     p.style_src   :self, :https, :unsafe_inline, 'https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css', 'https://use.typekit.net/oyz0gkh.css', 'https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css', 'https://use.typekit.net/oyz0gkh.css'
