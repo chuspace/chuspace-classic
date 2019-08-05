@@ -1,4 +1,9 @@
 en:
+  chuspace:
+    pitch: |
+      Chuspace is a collaborative blogging platform for developers like Github,
+      where articles can be shared and maintained just like code.
+
   activerecord:
     errors:
       models:
@@ -36,11 +41,23 @@ en:
               invalid_content_type: is invalid. Supported types are text and images.
               invalid_size: is invalid. Allowed blob size is %{size}MB for %{type}.
 
-  login_mailer:
+  layouts:
+    mailer:
+      do_not_share: This email contains unique secure links that allow you to access Chuspace. Please do not forward or share this email.
+
+  user_mailer:
+    welcome:
+      subject: Welcome to Chuspace, %{name}
+      salutation: Hey %{name},
+      body: Thank you for signing up! Chuspace is currently in alpha and we're really happy to have you onboard. Please give it a try and help us make it better.
+      outro: Hope you will have a good experience. Just send us an email if you have any questions.
+
     send_magic_login:
-      subject: Log in to Chuspace
-      link_request: You don’t need a password to access your Chuspace account. Just click the secure link below.
-      heading: Log in to Chuspace
+      subject: Log in to Chuspace, %{name}
+      salutation: Hey %{name},
+      body: Click on the button below to sign in to your Chuspace account. This magic link will expire in 15 minutes and can only be used once.
+      direct_url: If the button above doesn’t work, paste this link into your web browser
+      compliance: If you did not make this request, you can safely ignore this email.
 
   settings:
     ssh_keys:

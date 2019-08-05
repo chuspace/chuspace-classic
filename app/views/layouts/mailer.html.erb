@@ -1,13 +1,129 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <style>
-      /* Email styles need to be inline */
+    <!--[if gte mso 9]>
+    <xml>
+    <o:OfficeDocumentSettings>
+    <o:AllowPNG/>
+    <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="format-detection" content="date=no" />
+    <meta name="format-detection" content="address=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <!--[if !mso]><!-->
+    <link href="https://rsms.me/inter/inter.css" rel="stylesheet" />
+    <!--<![endif]-->
+    <title><%= @subject %></title>
+    <!--[if gte mso 9]>
+    <style type="text/css" media="all">
+      sup { font-size: 100% !important; }
+    </style>
+    <![endif]-->
+
+	  <style type="text/css" media="screen">
+      html, body {
+        font-family: 'Inter', 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        box-sizing: border-box;
+        font-size: 16px;
+        -webkit-font-smoothing: antialiased;
+        -webkit-text-size-adjust: none;
+        width: 100% !important;
+        height: 100%;
+        line-height: 1.6;
+        background: #fff;
+        margin: 0;
+        padding: 0;
+        color: #222;
+      }
+
+      * { margin: 0; padding: 0; }
+      .mt-20 { margin-top: 20px; }
+      .mb-10 { margin-bottom: 10px; }
+      .mb-20 { margin-bottom: 20px; }
+      .my-20 { margin-top: 20px; margin-bottom: 20px; }
+
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        vertical-align: top;
+        display: block;
+      }
+
+      .section {
+        margin-top: 50px;
+      }
+
+      .small__text {
+        font-size: 12px;
+        color: #999999;
+        font-weight: normal;
+      }
+
+      .grey__text {
+        color: #999999;
+        font-size: 14px;
+      }
+
+      .button {
+        display: inline-block;
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 5px;
+        background: #6898da;
+        padding: 10px 15px;
+      }
+
+      @media only screen and (max-device-width: 600px), only screen and (max-width: 600px) {
+        .container {
+          max-width: 100%;
+          padding: 0 20px;
+        }
+      }
     </style>
   </head>
 
   <body>
-    <%= yield %>
+    <table style="width: 100%;">
+      <tr>
+        <td class='container'>
+          <div class='section'>
+            <table>
+              <tr>
+                <td style="font-size: 30px; font-weight: 700;">
+                  <span style='background-color: rgba(0, 0, 0, 0.2); padding-left: 5px;'>Chu</span>space
+                  <span class='small__text'>axiom</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class='section'>
+                    <%= yield %>
+                  </div>
+                </td>
+              </tr>
+            </table>
+
+            <div class='section grey__text'>
+              <table>
+                <tr>
+                  <td><p class='mb-10'><%= t('.do_not_share') %></p></td>
+                </tr>
+                <tr>
+                  <td><p class='small__text'>&#169; Chuspace <%= Time.now.year %></p></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
   </body>
 </html>

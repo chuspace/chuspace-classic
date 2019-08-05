@@ -12,7 +12,7 @@ class SigninsController < ApplicationController
     @user = User.find_by(email: signin_params[:email])
 
     if @user
-      LoginMailer.with(user: @user).send_magic_login.deliver_later
+      UserMailer.with(user: @user).send_magic_login.deliver_later
       redirect_to signins_path, notice: t('signins.create.success')
     else
       @user = User.new(email: signin_params[:email])

@@ -33,6 +33,10 @@ class User < ApplicationRecord
     name.gsub(/([[:upper:]])[[:lower:]]+/, '\1').tr(' ', '')
   end
 
+  def first_name
+    name.split(' ').first
+  end
+
   def avatar_url(**options)
     Imgproxy.url_for(s3_avatar_url, **options)
   end
