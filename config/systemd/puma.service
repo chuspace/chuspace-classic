@@ -6,6 +6,7 @@ Requires=/home/chuspace/.config/systemd/user/puma.socket
 [Service]
 Type=simple
 WorkingDirectory=/home/chuspace/chuspace.com/current
+EnvironmentFile=/home/chuspace/chuspace.com/current/.env
 ExecStart=/home/chuspace/.rbenv/bin/rbenv exec bundle exec puma -C /home/chuspace/chuspace.com/current/config/puma.rb
 Restart=always
 
