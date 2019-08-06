@@ -8,6 +8,7 @@ plugin 'bundler'
 plugin 'rails'
 plugin 'rbenv'
 plugin 'nodenv'
+plugin './plugins/chuspace.rb'
 
 host 'chuspace@chuspace.com'
 
@@ -52,6 +53,7 @@ end
 
 deploy do
   run 'env:update'
+  run 'chuspace:copy_env_vars'
   run 'git:create_release'
   run 'core:symlink_shared'
   run 'core:write_release_json'
@@ -63,4 +65,5 @@ deploy do
   run 'core:clean_releases'
   run 'bundler:clean'
   run 'core:log_revision'
+  run 'chuspace:restart_puma_and_anycable'
 end
