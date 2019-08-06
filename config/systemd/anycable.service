@@ -1,0 +1,13 @@
+[Unit]
+Description=Anycable WS Server
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/chuspace/chuspace.com/current
+EnvironmentFile=/home/chuspace/chuspace.com/current/.env
+ExecStart=/home/chuspace/.rbenv/bin/rbenv exec bundle exec anycable
+Restart=always
+
+[Install]
+WantedBy=default.target
