@@ -57,8 +57,7 @@ class PostHtmlRenderer < CommonMarker::HtmlRenderer
       blob = Current.user.repository.blob_at(path: blob_path)
 
       if blob.persisted?
-        payload = { path: blob.path, repository_id: Current.user.repository.id, action: :upload }.freeze
-        image_url = Imgproxy.url_for("#{ENV.fetch('REPOSITORY_ENDPOINT', '')}/#{blob.path}", width: 800, resizing_type: :fill)
+        image_url = Imgproxy.url_for(blob.path, width: 800, resizing_type: :fill)
       end
 
       out('<img src="', escape_href(image_url), '"')

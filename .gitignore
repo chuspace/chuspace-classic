@@ -58,4 +58,5 @@ bin/git-hooks/*
 
 # Env
 .env*
+public/avatars
 public/uploads
