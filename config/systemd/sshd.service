@@ -5,17 +5,16 @@ ConditionPathExists=!/etc/ssh/sshd_not_to_be_run
 
 [Service]
 EnvironmentFile=-/etc/default/ssh
-ExecStartPre=/usr/sbin/sshd -t -f /home/chuspace/chuspace.com/current/openssh/sshd_config
 ExecStart=/usr/sbin/sshd -e -D -f /home/chuspace/chuspace.com/current/openssh/sshd_config
-ExecReload=/usr/sbin/sshd -t -f /home/chuspace/chuspace.com/current/openssh/sshd_config
+ExecReload=/usr/sbin/sshd -e -D -f /home/chuspace/chuspace.com/current/openssh/sshd_config
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=on-failure
 RestartPreventExitStatus=255
 Type=notify
-RuntimeDirectory=sshd
+RuntimeDirectory=gitsshd
 RuntimeDirectoryMode=0755
 
 [Install]
 WantedBy=multi-user.target
-Alias=sshd.service
+Alias=gitsshd.service

@@ -17,3 +17,4 @@ production:
   port: 5432
   username: <%= ENV['PG_USERNAME'] %>
   password: <%= ENV['PG_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
