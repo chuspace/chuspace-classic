@@ -65,5 +65,6 @@ deploy do
   run 'bundler:clean'
   run 'core:log_revision'
   run 'chuspace:copy_env_vars'
+  run 'chuspace:copy_sshd_config'
   run 'chuspace:restart_puma_and_anycable'
 end
