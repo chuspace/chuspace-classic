@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 # typed: false
-class AppUploader < Shrine
+
+class AvatarUploader < Shrine
   include ImageProcessing::Vips
 
   plugin :pretty_location
@@ -13,7 +14,7 @@ class AppUploader < Shrine
   plugin :delete_raw
   plugin :restore_cached_data
   plugin :cached_attachment_data
-  plugin :logging
+  plugin :instrumentation
   plugin :recache
 
   Attacher.validate do

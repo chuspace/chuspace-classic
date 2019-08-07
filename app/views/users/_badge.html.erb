@@ -1,7 +1,7 @@
 <%= link_to user_path(user) do %>
   <div class='author mx-auto text-center'>
     <%= component 'avatar',
-      avatar: user.s3_avatar_url,
+      avatar: user.avatar,
       initials: user.initials,
       variant: :md,
       css_class: 'block mx-auto'

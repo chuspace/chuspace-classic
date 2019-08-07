@@ -328,7 +328,7 @@ CREATE TABLE public.users (
     name character varying DEFAULT ''::character varying NOT NULL,
     email character varying DEFAULT ''::character varying NOT NULL,
     nickname character varying DEFAULT ''::character varying NOT NULL,
-    avatar character varying,
+    avatar_data jsonb,
     auth_token character varying DEFAULT ''::character varying NOT NULL,
     posts_count integer DEFAULT 0 NOT NULL,
     bio character varying,
