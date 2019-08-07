@@ -12,4 +12,4 @@ test:
 
 production:
   <<: *default
-  host: <%= URI.encode(ENV['DATABASE_URL']) %>
+  host: <%= CGI.escape(ENV['DATABASE_URL']) %>
