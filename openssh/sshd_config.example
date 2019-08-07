@@ -7,7 +7,7 @@ AuthorizedKeysFile none
 
 AllowUsers git
 AuthenticationMethods publickey
-ListenAddress 127.0.0.1:22
+ListenAddress 0.0.0.0:22
 LogLevel VERBOSE
 PasswordAuthentication no
 AllowAgentForwarding no
@@ -22,4 +22,4 @@ Protocol 2
 StrictModes yes
 UsePAM no
 
-PidFile /home/chuspace/chuspace.com/tmp/pids/sshd.pid
+PidFile /home/chuspace/chuspace.com/shared/sshd.pid
