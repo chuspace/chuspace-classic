@@ -1,10 +1,10 @@
 [Unit]
-Description=OpenBSD Secure Shell server
+Description=Git SSHD server
 After=network.target auditd.service
 ConditionPathExists=!/etc/ssh/sshd_not_to_be_run
 
 [Service]
-EnvironmentFile=-/etc/default/ssh
+EnvironmentFile=/home/chuspace/chuspace.com/current/.env
 ExecStart=/usr/sbin/sshd -e -D -f /home/chuspace/chuspace.com/current/openssh/sshd_config
 ExecReload=/usr/sbin/sshd -e -D -f /home/chuspace/chuspace.com/current/openssh/sshd_config
 ExecReload=/bin/kill -HUP $MAINPID

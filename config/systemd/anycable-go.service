@@ -4,15 +4,10 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/anycable-go
+EnvironmentFile=/home/chuspace/chuspace.com/current/.env
+ExecStart=/home/chuspace/bin/anycable-go --headers=cookie,origin
 Restart=always
-LimitNOFILE = infinity
-Environment=ANYCABLE_HOST=localhost
-Environment=ANYCABLE_PORT=8081
-Environment=ANYCABLE_PATH=/cable
-Environment=ANYCABLE_REDIS_URL=redis://localhost:6379/5
-Environment=ANYCABLE_REDIS_CHANNEL=__anycable__
-Environment=ANYCABLE_METRICS_HTTP=/metrics
+LimitNOFILE=infinity
 
 [Install]
 WantedBy=multi-user.target
