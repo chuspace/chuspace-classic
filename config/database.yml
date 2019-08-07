@@ -12,8 +12,4 @@ test:
 
 production:
   <<: *default
-  database: chuspace
-  host: <%= ENV['PG_HOST'] %>
-  port: 5432
-  username: <%= ENV['PG_USERNAME'] %>
-  password: <%= ENV['PG_PASSWORD'] %>
+  host: <%= ENV['DATABASE_URL'] %>
