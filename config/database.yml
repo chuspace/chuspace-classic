@@ -12,4 +12,4 @@ test:
 
 production:
   <<: *default
-  host: <%= ENV['DATABASE_URL'] %>
+  host: <%= URI.encode(ENV['DATABASE_URL']) %>
