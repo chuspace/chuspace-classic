@@ -1,4 +1,4 @@
-# typed: strong
+# typed: false
 
 def copy_env_vars
   env_vars = File.read('.env.production')

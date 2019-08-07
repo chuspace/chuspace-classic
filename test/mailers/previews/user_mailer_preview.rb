@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# typed: false
 
 class UserMailerPreview < ActionMailer::Preview
   def welcome

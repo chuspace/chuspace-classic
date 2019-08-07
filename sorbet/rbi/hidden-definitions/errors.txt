@@ -160,7 +160,6 @@
 # wrong constant name response_body
 # wrong constant name response_body=
 # wrong constant name send_action
-# wrong constant name <static-init>
 # wrong constant name abstract
 # wrong constant name abstract!
 # wrong constant name abstract?
@@ -653,9 +652,6 @@
 # wrong constant name <static-init>
 # wrong constant name <static-init>
 # wrong constant name <static-init>
-# wrong constant name <Class:ClassMethods>
-# wrong constant name add_flash_types
-# wrong constant name <static-init>
 # wrong constant name <static-init>
 # wrong constant name <Class:ClassMethods>
 # wrong constant name force_ssl_redirect
@@ -771,12 +767,9 @@
 # wrong constant name middleware_stack
 # wrong constant name middleware_stack=
 # wrong constant name middleware_stack?
-# wrong constant name params
 # wrong constant name params=
-# wrong constant name request
 # wrong constant name request=
 # wrong constant name reset_session
-# wrong constant name response
 # wrong constant name response=
 # wrong constant name response_body=
 # wrong constant name response_code
@@ -787,7 +780,6 @@
 # wrong constant name status=
 # wrong constant name to_a
 # wrong constant name url_for
-# wrong constant name <static-init>
 # wrong constant name action
 # wrong constant name binary_params_for?
 # wrong constant name controller_name
@@ -890,11 +882,8 @@
 # wrong constant name setup_renderer!
 # wrong constant name <static-init>
 # wrong constant name <static-init>
-# wrong constant name <Class:ClassMethods>
 # wrong constant name <Class:ProtectionMethods>
-# wrong constant name protect_from_forgery
 # wrong constant name skip_forgery_protection
-# wrong constant name <static-init>
 # wrong constant name <Class:Exception>
 # wrong constant name <Class:NullSession>
 # wrong constant name <Class:ResetSession>
@@ -905,13 +894,13 @@
 # wrong constant name <Class:NullSessionHash>
 # wrong constant name handle_unverified_request
 # wrong constant name initialize
-# uninitialized constant #<Class:0x00007f935dde0a60>::DOMAIN_REGEXP
+# uninitialized constant #<Class:0x00007f9a8b5f7df0>::DOMAIN_REGEXP
 # Did you mean?  ActionController::RequestForgeryProtection::ProtectionMethods::NullSession::NullCookieJar::DOMAIN_REGEXP
-# uninitialized constant #<Class:0x00007f935dde0a60>::Elem
+# uninitialized constant #<Class:0x00007f9a8b5f7df0>::Elem
 # wrong constant name write
 # wrong constant name <static-init>
-# uninitialized constant #<Class:0x00007f935dde0b78>::Elem
-# uninitialized constant #<Class:0x00007f935dde0b78>::Unspecified
+# uninitialized constant #<Class:0x00007f9a8b5f7f08>::Elem
+# uninitialized constant #<Class:0x00007f9a8b5f7f08>::Unspecified
 # Did you mean?  ActionController::RequestForgeryProtection::ProtectionMethods::NullSession::NullSessionHash::Unspecified
 # wrong constant name initialize
 # wrong constant name <static-init>
@@ -1218,17 +1207,17 @@
 #                ActionDispatch::Request::HTTP_X_FORWARDED_SCHEME
 # uninitialized constant ActionDispatch::Request::HTTP_X_FORWARDED_PROTO
 # Did you mean?  ActionDispatch::Request::HTTP_X_FORWARDED_SSL
-#                ActionDispatch::Request::HTTP_X_FORWARDED_PORT
 #                ActionDispatch::Request::HTTP_X_FORWARDED_HOST
+#                ActionDispatch::Request::HTTP_X_FORWARDED_PORT
 #                ActionDispatch::Request::HTTP_X_FORWARDED_SCHEME
 # uninitialized constant ActionDispatch::Request::HTTP_X_FORWARDED_SCHEME
 # Did you mean?  ActionDispatch::Request::HTTP_X_FORWARDED_SSL
-#                ActionDispatch::Request::HTTP_X_FORWARDED_PORT
 #                ActionDispatch::Request::HTTP_X_FORWARDED_HOST
+#                ActionDispatch::Request::HTTP_X_FORWARDED_PORT
 #                ActionDispatch::Request::HTTP_X_FORWARDED_PROTO
 # uninitialized constant ActionDispatch::Request::HTTP_X_FORWARDED_SSL
-# Did you mean?  ActionDispatch::Request::HTTP_X_FORWARDED_PORT
-#                ActionDispatch::Request::HTTP_X_FORWARDED_HOST
+# Did you mean?  ActionDispatch::Request::HTTP_X_FORWARDED_HOST
+#                ActionDispatch::Request::HTTP_X_FORWARDED_PORT
 #                ActionDispatch::Request::HTTP_X_FORWARDED_PROTO
 #                ActionDispatch::Request::HTTP_X_FORWARDED_SCHEME
 # uninitialized constant ActionDispatch::Request::IP_HOST_REGEXP
@@ -1350,17 +1339,17 @@
 #                ActionDispatch::TestRequest::HTTP_X_FORWARDED_SCHEME
 # uninitialized constant ActionDispatch::TestRequest::HTTP_X_FORWARDED_PROTO
 # Did you mean?  ActionDispatch::TestRequest::HTTP_X_FORWARDED_SSL
-#                ActionDispatch::TestRequest::HTTP_X_FORWARDED_PORT
 #                ActionDispatch::TestRequest::HTTP_X_FORWARDED_HOST
+#                ActionDispatch::TestRequest::HTTP_X_FORWARDED_PORT
 #                ActionDispatch::TestRequest::HTTP_X_FORWARDED_SCHEME
 # uninitialized constant ActionDispatch::TestRequest::HTTP_X_FORWARDED_SCHEME
 # Did you mean?  ActionDispatch::TestRequest::HTTP_X_FORWARDED_SSL
-#                ActionDispatch::TestRequest::HTTP_X_FORWARDED_PORT
 #                ActionDispatch::TestRequest::HTTP_X_FORWARDED_HOST
+#                ActionDispatch::TestRequest::HTTP_X_FORWARDED_PORT
 #                ActionDispatch::TestRequest::HTTP_X_FORWARDED_PROTO
 # uninitialized constant ActionDispatch::TestRequest::HTTP_X_FORWARDED_SSL
-# Did you mean?  ActionDispatch::TestRequest::HTTP_X_FORWARDED_PORT
-#                ActionDispatch::TestRequest::HTTP_X_FORWARDED_HOST
+# Did you mean?  ActionDispatch::TestRequest::HTTP_X_FORWARDED_HOST
+#                ActionDispatch::TestRequest::HTTP_X_FORWARDED_PORT
 #                ActionDispatch::TestRequest::HTTP_X_FORWARDED_PROTO
 #                ActionDispatch::TestRequest::HTTP_X_FORWARDED_SCHEME
 # uninitialized constant ActionDispatch::TestRequest::IP_HOST_REGEXP
@@ -1690,23 +1679,6 @@
 # wrong constant name initialize
 # wrong constant name <static-init>
 # wrong constant name initialize
-# wrong constant name <static-init>
-# wrong constant name <static-init>
-# wrong constant name initialize
-# wrong constant name params
-# wrong constant name <static-init>
-# wrong constant name all
-# wrong constant name call
-# wrong constant name email_exists?
-# wrong constant name emails
-# wrong constant name exists?
-# wrong constant name find
-# wrong constant name preview_name
-# wrong constant name <Class:ClassMethods>
-# wrong constant name register_preview_interceptor
-# wrong constant name register_preview_interceptors
-# wrong constant name unregister_preview_interceptor
-# wrong constant name unregister_preview_interceptors
 # wrong constant name <static-init>
 # wrong constant name <static-init>
 # wrong constant name <Class:ClassMethods>
@@ -2719,28 +2691,28 @@
 # wrong constant name rolledback?
 # wrong constant name <static-init>
 # wrong constant name collect?
-# uninitialized constant #<Class:0x00007f9364e3cb88>::ACTIONS
+# uninitialized constant #<Class:0x00007f9a835c2c48>::ACTIONS
 # Did you mean?  ActiveRecord::InternalMetadata::ACTIONS
-# uninitialized constant #<Class:0x00007f9364e3cb88>::CALLBACKS
+# uninitialized constant #<Class:0x00007f9a835c2c48>::CALLBACKS
 # Did you mean?  ActiveRecord::InternalMetadata::Callbacks
 #                ActiveRecord::Callbacks
 #                ActiveRecord::InternalMetadata::Callback
 #                ActiveRecord::InternalMetadata::CALLBACKS
-# uninitialized constant #<Class:0x00007f9364e3cb88>::CALLBACK_FILTER_TYPES
+# uninitialized constant #<Class:0x00007f9a835c2c48>::CALLBACK_FILTER_TYPES
 # Did you mean?  ActiveRecord::InternalMetadata::CALLBACK_FILTER_TYPES
-# uninitialized constant #<Class:0x00007f9364e3cb88>::CALL_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f9a835c2c48>::CALL_COMPILABLE_REGEXP
 # Did you mean?  ActiveRecord::InternalMetadata::CALL_COMPILABLE_REGEXP
 # wrong constant name <Class:GeneratedAssociationMethods>
 # wrong constant name <Class:GeneratedAttributeMethods>
-# uninitialized constant #<Class:0x00007f9364e3cb88>::MAX_PASSWORD_LENGTH_ALLOWED
+# uninitialized constant #<Class:0x00007f9a835c2c48>::MAX_PASSWORD_LENGTH_ALLOWED
 # Did you mean?  ActiveRecord::InternalMetadata::MAX_PASSWORD_LENGTH_ALLOWED
-# uninitialized constant #<Class:0x00007f9364e3cb88>::NAME_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f9a835c2c48>::NAME_COMPILABLE_REGEXP
 # Did you mean?  ActiveRecord::InternalMetadata::NAME_COMPILABLE_REGEXP
-# uninitialized constant #<Class:0x00007f9364e3cb88>::RESTRICTED_CLASS_METHODS
+# uninitialized constant #<Class:0x00007f9a835c2c48>::RESTRICTED_CLASS_METHODS
 # Did you mean?  ActiveRecord::InternalMetadata::RESTRICTED_CLASS_METHODS
-# uninitialized constant #<Class:0x00007f9364e3cb88>::UNASSIGNABLE_KEYS
+# uninitialized constant #<Class:0x00007f9a835c2c48>::UNASSIGNABLE_KEYS
 # Did you mean?  ActiveRecord::InternalMetadata::UNASSIGNABLE_KEYS
-# uninitialized constant #<Class:0x00007f9364e3cb88>::VERSION
+# uninitialized constant #<Class:0x00007f9a835c2c48>::VERSION
 # Did you mean?  ActiveRecord::InternalMetadata::VERSION
 #                ActiveRecord::VERSION
 # wrong constant name <static-init>
@@ -4556,6 +4528,7 @@
 # undefined singleton method `home$1' for `Dir'
 # undefined singleton method `mkdir$1' for `Dir'
 # undefined singleton method `mktmpdir$2' for `Dir'
+# undefined singleton method `open$2' for `Dir'
 # wrong constant name []$2
 # wrong constant name chdir$2
 # wrong constant name children
@@ -4568,6 +4541,7 @@
 # wrong constant name home$1
 # wrong constant name mkdir$1
 # wrong constant name mktmpdir$2
+# wrong constant name open$2
 # wrong constant name tmpdir
 # wrong constant name <static-init>
 # uninitialized constant DropdownComponent::CALLBACK_FILTER_TYPES
@@ -4886,6 +4860,14 @@
 # wrong constant name extend_object
 # wrong constant name message
 # wrong constant name <static-init>
+# wrong constant name <Class:NativeType>
+# wrong constant name <Class:NullPointerError>
+# wrong constant name <static-init>
+# wrong constant name <static-init>
+# uninitialized constant FFI::Struct::InlineArray::Elem
+# wrong constant name <static-init>
+# wrong constant name <static-init>
+# wrong constant name <static-init>
 # uninitialized constant Faker::DrivingLicence::Letters
 # Did you mean?  Faker::DrivingLicence::ULetters
 # uninitialized constant Faker::DrivingLicence::Numbers
@@ -5094,10 +5076,10 @@
 # undefined singleton method `umask$1' for `File'
 # undefined singleton method `utime$1' for `File'
 # wrong constant name absolute_path$1
-# wrong constant name atomic_write
 # wrong constant name basename$1
 # wrong constant name chmod$1
 # wrong constant name chown$1
+# wrong constant name empty?
 # wrong constant name exists?
 # wrong constant name expand_path$1
 # wrong constant name fnmatch$1
@@ -5106,7 +5088,6 @@
 # wrong constant name lchown$1
 # wrong constant name lutime
 # wrong constant name mkfifo
-# wrong constant name probe_stat_in
 # wrong constant name realdirpath$1
 # wrong constant name realpath$1
 # wrong constant name umask$1
@@ -7355,8 +7336,6 @@
 # uninitialized constant Google::Protobuf::Map::Elem
 # uninitialized constant Google::Protobuf::OneofDescriptor::Elem
 # uninitialized constant Google::Protobuf::RepeatedField::Elem
-# wrong constant name s3_avatar_url
-# wrong constant name <static-init>
 # undefined method `default$2' for class `Hash'
 # undefined method `fetch$2' for class `Hash'
 # undefined method `initialize$2' for class `Hash'
@@ -7675,6 +7654,7 @@
 # wrong constant name default_console_size
 # wrong constant name for_fd$1
 # wrong constant name foreach
+# wrong constant name open
 # wrong constant name pipe
 # wrong constant name read$1
 # wrong constant name sysopen$1
@@ -8030,6 +8010,144 @@
 # wrong constant name version
 # wrong constant name matches?
 # wrong constant name <static-init>
+# wrong constant name <Class:MiniMagick>
+# wrong constant name <Class:Vips>
+# wrong constant name <Class:Processor>
+# wrong constant name <Class:ACCUMULATOR_CLASS>
+# wrong constant name <Class:Utils>
+# wrong constant name append
+# wrong constant name composite
+# wrong constant name define
+# wrong constant name limits
+# wrong constant name magick
+# wrong constant name resize_and_pad
+# wrong constant name resize_to_fill
+# wrong constant name resize_to_fit
+# wrong constant name resize_to_limit
+# wrong constant name rotate
+# wrong constant name +
+# wrong constant name <<
+# wrong constant name <Class:Animate>
+# wrong constant name <Class:Compare>
+# wrong constant name <Class:Composite>
+# wrong constant name <Class:Conjure>
+# wrong constant name <Class:Convert>
+# wrong constant name <Class:Display>
+# wrong constant name <Class:Identify>
+# wrong constant name <Class:Import>
+# wrong constant name <Class:Magick>
+# wrong constant name <Class:Mogrify>
+# wrong constant name <Class:MogrifyRestricted>
+# wrong constant name <Class:Montage>
+# wrong constant name <Class:Stream>
+# wrong constant name args
+# wrong constant name call
+# wrong constant name canvas
+# wrong constant name clone
+# wrong constant name command
+# wrong constant name executable
+# wrong constant name gradient
+# wrong constant name initialize
+# wrong constant name logo
+# wrong constant name merge!
+# wrong constant name method_missing
+# wrong constant name name
+# wrong constant name pango
+# wrong constant name pattern
+# wrong constant name plasma
+# wrong constant name radial_gradient
+# wrong constant name rose
+# wrong constant name stack
+# wrong constant name stdin
+# wrong constant name stdout
+# wrong constant name text
+# wrong constant name xc
+# uninitialized constant MiniMagick::Tool::Animate::CREATION_OPERATORS
+# Did you mean?  MiniMagick::Tool::CREATION_OPERATORS
+# wrong constant name initialize
+# wrong constant name <static-init>
+# uninitialized constant MiniMagick::Tool::Compare::CREATION_OPERATORS
+# Did you mean?  MiniMagick::Tool::CREATION_OPERATORS
+# wrong constant name initialize
+# wrong constant name <static-init>
+# uninitialized constant MiniMagick::Tool::Composite::CREATION_OPERATORS
+# Did you mean?  MiniMagick::Tool::CREATION_OPERATORS
+# wrong constant name initialize
+# wrong constant name <static-init>
+# uninitialized constant MiniMagick::Tool::Conjure::CREATION_OPERATORS
+# Did you mean?  MiniMagick::Tool::CREATION_OPERATORS
+# wrong constant name initialize
+# wrong constant name <static-init>
+# uninitialized constant MiniMagick::Tool::Convert::CREATION_OPERATORS
+# Did you mean?  MiniMagick::Tool::CREATION_OPERATORS
+# wrong constant name initialize
+# wrong constant name <static-init>
+# uninitialized constant MiniMagick::Tool::Display::CREATION_OPERATORS
+# Did you mean?  MiniMagick::Tool::CREATION_OPERATORS
+# wrong constant name initialize
+# wrong constant name <static-init>
+# uninitialized constant MiniMagick::Tool::Identify::CREATION_OPERATORS
+# Did you mean?  MiniMagick::Tool::CREATION_OPERATORS
+# wrong constant name initialize
+# wrong constant name <static-init>
+# uninitialized constant MiniMagick::Tool::Import::CREATION_OPERATORS
+# Did you mean?  MiniMagick::Tool::CREATION_OPERATORS
+# wrong constant name initialize
+# wrong constant name <static-init>
+# uninitialized constant MiniMagick::Tool::Magick::CREATION_OPERATORS
+# Did you mean?  MiniMagick::Tool::CREATION_OPERATORS
+# wrong constant name initialize
+# wrong constant name <static-init>
+# uninitialized constant MiniMagick::Tool::Mogrify::CREATION_OPERATORS
+# Did you mean?  MiniMagick::Tool::CREATION_OPERATORS
+# wrong constant name initialize
+# wrong constant name <static-init>
+# uninitialized constant MiniMagick::Tool::MogrifyRestricted::CREATION_OPERATORS
+# Did you mean?  MiniMagick::Tool::CREATION_OPERATORS
+# wrong constant name format
+# wrong constant name <static-init>
+# uninitialized constant MiniMagick::Tool::Montage::CREATION_OPERATORS
+# Did you mean?  MiniMagick::Tool::CREATION_OPERATORS
+# wrong constant name initialize
+# wrong constant name <static-init>
+# uninitialized constant MiniMagick::Tool::Stream::CREATION_OPERATORS
+# Did you mean?  MiniMagick::Tool::CREATION_OPERATORS
+# wrong constant name initialize
+# wrong constant name <static-init>
+# wrong constant name <static-init>
+# wrong constant name new
+# wrong constant name option_methods
+# wrong constant name <static-init>
+# wrong constant name apply_define
+# wrong constant name apply_options
+# wrong constant name disallow_split_layers!
+# wrong constant name <static-init>
+# wrong constant name load_image
+# wrong constant name save_image
+# wrong constant name <static-init>
+# wrong constant name valid_image?
+# wrong constant name <Class:Processor>
+# wrong constant name <Class:Utils>
+# wrong constant name composite
+# wrong constant name image
+# wrong constant name remove
+# wrong constant name resize_and_pad
+# wrong constant name resize_to_fill
+# wrong constant name resize_to_fit
+# wrong constant name resize_to_limit
+# wrong constant name rotate
+# wrong constant name set
+# wrong constant name set_type
+# wrong constant name set_value
+# wrong constant name <static-init>
+# wrong constant name select_valid_loader_options
+# wrong constant name select_valid_options
+# wrong constant name select_valid_saver_options
+# wrong constant name <static-init>
+# wrong constant name load_image
+# wrong constant name save_image
+# wrong constant name <static-init>
+# wrong constant name valid_image?
 # uninitialized constant ImagesController::ACTION_OPTIONS
 # uninitialized constant ImagesController::AUTHENTICITY_TOKEN_LENGTH
 # uninitialized constant ImagesController::CALLBACK_FILTER_TYPES
@@ -8169,11 +8287,6 @@
 # wrong constant name <static-init>
 # wrong constant name <static-init>
 # wrong constant name log_data
-# wrong constant name <static-init>
-# uninitialized constant LoginMailer::CALLBACK_FILTER_TYPES
-# uninitialized constant LoginMailer::DEFAULT_PROTECTED_INSTANCE_VARIABLES
-# uninitialized constant LoginMailer::PROTECTED_IVARS
-# wrong constant name send_magic_login
 # wrong constant name <static-init>
 # wrong constant name <static-init>
 # uninitialized constant LogoComponent::CALLBACK_FILTER_TYPES
@@ -8433,11 +8546,11 @@
 # uninitialized constant Net::FTPConnectionError
 # uninitialized constant Net::FTPConnectionError
 # uninitialized constant Net::FTPError
-# Did you mean?  Net::SMTPError
-#                Net::HTTPError
+# Did you mean?  Net::HTTPError
+#                Net::SMTPError
 # uninitialized constant Net::FTPError
-# Did you mean?  Net::SMTPError
-#                Net::HTTPError
+# Did you mean?  Net::HTTPError
+#                Net::SMTPError
 # uninitialized constant Net::FTPPermError
 # Did you mean?  FiberError
 # uninitialized constant Net::FTPPermError
@@ -8733,8 +8846,8 @@
 # uninitialized constant CXX_EXT
 # Did you mean?  C_EXT
 # uninitialized constant C_EXT
-# Did you mean?  CXX_EXT
-#                SRC_EXT
+# Did you mean?  SRC_EXT
+#                CXX_EXT
 # uninitialized constant EXPORT_PREFIX
 # uninitialized constant FailedMessage
 # uninitialized constant HDR_EXT
@@ -8817,6 +8930,9 @@
 # wrong constant name ==
 # wrong constant name to_der
 # wrong constant name fips_mode
+# wrong constant name open
+# wrong constant name read
+# wrong constant name <static-init>
 # uninitialized constant Opus
 # uninitialized constant Opus
 # wrong constant name <Class:ActiveSqlTransaction>
@@ -11489,6 +11605,8 @@
 # undefined method `find$2' for class `Pathname'
 # undefined method `fnmatch$1' for class `Pathname'
 # undefined method `mkdir$1' for class `Pathname'
+# undefined method `open$2' for class `Pathname'
+# Did you mean?  open
 # undefined method `opendir$2' for class `Pathname'
 # undefined method `read$1' for class `Pathname'
 # undefined method `realdirpath$1' for class `Pathname'
@@ -11508,6 +11626,7 @@
 # wrong constant name glob
 # wrong constant name make_symlink
 # wrong constant name mkdir$1
+# wrong constant name open$2
 # wrong constant name opendir$2
 # wrong constant name read$1
 # wrong constant name realdirpath$1
@@ -11515,37 +11634,37 @@
 # wrong constant name symlink?$2
 # wrong constant name sysopen$1
 # wrong constant name write$1
-# uninitialized constant #<Class:0x00007f935dfef810>::ACTIONS
+# uninitialized constant #<Class:0x00007f9a846599f8>::ACTIONS
 # Did you mean?  Post::ACTIONS
-# uninitialized constant #<Class:0x00007f935dfef810>::ANCESTRY_DELIMITER
+# uninitialized constant #<Class:0x00007f9a846599f8>::ANCESTRY_DELIMITER
 # Did you mean?  Post::ANCESTRY_DELIMITER
-# uninitialized constant #<Class:0x00007f935dfef810>::BEFORE_LAST_SAVE_SUFFIX
+# uninitialized constant #<Class:0x00007f9a846599f8>::BEFORE_LAST_SAVE_SUFFIX
 # Did you mean?  Post::BEFORE_LAST_SAVE_SUFFIX
-# uninitialized constant #<Class:0x00007f935dfef810>::CALLBACKS
+# uninitialized constant #<Class:0x00007f9a846599f8>::CALLBACKS
 # Did you mean?  Post::Callbacks
 #                Post::Callback
 #                Post::CALLBACKS
-# uninitialized constant #<Class:0x00007f935dfef810>::CALLBACK_FILTER_TYPES
+# uninitialized constant #<Class:0x00007f9a846599f8>::CALLBACK_FILTER_TYPES
 # Did you mean?  Post::CALLBACK_FILTER_TYPES
-# uninitialized constant #<Class:0x00007f935dfef810>::CALL_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f9a846599f8>::CALL_COMPILABLE_REGEXP
 # Did you mean?  Post::CALL_COMPILABLE_REGEXP
 # wrong constant name <Class:GeneratedAssociationMethods>
 # wrong constant name <Class:GeneratedAttributeMethods>
-# uninitialized constant #<Class:0x00007f935dfef810>::IN_DATABASE_SUFFIX
+# uninitialized constant #<Class:0x00007f9a846599f8>::IN_DATABASE_SUFFIX
 # Did you mean?  Post::IN_DATABASE_SUFFIX
-# uninitialized constant #<Class:0x00007f935dfef810>::MAX_PASSWORD_LENGTH_ALLOWED
+# uninitialized constant #<Class:0x00007f9a846599f8>::MAX_PASSWORD_LENGTH_ALLOWED
 # Did you mean?  Post::MAX_PASSWORD_LENGTH_ALLOWED
-# uninitialized constant #<Class:0x00007f935dfef810>::NAME_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f9a846599f8>::NAME_COMPILABLE_REGEXP
 # Did you mean?  Post::NAME_COMPILABLE_REGEXP
-# uninitialized constant #<Class:0x00007f935dfef810>::NO_VALUE
+# uninitialized constant #<Class:0x00007f9a846599f8>::NO_VALUE
 # Did you mean?  Post::NO_VALUE
-# uninitialized constant #<Class:0x00007f935dfef810>::RESTRICTED_CLASS_METHODS
+# uninitialized constant #<Class:0x00007f9a846599f8>::RESTRICTED_CLASS_METHODS
 # Did you mean?  Post::RESTRICTED_CLASS_METHODS
-# uninitialized constant #<Class:0x00007f935dfef810>::TIME_FACTOR
+# uninitialized constant #<Class:0x00007f9a846599f8>::TIME_FACTOR
 # Did you mean?  Post::TIME_FACTOR
-# uninitialized constant #<Class:0x00007f935dfef810>::UNASSIGNABLE_KEYS
+# uninitialized constant #<Class:0x00007f9a846599f8>::UNASSIGNABLE_KEYS
 # Did you mean?  Post::UNASSIGNABLE_KEYS
-# uninitialized constant #<Class:0x00007f935dfef810>::VERSION
+# uninitialized constant #<Class:0x00007f9a846599f8>::VERSION
 # Did you mean?  Post::VERSION
 # wrong constant name ancestry_base_class
 # wrong constant name ancestry_base_class=
@@ -11809,6 +11928,7 @@
 #                Psych::ClassLoader::EXCEPTION
 # uninitialized constant Psych::ClassLoader::Restricted::OBJECT
 # Did you mean?  Object
+#                GObject
 #                Psych::ClassLoader::OBJECT
 # uninitialized constant Psych::ClassLoader::Restricted::PSYCH_OMAP
 # Did you mean?  Psych::ClassLoader::PSYCH_OMAP
@@ -13849,17 +13969,17 @@
 #                Rack::Request::HTTP_X_FORWARDED_SCHEME
 # uninitialized constant Rack::Request::HTTP_X_FORWARDED_PROTO
 # Did you mean?  Rack::Request::HTTP_X_FORWARDED_SSL
-#                Rack::Request::HTTP_X_FORWARDED_PORT
 #                Rack::Request::HTTP_X_FORWARDED_HOST
+#                Rack::Request::HTTP_X_FORWARDED_PORT
 #                Rack::Request::HTTP_X_FORWARDED_SCHEME
 # uninitialized constant Rack::Request::HTTP_X_FORWARDED_SCHEME
 # Did you mean?  Rack::Request::HTTP_X_FORWARDED_SSL
-#                Rack::Request::HTTP_X_FORWARDED_PORT
 #                Rack::Request::HTTP_X_FORWARDED_HOST
+#                Rack::Request::HTTP_X_FORWARDED_PORT
 #                Rack::Request::HTTP_X_FORWARDED_PROTO
 # uninitialized constant Rack::Request::HTTP_X_FORWARDED_SSL
-# Did you mean?  Rack::Request::HTTP_X_FORWARDED_PORT
-#                Rack::Request::HTTP_X_FORWARDED_HOST
+# Did you mean?  Rack::Request::HTTP_X_FORWARDED_HOST
+#                Rack::Request::HTTP_X_FORWARDED_PORT
 #                Rack::Request::HTTP_X_FORWARDED_PROTO
 #                Rack::Request::HTTP_X_FORWARDED_SCHEME
 # uninitialized constant Rack::Request::PARSEABLE_DATA_MEDIA_TYPES
@@ -14315,29 +14435,29 @@
 # wrong constant name compile$2
 # wrong constant name last_match$2
 # wrong constant name union
-# uninitialized constant #<Class:0x00007f935dc1cb20>::ACTIONS
+# uninitialized constant #<Class:0x00007f9a8b4049d0>::ACTIONS
 # Did you mean?  Repository::ACTIONS
-# uninitialized constant #<Class:0x00007f935dc1cb20>::CALLBACKS
+# uninitialized constant #<Class:0x00007f9a8b4049d0>::CALLBACKS
 # Did you mean?  Repository::Callbacks
 #                Repository::Callback
 #                Repository::CALLBACKS
-# uninitialized constant #<Class:0x00007f935dc1cb20>::CALLBACK_FILTER_TYPES
+# uninitialized constant #<Class:0x00007f9a8b4049d0>::CALLBACK_FILTER_TYPES
 # Did you mean?  Repository::CALLBACK_FILTER_TYPES
-# uninitialized constant #<Class:0x00007f935dc1cb20>::CALL_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f9a8b4049d0>::CALL_COMPILABLE_REGEXP
 # Did you mean?  Repository::CALL_COMPILABLE_REGEXP
 # wrong constant name <Class:GeneratedAssociationMethods>
 # wrong constant name <Class:GeneratedAttributeMethods>
 # wrong constant name <Class:InvalidRef>
-# uninitialized constant #<Class:0x00007f935dc1cb20>::MAX_PASSWORD_LENGTH_ALLOWED
+# uninitialized constant #<Class:0x00007f9a8b4049d0>::MAX_PASSWORD_LENGTH_ALLOWED
 # Did you mean?  Repository::MAX_PASSWORD_LENGTH_ALLOWED
-# uninitialized constant #<Class:0x00007f935dc1cb20>::NAME_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f9a8b4049d0>::NAME_COMPILABLE_REGEXP
 # Did you mean?  Repository::NAME_COMPILABLE_REGEXP
 # wrong constant name <Class:NoRepository>
-# uninitialized constant #<Class:0x00007f935dc1cb20>::RESTRICTED_CLASS_METHODS
+# uninitialized constant #<Class:0x00007f9a8b4049d0>::RESTRICTED_CLASS_METHODS
 # Did you mean?  Repository::RESTRICTED_CLASS_METHODS
-# uninitialized constant #<Class:0x00007f935dc1cb20>::UNASSIGNABLE_KEYS
+# uninitialized constant #<Class:0x00007f9a8b4049d0>::UNASSIGNABLE_KEYS
 # Did you mean?  Repository::UNASSIGNABLE_KEYS
-# uninitialized constant #<Class:0x00007f935dc1cb20>::VERSION
+# uninitialized constant #<Class:0x00007f9a8b4049d0>::VERSION
 # Did you mean?  Repository::VERSION
 # wrong constant name autosave_associated_records_for_author
 # wrong constant name bare?
@@ -15442,6 +15562,47 @@
 # wrong constant name shellsplit
 # wrong constant name shellwords
 # wrong constant name split
+# uninitialized constant Shrine::Attachment::DELEGATION_RESERVED_KEYWORDS
+# uninitialized constant Shrine::Attachment::DELEGATION_RESERVED_METHOD_NAMES
+# uninitialized constant Shrine::Attachment::RUBY_RESERVED_KEYWORDS
+# wrong constant name <Class:ClassMethods>
+# wrong constant name <Class:FileMethods>
+# wrong constant name <Class:InstanceMethods>
+# wrong constant name add_metadata
+# wrong constant name metadata_method
+# wrong constant name <static-init>
+# wrong constant name <static-init>
+# wrong constant name extract_metadata
+# wrong constant name <static-init>
+# wrong constant name <static-init>
+# wrong constant name configure
+# wrong constant name <Class:InstanceMethods>
+# wrong constant name after_delete
+# wrong constant name after_process
+# wrong constant name after_store
+# wrong constant name after_upload
+# wrong constant name around_delete
+# wrong constant name around_process
+# wrong constant name around_store
+# wrong constant name around_upload
+# wrong constant name before_delete
+# wrong constant name before_process
+# wrong constant name before_store
+# wrong constant name before_upload
+# wrong constant name delete
+# wrong constant name store
+# wrong constant name upload
+# wrong constant name <static-init>
+# wrong constant name <static-init>
+# wrong constant name <Class:AttacherMethods>
+# wrong constant name recache
+# wrong constant name save
+# wrong constant name <static-init>
+# wrong constant name <static-init>
+# wrong constant name <Class:FileMethods>
+# wrong constant name refresh_metadata!
+# wrong constant name <static-init>
+# wrong constant name <static-init>
 # wrong constant name signm
 # wrong constant name signo
 # uninitialized constant SigninsController::ACTION_OPTIONS
@@ -16037,27 +16198,27 @@
 # uninitialized constant SortedSet::InspectKey
 # wrong constant name initialize
 # wrong constant name setup
-# uninitialized constant #<Class:0x00007f935ea11348>::ACTIONS
+# uninitialized constant #<Class:0x00007f9a8b485aa8>::ACTIONS
 # Did you mean?  SshKey::ACTIONS
-# uninitialized constant #<Class:0x00007f935ea11348>::CALLBACKS
+# uninitialized constant #<Class:0x00007f9a8b485aa8>::CALLBACKS
 # Did you mean?  SshKey::Callbacks
 #                SshKey::Callback
 #                SshKey::CALLBACKS
-# uninitialized constant #<Class:0x00007f935ea11348>::CALLBACK_FILTER_TYPES
+# uninitialized constant #<Class:0x00007f9a8b485aa8>::CALLBACK_FILTER_TYPES
 # Did you mean?  SshKey::CALLBACK_FILTER_TYPES
-# uninitialized constant #<Class:0x00007f935ea11348>::CALL_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f9a8b485aa8>::CALL_COMPILABLE_REGEXP
 # Did you mean?  SshKey::CALL_COMPILABLE_REGEXP
 # wrong constant name <Class:GeneratedAssociationMethods>
 # wrong constant name <Class:GeneratedAttributeMethods>
-# uninitialized constant #<Class:0x00007f935ea11348>::MAX_PASSWORD_LENGTH_ALLOWED
+# uninitialized constant #<Class:0x00007f9a8b485aa8>::MAX_PASSWORD_LENGTH_ALLOWED
 # Did you mean?  SshKey::MAX_PASSWORD_LENGTH_ALLOWED
-# uninitialized constant #<Class:0x00007f935ea11348>::NAME_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f9a8b485aa8>::NAME_COMPILABLE_REGEXP
 # Did you mean?  SshKey::NAME_COMPILABLE_REGEXP
-# uninitialized constant #<Class:0x00007f935ea11348>::RESTRICTED_CLASS_METHODS
+# uninitialized constant #<Class:0x00007f9a8b485aa8>::RESTRICTED_CLASS_METHODS
 # Did you mean?  SshKey::RESTRICTED_CLASS_METHODS
-# uninitialized constant #<Class:0x00007f935ea11348>::UNASSIGNABLE_KEYS
+# uninitialized constant #<Class:0x00007f9a8b485aa8>::UNASSIGNABLE_KEYS
 # Did you mean?  SshKey::UNASSIGNABLE_KEYS
-# uninitialized constant #<Class:0x00007f935ea11348>::VERSION
+# uninitialized constant #<Class:0x00007f9a8b485aa8>::VERSION
 # Did you mean?  SshKey::VERSION
 # wrong constant name autosave_associated_records_for_user
 # wrong constant name valid_without_database_validations?
@@ -16501,27 +16662,27 @@
 # wrong constant name round$1
 # wrong constant name to_s$1
 # wrong constant name <static-init>
-# uninitialized constant #<Class:0x00007f935df67b18>::ACTIONS
+# uninitialized constant #<Class:0x00007f9a823c9e60>::ACTIONS
 # Did you mean?  Topic::ACTIONS
-# uninitialized constant #<Class:0x00007f935df67b18>::CALLBACKS
+# uninitialized constant #<Class:0x00007f9a823c9e60>::CALLBACKS
 # Did you mean?  Topic::Callbacks
 #                Topic::Callback
 #                Topic::CALLBACKS
-# uninitialized constant #<Class:0x00007f935df67b18>::CALLBACK_FILTER_TYPES
+# uninitialized constant #<Class:0x00007f9a823c9e60>::CALLBACK_FILTER_TYPES
 # Did you mean?  Topic::CALLBACK_FILTER_TYPES
-# uninitialized constant #<Class:0x00007f935df67b18>::CALL_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f9a823c9e60>::CALL_COMPILABLE_REGEXP
 # Did you mean?  Topic::CALL_COMPILABLE_REGEXP
 # wrong constant name <Class:GeneratedAssociationMethods>
 # wrong constant name <Class:GeneratedAttributeMethods>
-# uninitialized constant #<Class:0x00007f935df67b18>::MAX_PASSWORD_LENGTH_ALLOWED
+# uninitialized constant #<Class:0x00007f9a823c9e60>::MAX_PASSWORD_LENGTH_ALLOWED
 # Did you mean?  Topic::MAX_PASSWORD_LENGTH_ALLOWED
-# uninitialized constant #<Class:0x00007f935df67b18>::NAME_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f9a823c9e60>::NAME_COMPILABLE_REGEXP
 # Did you mean?  Topic::NAME_COMPILABLE_REGEXP
-# uninitialized constant #<Class:0x00007f935df67b18>::RESTRICTED_CLASS_METHODS
+# uninitialized constant #<Class:0x00007f9a823c9e60>::RESTRICTED_CLASS_METHODS
 # Did you mean?  Topic::RESTRICTED_CLASS_METHODS
-# uninitialized constant #<Class:0x00007f935df67b18>::UNASSIGNABLE_KEYS
+# uninitialized constant #<Class:0x00007f9a823c9e60>::UNASSIGNABLE_KEYS
 # Did you mean?  Topic::UNASSIGNABLE_KEYS
-# uninitialized constant #<Class:0x00007f935df67b18>::VERSION
+# uninitialized constant #<Class:0x00007f9a823c9e60>::VERSION
 # Did you mean?  Topic::VERSION
 # wrong constant name name=
 # wrong constant name valid_without_database_validations?
@@ -16558,6 +16719,7 @@
 # wrong constant name encode
 # wrong constant name escape
 # wrong constant name unescape
+# wrong constant name buffer_open
 # wrong constant name set_typecode
 # wrong constant name typecode
 # wrong constant name typecode=
@@ -16751,6 +16913,7 @@
 # wrong constant name default_port
 # wrong constant name use_proxy?
 # wrong constant name use_registry
+# wrong constant name buffer_open
 # wrong constant name request_uri
 # wrong constant name attributes
 # wrong constant name attributes=
@@ -16802,137 +16965,6 @@
 # wrong constant name value
 # wrong constant name <static-init>
 # wrong constant name <static-init>
-# uninitialized constant #<Class:0x00007f935df968a0>::ACTIONS
-# Did you mean?  User::ACTIONS
-# uninitialized constant #<Class:0x00007f935df968a0>::CALLBACKS
-# Did you mean?  User::Callbacks
-#                User::Callback
-#                User::CALLBACKS
-# uninitialized constant #<Class:0x00007f935df968a0>::CALLBACK_FILTER_TYPES
-# Did you mean?  User::CALLBACK_FILTER_TYPES
-# uninitialized constant #<Class:0x00007f935df968a0>::CALL_COMPILABLE_REGEXP
-# Did you mean?  User::CALL_COMPILABLE_REGEXP
-# wrong constant name <Class:GeneratedAssociationMethods>
-# wrong constant name <Class:GeneratedAttributeMethods>
-# uninitialized constant #<Class:0x00007f935df968a0>::MAX_PASSWORD_LENGTH_ALLOWED
-# Did you mean?  User::MAX_PASSWORD_LENGTH_ALLOWED
-# uninitialized constant #<Class:0x00007f935df968a0>::NAME_COMPILABLE_REGEXP
-# Did you mean?  User::NAME_COMPILABLE_REGEXP
-# uninitialized constant #<Class:0x00007f935df968a0>::RESTRICTED_CLASS_METHODS
-# Did you mean?  User::RESTRICTED_CLASS_METHODS
-# uninitialized constant #<Class:0x00007f935df968a0>::UNASSIGNABLE_KEYS
-# Did you mean?  User::UNASSIGNABLE_KEYS
-# uninitialized constant #<Class:0x00007f935df968a0>::VERSION
-# Did you mean?  User::VERSION
-# wrong constant name after_add_for_images
-# wrong constant name after_add_for_images=
-# wrong constant name after_add_for_images?
-# wrong constant name after_add_for_posts
-# wrong constant name after_add_for_posts=
-# wrong constant name after_add_for_posts?
-# wrong constant name after_add_for_ssh_keys
-# wrong constant name after_add_for_ssh_keys=
-# wrong constant name after_add_for_ssh_keys?
-# wrong constant name after_remove_for_images
-# wrong constant name after_remove_for_images=
-# wrong constant name after_remove_for_images?
-# wrong constant name after_remove_for_posts
-# wrong constant name after_remove_for_posts=
-# wrong constant name after_remove_for_posts?
-# wrong constant name after_remove_for_ssh_keys
-# wrong constant name after_remove_for_ssh_keys=
-# wrong constant name after_remove_for_ssh_keys?
-# wrong constant name autosave_associated_records_for_images
-# wrong constant name autosave_associated_records_for_posts
-# wrong constant name autosave_associated_records_for_repository
-# wrong constant name autosave_associated_records_for_ssh_keys
-# wrong constant name avatar_blob
-# wrong constant name avatar_blob=
-# wrong constant name avatar_url
-# wrong constant name before_add_for_images
-# wrong constant name before_add_for_images=
-# wrong constant name before_add_for_images?
-# wrong constant name before_add_for_posts
-# wrong constant name before_add_for_posts=
-# wrong constant name before_add_for_posts?
-# wrong constant name before_add_for_ssh_keys
-# wrong constant name before_add_for_ssh_keys=
-# wrong constant name before_add_for_ssh_keys?
-# wrong constant name before_remove_for_images
-# wrong constant name before_remove_for_images=
-# wrong constant name before_remove_for_images?
-# wrong constant name before_remove_for_posts
-# wrong constant name before_remove_for_posts=
-# wrong constant name before_remove_for_posts?
-# wrong constant name before_remove_for_ssh_keys
-# wrong constant name before_remove_for_ssh_keys=
-# wrong constant name before_remove_for_ssh_keys?
-# wrong constant name drafts
-# wrong constant name initials
-# wrong constant name regenerate_auth_token
-# wrong constant name repo
-# wrong constant name valid_without_database_validations?
-# wrong constant name validate_associated_records_for_images
-# wrong constant name validate_associated_records_for_posts
-# wrong constant name validate_associated_records_for_repository
-# wrong constant name validate_associated_records_for_ssh_keys
-# wrong constant name build_repository
-# wrong constant name create_repository
-# wrong constant name create_repository!
-# wrong constant name image_ids
-# wrong constant name image_ids=
-# wrong constant name images
-# wrong constant name images=
-# wrong constant name post_ids
-# wrong constant name post_ids=
-# wrong constant name posts
-# wrong constant name posts=
-# wrong constant name reload_repository
-# wrong constant name repository
-# wrong constant name repository=
-# wrong constant name ssh_key_ids
-# wrong constant name ssh_key_ids=
-# wrong constant name ssh_keys
-# wrong constant name ssh_keys=
-# wrong constant name <static-init>
-# wrong constant name <static-init>
-# wrong constant name <static-init>
-# wrong constant name after_add_for_images
-# wrong constant name after_add_for_images=
-# wrong constant name after_add_for_images?
-# wrong constant name after_add_for_posts
-# wrong constant name after_add_for_posts=
-# wrong constant name after_add_for_posts?
-# wrong constant name after_add_for_ssh_keys
-# wrong constant name after_add_for_ssh_keys=
-# wrong constant name after_add_for_ssh_keys?
-# wrong constant name after_remove_for_images
-# wrong constant name after_remove_for_images=
-# wrong constant name after_remove_for_images?
-# wrong constant name after_remove_for_posts
-# wrong constant name after_remove_for_posts=
-# wrong constant name after_remove_for_posts?
-# wrong constant name after_remove_for_ssh_keys
-# wrong constant name after_remove_for_ssh_keys=
-# wrong constant name after_remove_for_ssh_keys?
-# wrong constant name before_add_for_images
-# wrong constant name before_add_for_images=
-# wrong constant name before_add_for_images?
-# wrong constant name before_add_for_posts
-# wrong constant name before_add_for_posts=
-# wrong constant name before_add_for_posts?
-# wrong constant name before_add_for_ssh_keys
-# wrong constant name before_add_for_ssh_keys=
-# wrong constant name before_add_for_ssh_keys?
-# wrong constant name before_remove_for_images
-# wrong constant name before_remove_for_images=
-# wrong constant name before_remove_for_images?
-# wrong constant name before_remove_for_posts
-# wrong constant name before_remove_for_posts=
-# wrong constant name before_remove_for_posts?
-# wrong constant name before_remove_for_ssh_keys
-# wrong constant name before_remove_for_ssh_keys=
-# wrong constant name before_remove_for_ssh_keys?
 # uninitialized constant UserDraftsController::ACTION_OPTIONS
 # uninitialized constant UserDraftsController::AUTHENTICITY_TOKEN_LENGTH
 # uninitialized constant UserDraftsController::CALLBACK_FILTER_TYPES
@@ -16951,6 +16983,12 @@
 # uninitialized constant UserDraftsController::URL_OPTIONS
 # uninitialized constant UserDraftsController::VERSION
 # wrong constant name index
+# wrong constant name <static-init>
+# uninitialized constant UserMailer::CALLBACK_FILTER_TYPES
+# uninitialized constant UserMailer::DEFAULT_PROTECTED_INSTANCE_VARIABLES
+# uninitialized constant UserMailer::PROTECTED_IVARS
+# wrong constant name send_magic_login
+# wrong constant name welcome
 # wrong constant name <static-init>
 # uninitialized constant UsersController::ACTION_OPTIONS
 # uninitialized constant UsersController::AUTHENTICITY_TOKEN_LENGTH
@@ -17096,6 +17134,7 @@
 # wrong constant name ungetc
 # wrong constant name unused
 # wrong constant name <static-init>
+# wrong constant name open
 # wrong constant name <<
 # wrong constant name comment=
 # wrong constant name flush
@@ -17106,6 +17145,7 @@
 # wrong constant name tell
 # wrong constant name write
 # wrong constant name <static-init>
+# wrong constant name open
 # wrong constant name <<
 # wrong constant name add_dictionary
 # wrong constant name inflate

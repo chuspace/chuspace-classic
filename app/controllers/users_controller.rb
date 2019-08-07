@@ -12,15 +12,7 @@ class UsersController < ApplicationController
 
   def update
     @user = Current.user
-    @user.assign_attributes(update_params.except(:avatar))
-    avatar = params[:user][:avatar]
-
-    if avatar && @user.valid?
-      @user.avatar_blob = avatar.tempfile
-      S3Service.upload(io: avatar.read, filename: avatar.original_filename)
-      @user.avatar = avatar.original_filename
-      @user.avatar_blob = nil
-    end
+    @user.assign_attributes(update_params)
 
     if @user.save
       flash[:notice] = 'Profile successfully updated'

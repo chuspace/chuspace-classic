@@ -9,3 +9,5 @@ Imgproxy.configure do |config|
   # Hex-encoded signature salt
   config.hex_salt = ENV.fetch('IMGPROXY_SALT')
 end
+
+Imgproxy.extend_shrine!(host: ENV.fetch('CHUSPACE_URL'))

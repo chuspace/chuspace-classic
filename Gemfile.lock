@@ -133,6 +133,7 @@ GEM
     commonmarker (0.20.1)
       ruby-enum (~> 0.5)
     concurrent-ruby (1.1.5)
+    content_disposition (1.0.0)
     coveralls (0.8.23)
       json (>= 1.8, < 3)
       simplecov (~> 0.16.1)
@@ -153,6 +154,8 @@ GEM
     dotenv-rails (2.7.5)
       dotenv (= 2.7.5)
       railties (>= 3.2, < 6.1)
+    down (4.8.1)
+      addressable (~> 2.5)
     dry-initializer (3.0.1)
     easymon (1.4.2)
       redis
@@ -162,6 +165,7 @@ GEM
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     fastimage (2.1.5)
+    ffi (1.11.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     google-protobuf (3.9.0)
@@ -173,6 +177,9 @@ GEM
     hiredis (0.6.3)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
+    image_processing (1.9.2)
+      mini_magick (>= 4.9.5, < 5)
+      ruby-vips (>= 2.0.13, < 3)
     imgproxy (1.0.2)
     jaro_winkler (1.5.3)
     jmespath (1.4.0)
@@ -189,6 +196,7 @@ GEM
       mimemagic (~> 0.3.2)
     method_source (0.9.2)
     mimemagic (0.3.3)
+    mini_magick (4.9.5)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minitest (5.11.3)
@@ -279,6 +287,8 @@ GEM
     ruby-kafka (0.7.9)
       digest-crc
     ruby-progressbar (1.10.1)
+    ruby-vips (2.0.14)
+      ffi (~> 1.9)
     rubyzip (1.2.3)
     rugged (0.28.2)
     sawyer (0.8.2)
@@ -287,6 +297,9 @@ GEM
     selenium-webdriver (3.142.3)
       childprocess (>= 0.5, < 2.0)
       rubyzip (~> 1.2, >= 1.2.2)
+    shrine (2.19.2)
+      content_disposition (~> 1.0)
+      down (~> 4.1)
     simple_form (4.1.0)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
@@ -372,6 +385,7 @@ DEPENDENCIES
   faker
   fastimage
   hiredis
+  image_processing
   imgproxy
   logidze
   mini_mime
@@ -392,8 +406,10 @@ DEPENDENCIES
   rspec_junit_formatter
   rubocop
   rubocop-performance
+  ruby-vips
   rugged
   selenium-webdriver
+  shrine
   simple_form
   simplecov
   simplecov-lcov

@@ -20,6 +20,9 @@ gem 'aws-sdk-s3'
 gem 'imgproxy'
 gem 'mini_mime'
 gem 'fastimage'
+gem 'image_processing'
+gem 'ruby-vips'
+gem 'shrine'
 
 # Logging
 gem 'logidze'
