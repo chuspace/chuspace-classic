@@ -7,7 +7,7 @@ module Authentication
   included { before_action :authenticate }
 
   def login(user)
-    cookies.encrypted[:user_id] = { value: user.id, expires: 1.year.from_now, domain: :all }
+    cookies.encrypted[:user_id] = { value: user.id, expires: 1.year.from_now, domain: :all, secure: Rails.env.production? }
     user.update_tracked_fields!(request)
     user.regenerate_auth_token
     user
