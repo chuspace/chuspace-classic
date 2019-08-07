@@ -5,7 +5,7 @@ require "dotenv"
 require "./mobius/auth.cr"
 require "./mobius/shell.cr"
 
-Dotenv.load!(ENV.fetch("CHUSPACE_PATH", "/home/chuspace/chuspace.com/current"))
+Dotenv.load!(ENV.fetch("CHUSPACE_ENV_FILE_PATH", "/home/chuspace/chuspace.com/current/.env"))
 
 module Mobius
   VERSION = "0.1.0"
