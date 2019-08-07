@@ -7,14 +7,14 @@ module Authentication
   included { before_action :authenticate }
 
   def login(user)
-    cookies.encrypted[:user_id] = { value: user.id, expires: 1.year.from_now }
+    cookies.encrypted[:user_id] = { value: user.id, expires: 1.year.from_now, domain: %w(chuspace.com websockets.chuspace.com), secure: Rails.env.production? }
     user.update_tracked_fields!(request)
     user.regenerate_auth_token
     user
   end
 
   def logout
-    cookies.delete(:user_id)
+    cookies.delete(:user_id, domain: %w(chuspace.com websockets.chuspace.com))
   end
 
   private
