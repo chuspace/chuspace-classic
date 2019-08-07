@@ -14,7 +14,7 @@ module Authentication
   end
 
   def logout
-    cookies.encrypted[:user_id] = nil
+    cookies.delete(:user_id, domain: :all)
   end
 
   private
