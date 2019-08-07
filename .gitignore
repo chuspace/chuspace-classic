@@ -39,10 +39,6 @@ rspec_failures.txt
 authorized_keys.lock
 tags
 
-# git
-git-storage
-repositories
-
 # Openssh
 openssh/ssh_host*
 openssh/sshd_config
