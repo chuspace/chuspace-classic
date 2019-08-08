@@ -4,7 +4,7 @@ module Mobius
     class RepositoryNotFound < Exception; end
 
     GIT_COMMANDS = %w(git-upload-pack git-receive-pack git-upload-archive)
-    BINARY = "/etc/chuspace/mobius shell"
+    BINARY = "/etc/git/mobius shell"
     GIT_PROTOCOL = "ssh"
 
     def self.call(user : String)

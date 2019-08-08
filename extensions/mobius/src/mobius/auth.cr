@@ -1,7 +1,7 @@
 
 module Mobius
   class Auth
-    BINARY = "/etc/chuspace/mobius auth"
+    BINARY = "/etc/git/mobius auth"
 
     def self.call(key : String)
       begin
