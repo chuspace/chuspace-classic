@@ -66,5 +66,6 @@ deploy do
   run 'core:log_revision'
   run 'chuspace:copy_env_vars'
   run 'chuspace:copy_sshd_config'
+  run 'chuspace:compile_mobius'
   run 'chuspace:restart_puma_and_anycable'
 end

@@ -5,6 +5,10 @@ def copy_env_vars
   remote.write text: env_vars, to: "#{paths.current}/.env"
 end
 
+def compile_mobius
+  remote.run "cd #{paths.current} && bundle exec rails chuspace:setup"
+end
+
 def copy_sshd_config
   remote.run "cp #{paths.current}/openssh/sshd_config.example #{paths.current}/openssh/sshd_config"
 end

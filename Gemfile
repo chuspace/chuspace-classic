@@ -17,7 +17,7 @@ gem 'activerecord-clean-db-structure'
 
 # File uploads
 gem 'aws-sdk-s3'
-gem 'imgproxy'
+gem 'imgproxy', github: 'gauravtiwari/imgproxy.rb', branch: 'patch-1'
 gem 'mini_mime'
 gem 'fastimage'
 gem 'image_processing'
