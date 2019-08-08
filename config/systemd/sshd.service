@@ -4,9 +4,9 @@ After=network.target auditd.service
 ConditionPathExists=!/etc/ssh/sshd_not_to_be_run
 
 [Service]
-EnvironmentFile=/home/chuspace/chuspace.com/current/.env
-ExecStart=/usr/sbin/sshd -e -D -f /home/chuspace/chuspace.com/current/openssh/sshd_config
-ExecReload=/usr/sbin/sshd -e -D -f /home/chuspace/chuspace.com/current/openssh/sshd_config
+EnvironmentFile=/home/git/chuspace.com/current/.env
+ExecStart=/usr/sbin/sshd -e -D -f /home/git/chuspace.com/current/openssh/sshd_config
+ExecReload=/usr/sbin/sshd -e -D -f /home/git/chuspace.com/current/openssh/sshd_config
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=on-failure

@@ -10,10 +10,10 @@ plugin 'rbenv'
 plugin 'nodenv'
 plugin './plugins/chuspace.rb'
 
-host 'chuspace@chuspace.com', port: 40423
+host 'git@chuspace.com', port: 40423
 
 set application: 'chuspace'
-set deploy_to: '/home/chuspace/chuspace.com'
+set deploy_to: '/home/git/chuspace.com'
 set nodenv_node_version: '10.16.0'
 set nodenv_yarn_version: '1.17.3'
 set rbenv_ruby_version: '2.6.3'

@@ -2,7 +2,7 @@
 HostKey /etc/ssh/ssh_host_rsa_key
 
 AuthorizedKeysCommandUser git
-AuthorizedKeysCommand /etc/chuspace/mobius auth %k
+AuthorizedKeysCommand /etc/git/mobius auth %k
 AuthorizedKeysFile none
 
 AllowUsers git
@@ -22,4 +22,4 @@ Protocol 2
 StrictModes yes
 UsePAM no
 
-PidFile /home/chuspace/chuspace.com/shared/sshd.pid
+PidFile /home/git/chuspace.com/shared/sshd.pid

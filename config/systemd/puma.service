@@ -1,13 +1,13 @@
 [Unit]
 Description=Puma HTTP Server
 After=network.target
-Requires=/home/chuspace/.config/systemd/user/puma.socket
+Requires=/home/git/.config/systemd/user/puma.socket
 
 [Service]
 Type=simple
-WorkingDirectory=/home/chuspace/chuspace.com/current
-EnvironmentFile=/home/chuspace/chuspace.com/current/.env
-ExecStart=/home/chuspace/.rbenv/bin/rbenv exec bundle exec puma -C /home/chuspace/chuspace.com/current/config/puma.rb
+WorkingDirectory=/home/git/chuspace.com/current
+EnvironmentFile=/home/git/chuspace.com/current/.env
+ExecStart=/home/git/.rbenv/bin/rbenv exec bundle exec puma -C /home/git/chuspace.com/current/config/puma.rb
 Restart=always
 
 [Install]

@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/home/chuspace/bin/imgproxy
+ExecStart=/home/git/bin/imgproxy
 Restart=always
-EnvironmentFile=/home/chuspace/chuspace.com/current/.env
+EnvironmentFile=/home/git/chuspace.com/current/.env
 [Install]
 WantedBy=multi-user.target
