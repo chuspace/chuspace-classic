@@ -23,7 +23,7 @@ Shrine.plugin :determine_mime_type
      access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID'),
      secret_access_key: ENV.fetch('AWS_SECRET_ACCESS_KEY'),
      region: ENV.fetch('AWS_REGION'),
-     bucket: 'chuspace-user-avatars'
+     bucket: ENV.fetch('AWS_S3_BUCKET')
    }
 
   {
