@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/gauravtiwari/imgproxy.rb.git
-  revision: 2fd6f4fa96dc54b6d5c54cfe7c9ba0bdc96ab85a
+  revision: bfde4dcd46b1784e5d3b034c96e6d6e2b7ad58cf
   branch: patch-1
   specs:
     imgproxy (1.0.2)
