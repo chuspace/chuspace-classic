@@ -10,4 +10,4 @@ Imgproxy.configure do |config|
   config.hex_salt = ENV.fetch('IMGPROXY_SALT')
 end
 
-Imgproxy.extend_shrine!(host: ENV.fetch('CHUSPACE_URL'))
+Imgproxy.extend_shrine!
