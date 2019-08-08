@@ -16,10 +16,7 @@ class AvatarUploader < Shrine
   plugin :cached_attachment_data
   plugin :instrumentation
   plugin :recache
-
-  if Rails.env.production?
-    plugin :default_url_options, store: { host: ENV.fetch('AVATAR_ENDPOINT') }
-  end
+  plugin :default_url_options, store: { host: ENV.fetch('AVATAR_ENDPOINT') }
 
   Attacher.validate do
     validate_max_size 5.megabytes, message: 'is too large (max is 5 MB)'

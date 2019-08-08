@@ -131,6 +131,7 @@ class Repository < ApplicationRecord
   def create_git_repo
     Rails.logger.info "Creating repository <#{name}> at <#{path}>."
     FileUtils.mkdir_p(path, mode: 0o770)
+    FileUtils.chown_R(nil, Git.config.ssh_user, path)
 
     repo = Rugged::Repository.init_at(path, :bare)
     repo.config['user.name'] = author.name
