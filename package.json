@@ -50,7 +50,7 @@
     "dialog-polyfill": "^0.5.0",
     "diff-match-patch": "^1.0.4",
     "flow-bin": "^0.104.0",
-    "graphql": "14.4.2",
+    "graphql": "0.13.0",
     "graphql-language-service-parser": "^1.2.2",
     "highlight.js": "^9.15.9",
     "is-url": "^1.2.4",

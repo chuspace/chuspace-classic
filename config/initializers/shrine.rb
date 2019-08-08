@@ -8,6 +8,7 @@ require 'shrine/plugins/delete_raw'
 require 'shrine/storage/s3'
 require 'shrine/storage/file_system'
 require 'shrine/plugins/instrumentation'
+require 'shrine/plugins/default_url_options'
 require 'shrine/plugins/determine_mime_type'
 require 'shrine/plugins/store_dimensions'
 require 'shrine/plugins/cached_attachment_data'
@@ -28,7 +29,7 @@ Shrine.plugin :determine_mime_type
 
   {
     cache: Shrine::Storage::FileSystem.new('public/uploads', prefix: 'avatars/cache'),
-    store: Shrine::Storage::S3.new(prefix: 'avatars/store', host: ENV.fetch('AVATAR_ENDPOINT'), upload_options: { acl: 'public-read' }, **s3_options)
+    store: Shrine::Storage::S3.new(prefix: 'avatars/store', upload_options: { acl: 'public-read' }, **s3_options)
   }
 end
 
