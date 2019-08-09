@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 WorkingDirectory=/home/git/chuspace.com/current
 EnvironmentFile=/home/git/chuspace.com/current/.env
-ExecStart=/home/git/.rbenv/bin/rbenv exec bundle exec anycable
+ExecStart=/usr/bin/rbenv exec bundle exec anycable
 Restart=always
 
 [Install]

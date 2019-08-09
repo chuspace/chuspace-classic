@@ -43,7 +43,6 @@ setup do
   run 'git:create_release'
   run 'core:symlink_shared'
   run 'nodenv:install'
-  run 'rbenv:install'
   run 'bundler:upgrade_bundler'
   run 'bundler:install'
   run 'rails:db_create'

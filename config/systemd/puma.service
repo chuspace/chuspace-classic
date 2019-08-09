@@ -7,7 +7,7 @@ Requires=/home/git/.config/systemd/user/puma.socket
 Type=simple
 WorkingDirectory=/home/git/chuspace.com/current
 EnvironmentFile=/home/git/chuspace.com/current/.env
-ExecStart=/home/git/.rbenv/bin/rbenv exec bundle exec puma -C /home/git/chuspace.com/current/config/puma.rb
+ExecStart=/usr/bin/rbenv exec bundle exec puma -C /home/git/chuspace.com/current/config/puma.rb
 Restart=always
 
 [Install]
