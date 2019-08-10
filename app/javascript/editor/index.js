@@ -42,6 +42,7 @@ type Options = {
   autoFocus: boolean,
   element: HTMLElement,
   original: string,
+  imageProviderPath: string,
   content: string,
   editable: boolean,
   onChange: () => void
@@ -244,6 +245,7 @@ export default class Editor {
     const view = new EditorView(this.element, {
       state: this.state,
       editable: () => !!this.options.editable,
+      imageProviderPath: this.options.imageProviderPath,
       dispatchTransaction: this.dispatchTransaction.bind(this),
       nodeViews
     })

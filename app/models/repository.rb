@@ -44,6 +44,10 @@ class Repository < ApplicationRecord
   delegate :lookup, :checkout, :empty?, :bare?, :index, :branches, to: :rugged
   delegate :tree, to: :commit
 
+  def to_param
+    name
+  end
+
   def rugged
     @rugged ||= Rugged::Repository.bare(path)
   rescue Rugged::RepositoryError, Rugged::OSError

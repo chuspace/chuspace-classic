@@ -108,7 +108,7 @@ export default class Image extends Node {
 
                 Rails.ajax({
                   type: 'POST',
-                  url: '/images',
+                  url: view.props.imageProviderPath,
                   data: formData,
                   success: data => {
                     const node = schema.nodes.image.create({

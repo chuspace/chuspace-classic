@@ -21,6 +21,7 @@ export default class ChuEditor extends LitElement {
       content: { type: String },
       channel: { type: String },
       editable: { type: Boolean },
+      imageProviderPath: { type: String },
       saving: { type: Boolean, reflect: true },
       autofocus: { type: Boolean }
     }
@@ -37,11 +38,11 @@ export default class ChuEditor extends LitElement {
 
   async connectedCallback() {
     await super.connectedCallback()
-
     this.editor = new Editor({
       element: this,
       autoFocus: this.autofocus,
       editable: this.editable,
+      imageProviderPath: this.imageProviderPath,
       placeholder: 'Write your post',
       onChange: this.onChange,
       original: this.original,

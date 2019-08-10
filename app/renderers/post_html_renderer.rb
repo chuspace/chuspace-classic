@@ -57,7 +57,8 @@ class PostHtmlRenderer < CommonMarker::HtmlRenderer
       blob = Current.user.repository.blob_at(path: blob_path)
 
       if blob.persisted?
-        image_url = Imgproxy.url_for(blob.path, width: 800, resizing_type: :fill)
+        blob_url = URI::join(ENV.fetch('CHUSPACE_URL'), blob.repository.full_name, blob.path)
+        image_url = Imgproxy.url_for(blob_url, width: 800, resizing_type: :fill)
       end
 
       out('<img src="', escape_href(image_url), '"')
