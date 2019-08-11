@@ -15,21 +15,19 @@ Rails.application.routes.draw do
     resources :topics, only: :index
   end
 
-  resources :users, path: 'u', param: :nickname, except: %i[new create] do
-    resources :drafts, only: :index, controller: :user_drafts
+  scope :me do
+    resources :settings, only: :index
+    namespace :settings do
+      resources :profiles, path: 'profile', only: %i[index]
+      resources :ssh_keys, path: 'ssh', except: %i[show update]
+      resources :repositories, path: 'repository', only: :index
+    end
   end
 
-  resources :posts, path: 'p', param: :slug do
+  resources :images, only: %i[create show destroy]
+
+  resources :posts, path: 'p', param: :slug, only: %i[new index create edit] do
     resources :publish, only: %i[index create], module: 'posts'
-  end
-
-  resources :images, only: %i[create destroy]
-  resources :settings, only: :index
-
-  namespace :settings do
-    resources :profiles, path: 'profile', only: %i[index]
-    resources :ssh_keys, path: 'ssh', except: %i[show update]
-    resources :repositories, path: 'repository', only: :index
   end
 
   namespace :mobius do
@@ -38,6 +36,9 @@ Rails.application.routes.draw do
 
   mount Easymon::Engine => '/alive' if Rails.env.production?
 
-  # Image catch all route
-  get '*path', format: false, to: 'images#show', constraints: ImageConstraint.new
+  resources :users, path: '', param: :nickname, only: %i[show update destroy] do
+    resources :drafts, only: :index, controller: :user_drafts
+    resources :posts, path: '', param: :slug, only: %i[show destroy]
+    resources :repositories, path: '', param: :slug, only: :show, format: :git
+  end
 end

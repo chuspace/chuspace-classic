@@ -259,6 +259,18 @@ CREATE TABLE public.ar_internal_metadata (
     updated_at timestamp(6) without time zone NOT NULL
 );
 
+-- Name: images; Type: TABLE
+
+CREATE TABLE public.images (
+    id BIGSERIAL PRIMARY KEY,
+    name character varying,
+    image_data jsonb,
+    blob_path character varying,
+    repository_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
 -- Name: posts; Type: TABLE
 
 CREATE TABLE public.posts (
@@ -350,6 +362,18 @@ ALTER TABLE ONLY public.ar_internal_metadata
 ALTER TABLE ONLY public.schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
 
+-- Name: index_images_on_repository_id; Type: INDEX
+
+CREATE INDEX index_images_on_repository_id ON public.images USING btree (repository_id);
+
+-- Name: index_images_on_repository_id_and_blob_path; Type: INDEX
+
+CREATE UNIQUE INDEX index_images_on_repository_id_and_blob_path ON public.images USING btree (repository_id, blob_path);
+
+-- Name: index_images_on_repository_id_and_name; Type: INDEX
+
+CREATE UNIQUE INDEX index_images_on_repository_id_and_name ON public.images USING btree (repository_id, name);
+
 -- Name: index_posts_on_ancestry; Type: INDEX
 
 CREATE INDEX index_posts_on_ancestry ON public.posts USING btree (ancestry);
@@ -439,6 +463,11 @@ CREATE TRIGGER logidze_on_posts BEFORE INSERT OR UPDATE ON public.posts FOR EACH
 ALTER TABLE ONLY public.posts
     ADD CONSTRAINT fk_rails_04d13ef8c7 FOREIGN KEY (author_id) REFERENCES public.users(id);
 
+-- Name: images fk_rails_5fba8ffc00; Type: FK CONSTRAINT
+
+ALTER TABLE ONLY public.images
+    ADD CONSTRAINT fk_rails_5fba8ffc00 FOREIGN KEY (repository_id) REFERENCES public.repositories(id);
+
 -- Name: repositories fk_rails_73e1e26d06; Type: FK CONSTRAINT
 
 ALTER TABLE ONLY public.repositories
@@ -467,5 +496,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190706110353'),
 ('20190709114321'),
 ('20190709114322'),
-('20190709114442');
+('20190709114442'),
+('20190810174245');
 

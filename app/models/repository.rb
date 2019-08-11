@@ -11,8 +11,8 @@ class Repository < ApplicationRecord
   DEFAULT_BRANCH = 'master'
   GLOBAL_HOOKS_DIRECTORY = Rails.root.join('bin', 'git-hooks')
   GITIGNORE_PATH = '.gitignore'
-  IMAGES_ROOT = 'images'
-  POSTS_ROOT = 'posts'
+  IMAGES_ROOT_PATH = 'images'
+  POSTS_ROOT_PATH = 'posts'
 
   GITIGNORE = <<~STRING
     # Ignore everything
@@ -21,7 +21,9 @@ class Repository < ApplicationRecord
     !.gitignore
     !/posts
     !/posts/*.md
+    !/posts/.keep
     !/images
+    !/images/.keep
     !/images/*.png
     !/images/*.gif
     !/images/*.jpeg
@@ -43,6 +45,8 @@ class Repository < ApplicationRecord
 
   delegate :lookup, :checkout, :empty?, :bare?, :index, :branches, to: :rugged
   delegate :tree, to: :commit
+
+  has_many :images, dependent: :destroy
 
   def to_param
     name
@@ -170,12 +174,12 @@ class Repository < ApplicationRecord
   end
 
   def add_images_folder
-    path = File.join(IMAGES_ROOT, '.keep')
+    path = File.join(IMAGES_ROOT_PATH, '.keep')
     create_blob(path: path, content: '', commit_message: 'Add images folder')
   end
 
   def add_posts_folder
-    path = File.join(POSTS_ROOT, '.keep')
+    path = File.join(POSTS_ROOT_PATH, '.keep')
     create_blob(path: path, content: '', commit_message: 'Add posts folder')
   end
 

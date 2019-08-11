@@ -1,7 +1,7 @@
 require "dotenv"
 require "http/client"
 
-Dotenv.load!(ENV.fetch("CHUSPACE_ENV_FILE_PATH", "/home/git/chuspace.com/current/.env"))
+Dotenv.load!(ENV.fetch("CHUSPACE_ENV_FILE_PATH", "/Users/gaurav/personal/chuspace/.env"))
 
 module Mobius
   module Hooks

@@ -2,9 +2,9 @@
 
 # typed: false
 
-class AvatarUploader < AppUploader
-  plugin :pretty_location, identifier: :nickname
-  plugin :default_url_options, store: { host: ENV.fetch('AVATAR_ENDPOINT') }
+class ImageUploader < AppUploader
+  plugin :pretty_location
+  plugin :default_url_options, store: { host: ENV.fetch('REPOSITORY_ENDPOINT') }
 
   Attacher.validate do
     validate_max_size 5.megabytes, message: 'is too large (max is 5 MB)'
@@ -14,6 +14,6 @@ class AvatarUploader < AppUploader
   def generate_location(io, context)
     name = super
 
-    [User::AVATAR_ROOT_PATH, name].compact.join('/')
+    [Image::UPLOAD_PATH, name].compact.join('/')
   end
 end

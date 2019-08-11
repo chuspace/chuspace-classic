@@ -24,7 +24,7 @@ class PostsController < ApplicationController
     Post.transaction do
       markdown = PostMarkdownService.call(content: post_params[:body])
       slug = markdown.title&.to_slug&.to_ascii&.normalize&.to_s
-      blob_path = File.join(Repository::POSTS_ROOT, "#{slug}.md")
+      blob_path = "#{slug}.md"
       blob = Current.user.repository.create_blob(path: blob_path, content: markdown.content)
 
       if blob.persisted?

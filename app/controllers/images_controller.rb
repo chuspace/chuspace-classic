@@ -3,26 +3,26 @@
 
 class ImagesController < ApplicationController
   before_action :authenticate!, only: :create
-  before_action :find_user_and_repository
   before_action :find_image, only: :show
 
   def create
     image_blob = params[:image]
     name = image_blob.original_filename.to_slug&.to_ascii&.to_s
-    blob_path = File.join('images', name)
-    blob = @repository.create_blob(path: blob_path, content: image_blob.read)
+    blob = Current.user.repository.create_blob(path: name, content: image_blob.read)
+    image = Current.user.repository.images.find_or_initialize_by(name: name)
+    image.assign_attributes(image: image_blob, blob_path: blob.path)
 
-    if blob.persisted?
-      render json: { created: true, url: File.join('/', @repository.full_name, blob_path) }
+    if blob.persisted? && image.save
+      render json: { created: true, url: blob.absolute_path }
     else
-      render json: { message: blob.errors.full_messages.to_sentence, created: false }, status: :unprocessable_entity
+      render json: { message: image.errors.full_messages.to_sentence, created: false }, status: :unprocessable_entity
     end
   end
 
   def show
     if @image
       expires_in 1.year, public: true
-      send_data @image.content
+      send_data @image.blob.io.read
     else
       raise ActionController::RoutingError.new('Not Found')
     end
@@ -30,12 +30,7 @@ class ImagesController < ApplicationController
 
   private
 
-  def find_user_and_repository
-    @user = User.includes(:repository).find_by(nickname: params[:user_nickname])
-    @repository = @user.repository
-  end
-
   def find_image
-    @image = @repository.blob_at(path: "images/#{params[:path]}.#{params[:format]}")
+    @image = Image.find_by(name: params[:id])
   end
 end

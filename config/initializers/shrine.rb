@@ -28,15 +28,15 @@ Shrine.plugin :determine_mime_type
    }
 
   {
-    cache: Shrine::Storage::FileSystem.new('public/uploads', prefix: 'avatars/cache'),
-    store: Shrine::Storage::S3.new(prefix: 'avatars/store', upload_options: { acl: 'public-read' }, **s3_options)
+    cache: Shrine::Storage::FileSystem.new('public', prefix: 'uploads'),
+    store: Shrine::Storage::S3.new(prefix: 'uploads', upload_options: { acl: 'public-read' }, **s3_options)
   }
 end
 
  def development_storages
    {
-     cache: Shrine::Storage::FileSystem.new('public', prefix: 'avatars/cache'),
-     store: Shrine::Storage::FileSystem.new('public', prefix: 'avatars/store'),
+     cache: Shrine::Storage::FileSystem.new('public', prefix: 'uploads'),
+     store: Shrine::Storage::FileSystem.new('public', prefix: 'uploads'),
    }
 end
 

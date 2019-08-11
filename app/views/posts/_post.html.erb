@@ -1,6 +1,6 @@
 <%= content_tag :div, class: 'list__item list__item--bordered' do %>
   <article>
-    <%= link_to post_path(post) do %>
+    <%= link_to user_post_path(post.author, post) do %>
       <div class='header'>
         <h4><%= post.title %></h4>
         <%= content_tag :p, post.summary, class: 'text-grey tracking-normal text-sm leading-normal mt-2' %>

@@ -25,7 +25,7 @@ class Posts::PublishController < ApplicationController
     end
 
     if @post.save
-      redirect_to post_path(@post)
+      redirect_to user_post_path(@post.author, @post)
     else
       render :index
     end
