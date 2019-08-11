@@ -9,11 +9,10 @@ class ImagesController < ApplicationController
   def create
     image_blob = params[:image]
     name = image_blob.original_filename.to_slug&.to_ascii&.to_s
-    blob_path = File.join('images', name)
-    blob = @repository.create_blob(path: blob_path, content: image_blob.read)
+    blob = @repository.create_blob(path: name, content: image_blob.read)
 
     if blob.persisted?
-      render json: { created: true, url: File.join('/', @repository.full_name, blob_path) }
+      render json: { created: true, url: blob.path }
     else
       render json: { message: blob.errors.full_messages.to_sentence, created: false }, status: :unprocessable_entity
     end
