@@ -1,11 +1,11 @@
 <%= simple_form_for @user, remote: true do |f| %>
-  <div class='flex'>
-    <div class='avatar w-1/3 mt-8'>
+  <div class='block sm:flex'>
+    <div class='avatar w-full sm:w-1/3 mt-8'>
       <%= component 'avatar', avatar: @user.avatar, initials: @user.initials, variant: :xl, css_class: 'mx-auto' %>
       <%= f.input :avatar, as: :file, label: false %>
     </div>
 
-    <div class='form w-2/3'>
+    <div class='form w-full sm:w-2/3'>
       <%= f.input :name, placeholder: 'Your name', autofocus: true %>
       <%= f.input :bio, placeholder: 'Bio', input_html: { data: { gramm: false } } %>
       <%= f.input :url, placeholder: 'Website' %>

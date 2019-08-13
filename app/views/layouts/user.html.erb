@@ -4,13 +4,12 @@
   <body>
     <%= render 'layouts/header' %>
 
-    <div class='content w-1/2 mx-auto'>
-      <div class='pt-16'>
-        <div class='flex justify-between items-center mb-5'>
-          <%= component 'avatar', avatar: @user.avatar, initials: @user.initials, variant: :xl %>
-
+    <div class='container content w-full sm:w-1/2 mx-auto'>
+      <div class='mt-12'>
+        <div class='block text-center sm:text-left sm:flex justify-between items-center mb-5'>
+          <%= component 'avatar', avatar: @user.avatar, initials: @user.initials, variant: :xl, css_class: 'mx-auto sm:mx-0' %>
           <div class='flex-1 pl-4 w-75'>
-            <h3><%= @user.name %></h3>
+            <h3 class='mt-4 sm:mt-0'><%= @user.name %></h3>
 
             <%= content_tag :p, @user.bio, class: 'text-sm mt-1' unless @user.bio.blank? %>
 
@@ -25,7 +24,7 @@
             </ul>
           </div>
 
-          <%= link_to 'Edit profile', settings_profiles_path, class: 'button button--active inline-block'%>
+          <%= link_to 'Edit profile', settings_profiles_path, class: 'button button--active inline-block mt-4 sm:mt-0'%>
         </div>
 
         <div class='posts mt-12'>

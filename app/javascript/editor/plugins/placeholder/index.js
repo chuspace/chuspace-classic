@@ -10,9 +10,9 @@ export default class Placeholder extends Element {
   name = 'placeholder'
 
   options = {
-    h1Class: 'title__label',
-    h2Class: 'summary__label',
-    paragraphClass: 'body__label',
+    h1Class: 'title title__label',
+    h2Class: 'summary summary__label',
+    paragraphClass: 'body body__label',
     h1Text: 'Title',
     h2Text: 'Summary',
     paragraphText: 'Write your post here...'

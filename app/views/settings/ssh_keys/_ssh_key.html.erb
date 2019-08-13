@@ -6,7 +6,7 @@
     </small>
     <small><%= ssh_key.last_used ? "Last used #{distance_of_time_in_words_to_now(ssh_key.last_used)} ago" : 'Never used'  %></small>
   </div>
-  <code><%= ssh_key.fingerprint %></code>
+  <code class='break-all'><%= ssh_key.fingerprint %></code>
   <%= link_to(
     'Delete',
     settings_ssh_key_path(ssh_key),

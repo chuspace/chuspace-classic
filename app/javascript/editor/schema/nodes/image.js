@@ -68,6 +68,28 @@ export default class Image extends Node {
 
   get plugins() {
     return [
+      // new Plugin({
+      //   key: new PluginKey('image-remove'),
+      //   filterTransaction(tr, state) {
+      //     console.log(tr)
+      //     console.log(state)
+
+      //     console.log(tr.before.resolve(845))
+
+      //     // Rails.ajax({
+      //     //   type: 'DELETE',
+      //     //   url: this.node.attrs.src,
+      //     //   success: data => {
+      //     //     this.containerNode.remove()
+      //     //   },
+      //     //   error: data => {
+      //     //     console.error('unable to remove')
+      //     //   }
+      //     // })
+
+      //     return true
+      //   }
+      // }),
       new Plugin({
         key: new PluginKey('image'),
         props: {
@@ -90,6 +112,7 @@ export default class Image extends Node {
               let id = nanoid('1234567890abcdef', 10)
               let tr = view.state.tr
               if (!tr.selection.empty) tr.deleteSelection()
+
               tr.setMeta(placeholderPlugin, { add: { id, pos: tr.selection.from } })
               view.dispatch(tr)
 

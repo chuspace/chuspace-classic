@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :images, only: %i[create show destroy]
+  resources :images, only: %i[create destroy]
 
   resources :posts, path: 'p', param: :slug, except: :show do
     resources :publish, only: %i[index create], module: 'posts'
@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   mount Easymon::Engine => '/alive' if Rails.env.production?
 
   resources :users, path: '', param: :nickname, only: %i[show update destroy] do
+    resources :images, only: %i[show destroy]
     resources :drafts, only: :index, controller: :user_drafts
     resources :posts, path: '', param: :slug, only: %i[show destroy]
     resources :repositories, path: '', param: :slug, only: :show, format: :git

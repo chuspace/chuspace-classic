@@ -11,8 +11,9 @@ class Repository < ApplicationRecord
   DEFAULT_BRANCH = 'master'
   GLOBAL_HOOKS_DIRECTORY = Rails.root.join('bin', 'git-hooks')
   GITIGNORE_PATH = '.gitignore'
-  IMAGES_ROOT = 'images'
-  POSTS_ROOT = 'posts'
+  IMAGES_ROOT_PATH = 'images'
+  DRAFTS_ROOT_PATH = 'drafts'
+  POSTS_ROOT_PATH = 'posts'
 
   GITIGNORE = <<~STRING
     # Ignore everything
@@ -21,7 +22,12 @@ class Repository < ApplicationRecord
     !.gitignore
     !/posts
     !/posts/*.md
+    !/posts/.keep
+    !/drafts
+    !/drafts/*.md
+    !/drafts/.keep
     !/images
+    !/images/.keep
     !/images/*.png
     !/images/*.gif
     !/images/*.jpeg
@@ -33,7 +39,7 @@ class Repository < ApplicationRecord
   validates_db_uniqueness_of :path
 
   before_validation :assign_default_attributes, on: :create
-  after_save :create_git_repo, :create_git_hooks, :add_gitignore, :add_images_folder, :add_posts_folder
+  after_save :create_git_repo, :create_git_hooks, :add_gitignore, :add_drafts_folder, :add_posts_folder, :add_images_folder
   after_save :rename_git_repo, if: -> { !new_record? && path_changed? }
 
   after_destroy :destroy_git_repo
@@ -43,6 +49,14 @@ class Repository < ApplicationRecord
 
   delegate :lookup, :checkout, :empty?, :bare?, :index, :branches, to: :rugged
   delegate :tree, to: :commit
+
+  def self.in_post_path?(path)
+    path.start_with?(DRAFTS_ROOT_PATH, POSTS_ROOT_PATH)
+  end
+
+  def self.in_image_path?(path)
+    path.start_with?(IMAGES_ROOT_PATH)
+  end
 
   def to_param
     name
@@ -76,6 +90,10 @@ class Repository < ApplicationRecord
 
   def blobs(sha: commit_sha)
     Blob.all(repository: self, commit_sha: sha)
+  end
+
+  def blob_at(path:, sha: commit_sha)
+    Blob.find(repository: self, path: path, commit_sha: sha)
   end
 
   def blob_at(path:, sha: commit_sha)
@@ -169,14 +187,19 @@ class Repository < ApplicationRecord
     create_blob(path: GITIGNORE_PATH, content: GITIGNORE, commit_message: 'Add gitignore')
   end
 
-  def add_images_folder
-    path = File.join(IMAGES_ROOT, '.keep')
-    create_blob(path: path, content: '', commit_message: 'Add images folder')
+  def add_drafts_folder
+    path = File.join(DRAFTS_ROOT_PATH, '.keep')
+    create_blob(path: path, content: '', commit_message: 'Add drafts folder')
   end
 
   def add_posts_folder
-    path = File.join(POSTS_ROOT, '.keep')
+    path = File.join(POSTS_ROOT_PATH, '.keep')
     create_blob(path: path, content: '', commit_message: 'Add posts folder')
+  end
+
+  def add_images_folder
+    path = File.join(IMAGES_ROOT_PATH, '.keep')
+    create_blob(path: path, content: '', commit_message: 'Add images folder')
   end
 
   def destroy_git_repo

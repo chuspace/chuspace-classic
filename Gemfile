@@ -96,6 +96,9 @@ gem 'octokit'
 # environment variables
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 
+# SEO
+gem 'meta-tags'
+
 group :production do
   # Resource monitoring
   gem 'easymon'

@@ -274,6 +274,7 @@ CREATE TABLE public.posts (
     repository_id bigint NOT NULL,
     ancestry character varying,
     topics character varying[] DEFAULT '{}'::character varying[],
+    canonical_url character varying,
     published_at timestamp without time zone,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,

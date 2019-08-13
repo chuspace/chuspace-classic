@@ -1,16 +1,14 @@
-<div class="w-1/2 mx-auto mt-16">
-  <%= render 'settings/navigation' %>
+<%= render 'settings/navigation' %>
 
-  <div class="profile">
-    <div class="page-header my-8">
-      <h4>Profile</h4>
-      <p class="mt-2 text-secondary">
-        Update your profile
-      </p>
-    </div>
+<div class="profile">
+  <div class="page-header my-8">
+    <h4>Profile</h4>
+    <p class="mt-2 text-secondary">
+      Update your profile
+    </p>
+  </div>
 
-    <div class="form border-t border-grey-lighter">
-      <%= render 'settings/profiles/form', user: @user %>
-    </div>
+  <div class="form border-t border-grey-lighter">
+    <%= render 'settings/profiles/form', user: @user %>
   </div>
 </div>

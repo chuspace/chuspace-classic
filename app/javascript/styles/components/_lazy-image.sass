@@ -1,17 +1,21 @@
 lazy-image
-	@apply whitespace-no-wrap relative block
+	@apply whitespace-no-wrap relative block shadow-md rounded overflow-hidden
 
-	.image-container
+	&[editable="true"]
+		&.selected, &:hover
+			box-shadow: 0 0 0 3px theme('colors.blue')
+
+	.image__container
 		@apply float-none relative
 
-	&.selected, &:hover
-		box-shadow: 0 0 0 3px theme('colors.blue')
+		figcaption
+			@apply text-grey italic py-2 italic text-center text-sm font-headings
 
-	img
-		width: 800px
-		min-height: 400px
-		&.ls-blur-up-is-loading, &.lazyload:not([src])
-			visibility: hidden
+		img
+			width: 800px
+			min-height: 400px
+			&.ls-blur-up-is-loading, &.lazyload:not([src])
+				visibility: hidden
 
 	.ls-blur-up-img
 		position: absolute

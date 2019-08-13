@@ -8,32 +8,40 @@
   line-height: 1.5
   outline: none
 
+  div
+    @apply whitespace-no-wrap
+
   blockquote
     @apply border-l-2 -ml-4 pl-4 mb-6
     font-style: italic
 
   a
     text-decoration: underline
+    hyphens: auto
+    overflow-wrap: break-word
 
   h1, h2, h3, h4, h5, h6, strong, p
     @apply mb-6
     @apply font-content
 
-  code-editor
+  code-editor, lazy-image
     @apply mb-6 block
 
-  figure
+  figure, p > div
     @apply whitespace-no-wrap
 
   img
     width: 800px
 		min-height: 400px
 
+  div + br
+    display: none
+
   .title
     @apply mb-2
 
   .summary
-    @apply text-grey
+    @apply text-grey text-2xl
 
   .insertion
     @apply bg-green-lightest text-green-darkest max-w-full whitespace-normal

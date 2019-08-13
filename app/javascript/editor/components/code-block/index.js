@@ -98,7 +98,7 @@ export default class CodeEditor extends LitElement {
           <div class="code-editor-toolbar-menu" contenteditable="false">
             ${this.readonly
               ? html`
-                  <div class="code-editor-language-badge badge--grey mr-4">${this.mode}</div>
+                  <div class="code-editor-language-badge badge badge--grey mr-4">${this.mode}</div>
                 `
               : html`
                   <code-editor-language-switcher

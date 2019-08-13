@@ -15,7 +15,6 @@ class User < ApplicationRecord
   has_many :ssh_keys, dependent: :destroy
   has_one :repository, dependent: :destroy, foreign_key: 'author_id', autosave: true
   has_many :posts, foreign_key: 'author_id', dependent: :destroy
-  has_many :images, dependent: :destroy
 
   alias repo repository
 

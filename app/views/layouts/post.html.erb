@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang='en' class='flex-body'>
   <%= render 'layouts/head' %>
-  <body>
+  <body data-controller='popper'>
     <%= render 'layouts/header' %>
 
-    <section class='content w-1/2 mx-auto pb-32'>
+    <section class='container content mx-auto'>
       <%= yield %>
     </section>
   </body>

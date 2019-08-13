@@ -1,5 +1,7 @@
 // @flow
 
+import * as Rails from 'rails-ujs'
+
 import { Node as ProsemirrorNode, Schema } from 'prosemirror-model'
 import { html, render } from 'lit-html'
 
@@ -11,7 +13,7 @@ export default class ImageView extends BaseView {
   constructor(props: BaseViewPropType) {
     super(props, false)
 
-    this.containerNode = document.createElement('figure')
+    this.containerNode = document.createElement('div')
     this.renderElement()
   }
 
@@ -21,7 +23,6 @@ export default class ImageView extends BaseView {
         <lazy-image
           src=${this.node.attrs.src || ''}
           alt=${this.node.attrs.alt || ''}
-          editable="true"
           title=${this.node.attrs.title || this.node.attrs.alt || ''}
           .handleChange=${this.handleChange}
         ></lazy-image>

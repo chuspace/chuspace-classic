@@ -13,13 +13,14 @@ class Blob
   SAFELISTED = %w[.gitignore .keep]
 
   attr_accessor :path, :repository, :content, :commit_sha
-  attr_reader :name, :extname, :object
+  attr_reader :name, :extname, :object, :absolute_path
 
-  validates :name, :path, :repository, :content, presence: true
-  validates :name, format: { with: /\A^[a-zA-Z0-9_-]*$\z/i }
-  validates_length_of :name, maximum: 100
-  validate :should_have_correct_content_type
-  validate :should_have_correct_content_size
+  validates :name, :path, :repository, presence: true
+  validates :content, presence: true, unless: :safelisted
+  validates :name, format: { with: /\A^[a-zA-Z0-9_-]*$\z/i }, unless: :safelisted
+  validates_length_of :name, maximum: 100, unless: :safelisted
+  validate :should_have_correct_content_type, unless: :safelisted
+  validate :should_have_correct_content_size, unless: :safelisted
   validate :should_have_correct_extname, unless: :safelisted
 
   delegate :oid, :binary?, :size, to: :object, allow_nil: true
@@ -49,9 +50,10 @@ class Blob
       blob.persisted? ? blob : nil
     end
 
-    sig { params(repository: Repository, path: String, content: String, branch: String, committer: T.nilable(User), commit_message: T.nilable(String)).returns(Blob) }
+    sig { params(repository: Repository, path: String, content: T.any(StringIO, String), branch: String, committer: T.nilable(User), commit_message: T.nilable(String)).returns(Blob) }
     def create(repository:, path:, content:, branch:, committer: nil, commit_message: nil)
-      Blob.new(repository: repository, path: path).save(io: content, committer: committer, commit_message: commit_message, branch: branch)
+      Blob.new(repository: repository, path: path)
+        .save(io: content, committer: committer, commit_message: commit_message, branch: branch)
     end
 
     sig { params(name: String).returns(T::Boolean) }
@@ -67,6 +69,7 @@ class Blob
     @name = File.basename(path || '', '.*')
     @extname = File.extname(path || '').downcase
     @commit_sha ||= repository.commit_sha
+    @absolute_path = File.join('/', path)
   end
 
   def to_param
@@ -85,7 +88,7 @@ class Blob
 
   sig { returns(T.any(StringIO, String)) }
   def io
-    binary? ? content : StringIO.new(content)
+    StringIO.new(content)
   end
 
   sig { returns(T::Boolean) }
@@ -98,7 +101,7 @@ class Blob
     !!oid
   end
 
-  sig { params(committer: T.nilable(User), io: String, branch: String, commit_message: T.nilable(String)).returns(Blob) }
+  sig { params(committer: T.nilable(User), io: T.any(StringIO, String), branch: String, commit_message: T.nilable(String)).returns(Blob) }
   def save(committer:, io:, branch: Repository::DEFAULT_BRANCH, commit_message: nil)
     @content = encode!(io)
 
@@ -108,6 +111,18 @@ class Blob
       @commit_sha = repository.create_commit(options: options)
       @object = nil
     end
+
+    self
+  end
+
+  sig { params(committer: T.nilable(User), new_path: String, branch: String, commit_message: T.nilable(String)).returns(Blob) }
+  def rename(committer:, new_path:, branch: Repository::DEFAULT_BRANCH, commit_message: nil)
+    commit_message ||= "Moved from #{previous_path} to #{new_path}"
+    options = { commit: { message: commit_message, branch: branch, committer: committer }, file: { content: content, previous_path: path, path: new_path } }
+    @commit_sha = repository.create_commit(options: options, action: :rename)
+
+    @path = new_path
+    @object = nil
 
     self
   end
@@ -132,12 +147,12 @@ class Blob
 
   sig { returns(T.nilable(T::Boolean)) }
   def post?
-    mime&.content_type == 'text/markdown' && mime&.extension == 'md'
+    mime&.content_type == 'text/markdown' && mime&.extension == 'md' && Repository.in_post_path?(path)
   end
 
   sig { returns(T.nilable(T::Boolean)) }
   def image?
-    mime&.content_type&.include?('image')
+    mime&.content_type&.include?('image') && Repository.in_image_path?(path)
   end
 
   private

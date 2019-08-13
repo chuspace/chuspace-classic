@@ -5,7 +5,7 @@ class Posts::PublishController < ApplicationController
   before_action :authenticate!
   before_action :find_post, :assign_attributes, only: %i[index create]
 
-  layout 'editor', only: :index
+  layout 'editor'
 
   def index
     @published_posts = Current.user.posts.published.where.not(id: @post.id)
@@ -17,24 +17,25 @@ class Posts::PublishController < ApplicationController
     @post.parent = publish_params[:parent]
     @post.blob_id = @post.blob.oid
     @post.slug = @markdown.title
-    @post.assign_attributes(body_html: @markdown.body_html)
+    new_blob_path = Pathname.new(@post.repo_dir).join("#{@post.slug}.md").to_path
 
-    if @post.may_publish?
+    if @post.may_publish? && @post.valid?
       @post.publish
-      @post.assign_attributes(published_at: Time.now)
+      @post.assign_attributes(body_html: @markdown.body_html, published_at: Time.now, blob_path: new_blob_path)
     end
 
     if @post.save
+      @post.blob.rename(committer: Current.user, new_path: new_blob_path, commit_message: "Publish post #{new_blob_path}")
       redirect_to user_post_path(@post.author, @post)
     else
-      render :index
+      render 'posts/edit'
     end
   end
 
   private
 
   def publish_params
-    params.require(:post).permit(:parent, :topics)
+    params.require(:post).permit(:parent, :topics, :canonical_url)
   end
 
   def assign_attributes

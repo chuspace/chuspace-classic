@@ -11,6 +11,7 @@ module EncodingHelper
 
   def encode!(blob)
     return nil unless blob.respond_to? :force_encoding
+    return blob if blob.encoding.name == 'UTF-8'
 
     # if blob is utf-8 encoding, just return it
     blob.force_encoding('UTF-8')

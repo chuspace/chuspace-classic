@@ -1,11 +1,13 @@
-<ul class="list-reset tabs">
-  <li class="<%= tabs_class(settings_profiles_path) %>">
-    <%= link_to 'Profile', settings_profiles_path %>
-  </li>
-  <li class="<%= tabs_class(settings_repositories_path) %>">
-    <%= link_to 'Git repository', settings_repositories_path %>
-  </li>
-  <li class="<%= tabs_class(settings_ssh_keys_path) %> <%= tabs_class(new_settings_ssh_key_path) %>">
-    <%= link_to 'Ssh keys', settings_ssh_keys_path %>
-  </li>
-</ul>
+<div>
+  <ul class="list-reset tabs">
+    <li class="<%= tabs_class(settings_profiles_path) %>">
+      <%= link_to 'Profile', settings_profiles_path %>
+    </li>
+    <li class="<%= tabs_class(settings_repositories_path) %>">
+      <%= link_to 'Git repository', settings_repositories_path %>
+    </li>
+    <li class="<%= tabs_class(settings_ssh_keys_path) %> <%= tabs_class(new_settings_ssh_key_path) %>">
+      <%= link_to 'Ssh keys', settings_ssh_keys_path %>
+    </li>
+  </ul>
+</div>

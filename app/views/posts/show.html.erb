@@ -1,7 +1,9 @@
-<div class='flex container' data-controller="markdown">
+<% set_meta_tags @post %>
+
+<div class='block md:flex container' data-controller="markdown">
   <%= render 'posts/sidebar', post: @post %>
 
-  <div class='post__body w-3/4 mx-auto'>
+  <div class='post__body w-full md:w-3/4  mx-auto'>
     <% if policy(@post).publish? %>
       <div class='flex justify-between items-center card card-default'>
         <%= content_tag :p, 'You have made some changes to this post.' %>

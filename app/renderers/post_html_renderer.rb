@@ -53,22 +53,19 @@ class PostHtmlRenderer < CommonMarker::HtmlRenderer
       super(node)
     else
       image_url = node.url
-      blob_path = node.url.start_with?('/') ? node.url[1..-1] : node.url
-      blob = Current.user.repository.blob_at(path: blob_path)
+      blob_url = URI::join(ENV.fetch('CHUSPACE_URL'), image_url)
+      image_url = Imgproxy.url_for(blob_url, width: 800, resizing_type: :fill)
 
-      if blob.persisted?
-        blob_url = URI::join(ENV.fetch('CHUSPACE_URL'), blob.repository.full_name, blob.path)
-        image_url = Imgproxy.url_for(blob_url, width: 800, resizing_type: :fill)
-      end
-
-      out('<img src="', escape_href(image_url), '"')
+      out('<lazy-image')
+      out('src="', escape_href(image_url), '"')
       plain do
         out(' alt="', :children, '"')
       end
       if node.title && !node.title.empty?
         out(' title="', escape_html(node.title), '"')
       end
-      out(' />')
+      out(' >')
+      out('</lazy-image>')
     end
   end
 

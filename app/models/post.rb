@@ -10,7 +10,7 @@ class Post < ApplicationRecord
   has_ancestry
   has_logidze
 
-  enum status: { draft: 0, published: 1, archived: 2 }
+  enum status: { draft: 0, published: 1 }
 
   validates_presence_of :slug, :blob_path, :status
   validates_presence_of :title, :summary, :topics, :body_html, :published_at, :blob_id, if: :published?
@@ -30,14 +30,10 @@ class Post < ApplicationRecord
 
   aasm column: :status, enum: true do
     state :draft, initial: true
-    state :published, :archived
+    state :published
 
     event :publish do
       transitions from: :draft, to: :published
-    end
-
-    event :archive do
-      transitions from: :published, to: :archived
     end
 
     event :unpublish do
@@ -112,7 +108,52 @@ class Post < ApplicationRecord
     end
   end
 
+  def repo_dir
+    dir = case status.to_sym
+          when :draft
+            Repository::DRAFTS_ROOT_PATH
+          when :published
+            Repository::POSTS_ROOT_PATH
+    end
+
+    Pathname.new(dir)
+  end
+
   def draft
     @draft ||= PostMarkdownService.call(content: blob.content)
+  end
+
+  def to_meta_tags
+    {
+      site: 'Chuspace',
+      charset: 'en',
+      title: title,
+      description: summary,
+      keywords: topics_list,
+      index: true,
+      follow: true,
+      author: author.name,
+      'theme-color': '#000000',
+      canonical: canonical_url || Rails.application.routes.url_helpers.user_post_url(author, self),
+      og: {
+        title: :title,
+        type: :article,
+        description: :description,
+        site_name: :site,
+        url: Rails.application.routes.url_helpers.user_post_url(author, self)
+      },
+      twitter: {
+        title: :title,
+        card: :summary,
+        description: :description,
+        site_name: :site
+      },
+      article: {
+        published_time: published_at,
+        modified_time: updated_at,
+        tag: topics_list,
+        author: author.nickname
+      }
+    }
   end
 end

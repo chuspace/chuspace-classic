@@ -1,16 +1,14 @@
-<div class="w-1/2 mx-auto mt-16">
-  <%= render 'settings/navigation' %>
+<%= render 'settings/navigation' %>
 
-  <div class="ssh" data-controller="ssh-keys">
-    <div class="page-header my-8">
-      <h4>Ssh keys</h4>
-      <p class="mt-2 text-secondary">
-        Add a new ssh key
-      </p>
-    </div>
-
-    <div class="form border-t border-grey-lighter">
-      <%= render 'form', user: @user %>
-    </div>
+<section>
+  <div class="page-header my-8">
+    <h4>Ssh keys</h4>
+    <p class="mt-2 text-secondary">
+      Add a new ssh key
+    </p>
   </div>
-</div>
+
+  <div class="form border-t border-grey-lighter">
+    <%= render 'form', user: @user %>
+  </div>
+</section>

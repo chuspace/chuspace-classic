@@ -84,7 +84,8 @@ module Git
       sig { params(repository: Repository, options: {
         file: {
           content: String,
-          path: String
+          path: String,
+          previous_path: T.nilable(String)
         },
         commit: {
           message: String,

@@ -17,6 +17,7 @@ class PostsController < ApplicationController
     @post = @author.posts.find_by!(slug: params[:slug])
 
     redirect_to edit_post_path(@post) if @post.draft?
+    render :show, layout: 'post'
   end
 
   def edit
@@ -27,12 +28,11 @@ class PostsController < ApplicationController
     Post.transaction do
       markdown = PostMarkdownService.call(content: post_params[:body])
       slug = markdown.title&.to_slug&.to_ascii&.normalize&.to_s
-      blob_path = File.join(Repository::POSTS_ROOT, "#{slug}.md")
-      blob = Current.user.repository.create_blob(path: blob_path, content: markdown.content)
+      post = Current.user.posts.build(repository: Current.user.repository, slug: slug)
+      post.blob_path = post.repo_dir.join("#{slug}.md").to_path
+      blob = Current.user.repository.create_blob(path: post.blob_path, content: markdown.content)
 
-      if blob.persisted?
-        post = Current.user.posts.create(repository: Current.user.repository, slug: blob.oid[0..8], blob_path: blob_path)
-
+      if blob.persisted? && post.save
         render json: {
           redirect: edit_post_path(post),
           slug: post.slug,
@@ -50,7 +50,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    if @post.blob.destroy && @post.destroy
+    if @post.blob.destroy(committer: Current.user) && @post.destroy
       redirect_to user_drafts_path(@post.author)
     else
       redirect_to post_path(@post)

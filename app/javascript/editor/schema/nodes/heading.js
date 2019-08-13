@@ -27,7 +27,7 @@ export default class Heading extends Node {
           default: 'heading'
         }
       },
-      content: 'inline*',
+      content: 'text*',
       group: 'block',
       defining: true,
       draggable: false,

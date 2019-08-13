@@ -23,6 +23,7 @@ en:
         topics: Add or change tags (up to 5) so readers know what your story is about
         parent: Select a parent post (optional) so readers can read previous posts
         commit_message: Write a commit message that describes this change (optional)
+        canonical_url: Add a canonical url (optional)
 
     placeholders:
       defaults:

@@ -1,9 +1,11 @@
-const { environment } = require('@rails/webpacker')
+const { environment, config } = require('@rails/webpacker')
 
 const webpack = require('webpack')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const nullLoader = require('./loaders/null')
 const globImporter = require('node-sass-glob-importer')
+const WorkboxPlugin = require('workbox-webpack-plugin')
+const { resolve } = require('path')
 
 environment.config.merge({
   stats: 'minimal'
@@ -23,13 +25,23 @@ environment.loaders.append('null', nullLoader)
 const sassLoader = environment.loaders.get('sass').use.find(loader => loader.loader === 'sass-loader')
 sassLoader.options.importer = globImporter()
 
-environment.plugins.prepend(
-  'WebpackProvide',
-  new webpack.ProvidePlugin({
-    diff_match_patch: 'diff_match_patch',
-    DIFF_EQUAL: ['diff_match_patch', 'DIFF_EQUAL'],
-    DIFF_INSERT: ['diff_match_patch', 'DIFF_INSERT'],
-    DIFF_DELETE: ['diff_match_patch', 'DIFF_DELETE']
+environment.plugins.append(
+  'SW',
+  new WorkboxPlugin.GenerateSW({
+    clientsClaim: true,
+    exclude: [/\.map$/, /manifest\.json$/],
+    importWorkboxFrom: 'cdn',
+    skipWaiting: true,
+    navigateFallback: process.env.CHUSPACE_URL,
+    navigateFallbackBlacklist: [
+      // Exclude URLs starting with /_, as they're likely an API call
+      new RegExp('^/_'),
+      // Exclude any URLs whose last part seems to be a file extension
+      // as they're likely a resource and not a SPA route.
+      // URLs containing a "?" character won't be blacklisted as they're likely
+      // a route with query params (e.g. auth callbacks).
+      new RegExp('/[^/?]+\\.[^/]+$')
+    ]
   })
 )
 

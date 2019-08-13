@@ -28,6 +28,8 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.string :topics, array: true, default: []
       t.index :topics, using: 'gin'
 
+      t.string :canonical_url
+
       t.datetime :published_at
       t.index :published_at
 

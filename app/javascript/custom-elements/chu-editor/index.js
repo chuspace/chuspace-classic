@@ -86,6 +86,8 @@ export default class ChuEditor extends LitElement {
   onChange = () => {
     if (this.saving) return
 
+    this.saving = true
+
     if (this.id) {
       this.autosave()
     } else {
@@ -101,7 +103,6 @@ export default class ChuEditor extends LitElement {
 
   autosave = debounce(
     () => {
-      this.saving = true
       this.subscription.send(this.payload)
     },
     2000,
@@ -110,7 +111,6 @@ export default class ChuEditor extends LitElement {
 
   create = debounce(
     () => {
-      this.saving = true
       fetch(this.url, {
         method: 'POST',
         body: JSON.stringify({ post: this.payload }),

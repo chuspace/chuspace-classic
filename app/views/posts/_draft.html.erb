@@ -10,7 +10,9 @@
     <li class='text-grey'>
       Last edited <%= distance_of_time_in_words_to_now(draft.updated_at) %> ago
     </li>
-
+    <li>
+      <%= link_to 'Edit', edit_post_path(draft), class: 'link link--active underline' %>
+    </li>
     <li>
       <%= link_to 'Delete',
         post_path(draft),
