@@ -1,9 +1,5 @@
-<section class='list w-full sm:w-3/4 mx-auto'>
-  <ul class="list-reset tabs">
-    <li class="tabs__tab tabs__tab--active">
-      All Posts
-    </li>
-  </ul>
+<section class='list w-full mx-auto'>
+  <h3 class='border-b border-grey-lightest pb-5 font-semibold'>Today</h3>
 
   <% if @posts.any? %>
     <% @posts.each do |post| %>

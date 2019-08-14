@@ -20,11 +20,10 @@
     hyphens: auto
     overflow-wrap: break-word
 
-  h1, h2, h3, h4, h5, h6, strong, p
-    @apply mb-6
-    @apply font-content
+  h1, h2, h3, h4, h5, h6, strong
+    @apply mb-6 font-content
 
-  code-editor, lazy-image
+  code-editor, lazy-image, p
     @apply mb-6 block
 
   figure, p > div
@@ -38,10 +37,10 @@
     display: none
 
   .title
-    @apply mb-2
+    @apply mb-2 font-medium
 
   .summary
-    @apply text-grey text-2xl
+    @apply text-grey text-2xl font-medium
 
   .insertion
     @apply bg-green-lightest text-green-darkest max-w-full whitespace-normal

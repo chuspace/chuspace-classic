@@ -1,7 +1,22 @@
-// const purgecss = require('@fullhuman/postcss-purgecss')({
-//   content: ['./app/components/**/*.html.erb', './app/views/**/*.html.erb', './app/helpers/**/*.rb'],
-//   defaultExtractor: content => content.match(/[A-Za-z0-9-_:/]+/g) || []
-// })
+const purgecss = require('@fullhuman/postcss-purgecss')({
+  content: [
+    './app/components/**/*.rb',
+    './app/javascript/**/*.js',
+    './app/views/**/*.html.erb',
+    './app/helpers/**/*.rb'
+  ],
+  keyframes: true,
+  fontFace: true,
+  defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
+  whitelistPatterns: [
+    /([a-z0-9]+(_[a-z0-9]+)?)+(--)([a-z0-9]+(-[a-z0-9]+)?)+/g,
+    /([a-z0-9]+(_[a-z0-9]+)?)+__([a-z0-9]+(_[a-z0-9]+)?)+/,
+    /CodeMirror-*/,
+    /cm-*/,
+    /tippy*/,
+    /popper*/
+  ]
+})
 
 module.exports = {
   plugins: [
@@ -13,7 +28,7 @@ module.exports = {
         flexbox: 'no-2009'
       },
       stage: 3
-    })
-    //...(process.env.NODE_ENV === 'production' ? [purgecss] : [])
+    }),
+    purgecss
   ]
 }
