@@ -3,10 +3,10 @@
 
 class UserDraftsController < ApplicationController
   before_action :authenticate!, :find_user
-  layout 'user'
 
   def index
-    @drafts = @user.posts.draft.includes(author: :repository).limit(20).order(id: :desc)
+    @posts = @user.posts.draft.includes(author: :repository).limit(20).order(id: :desc)
+    render 'users/show'
   end
 
   private

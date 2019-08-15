@@ -1,14 +1,25 @@
-<section class='list w-full mx-auto'>
-  <h3 class='border-b border-grey-lightest pb-5 font-semibold'>Today</h3>
-
-  <% if @posts.any? %>
-    <% @posts.each do |post| %>
-      <%= render 'posts/post', post: post %>
-    <% end %>
-  <% else %>
-    <div class='placeholder'>
-      <h1 class='text-3xl'>No posts published yet</h1>
-      <%= link_to 'Write a post', new_post_path, class: 'button button--fill mt-4 inline-block' %>
+<div class='flex justify-between'>
+  <section class='list w-full sm:w-1/4 mt-12'>
+    <div class='border border-grey-lightest p-4'>
+      <h1 class='text-base font-normal'>Publish a post</h1>
+      <div class='py-8 text-center'>
+        <%= link_to 'Write a post', new_post_path, class: 'button button--fill' %>
+      </div>
     </div>
-  <% end %>
-</section>
+  </section>
+
+  <section class='list w-full sm:w-4/6'>
+    <h3 class='border-b border-grey-lightest pb-5 font-semibold'>Today</h3>
+
+    <% if @posts.any? %>
+      <% @posts.each do |post| %>
+        <%= render 'posts/post', post: post %>
+      <% end %>
+    <% else %>
+      <div class='placeholder'>
+        <h1 class='text-3xl'>No posts published yet</h1>
+        <%= link_to 'Write a post', new_post_path, class: 'button button--fill mt-4 inline-block' %>
+      </div>
+    <% end %>
+  </section>
+</div>

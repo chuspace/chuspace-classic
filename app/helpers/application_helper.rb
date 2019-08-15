@@ -20,4 +20,27 @@ module ApplicationHelper
       { label: 'Sign out', url: signin_path(Current.user), options: { method: :delete } }
     ].map { |hash| OpenStruct.new(hash) }.freeze
   end
+
+  def layout_class
+    controller_name = params['controller'].to_sym
+    action = params['action']
+
+    layout = layout_classes_mapping[controller_name]
+    layout ? layout[action.to_sym] : nil
+  end
+
+  private
+
+  def layout_classes_mapping
+    {
+      posts: {
+        edit: 'layout__narrow',
+        new: 'layout__narrow'
+      },
+
+      'posts/publish': {
+        index: 'layout__narrow'
+      }
+    }
+  end
 end

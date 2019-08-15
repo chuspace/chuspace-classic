@@ -1,0 +1,9 @@
+<ul class="list-reset tabs">
+  <li class="<%= tabs_class(user_path(@user)) %>">
+    <%= link_to 'Published', user_path(@user) %>
+  </li>
+
+  <li class="<%= tabs_class(user_drafts_path(@user)) %>">
+    <%= link_to 'Drafts', user_drafts_path(@user) %>
+  </li>
+</ul>

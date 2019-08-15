@@ -4,8 +4,6 @@
 class UsersController < ApplicationController
   before_action :find_user, only: :show
 
-  layout 'user'
-
   def show
     @posts = @user.posts.published.includes(:author).limit(20).order(id: :desc)
   end

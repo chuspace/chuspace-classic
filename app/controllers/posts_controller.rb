@@ -6,8 +6,6 @@ class PostsController < ApplicationController
   before_action :find_post, except: %i[show index new create]
   after_action :verify_authorized, only: %[new edit create]
 
-  layout 'editor', only: %i[new edit]
-
   def new
     @post = Post.new(author: Current.user)
   end
@@ -17,7 +15,6 @@ class PostsController < ApplicationController
     @post = @author.posts.find_by!(slug: params[:slug])
 
     redirect_to edit_post_path(@post) if @post.draft?
-    render :show, layout: 'post'
   end
 
   def edit

@@ -1,9 +1,7 @@
 <% set_meta_tags @post %>
 
 <div class='block md:flex container' data-controller="markdown">
-  <%= render 'posts/sidebar', post: @post %>
-
-  <div class='post__body w-full md:w-3/4  mx-auto'>
+  <div class='post__body w-full md:w-3/4 mx-auto'>
     <% if policy(@post).publish? %>
       <div class='flex justify-between items-center card card-default'>
         <%= content_tag :p, 'You have made some changes to this post.' %>
@@ -20,5 +18,26 @@
         <li class='list-none badge badge--grey mr-2'><%= topic %></li>
       <% end %>
     </ul>
+
+    <div class='author mt-12 border-t border-grey-lightest'>
+      <%= link_to user_path(@post.author), class: 'block mt-8' do %>
+        <section class='flex items-center'>
+          <%= component 'avatar',
+            avatar: @post.author.avatar,
+            initials: @post.author.initials,
+            variant: :xl
+          %>
+
+          <section class='info ml-4'>
+            <h4><%= @post.author.name %></h4>
+            <%= content_tag :p, @post.author.bio, class: 'text-grey text-sm w-4/5' unless @post.author.bio.blank? %>
+            <h3 class='text-base font-normal text-grey pb-2'>Author</h3>
+            <%= content_tag :time, @post.formatted_published_at, class: 'text-grey text-xs' if @post.published? %>
+          </section>
+        </section>
+      <% end %>
+    </div>
+
+    <%= render 'posts/series', post: @post %>
   </div>
 </div>

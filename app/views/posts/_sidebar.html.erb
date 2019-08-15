@@ -1,7 +1,0 @@
-<div class='post__sidebar mt-12 md:mt-24 w-full md:w-1/4'>
-  <%= render 'users/badge', user: @post.author %>
-  <div class='text-center'>
-    <%= content_tag :time, post.formatted_published_at, class: 'text-grey text-xs' if post.published? %>
-  </div>
-  <%= render 'posts/series', post: post %>
-</div>

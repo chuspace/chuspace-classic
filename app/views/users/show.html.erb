@@ -2,13 +2,41 @@
 <% description @user.bio %>
 <% noindex %>
 
-<% if @posts.any? %>
-  <div class='list'>
-    <%= render partial: 'posts/post', collection: @posts %>
+<div class='block sm:text-left sm:flex'>
+  <div class='mb-5 w-full sm:w-1/4'>
+    <%= component 'avatar', avatar: @user.avatar, initials: @user.initials, variant: :thumb %>
+
+    <div class='w-75'>
+      <h3 class='text-2xl mt-8'><%= @user.name %></h3>
+      <h3 class='text-base font-normal text-grey'><%= @user.nickname %></h3>
+      <%= content_tag :p, @user.bio, class: 'text-sm mt-1' unless @user.bio.blank? %>
+
+      <ul class='horizontal__list text-sm'>
+        <%= content_tag :li, @user.company unless @user.company.blank? %>
+        <%= content_tag :li, @user.location unless @user.location.blank? %>
+        <% unless @user.url.blank? %>
+          <%= content_tag :li do %>
+            <%= link_to 'Website', @user.url, class: 'link link--active underline text-sm', target: '_blank', rel: 'noopener noreferer' %>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+
+    <%= link_to 'Edit profile', settings_profiles_path, class: 'button button--active inline-block mt-4'%>
   </div>
-<% else %>
-  <div class='placeholder'>
-    <h1 class='text-3xl'>You haven't published any posts</h1>
-    <%= link_to 'Publish one', new_post_path, class: 'button button--fill mt-4 inline-block' %>
+
+  <div class='posts w-full sm:w-3/4'>
+    <%= render 'users/tabs' %>
+
+    <% if @posts.any? %>
+      <div class='list'>
+        <%= render partial: 'posts/post', collection: @posts %>
+      </div>
+    <% else %>
+      <div class='placeholder'>
+        <h1 class='text-3xl'><%= t("#{params[:controller]}.no_posts") %></h1>
+        <%= link_to t("#{params[:controller]}.no_posts_btn_text"), new_post_path, class: 'button button--fill mt-4 inline-block' %>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>

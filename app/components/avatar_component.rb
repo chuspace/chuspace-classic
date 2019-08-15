@@ -8,7 +8,8 @@ class AvatarComponent < Components::Component
     sm: { size: 32, class: 'avatar--sm' },
     md: { size: 64, class: 'avatar--md' },
     lg: { size: 80, class: 'avatar--lg' },
-    xl: { size: 120, class: 'avatar--xl' }
+    xl: { size: 120, class: 'avatar--xl' },
+    thumb: { size: 150, class: 'avatar--thumb' }
   }.freeze
 
   attribute :avatar
