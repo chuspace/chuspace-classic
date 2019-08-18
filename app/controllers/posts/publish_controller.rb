@@ -5,8 +5,6 @@ class Posts::PublishController < ApplicationController
   before_action :authenticate!
   before_action :find_post, :assign_attributes, only: %i[index create]
 
-  layout 'editor'
-
   def index
     @published_posts = Current.user.posts.published.where.not(id: @post.id)
     render 'posts/edit'
