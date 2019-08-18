@@ -24,17 +24,22 @@ set git_exclusions: %w[
   spec/
   test/
 ]
+
 set env_vars: {
   RAILS_ENV: 'production',
   RACK_ENV: 'production',
   SECRET_KEY_BASE: :prompt,
   DATABASE_URL: :prompt
 }
+
 set linked_dirs: %w[
   .bundle
   log
   node_modules
   public/assets
+  public/packs
+  cache/webpacker
+  bin/git-hooks
 ]
 
 setup do
@@ -66,6 +71,6 @@ deploy do
   run 'core:log_revision'
   run 'chuspace:copy_env_vars'
   run 'chuspace:copy_sshd_config'
-  run 'chuspace:compile_mobius'
+  # run 'chuspace:compile_mobius'
   run 'chuspace:restart_puma_and_anycable'
 end
