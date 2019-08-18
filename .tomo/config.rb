@@ -16,7 +16,7 @@ set application: 'chuspace'
 set deploy_to: '/home/git/chuspace.com'
 set nodenv_node_version: '10.16.0'
 set nodenv_yarn_version: '1.17.3'
-set rbenv_ruby_version: '2.6.3-jemalloc'
+set rbenv_ruby_version: '2.6-jemalloc'
 set git_url: 'git@github.com:gauravtiwari/chuspace.git'
 set git_branch: 'master'
 set git_exclusions: %w[
@@ -27,7 +27,8 @@ set git_exclusions: %w[
 set env_vars: {
   RAILS_ENV: 'production',
   RACK_ENV: 'production',
-  SECRET_KEY_BASE: :prompt
+  SECRET_KEY_BASE: :prompt,
+  DATABASE_URL: :prompt
 }
 set linked_dirs: %w[
   .bundle
