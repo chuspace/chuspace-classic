@@ -28,6 +28,7 @@ sassLoader.options.importer = globImporter()
 environment.plugins.append(
   'SW',
   new WorkboxPlugin.GenerateSW({
+    swDest: resolve(config.public_root_path, 'sw.js'),
     clientsClaim: true,
     exclude: [/\.map$/, /manifest\.json$/],
     importWorkboxFrom: 'cdn',
