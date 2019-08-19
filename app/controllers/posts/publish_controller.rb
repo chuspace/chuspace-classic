@@ -16,14 +16,15 @@ class Posts::PublishController < ApplicationController
     @post.blob_id = @post.blob.oid
     @post.slug = @markdown.title
     new_blob_path = Pathname.new(@post.repo_dir).join("#{@post.slug}.md").to_path
+    @post.body_html = @markdown.body_html
 
     if @post.may_publish? && @post.valid?
       @post.publish
-      @post.assign_attributes(body_html: @markdown.body_html, published_at: Time.now, blob_path: new_blob_path)
+      @post.assign_attributes(published_at: Time.now, blob_path: new_blob_path)
     end
 
     if @post.save
-      @post.blob.rename(committer: Current.user, new_path: new_blob_path, commit_message: "Publish post #{new_blob_path}")
+      @post.blob.rename(committer: Current.user, new_path: new_blob_path, commit_message: "Publish post #{new_blob_path}") if @post.status_changed?
       redirect_to user_post_path(@post.author, @post)
     else
       render 'posts/edit'
