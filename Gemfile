@@ -96,7 +96,7 @@ gem 'octokit'
 # environment variables
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 
-# SEO
+#  SEO
 gem 'meta-tags'
 
 group :production do

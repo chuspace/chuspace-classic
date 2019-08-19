@@ -7,7 +7,6 @@ import 'custom-elements'
 
 import * as Rails from 'rails-ujs'
 import * as Turbolinks from 'turbolinks'
-import * as serviceWorker from '../service-worker'
 
 import { Application } from 'stimulus'
 import { definitionsFromContext } from 'stimulus/webpack-helpers'
@@ -18,4 +17,10 @@ application.load(definitionsFromContext(controllersContext))
 
 Rails.start()
 Turbolinks.start()
-serviceWorker.register()
+
+if (navigator.serviceWorker) {
+  navigator.serviceWorker.register('/sw.js', { scope: './' }).then(function(reg) {
+    console.log('[Companion]', 'Service worker registered!')
+    console.log(reg)
+  })
+}

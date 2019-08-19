@@ -10,4 +10,4 @@ Restart=always
 LimitNOFILE=infinity
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

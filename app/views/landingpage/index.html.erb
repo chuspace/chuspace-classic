@@ -1,12 +1,12 @@
-<main class='mt-24 flex justify-between'>
-  <section class='w-1/2 pr-8 mt-12'>
+<main class='sm:mt-24 block sm:flex justify-between'>
+  <section class='w-full sm:w-1/2 pr-8 mt-12'>
     <h1 class='font-semibold'><%= t('.heading') %></h1>
     <p class="mt-6 text-lg text-secondary">
       <%= t('chuspace.pitch') %>
     </p>
   </section>
 
-  <section class='w-2/5'>
+  <section class='w-full sm:w-2/5'>
     <%= render 'signups/form', user: @user %>
   </section>
 </main>
