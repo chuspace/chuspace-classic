@@ -38,7 +38,7 @@ set linked_dirs: %w[
   node_modules
   public/assets
   public/packs
-  cache/webpacker
+  cache
   bin/git-hooks
 ]
 
