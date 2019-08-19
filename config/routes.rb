@@ -2,8 +2,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get 'service_worker/file'
-  get 'service_worker/manifest'
   root to: 'frontpage#index', constraints: PrivateRootConstraint.new, as: :authenticated_root
   root to: 'landingpage#index'
 
@@ -12,6 +10,7 @@ Rails.application.routes.draw do
 
   resources :signins, path: 'signin', only: %i[index create destroy]
   resources :signups, path: 'signup', only: %i[index create]
+
   resources :check_nicknames, only: :create
   resources :check_emails, only: :create
   resources :magic_logins, only: :index

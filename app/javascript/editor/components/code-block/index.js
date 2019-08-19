@@ -61,7 +61,7 @@ export default class CodeEditor extends LitElement {
     } catch (e) {}
 
     const codeNode = this.querySelector('.code-editor')
-    this.cm = this.createCM(codeNode)
+    this.cm = await this.createCM(codeNode)
     this.onInit && this.onInit(this.cm)
 
     this.loaded = true
@@ -71,7 +71,7 @@ export default class CodeEditor extends LitElement {
     return this
   }
 
-  createCM = (node: ?HTMLElement) =>
+  createCM = async (node: ?HTMLElement) =>
     new CodeMirror(node, {
       lineNumbers: true,
       smartIndent: !this.readonly,
