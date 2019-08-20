@@ -69,6 +69,21 @@ class PostHtmlRenderer < CommonMarker::HtmlRenderer
     end
   end
 
+  def code_block(node)
+    block do
+      out("<code-editor#{sourcepos(node)}")
+
+      if node.fence_info && !node.fence_info.empty?
+        out(' mode="', node.fence_info.split(/\s+/)[0], '"')
+      end
+
+      out(' content="', escape_html(node.string_content), '"')
+      out(' readonly="nocursor"')
+      out(' theme="light"')
+      out('></code-editor>')
+    end
+  end
+
   def render(node)
     @count += 1 if node.type == :header
     super(node)

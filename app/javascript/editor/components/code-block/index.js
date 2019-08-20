@@ -31,9 +31,10 @@ export default class CodeEditor extends LitElement {
       mode: { type: String, reflect: true },
       readonly: { type: String },
       theme: { type: String },
-      lines: { type: Number },
       loaded: { type: Boolean },
+      content: { type: String, reflect: true },
       onInit: { type: Function },
+      codeMirrorKeymap: { type: Function },
       onLanguageChange: { type: Function },
       onDestroy: { type: Function }
     }
@@ -41,7 +42,9 @@ export default class CodeEditor extends LitElement {
 
   constructor() {
     super()
+
     this.loaded = false
+    this.lines = 0
   }
 
   setMode = async (mode: string) => {
@@ -53,6 +56,7 @@ export default class CodeEditor extends LitElement {
 
   async connectedCallback() {
     super.connectedCallback()
+    this.lines = this.content.split(/\r\n|\r|\n/).length
 
     await loadMode(this.mode)
 
@@ -60,9 +64,13 @@ export default class CodeEditor extends LitElement {
       this.readonly = JSON.parse(this.readonly)
     } catch (e) {}
 
+    console.log(this.content)
+
     const codeNode = this.querySelector('.code-editor')
     this.cm = await this.createCM(codeNode)
-    this.onInit && this.onInit(this.cm)
+    this.cm.refresh()
+
+    if (this.onInit) await this.onInit(this.cm)
 
     this.loaded = true
   }
@@ -77,10 +85,13 @@ export default class CodeEditor extends LitElement {
       smartIndent: !this.readonly,
       readOnly: this.readonly || false,
       indentUnit: 2,
+      value: this.content.trim(),
+      mode: this.mode,
       lineWrapping: true,
       indentWithTabs: !this.readonly,
       theme: `chuspace-${this.theme}`,
       addModeClass: true,
+      extraKeys: this.codeMirrorKeymap && this.codeMirrorKeymap(),
       autoCloseBrackets: !this.readonly,
       autoCloseTags: !this.readonly,
       showTrailingSpace: !this.readonly,

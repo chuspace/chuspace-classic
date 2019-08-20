@@ -47,9 +47,10 @@ export default class CodeBlockView extends BaseView {
         <code-editor
           mode=${this.mode}
           readonly=${this.readOnly}
-          lines=${this.lines}
           theme=${this.theme}
+          content=${this.content}
           .onInit=${this.onInit}
+          .codeMirrorKeymap=${this.codeMirrorKeymap}
           .onLanguageChange=${this.onLanguageChange}
           .onDestroy=${this.destroy}
         ></code-editor>
@@ -61,13 +62,8 @@ export default class CodeBlockView extends BaseView {
     this.containerNode = this.dom
   }
 
-  onInit = (cm: CodeMirror) => {
+  onInit = async (cm: CodeMirror) => {
     this.cm = cm
-
-    this.cm.setOption('mode', this.mode)
-    this.cm.setValue(this.content)
-
-    this.cm.setOption('extraKeys', this.codeMirrorKeymap())
     // Propagate updates from the code editor to ProseMirror
     this.cm.on('beforeChange', () => (this.incomingChanges = true))
     // Propagate updates from the code editor to ProseMirror
