@@ -32,5 +32,6 @@ module Chuspace
 
     # Active job adapter
     config.active_job.queue_adapter = :sidekiq
+    config.action_mailer.deliver_later_queue_name = 'low'
   end
 end
