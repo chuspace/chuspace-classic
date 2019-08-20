@@ -4,6 +4,9 @@ dialog
 
   &.dialog__sm
     @apply h-screen z-50 left-0 right-0 bg-white border border-grey-lighter overflow-auto rounded shadow-lg
-    width: 800px
+    width: 100%
     top: 4rem
     height: calc(100vh - 8rem)
+
+    @screen sm
+      width: 800px

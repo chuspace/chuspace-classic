@@ -16,6 +16,7 @@ class SignupsController < ApplicationController
         if @user.save
           @user.create_repository
           UserMailer.with(user: @user).welcome.deliver_later
+
           format.html { redirect_to root_path, notice: t('users.create.success') }
         else
           format.js

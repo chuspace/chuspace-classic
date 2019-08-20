@@ -1,11 +1,7 @@
 
 <table cellpadding="0" cellspacing="0">
-  <tr>
-    <td><h3 class='mb-10'><%= t('.salutation', name: @user.first_name) %></h3></td>
-  </tr>
-  <tr>
-    <td><p class='mb-10'><%= t('.body') %></p></td>
-  </tr>
+  <tr><td><h3 class='mb-10'><%= t('.salutation', name: @user.first_name) %></h3></td></tr>
+  <tr><td><p class='mb-10'><%= t('.body', expires_in: User::AUTH_TOKEN_EXPIRE_IN) %></p></td></tr>
   <tr>
     <td style='text-align: center;' >
       <%= link_to 'Click to login', magic_logins_url(token: @user.auth_token), class: 'button my-20' %>
@@ -13,12 +9,14 @@
   </tr>
   <tr>
     <td>
-      <p class='grey__text mt-20'><%= t('.direct_url') %>: <%= magic_logins_url(token: @user.auth_token) %></p>
+      <p class='my-20'><%= t('.token', link: link_to('click here', signin_token_index_url)).html_safe %>.</p>
+      <p class='bordered__box center'><%= @user.auth_token %></p>
     </td>
   </tr>
   <tr>
     <td>
-      <p class='grey__text mt-20'><%= t('.compliance') %></p>
+      <p class='grey__text mt-20'><%= t('.direct_url') %>: <%= magic_logins_url(token: @user.auth_token) %></p>
     </td>
   </tr>
+  <tr><td><p class='grey__text mt-20'><%= t('.compliance') %></p></td></tr>
 </table>

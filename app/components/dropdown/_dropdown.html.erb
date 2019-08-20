@@ -1,7 +1,9 @@
 <details class='relative' data-controller='dropdown'>
   <summary>
     <%= dropdown.opener %>
-    <span class='drop__arrow'></span>
+    <% if dropdown.arrow? %>
+      <span class='drop__arrow'></span>
+    <% end %>
   </summary>
 
   <details-menu role="menu" class='dropdown'>
@@ -9,7 +11,7 @@
       <% if item.divider %>
         <%= content_tag :div, nil, class: 'dropdown__divider' %>
       <% else %>
-        <%= link_to item.label.html_safe, item.url, class: 'link link--default dropdown__item', role: 'menuitem', tabindex: '-1', **item.options %>
+        <%= link_to item.label.html_safe, item.url, class: "link link--#{item.link_type || 'default'} dropdown__item", role: 'menuitem', tabindex: '-1', **item.options %>
       <% end %>
     <% end %>
   </details-menu>

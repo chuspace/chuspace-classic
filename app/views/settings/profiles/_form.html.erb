@@ -1,7 +1,7 @@
 <%= simple_form_for @user, remote: true do |f| %>
   <div class='block sm:flex'>
     <div class='avatar w-full sm:w-1/3 mt-8'>
-      <%= component 'avatar', avatar: @user.avatar, initials: @user.initials, variant: :xl, css_class: 'mx-auto' %>
+      <%= component 'avatar', avatar: @user.avatar, initials: @user.initials, variant: :xl %>
       <%= f.input :avatar, as: :file, label: false %>
     </div>
 

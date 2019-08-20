@@ -43,6 +43,7 @@ gem 'webpacker', github: 'rails/webpacker'
 gem 'redis', '>= 4.0'
 gem 'anycable-rails'
 gem 'hiredis'
+gem 'sidekiq'
 
 # Auth
 gem 'pundit'

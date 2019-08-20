@@ -13,19 +13,21 @@ export default class AlertNotification extends LitElement {
   connectedCallback() {
     super.connectedCallback()
 
-    setTimeout(() => {
-      this.classList.remove('fadeInDown')
-      this.classList.add('fadeOutUp')
-    }, 5000)
+    setTimeout(this.hide, 5000)
   }
 
   createRenderRoot() {
     return this
   }
 
+  hide = () => {
+    this.classList.remove('fadeInDown')
+    this.classList.add('fadeOutUp')
+  }
+
   render() {
     return html`
-      <div class="alert alert--${this.level}">
+      <div class="alert alert--${this.level}" @click=${this.hide}>
         <div class="p-4 ">
           ${this.message}
         </div>

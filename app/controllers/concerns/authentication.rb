@@ -9,7 +9,7 @@ module Authentication
   def login(user)
     cookies.encrypted[:user_id] = { value: user.id, expires: 1.year.from_now, domain: %w(chuspace.com live.chuspace.com), secure: Rails.env.production? }
     user.update_tracked_fields!(request)
-    user.regenerate_auth_token
+    user.update(auth_token_expires_at: Time.now)
     user
   end
 

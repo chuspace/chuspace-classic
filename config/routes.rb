@@ -8,7 +8,12 @@ Rails.application.routes.draw do
   get :sw, to: 'service_worker#file', format: :js
   get :manifest, to: 'service_worker#manifest', format: :json
 
-  resources :signins, path: 'signin', only: %i[index create destroy]
+  resources :signins, path: 'signin', only: %i[index create destroy] do
+    collection do
+      resources :tokens, only: %i[index create], as: :signin_token, module: :signins, path: :token
+    end
+  end
+
   resources :signups, path: 'signup', only: %i[index create]
 
   resources :check_nicknames, only: :create

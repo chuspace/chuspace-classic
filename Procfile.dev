@@ -4,3 +4,4 @@ imgproxy: dotenv -f ".env.development" imgproxy
 anycable-go: anycable-go --headers=cookie,origin --host=localhost --port=3334
 anycable: dotenv -f ".env.development" bundle exec anycable
 racecar-process-commits: dotenv -f ".env.development" bundle exec racecar PostReceiveConsumer
+sidekiq: bundle exec sidekiq -C config/sidekiq.yml

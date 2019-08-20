@@ -5,7 +5,7 @@ class MagicLoginsController < ApplicationController
   def index
     user = User.find_by(auth_token: params[:token])
 
-    if user
+    if user&.auth_token_valid?
       login(user)
       redirect_to root_url
     else

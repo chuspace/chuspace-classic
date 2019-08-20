@@ -1,0 +1,13 @@
+[Unit]
+Description=Sidekiq background jobs service
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/git/chuspace.com/current
+EnvironmentFile=/home/git/chuspace.com/current/.env
+ExecStart=/usr/bin/rbenv exec bundle exec sidekiq -C config/sidekiq.yml
+Restart=always
+
+[Install]
+WantedBy=default.target

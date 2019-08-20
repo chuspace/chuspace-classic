@@ -19,8 +19,10 @@
       </div>
     </section>
 
-    <div class='container'>
-      <%= render 'layouts/footer' %>
-    </div>
+    <% unless params[:controller].include?('posts') %>
+      <div class='container'>
+        <%= render 'layouts/footer' %>
+      </div>
+    <% end %>
   </body>
 </html>

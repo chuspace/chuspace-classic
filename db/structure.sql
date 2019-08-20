@@ -331,6 +331,7 @@ CREATE TABLE public.users (
     nickname character varying DEFAULT ''::character varying NOT NULL,
     avatar_data jsonb,
     auth_token character varying DEFAULT ''::character varying NOT NULL,
+    auth_token_expires_at timestamp without time zone,
     posts_count integer DEFAULT 0 NOT NULL,
     bio character varying,
     company character varying,

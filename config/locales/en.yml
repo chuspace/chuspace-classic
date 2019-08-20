@@ -1,110 +1,109 @@
+---
 en:
-  chuspace:
-    pitch: |
-      Chuspace is a collaborative blogging platform for developers like Github,
-      where articles can be shared and maintained just like code.
-
-  activerecord:
-    errors:
-      models:
-        user:
-          attributes:
-            nickname:
-              invalid: should be all lowercase, unique, min 1 character, may have a single hyphen and no special characters.
-        ssh_key:
-          attributes:
-            key:
-              invalid_key: is invalid. It must begin with 'ssh-ed25519', 'ssh-rsa', 'ssh-dss', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', or 'ecdsa-sha2-nistp521'. Please paste public key only.
-              nonunique_key: is already taken
-
-        user:
-          attributes:
-            avatar:
-              invalid_type: is invalid. Please upload 'gif', 'png', 'jpg' images only.
-              invalid_size: is invalid. Please upload images size up to 5 MB.
-
-        post:
-          attributes:
-            slug:
-              invalid: should be all lowercase, unique, min 10 character, may have a single hyphen and no special characters.
-            topics:
-              too_long: maximum %{count} topics allowed
-
   activemodel:
     errors:
       models:
         blob:
           attributes:
-            name:
-              invalid_extname: is invalid. Supported types are 'md', 'gif', 'png' and 'jpg'.
             content:
               invalid_content_type: is invalid. Supported types are text and images.
               invalid_size: is invalid. Allowed blob size is %{size}MB for %{type}.
-
+            name:
+              invalid_extname: is invalid. Supported types are 'md', 'gif', 'png'
+                and 'jpg'.
+  activerecord:
+    errors:
+      models:
+        post:
+          attributes:
+            slug:
+              invalid: should be all lowercase, unique, min 10 character, may have
+                a single hyphen and no special characters.
+            topics:
+              too_long: maximum %{count} topics allowed
+        ssh_key:
+          attributes:
+            key:
+              invalid_key: is invalid. It must begin with 'ssh-ed25519', 'ssh-rsa',
+                'ssh-dss', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', or 'ecdsa-sha2-nistp521'.
+                Please paste public key only.
+              nonunique_key: is already taken
+        user:
+          attributes:
+            avatar:
+              invalid_size: is invalid. Please upload images size up to 5 MB.
+              invalid_type: is invalid. Please upload 'gif', 'png', 'jpg' images only.
+  chuspace:
+    pitch: |
+      Chuspace is a collaborative blogging platform for developers like Github,
+      where articles can be shared and maintained just like code.
+  header:
+    guest:
+      signin_cta: Got an account?
+  landingpage:
+    index:
+      heading: Blogging platform for developers
+      intro: Chuspace is a blogging platform built on Git. Publish, learn and collaborate
+        using the tools you love and use everyday.
   layouts:
     mailer:
-      do_not_share: This email contains unique secure links that allow you to access Chuspace. Please do not forward or share this email.
-
-  user_mailer:
-    welcome:
-      subject: Welcome to Chuspace, %{name}
-      salutation: Hey %{name},
-      body: Thank you for signing up! Chuspace is currently in alpha and we're really happy to have you onboard. Please give it a try and help us make it better.
-      outro: Hope you will have a good experience. Just send us an email if you have any questions.
-
-    send_magic_login:
-      subject: Log in to Chuspace, %{name}
-      salutation: Hey %{name},
-      body: Click on the button below to sign in to your Chuspace account. This magic link will expire in 15 minutes and can only be used once.
-      direct_url: If the button above doesn’t work, paste this link into your web browser
-      compliance: If you did not make this request, you can safely ignore this email.
-
+      do_not_share: This email contains unique secure links that allow you to access
+        Chuspace. Please do not forward or share this email.
+  magic_login:
+    expired: Login link expired! Please request a new one.
+  pundit:
+    default: You cannot perform this action.
+    post_policy:
+      create?: You cannot create posts!
+      show?: You cannot view this post!
+      update?: You cannot edit this post!
   settings:
     ssh_keys:
       create:
         success: Ssh key successfully added to your account
       destroy:
         success: Ssh key successfully removed from your account
-
+  signins:
+    create:
+      failure: We couldn't find that email. Perhaps you mispelled it?
+      success: We have sent you an email with login link.
+    index:
+      heading: Sign in
+      intro: Enter the email address associated with your account, and we’ll send
+        a magic link to your inbox.
+    tokens:
+      create:
+        invalid: Login token invalid or expired
+      index:
+        heading: Sign in
+        intro: Enter the login token from your email
+  signups:
+    index:
+      heading: Join Chuspace
+      intro: Blogging platform for developers
+  user_drafts:
+    no_posts: You don't have any posts as draft.
+    no_posts_btn_text: Start writing
+  user_mailer:
+    send_magic_login:
+      body: Click on the button below to sign in to your Chuspace account. This magic
+        link will expire in %{expires_in} minutes and can only be used once.
+      compliance: If you did not make this request, you can safely ignore this email.
+      direct_url: If the button above doesn’t work, paste this link into your web
+        browser
+      salutation: Hey %{name},
+      subject: Log in to Chuspace, %{name}
+      token: If you can't use the magic login link, for example when using our PWA
+        app, please %{link} and enter the token below
+    welcome:
+      body: Thank you for signing up! Chuspace is currently in alpha and we're really
+        happy to have you onboard. Please give it a try and help us make it better.
+      outro: Hope you will have a good experience. Just send us an email if you have
+        any questions.
+      salutation: Hey %{name},
+      subject: Welcome to Chuspace, %{name}
   users:
     create:
       success: Welcome aboard! we have sent you an email with login link.
     no_posts: You haven't published any posts yet.
     no_posts_btn_text: Publish one
-
-  user_drafts:
-    no_posts: You don't have any posts as draft.
-    no_posts_btn_text: Start writing
-
-  header:
-    guest:
-      signin_cta: Got an account?
-
-  landingpage:
-    index:
-      heading: Blogging platform for developers
-      intro: Chuspace is a blogging platform built on Git. Publish, learn and collaborate using the tools you love and use everyday.
-
-  signups:
-    index:
-      heading: Join Chuspace
-      intro: Blogging platform for developers
-
-  signins:
-    index:
-      heading: Sign in
-      intro: Enter the email address associated with your account, and we’ll send a magic link to your inbox.
-
-    create:
-      failure: We couldn't find that email. Perhaps you mispelled it?
-      success: We have sent you an email with login link.
-
-  magic_login:
-    expired: Login link expired! Please request a new one.
-
-  pundit:
-    default: 'You cannot perform this action.'
-    post_policy:
-      update?: 'You cannot edit this post!'
-      show?: 'You cannot view this post!'
-      create?: 'You cannot create posts!'

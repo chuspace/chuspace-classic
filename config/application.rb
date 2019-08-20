@@ -5,7 +5,7 @@ require_relative 'boot'
 require 'rails'
 # Pick the frameworks you want:
 require 'active_model/railtie'
-#  require 'active_job/railtie'
+require 'active_job/railtie'
 require 'active_record/railtie'
 require 'action_controller/railtie'
 require 'action_mailer/railtie'
@@ -29,5 +29,8 @@ module Chuspace
 
     # Schema format
     config.active_record.schema_format = :sql
+
+    # Active job adapter
+    config.active_job.queue_adapter = :sidekiq
   end
 end

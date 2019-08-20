@@ -1,5 +1,9 @@
 .card
-  @apply mx-auto p-8
+  @apply mx-auto
+  padding: 0
+
+  @screen sm
+    @apply p-8
 
 .card-default
   @apply shadow border border-grey-lighter
@@ -12,5 +16,3 @@
 
 .card-body
   @apply mb-4 my-8
-
-.card-footer

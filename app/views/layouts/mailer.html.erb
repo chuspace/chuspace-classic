@@ -44,12 +44,16 @@
 
       * { margin: 0; padding: 0; }
       .mt-20 { margin-top: 20px; }
+      .mt-40 { margin-top: 40px; }
       .mb-10 { margin-bottom: 10px; }
       .mb-20 { margin-bottom: 20px; }
       .my-20 { margin-top: 20px; margin-bottom: 20px; }
+      .bordered__box { border: 1px solid #ccc; padding: 10px; }
+      .center { text-align: center; }
 
       .container {
-        max-width: 600px;
+        min-width: 600px;
+        width: 600px;
         margin: 0 auto;
         vertical-align: top;
         display: block;
@@ -91,11 +95,11 @@
   </head>
 
   <body>
-    <table style="width: 100%;">
+    <table style="width: 100%;" width='100%'>
       <tr>
         <td class='container'>
           <div class='section'>
-            <table>
+            <table width='600'>
               <tr>
                 <td style="font-size: 30px; font-weight: 700;">
                   <span style='background-color: rgba(0, 0, 0, 0.2); padding-left: 5px;'>Chu</span>space
@@ -112,7 +116,7 @@
             </table>
 
             <div class='section grey__text'>
-              <table>
+              <table width='600'>
                 <tr>
                   <td><p class='mb-10'><%= t('.do_not_share') %></p></td>
                 </tr>

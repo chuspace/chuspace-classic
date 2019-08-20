@@ -2,7 +2,7 @@
   <td><h3 class='mb-10'><%= t('.salutation', name: @user.first_name) %></h3></td>
 </tr>
 <tr>
-  <td >
+  <td>
     <p class='mb-10'>
       <%= t('.body').html_safe %>
     </p>
@@ -44,11 +44,20 @@
   </td>
 </tr>
 <tr>
+  <td><p class='my-20'><%= t('user_mailer.send_magic_login.body', expires_in: User::AUTH_TOKEN_EXPIRE_IN) %></p></td>
+</tr>
+<tr>
   <td style='text-align: center;'><%= link_to 'Click to login', magic_logins_url(token: @user.auth_token), class: 'button my-20' %></td>
 </tr>
 <tr>
+  <td>
+    <p class='my-20'><%= t('user_mailer.send_magic_login.token', link: link_to('click here', signin_token_index_url)).html_safe %>.</p>
+    <p class='bordered__box center'><%= @user.auth_token %></p>
+  </td>
+</tr>
+<tr>
   <td >
-    <p class='mb-10'>
+    <p class='mt-40'>
       <%= t('.outro').html_safe %>
     </p>
   </td>

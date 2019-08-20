@@ -3,8 +3,8 @@
 <% noindex %>
 
 <div class='block sm:text-left sm:flex'>
-  <div class='mb-5 w-full sm:w-1/4'>
-    <%= component 'avatar', avatar: @user.avatar, initials: @user.initials, variant: :thumb %>
+  <div class='mb-5 w-full text-center sm:text-left sm:w-1/4'>
+    <%= component 'avatar', avatar: @user.avatar, initials: @user.initials, variant: :thumb, css_class: 'mx-auto sm:mx-0' %>
 
     <div class='w-75'>
       <h3 class='text-2xl mt-8'><%= @user.name %></h3>
@@ -25,7 +25,7 @@
     <%= link_to 'Edit profile', settings_profiles_path, class: 'button button--active inline-block mt-4'%>
   </div>
 
-  <div class='posts w-full sm:w-3/4'>
+  <div class='posts w-full sm:w-3/4 mt-10 sm:mt-0'>
     <%= render 'users/tabs' %>
 
     <% if @posts.any? %>

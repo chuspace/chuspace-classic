@@ -16,6 +16,10 @@ class User < ApplicationRecord
   has_one :repository, dependent: :destroy, foreign_key: 'author_id', autosave: true
   has_many :posts, foreign_key: 'author_id', dependent: :destroy
 
+  before_save :update_auth_token_expiry, if: :auth_token_changed?
+
+  AUTH_TOKEN_EXPIRE_IN = 30
+
   alias repo repository
 
   def to_param
@@ -30,8 +34,18 @@ class User < ApplicationRecord
     name.split(' ').first
   end
 
+  def auth_token_valid?
+    auth_token_expires_at.to_i >= Time.now.to_i
+  end
+
   def drafts
     published_blob_paths ||= posts.pluck(:blob_path)
     repository.blobs.select { |blob| published_blob_paths.exclude?(blob.path) && blob.post? }
+  end
+
+  private
+
+  def update_auth_token_expiry
+    self.auth_token_expires_at = AUTH_TOKEN_EXPIRE_IN.minutes
   end
 end

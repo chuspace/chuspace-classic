@@ -26,10 +26,15 @@
 
     &__label--floating
       &::before
-        @apply absolute text-sm border-r pr-2 italic pointer-events-none text-grey-light font-headings
+        @apply absolute hidden text-sm border-r pr-2 italic pointer-events-none text-grey-light font-headings
         content: attr(data-label)
         top: calc(100% / 2 - 0.4rem)
         right: 110%
+
+      @screen sm
+        &::before
+          @apply block
+
   &.file
     .input__container::after
       @apply border-none

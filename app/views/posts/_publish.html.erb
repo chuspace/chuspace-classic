@@ -1,5 +1,5 @@
 <dialog class='dialog__sm' data-controller='publish'>
-  <div class='container relative'>
+  <div class='relative'>
     <%= link_to edit_post_path(post) do %>
       <svg-icon
         class='absolute top-0 right-0'
@@ -11,7 +11,7 @@
     <% end %>
 
     <h3 class='border-b pb-2 inline-block text-lg'>Publish</h3>
-    <div class='card card--default w-3/4 mx-auto mt-8'>
+    <div class='card card--default w-full sm:w-3/4 mx-auto mt-8'>
       <%= simple_form_for post, scope: :post, url: post_publish_index_path(post), method: :post, remote: true do |f| %>
         <h1 class='title__label title__label--nohover text-3xl'><%= post.title %></h1>
         <%= content_tag :span, post.errors.full_messages_for(:title).to_sentence, class: 'input__error text-red block' if post.errors.include?(:title) %>
