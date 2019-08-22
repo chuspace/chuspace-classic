@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/activerecord-clean-db-structure/all/activerecord-clean-db-structure.rbi
 #
-# activerecord-clean-db-structure-0.3.0
+# activerecord-clean-db-structure-736c157c3aa2
 module ActiveRecordCleanDbStructure
 end
 class ActiveRecordCleanDbStructure::Railtie < Rails::Railtie

@@ -2395,9 +2395,6 @@ end
 class ActionView::Template::Inline
 end
 
-class ActionView::Template::LegacyTemplate
-end
-
 class ActionView::Template::RawFile
   def format(); end
 
@@ -3657,6 +3654,7 @@ module ActiveRecord::Base::GeneratedAttributeMethods
 end
 
 class ActiveRecord::Base
+  extend ::SorbetRails::CustomFinderMethods
   def self.inherited(child); end
 end
 
@@ -3905,7 +3903,6 @@ module ActiveRecord::FinderMethods
 end
 
 class ActiveRecord::InternalMetadata
-  include ::ActiveRecord::InternalMetadata::GeneratedAttributeMethods
   include ::ActiveRecord::InternalMetadata::GeneratedAssociationMethods
 end
 
@@ -3940,9 +3937,6 @@ module ActiveRecord::InternalMetadata::GeneratedAssociationMethods
 end
 
 module ActiveRecord::InternalMetadata::GeneratedAssociationMethods
-end
-
-module ActiveRecord::InternalMetadata::GeneratedAttributeMethods
 end
 
 module ActiveRecord::InternalMetadata::GeneratedAttributeMethods
@@ -4357,6 +4351,7 @@ class ActiveRecord::Relation
   include ::ActiveModel::ForbiddenAttributesProtection
   include ::ActiveRecord::SpawnMethods
   include ::ActiveRecord::Calculations
+  include ::SorbetRails::CustomFinderMethods
   CLAUSE_METHODS = ::T.let(nil, ::T.untyped)
   INVALID_METHODS_FOR_DELETE_ALL = ::T.let(nil, ::T.untyped)
   MULTI_VALUE_METHODS = ::T.let(nil, ::T.untyped)
@@ -4398,7 +4393,6 @@ class ActiveRecord::Schema
 end
 
 class ActiveRecord::SchemaMigration
-  include ::ActiveRecord::SchemaMigration::GeneratedAttributeMethods
   include ::ActiveRecord::SchemaMigration::GeneratedAssociationMethods
   def version(); end
 end
@@ -4434,9 +4428,6 @@ module ActiveRecord::SchemaMigration::GeneratedAssociationMethods
 end
 
 module ActiveRecord::SchemaMigration::GeneratedAssociationMethods
-end
-
-module ActiveRecord::SchemaMigration::GeneratedAttributeMethods
 end
 
 module ActiveRecord::SchemaMigration::GeneratedAttributeMethods
@@ -7211,22 +7202,6 @@ module Bootsnap::LoadPathCache::PathScanner
   REQUIRABLE_EXTENSIONS = ::T.let(nil, ::T.untyped)
 end
 
-Builder::BlankSlate = BasicObject
-
-module Builder::XChar
-  CP1252 = ::T.let(nil, ::T.untyped)
-  CP1252_DIFFERENCES = ::T.let(nil, ::T.untyped)
-  ENCODING_BINARY = ::T.let(nil, ::T.untyped)
-  ENCODING_ISO1 = ::T.let(nil, ::T.untyped)
-  ENCODING_UTF8 = ::T.let(nil, ::T.untyped)
-  INVALID_XML_CHAR = ::T.let(nil, ::T.untyped)
-  PREDEFINED = ::T.let(nil, ::T.untyped)
-  REPLACEMENT_CHAR = ::T.let(nil, ::T.untyped)
-  UNICODE_EQUIVALENT = ::T.let(nil, ::T.untyped)
-  VALID = ::T.let(nil, ::T.untyped)
-  XML_PREDEFINED = ::T.let(nil, ::T.untyped)
-end
-
 Bundler::Deprecate = Gem::Deprecate
 
 class Bundler::Env
@@ -8558,19 +8533,6 @@ module Capybara
   extend ::Capybara::DSL
 end
 
-module CarrierWave
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module CarrierWave::Compatibility::Paperclip
-  DEFAULT_MAPPINGS = ::T.let(nil, ::T.untyped)
-end
-
-module CarrierWave::Utilities::Uri
-  SAFE_STRING = ::T.let(nil, ::T.untyped)
-  UNSAFE = ::T.let(nil, ::T.untyped)
-end
-
 module CharlockHolmes
   VERSION = ::T.let(nil, ::T.untyped)
 end
@@ -9883,171 +9845,6 @@ module Exception2MessageMapper
   def self.message(klass, exp); end
 end
 
-module Excon
-  CHUNK_SIZE = ::T.let(nil, ::T.untyped)
-  CR_NL = ::T.let(nil, ::T.untyped)
-  DEFAULTS = ::T.let(nil, ::T.untyped)
-  DEFAULT_CA_FILE = ::T.let(nil, ::T.untyped)
-  DEFAULT_CHUNK_SIZE = ::T.let(nil, ::T.untyped)
-  DEFAULT_REDIRECT_LIMIT = ::T.let(nil, ::T.untyped)
-  DEFAULT_RETRY_ERRORS = ::T.let(nil, ::T.untyped)
-  DEFAULT_RETRY_LIMIT = ::T.let(nil, ::T.untyped)
-  DEPRECATED_VALID_REQUEST_KEYS = ::T.let(nil, ::T.untyped)
-  FORCE_ENC = ::T.let(nil, ::T.untyped)
-  HTTPS = ::T.let(nil, ::T.untyped)
-  HTTP_1_1 = ::T.let(nil, ::T.untyped)
-  HTTP_VERBS = ::T.let(nil, ::T.untyped)
-  NO_ENTITY = ::T.let(nil, ::T.untyped)
-  REDACTED = ::T.let(nil, ::T.untyped)
-  UNIX = ::T.let(nil, ::T.untyped)
-  USER_AGENT = ::T.let(nil, ::T.untyped)
-  VALID_CONNECTION_KEYS = ::T.let(nil, ::T.untyped)
-  VALID_REQUEST_KEYS = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-  VERSIONS = ::T.let(nil, ::T.untyped)
-end
-
-Excon::Errors::Accepted = Excon::Error::Accepted
-
-Excon::Errors::BadGateway = Excon::Error::BadGateway
-
-Excon::Errors::BadRequest = Excon::Error::BadRequest
-
-Excon::Errors::CertificateError = Excon::Error::Certificate
-
-Excon::Errors::ClientError = Excon::Error::Client
-
-Excon::Errors::Conflict = Excon::Error::Conflict
-
-Excon::Errors::Continue = Excon::Error::Continue
-
-Excon::Errors::Created = Excon::Error::Created
-
-Excon::Errors::Error = Excon::Error
-
-Excon::Errors::ExpectationFailed = Excon::Error::ExpectationFailed
-
-Excon::Errors::Forbidden = Excon::Error::Forbidden
-
-Excon::Errors::Found = Excon::Error::Found
-
-Excon::Errors::GatewayTimeout = Excon::Error::GatewayTimeout
-
-Excon::Errors::Gone = Excon::Error::Gone
-
-Excon::Errors::HTTPStatusError = Excon::Error::HTTPStatus
-
-Excon::Errors::Informational = Excon::Error::Informational
-
-Excon::Errors::InternalServerError = Excon::Error::InternalServerError
-
-Excon::Errors::InvalidHeaderKey = Excon::Error::InvalidHeaderKey
-
-Excon::Errors::InvalidHeaderValue = Excon::Error::InvalidHeaderValue
-
-Excon::Errors::InvalidStub = Excon::Error::InvalidStub
-
-Excon::Errors::LengthRequired = Excon::Error::LengthRequired
-
-Excon::Errors::MethodNotAllowed = Excon::Error::MethodNotAllowed
-
-Excon::Errors::MovedPermanently = Excon::Error::MovedPermanently
-
-Excon::Errors::MultipleChoices = Excon::Error::MultipleChoices
-
-Excon::Errors::NoContent = Excon::Error::NoContent
-
-Excon::Errors::NonAuthoritativeInformation = Excon::Error::NonAuthoritativeInformation
-
-Excon::Errors::NotAcceptable = Excon::Error::NotAcceptable
-
-Excon::Errors::NotFound = Excon::Error::NotFound
-
-Excon::Errors::NotImplemented = Excon::Error::NotImplemented
-
-Excon::Errors::NotModified = Excon::Error::NotModified
-
-Excon::Errors::OK = Excon::Error::OK
-
-Excon::Errors::PartialContent = Excon::Error::PartialContent
-
-Excon::Errors::PaymentRequired = Excon::Error::PaymentRequired
-
-Excon::Errors::PreconditionFailed = Excon::Error::PreconditionFailed
-
-Excon::Errors::ProxyAuthenticationRequired = Excon::Error::ProxyAuthenticationRequired
-
-Excon::Errors::ProxyParse = Excon::Error::ProxyParse
-
-Excon::Errors::Redirection = Excon::Error::Redirection
-
-Excon::Errors::RequestEntityTooLarge = Excon::Error::RequestEntityTooLarge
-
-Excon::Errors::RequestTimeout = Excon::Error::RequestTimeout
-
-Excon::Errors::RequestURITooLong = Excon::Error::RequestURITooLong
-
-Excon::Errors::RequestedRangeNotSatisfiable = Excon::Error::RequestedRangeNotSatisfiable
-
-Excon::Errors::ResetContent = Excon::Error::ResetContent
-
-Excon::Errors::ResponseParse = Excon::Error::ResponseParse
-
-Excon::Errors::SeeOther = Excon::Error::SeeOther
-
-Excon::Errors::ServerError = Excon::Error::Server
-
-Excon::Errors::ServiceUnavailable = Excon::Error::ServiceUnavailable
-
-Excon::Errors::SocketError = Excon::Error::Socket
-
-Excon::Errors::StubNotFound = Excon::Error::StubNotFound
-
-Excon::Errors::Success = Excon::Error::Success
-
-Excon::Errors::SwitchingProtocols = Excon::Error::SwitchingProtocols
-
-Excon::Errors::TemporaryRedirect = Excon::Error::TemporaryRedirect
-
-Excon::Errors::Timeout = Excon::Error::Timeout
-
-Excon::Errors::TooManyRedirects = Excon::Error::TooManyRedirects
-
-Excon::Errors::TooManyRequests = Excon::Error::TooManyRequests
-
-Excon::Errors::Unauthorized = Excon::Error::Unauthorized
-
-Excon::Errors::UnprocessableEntity = Excon::Error::UnprocessableEntity
-
-Excon::Errors::UnsupportedMediaType = Excon::Error::UnsupportedMediaType
-
-Excon::Errors::UseProxy = Excon::Error::UseProxy
-
-Excon::Errors::Warning = Excon::Error::Warning
-
-class Excon::Headers
-  SENTINEL = ::T.let(nil, ::T.untyped)
-end
-
-class Excon::SSLSocket
-  HAVE_NONBLOCK = ::T.let(nil, ::T.untyped)
-end
-
-class Excon::Socket
-  CONNECT_RETRY_EXCEPTION_CLASSES = ::T.let(nil, ::T.untyped)
-  READ_RETRY_EXCEPTION_CLASSES = ::T.let(nil, ::T.untyped)
-  WRITE_RETRY_EXCEPTION_CLASSES = ::T.let(nil, ::T.untyped)
-end
-
-module Excon::Utils
-  CONTROL = ::T.let(nil, ::T.untyped)
-  DELIMS = ::T.let(nil, ::T.untyped)
-  ESCAPED = ::T.let(nil, ::T.untyped)
-  NONASCII = ::T.let(nil, ::T.untyped)
-  UNESCAPED = ::T.let(nil, ::T.untyped)
-  UNWISE = ::T.let(nil, ::T.untyped)
-end
-
 class ExitCalledError
 end
 
@@ -10815,260 +10612,6 @@ class Float
   include ::ActiveSupport::ToJsonWithActiveSupportEncoder
   include ::JSON::Ext::Generator::GeneratorMethods::Float
   def to_d(precision=T.unsafe(nil)); end
-end
-
-module Fog::AWS
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class Fog::AWS::AutoScaling
-  ExpectedOptions = ::T.let(nil, ::T.untyped)
-end
-
-class Fog::AWS::CDN::Mock
-  CDN_ERRORS = ::T.let(nil, ::T.untyped)
-end
-
-class Fog::AWS::Compute::Mock
-  MOCKED_TAG_TYPES = ::T.let(nil, ::T.untyped)
-  VPC_BLANK_VALUE = ::T.let(nil, ::T.untyped)
-end
-
-module Fog::AWS::CredentialFetcher
-  CONTAINER_CREDENTIALS_HOST = ::T.let(nil, ::T.untyped)
-  INSTANCE_METADATA_AZ = ::T.let(nil, ::T.untyped)
-  INSTANCE_METADATA_HOST = ::T.let(nil, ::T.untyped)
-  INSTANCE_METADATA_PATH = ::T.let(nil, ::T.untyped)
-end
-
-class Fog::AWS::ELB::Mock
-  POLICY_TYPES = ::T.let(nil, ::T.untyped)
-end
-
-module Fog::AWS::Errors
-end
-
-module Fog::AWS::Errors
-  def self.match_error(error); end
-end
-
-class Fog::AWS::Glacier
-  MEGABYTE = ::T.let(nil, ::T.untyped)
-end
-
-class Fog::AWS::Mock
-end
-
-class Fog::AWS::Mock
-  def self.arn(vendor, account_id, path, region=T.unsafe(nil)); end
-
-  def self.availability_zone(region); end
-
-  def self.box_usage(); end
-
-  def self.change_id(); end
-
-  def self.console_output(); end
-
-  def self.data_pipeline_id(); end
-
-  def self.default_vpc_for(region); end
-
-  def self.dhcp_options_id(); end
-
-  def self.dns_name_for(ip_address); end
-
-  def self.image(); end
-
-  def self.image_id(); end
-
-  def self.instance_id(); end
-
-  def self.internet_gateway_id(); end
-
-  def self.ip_address(); end
-
-  def self.kernel_id(); end
-
-  def self.key_fingerprint(); end
-
-  def self.key_id(length=T.unsafe(nil)); end
-
-  def self.key_material(); end
-
-  def self.nameservers(); end
-
-  def self.network_acl_association_id(); end
-
-  def self.network_acl_id(); end
-
-  def self.network_interface_id(); end
-
-  def self.owner_id(); end
-
-  def self.private_dns_name_for(ip_address); end
-
-  def self.private_ip_address(); end
-
-  def self.ramdisk_id(); end
-
-  def self.rds_address(db_name, region); end
-
-  def self.request_id(); end
-
-  def self.reservation_id(); end
-
-  def self.reserved_instances_id(); end
-
-  def self.reserved_instances_offering_id(); end
-
-  def self.route_table_id(); end
-
-  def self.security_group_id(); end
-
-  def self.snapshot_id(); end
-
-  def self.spot_instance_request_id(); end
-
-  def self.spot_product_descriptions(); end
-
-  def self.sqs_message_id(); end
-
-  def self.sqs_sender_id(); end
-
-  def self.subnet_id(); end
-
-  def self.volume_id(); end
-
-  def self.vpc_id(); end
-
-  def self.zone_id(); end
-end
-
-class Fog::AWS::ServiceMapper
-end
-
-class Fog::AWS::ServiceMapper
-  def self.[](service); end
-
-  def self.class_for(key); end
-
-  def self.services(); end
-end
-
-class Fog::AWS::SignatureV4
-  def canonical_headers(headers); end
-
-  def canonical_path(path); end
-
-  def canonical_query_string(query); end
-
-  def components_to_header(components); end
-
-  def credential_scope(date); end
-
-  def derived_hmac(date); end
-
-  def initialize(aws_access_key_id, secret_key, region, service); end
-
-  def sign(params, date); end
-
-  def signature_components(params, date, body_sha); end
-
-  def signature_header(params, date, body_sha=T.unsafe(nil)); end
-
-  def signature_parameters(params, date, body_sha=T.unsafe(nil)); end
-
-  def signed_headers(headers); end
-  ALGORITHM = ::T.let(nil, ::T.untyped)
-end
-
-class Fog::AWS::SignatureV4
-end
-
-class Fog::AWS::Storage
-  ACCELERATION_HOST = ::T.let(nil, ::T.untyped)
-  COMPLIANT_BUCKET_NAMES = ::T.let(nil, ::T.untyped)
-  DEFAULT_REGION = ::T.let(nil, ::T.untyped)
-  DEFAULT_SCHEME = ::T.let(nil, ::T.untyped)
-  DEFAULT_SCHEME_PORT = ::T.let(nil, ::T.untyped)
-  VALID_QUERY_KEYS = ::T.let(nil, ::T.untyped)
-end
-
-class Fog::Cache
-  SANDBOX = ::T.let(nil, ::T.untyped)
-end
-
-module Fog::Core
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class Fog::CurrentMachine
-  AMAZON_AWS_CHECK_IP = ::T.let(nil, ::T.untyped)
-end
-
-module Fog::Formatador
-  INDENT_REGEX = ::T.let(nil, ::T.untyped)
-  PARSE_REGEX = ::T.let(nil, ::T.untyped)
-  STYLES = ::T.let(nil, ::T.untyped)
-end
-
-module Fog::Json
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class Fog::Parsers::Base
-  def attr_value(name, attrs); end
-
-  def reset(); end
-
-  def response(); end
-
-  def value(); end
-end
-
-class Fog::Parsers::Base
-end
-
-class Fog::Time
-  DAYS = ::T.let(nil, ::T.untyped)
-  MONTHS = ::T.let(nil, ::T.untyped)
-end
-
-class Fog::ToHashDocument
-  def body(); end
-
-  def response(); end
-
-  def start_element(name, attributes=T.unsafe(nil)); end
-end
-
-class Fog::ToHashDocument
-end
-
-class Fog::XML::Connection
-  def request(params, &_block); end
-end
-
-class Fog::XML::Connection
-end
-
-class Fog::XML::SAXParserConnection
-  def request(parser, params); end
-end
-
-class Fog::XML::SAXParserConnection
-end
-
-module Fog::Xml
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class Formatador
-  INDENT_REGEX = ::T.let(nil, ::T.untyped)
-  PARSE_REGEX = ::T.let(nil, ::T.untyped)
-  STYLES = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
 end
 
 module FormattingHelper
@@ -13495,27 +13038,6 @@ module Loofah::Scrubbers
   MAP = ::T.let(nil, ::T.untyped)
 end
 
-class MIME::Type
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class MIME::Types
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module MIME::Types::Columnar
-  LOAD_MUTEX = ::T.let(nil, ::T.untyped)
-end
-
-module MIME::Types::Data
-  PATH = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class MIME::Types
-  extend ::Enumerable
-end
-
 class MagicLoginsController
   def index(); end
 end
@@ -13838,13 +13360,6 @@ class Mime::Type
   MIME_REGEXP = ::T.let(nil, ::T.untyped)
 end
 
-class MimeMagic
-  EXTENSIONS = ::T.let(nil, ::T.untyped)
-  MAGIC = ::T.let(nil, ::T.untyped)
-  TYPES = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
 module MiniMime
   VERSION = ::T.let(nil, ::T.untyped)
 end
@@ -13999,27 +13514,6 @@ end
 
 module MonitorMixin
   def self.extend_object(obj); end
-end
-
-module MultiJson
-  ALIASES = ::T.let(nil, ::T.untyped)
-  REQUIREMENT_MAP = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-MultiJson::DecodeError = MultiJson::ParseError
-
-MultiJson::LoadError = MultiJson::ParseError
-
-module MultiJson::OptionsCache
-  MAX_CACHE_SIZE = ::T.let(nil, ::T.untyped)
-end
-
-class MultiJson::Version
-  MAJOR = ::T.let(nil, ::T.untyped)
-  MINOR = ::T.let(nil, ::T.untyped)
-  PATCH = ::T.let(nil, ::T.untyped)
-  PRE = ::T.let(nil, ::T.untyped)
 end
 
 module Mutex_m
@@ -15242,78 +14736,6 @@ class OpenStruct
   include ::ActiveSupport::ToJsonWithActiveSupportEncoder
 end
 
-module OpenURI
-  Options = ::T.let(nil, ::T.untyped)
-end
-
-class OpenURI::Buffer
-  def <<(str); end
-
-  def io(); end
-
-  def size(); end
-  StringMax = ::T.let(nil, ::T.untyped)
-end
-
-class OpenURI::Buffer
-end
-
-class OpenURI::HTTPError
-  def initialize(message, io); end
-
-  def io(); end
-end
-
-class OpenURI::HTTPError
-end
-
-class OpenURI::HTTPRedirect
-  def initialize(message, io, uri); end
-
-  def uri(); end
-end
-
-class OpenURI::HTTPRedirect
-end
-
-module OpenURI::Meta
-  def base_uri(); end
-
-  def base_uri=(base_uri); end
-
-  def charset(); end
-
-  def content_encoding(); end
-
-  def content_type(); end
-
-  def content_type_parse(); end
-
-  def last_modified(); end
-
-  def meta(); end
-
-  def meta_add_field(name, value); end
-
-  def meta_add_field2(name, values); end
-
-  def meta_setup_encoding(); end
-
-  def metas(); end
-
-  def status(); end
-
-  def status=(status); end
-  RE_LWS = ::T.let(nil, ::T.untyped)
-  RE_PARAMETERS = ::T.let(nil, ::T.untyped)
-  RE_QUOTED_STRING = ::T.let(nil, ::T.untyped)
-  RE_TOKEN = ::T.let(nil, ::T.untyped)
-end
-
-module OpenURI::Meta
-  def self.init(obj, src=T.unsafe(nil)); end
-end
-
 module OpenURI::OpenRead
   def open(*rest, &block); end
 
@@ -15321,20 +14743,6 @@ module OpenURI::OpenRead
 end
 
 module OpenURI::OpenRead
-end
-
-module OpenURI
-  def self.check_options(options); end
-
-  def self.open_http(buf, target, proxy, options); end
-
-  def self.open_loop(uri, options); end
-
-  def self.open_uri(name, *rest); end
-
-  def self.redirectable?(uri1, uri2); end
-
-  def self.scan_open_optional_arguments(*rest); end
 end
 
 class OptionParser
@@ -17297,42 +16705,8 @@ module Parlour
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
-class Parlour::ConflictResolver
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
-class Parlour::Plugin
-  extend ::T::Private::Abstract::Hooks
-  extend ::T::InterfaceWrapper::Helpers
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
-class Parlour::RbiGenerator::Options
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
 class Parlour::RbiGenerator::Parameter
   PREFIXES = ::T.let(nil, ::T.untyped)
-end
-
-class Parlour::RbiGenerator::Parameter
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
-class Parlour::RbiGenerator::RbiObject
-  extend ::T::Private::Abstract::Hooks
-  extend ::T::InterfaceWrapper::Helpers
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
-class Parlour::RbiGenerator
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 ParseError = Racc::ParseError
@@ -17369,8 +16743,6 @@ class Pathname
 end
 
 class Post
-  include ::Post::GeneratedAttributeMethods
-  include ::Post::GeneratedAssociationMethods
   include ::AASM
   include ::AASM::Persistence::ActiveRecordPersistence
   include ::AASM::Persistence::Base
@@ -17479,10 +16851,6 @@ class Post::ActiveRecord_Relation
 end
 
 module Post::GeneratedAssociationMethods
-  def author(); end
-
-  def author=(value); end
-
   def build_author(*args, &block); end
 
   def build_repository(*args, &block); end
@@ -17498,16 +16866,6 @@ module Post::GeneratedAssociationMethods
   def reload_author(); end
 
   def reload_repository(); end
-
-  def repository(); end
-
-  def repository=(value); end
-end
-
-module Post::GeneratedAssociationMethods
-end
-
-module Post::GeneratedAttributeMethods
 end
 
 module Post::GeneratedAttributeMethods
@@ -17567,10 +16925,6 @@ class Post
   extend ::Ancestry::ClassMethods
   extend ::Ancestry::MaterializedPath
   extend ::Logidze::Model::ClassMethods
-  def self.after_depth(*args); end
-
-  def self.ancestors_of(*args); end
-
   def self.ancestry_base_class(); end
 
   def self.ancestry_base_class=(obj); end
@@ -17579,43 +16933,11 @@ class Post
 
   def self.ancestry_column=(obj); end
 
-  def self.at_depth(*args); end
-
-  def self.before_depth(*args); end
-
-  def self.children_of(*args); end
-
-  def self.descendants_of(*args); end
-
-  def self.from_depth(*args); end
-
-  def self.indirects_of(*args); end
-
-  def self.not_draft(*args); end
-
-  def self.not_published(*args); end
-
-  def self.ordered_by_ancestry(*args); end
-
-  def self.ordered_by_ancestry_and(*args); end
-
   def self.orphan_strategy(); end
-
-  def self.path_of(*args); end
-
-  def self.roots(*args); end
-
-  def self.siblings_of(*args); end
-
-  def self.subtree_of(*args); end
-
-  def self.to_depth(*args); end
 
   def self.touch_ancestors(); end
 
   def self.touch_ancestors=(obj); end
-
-  def self.with_log_data(*args); end
 end
 
 class PostChannel
@@ -20550,7 +19872,6 @@ class Rack::Attack::Safelist
 end
 
 module Rack::Attack::StoreProxy
-  PROXIES = ::T.let(nil, ::T.untyped)
 end
 
 class Rack::Attack::StoreProxy::ActiveSupportRedisStoreProxy
@@ -20622,7 +19943,6 @@ class Rack::Attack::StoreProxy::RedisStoreProxy
 end
 
 module Rack::Attack::StoreProxy
-  def self.build(store); end
 end
 
 class Rack::Attack::Throttle
@@ -22631,8 +21951,6 @@ class Regexp
 end
 
 class Repository
-  include ::Repository::GeneratedAttributeMethods
-  include ::Repository::GeneratedAssociationMethods
   include ::Commitable
   include ::DatabaseValidations::Validations
   def autosave_associated_records_for_author(*args); end
@@ -22723,10 +22041,6 @@ class Repository::ActiveRecord_Relation
 end
 
 module Repository::GeneratedAssociationMethods
-  def author(); end
-
-  def author=(value); end
-
   def build_author(*args, &block); end
 
   def create_author(*args, &block); end
@@ -22734,12 +22048,6 @@ module Repository::GeneratedAssociationMethods
   def create_author!(*args, &block); end
 
   def reload_author(); end
-end
-
-module Repository::GeneratedAssociationMethods
-end
-
-module Repository::GeneratedAttributeMethods
 end
 
 module Repository::GeneratedAttributeMethods
@@ -25532,6 +24840,19 @@ end
 class Settings::RepositoriesController
 end
 
+class Settings::SSHKeysController
+  def create(); end
+
+  def destroy(); end
+
+  def index(); end
+
+  def new(); end
+end
+
+class Settings::SSHKeysController
+end
+
 module Settings
 end
 
@@ -26234,97 +25555,6 @@ module Singleton
   def self.__init__(klass); end
 end
 
-module SitemapGenerator
-  MAX_SITEMAP_FILES = ::T.let(nil, ::T.untyped)
-  MAX_SITEMAP_FILESIZE = ::T.let(nil, ::T.untyped)
-  MAX_SITEMAP_IMAGES = ::T.let(nil, ::T.untyped)
-  MAX_SITEMAP_LINKS = ::T.let(nil, ::T.untyped)
-  MAX_SITEMAP_NEWS = ::T.let(nil, ::T.untyped)
-  SCHEMAS = ::T.let(nil, ::T.untyped)
-  Sitemap = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class SitemapGenerator::AwsSdkAdapter
-  def initialize(bucket, options=T.unsafe(nil)); end
-
-  def write(location, raw_data); end
-end
-
-class SitemapGenerator::AwsSdkAdapter
-end
-
-class SitemapGenerator::BigDecimal
-  def *(other); end
-
-  def /(other); end
-
-  def encode_with(coder); end
-
-  def initialize(num); end
-
-  def to_d(); end
-
-  def to_s(format=T.unsafe(nil)); end
-
-  def to_yaml(opts=T.unsafe(nil)); end
-  DEFAULT_STRING_FORMAT = ::T.let(nil, ::T.untyped)
-  YAML_MAPPING = ::T.let(nil, ::T.untyped)
-  YAML_TAG = ::T.let(nil, ::T.untyped)
-end
-
-class SitemapGenerator::BigDecimal
-end
-
-class SitemapGenerator::FogAdapter
-  def initialize(opts=T.unsafe(nil)); end
-
-  def write(location, raw_data); end
-end
-
-class SitemapGenerator::FogAdapter
-end
-
-module SitemapGenerator::Helpers::NumberHelper
-  DECIMAL_UNITS = ::T.let(nil, ::T.untyped)
-  STORAGE_UNITS = ::T.let(nil, ::T.untyped)
-end
-
-class SitemapGenerator::Numeric
-  EXABYTE = ::T.let(nil, ::T.untyped)
-  GIGABYTE = ::T.let(nil, ::T.untyped)
-  KILOBYTE = ::T.let(nil, ::T.untyped)
-  MEGABYTE = ::T.let(nil, ::T.untyped)
-  PETABYTE = ::T.let(nil, ::T.untyped)
-  TERABYTE = ::T.let(nil, ::T.untyped)
-end
-
-class SitemapGenerator::S3Adapter
-  def initialize(opts=T.unsafe(nil)); end
-
-  def write(location, raw_data); end
-end
-
-class SitemapGenerator::S3Adapter
-end
-
-class SitemapGenerator::SitemapLocation
-  PATH_OUTPUT_WIDTH = ::T.let(nil, ::T.untyped)
-end
-
-class SitemapGenerator::Templates
-  FILES = ::T.let(nil, ::T.untyped)
-end
-
-class SitemapGenerator::WaveAdapter
-  def store_dir=(store_dir); end
-
-  def write(location, raw_data); end
-end
-
-class SitemapGenerator::WaveAdapter
-end
-
 class SlugValidator
 end
 
@@ -26937,23 +26167,6 @@ class Sorbet::Private::TodoRBI
 end
 
 SorbetRails::ModelPlugins::Base::Parameter = Parlour::RbiGenerator::Parameter
-
-module SorbetRails::ModelPlugins
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
-class SorbetRails::ModelRbiFormatter
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
-module SorbetRails::ModelUtils
-  extend ::T::Private::Abstract::Hooks
-  extend ::T::InterfaceWrapper::Helpers
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
 
 class SortedSet
   def initialize(*args, &block); end
@@ -27782,7 +26995,6 @@ end
 ToRuby = Psych::Visitors::ToRuby
 
 class Topic
-  include ::Topic::GeneratedAttributeMethods
   include ::Topic::GeneratedAssociationMethods
   include ::DatabaseValidations::Validations
   def name=(val); end
@@ -27821,9 +27033,6 @@ module Topic::GeneratedAssociationMethods
 end
 
 module Topic::GeneratedAssociationMethods
-end
-
-module Topic::GeneratedAttributeMethods
 end
 
 module Topic::GeneratedAttributeMethods
@@ -28210,8 +27419,6 @@ class UrlValidator
 end
 
 class User
-  include ::User::GeneratedAttributeMethods
-  include ::User::GeneratedAssociationMethods
   include ::Trackable
   include ::DatabaseValidations::Validations
   def after_add_for_posts(); end
@@ -28328,29 +27535,11 @@ module User::GeneratedAssociationMethods
 
   def post_ids=(ids); end
 
-  def posts(); end
-
-  def posts=(value); end
-
   def reload_repository(); end
-
-  def repository(); end
-
-  def repository=(value); end
 
   def ssh_key_ids(); end
 
   def ssh_key_ids=(ids); end
-
-  def ssh_keys(); end
-
-  def ssh_keys=(value); end
-end
-
-module User::GeneratedAssociationMethods
-end
-
-module User::GeneratedAttributeMethods
 end
 
 module User::GeneratedAttributeMethods

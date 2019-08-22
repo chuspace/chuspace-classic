@@ -60,3 +60,4 @@ bin/git-hooks/*
 .env*
 public/avatars
 public/uploads
+public/sitemap*

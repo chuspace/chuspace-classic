@@ -1,30 +1,34 @@
 # frozen_string_literal: true
 
-# typed: strict
-# Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = 'http://www.example.com'
+# typed: false
+
+require 'aws-sdk-s3'
+
+SitemapGenerator::Sitemap.default_host = ENV.fetch('CHUSPACE_URL')
+SitemapGenerator::Sitemap.sitemaps_path = 'sitemaps/'
+SitemapGenerator::Sitemap.public_path = 'public/'
+
+if Rails.env.production?
+  SitemapGenerator::Sitemap.adapter = SitemapGenerator::AwsSdkAdapter.new(ENV['AWS_S3_BUCKET'],
+    aws_access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key: ENV.fetch('AWS_SECRET_ACCESS_KEY'),
+    aws_region: 'eu-west-2'
+  )
+
+  SitemapGenerator::Sitemap.public_path = 'tmp/'
+  SitemapGenerator::Sitemap.sitemaps_host = 'https://sitemaps.chuspace.com/'
+end
 
 SitemapGenerator::Sitemap.create do
-  # Put links creation logic here.
-  #
-  # The root path '/' and sitemap index file are added automatically for you.
-  # Links are added to the Sitemap in the order they are specified.
-  #
-  # Usage: add(path, options={})
-  #        (default options are used if you don't specify)
-  #
-  # Defaults: :priority => 0.5, :changefreq => 'weekly',
-  #           :lastmod => Time.now, :host => default_host
-  #
-  # Examples:
-  #
-  # Add '/articles'
-  #
-  #   add articles_path, :priority => 0.7, :changefreq => 'daily'
-  #
-  # Add all articles:
-  #
-  #   Article.find_each do |article|
-  #     add article_path(article), :lastmod => article.updated_at
-  #   end
+  Post.published.order(:published_at).limit(1000).find_each do |post|
+    add post_url(post), lastmod: post.published_at, changefreq: 'daily'
+  end
+
+  Topic.limit(1000).find_each do |topic|
+    add topic_url(topic), changefreq: 'daily'
+  end
+
+  User.order(:updated_at).limit(1000).find_each do |user|
+    add user_url(user), lastmod: user.updated_at, changefreq: 'daily'
+  end
 end

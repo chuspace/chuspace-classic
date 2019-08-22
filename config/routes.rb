@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :check_nicknames, only: :create
   resources :check_emails, only: :create
   resources :magic_logins, only: :index
+  resources :topics, only: %i[index show]
 
   namespace :autocomplete do
     resources :topics, only: :index

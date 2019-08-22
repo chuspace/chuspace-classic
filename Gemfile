@@ -52,9 +52,7 @@ gem 'pundit'
 gem 'high_voltage'
 
 # Sitemap
-gem 'sitemap_generator'
-gem 'fog-aws'
-gem 'carrierwave'
+gem 'sitemap_generator', require: false
 
 # State machine
 gem 'aasm'
