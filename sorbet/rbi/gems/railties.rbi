@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/railties/all/railties.rbi
 #
-# railties-6.0.0.rc1
+# railties-6.0.0
 module Rails
   def self.app_class; end
   def self.app_class=(arg0); end
@@ -92,7 +92,7 @@ end
 class Rails::Engine < Rails::Railtie
   def _all_autoload_once_paths; end
   def _all_autoload_paths; end
-  def _all_load_paths; end
+  def _all_load_paths(add_autoload_paths_to_load_path); end
   def app; end
   def build_middleware; end
   def build_request(env); end
@@ -232,6 +232,7 @@ module Rails::VERSION
 end
 module Rails::Autoloaders
   def self.each; end
+  def self.log!; end
   def self.logger=(logger); end
   def self.main; end
   def self.once; end
@@ -353,6 +354,8 @@ class Rails::Engine::Configuration < Rails::Railtie::Configuration
   def eager_load_paths=(arg0); end
   def generators; end
   def initialize(root = nil); end
+  def javascript_path; end
+  def javascript_path=(arg0); end
   def middleware; end
   def middleware=(arg0); end
   def paths; end
@@ -420,7 +423,11 @@ class Rails::SourceAnnotationExtractor::Annotation < Anonymous_Struct_1
   def self.tags; end
   def to_s(options = nil); end
 end
+module SourceAnnotationExtractor
+end
 class Rails::Application::Configuration < Rails::Engine::Configuration
+  def add_autoload_paths_to_load_path; end
+  def add_autoload_paths_to_load_path=(arg0); end
   def allow_concurrency; end
   def allow_concurrency=(arg0); end
   def annotations; end
@@ -445,6 +452,8 @@ class Rails::Application::Configuration < Rails::Engine::Configuration
   def console; end
   def console=(arg0); end
   def content_security_policy(&block); end
+  def content_security_policy_nonce_directives; end
+  def content_security_policy_nonce_directives=(arg0); end
   def content_security_policy_nonce_generator; end
   def content_security_policy_nonce_generator=(arg0); end
   def content_security_policy_report_only; end
@@ -457,6 +466,7 @@ class Rails::Application::Configuration < Rails::Engine::Configuration
   def debug_exception_response_format=(arg0); end
   def default_credentials_content_path; end
   def default_credentials_key_path; end
+  def default_log_file; end
   def disable_sandbox; end
   def disable_sandbox=(arg0); end
   def eager_load; end

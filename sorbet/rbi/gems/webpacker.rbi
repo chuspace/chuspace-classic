@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/webpacker/all/webpacker.rbi
 #
-# webpacker-d410d0123e92
+# webpacker-3547917a3e56
 class Webpacker::Instance
   def commands; end
   def compiler; end
@@ -142,6 +142,7 @@ module Webpacker::Helper
   def image_pack_tag(name, **options); end
   def javascript_pack_tag(*names, **options); end
   def javascript_packs_with_chunks_tag(*names, **options); end
+  def preload_pack_asset(name, **options); end
   def resolve_path_to_image(name); end
   def sources_from_manifest_entries(names, type:); end
   def sources_from_manifest_entrypoints(names, type:); end

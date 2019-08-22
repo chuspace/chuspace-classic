@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/shrine/all/shrine.rbi
 #
-# shrine-2.19.2
+# shrine-2.19.3
 class Shrine
   def self.version; end
   extend Shrine::ClassMethods
@@ -269,31 +269,67 @@ class Shrine::Storage::FileSystem
   def prefix; end
   def relative(path); end
   def relative_path(id); end
-  def upload(io, id, move: nil, shrine_metadata: nil, **options); end
+  def upload(io, id, move: nil, **arg3); end
   def url(id, host: nil, **options); end
 end
-module Shrine::Plugins::Logging
+module Shrine::Plugins::Instrumentation
   def self.configure(uploader, opts = nil); end
-  def self.load_dependencies(uploader, *arg1); end
 end
-module Shrine::Plugins::Logging::ClassMethods
-  def create_logger; end
+module Shrine::Plugins::Instrumentation::ClassMethods
+  def instrument(event_name, payload = nil, &block); end
+  def log_subscriber; end
+  def notifications; end
+  def subscribe(event_name, &subscriber); end
+  def subscribers; end
+end
+module Shrine::Plugins::Instrumentation::InstanceMethods
+  def copy(io, context); end
+  def get_metadata(io, context); end
+end
+module Shrine::Plugins::Instrumentation::FileMethods
+  def delete; end
+  def exists?; end
+  def open(**options); end
+end
+class Shrine::Plugins::Instrumentation::Notifications
+  def active_support_subscribe(event_name, &block); end
+  def dry_monitor_subscribe(event_name, &block); end
+  def initialize(notifications); end
+  def instrument(event_name, payload, &block); end
+  def library_send(method_name, *args, &block); end
+  def notifications; end
+  def subscribe(event_name, &block); end
+end
+class Shrine::Plugins::Instrumentation::Event
+  def [](name); end
+  def active_support_duration; end
+  def active_support_name; end
+  def dry_events_duration; end
+  def dry_events_name; end
+  def duration; end
+  def event; end
+  def initialize(event); end
+  def library_send(method_name, *args, &block); end
+  def name; end
+  def payload; end
+end
+class Shrine::Plugins::Instrumentation::LogSubscriber
+  def format(properties = nil); end
+  def log(message); end
   def logger; end
-  def logger=(logger); end
-  def pretty_formatter; end
+  def on_delete(event); end
+  def on_download(event); end
+  def on_exists(event); end
+  def on_metadata(event); end
+  def on_upload(event); end
+  def self.call(event); end
 end
-module Shrine::Plugins::Logging::InstanceMethods
-  def _log(data); end
-  def _log_message_heroku(data); end
-  def _log_message_human(data); end
-  def _log_message_json(data); end
-  def _log_message_logfmt(data); end
-  def benchmark; end
-  def count(object); end
-  def delete(io, context = nil); end
-  def log(action, input, context); end
-  def processed(io, context = nil); end
-  def store(io, context = nil); end
+module Shrine::Plugins::DefaultUrlOptions
+  def self.configure(uploader, options = nil); end
+end
+module Shrine::Plugins::DefaultUrlOptions::FileMethods
+  def default_url_options; end
+  def url(**options); end
 end
 module Shrine::Plugins::DetermineMimeType
   def self.configure(uploader, opts = nil); end

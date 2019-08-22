@@ -1,7 +1,7 @@
 # typed: ignore
 # frozen_string_literal: true
 
-class Settings::SshKeysController < ApplicationController
+class Settings::SSHKeysController < ApplicationController
   before_action :authenticate!
   before_action :find_ssh_key, only: %i[update destroy]
 

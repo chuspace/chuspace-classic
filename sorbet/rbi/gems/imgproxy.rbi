@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/imgproxy/all/imgproxy.rbi
 #
-# imgproxy-1.0.2
+# imgproxy-1.0.4
 module Imgproxy
   def self.config; end
   def self.configure; end

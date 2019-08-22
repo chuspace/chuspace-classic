@@ -5,9 +5,9 @@
 #
 # If you would like to make changes to this file, great! Please create the gem's shim here:
 #
-#   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/google-protobuf-3.9.0-universal/all/google-protobuf-3.9.0-universal.rbi
+#   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/google-protobuf-3.9.1-universal/all/google-protobuf-3.9.1-universal.rbi
 #
-# google-protobuf-3.9.0-universal-darwin
+# google-protobuf-3.9.1-universal-darwin
 module Google
 end
 module Google::Protobuf
@@ -225,7 +225,7 @@ class Google::Protobuf::Map
   def to_h; end
   def values; end
 end
-class Anonymous_Struct_405 < Struct
+class Anonymous_Struct_406 < Struct
   def external_enumerator; end
   def external_enumerator=(_); end
   def repeated_field; end
@@ -235,7 +235,7 @@ class Anonymous_Struct_405 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Google::Protobuf::RepeatedField::ProxyingEnumerator < Anonymous_Struct_405
+class Google::Protobuf::RepeatedField::ProxyingEnumerator < Anonymous_Struct_406
   def each(*args, &block); end
 end
 class Google::Protobuf::Error < StandardError

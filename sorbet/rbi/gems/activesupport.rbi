@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/activesupport/all/activesupport.rbi
 #
-# activesupport-6.0.0.rc1
+# activesupport-6.0.0
 class Hash
   def _deep_transform_keys_in_object!(object, &block); end
   def _deep_transform_keys_in_object(object, &block); end
@@ -35,8 +35,8 @@ class Hash
   def reverse_merge!(other_hash); end
   def reverse_merge(other_hash); end
   def reverse_update(other_hash); end
-  def self.[](*arg0); end
-  def self.from_xml(xml, disallowed_types = nil); end
+  def self.from_trusted_xml(xml); end
+  def self.try_convert(arg0); end
   def slice!(*keys); end
   def stringify_keys!; end
   def stringify_keys; end
@@ -362,11 +362,14 @@ class ActiveSupport::Deprecation::DeprecatedInstanceVariableProxy < ActiveSuppor
   def target; end
   def warn(callstack, called, args); end
 end
-class ActiveSupport::Deprecation::DeprecatedConstantProxy < ActiveSupport::Deprecation::DeprecationProxy
+class ActiveSupport::Deprecation::DeprecatedConstantProxy < Module
   def class; end
+  def const_missing(name); end
   def initialize(old_const, new_const, deprecator = nil, message: nil); end
+  def inspect; end
+  def method_missing(called, *args, &block); end
+  def self.new(*args, &block); end
   def target; end
-  def warn(callstack, called, args); end
 end
 module ActiveSupport::Inflector
   def apply_inflections(word, rules, locale = nil); end
@@ -640,9 +643,15 @@ class Time
   def minus_with_duration(other); end
   def minus_without_coercion(other); end
   def minus_without_duration(arg0); end
+  def next_day(days = nil); end
+  def next_month(months = nil); end
+  def next_year(years = nil); end
   def noon; end
   def plus_with_duration(other); end
   def plus_without_duration(arg0); end
+  def prev_day(days = nil); end
+  def prev_month(months = nil); end
+  def prev_year(years = nil); end
   def rfc3339(fraction_digits = nil); end
   def sec_fraction; end
   def seconds_since_midnight; end
@@ -922,6 +931,7 @@ module ActiveSupport::Dependencies
   def new_constants_in(*descs); end
   def qualified_const_defined?(path); end
   def qualified_name_for(mod, name); end
+  def real_mod_name(mod); end
   def reference(klass); end
   def remove_constant(const); end
   def remove_unloadable_constants!; end
@@ -995,6 +1005,7 @@ module ActiveSupport::Dependencies::ModuleConstMissing
   def guess_for_anonymous(const_name); end
   def self.append_features(base); end
   def self.exclude_from(base); end
+  def self.include_into(base); end
   def unloadable(const_desc = nil); end
 end
 module ActiveSupport::Dependencies::Loadable
@@ -1004,6 +1015,7 @@ module ActiveSupport::Dependencies::Loadable
   def require_dependency(file_name, message = nil); end
   def require_or_load(file_name); end
   def self.exclude_from(base); end
+  def self.include_into(base); end
   def unloadable(const_desc); end
 end
 module ActiveSupport::Dependencies::Blamable
@@ -1043,22 +1055,17 @@ module ActiveSupport::Dependencies::ZeitwerkIntegration::Decorations
   def unhook!; end
   def verbose=(verbose); end
 end
+module ActiveSupport::Dependencies::ZeitwerkIntegration::RequireDependency
+  def require_dependency(filename); end
+end
 module ActiveSupport::Dependencies::ZeitwerkIntegration::Inflector
   def self.camelize(basename, _abspath); end
-end
-class Symbol
-  def as_json(options = nil); end
-end
-class BigDecimal < Numeric
-  def as_json(options = nil); end
-  def duplicable?; end
 end
 class Method
   def duplicable?; end
 end
-class Complex < Numeric
-end
-class Rational < Numeric
+class UnboundMethod
+  def duplicable?; end
 end
 module ActiveSupport::Tryable
   def try!(method_name = nil, *args, &b); end
@@ -1397,23 +1404,17 @@ module DateAndTime::Calculations
   def monday; end
   def months_ago(months); end
   def months_since(months); end
-  def next_day(days = nil); end
-  def next_month(months = nil); end
   def next_occurring(day_of_week); end
   def next_quarter; end
   def next_week(given_day_in_next_week = nil, same_time: nil); end
   def next_weekday; end
-  def next_year(years = nil); end
   def on_weekday?; end
   def on_weekend?; end
   def past?; end
-  def prev_day(days = nil); end
-  def prev_month(months = nil); end
   def prev_occurring(day_of_week); end
   def prev_quarter; end
   def prev_week(start_day = nil, same_time: nil); end
   def prev_weekday; end
-  def prev_year(years = nil); end
   def sunday; end
   def today?; end
   def tomorrow; end
@@ -1501,7 +1502,13 @@ end
 class Struct
   def as_json(options = nil); end
 end
+class Symbol
+  def as_json(options = nil); end
+end
 class Float < Numeric
+  def as_json(options = nil); end
+end
+class BigDecimal < Numeric
   def as_json(options = nil); end
 end
 class Regexp
@@ -1978,6 +1985,34 @@ module ActiveSupport::TaggedLogging::Formatter
   def tagged(*tags); end
   def tags_text; end
 end
+class ActiveSupport::ProxyObject < BasicObject
+  def raise(*args); end
+end
+module ActiveSupport::Configurable
+  def config; end
+  extend ActiveSupport::Concern
+end
+class ActiveSupport::Configurable::Configuration < ActiveSupport::InheritableOptions
+  def compile_methods!; end
+  def self.compile_methods!(keys); end
+end
+module ActiveSupport::Configurable::ClassMethods
+  def config; end
+  def config_accessor(*names, instance_reader: nil, instance_writer: nil, instance_accessor: nil); end
+  def configure; end
+end
+module ActiveSupport::Rescuable
+  def handler_for_rescue(exception); end
+  def rescue_with_handler(exception); end
+  extend ActiveSupport::Concern
+end
+module ActiveSupport::Rescuable::ClassMethods
+  def constantize_rescue_handler_class(class_or_name); end
+  def find_rescue_handler(exception); end
+  def handler_for_rescue(exception, object: nil); end
+  def rescue_from(*klasses, with: nil, &block); end
+  def rescue_with_handler(exception, object: nil, visited_exceptions: nil); end
+end
 class ActiveSupport::ExecutionWrapper
   def __callbacks; end
   def __callbacks?; end
@@ -2085,6 +2120,14 @@ end
 class File < IO
   def self.atomic_write(file_name, temp_dir = nil); end
   def self.probe_stat_in(dir); end
+end
+module Digest
+end
+module Digest::UUID
+  def self.uuid_from_hash(hash_class, uuid_namespace, name); end
+  def self.uuid_v3(uuid_namespace, name); end
+  def self.uuid_v4; end
+  def self.uuid_v5(uuid_namespace, name); end
 end
 module ActiveSupport::MarshalWithAutoloading
   def load(source, proc = nil); end
@@ -2211,18 +2254,6 @@ class ActiveSupport::Cache::Strategy::LocalCache::Middleware
   def local_cache_key; end
   def name; end
   def new(app); end
-end
-module ActiveSupport::Rescuable
-  def handler_for_rescue(exception); end
-  def rescue_with_handler(exception); end
-  extend ActiveSupport::Concern
-end
-module ActiveSupport::Rescuable::ClassMethods
-  def constantize_rescue_handler_class(class_or_name); end
-  def find_rescue_handler(exception); end
-  def handler_for_rescue(exception, object: nil); end
-  def rescue_from(*klasses, with: nil, &block); end
-  def rescue_with_handler(exception, object: nil, visited_exceptions: nil); end
 end
 class ActiveSupport::Cache::MemoryStore < ActiveSupport::Cache::Store
   def cached_size(key, entry); end

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/oj/all/oj.rbi
 #
-# oj-3.8.1
+# oj-3.9.0
 module Oj
   def add_to_json(*arg0); end
   def compat_load(*arg0); end

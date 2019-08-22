@@ -584,6 +584,8 @@ module RSpec::Core::HashImitatable
   def deep_symbolize_keys(*args, &block); end
   def deep_transform_keys!(*args, &block); end
   def deep_transform_keys(*args, &block); end
+  def deep_transform_values!(*args, &block); end
+  def deep_transform_values(*args, &block); end
   def default(*args, &block); end
   def default=(*args, &block); end
   def default_proc(*args, &block); end

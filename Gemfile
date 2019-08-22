@@ -6,18 +6,18 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '6.0.0.rc1'
+gem 'rails', '>= 6.x'
 gem 'bundler', '1.17.2'
 
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.x'
 gem 'strong_migrations'
 gem 'database_validations'
-gem 'activerecord-clean-db-structure'
+gem 'activerecord-clean-db-structure', github: 'lfittl/activerecord-clean-db-structure'
 
 # File uploads
 gem 'aws-sdk-s3'
-gem 'imgproxy', github: 'gauravtiwari/imgproxy.rb', branch: 'patch-1'
+gem 'imgproxy'
 gem 'mini_mime'
 gem 'fastimage'
 gem 'image_processing'
@@ -43,20 +43,24 @@ gem 'webpacker', github: 'rails/webpacker'
 gem 'redis', '>= 4.0'
 gem 'anycable-rails'
 gem 'hiredis'
-gem 'sidekiq'
+gem 'delayed_job_active_record'
 
 # Auth
 gem 'pundit'
+
+# Static pages
+gem 'high_voltage'
+
+# Sitemap
+gem 'sitemap_generator'
+gem 'fog-aws'
+gem 'carrierwave'
 
 # State machine
 gem 'aasm'
 
 # Search
 gem 'oj'
-
-# Jobs
-gem 'racecar'
-gem 'delivery_boy'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
@@ -131,6 +135,7 @@ group :development do
   gem 'sorbet'
   gem 'database_consistency', require: false
   gem 'tomo', github: 'gauravtiwari/tomo', require: false
+  gem 'runbook', github: 'gauravtiwari/runbook', branch: 'patch-1'
 end
 
 group :test do

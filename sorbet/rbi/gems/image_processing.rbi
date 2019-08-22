@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/image_processing/all/image_processing.rbi
 #
-# image_processing-1.9.2
+# image_processing-1.9.3
 module ImageProcessing
 end
 module ImageProcessing::Chainable

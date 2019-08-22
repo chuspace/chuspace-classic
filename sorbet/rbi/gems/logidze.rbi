@@ -7,17 +7,14 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/logidze/all/logidze.rbi
 #
-# logidze-0.10.0
+# logidze-0.11.0
 module Logidze
   def self.append_on_undo; end
   def self.append_on_undo=(arg0); end
   def self.associations_versioning; end
   def self.associations_versioning=(arg0); end
-  def self.force_load_log_data; end
-  def self.force_load_log_data=(arg0); end
   def self.ignore_log_data_by_default; end
   def self.ignore_log_data_by_default=(arg0); end
-  def self.with_log_data; end
   def self.without_logging; end
   extend Logidze::Meta
 end
@@ -108,14 +105,7 @@ module Logidze::VersionedAssociation::CollectionAssociation
   def ids_reader; end
 end
 module Logidze::IgnoreLogData
-  def association(name); end
   extend ActiveSupport::Concern
-end
-module Logidze::IgnoreLogData::Association
-  def target_scope; end
-end
-module Logidze::IgnoreLogData::ClassMethods
-  def self.default_scope; end
 end
 module Logidze::HasLogidze
   extend ActiveSupport::Concern

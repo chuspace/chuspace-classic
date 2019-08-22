@@ -1,11 +1,9 @@
 SET statement_timeout = 0;
 SET lock_timeout = 0;
-
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
-SET xmloption = content;
 SET client_min_messages = warning;
 
 -- Name: hstore; Type: EXTENSION
@@ -248,8 +246,6 @@ CREATE FUNCTION public.logidze_version(v bigint, data jsonb, ts timestamp with t
 
 SET default_tablespace = '';
 
-SET default_with_oids = false;
-
 -- Name: ar_internal_metadata; Type: TABLE
 
 CREATE TABLE public.ar_internal_metadata (
@@ -257,6 +253,23 @@ CREATE TABLE public.ar_internal_metadata (
     value character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
+);
+
+-- Name: delayed_jobs; Type: TABLE
+
+CREATE TABLE public.delayed_jobs (
+    id BIGSERIAL PRIMARY KEY,
+    priority integer DEFAULT 0 NOT NULL,
+    attempts integer DEFAULT 0 NOT NULL,
+    handler text NOT NULL,
+    last_error text,
+    run_at timestamp without time zone,
+    locked_at timestamp without time zone,
+    failed_at timestamp without time zone,
+    locked_by character varying,
+    queue character varying,
+    created_at timestamp(6) without time zone,
+    updated_at timestamp(6) without time zone
 );
 
 -- Name: posts; Type: TABLE
@@ -351,6 +364,10 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 ALTER TABLE ONLY public.schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+-- Name: delayed_jobs_priority; Type: INDEX
+
+CREATE INDEX delayed_jobs_priority ON public.delayed_jobs USING btree (priority, run_at);
 
 -- Name: index_posts_on_ancestry; Type: INDEX
 
@@ -469,5 +486,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190706110353'),
 ('20190709114321'),
 ('20190709114322'),
-('20190709114442');
+('20190709114442'),
+('20190822161805');
 
