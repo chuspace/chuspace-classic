@@ -21,7 +21,7 @@ en:
                 a single hyphen and no special characters.
             topics:
               too_long: maximum %{count} topics allowed
-        ssh_key:
+        key:
           attributes:
             key:
               invalid_key: is invalid. It must begin with 'ssh-ed25519', 'ssh-rsa',
@@ -58,7 +58,7 @@ en:
       show?: You cannot view this post!
       update?: You cannot edit this post!
   settings:
-    ssh_keys:
+    keys:
       create:
         success: Ssh key successfully added to your account
       destroy:
