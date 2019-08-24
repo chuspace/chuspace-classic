@@ -23,7 +23,7 @@ module Mobius
       end
 
       def exec
-        repo_id = ENV.fetch("GIT_REPO_ID", "")
+        publication_id = ENV.fetch("GIT_PUBLICATION_ID", "")
         user_id = ENV.fetch("GIT_USER_ID", "")
         token = ENV.fetch("MOBIUS_TOKEN", "")
         base_url = ENV.fetch("CHUSPACE_URL", "")
@@ -33,7 +33,7 @@ module Mobius
           headers: HTTP_HEADERS,
           form: {
             "token" => token,
-            "repository_id" => repo_id,
+            "publication_id" => publication_id,
             "author_id" => user_id,
             "old_commit_sha" => old_commit_sha,
             "new_commit_sha" => new_commit_sha,

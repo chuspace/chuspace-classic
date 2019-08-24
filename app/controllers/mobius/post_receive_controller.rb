@@ -9,7 +9,7 @@ module Mobius
       ref = params[:ref]
 
       author = User.find_by(id: params[:author_id])
-      repository = Repository.find_by(id: params[:repository_id], author: author)
+      repository = author.publications.find_by(id: params[:publication_id], owner: author)&.repository
 
       unless repository
         Rails.logger.error("Repository not found: author-#{author.id} repository-#{repository.id}")

@@ -65,6 +65,14 @@ class Repository
     false
   end
 
+  alias present? persisted?
+
+  sig { returns(T::Boolean) }
+  def blank?
+    !persisted?
+  end
+
+  sig { returns(Rugged::Reference) }
   def head
     rugged.head
   rescue Rugged::ReferenceError

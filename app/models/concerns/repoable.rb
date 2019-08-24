@@ -26,7 +26,7 @@ module Repoable
 
   def assign_default_attributes
     self.repo_name ||= Repository::DEFAULT_NAME
-    self.repo_full_name = "#{slug}/#{repo_name}"
-    self.repo_path = Git.config.storage_path.join("#{repo_full_name}.git")
+    self.repo_full_name = "#{slug}/#{repo_name}.git"
+    self.repo_path = Git.config.storage_path.join(repo_full_name)
   end
 end
