@@ -12,13 +12,11 @@ class User < ApplicationRecord
 
   has_secure_token :auth_token
 
-  has_many :ssh_keys, dependent: :destroy
+  has_many :keys, dependent: :destroy
   has_one :repository, dependent: :destroy, foreign_key: 'author_id', autosave: true
   has_many :posts, foreign_key: 'author_id', dependent: :destroy
 
-  before_save :update_auth_token_expiry, if: :auth_token_changed?
-
-  AUTH_TOKEN_EXPIRE_IN = 30
+  AUTH_TOKEN_LIFE = 30
 
   alias repo repository
 
@@ -41,11 +39,5 @@ class User < ApplicationRecord
   def drafts
     published_blob_paths ||= posts.pluck(:blob_path)
     repository.blobs.select { |blob| published_blob_paths.exclude?(blob.path) && blob.post? }
-  end
-
-  private
-
-  def update_auth_token_expiry
-    self.auth_token_expires_at = AUTH_TOKEN_EXPIRE_IN.minutes
   end
 end

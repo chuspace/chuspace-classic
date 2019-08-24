@@ -4,11 +4,12 @@
 module Mobius
   class PostReceiveController < BaseController
     def create
-      @old_commit_sha = params[:old_commit_sha]
-      @new_commit_sha = params[:new_commit_sha]
-      @ref = params[:ref]
-      @author = User.find_by(id: params[:author_id])
-      @repository = Repository.find_by(id: params[:repository_id], author: author)
+      old_commit_sha = params[:old_commit_sha]
+      new_commit_sha = params[:new_commit_sha]
+      ref = params[:ref]
+
+      author = User.find_by(id: params[:author_id])
+      repository = Repository.find_by(id: params[:repository_id], author: author)
 
       unless repository
         Rails.logger.error("Repository not found: author-#{author.id} repository-#{repository.id}")
