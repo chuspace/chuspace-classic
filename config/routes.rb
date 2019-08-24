@@ -30,7 +30,6 @@ Rails.application.routes.draw do
     namespace :settings do
       resources :profiles, path: 'profile', only: %i[index]
       resources :keys, path: 'key', except: %i[show update]
-      resources :repositories, path: 'repository', only: :index
     end
   end
 

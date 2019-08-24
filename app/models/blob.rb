@@ -1,4 +1,4 @@
-# typed: false
+# typed: true
 # frozen_string_literal: true
 
 class Blob
@@ -117,7 +117,7 @@ class Blob
 
   sig { params(committer: T.nilable(User), new_path: String, branch: String, commit_message: T.nilable(String)).returns(Blob) }
   def rename(committer:, new_path:, branch: Repository::DEFAULT_BRANCH, commit_message: nil)
-    commit_message ||= "Moved from #{previous_path} to #{new_path}"
+    commit_message ||= "Moved from #{path} to #{new_path}"
     options = { commit: { message: commit_message, branch: branch, committer: committer }, file: { content: content, previous_path: path, path: new_path } }
     @commit_sha = repository.create_commit(options: options, action: :rename)
 

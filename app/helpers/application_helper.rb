@@ -13,7 +13,6 @@ module ApplicationHelper
       { divider: true },
       { label: 'Profile', url: user_path(Current.user), options: {} },
       { label: 'Write post', url: new_post_path, options: {} },
-      { label: 'Your git repository', url: settings_repositories_path, options: {} },
       { label: 'Your posts', url: user_path(Current.user), options: {} },
       { label: 'Settings', url: settings_path, options: {} },
       { divider: true },

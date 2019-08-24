@@ -297,7 +297,7 @@ CREATE TABLE public.posts (
     blob_path character varying NOT NULL,
     status integer DEFAULT 0 NOT NULL,
     author_id bigint NOT NULL,
-    repository_id bigint NOT NULL,
+    publication_id bigint NOT NULL,
     ancestry character varying,
     topics character varying[] DEFAULT '{}'::character varying[],
     canonical_url character varying,
@@ -311,28 +311,19 @@ CREATE TABLE public.posts (
 
 CREATE TABLE public.publications (
     id BIGSERIAL PRIMARY KEY,
-    name character varying,
-    slug character varying,
+    name character varying NOT NULL,
+    slug character varying NOT NULL,
     description text,
     avatar_data jsonb,
+    repo_name character varying DEFAULT 'blog'::character varying NOT NULL,
+    repo_full_name character varying NOT NULL,
+    repo_path character varying NOT NULL,
+    personal boolean,
     owner_id bigint NOT NULL,
     email character varying,
     twitter character varying,
     facebook character varying,
     topics character varying[] DEFAULT '{}'::character varying[],
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
--- Name: repositories; Type: TABLE
-
-CREATE TABLE public.repositories (
-    id BIGSERIAL PRIMARY KEY,
-    name character varying DEFAULT 'blog'::character varying NOT NULL,
-    full_name character varying NOT NULL,
-    path character varying NOT NULL,
-    author_id bigint NOT NULL,
-    posts_count integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -410,21 +401,21 @@ CREATE INDEX index_posts_on_ancestry ON public.posts USING btree (ancestry);
 
 CREATE INDEX index_posts_on_author_id ON public.posts USING btree (author_id);
 
--- Name: index_posts_on_blob_path_and_repository_id; Type: INDEX
+-- Name: index_posts_on_blob_path_and_publication_id; Type: INDEX
 
-CREATE UNIQUE INDEX index_posts_on_blob_path_and_repository_id ON public.posts USING btree (blob_path, repository_id);
+CREATE UNIQUE INDEX index_posts_on_blob_path_and_publication_id ON public.posts USING btree (blob_path, publication_id);
+
+-- Name: index_posts_on_publication_id; Type: INDEX
+
+CREATE INDEX index_posts_on_publication_id ON public.posts USING btree (publication_id);
 
 -- Name: index_posts_on_published_at; Type: INDEX
 
 CREATE INDEX index_posts_on_published_at ON public.posts USING btree (published_at);
 
--- Name: index_posts_on_repository_id; Type: INDEX
+-- Name: index_posts_on_slug_and_publication_id; Type: INDEX
 
-CREATE INDEX index_posts_on_repository_id ON public.posts USING btree (repository_id);
-
--- Name: index_posts_on_slug_and_repository_id; Type: INDEX
-
-CREATE UNIQUE INDEX index_posts_on_slug_and_repository_id ON public.posts USING btree (slug, repository_id);
+CREATE UNIQUE INDEX index_posts_on_slug_and_publication_id ON public.posts USING btree (slug, publication_id);
 
 -- Name: index_posts_on_status; Type: INDEX
 
@@ -442,29 +433,29 @@ CREATE UNIQUE INDEX index_publications_on_name ON public.publications USING btre
 
 CREATE INDEX index_publications_on_owner_id ON public.publications USING btree (owner_id);
 
+-- Name: index_publications_on_repo_full_name; Type: INDEX
+
+CREATE UNIQUE INDEX index_publications_on_repo_full_name ON public.publications USING btree (repo_full_name);
+
+-- Name: index_publications_on_repo_name_and_slug; Type: INDEX
+
+CREATE UNIQUE INDEX index_publications_on_repo_name_and_slug ON public.publications USING btree (repo_name, slug);
+
+-- Name: index_publications_on_repo_path; Type: INDEX
+
+CREATE UNIQUE INDEX index_publications_on_repo_path ON public.publications USING btree (repo_path);
+
 -- Name: index_publications_on_slug; Type: INDEX
 
 CREATE UNIQUE INDEX index_publications_on_slug ON public.publications USING btree (slug);
 
+-- Name: index_publications_on_slug_and_personal; Type: INDEX
+
+CREATE UNIQUE INDEX index_publications_on_slug_and_personal ON public.publications USING btree (slug, personal);
+
 -- Name: index_publications_on_topics; Type: INDEX
 
 CREATE INDEX index_publications_on_topics ON public.publications USING gin (topics);
-
--- Name: index_repositories_on_author_id; Type: INDEX
-
-CREATE INDEX index_repositories_on_author_id ON public.repositories USING btree (author_id);
-
--- Name: index_repositories_on_full_name; Type: INDEX
-
-CREATE UNIQUE INDEX index_repositories_on_full_name ON public.repositories USING btree (full_name);
-
--- Name: index_repositories_on_name_and_author_id; Type: INDEX
-
-CREATE UNIQUE INDEX index_repositories_on_name_and_author_id ON public.repositories USING btree (name, author_id);
-
--- Name: index_repositories_on_path; Type: INDEX
-
-CREATE UNIQUE INDEX index_repositories_on_path ON public.repositories USING btree (path);
 
 -- Name: index_topics_on_name; Type: INDEX
 
@@ -496,30 +487,24 @@ ALTER TABLE ONLY public.posts
 ALTER TABLE ONLY public.keys
     ADD CONSTRAINT fk_rails_3d10ea6ad7 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
--- Name: repositories fk_rails_73e1e26d06; Type: FK CONSTRAINT
-
-ALTER TABLE ONLY public.repositories
-    ADD CONSTRAINT fk_rails_73e1e26d06 FOREIGN KEY (author_id) REFERENCES public.users(id);
-
 -- Name: publications fk_rails_8f49e7c7de; Type: FK CONSTRAINT
 
 ALTER TABLE ONLY public.publications
     ADD CONSTRAINT fk_rails_8f49e7c7de FOREIGN KEY (owner_id) REFERENCES public.users(id);
 
--- Name: posts fk_rails_d359178d0f; Type: FK CONSTRAINT
+-- Name: posts fk_rails_d5126cca81; Type: FK CONSTRAINT
 
 ALTER TABLE ONLY public.posts
-    ADD CONSTRAINT fk_rails_d359178d0f FOREIGN KEY (repository_id) REFERENCES public.repositories(id);
+    ADD CONSTRAINT fk_rails_d5126cca81 FOREIGN KEY (publication_id) REFERENCES public.publications(id);
 
 -- PostgreSQL database dump complete
 
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20180127181245'),
 ('20180127181248'),
-('20180127181249'),
 ('20190308201406'),
-('20190416114844'),
 ('20190416114847'),
 ('20190601073804'),
 ('20190706110353'),

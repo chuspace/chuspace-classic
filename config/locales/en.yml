@@ -33,6 +33,8 @@ en:
             avatar:
               invalid_size: is invalid. Please upload images size up to 5 MB.
               invalid_type: is invalid. Please upload 'gif', 'png', 'jpg' images only.
+            publication:
+              invalid: should have a default publication.
   chuspace:
     pitch: |
       Chuspace is a collaborative blogging platform for developers like Github,

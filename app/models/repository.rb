@@ -1,8 +1,10 @@
-# typed: ignore
+# typed: true
 # frozen_string_literal: true
 
-class Repository < ApplicationRecord
-  include Commitable
+class Repository
+  extend T::Sig
+  include Commitable, ActiveModel::AttributeMethods, ActiveModel::Model
+
   class NoRepository < StandardError; end
   class InvalidRef < StandardError; end
 
@@ -34,41 +36,30 @@ class Repository < ApplicationRecord
     !/images/*.jpg
   STRING
 
-  validates :name, :path, presence: true
-  validates_db_uniqueness_of :name, scope: :author_id
-  validates_db_uniqueness_of :path
-
-  before_validation :assign_default_attributes, on: :create
-  after_save :create_git_repo, :create_git_hooks, :add_gitignore, :add_drafts_folder, :add_posts_folder, :add_images_folder
-  after_save :rename_git_repo, if: -> { !new_record? && path_changed? }
-
-  after_destroy :destroy_git_repo
-  after_rollback :destroy_git_repo, on: :create
-
-  db_belongs_to :author, class_name: 'User', foreign_key: :author_id
+  attr_accessor :name, :path, :full_name, :author
 
   delegate :lookup, :checkout, :empty?, :bare?, :index, :branches, to: :rugged
   delegate :tree, to: :commit
 
+  sig { params(path: String).returns(T::Boolean) }
   def self.in_post_path?(path)
     path.start_with?(DRAFTS_ROOT_PATH, POSTS_ROOT_PATH)
   end
 
+  sig { params(path: String).returns(T::Boolean) }
   def self.in_image_path?(path)
     path.start_with?(IMAGES_ROOT_PATH)
   end
 
-  def to_param
-    name
-  end
-
+  sig { returns(Rugged::Repository) }
   def rugged
     @rugged ||= Rugged::Repository.bare(path)
   rescue Rugged::RepositoryError, Rugged::OSError
     fail NoRepository, 'no repository for such path'
   end
 
-  def exists?
+  sig { returns(T::Boolean) }
+  def persisted?
     !!rugged
   rescue NoRepository
     false
@@ -80,56 +71,48 @@ class Repository < ApplicationRecord
     nil
   end
 
+  sig { returns(T.nilable(String)) }
   def commit_sha
     head&.target&.oid
   end
 
+  sig { params(sha: T::nilable(String)).returns(Rugged::Commit) }
   def commit(sha: commit_sha)
     lookup(sha)
   end
 
+  sig { params(sha: T::nilable(String)).returns(T::Array[Blob]) }
   def blobs(sha: commit_sha)
     Blob.all(repository: self, commit_sha: sha)
   end
 
+  sig { params(path: String, sha: T::nilable(String)).returns(T.nilable(Blob)) }
   def blob_at(path:, sha: commit_sha)
     Blob.find(repository: self, path: path, commit_sha: sha)
   end
 
-  def blob_at(path:, sha: commit_sha)
-    Blob.find(repository: self, path: path, commit_sha: sha)
-  end
-
+  sig { params(path: String, content: String, commit_message: T::nilable(String), branch: String).returns(Blob) }
   def create_blob(path:, content:, commit_message: nil, branch: DEFAULT_BRANCH)
     Blob.create(repository: self, path: path, content: content, commit_message: commit_message, branch: branch)
   end
 
+  sig { params(name: String).returns(Rugged::Branch) }
   def find_branch(name:)
     branches.find { |branch| branch.name == name }
   end
 
+  sig { returns(String) }
   def ssh_path
     "git@chuspace.com:#{full_name}.git"
   end
 
   def size
-    size = popen(%w[du -sk], path).first.strip.to_i
+    size = IO.popen(%w[du -sk], path).first.strip.to_i
     (size.to_f / 1_024).round(2)
   end
 
   def commit_hash(user: author)
     { name: user.name, email: user.email, nickname: user.nickname, time: Time.now }.freeze
-  end
-
-  def sha_from_ref(ref)
-    rev_parse_target(ref).oid
-  rescue Rugged::ReferenceError
-    nil
-  end
-
-  def rev_parse_target(revspec)
-    obj = rugged.rev_parse(revspec)
-    Git::Branch.dereference_object(obj)
   end
 
   def merge_base_commit(from, to)
@@ -142,24 +125,40 @@ class Repository < ApplicationRecord
     sha
   end
 
+  sig { returns(Repository) }
+  def create
+    unless persisted?
+      Rails.logger.info "Creating repository <#{name}> at <#{path}>."
+      FileUtils.mkdir_p(path, mode: 0o770)
+
+      repo = Rugged::Repository.init_at(path, :bare)
+      repo.config['user.name'] = author.name
+      repo.config['user.email'] = author.email
+      repo.config['user.nickname'] = author.nickname
+      repo.close
+
+      Rails.logger.info "Created repository <#{name}> at <#{path}>."
+
+      create_git_hooks
+      create_defaults
+
+      self
+    else
+      self
+    end
+  end
+
+  def destroy
+    Rails.logger.info "Removing repository <#{name}> from <#{path}>."
+    FileUtils.rm_rf(path)
+  end
+
+  def rename(path:, new_path:)
+    Rails.logger.info "Moving repository from #{path} to <#{new_path}>."
+    FileUtils.mv(path, new_path)
+  end
+
   private
-
-  def assign_default_attributes
-    self.name ||= DEFAULT_NAME
-    self.full_name = "#{author.nickname}/#{DEFAULT_NAME}"
-    self.path = Git.config.storage_path.join("#{full_name}.git")
-  end
-
-  def create_git_repo
-    Rails.logger.info "Creating repository <#{name}> at <#{path}>."
-    FileUtils.mkdir_p(path, mode: 0o770)
-
-    repo = Rugged::Repository.init_at(path, :bare)
-    repo.config['user.name'] = author.name
-    repo.config['user.email'] = author.email
-    repo.config['user.nickname'] = author.nickname
-    repo.close
-  end
 
   def create_git_hooks
     local_hooks_directory = File.join(path, 'hooks')
@@ -171,44 +170,32 @@ class Repository < ApplicationRecord
       # real_local_hooks_directory == :not_found
     end
 
-    if real_local_hooks_directory != File.realpath(GLOBAL_HOOKS_DIRECTORY)
+    if real_local_hooks_directory != File.realpath(Repository::GLOBAL_HOOKS_DIRECTORY)
       if File.exist?(local_hooks_directory)
         Rails.logger.info "Moving existing hooks directory and symlinking global hooks directory in #{path}."
         FileUtils.mv(local_hooks_directory, "#{local_hooks_directory}.old.#{Time.now.to_i}")
       end
 
-      FileUtils.ln_sf(GLOBAL_HOOKS_DIRECTORY, local_hooks_directory)
+      FileUtils.ln_sf(Repository::GLOBAL_HOOKS_DIRECTORY, local_hooks_directory)
     else
       Rails.logger.info "Hooks already exist at #{path}."
     end
   end
 
-  def add_gitignore
-    create_blob(path: GITIGNORE_PATH, content: GITIGNORE, commit_message: 'Add gitignore')
-  end
+  def create_defaults
+    Rails.logger.info "Creating repository defaults <#{name}> at <#{path}>."
 
-  def add_drafts_folder
-    path = File.join(DRAFTS_ROOT_PATH, '.keep')
-    create_blob(path: path, content: '', commit_message: 'Add drafts folder')
-  end
+    create_blob(path: Repository::GITIGNORE_PATH, content: Repository::GITIGNORE, commit_message: 'Add gitignore')
 
-  def add_posts_folder
-    path = File.join(POSTS_ROOT_PATH, '.keep')
-    create_blob(path: path, content: '', commit_message: 'Add posts folder')
-  end
+    drafts_path = File.join(Repository::DRAFTS_ROOT_PATH, '.keep')
+    create_blob(path: drafts_path, content: '', commit_message: 'Add drafts folder')
 
-  def add_images_folder
-    path = File.join(IMAGES_ROOT_PATH, '.keep')
-    create_blob(path: path, content: '', commit_message: 'Add images folder')
-  end
+    posts_path = File.join(Repository::POSTS_ROOT_PATH, '.keep')
+    create_blob(path: posts_path, content: '', commit_message: 'Add posts folder')
 
-  def destroy_git_repo
-    Rails.logger.info "Removing repository <#{name}> from <#{path}>."
-    FileUtils.rm_rf(path)
-  end
+    images_path = File.join(Repository::IMAGES_ROOT_PATH, '.keep')
+    create_blob(path: images_path, content: '', commit_message: 'Add images folder')
 
-  def rename_git_repo
-    Rails.logger.info "Moving repository from #{path_was} to <#{path}>."
-    FileUtils.mv(path_was, path)
+    Rails.logger.info "Created repository defaults <#{name}> at <#{path}>."
   end
 end

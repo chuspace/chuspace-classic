@@ -5850,6 +5850,7 @@ module Authentication
   def login(user); end
 
   def logout(); end
+  COOKIE_DOMAINS = ::T.let(nil, ::T.untyped)
 end
 
 module Authentication
@@ -10536,13 +10537,15 @@ class File::Stat
 end
 
 class File
-  def self.empty?(_); end
+  def self.atomic_write(file_name, temp_dir=T.unsafe(nil)); end
 
   def self.exists?(_); end
 
   def self.lutime(*_); end
 
   def self.mkfifo(*_); end
+
+  def self.probe_stat_in(dir); end
 
 end
 
@@ -11153,28 +11156,6 @@ class Hash
 end
 
 HashWithIndifferentAccess = ActiveSupport::HashWithIndifferentAccess
-
-module HighVoltage
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class HighVoltage::PagesController
-  include ::HighVoltage::StaticPage
-  def _layout_from_proc(_); end
-end
-
-class HighVoltage::PagesController
-end
-
-module HighVoltage::StaticPage
-  def invalid_page(); end
-
-  def show(); end
-end
-
-module HighVoltage::StaticPage
-  extend ::ActiveSupport::Concern
-end
 
 module Hiredis
   VERSION = ::T.let(nil, ::T.untyped)
@@ -12886,6 +12867,76 @@ module Kernel
   def self.at_exit(); end
 
   def self.autoload(_, _1); end
+end
+
+class Key
+  include ::Key::GeneratedAttributeMethods
+  include ::Key::GeneratedAssociationMethods
+  include ::DatabaseValidations::Validations
+  def autosave_associated_records_for_user(*args); end
+
+  def valid_without_database_validations?(context=T.unsafe(nil)); end
+end
+
+class Key::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Key::GeneratedRelationMethods
+end
+
+class Key::ActiveRecord_AssociationRelation
+  extend ::ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
+end
+
+class Key::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Key::GeneratedRelationMethods
+end
+
+class Key::ActiveRecord_Associations_CollectionProxy
+  extend ::ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
+end
+
+class Key::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Key::GeneratedRelationMethods
+end
+
+class Key::ActiveRecord_Relation
+  extend ::ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
+end
+
+module Key::GeneratedAssociationMethods
+  def build_user(*args, &block); end
+
+  def create_user(*args, &block); end
+
+  def create_user!(*args, &block); end
+
+  def reload_user(); end
+
+  def user(); end
+
+  def user=(value); end
+end
+
+module Key::GeneratedAssociationMethods
+end
+
+module Key::GeneratedAttributeMethods
+end
+
+module Key::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module Key::GeneratedRelationMethods
+end
+
+module Key::GeneratedRelationMethods
+  extend ::Mutex_m
+end
+
+class Key
 end
 
 class KeyError
@@ -16763,7 +16814,7 @@ class Post
 
   def autosave_associated_records_for_author(*args); end
 
-  def autosave_associated_records_for_repository(*args); end
+  def autosave_associated_records_for_publication(*args); end
 
   def blob(); end
 
@@ -16853,19 +16904,23 @@ end
 module Post::GeneratedAssociationMethods
   def build_author(*args, &block); end
 
-  def build_repository(*args, &block); end
+  def build_publication(*args, &block); end
 
   def create_author(*args, &block); end
 
   def create_author!(*args, &block); end
 
-  def create_repository(*args, &block); end
+  def create_publication(*args, &block); end
 
-  def create_repository!(*args, &block); end
+  def create_publication!(*args, &block); end
+
+  def publication(); end
+
+  def publication=(value); end
 
   def reload_author(); end
 
-  def reload_repository(); end
+  def reload_publication(); end
 end
 
 module Post::GeneratedAttributeMethods
@@ -18007,6 +18062,140 @@ end
 
 class PublicSuffix::List
   DEFAULT_LIST_PATH = ::T.let(nil, ::T.untyped)
+end
+
+class Publication
+  include ::Publication::GeneratedAttributeMethods
+  include ::Publication::GeneratedAssociationMethods
+  include ::Repoable
+  include ::DatabaseValidations::Validations
+  def after_add_for_posts(); end
+
+  def after_add_for_posts=(val); end
+
+  def after_add_for_posts?(); end
+
+  def after_remove_for_posts(); end
+
+  def after_remove_for_posts=(val); end
+
+  def after_remove_for_posts?(); end
+
+  def autosave_associated_records_for_owner(*args); end
+
+  def autosave_associated_records_for_posts(*args); end
+
+  def before_add_for_posts(); end
+
+  def before_add_for_posts=(val); end
+
+  def before_add_for_posts?(); end
+
+  def before_remove_for_posts(); end
+
+  def before_remove_for_posts=(val); end
+
+  def before_remove_for_posts?(); end
+
+  def drafts(); end
+
+  def repository(); end
+
+  def valid_without_database_validations?(context=T.unsafe(nil)); end
+
+  def validate_associated_records_for_posts(*args); end
+end
+
+class Publication::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Publication::GeneratedRelationMethods
+end
+
+class Publication::ActiveRecord_AssociationRelation
+  extend ::ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
+end
+
+class Publication::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Publication::GeneratedRelationMethods
+end
+
+class Publication::ActiveRecord_Associations_CollectionProxy
+  extend ::ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
+end
+
+class Publication::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Publication::GeneratedRelationMethods
+end
+
+class Publication::ActiveRecord_Relation
+  extend ::ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
+end
+
+module Publication::GeneratedAssociationMethods
+  def build_owner(*args, &block); end
+
+  def create_owner(*args, &block); end
+
+  def create_owner!(*args, &block); end
+
+  def owner(); end
+
+  def owner=(value); end
+
+  def post_ids(); end
+
+  def post_ids=(ids); end
+
+  def posts(); end
+
+  def posts=(value); end
+
+  def reload_owner(); end
+end
+
+module Publication::GeneratedAssociationMethods
+end
+
+module Publication::GeneratedAttributeMethods
+end
+
+module Publication::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module Publication::GeneratedRelationMethods
+end
+
+module Publication::GeneratedRelationMethods
+  extend ::Mutex_m
+end
+
+class Publication
+  def self.after_add_for_posts(); end
+
+  def self.after_add_for_posts=(val); end
+
+  def self.after_add_for_posts?(); end
+
+  def self.after_remove_for_posts(); end
+
+  def self.after_remove_for_posts=(val); end
+
+  def self.after_remove_for_posts?(); end
+
+  def self.before_add_for_posts(); end
+
+  def self.before_add_for_posts=(val); end
+
+  def self.before_add_for_posts?(); end
+
+  def self.before_remove_for_posts(); end
+
+  def self.before_remove_for_posts=(val); end
+
+  def self.before_remove_for_posts?(); end
 end
 
 module Puma
@@ -19872,6 +20061,7 @@ class Rack::Attack::Safelist
 end
 
 module Rack::Attack::StoreProxy
+  PROXIES = ::T.let(nil, ::T.untyped)
 end
 
 class Rack::Attack::StoreProxy::ActiveSupportRedisStoreProxy
@@ -19943,6 +20133,7 @@ class Rack::Attack::StoreProxy::RedisStoreProxy
 end
 
 module Rack::Attack::StoreProxy
+  def self.build(store); end
 end
 
 class Rack::Attack::Throttle
@@ -21950,133 +22141,85 @@ class Regexp
   def self.union(*_); end
 end
 
-class Repository
-  include ::Commitable
-  include ::DatabaseValidations::Validations
-  def autosave_associated_records_for_author(*args); end
-
-  def bare?(*args, &block); end
-
-  def blob_at(path:, sha: T.unsafe(nil)); end
-
-  def blobs(sha: T.unsafe(nil)); end
-
-  def branches(*args, &block); end
-
-  def checkout(*args, &block); end
-
-  def commit(sha: T.unsafe(nil)); end
-
-  def commit_hash(user: T.unsafe(nil)); end
-
-  def commit_sha(); end
-
-  def create_blob(path:, content:, commit_message: T.unsafe(nil), branch: T.unsafe(nil)); end
-
-  def create_commit(options:, action: T.unsafe(nil)); end
-
-  def empty?(*args, &block); end
-
-  def exists?(); end
-
-  def find_branch(name:); end
-
-  def head(); end
-
-  def index(*args, &block); end
-
-  def lookup(*args, &block); end
-
-  def merge_base_commit(from, to); end
-
-  def rev_parse_target(revspec); end
-
-  def rugged(); end
-
-  def sha_from_ref(ref); end
-
-  def size(); end
-
-  def ssh_path(); end
-
-  def tree(*args, &block); end
-
-  def valid_without_database_validations?(context=T.unsafe(nil)); end
-  DEFAULT_BRANCH = ::T.let(nil, ::T.untyped)
-  DEFAULT_NAME = ::T.let(nil, ::T.untyped)
-  DRAFTS_ROOT_PATH = ::T.let(nil, ::T.untyped)
-  GITIGNORE = ::T.let(nil, ::T.untyped)
-  GITIGNORE_PATH = ::T.let(nil, ::T.untyped)
-  GLOBAL_HOOKS_DIRECTORY = ::T.let(nil, ::T.untyped)
-  IMAGES_ROOT_PATH = ::T.let(nil, ::T.untyped)
-  POSTS_ROOT_PATH = ::T.let(nil, ::T.untyped)
-  START_REF = ::T.let(nil, ::T.untyped)
+module Repoable
 end
 
-class Repository::ActiveRecord_AssociationRelation
-  include ::ActiveRecord::Delegation::ClassSpecificRelation
-  include ::Repository::GeneratedRelationMethods
-end
-
-class Repository::ActiveRecord_AssociationRelation
-  extend ::ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
-end
-
-class Repository::ActiveRecord_Associations_CollectionProxy
-  include ::ActiveRecord::Delegation::ClassSpecificRelation
-  include ::Repository::GeneratedRelationMethods
-end
-
-class Repository::ActiveRecord_Associations_CollectionProxy
-  extend ::ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
-end
-
-class Repository::ActiveRecord_Relation
-  include ::ActiveRecord::Delegation::ClassSpecificRelation
-  include ::Repository::GeneratedRelationMethods
-end
-
-class Repository::ActiveRecord_Relation
-  extend ::ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
-end
-
-module Repository::GeneratedAssociationMethods
-  def build_author(*args, &block); end
-
-  def create_author(*args, &block); end
-
-  def create_author!(*args, &block); end
-
-  def reload_author(); end
-end
-
-module Repository::GeneratedAttributeMethods
-  extend ::Mutex_m
-end
-
-module Repository::GeneratedRelationMethods
-end
-
-module Repository::GeneratedRelationMethods
-  extend ::Mutex_m
-end
-
-class Repository::InvalidRef
-end
-
-class Repository::InvalidRef
-end
-
-class Repository::NoRepository
-end
-
-class Repository::NoRepository
+module Repoable
+  extend ::ActiveSupport::Concern
 end
 
 class Repository
-  def self.in_image_path?(path); end
+  include ::ActiveModel::Validations
+  include ::ActiveSupport::Callbacks
+  include ::ActiveModel::Validations::HelperMethods
+  include ::ActiveModel::Conversion
+  include ::ActiveModel::Model
+  include ::ActiveModel::AttributeAssignment
+  include ::ActiveModel::ForbiddenAttributesProtection
+  include ::ActiveModel::AttributeMethods
+  def __callbacks(); end
 
-  def self.in_post_path?(path); end
+  def __callbacks?(); end
+
+  def _run_validate_callbacks(&block); end
+
+  def _validate_callbacks(); end
+
+  def _validators(); end
+
+  def _validators?(); end
+
+  def attribute_aliases(); end
+
+  def attribute_aliases?(); end
+
+  def attribute_method_matchers(); end
+
+  def attribute_method_matchers?(); end
+
+  def model_name(*args, &block); end
+
+  def validation_context(); end
+end
+
+class Repository
+  extend ::ActiveModel::Validations::ClassMethods
+  extend ::ActiveModel::Callbacks
+  extend ::ActiveSupport::DescendantsTracker
+  extend ::ActiveModel::Translation
+  extend ::ActiveModel::Naming
+  extend ::ActiveModel::Validations::HelperMethods
+  extend ::ActiveModel::Conversion::ClassMethods
+  extend ::ActiveModel::AttributeMethods::ClassMethods
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+  def self.__callbacks(); end
+
+  def self.__callbacks=(val); end
+
+  def self.__callbacks?(); end
+
+  def self._validate_callbacks(); end
+
+  def self._validate_callbacks=(value); end
+
+  def self._validators(); end
+
+  def self._validators=(val); end
+
+  def self._validators?(); end
+
+  def self.attribute_aliases(); end
+
+  def self.attribute_aliases=(val); end
+
+  def self.attribute_aliases?(); end
+
+  def self.attribute_method_matchers(); end
+
+  def self.attribute_method_matchers=(val); end
+
+  def self.attribute_method_matchers?(); end
 end
 
 RspecJunitFormatter = RSpecJUnitFormatter
@@ -24826,21 +24969,7 @@ end
 module Settings
 end
 
-class Settings::ProfilesController
-  def index(); end
-end
-
-class Settings::ProfilesController
-end
-
-class Settings::RepositoriesController
-  def index(); end
-end
-
-class Settings::RepositoriesController
-end
-
-class Settings::SSHKeysController
+class Settings::KeysController
   def create(); end
 
   def destroy(); end
@@ -24850,7 +24979,14 @@ class Settings::SSHKeysController
   def new(); end
 end
 
-class Settings::SSHKeysController
+class Settings::KeysController
+end
+
+class Settings::ProfilesController
+  def index(); end
+end
+
+class Settings::ProfilesController
 end
 
 module Settings
@@ -27421,17 +27557,29 @@ end
 class User
   include ::Trackable
   include ::DatabaseValidations::Validations
+  def after_add_for_keys(); end
+
+  def after_add_for_keys=(val); end
+
+  def after_add_for_keys?(); end
+
   def after_add_for_posts(); end
 
   def after_add_for_posts=(val); end
 
   def after_add_for_posts?(); end
 
-  def after_add_for_ssh_keys(); end
+  def after_add_for_publications(); end
 
-  def after_add_for_ssh_keys=(val); end
+  def after_add_for_publications=(val); end
 
-  def after_add_for_ssh_keys?(); end
+  def after_add_for_publications?(); end
+
+  def after_remove_for_keys(); end
+
+  def after_remove_for_keys=(val); end
+
+  def after_remove_for_keys?(); end
 
   def after_remove_for_posts(); end
 
@@ -27439,19 +27587,27 @@ class User
 
   def after_remove_for_posts?(); end
 
-  def after_remove_for_ssh_keys(); end
+  def after_remove_for_publications(); end
 
-  def after_remove_for_ssh_keys=(val); end
+  def after_remove_for_publications=(val); end
 
-  def after_remove_for_ssh_keys?(); end
+  def after_remove_for_publications?(); end
 
   def auth_token_valid?(); end
 
+  def autosave_associated_records_for_keys(*args); end
+
   def autosave_associated_records_for_posts(*args); end
 
-  def autosave_associated_records_for_repository(); end
+  def autosave_associated_records_for_publication(); end
 
-  def autosave_associated_records_for_ssh_keys(*args); end
+  def autosave_associated_records_for_publications(*args); end
+
+  def before_add_for_keys(); end
+
+  def before_add_for_keys=(val); end
+
+  def before_add_for_keys?(); end
 
   def before_add_for_posts(); end
 
@@ -27459,11 +27615,17 @@ class User
 
   def before_add_for_posts?(); end
 
-  def before_add_for_ssh_keys(); end
+  def before_add_for_publications(); end
 
-  def before_add_for_ssh_keys=(val); end
+  def before_add_for_publications=(val); end
 
-  def before_add_for_ssh_keys?(); end
+  def before_add_for_publications?(); end
+
+  def before_remove_for_keys(); end
+
+  def before_remove_for_keys=(val); end
+
+  def before_remove_for_keys?(); end
 
   def before_remove_for_posts(); end
 
@@ -27471,13 +27633,11 @@ class User
 
   def before_remove_for_posts?(); end
 
-  def before_remove_for_ssh_keys(); end
+  def before_remove_for_publications(); end
 
-  def before_remove_for_ssh_keys=(val); end
+  def before_remove_for_publications=(val); end
 
-  def before_remove_for_ssh_keys?(); end
-
-  def drafts(); end
+  def before_remove_for_publications?(); end
 
   def first_name(); end
 
@@ -27485,16 +27645,16 @@ class User
 
   def regenerate_auth_token(); end
 
-  def repo(); end
-
   def valid_without_database_validations?(context=T.unsafe(nil)); end
+
+  def validate_associated_records_for_keys(*args); end
 
   def validate_associated_records_for_posts(*args); end
 
-  def validate_associated_records_for_repository(*args); end
+  def validate_associated_records_for_publication(*args); end
 
-  def validate_associated_records_for_ssh_keys(*args); end
-  AUTH_TOKEN_EXPIRE_IN = ::T.let(nil, ::T.untyped)
+  def validate_associated_records_for_publications(*args); end
+  AUTH_TOKEN_LIFE = ::T.let(nil, ::T.untyped)
 end
 
 class User::ActiveRecord_AssociationRelation
@@ -27525,21 +27685,37 @@ class User::ActiveRecord_Relation
 end
 
 module User::GeneratedAssociationMethods
-  def build_repository(*args, &block); end
+  def build_publication(*args, &block); end
 
-  def create_repository(*args, &block); end
+  def create_publication(*args, &block); end
 
-  def create_repository!(*args, &block); end
+  def create_publication!(*args, &block); end
+
+  def key_ids(); end
+
+  def key_ids=(ids); end
+
+  def keys(); end
+
+  def keys=(value); end
 
   def post_ids(); end
 
   def post_ids=(ids); end
 
-  def reload_repository(); end
+  def publication(); end
 
-  def ssh_key_ids(); end
+  def publication=(value); end
 
-  def ssh_key_ids=(ids); end
+  def publication_ids(); end
+
+  def publication_ids=(ids); end
+
+  def publications(); end
+
+  def publications=(value); end
+
+  def reload_publication(); end
 end
 
 module User::GeneratedAttributeMethods
@@ -27554,17 +27730,29 @@ module User::GeneratedRelationMethods
 end
 
 class User
+  def self.after_add_for_keys(); end
+
+  def self.after_add_for_keys=(val); end
+
+  def self.after_add_for_keys?(); end
+
   def self.after_add_for_posts(); end
 
   def self.after_add_for_posts=(val); end
 
   def self.after_add_for_posts?(); end
 
-  def self.after_add_for_ssh_keys(); end
+  def self.after_add_for_publications(); end
 
-  def self.after_add_for_ssh_keys=(val); end
+  def self.after_add_for_publications=(val); end
 
-  def self.after_add_for_ssh_keys?(); end
+  def self.after_add_for_publications?(); end
+
+  def self.after_remove_for_keys(); end
+
+  def self.after_remove_for_keys=(val); end
+
+  def self.after_remove_for_keys?(); end
 
   def self.after_remove_for_posts(); end
 
@@ -27572,11 +27760,17 @@ class User
 
   def self.after_remove_for_posts?(); end
 
-  def self.after_remove_for_ssh_keys(); end
+  def self.after_remove_for_publications(); end
 
-  def self.after_remove_for_ssh_keys=(val); end
+  def self.after_remove_for_publications=(val); end
 
-  def self.after_remove_for_ssh_keys?(); end
+  def self.after_remove_for_publications?(); end
+
+  def self.before_add_for_keys(); end
+
+  def self.before_add_for_keys=(val); end
+
+  def self.before_add_for_keys?(); end
 
   def self.before_add_for_posts(); end
 
@@ -27584,11 +27778,17 @@ class User
 
   def self.before_add_for_posts?(); end
 
-  def self.before_add_for_ssh_keys(); end
+  def self.before_add_for_publications(); end
 
-  def self.before_add_for_ssh_keys=(val); end
+  def self.before_add_for_publications=(val); end
 
-  def self.before_add_for_ssh_keys?(); end
+  def self.before_add_for_publications?(); end
+
+  def self.before_remove_for_keys(); end
+
+  def self.before_remove_for_keys=(val); end
+
+  def self.before_remove_for_keys?(); end
 
   def self.before_remove_for_posts(); end
 
@@ -27596,11 +27796,11 @@ class User
 
   def self.before_remove_for_posts?(); end
 
-  def self.before_remove_for_ssh_keys(); end
+  def self.before_remove_for_publications(); end
 
-  def self.before_remove_for_ssh_keys=(val); end
+  def self.before_remove_for_publications=(val); end
 
-  def self.before_remove_for_ssh_keys?(); end
+  def self.before_remove_for_publications?(); end
 end
 
 class UserDraftsController
@@ -28003,9 +28203,6 @@ end
 
 module Zip::NullInputStream
   include ::ActiveSupport::ToJsonWithActiveSupportEncoder
-end
-
-class Zip::StreamableStream
 end
 
 Zip::ZipCompressionMethodError = Zip::CompressionMethodError

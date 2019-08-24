@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# typed: false
+# typed: ignore
 class CreateDelayedJobs < ActiveRecord::Migration[6.0]
   def self.up
     create_table :delayed_jobs do |table|

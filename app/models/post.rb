@@ -5,7 +5,7 @@ class Post < ApplicationRecord
   include AASM
 
   db_belongs_to :author, class_name: 'User'
-  db_belongs_to :repository
+  db_belongs_to :publication
 
   has_ancestry
   has_logidze
@@ -18,8 +18,8 @@ class Post < ApplicationRecord
   validates_length_of :summary, maximum: 140, if: :published?
   validates_length_of :topics, maximum: 5, if: :published?
 
-  validates_db_uniqueness_of :slug, scope: %i[repository_id]
-  validates_db_uniqueness_of :blob_path, scope: %i[repository_id]
+  validates_db_uniqueness_of :slug, scope: %i[publication_id]
+  validates_db_uniqueness_of :blob_path, scope: %i[publication_id]
 
   validates :slug, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
   validates :published_at, date: true, if: :published?
@@ -42,7 +42,7 @@ class Post < ApplicationRecord
   end
 
   def blob
-    @blob ||= repository.blob_at(path: blob_path)
+    @blob ||= publication.repository.blob_at(path: blob_path)
   end
 
   def to_param
