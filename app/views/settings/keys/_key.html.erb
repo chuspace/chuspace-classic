@@ -1,0 +1,19 @@
+<div class="list__item list__item--flex list__item--bordered">
+  <div>
+    <strong><%= key.title %></strong>
+    <small class="block mt-2">
+      Added <%= key.created_at.to_formatted_s(:long) %>
+    </small>
+    <small><%= key.last_used ? "Last used #{distance_of_time_in_words_to_now(key.last_used)} ago" : 'Never used'  %></small>
+  </div>
+  <code class='break-all'><%= key.fingerprint %></code>
+  <%= link_to(
+    'Delete',
+    settings_key_path(key),
+    method: :delete,
+    remote: true,
+    class: 'link link--danger underline text-sm',
+    data: { confirm: 'Are you sure?' }
+  )
+  %>
+</div>

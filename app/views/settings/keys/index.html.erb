@@ -1,0 +1,21 @@
+<%= render 'settings/navigation' %>
+
+<section>
+  <div class="my-8 block sm:flex justify-between items-center">
+    <div class="header">
+      <h4>Ssh keys</h4>
+      <p class="mt-2 text-secondary">All ssh keys added to your account</p>
+    </div>
+    <div>
+      <%= link_to 'Add new key', new_settings_key_path, class: 'button button--active inline-block sm:block mt-4 sm:mt:0' %>
+    </div>
+  </div>
+
+  <div class="list border-t border-grey-lighter">
+    <% if @user.keys.any? %>
+      <%= render partial: 'key', collection: @user.keys %>
+    <% else %>
+      <h3 class='text-secondary text-center mt-8'>No ssh keys added</h3>
+    <% end %>
+  </div>
+</section>
