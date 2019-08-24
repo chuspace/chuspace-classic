@@ -29,7 +29,7 @@ module Mobius
         sql = <<-STRING
           SELECT id as publication_id, repo_full_name, repo_path
           FROM publications
-          WHERE author_id = $1 AND full_name = $2
+          WHERE owner_id = $1 AND repo_full_name = $2
           LIMIT 1
         STRING
 

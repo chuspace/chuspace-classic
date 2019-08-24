@@ -72,7 +72,7 @@ class Repository
     !persisted?
   end
 
-  sig { returns(Rugged::Reference) }
+  sig { returns(T::nilable(Rugged::Reference)) }
   def head
     rugged.head
   rescue Rugged::ReferenceError

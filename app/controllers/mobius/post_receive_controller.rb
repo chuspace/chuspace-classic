@@ -9,7 +9,8 @@ module Mobius
       ref = params[:ref]
 
       author = User.find_by(id: params[:author_id])
-      repository = author.publications.find_by(id: params[:publication_id], owner: author)&.repository
+      publication = author.publications.find_by(id: params[:publication_id], owner: author)
+      repository = publication&.repository
 
       unless repository
         Rails.logger.error("Repository not found: author-#{author.id} repository-#{repository.id}")
@@ -27,8 +28,10 @@ module Mobius
 
           case delta.status
           when :added, :modified
-            post = author.posts.find_or_initialize_by(blob_path: git_blob.path, repository: repository)
-            post.assign_attributes(slug: git_blob.oid[0..8]) if post.new_record?
+            markdown = PostMarkdownService.call(content: git_blob.content)
+            slug = markdown.title&.to_slug&.to_ascii&.normalize&.to_s || git_blob.oid[0..8]
+            post = author.posts.find_or_initialize_by(blob_path: git_blob.path, publication: publication)
+            post.assign_attributes(slug: slug) if post.new_record?
             post.save!
           when :renamed
             author.posts.find_by(blob_path: delta.old_file[:path])&.update!(blob_path: delta.new_file[:path])
@@ -38,7 +41,7 @@ module Mobius
         end
       end
 
-      Rails.logger.error("Posts synced: author-#{author.id} repository-#{repository.id}")
+      Rails.logger.error("Posts synced: author-#{author.id} publication-#{publication.id}")
       self.status = 200
     end
   end
