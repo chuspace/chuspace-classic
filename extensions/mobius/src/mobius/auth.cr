@@ -9,7 +9,7 @@ module Mobius
 
         sql = <<-STRING
           SELECT user_id, key
-          FROM ssh_keys
+          FROM keys
           WHERE fingerprint= $1
           LIMIT 1
         STRING
@@ -18,7 +18,7 @@ module Mobius
         command = "#{Mobius::Shell::BINARY} user-#{user_id}"
 
         sql = <<-STRING
-          UPDATE ssh_keys
+          UPDATE keys
           SET last_used='#{Time.now}'
           WHERE fingerprint = $1
         STRING

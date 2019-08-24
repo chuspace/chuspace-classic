@@ -15,6 +15,7 @@ class SignupsController < ApplicationController
 
       respond_to do |format|
         if @user.save
+          @user.create_repository
           UserMailer.with(user: @user).welcome.deliver_later
           format.html { redirect_to root_path, notice: t('users.create.success') }
         else

@@ -272,6 +272,19 @@ CREATE TABLE public.delayed_jobs (
     updated_at timestamp(6) without time zone
 );
 
+-- Name: keys; Type: TABLE
+
+CREATE TABLE public.keys (
+    id BIGSERIAL PRIMARY KEY,
+    title character varying,
+    key text NOT NULL,
+    fingerprint character varying NOT NULL,
+    user_id bigint NOT NULL,
+    last_used timestamp without time zone,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
 -- Name: posts; Type: TABLE
 
 CREATE TABLE public.posts (
@@ -294,6 +307,23 @@ CREATE TABLE public.posts (
     log_data jsonb
 );
 
+-- Name: publications; Type: TABLE
+
+CREATE TABLE public.publications (
+    id BIGSERIAL PRIMARY KEY,
+    name character varying,
+    slug character varying,
+    description text,
+    avatar_data jsonb,
+    owner_id bigint NOT NULL,
+    email character varying,
+    twitter character varying,
+    facebook character varying,
+    topics character varying[] DEFAULT '{}'::character varying[],
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
 -- Name: repositories; Type: TABLE
 
 CREATE TABLE public.repositories (
@@ -311,19 +341,6 @@ CREATE TABLE public.repositories (
 
 CREATE TABLE public.schema_migrations (
     version character varying NOT NULL
-);
-
--- Name: ssh_keys; Type: TABLE
-
-CREATE TABLE public.ssh_keys (
-    id BIGSERIAL PRIMARY KEY,
-    title character varying,
-    key text NOT NULL,
-    fingerprint character varying NOT NULL,
-    user_id bigint NOT NULL,
-    last_used timestamp without time zone,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
 );
 
 -- Name: topics; Type: TABLE
@@ -369,6 +386,22 @@ ALTER TABLE ONLY public.schema_migrations
 
 CREATE INDEX delayed_jobs_priority ON public.delayed_jobs USING btree (priority, run_at);
 
+-- Name: index_keys_on_fingerprint; Type: INDEX
+
+CREATE UNIQUE INDEX index_keys_on_fingerprint ON public.keys USING btree (fingerprint);
+
+-- Name: index_keys_on_key; Type: INDEX
+
+CREATE UNIQUE INDEX index_keys_on_key ON public.keys USING btree (key);
+
+-- Name: index_keys_on_last_used; Type: INDEX
+
+CREATE INDEX index_keys_on_last_used ON public.keys USING btree (last_used);
+
+-- Name: index_keys_on_user_id; Type: INDEX
+
+CREATE INDEX index_keys_on_user_id ON public.keys USING btree (user_id);
+
 -- Name: index_posts_on_ancestry; Type: INDEX
 
 CREATE INDEX index_posts_on_ancestry ON public.posts USING btree (ancestry);
@@ -401,6 +434,22 @@ CREATE INDEX index_posts_on_status ON public.posts USING btree (status);
 
 CREATE INDEX index_posts_on_topics ON public.posts USING gin (topics);
 
+-- Name: index_publications_on_name; Type: INDEX
+
+CREATE UNIQUE INDEX index_publications_on_name ON public.publications USING btree (name);
+
+-- Name: index_publications_on_owner_id; Type: INDEX
+
+CREATE INDEX index_publications_on_owner_id ON public.publications USING btree (owner_id);
+
+-- Name: index_publications_on_slug; Type: INDEX
+
+CREATE UNIQUE INDEX index_publications_on_slug ON public.publications USING btree (slug);
+
+-- Name: index_publications_on_topics; Type: INDEX
+
+CREATE INDEX index_publications_on_topics ON public.publications USING gin (topics);
+
 -- Name: index_repositories_on_author_id; Type: INDEX
 
 CREATE INDEX index_repositories_on_author_id ON public.repositories USING btree (author_id);
@@ -416,22 +465,6 @@ CREATE UNIQUE INDEX index_repositories_on_name_and_author_id ON public.repositor
 -- Name: index_repositories_on_path; Type: INDEX
 
 CREATE UNIQUE INDEX index_repositories_on_path ON public.repositories USING btree (path);
-
--- Name: index_ssh_keys_on_fingerprint; Type: INDEX
-
-CREATE UNIQUE INDEX index_ssh_keys_on_fingerprint ON public.ssh_keys USING btree (fingerprint);
-
--- Name: index_ssh_keys_on_key; Type: INDEX
-
-CREATE UNIQUE INDEX index_ssh_keys_on_key ON public.ssh_keys USING btree (key);
-
--- Name: index_ssh_keys_on_last_used; Type: INDEX
-
-CREATE INDEX index_ssh_keys_on_last_used ON public.ssh_keys USING btree (last_used);
-
--- Name: index_ssh_keys_on_user_id; Type: INDEX
-
-CREATE INDEX index_ssh_keys_on_user_id ON public.ssh_keys USING btree (user_id);
 
 -- Name: index_topics_on_name; Type: INDEX
 
@@ -458,15 +491,20 @@ CREATE TRIGGER logidze_on_posts BEFORE INSERT OR UPDATE ON public.posts FOR EACH
 ALTER TABLE ONLY public.posts
     ADD CONSTRAINT fk_rails_04d13ef8c7 FOREIGN KEY (author_id) REFERENCES public.users(id);
 
+-- Name: keys fk_rails_3d10ea6ad7; Type: FK CONSTRAINT
+
+ALTER TABLE ONLY public.keys
+    ADD CONSTRAINT fk_rails_3d10ea6ad7 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
 -- Name: repositories fk_rails_73e1e26d06; Type: FK CONSTRAINT
 
 ALTER TABLE ONLY public.repositories
     ADD CONSTRAINT fk_rails_73e1e26d06 FOREIGN KEY (author_id) REFERENCES public.users(id);
 
--- Name: ssh_keys fk_rails_bacf7e1718; Type: FK CONSTRAINT
+-- Name: publications fk_rails_8f49e7c7de; Type: FK CONSTRAINT
 
-ALTER TABLE ONLY public.ssh_keys
-    ADD CONSTRAINT fk_rails_bacf7e1718 FOREIGN KEY (user_id) REFERENCES public.users(id);
+ALTER TABLE ONLY public.publications
+    ADD CONSTRAINT fk_rails_8f49e7c7de FOREIGN KEY (owner_id) REFERENCES public.users(id);
 
 -- Name: posts fk_rails_d359178d0f; Type: FK CONSTRAINT
 
@@ -481,6 +519,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180127181248'),
 ('20180127181249'),
 ('20190308201406'),
+('20190416114844'),
 ('20190416114847'),
 ('20190601073804'),
 ('20190706110353'),
