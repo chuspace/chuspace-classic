@@ -29,7 +29,7 @@ Rails.application.routes.draw do
     resources :settings, only: :index
     namespace :settings do
       resources :profiles, path: 'profile', only: %i[index]
-      resources :ssh_keys, path: 'ssh', except: %i[show update]
+      resources :keys, path: 'key', except: %i[show update]
       resources :repositories, path: 'repository', only: :index
     end
   end
