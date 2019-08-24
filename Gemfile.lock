@@ -198,7 +198,6 @@ GEM
     grpc (1.23.0)
       google-protobuf (~> 3.8)
       googleapis-common-protos-types (~> 1.0)
-    high_voltage (3.1.2)
     hiredis (0.6.3)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
@@ -441,7 +440,6 @@ DEPENDENCIES
   easymon
   faker
   fastimage
-  high_voltage
   hiredis
   image_processing
   imgproxy

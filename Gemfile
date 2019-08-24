@@ -48,9 +48,6 @@ gem 'delayed_job_active_record'
 # Auth
 gem 'pundit'
 
-# Static pages
-gem 'high_voltage'
-
 # Sitemap
 gem 'sitemap_generator', require: false
 
