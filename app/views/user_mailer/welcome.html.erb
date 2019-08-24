@@ -44,7 +44,7 @@
   </td>
 </tr>
 <tr>
-  <td><p class='my-20'><%= t('user_mailer.send_magic_login.body', expires_in: User::AUTH_TOKEN_EXPIRE_IN) %></p></td>
+  <td><p class='my-20'><%= t('user_mailer.send_magic_login.body', expires_in: User::AUTH_TOKEN_LIFE) %></p></td>
 </tr>
 <tr>
   <td style='text-align: center;'><%= link_to 'Click to login', magic_logins_url(token: @user.auth_token), class: 'button my-20' %></td>
