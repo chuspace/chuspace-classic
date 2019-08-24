@@ -12,7 +12,7 @@
     <% end %>
   </div>
 
-  <div class='flex justify-end items-center flex-1 mr-8 hidden sm:block'>
+  <div class='justify-end items-center flex-1 mr-8 hidden sm:flex'>
     <%= link_to post.publish_label, post_publish_index_path(post), class: 'button button--active button--slim mr-2' if policy(post).publish? %>
     <%= link_to 'Delete', post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'button button--danger button--slim' if policy(post).destroy? %>
   </div>
