@@ -11,12 +11,11 @@ class SignupsController < ApplicationController
   def create
     User.transaction do
       @user = User.new(create_params)
+      @user.auth_token_expires_at = User::AUTH_TOKEN_LIFE.minutes.from_now
 
       respond_to do |format|
         if @user.save
-          @user.create_repository
           UserMailer.with(user: @user).welcome.deliver_later
-
           format.html { redirect_to root_path, notice: t('users.create.success') }
         else
           format.js
@@ -33,6 +32,6 @@ class SignupsController < ApplicationController
   end
 
   def redirect_if_registered
-    redirect_back(fallback_location: root_path) if Current.user.present?
+    redirect_to(root_path) && return if Current.user.present?
   end
 end

@@ -13,8 +13,9 @@ class SigninsController < ApplicationController
 
     if @user
       @user.regenerate_auth_token
-      UserMailer.with(user: @user).send_magic_login.deliver_later
+      @user.update(auth_token_expires_at: User::AUTH_TOKEN_LIFE.minutes.from_now)
 
+      UserMailer.with(user: @user).send_magic_login.deliver_later
       redirect_to signins_path, notice: t('signins.create.success')
     else
       @user = User.new(email: signin_params[:email])
@@ -35,6 +36,6 @@ class SigninsController < ApplicationController
   end
 
   def redirect_if_signedin
-    redirect_back(fallback_location: root_path) if Current.user.present?
+    redirect_to(root_path) && return if Current.user.present?
   end
 end
