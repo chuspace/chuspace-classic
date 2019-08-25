@@ -17,14 +17,17 @@ en:
         name: nice to meet you
         email: we’ll never share your email address with anyone
         auth_token: should be 24 characters long
-        nickname: should be all lowercase, unique, min 1 character, may have a single hyphen and no special characters.
-        key: It must begin with 'ssh-ed25519', 'ssh-rsa', 'ssh-dss', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', or 'ecdsa-sha2-nistp521'. Please paste public key only.
+        nickname: should be all lowercase, unique, min 1 character, may have a single hyphen but cannot begin or end with a hyphen.
+        key: it must begin with 'ssh-ed25519', 'ssh-rsa', 'ssh-dss', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', or 'ecdsa-sha2-nistp521'. Please paste public key only.
 
       post:
         topics: Add or change tags (up to 5) so readers know what your story is about
         parent: Select a parent post (optional) so readers can read previous posts
         commit_message: Write a commit message that describes this change (optional)
         canonical_url: Add a canonical url (optional)
+
+      signin:
+        email: use the same email you have used during signup
 
     placeholders:
       defaults:

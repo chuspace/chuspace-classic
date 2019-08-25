@@ -1,21 +1,33 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  slug: MyString
-  description: MyText
-  icon: MyString
-  email: MyString
-  twitter: MyString
-  facebook: MyString
-  topics: MyString
+chuspace:
+  name: Chuspace
+  slug: chuspace
+  description: Chuspace publication platform for developers
+  email: chuspace@chuspace.com
+  repo_name: blog
+  repo_full_name: chuspace/blog.git
+  repo_path: chuspace/blog.git
+  twitter: chuspace
+  facebook: chuspace
+  topics:
+    - ruby
+    - rails
+  owner: gaurav
+  personal: true
 
-two:
-  name: MyString
-  slug: MyString
-  description: MyText
-  icon: MyString
-  email: MyString
-  twitter: MyString
-  facebook: MyString
-  topics: MyString
+rails:
+  name: Rails
+  slug: rails
+  description: Rails publication and everything related to Rails
+  email: rails@rails.com
+  repo_name: blog
+  repo_full_name: rails/blog.git
+  repo_path: <%= Git.config.storage_path.join('rails/blog.git') %>
+  twitter: rails
+  facebook: rails
+  topics:
+    - rails
+    - ruby
+  owner: parul
+  personal: true

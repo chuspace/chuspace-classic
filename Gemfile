@@ -84,7 +84,7 @@ gem 'rack-attack'
 gem 'commonmarker'
 
 # Friendly urls
-gem 'babosa'
+gem 'babosa', github: 'empathyby/babosa'
 
 # Typechecking
 gem 'sorbet-runtime'

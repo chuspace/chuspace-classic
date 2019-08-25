@@ -433,6 +433,10 @@ CREATE UNIQUE INDEX index_publications_on_name ON public.publications USING btre
 
 CREATE INDEX index_publications_on_owner_id ON public.publications USING btree (owner_id);
 
+-- Name: index_publications_on_owner_id_and_personal; Type: INDEX
+
+CREATE UNIQUE INDEX index_publications_on_owner_id_and_personal ON public.publications USING btree (owner_id, personal);
+
 -- Name: index_publications_on_repo_full_name; Type: INDEX
 
 CREATE UNIQUE INDEX index_publications_on_repo_full_name ON public.publications USING btree (repo_full_name);
@@ -448,10 +452,6 @@ CREATE UNIQUE INDEX index_publications_on_repo_path ON public.publications USING
 -- Name: index_publications_on_slug; Type: INDEX
 
 CREATE UNIQUE INDEX index_publications_on_slug ON public.publications USING btree (slug);
-
--- Name: index_publications_on_slug_and_personal; Type: INDEX
-
-CREATE UNIQUE INDEX index_publications_on_slug_and_personal ON public.publications USING btree (slug, personal);
 
 -- Name: index_publications_on_topics; Type: INDEX
 

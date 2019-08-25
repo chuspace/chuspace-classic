@@ -10,10 +10,11 @@ module Repoable
     validates_db_uniqueness_of :repo_full_name
     validates_db_uniqueness_of :repo_path
 
-    before_validation :assign_default_attributes, on: :create
+    before_validation :assign_default_attributes
     after_create -> { repository.create }
-    after_update -> { repository.rename(path: repo_path_was, new_path: repo_path) }, if: :repo_path_changed?
+    before_update :rename, if: :slug_changed?
 
+    after_commit -> { @repository = nil }
     after_destroy -> { repository.destroy }
     after_rollback -> { repository.destroy }, on: :create
   end
@@ -22,7 +23,15 @@ module Repoable
     @repository ||= Repository.new(name: repo_name, full_name: repo_full_name, path: repo_path, author: owner)
   end
 
+  def repo_base_dir(name: slug)
+    Git.config.storage_path.join(name)
+  end
+
   private
+
+  def rename
+    repository.rename(path: repo_base_dir(name: slug_was), new_path: repo_base_dir)
+  end
 
   def assign_default_attributes
     self.repo_name ||= Repository::DEFAULT_NAME

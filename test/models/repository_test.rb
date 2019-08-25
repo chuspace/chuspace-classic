@@ -4,7 +4,35 @@
 require 'test_helper'
 
 class RepositoryTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  def setup
+    @user = users(:gaurav)
+    @invalid_repository = Repository.new
+    @valid_repository = Repository.new(name: 'bar', full_name: 'foo/bar.git', path: Git.config.storage_path.join('foo/bar.git'), author: @user)
+  end
+
+  test 'valid?' do
+    refute @invalid_repository.valid?
+  end
+
+  test 'persisted?' do
+    assert @valid_repository.valid?
+    refute @valid_repository.persisted?
+  end
+
+  test 'create' do
+    @valid_repository.create
+    assert @valid_repository.persisted?
+  end
+
+  test 'destroy' do
+    @valid_repository.create
+    @valid_repository.destroy
+    refute @valid_repository.persisted?
+  end
+
+  test 'rename' do
+    @valid_repository.create
+    @valid_repository.rename(path: Git.config.storage_path.join('foo/bar.git'), new_path:  Git.config.storage_path.join('foo/baz.git'))
+    assert @valid_repository.persisted?
+  end
 end

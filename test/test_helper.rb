@@ -16,6 +16,8 @@ end
 
 class ActiveSupport::TestCase
   fixtures :all
+  self.use_transactional_tests = true
 
+  setup { ActiveJob::Base.queue_adapter = :test }
   teardown { FileUtils.rm_rf(Git.config.storage_path) }
 end

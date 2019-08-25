@@ -4,6 +4,7 @@
 class User < ApplicationRecord
   include Trackable, AvatarUploader::Attachment.new(:avatar)
 
+  before_validation :standardise_email_and_nickname
   before_validation :build_default_publication, on: :create
 
   validates :email, presence: true, email: true
@@ -18,7 +19,7 @@ class User < ApplicationRecord
   has_many :keys, dependent: :destroy
   has_many :publications, dependent: :destroy, foreign_key: 'owner_id'
   has_many :posts, foreign_key: 'author_id', dependent: :destroy
-  has_one :publication, -> { where(personal: true) }, foreign_key: 'owner_id', autosave: true
+  has_one :publication, -> { where(personal: true) }, foreign_key: 'owner_id', autosave: true, required: true
 
   AUTH_TOKEN_LIFE = 30
 
@@ -40,8 +41,13 @@ class User < ApplicationRecord
 
   private
 
+  def standardise_email_and_nickname
+    self.email = email&.downcase
+    self.nickname = nickname&.downcase
+  end
+
   def build_default_publication
-    self.publication = build_publication(name: name, slug: nickname, personal: true, owner: self)
+    self.publication ||= build_publication(name: name, slug: nickname, personal: true, owner: self)
   end
 
   def should_have_a_default_publication

@@ -30,11 +30,23 @@ en:
               nonunique_key: is already taken
         user:
           attributes:
+            name:
+              blank: can't be blank. should be your full name
+            email:
+              blank: can't be blank. should be a valid email
+            nickname:
+              invalid: should be all lowercase, unique, min 1 character, may have a single hyphen but cannot begin or end with a hyphen.
+              blank: can't be blank. should be all lowercase, unique, min 1 character, may have a single hyphen but cannot begin or end with a hyphen.
             avatar:
               invalid_size: is invalid. Please upload images size up to 5 MB.
               invalid_type: is invalid. Please upload 'gif', 'png', 'jpg' images only.
             publication:
               invalid: should have a default publication.
+
+        publication:
+          attributes:
+            personal:
+              invalid: is invalid. It must begin set to either 'nil' or 'true'
   chuspace:
     pitch: |
       Chuspace is a collaborative blogging platform for developers like Github,
@@ -67,8 +79,9 @@ en:
         success: Ssh key successfully removed from your account
   signins:
     create:
+      blank: can't be blank
       failure: We couldn't find that email. Perhaps you mispelled it?
-      success: We have sent you an email with login link.
+      success: We have sent you an email with a login link
     index:
       heading: Sign in
       intro: Enter the email address associated with your account, and we’ll send

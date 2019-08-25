@@ -22,7 +22,7 @@ class Signins::TokensController < ApplicationController
   private
 
   def signin_params
-    params.require(:user).permit(:auth_token)
+    params.require(:signin).permit(:auth_token)
   end
 
   def redirect_if_signedin

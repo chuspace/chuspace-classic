@@ -18,9 +18,7 @@ class SigninsController < ApplicationController
       UserMailer.with(user: @user).send_magic_login.deliver_later
       redirect_to signins_path, notice: t('signins.create.success')
     else
-      @user = User.new(email: signin_params[:email])
-      @user.errors.add(:email, t('signins.create.failure'))
-      render :index
+      redirect_to signins_path, notice: t('signins.create.failure')
     end
   end
 
@@ -32,7 +30,7 @@ class SigninsController < ApplicationController
   private
 
   def signin_params
-    params.require(:user).permit(:email)
+    params.require(:signin).permit(:email)
   end
 
   def redirect_if_signedin

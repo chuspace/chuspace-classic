@@ -31,7 +31,7 @@ module Chuspace
     config.active_record.schema_format = :sql
 
     # Active job adapter
-    config.active_job.queue_adapter = :sidekiq
+    config.active_job.queue_adapter = :delayed_job
     config.action_mailer.deliver_later_queue_name = 'low'
   end
 end

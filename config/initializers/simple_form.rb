@@ -22,7 +22,7 @@ SimpleForm.setup do |config|
     end
 
     b.use :hint, wrap_with: { tag: :span, class: 'input__hint' }
-    b.use :full_error, wrap_with: { tag: 'div', class: 'input__error' }
+    b.use :error, wrap_with: { tag: 'div', class: 'input__error' }
   end
 
   config.default_form_class = 'form'

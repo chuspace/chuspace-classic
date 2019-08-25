@@ -1,4 +1,10 @@
 GIT
+  remote: https://github.com/empathyby/babosa.git
+  revision: 3eb4c6546647d225f268fcbaa732e0f0a8e6c76a
+  specs:
+    babosa (1.0.2)
+
+GIT
   remote: https://github.com/gauravtiwari/runbook.git
   revision: 53d8be6a4f0b5e3c8bae7b7a5f22250972c6229c
   branch: patch-1
@@ -133,7 +139,6 @@ GEM
       aws-sigv4 (~> 1.1)
     aws-sigv4 (1.1.0)
       aws-eventstream (~> 1.0, >= 1.0.2)
-    babosa (1.0.2)
     bindex (0.8.1)
     bootsnap (1.4.4)
       msgpack (~> 1.0)
@@ -423,7 +428,7 @@ DEPENDENCIES
   anycable-rails
   awesome_print
   aws-sdk-s3
-  babosa
+  babosa!
   bootsnap (>= 1.1.0)
   brakeman
   bundler (= 1.17.2)

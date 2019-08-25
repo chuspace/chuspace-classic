@@ -3,12 +3,12 @@
 
 class CheckEmailsController < ApplicationController
   def create
-    @user = User.new(email: params[:value])
+    user = User.new(email: params[:value])
 
-    if @user.valid_attributes?(:email)
+    if user.valid_attributes?(:email)
       head :ok
     else
-      render html: @user.errors.full_messages_for(:email).to_sentence.html_safe, status: :unprocessable_entity
+      render html: user.errors.messages[:email].to_sentence.html_safe, status: :unprocessable_entity
     end
   end
 end

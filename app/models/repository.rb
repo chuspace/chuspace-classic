@@ -1,4 +1,4 @@
-# typed: true
+# typed: false
 # frozen_string_literal: true
 
 class Repository
@@ -37,6 +37,7 @@ class Repository
   STRING
 
   attr_accessor :name, :path, :full_name, :author
+  validates :name, :full_name, :path, :author, presence: true
 
   delegate :lookup, :checkout, :empty?, :bare?, :index, :branches, to: :rugged
   delegate :tree, to: :commit
@@ -51,18 +52,16 @@ class Repository
     path.start_with?(IMAGES_ROOT_PATH)
   end
 
-  sig { returns(Rugged::Repository) }
+  sig { returns(T::nilable(Rugged::Repository)) }
   def rugged
     @rugged ||= Rugged::Repository.bare(path)
-  rescue Rugged::RepositoryError, Rugged::OSError
-    fail NoRepository, 'no repository for such path'
+  rescue Rugged::RepositoryError, Rugged::OSError, TypeError
+    nil
   end
 
   sig { returns(T::Boolean) }
   def persisted?
     !!rugged
-  rescue NoRepository
-    false
   end
 
   alias present? persisted?
@@ -159,11 +158,14 @@ class Repository
   def destroy
     Rails.logger.info "Removing repository <#{name}> from <#{path}>."
     FileUtils.rm_rf(path)
+    @rugged = nil
   end
 
   def rename(path:, new_path:)
     Rails.logger.info "Moving repository from #{path} to <#{new_path}>."
     FileUtils.mv(path, new_path)
+    @path = new_path
+    @rugged = nil
   end
 
   private

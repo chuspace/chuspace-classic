@@ -7,13 +7,6 @@
   </section>
 
   <section class='mt-8'>
-    <%= simple_form_for @user, url: signins_path, remote: true do |f| %>
-      <%= f.input :email, autofocus: true %>
-      <div class='flex items-center mt-8'>
-        <%= f.button :button, 'Login' %>
-        <%= link_to('Got a login token?', signin_token_index_path, class: 'link text-sm underline ml-4') %>
-        <%= link_to('Signup', root_path, class: 'link text-sm underline ml-4') %>
-      </div>
-    <% end %>
+    <%= render 'signins/form', user: @user %>
   </section>
 </main>

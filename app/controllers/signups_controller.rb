@@ -19,7 +19,7 @@ class SignupsController < ApplicationController
           format.html { redirect_to root_path, notice: t('users.create.success') }
         else
           format.js
-          format.html { redirect_to root_path, notice: @user.errors.full_messages.to_sentence }
+          format.html { redirect_to root_path, notice: @user.errors.messages.to_sentence }
         end
       end
     end
@@ -28,7 +28,7 @@ class SignupsController < ApplicationController
   private
 
   def create_params
-    params.require(:user).permit(:email, :name, :nickname)
+    params.require(:signup).permit(:email, :name, :nickname)
   end
 
   def redirect_if_registered

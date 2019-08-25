@@ -23,7 +23,7 @@ class CreatePublications < ActiveRecord::Migration[6.0]
       t.index :repo_path, unique: true
 
       t.boolean :personal
-      t.index %i[slug personal], unique: true
+      t.index %i[owner_id personal], unique: true
 
       t.references :owner, index: true, null: false, foreign_key: { to_table: :users }
 
