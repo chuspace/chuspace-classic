@@ -3,5 +3,4 @@
 
 require 'test_helper'
 
-class PublishedControllerTest < ActionDispatch::IntegrationTest
-end
+class PublishedControllerTest < ActionDispatch::IntegrationTest; end

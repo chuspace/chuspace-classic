@@ -144,6 +144,7 @@
 # wrong constant name <Class:SubscriptionAdapter>
 # wrong constant name <Class:TestCase>
 # wrong constant name <Class:TestHelper>
+# uninitialized constant ActionCable::Channel::Base::CALLBACK_FILTER_TYPES
 # wrong constant name <Class:Behavior>
 # uninitialized constant ActionCable::Channel::TestCase::CALLBACK_FILTER_TYPES
 # uninitialized constant ActionCable::Channel::TestCase::CHANNEL_IDENTIFIER
@@ -337,6 +338,7 @@
 #                ActionController::Rendering
 # uninitialized constant ActionController::Base::RENDER_FORMATS_IN_PRIORITY
 # uninitialized constant ActionController::Base::URL_OPTIONS
+# wrong constant name authorize_count=
 # wrong constant name process
 # wrong constant name process_with_mini_profiler
 # wrong constant name process_without_mini_profiler
@@ -1147,6 +1149,9 @@
 # wrong constant name assert_no_emails
 # wrong constant name assert_no_enqueued_emails
 # wrong constant name <static-init>
+# uninitialized constant ActionPolicy::Base::DEFAULT
+# uninitialized constant ActionPolicy::Base::EVENT_NAME
+# wrong constant name user
 # wrong constant name <Class:ActionViewError>
 # wrong constant name <Class:Digestor>
 # wrong constant name <Class:EncodingError>
@@ -1893,28 +1898,32 @@
 # wrong constant name rolledback?
 # wrong constant name <static-init>
 # wrong constant name collect?
-# uninitialized constant #<Class:0x00007fed7cf58590>::ACTIONS
+# uninitialized constant #<Class:0x00007f8249dd6120>::ACTIONS
 # Did you mean?  ActiveRecord::InternalMetadata::ACTIONS
-# uninitialized constant #<Class:0x00007fed7cf58590>::CALLBACKS
+# wrong constant name <Class:ActiveRecord_AssociationRelation>
+# wrong constant name <Class:ActiveRecord_Associations_CollectionProxy>
+# wrong constant name <Class:ActiveRecord_Relation>
+# uninitialized constant #<Class:0x00007f8249dd6120>::CALLBACKS
 # Did you mean?  ActiveRecord::Callbacks
 #                ActiveRecord::InternalMetadata::Callbacks
 #                ActiveRecord::InternalMetadata::Callback
 #                ActiveRecord::InternalMetadata::CALLBACKS
-# uninitialized constant #<Class:0x00007fed7cf58590>::CALLBACK_FILTER_TYPES
+# uninitialized constant #<Class:0x00007f8249dd6120>::CALLBACK_FILTER_TYPES
 # Did you mean?  ActiveRecord::InternalMetadata::CALLBACK_FILTER_TYPES
-# uninitialized constant #<Class:0x00007fed7cf58590>::CALL_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f8249dd6120>::CALL_COMPILABLE_REGEXP
 # Did you mean?  ActiveRecord::InternalMetadata::CALL_COMPILABLE_REGEXP
 # wrong constant name <Class:GeneratedAssociationMethods>
+# wrong constant name <Class:GeneratedAttributeMethods>
 # wrong constant name <Class:GeneratedRelationMethods>
-# uninitialized constant #<Class:0x00007fed7cf58590>::MAX_PASSWORD_LENGTH_ALLOWED
+# uninitialized constant #<Class:0x00007f8249dd6120>::MAX_PASSWORD_LENGTH_ALLOWED
 # Did you mean?  ActiveRecord::InternalMetadata::MAX_PASSWORD_LENGTH_ALLOWED
-# uninitialized constant #<Class:0x00007fed7cf58590>::NAME_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f8249dd6120>::NAME_COMPILABLE_REGEXP
 # Did you mean?  ActiveRecord::InternalMetadata::NAME_COMPILABLE_REGEXP
-# uninitialized constant #<Class:0x00007fed7cf58590>::RESTRICTED_CLASS_METHODS
+# uninitialized constant #<Class:0x00007f8249dd6120>::RESTRICTED_CLASS_METHODS
 # Did you mean?  ActiveRecord::InternalMetadata::RESTRICTED_CLASS_METHODS
-# uninitialized constant #<Class:0x00007fed7cf58590>::UNASSIGNABLE_KEYS
+# uninitialized constant #<Class:0x00007f8249dd6120>::UNASSIGNABLE_KEYS
 # Did you mean?  ActiveRecord::InternalMetadata::UNASSIGNABLE_KEYS
-# uninitialized constant #<Class:0x00007fed7cf58590>::VERSION
+# uninitialized constant #<Class:0x00007f8249dd6120>::VERSION
 # Did you mean?  ActiveRecord::InternalMetadata::VERSION
 #                ActiveRecord::VERSION
 # uninitialized constant ActiveRecord::InternalMetadata::ActiveRecord_AssociationRelation::CLAUSE_METHODS
@@ -1922,6 +1931,7 @@
 #                ActiveRecord::InternalMetadata::ClassMethods
 #                ActiveRecord::InternalMetadata::ActiveRecord_AssociationRelation::VALUE_METHODS
 # uninitialized constant ActiveRecord::InternalMetadata::ActiveRecord_AssociationRelation::DEFAULT_VALUES
+# uninitialized constant ActiveRecord::InternalMetadata::ActiveRecord_AssociationRelation::Elem
 # uninitialized constant ActiveRecord::InternalMetadata::ActiveRecord_AssociationRelation::FROZEN_EMPTY_ARRAY
 # Did you mean?  ActiveRecord::InternalMetadata::ActiveRecord_AssociationRelation::FROZEN_EMPTY_HASH
 # uninitialized constant ActiveRecord::InternalMetadata::ActiveRecord_AssociationRelation::FROZEN_EMPTY_HASH
@@ -1936,43 +1946,47 @@
 # uninitialized constant ActiveRecord::InternalMetadata::ActiveRecord_AssociationRelation::VALID_UNSCOPING_VALUES
 # uninitialized constant ActiveRecord::InternalMetadata::ActiveRecord_AssociationRelation::VALUE_METHODS
 # Did you mean?  ActiveRecord::InternalMetadata::ActiveRecord_AssociationRelation::CLAUSE_METHODS
-# uninitialized constant #<Class:0x00007fed7cf5ee90>::CLAUSE_METHODS
+# wrong constant name <static-init>
+# uninitialized constant #<Class:0x00007f8249dd42f8>::CLAUSE_METHODS
 # Did you mean?  ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy::ClassMethods
 #                ActiveRecord::InternalMetadata::ClassMethods
 #                ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy::VALUE_METHODS
 #                ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy::CLAUSE_METHODS
-# uninitialized constant #<Class:0x00007fed7cf5ee90>::DEFAULT_VALUES
+# uninitialized constant #<Class:0x00007f8249dd42f8>::DEFAULT_VALUES
 # Did you mean?  ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy::DEFAULT_VALUES
-# uninitialized constant #<Class:0x00007fed7cf5ee90>::FROZEN_EMPTY_ARRAY
+# uninitialized constant #<Class:0x00007f8249dd42f8>::Elem
+# uninitialized constant #<Class:0x00007f8249dd42f8>::FROZEN_EMPTY_ARRAY
 # Did you mean?  ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy::FROZEN_EMPTY_HASH
 #                ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy::FROZEN_EMPTY_ARRAY
-# uninitialized constant #<Class:0x00007fed7cf5ee90>::FROZEN_EMPTY_HASH
+# uninitialized constant #<Class:0x00007f8249dd42f8>::FROZEN_EMPTY_HASH
 # Did you mean?  ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy::FROZEN_EMPTY_HASH
 #                ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy::FROZEN_EMPTY_ARRAY
-# uninitialized constant #<Class:0x00007fed7cf5ee90>::INVALID_METHODS_FOR_DELETE_ALL
+# uninitialized constant #<Class:0x00007f8249dd42f8>::INVALID_METHODS_FOR_DELETE_ALL
 # Did you mean?  ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy::INVALID_METHODS_FOR_DELETE_ALL
-# uninitialized constant #<Class:0x00007fed7cf5ee90>::MULTI_VALUE_METHODS
+# uninitialized constant #<Class:0x00007f8249dd42f8>::MULTI_VALUE_METHODS
 # Did you mean?  ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy::MULTI_VALUE_METHODS
-# uninitialized constant #<Class:0x00007fed7cf5ee90>::ONE_AS_ONE
+# uninitialized constant #<Class:0x00007f8249dd42f8>::ONE_AS_ONE
 # Did you mean?  ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy::ONE_AS_ONE
-# uninitialized constant #<Class:0x00007fed7cf5ee90>::ORDER_IGNORE_MESSAGE
+# uninitialized constant #<Class:0x00007f8249dd42f8>::ORDER_IGNORE_MESSAGE
 # Did you mean?  ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy::ORDER_IGNORE_MESSAGE
-# uninitialized constant #<Class:0x00007fed7cf5ee90>::SINGLE_VALUE_METHODS
+# uninitialized constant #<Class:0x00007f8249dd42f8>::SINGLE_VALUE_METHODS
 # Did you mean?  ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy::SINGLE_VALUE_METHODS
-# uninitialized constant #<Class:0x00007fed7cf5ee90>::STRUCTURAL_OR_METHODS
+# uninitialized constant #<Class:0x00007f8249dd42f8>::STRUCTURAL_OR_METHODS
 # Did you mean?  ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy::STRUCTURAL_OR_METHODS
-# uninitialized constant #<Class:0x00007fed7cf5ee90>::VALID_DIRECTIONS
+# uninitialized constant #<Class:0x00007f8249dd42f8>::VALID_DIRECTIONS
 # Did you mean?  ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy::VALID_DIRECTIONS
-# uninitialized constant #<Class:0x00007fed7cf5ee90>::VALID_UNSCOPING_VALUES
+# uninitialized constant #<Class:0x00007f8249dd42f8>::VALID_UNSCOPING_VALUES
 # Did you mean?  ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy::VALID_UNSCOPING_VALUES
-# uninitialized constant #<Class:0x00007fed7cf5ee90>::VALUE_METHODS
+# uninitialized constant #<Class:0x00007f8249dd42f8>::VALUE_METHODS
 # Did you mean?  ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy::VALUE_METHODS
 #                ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy::CLAUSE_METHODS
+# wrong constant name <static-init>
 # uninitialized constant ActiveRecord::InternalMetadata::ActiveRecord_Relation::CLAUSE_METHODS
 # Did you mean?  ActiveRecord::InternalMetadata::ActiveRecord_Relation::ClassMethods
 #                ActiveRecord::InternalMetadata::ClassMethods
 #                ActiveRecord::InternalMetadata::ActiveRecord_Relation::VALUE_METHODS
 # uninitialized constant ActiveRecord::InternalMetadata::ActiveRecord_Relation::DEFAULT_VALUES
+# uninitialized constant ActiveRecord::InternalMetadata::ActiveRecord_Relation::Elem
 # uninitialized constant ActiveRecord::InternalMetadata::ActiveRecord_Relation::FROZEN_EMPTY_ARRAY
 # Did you mean?  ActiveRecord::InternalMetadata::ActiveRecord_Relation::FROZEN_EMPTY_HASH
 # uninitialized constant ActiveRecord::InternalMetadata::ActiveRecord_Relation::FROZEN_EMPTY_HASH
@@ -1987,6 +2001,9 @@
 # uninitialized constant ActiveRecord::InternalMetadata::ActiveRecord_Relation::VALID_UNSCOPING_VALUES
 # uninitialized constant ActiveRecord::InternalMetadata::ActiveRecord_Relation::VALUE_METHODS
 # Did you mean?  ActiveRecord::InternalMetadata::ActiveRecord_Relation::CLAUSE_METHODS
+# wrong constant name <static-init>
+# wrong constant name <static-init>
+# wrong constant name <static-init>
 # wrong constant name <static-init>
 # wrong constant name <static-init>
 # wrong constant name []
@@ -2100,6 +2117,50 @@
 # wrong constant name invert_remove_timestamps
 # wrong constant name <static-init>
 # wrong constant name <static-init>
+# uninitialized constant ActiveRecord::Migration::Compatibility::V4_2::MigrationFilenameRegexp
+# Did you mean?  ActiveRecord::Migration::MigrationFilenameRegexp
+# wrong constant name <Class:TableDefinition>
+# wrong constant name index_exists?
+# wrong constant name remove_index
+# wrong constant name belongs_to
+# wrong constant name references
+# wrong constant name timestamps
+# wrong constant name <static-init>
+# wrong constant name <static-init>
+# uninitialized constant ActiveRecord::Migration::Compatibility::V5_0::MigrationFilenameRegexp
+# Did you mean?  ActiveRecord::Migration::MigrationFilenameRegexp
+# wrong constant name <Class:TableDefinition>
+# wrong constant name add_belongs_to
+# wrong constant name add_column
+# wrong constant name add_reference
+# wrong constant name create_join_table
+# wrong constant name belongs_to
+# wrong constant name primary_key
+# wrong constant name references
+# wrong constant name <static-init>
+# wrong constant name <static-init>
+# uninitialized constant ActiveRecord::Migration::Compatibility::V5_1::MigrationFilenameRegexp
+# Did you mean?  ActiveRecord::Migration::MigrationFilenameRegexp
+# wrong constant name change_column
+# wrong constant name create_table
+# wrong constant name <static-init>
+# wrong constant name <Class:CommandRecorder>
+# uninitialized constant ActiveRecord::Migration::Compatibility::V5_2::MigrationFilenameRegexp
+# Did you mean?  ActiveRecord::Migration::MigrationFilenameRegexp
+# wrong constant name <Class:TableDefinition>
+# wrong constant name add_timestamps
+# wrong constant name change_table
+# wrong constant name create_join_table
+# wrong constant name create_table
+# wrong constant name invert_change_column_comment
+# wrong constant name invert_change_table_comment
+# wrong constant name invert_transaction
+# wrong constant name <static-init>
+# wrong constant name timestamps
+# wrong constant name <static-init>
+# wrong constant name <static-init>
+# wrong constant name <static-init>
+# wrong constant name find
 # wrong constant name any?
 # wrong constant name calculate
 # wrong constant name delete
@@ -2186,6 +2247,9 @@
 # wrong constant name define
 # uninitialized constant ActiveRecord::SchemaMigration(version: string)::ACTIONS
 # Did you mean?  ActiveRecord::SchemaMigration::ACTIONS
+# wrong constant name <Class:ActiveRecord_AssociationRelation>
+# wrong constant name <Class:ActiveRecord_Associations_CollectionProxy>
+# wrong constant name <Class:ActiveRecord_Relation>
 # uninitialized constant ActiveRecord::SchemaMigration(version: string)::CALLBACKS
 # Did you mean?  ActiveRecord::Callbacks
 #                ActiveRecord::SchemaMigration::Callbacks
@@ -2196,6 +2260,7 @@
 # uninitialized constant ActiveRecord::SchemaMigration(version: string)::CALL_COMPILABLE_REGEXP
 # Did you mean?  ActiveRecord::SchemaMigration::CALL_COMPILABLE_REGEXP
 # wrong constant name <Class:GeneratedAssociationMethods>
+# wrong constant name <Class:GeneratedAttributeMethods>
 # wrong constant name <Class:GeneratedRelationMethods>
 # uninitialized constant ActiveRecord::SchemaMigration(version: string)::MAX_PASSWORD_LENGTH_ALLOWED
 # Did you mean?  ActiveRecord::SchemaMigration::MAX_PASSWORD_LENGTH_ALLOWED
@@ -2214,6 +2279,7 @@
 #                ActiveRecord::SchemaMigration::ClassMethods
 #                ActiveRecord::SchemaMigration::ActiveRecord_AssociationRelation::VALUE_METHODS
 # uninitialized constant ActiveRecord::SchemaMigration::ActiveRecord_AssociationRelation::DEFAULT_VALUES
+# uninitialized constant ActiveRecord::SchemaMigration::ActiveRecord_AssociationRelation::Elem
 # uninitialized constant ActiveRecord::SchemaMigration::ActiveRecord_AssociationRelation::FROZEN_EMPTY_ARRAY
 # Did you mean?  ActiveRecord::SchemaMigration::ActiveRecord_AssociationRelation::FROZEN_EMPTY_HASH
 # uninitialized constant ActiveRecord::SchemaMigration::ActiveRecord_AssociationRelation::FROZEN_EMPTY_HASH
@@ -2228,43 +2294,47 @@
 # uninitialized constant ActiveRecord::SchemaMigration::ActiveRecord_AssociationRelation::VALID_UNSCOPING_VALUES
 # uninitialized constant ActiveRecord::SchemaMigration::ActiveRecord_AssociationRelation::VALUE_METHODS
 # Did you mean?  ActiveRecord::SchemaMigration::ActiveRecord_AssociationRelation::CLAUSE_METHODS
-# uninitialized constant #<Class:0x00007fed7cf54f08>::CLAUSE_METHODS
+# wrong constant name <static-init>
+# uninitialized constant #<Class:0x00007f8242f786d8>::CLAUSE_METHODS
 # Did you mean?  ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy::ClassMethods
 #                ActiveRecord::SchemaMigration::ClassMethods
 #                ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy::VALUE_METHODS
 #                ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy::CLAUSE_METHODS
-# uninitialized constant #<Class:0x00007fed7cf54f08>::DEFAULT_VALUES
+# uninitialized constant #<Class:0x00007f8242f786d8>::DEFAULT_VALUES
 # Did you mean?  ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy::DEFAULT_VALUES
-# uninitialized constant #<Class:0x00007fed7cf54f08>::FROZEN_EMPTY_ARRAY
+# uninitialized constant #<Class:0x00007f8242f786d8>::Elem
+# uninitialized constant #<Class:0x00007f8242f786d8>::FROZEN_EMPTY_ARRAY
 # Did you mean?  ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy::FROZEN_EMPTY_HASH
 #                ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy::FROZEN_EMPTY_ARRAY
-# uninitialized constant #<Class:0x00007fed7cf54f08>::FROZEN_EMPTY_HASH
+# uninitialized constant #<Class:0x00007f8242f786d8>::FROZEN_EMPTY_HASH
 # Did you mean?  ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy::FROZEN_EMPTY_HASH
 #                ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy::FROZEN_EMPTY_ARRAY
-# uninitialized constant #<Class:0x00007fed7cf54f08>::INVALID_METHODS_FOR_DELETE_ALL
+# uninitialized constant #<Class:0x00007f8242f786d8>::INVALID_METHODS_FOR_DELETE_ALL
 # Did you mean?  ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy::INVALID_METHODS_FOR_DELETE_ALL
-# uninitialized constant #<Class:0x00007fed7cf54f08>::MULTI_VALUE_METHODS
+# uninitialized constant #<Class:0x00007f8242f786d8>::MULTI_VALUE_METHODS
 # Did you mean?  ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy::MULTI_VALUE_METHODS
-# uninitialized constant #<Class:0x00007fed7cf54f08>::ONE_AS_ONE
+# uninitialized constant #<Class:0x00007f8242f786d8>::ONE_AS_ONE
 # Did you mean?  ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy::ONE_AS_ONE
-# uninitialized constant #<Class:0x00007fed7cf54f08>::ORDER_IGNORE_MESSAGE
+# uninitialized constant #<Class:0x00007f8242f786d8>::ORDER_IGNORE_MESSAGE
 # Did you mean?  ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy::ORDER_IGNORE_MESSAGE
-# uninitialized constant #<Class:0x00007fed7cf54f08>::SINGLE_VALUE_METHODS
+# uninitialized constant #<Class:0x00007f8242f786d8>::SINGLE_VALUE_METHODS
 # Did you mean?  ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy::SINGLE_VALUE_METHODS
-# uninitialized constant #<Class:0x00007fed7cf54f08>::STRUCTURAL_OR_METHODS
+# uninitialized constant #<Class:0x00007f8242f786d8>::STRUCTURAL_OR_METHODS
 # Did you mean?  ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy::STRUCTURAL_OR_METHODS
-# uninitialized constant #<Class:0x00007fed7cf54f08>::VALID_DIRECTIONS
+# uninitialized constant #<Class:0x00007f8242f786d8>::VALID_DIRECTIONS
 # Did you mean?  ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy::VALID_DIRECTIONS
-# uninitialized constant #<Class:0x00007fed7cf54f08>::VALID_UNSCOPING_VALUES
+# uninitialized constant #<Class:0x00007f8242f786d8>::VALID_UNSCOPING_VALUES
 # Did you mean?  ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy::VALID_UNSCOPING_VALUES
-# uninitialized constant #<Class:0x00007fed7cf54f08>::VALUE_METHODS
+# uninitialized constant #<Class:0x00007f8242f786d8>::VALUE_METHODS
 # Did you mean?  ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy::VALUE_METHODS
 #                ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy::CLAUSE_METHODS
+# wrong constant name <static-init>
 # uninitialized constant ActiveRecord::SchemaMigration::ActiveRecord_Relation::CLAUSE_METHODS
 # Did you mean?  ActiveRecord::SchemaMigration::ActiveRecord_Relation::ClassMethods
 #                ActiveRecord::SchemaMigration::ClassMethods
 #                ActiveRecord::SchemaMigration::ActiveRecord_Relation::VALUE_METHODS
 # uninitialized constant ActiveRecord::SchemaMigration::ActiveRecord_Relation::DEFAULT_VALUES
+# uninitialized constant ActiveRecord::SchemaMigration::ActiveRecord_Relation::Elem
 # uninitialized constant ActiveRecord::SchemaMigration::ActiveRecord_Relation::FROZEN_EMPTY_ARRAY
 # Did you mean?  ActiveRecord::SchemaMigration::ActiveRecord_Relation::FROZEN_EMPTY_HASH
 # uninitialized constant ActiveRecord::SchemaMigration::ActiveRecord_Relation::FROZEN_EMPTY_HASH
@@ -2279,6 +2349,9 @@
 # uninitialized constant ActiveRecord::SchemaMigration::ActiveRecord_Relation::VALID_UNSCOPING_VALUES
 # uninitialized constant ActiveRecord::SchemaMigration::ActiveRecord_Relation::VALUE_METHODS
 # Did you mean?  ActiveRecord::SchemaMigration::ActiveRecord_Relation::CLAUSE_METHODS
+# wrong constant name <static-init>
+# wrong constant name <static-init>
+# wrong constant name <static-init>
 # wrong constant name <static-init>
 # wrong constant name <static-init>
 # wrong constant name all_versions
@@ -2689,9 +2762,7 @@
 # uninitialized constant ApplicationController::REDIRECT_OPTIONS
 # uninitialized constant ApplicationController::RENDERERS
 # uninitialized constant ApplicationController::RENDER_FORMATS_IN_PRIORITY
-# uninitialized constant ApplicationController::SUFFIX
 # uninitialized constant ApplicationController::URL_OPTIONS
-# uninitialized constant ApplicationController::VERSION
 # wrong constant name t
 # wrong constant name <static-init>
 # wrong constant name layout_class
@@ -2701,18 +2772,15 @@
 # uninitialized constant ApplicationMailer::DEFAULT_PROTECTED_INSTANCE_VARIABLES
 # uninitialized constant ApplicationMailer::PROTECTED_IVARS
 # wrong constant name <static-init>
+# uninitialized constant ApplicationPolicy::DEFAULT
+# uninitialized constant ApplicationPolicy::EVENT_NAME
 # wrong constant name <Class:Scope>
-# wrong constant name create?
 # wrong constant name destroy?
 # wrong constant name edit?
-# wrong constant name index?
-# wrong constant name initialize
 # wrong constant name new?
-# wrong constant name record
 # wrong constant name scope
 # wrong constant name show?
 # wrong constant name update?
-# wrong constant name user
 # wrong constant name initialize
 # wrong constant name resolve
 # wrong constant name scope
@@ -2893,9 +2961,7 @@
 # uninitialized constant Autocomplete::TopicsController::REDIRECT_OPTIONS
 # uninitialized constant Autocomplete::TopicsController::RENDERERS
 # uninitialized constant Autocomplete::TopicsController::RENDER_FORMATS_IN_PRIORITY
-# uninitialized constant Autocomplete::TopicsController::SUFFIX
 # uninitialized constant Autocomplete::TopicsController::URL_OPTIONS
-# uninitialized constant Autocomplete::TopicsController::VERSION
 # wrong constant name index
 # wrong constant name <static-init>
 # wrong constant name <static-init>
@@ -2931,6 +2997,9 @@
 # wrong constant name <static-init>
 # wrong constant name <static-init>
 # wrong constant name <static-init>
+# wrong constant name <static-init>
+# wrong constant name <static-init>
+# uninitialized constant Babosa::Transliterator::Turkish::APPROXIMATIONS
 # wrong constant name <static-init>
 # wrong constant name <static-init>
 # wrong constant name <static-init>
@@ -3587,9 +3656,7 @@
 # uninitialized constant CheckEmailsController::REDIRECT_OPTIONS
 # uninitialized constant CheckEmailsController::RENDERERS
 # uninitialized constant CheckEmailsController::RENDER_FORMATS_IN_PRIORITY
-# uninitialized constant CheckEmailsController::SUFFIX
 # uninitialized constant CheckEmailsController::URL_OPTIONS
-# uninitialized constant CheckEmailsController::VERSION
 # wrong constant name create
 # wrong constant name <static-init>
 # uninitialized constant CheckNicknamesController::ACTION_OPTIONS
@@ -3607,9 +3674,7 @@
 # uninitialized constant CheckNicknamesController::REDIRECT_OPTIONS
 # uninitialized constant CheckNicknamesController::RENDERERS
 # uninitialized constant CheckNicknamesController::RENDER_FORMATS_IN_PRIORITY
-# uninitialized constant CheckNicknamesController::SUFFIX
 # uninitialized constant CheckNicknamesController::URL_OPTIONS
-# uninitialized constant CheckNicknamesController::VERSION
 # wrong constant name create
 # wrong constant name <static-init>
 # wrong constant name <Class:Application>
@@ -4542,9 +4607,7 @@
 # uninitialized constant FrontpageController::REDIRECT_OPTIONS
 # uninitialized constant FrontpageController::RENDERERS
 # uninitialized constant FrontpageController::RENDER_FORMATS_IN_PRIORITY
-# uninitialized constant FrontpageController::SUFFIX
 # uninitialized constant FrontpageController::URL_OPTIONS
-# uninitialized constant FrontpageController::VERSION
 # wrong constant name index
 # wrong constant name <static-init>
 # wrong constant name <static-init>
@@ -5613,9 +5676,7 @@
 # uninitialized constant ImagesController::REDIRECT_OPTIONS
 # uninitialized constant ImagesController::RENDERERS
 # uninitialized constant ImagesController::RENDER_FORMATS_IN_PRIORITY
-# uninitialized constant ImagesController::SUFFIX
 # uninitialized constant ImagesController::URL_OPTIONS
-# uninitialized constant ImagesController::VERSION
 # wrong constant name create
 # wrong constant name destroy
 # wrong constant name show
@@ -5707,31 +5768,31 @@
 # wrong constant name yield_self
 # wrong constant name at_exit
 # wrong constant name autoload
-# uninitialized constant #<Class:0x00007fed82b31088>::ACTIONS
+# uninitialized constant #<Class:0x00007f8249db6af0>::ACTIONS
 # Did you mean?  Key::ACTIONS
 # wrong constant name <Class:ActiveRecord_AssociationRelation>
 # wrong constant name <Class:ActiveRecord_Associations_CollectionProxy>
 # wrong constant name <Class:ActiveRecord_Relation>
-# uninitialized constant #<Class:0x00007fed82b31088>::CALLBACKS
+# uninitialized constant #<Class:0x00007f8249db6af0>::CALLBACKS
 # Did you mean?  Key::Callbacks
 #                Key::Callback
 #                Key::CALLBACKS
-# uninitialized constant #<Class:0x00007fed82b31088>::CALLBACK_FILTER_TYPES
+# uninitialized constant #<Class:0x00007f8249db6af0>::CALLBACK_FILTER_TYPES
 # Did you mean?  Key::CALLBACK_FILTER_TYPES
-# uninitialized constant #<Class:0x00007fed82b31088>::CALL_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f8249db6af0>::CALL_COMPILABLE_REGEXP
 # Did you mean?  Key::CALL_COMPILABLE_REGEXP
 # wrong constant name <Class:GeneratedAssociationMethods>
 # wrong constant name <Class:GeneratedAttributeMethods>
 # wrong constant name <Class:GeneratedRelationMethods>
-# uninitialized constant #<Class:0x00007fed82b31088>::MAX_PASSWORD_LENGTH_ALLOWED
+# uninitialized constant #<Class:0x00007f8249db6af0>::MAX_PASSWORD_LENGTH_ALLOWED
 # Did you mean?  Key::MAX_PASSWORD_LENGTH_ALLOWED
-# uninitialized constant #<Class:0x00007fed82b31088>::NAME_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f8249db6af0>::NAME_COMPILABLE_REGEXP
 # Did you mean?  Key::NAME_COMPILABLE_REGEXP
-# uninitialized constant #<Class:0x00007fed82b31088>::RESTRICTED_CLASS_METHODS
+# uninitialized constant #<Class:0x00007f8249db6af0>::RESTRICTED_CLASS_METHODS
 # Did you mean?  Key::RESTRICTED_CLASS_METHODS
-# uninitialized constant #<Class:0x00007fed82b31088>::UNASSIGNABLE_KEYS
+# uninitialized constant #<Class:0x00007f8249db6af0>::UNASSIGNABLE_KEYS
 # Did you mean?  Key::UNASSIGNABLE_KEYS
-# uninitialized constant #<Class:0x00007fed82b31088>::VERSION
+# uninitialized constant #<Class:0x00007f8249db6af0>::VERSION
 # Did you mean?  Key::VERSION
 # wrong constant name autosave_associated_records_for_user
 # wrong constant name valid_without_database_validations?
@@ -5810,26 +5871,6 @@
 # wrong constant name <static-init>
 # wrong constant name key
 # wrong constant name receiver
-# uninitialized constant LandingpageController::ACTION_OPTIONS
-# uninitialized constant LandingpageController::AUTHENTICITY_TOKEN_LENGTH
-# uninitialized constant LandingpageController::CALLBACK_FILTER_TYPES
-# uninitialized constant LandingpageController::COOKIE_DOMAINS
-# uninitialized constant LandingpageController::DEFAULT_PROTECTED_INSTANCE_VARIABLES
-# uninitialized constant LandingpageController::DEFAULT_SEND_FILE_DISPOSITION
-# uninitialized constant LandingpageController::DEFAULT_SEND_FILE_TYPE
-# uninitialized constant LandingpageController::EXCLUDE_PARAMETERS
-# uninitialized constant LandingpageController::MODULES
-# Did you mean?  Module
-# uninitialized constant LandingpageController::NULL_ORIGIN_MESSAGE
-# uninitialized constant LandingpageController::PROTECTED_IVARS
-# uninitialized constant LandingpageController::REDIRECT_OPTIONS
-# uninitialized constant LandingpageController::RENDERERS
-# uninitialized constant LandingpageController::RENDER_FORMATS_IN_PRIORITY
-# uninitialized constant LandingpageController::SUFFIX
-# uninitialized constant LandingpageController::URL_OPTIONS
-# uninitialized constant LandingpageController::VERSION
-# wrong constant name index
-# wrong constant name <static-init>
 # wrong constant name path
 # wrong constant name exit_value
 # wrong constant name reason
@@ -5856,9 +5897,7 @@
 # uninitialized constant MagicLoginsController::REDIRECT_OPTIONS
 # uninitialized constant MagicLoginsController::RENDERERS
 # uninitialized constant MagicLoginsController::RENDER_FORMATS_IN_PRIORITY
-# uninitialized constant MagicLoginsController::SUFFIX
 # uninitialized constant MagicLoginsController::URL_OPTIONS
-# uninitialized constant MagicLoginsController::VERSION
 # wrong constant name index
 # wrong constant name <static-init>
 # wrong constant name <Class:Logging>
@@ -5967,6 +6006,8 @@
 # wrong constant name restore
 # undefined method `[]$2' for class `MatchData'
 # wrong constant name []$2
+# wrong constant name <Class:Spec>
+# wrong constant name <Class:DSL>
 # uninitialized constant Minitest::Spec::E
 # uninitialized constant Minitest::Spec::PASSTHROUGH_EXCEPTIONS
 # uninitialized constant Minitest::Spec::SIGNALS
@@ -9289,7 +9330,84 @@
 # wrong constant name <static-init>
 # wrong constant name <static-init>
 # wrong constant name <static-init>
+# uninitialized constant PagesController::ACTION_OPTIONS
+# uninitialized constant PagesController::AUTHENTICITY_TOKEN_LENGTH
+# uninitialized constant PagesController::CALLBACK_FILTER_TYPES
+# uninitialized constant PagesController::COOKIE_DOMAINS
+# uninitialized constant PagesController::DEFAULT_PROTECTED_INSTANCE_VARIABLES
+# uninitialized constant PagesController::DEFAULT_SEND_FILE_DISPOSITION
+# uninitialized constant PagesController::DEFAULT_SEND_FILE_TYPE
+# uninitialized constant PagesController::EXCLUDE_PARAMETERS
+# uninitialized constant PagesController::MODULES
+# Did you mean?  Module
+# uninitialized constant PagesController::NULL_ORIGIN_MESSAGE
+# uninitialized constant PagesController::PROTECTED_IVARS
+# uninitialized constant PagesController::REDIRECT_OPTIONS
+# uninitialized constant PagesController::RENDERERS
+# uninitialized constant PagesController::RENDER_FORMATS_IN_PRIORITY
+# uninitialized constant PagesController::URL_OPTIONS
+# wrong constant name index
 # wrong constant name <static-init>
+# wrong constant name <static-init>
+# uninitialized constant Parser::Ruby26::Racc_Main_Parsing_Routine
+# uninitialized constant Parser::Ruby26::Racc_Runtime_Core_Id_C
+# Did you mean?  Parser::Ruby26::Racc_Runtime_Core_Version_C
+# uninitialized constant Parser::Ruby26::Racc_Runtime_Core_Revision
+# Did you mean?  Parser::Ruby26::Racc_Runtime_Core_Revision_C
+#                Parser::Ruby26::Racc_Runtime_Core_Revision_R
+#                Parser::Ruby26::Racc_Runtime_Revision
+#                Parser::Ruby26::Racc_Runtime_Core_Version
+#                Parser::Ruby26::Racc_Runtime_Core_Version_R
+#                Parser::Ruby26::Racc_Runtime_Core_Version_C
+#                Parser::Ruby26::Racc_Runtime_Version
+#                Parser::Ruby26::Racc_Runtime_Core_Id_C
+# uninitialized constant Parser::Ruby26::Racc_Runtime_Core_Revision_C
+# Did you mean?  Parser::Ruby26::Racc_Runtime_Core_Revision_R
+#                Parser::Ruby26::Racc_Runtime_Revision
+#                Parser::Ruby26::Racc_Runtime_Core_Version_R
+#                Parser::Ruby26::Racc_Runtime_Core_Version_C
+#                Parser::Ruby26::Racc_Runtime_Core_Version
+#                Parser::Ruby26::Racc_Runtime_Core_Id_C
+# uninitialized constant Parser::Ruby26::Racc_Runtime_Core_Revision_R
+# Did you mean?  Parser::Ruby26::Racc_Runtime_Core_Revision_C
+#                Parser::Ruby26::Racc_Runtime_Revision
+#                Parser::Ruby26::Racc_Runtime_Core_Version_R
+#                Parser::Ruby26::Racc_Runtime_Core_Version_C
+#                Parser::Ruby26::Racc_Runtime_Core_Version
+# uninitialized constant Parser::Ruby26::Racc_Runtime_Core_Version
+# Did you mean?  Parser::Ruby26::Racc_Runtime_Revision
+#                Parser::Ruby26::Racc_Runtime_Core_Revision
+#                Parser::Ruby26::Racc_Runtime_Core_Version_R
+#                Parser::Ruby26::Racc_Runtime_Core_Version_C
+#                Parser::Ruby26::Racc_Runtime_Core_Revision_R
+#                Parser::Ruby26::Racc_Runtime_Core_Revision_C
+#                Parser::Ruby26::Racc_Runtime_Version
+#                Parser::Ruby26::Racc_Runtime_Core_Id_C
+# uninitialized constant Parser::Ruby26::Racc_Runtime_Core_Version_C
+# Did you mean?  Parser::Ruby26::Racc_Runtime_Core_Version_R
+#                Parser::Ruby26::Racc_Runtime_Core_Revision_R
+#                Parser::Ruby26::Racc_Runtime_Core_Revision_C
+#                Parser::Ruby26::Racc_Runtime_Revision
+#                Parser::Ruby26::Racc_Runtime_Core_Revision
+#                Parser::Ruby26::Racc_Runtime_Version
+#                Parser::Ruby26::Racc_Runtime_Core_Id_C
+# uninitialized constant Parser::Ruby26::Racc_Runtime_Core_Version_R
+# Did you mean?  Parser::Ruby26::Racc_Runtime_Core_Version_C
+#                Parser::Ruby26::Racc_Runtime_Core_Revision_R
+#                Parser::Ruby26::Racc_Runtime_Core_Revision_C
+#                Parser::Ruby26::Racc_Runtime_Revision
+#                Parser::Ruby26::Racc_Runtime_Core_Revision
+#                Parser::Ruby26::Racc_Runtime_Version
+#                Parser::Ruby26::Racc_Runtime_Core_Id_C
+# uninitialized constant Parser::Ruby26::Racc_Runtime_Revision
+# Did you mean?  Parser::Ruby26::Racc_Runtime_Version
+#                Parser::Ruby26::Racc_Runtime_Core_Version
+#                Parser::Ruby26::Racc_Runtime_Core_Revision
+# uninitialized constant Parser::Ruby26::Racc_Runtime_Type
+# uninitialized constant Parser::Ruby26::Racc_Runtime_Version
+# Did you mean?  Parser::Ruby26::Racc_Runtime_Revision
+#                Parser::Ruby26::Racc_Runtime_Core_Version
+# uninitialized constant Parser::Ruby26::Racc_YY_Parse_Method
 # uninitialized constant Pastel::Color::ATTRIBUTES
 # uninitialized constant Pastel::Color::VERSION
 # Did you mean?  Pastel::VERSION
@@ -9331,36 +9449,41 @@
 # wrong constant name symlink?$2
 # wrong constant name sysopen$1
 # wrong constant name write$1
-# uninitialized constant #<Class:0x00007fed80fe7160>::ACTIONS
+# uninitialized constant #<Class:0x00007f824e232a80>::ACTIONS
 # Did you mean?  Post::ACTIONS
-# uninitialized constant #<Class:0x00007fed80fe7160>::ANCESTRY_DELIMITER
+# uninitialized constant #<Class:0x00007f824e232a80>::ANCESTRY_DELIMITER
 # Did you mean?  Post::ANCESTRY_DELIMITER
-# uninitialized constant #<Class:0x00007fed80fe7160>::BEFORE_LAST_SAVE_SUFFIX
+# wrong constant name <Class:ActiveRecord_AssociationRelation>
+# wrong constant name <Class:ActiveRecord_Associations_CollectionProxy>
+# wrong constant name <Class:ActiveRecord_Relation>
+# uninitialized constant #<Class:0x00007f824e232a80>::BEFORE_LAST_SAVE_SUFFIX
 # Did you mean?  Post::BEFORE_LAST_SAVE_SUFFIX
-# uninitialized constant #<Class:0x00007fed80fe7160>::CALLBACKS
+# uninitialized constant #<Class:0x00007f824e232a80>::CALLBACKS
 # Did you mean?  Post::Callbacks
 #                Post::Callback
 #                Post::CALLBACKS
-# uninitialized constant #<Class:0x00007fed80fe7160>::CALLBACK_FILTER_TYPES
+# uninitialized constant #<Class:0x00007f824e232a80>::CALLBACK_FILTER_TYPES
 # Did you mean?  Post::CALLBACK_FILTER_TYPES
-# uninitialized constant #<Class:0x00007fed80fe7160>::CALL_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f824e232a80>::CALL_COMPILABLE_REGEXP
 # Did you mean?  Post::CALL_COMPILABLE_REGEXP
+# wrong constant name <Class:GeneratedAssociationMethods>
+# wrong constant name <Class:GeneratedAttributeMethods>
 # wrong constant name <Class:GeneratedRelationMethods>
-# uninitialized constant #<Class:0x00007fed80fe7160>::IN_DATABASE_SUFFIX
+# uninitialized constant #<Class:0x00007f824e232a80>::IN_DATABASE_SUFFIX
 # Did you mean?  Post::IN_DATABASE_SUFFIX
-# uninitialized constant #<Class:0x00007fed80fe7160>::MAX_PASSWORD_LENGTH_ALLOWED
+# uninitialized constant #<Class:0x00007f824e232a80>::MAX_PASSWORD_LENGTH_ALLOWED
 # Did you mean?  Post::MAX_PASSWORD_LENGTH_ALLOWED
-# uninitialized constant #<Class:0x00007fed80fe7160>::NAME_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f824e232a80>::NAME_COMPILABLE_REGEXP
 # Did you mean?  Post::NAME_COMPILABLE_REGEXP
-# uninitialized constant #<Class:0x00007fed80fe7160>::NO_VALUE
+# uninitialized constant #<Class:0x00007f824e232a80>::NO_VALUE
 # Did you mean?  Post::NO_VALUE
-# uninitialized constant #<Class:0x00007fed80fe7160>::RESTRICTED_CLASS_METHODS
+# uninitialized constant #<Class:0x00007f824e232a80>::RESTRICTED_CLASS_METHODS
 # Did you mean?  Post::RESTRICTED_CLASS_METHODS
-# uninitialized constant #<Class:0x00007fed80fe7160>::TIME_FACTOR
+# uninitialized constant #<Class:0x00007f824e232a80>::TIME_FACTOR
 # Did you mean?  Post::TIME_FACTOR
-# uninitialized constant #<Class:0x00007fed80fe7160>::UNASSIGNABLE_KEYS
+# uninitialized constant #<Class:0x00007f824e232a80>::UNASSIGNABLE_KEYS
 # Did you mean?  Post::UNASSIGNABLE_KEYS
-# uninitialized constant #<Class:0x00007fed80fe7160>::VERSION
+# uninitialized constant #<Class:0x00007f824e232a80>::VERSION
 # Did you mean?  Post::VERSION
 # wrong constant name ancestry_base_class
 # wrong constant name ancestry_base_class=
@@ -9400,6 +9523,7 @@
 #                Post::ClassMethods
 #                Post::ActiveRecord_AssociationRelation::VALUE_METHODS
 # uninitialized constant Post::ActiveRecord_AssociationRelation::DEFAULT_VALUES
+# uninitialized constant Post::ActiveRecord_AssociationRelation::Elem
 # uninitialized constant Post::ActiveRecord_AssociationRelation::FROZEN_EMPTY_ARRAY
 # Did you mean?  Post::ActiveRecord_AssociationRelation::FROZEN_EMPTY_HASH
 # uninitialized constant Post::ActiveRecord_AssociationRelation::FROZEN_EMPTY_HASH
@@ -9414,11 +9538,13 @@
 # uninitialized constant Post::ActiveRecord_AssociationRelation::VALID_UNSCOPING_VALUES
 # uninitialized constant Post::ActiveRecord_AssociationRelation::VALUE_METHODS
 # Did you mean?  Post::ActiveRecord_AssociationRelation::CLAUSE_METHODS
+# wrong constant name <static-init>
 # uninitialized constant Post::ActiveRecord_Associations_CollectionProxy::CLAUSE_METHODS
 # Did you mean?  Post::ActiveRecord_Associations_CollectionProxy::ClassMethods
 #                Post::ClassMethods
 #                Post::ActiveRecord_Associations_CollectionProxy::VALUE_METHODS
 # uninitialized constant Post::ActiveRecord_Associations_CollectionProxy::DEFAULT_VALUES
+# uninitialized constant Post::ActiveRecord_Associations_CollectionProxy::Elem
 # uninitialized constant Post::ActiveRecord_Associations_CollectionProxy::FROZEN_EMPTY_ARRAY
 # Did you mean?  Post::ActiveRecord_Associations_CollectionProxy::FROZEN_EMPTY_HASH
 # uninitialized constant Post::ActiveRecord_Associations_CollectionProxy::FROZEN_EMPTY_HASH
@@ -9433,11 +9559,13 @@
 # uninitialized constant Post::ActiveRecord_Associations_CollectionProxy::VALID_UNSCOPING_VALUES
 # uninitialized constant Post::ActiveRecord_Associations_CollectionProxy::VALUE_METHODS
 # Did you mean?  Post::ActiveRecord_Associations_CollectionProxy::CLAUSE_METHODS
+# wrong constant name <static-init>
 # uninitialized constant Post::ActiveRecord_Relation::CLAUSE_METHODS
 # Did you mean?  Post::ActiveRecord_Relation::ClassMethods
 #                Post::ClassMethods
 #                Post::ActiveRecord_Relation::VALUE_METHODS
 # uninitialized constant Post::ActiveRecord_Relation::DEFAULT_VALUES
+# uninitialized constant Post::ActiveRecord_Relation::Elem
 # uninitialized constant Post::ActiveRecord_Relation::FROZEN_EMPTY_ARRAY
 # Did you mean?  Post::ActiveRecord_Relation::FROZEN_EMPTY_HASH
 # uninitialized constant Post::ActiveRecord_Relation::FROZEN_EMPTY_HASH
@@ -9452,6 +9580,9 @@
 # uninitialized constant Post::ActiveRecord_Relation::VALID_UNSCOPING_VALUES
 # uninitialized constant Post::ActiveRecord_Relation::VALUE_METHODS
 # Did you mean?  Post::ActiveRecord_Relation::CLAUSE_METHODS
+# wrong constant name <static-init>
+# wrong constant name author
+# wrong constant name author=
 # wrong constant name build_author
 # wrong constant name build_publication
 # wrong constant name create_author
@@ -9462,6 +9593,8 @@
 # wrong constant name publication=
 # wrong constant name reload_author
 # wrong constant name reload_publication
+# wrong constant name <static-init>
+# wrong constant name <static-init>
 # wrong constant name after_depth
 # wrong constant name ancestors_of
 # wrong constant name at_depth
@@ -9483,16 +9616,40 @@
 # wrong constant name to_depth
 # wrong constant name with_log_data
 # wrong constant name <static-init>
+# wrong constant name <static-init>
+# wrong constant name after_depth
+# wrong constant name ancestors_of
 # wrong constant name ancestry_base_class
 # wrong constant name ancestry_base_class=
 # wrong constant name ancestry_column
 # wrong constant name ancestry_column=
+# wrong constant name at_depth
+# wrong constant name before_depth
+# wrong constant name children_of
+# wrong constant name descendants_of
+# wrong constant name draft
+# wrong constant name from_depth
+# wrong constant name indirects_of
+# wrong constant name not_draft
+# wrong constant name not_published
+# wrong constant name ordered_by_ancestry
+# wrong constant name ordered_by_ancestry_and
 # wrong constant name orphan_strategy
+# wrong constant name path_of
+# wrong constant name published
+# wrong constant name roots
+# wrong constant name siblings_of
+# wrong constant name statuses
+# wrong constant name subtree_of
+# wrong constant name to_depth
 # wrong constant name touch_ancestors
 # wrong constant name touch_ancestors=
+# wrong constant name with_log_data
 # uninitialized constant PostChannel::CALLBACK_FILTER_TYPES
 # wrong constant name receive
 # wrong constant name <static-init>
+# uninitialized constant PostPolicy::DEFAULT
+# uninitialized constant PostPolicy::EVENT_NAME
 # wrong constant name <Class:PublishController>
 # uninitialized constant Posts::PublishController::ACTION_OPTIONS
 # uninitialized constant Posts::PublishController::AUTHENTICITY_TOKEN_LENGTH
@@ -9509,9 +9666,7 @@
 # uninitialized constant Posts::PublishController::REDIRECT_OPTIONS
 # uninitialized constant Posts::PublishController::RENDERERS
 # uninitialized constant Posts::PublishController::RENDER_FORMATS_IN_PRIORITY
-# uninitialized constant Posts::PublishController::SUFFIX
 # uninitialized constant Posts::PublishController::URL_OPTIONS
-# uninitialized constant Posts::PublishController::VERSION
 # wrong constant name create
 # wrong constant name index
 # wrong constant name <static-init>
@@ -9531,9 +9686,7 @@
 # uninitialized constant PostsController::REDIRECT_OPTIONS
 # uninitialized constant PostsController::RENDERERS
 # uninitialized constant PostsController::RENDER_FORMATS_IN_PRIORITY
-# uninitialized constant PostsController::SUFFIX
 # uninitialized constant PostsController::URL_OPTIONS
-# uninitialized constant PostsController::VERSION
 # wrong constant name create
 # wrong constant name destroy
 # wrong constant name edit
@@ -10038,31 +10191,31 @@
 # wrong constant name remove_type
 # wrong constant name safe_load
 # wrong constant name to_json
-# uninitialized constant #<Class:0x00007fed82ea04f8>::ACTIONS
+# uninitialized constant #<Class:0x00007f8243c07070>::ACTIONS
 # Did you mean?  Publication::ACTIONS
 # wrong constant name <Class:ActiveRecord_AssociationRelation>
 # wrong constant name <Class:ActiveRecord_Associations_CollectionProxy>
 # wrong constant name <Class:ActiveRecord_Relation>
-# uninitialized constant #<Class:0x00007fed82ea04f8>::CALLBACKS
+# uninitialized constant #<Class:0x00007f8243c07070>::CALLBACKS
 # Did you mean?  Publication::Callbacks
 #                Publication::Callback
 #                Publication::CALLBACKS
-# uninitialized constant #<Class:0x00007fed82ea04f8>::CALLBACK_FILTER_TYPES
+# uninitialized constant #<Class:0x00007f8243c07070>::CALLBACK_FILTER_TYPES
 # Did you mean?  Publication::CALLBACK_FILTER_TYPES
-# uninitialized constant #<Class:0x00007fed82ea04f8>::CALL_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f8243c07070>::CALL_COMPILABLE_REGEXP
 # Did you mean?  Publication::CALL_COMPILABLE_REGEXP
 # wrong constant name <Class:GeneratedAssociationMethods>
 # wrong constant name <Class:GeneratedAttributeMethods>
 # wrong constant name <Class:GeneratedRelationMethods>
-# uninitialized constant #<Class:0x00007fed82ea04f8>::MAX_PASSWORD_LENGTH_ALLOWED
+# uninitialized constant #<Class:0x00007f8243c07070>::MAX_PASSWORD_LENGTH_ALLOWED
 # Did you mean?  Publication::MAX_PASSWORD_LENGTH_ALLOWED
-# uninitialized constant #<Class:0x00007fed82ea04f8>::NAME_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f8243c07070>::NAME_COMPILABLE_REGEXP
 # Did you mean?  Publication::NAME_COMPILABLE_REGEXP
-# uninitialized constant #<Class:0x00007fed82ea04f8>::RESTRICTED_CLASS_METHODS
+# uninitialized constant #<Class:0x00007f8243c07070>::RESTRICTED_CLASS_METHODS
 # Did you mean?  Publication::RESTRICTED_CLASS_METHODS
-# uninitialized constant #<Class:0x00007fed82ea04f8>::UNASSIGNABLE_KEYS
+# uninitialized constant #<Class:0x00007f8243c07070>::UNASSIGNABLE_KEYS
 # Did you mean?  Publication::UNASSIGNABLE_KEYS
-# uninitialized constant #<Class:0x00007fed82ea04f8>::VERSION
+# uninitialized constant #<Class:0x00007f8243c07070>::VERSION
 # Did you mean?  Publication::VERSION
 # wrong constant name after_add_for_posts
 # wrong constant name after_add_for_posts=
@@ -10078,8 +10231,7 @@
 # wrong constant name before_remove_for_posts
 # wrong constant name before_remove_for_posts=
 # wrong constant name before_remove_for_posts?
-# wrong constant name drafts
-# wrong constant name repository
+# wrong constant name topics_list
 # wrong constant name valid_without_database_validations?
 # wrong constant name validate_associated_records_for_posts
 # uninitialized constant Publication::ActiveRecord_AssociationRelation::CLAUSE_METHODS
@@ -10157,6 +10309,9 @@
 # wrong constant name reload_owner
 # wrong constant name <static-init>
 # wrong constant name <static-init>
+# wrong constant name internal
+# wrong constant name listed
+# wrong constant name personal
 # wrong constant name <static-init>
 # wrong constant name <static-init>
 # wrong constant name after_add_for_posts
@@ -10171,6 +10326,33 @@
 # wrong constant name before_remove_for_posts
 # wrong constant name before_remove_for_posts=
 # wrong constant name before_remove_for_posts?
+# wrong constant name internal
+# wrong constant name listed
+# wrong constant name personal
+# uninitialized constant PublicationPolicy::DEFAULT
+# uninitialized constant PublicationPolicy::EVENT_NAME
+# uninitialized constant PublicationsController::ACTION_OPTIONS
+# uninitialized constant PublicationsController::AUTHENTICITY_TOKEN_LENGTH
+# uninitialized constant PublicationsController::CALLBACK_FILTER_TYPES
+# uninitialized constant PublicationsController::COOKIE_DOMAINS
+# uninitialized constant PublicationsController::DEFAULT_PROTECTED_INSTANCE_VARIABLES
+# uninitialized constant PublicationsController::DEFAULT_SEND_FILE_DISPOSITION
+# uninitialized constant PublicationsController::DEFAULT_SEND_FILE_TYPE
+# uninitialized constant PublicationsController::EXCLUDE_PARAMETERS
+# uninitialized constant PublicationsController::MODULES
+# Did you mean?  Module
+# uninitialized constant PublicationsController::NULL_ORIGIN_MESSAGE
+# uninitialized constant PublicationsController::PROTECTED_IVARS
+# uninitialized constant PublicationsController::REDIRECT_OPTIONS
+# uninitialized constant PublicationsController::RENDERERS
+# uninitialized constant PublicationsController::RENDER_FORMATS_IN_PRIORITY
+# uninitialized constant PublicationsController::URL_OPTIONS
+# wrong constant name create
+# wrong constant name index
+# wrong constant name new
+# wrong constant name show
+# wrong constant name update
+# wrong constant name <static-init>
 # wrong constant name <Class:HttpParserError>
 # uninitialized constant Puma::Binder::CGI_VER
 # uninitialized constant Puma::Binder::CHUNKED
@@ -12357,6 +12539,7 @@
 # wrong constant name compile$2
 # wrong constant name last_match$2
 # wrong constant name union
+# wrong constant name repository
 # wrong constant name <static-init>
 # uninitialized constant Repository::CALLBACK_FILTER_TYPES
 # uninitialized constant Repository::CALL_COMPILABLE_REGEXP
@@ -12931,8 +13114,10 @@
 # wrong constant name <static-init>
 # uninitialized constant Selenium::WebDriver::Interactions::PointerMove::PAUSE
 # Did you mean?  Selenium::WebDriver::Interactions::Pause
+#                Parser
 # uninitialized constant Selenium::WebDriver::Interactions::PointerPress::PAUSE
 # Did you mean?  Selenium::WebDriver::Interactions::Pause
+#                Parser
 # wrong constant name <Class:Bridge>
 # wrong constant name <Class:Capabilities>
 # wrong constant name <Class:Driver>
@@ -13405,9 +13590,7 @@
 # uninitialized constant ServiceWorkerController::REDIRECT_OPTIONS
 # uninitialized constant ServiceWorkerController::RENDERERS
 # uninitialized constant ServiceWorkerController::RENDER_FORMATS_IN_PRIORITY
-# uninitialized constant ServiceWorkerController::SUFFIX
 # uninitialized constant ServiceWorkerController::URL_OPTIONS
-# uninitialized constant ServiceWorkerController::VERSION
 # wrong constant name ==
 # wrong constant name ===
 # wrong constant name compare_by_identity
@@ -13437,9 +13620,7 @@
 # uninitialized constant Settings::KeysController::REDIRECT_OPTIONS
 # uninitialized constant Settings::KeysController::RENDERERS
 # uninitialized constant Settings::KeysController::RENDER_FORMATS_IN_PRIORITY
-# uninitialized constant Settings::KeysController::SUFFIX
 # uninitialized constant Settings::KeysController::URL_OPTIONS
-# uninitialized constant Settings::KeysController::VERSION
 # wrong constant name create
 # wrong constant name destroy
 # wrong constant name index
@@ -13460,9 +13641,7 @@
 # uninitialized constant Settings::ProfilesController::REDIRECT_OPTIONS
 # uninitialized constant Settings::ProfilesController::RENDERERS
 # uninitialized constant Settings::ProfilesController::RENDER_FORMATS_IN_PRIORITY
-# uninitialized constant Settings::ProfilesController::SUFFIX
 # uninitialized constant Settings::ProfilesController::URL_OPTIONS
-# uninitialized constant Settings::ProfilesController::VERSION
 # wrong constant name index
 # wrong constant name <static-init>
 # wrong constant name <static-init>
@@ -13481,9 +13660,7 @@
 # uninitialized constant SettingsController::REDIRECT_OPTIONS
 # uninitialized constant SettingsController::RENDERERS
 # uninitialized constant SettingsController::RENDER_FORMATS_IN_PRIORITY
-# uninitialized constant SettingsController::SUFFIX
 # uninitialized constant SettingsController::URL_OPTIONS
-# uninitialized constant SettingsController::VERSION
 # wrong constant name index
 # wrong constant name <static-init>
 # wrong constant name <static-init>
@@ -13535,9 +13712,7 @@
 # uninitialized constant Signins::TokensController::REDIRECT_OPTIONS
 # uninitialized constant Signins::TokensController::RENDERERS
 # uninitialized constant Signins::TokensController::RENDER_FORMATS_IN_PRIORITY
-# uninitialized constant Signins::TokensController::SUFFIX
 # uninitialized constant Signins::TokensController::URL_OPTIONS
-# uninitialized constant Signins::TokensController::VERSION
 # wrong constant name create
 # wrong constant name index
 # wrong constant name <static-init>
@@ -13557,9 +13732,7 @@
 # uninitialized constant SigninsController::REDIRECT_OPTIONS
 # uninitialized constant SigninsController::RENDERERS
 # uninitialized constant SigninsController::RENDER_FORMATS_IN_PRIORITY
-# uninitialized constant SigninsController::SUFFIX
 # uninitialized constant SigninsController::URL_OPTIONS
-# uninitialized constant SigninsController::VERSION
 # wrong constant name create
 # wrong constant name destroy
 # wrong constant name index
@@ -13579,9 +13752,7 @@
 # uninitialized constant SignupsController::REDIRECT_OPTIONS
 # uninitialized constant SignupsController::RENDERERS
 # uninitialized constant SignupsController::RENDER_FORMATS_IN_PRIORITY
-# uninitialized constant SignupsController::SUFFIX
 # uninitialized constant SignupsController::URL_OPTIONS
-# uninitialized constant SignupsController::VERSION
 # wrong constant name create
 # wrong constant name index
 # wrong constant name <static-init>
@@ -14508,27 +14679,31 @@
 # wrong constant name round$1
 # wrong constant name to_s$1
 # wrong constant name <static-init>
-# uninitialized constant #<Class:0x00007fed7ac24678>::ACTIONS
+# uninitialized constant #<Class:0x00007f8243c0de48>::ACTIONS
 # Did you mean?  Topic::ACTIONS
-# uninitialized constant #<Class:0x00007fed7ac24678>::CALLBACKS
+# wrong constant name <Class:ActiveRecord_AssociationRelation>
+# wrong constant name <Class:ActiveRecord_Associations_CollectionProxy>
+# wrong constant name <Class:ActiveRecord_Relation>
+# uninitialized constant #<Class:0x00007f8243c0de48>::CALLBACKS
 # Did you mean?  Topic::Callbacks
 #                Topic::Callback
 #                Topic::CALLBACKS
-# uninitialized constant #<Class:0x00007fed7ac24678>::CALLBACK_FILTER_TYPES
+# uninitialized constant #<Class:0x00007f8243c0de48>::CALLBACK_FILTER_TYPES
 # Did you mean?  Topic::CALLBACK_FILTER_TYPES
-# uninitialized constant #<Class:0x00007fed7ac24678>::CALL_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f8243c0de48>::CALL_COMPILABLE_REGEXP
 # Did you mean?  Topic::CALL_COMPILABLE_REGEXP
 # wrong constant name <Class:GeneratedAssociationMethods>
+# wrong constant name <Class:GeneratedAttributeMethods>
 # wrong constant name <Class:GeneratedRelationMethods>
-# uninitialized constant #<Class:0x00007fed7ac24678>::MAX_PASSWORD_LENGTH_ALLOWED
+# uninitialized constant #<Class:0x00007f8243c0de48>::MAX_PASSWORD_LENGTH_ALLOWED
 # Did you mean?  Topic::MAX_PASSWORD_LENGTH_ALLOWED
-# uninitialized constant #<Class:0x00007fed7ac24678>::NAME_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f8243c0de48>::NAME_COMPILABLE_REGEXP
 # Did you mean?  Topic::NAME_COMPILABLE_REGEXP
-# uninitialized constant #<Class:0x00007fed7ac24678>::RESTRICTED_CLASS_METHODS
+# uninitialized constant #<Class:0x00007f8243c0de48>::RESTRICTED_CLASS_METHODS
 # Did you mean?  Topic::RESTRICTED_CLASS_METHODS
-# uninitialized constant #<Class:0x00007fed7ac24678>::UNASSIGNABLE_KEYS
+# uninitialized constant #<Class:0x00007f8243c0de48>::UNASSIGNABLE_KEYS
 # Did you mean?  Topic::UNASSIGNABLE_KEYS
-# uninitialized constant #<Class:0x00007fed7ac24678>::VERSION
+# uninitialized constant #<Class:0x00007f8243c0de48>::VERSION
 # Did you mean?  Topic::VERSION
 # wrong constant name name=
 # wrong constant name valid_without_database_validations?
@@ -14537,6 +14712,7 @@
 #                Topic::ClassMethods
 #                Topic::ActiveRecord_AssociationRelation::VALUE_METHODS
 # uninitialized constant Topic::ActiveRecord_AssociationRelation::DEFAULT_VALUES
+# uninitialized constant Topic::ActiveRecord_AssociationRelation::Elem
 # uninitialized constant Topic::ActiveRecord_AssociationRelation::FROZEN_EMPTY_ARRAY
 # Did you mean?  Topic::ActiveRecord_AssociationRelation::FROZEN_EMPTY_HASH
 # uninitialized constant Topic::ActiveRecord_AssociationRelation::FROZEN_EMPTY_HASH
@@ -14551,11 +14727,13 @@
 # uninitialized constant Topic::ActiveRecord_AssociationRelation::VALID_UNSCOPING_VALUES
 # uninitialized constant Topic::ActiveRecord_AssociationRelation::VALUE_METHODS
 # Did you mean?  Topic::ActiveRecord_AssociationRelation::CLAUSE_METHODS
+# wrong constant name <static-init>
 # uninitialized constant Topic::ActiveRecord_Associations_CollectionProxy::CLAUSE_METHODS
 # Did you mean?  Topic::ActiveRecord_Associations_CollectionProxy::ClassMethods
 #                Topic::ClassMethods
 #                Topic::ActiveRecord_Associations_CollectionProxy::VALUE_METHODS
 # uninitialized constant Topic::ActiveRecord_Associations_CollectionProxy::DEFAULT_VALUES
+# uninitialized constant Topic::ActiveRecord_Associations_CollectionProxy::Elem
 # uninitialized constant Topic::ActiveRecord_Associations_CollectionProxy::FROZEN_EMPTY_ARRAY
 # Did you mean?  Topic::ActiveRecord_Associations_CollectionProxy::FROZEN_EMPTY_HASH
 # uninitialized constant Topic::ActiveRecord_Associations_CollectionProxy::FROZEN_EMPTY_HASH
@@ -14570,11 +14748,13 @@
 # uninitialized constant Topic::ActiveRecord_Associations_CollectionProxy::VALID_UNSCOPING_VALUES
 # uninitialized constant Topic::ActiveRecord_Associations_CollectionProxy::VALUE_METHODS
 # Did you mean?  Topic::ActiveRecord_Associations_CollectionProxy::CLAUSE_METHODS
+# wrong constant name <static-init>
 # uninitialized constant Topic::ActiveRecord_Relation::CLAUSE_METHODS
 # Did you mean?  Topic::ActiveRecord_Relation::ClassMethods
 #                Topic::ClassMethods
 #                Topic::ActiveRecord_Relation::VALUE_METHODS
 # uninitialized constant Topic::ActiveRecord_Relation::DEFAULT_VALUES
+# uninitialized constant Topic::ActiveRecord_Relation::Elem
 # uninitialized constant Topic::ActiveRecord_Relation::FROZEN_EMPTY_ARRAY
 # Did you mean?  Topic::ActiveRecord_Relation::FROZEN_EMPTY_HASH
 # uninitialized constant Topic::ActiveRecord_Relation::FROZEN_EMPTY_HASH
@@ -14589,6 +14769,9 @@
 # uninitialized constant Topic::ActiveRecord_Relation::VALID_UNSCOPING_VALUES
 # uninitialized constant Topic::ActiveRecord_Relation::VALUE_METHODS
 # Did you mean?  Topic::ActiveRecord_Relation::CLAUSE_METHODS
+# wrong constant name <static-init>
+# wrong constant name <static-init>
+# wrong constant name <static-init>
 # wrong constant name <static-init>
 # wrong constant name <static-init>
 # uninitialized constant TopicsController::ACTION_OPTIONS
@@ -14606,9 +14789,7 @@
 # uninitialized constant TopicsController::REDIRECT_OPTIONS
 # uninitialized constant TopicsController::RENDERERS
 # uninitialized constant TopicsController::RENDER_FORMATS_IN_PRIORITY
-# uninitialized constant TopicsController::SUFFIX
 # uninitialized constant TopicsController::URL_OPTIONS
-# uninitialized constant TopicsController::VERSION
 # wrong constant name <static-init>
 # undefined method `enable$2' for class `TracePoint'
 # Did you mean?  enable_config
@@ -14869,26 +15050,31 @@
 # wrong constant name value
 # wrong constant name <static-init>
 # wrong constant name <static-init>
-# uninitialized constant #<Class:0x00007fed82f23678>::ACTIONS
+# uninitialized constant #<Class:0x00007f824e14b310>::ACTIONS
 # Did you mean?  User::ACTIONS
-# uninitialized constant #<Class:0x00007fed82f23678>::CALLBACKS
+# wrong constant name <Class:ActiveRecord_AssociationRelation>
+# wrong constant name <Class:ActiveRecord_Associations_CollectionProxy>
+# wrong constant name <Class:ActiveRecord_Relation>
+# uninitialized constant #<Class:0x00007f824e14b310>::CALLBACKS
 # Did you mean?  User::Callbacks
 #                User::Callback
 #                User::CALLBACKS
-# uninitialized constant #<Class:0x00007fed82f23678>::CALLBACK_FILTER_TYPES
+# uninitialized constant #<Class:0x00007f824e14b310>::CALLBACK_FILTER_TYPES
 # Did you mean?  User::CALLBACK_FILTER_TYPES
-# uninitialized constant #<Class:0x00007fed82f23678>::CALL_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f824e14b310>::CALL_COMPILABLE_REGEXP
 # Did you mean?  User::CALL_COMPILABLE_REGEXP
+# wrong constant name <Class:GeneratedAssociationMethods>
+# wrong constant name <Class:GeneratedAttributeMethods>
 # wrong constant name <Class:GeneratedRelationMethods>
-# uninitialized constant #<Class:0x00007fed82f23678>::MAX_PASSWORD_LENGTH_ALLOWED
+# uninitialized constant #<Class:0x00007f824e14b310>::MAX_PASSWORD_LENGTH_ALLOWED
 # Did you mean?  User::MAX_PASSWORD_LENGTH_ALLOWED
-# uninitialized constant #<Class:0x00007fed82f23678>::NAME_COMPILABLE_REGEXP
+# uninitialized constant #<Class:0x00007f824e14b310>::NAME_COMPILABLE_REGEXP
 # Did you mean?  User::NAME_COMPILABLE_REGEXP
-# uninitialized constant #<Class:0x00007fed82f23678>::RESTRICTED_CLASS_METHODS
+# uninitialized constant #<Class:0x00007f824e14b310>::RESTRICTED_CLASS_METHODS
 # Did you mean?  User::RESTRICTED_CLASS_METHODS
-# uninitialized constant #<Class:0x00007fed82f23678>::UNASSIGNABLE_KEYS
+# uninitialized constant #<Class:0x00007f824e14b310>::UNASSIGNABLE_KEYS
 # Did you mean?  User::UNASSIGNABLE_KEYS
-# uninitialized constant #<Class:0x00007fed82f23678>::VERSION
+# uninitialized constant #<Class:0x00007f824e14b310>::VERSION
 # Did you mean?  User::VERSION
 # wrong constant name after_add_for_keys
 # wrong constant name after_add_for_keys=
@@ -14944,6 +15130,7 @@
 #                User::ClassMethods
 #                User::ActiveRecord_AssociationRelation::VALUE_METHODS
 # uninitialized constant User::ActiveRecord_AssociationRelation::DEFAULT_VALUES
+# uninitialized constant User::ActiveRecord_AssociationRelation::Elem
 # uninitialized constant User::ActiveRecord_AssociationRelation::FROZEN_EMPTY_ARRAY
 # Did you mean?  User::ActiveRecord_AssociationRelation::FROZEN_EMPTY_HASH
 # uninitialized constant User::ActiveRecord_AssociationRelation::FROZEN_EMPTY_HASH
@@ -14958,11 +15145,13 @@
 # uninitialized constant User::ActiveRecord_AssociationRelation::VALID_UNSCOPING_VALUES
 # uninitialized constant User::ActiveRecord_AssociationRelation::VALUE_METHODS
 # Did you mean?  User::ActiveRecord_AssociationRelation::CLAUSE_METHODS
+# wrong constant name <static-init>
 # uninitialized constant User::ActiveRecord_Associations_CollectionProxy::CLAUSE_METHODS
 # Did you mean?  User::ActiveRecord_Associations_CollectionProxy::ClassMethods
 #                User::ClassMethods
 #                User::ActiveRecord_Associations_CollectionProxy::VALUE_METHODS
 # uninitialized constant User::ActiveRecord_Associations_CollectionProxy::DEFAULT_VALUES
+# uninitialized constant User::ActiveRecord_Associations_CollectionProxy::Elem
 # uninitialized constant User::ActiveRecord_Associations_CollectionProxy::FROZEN_EMPTY_ARRAY
 # Did you mean?  User::ActiveRecord_Associations_CollectionProxy::FROZEN_EMPTY_HASH
 # uninitialized constant User::ActiveRecord_Associations_CollectionProxy::FROZEN_EMPTY_HASH
@@ -14977,11 +15166,13 @@
 # uninitialized constant User::ActiveRecord_Associations_CollectionProxy::VALID_UNSCOPING_VALUES
 # uninitialized constant User::ActiveRecord_Associations_CollectionProxy::VALUE_METHODS
 # Did you mean?  User::ActiveRecord_Associations_CollectionProxy::CLAUSE_METHODS
+# wrong constant name <static-init>
 # uninitialized constant User::ActiveRecord_Relation::CLAUSE_METHODS
 # Did you mean?  User::ActiveRecord_Relation::ClassMethods
 #                User::ClassMethods
 #                User::ActiveRecord_Relation::VALUE_METHODS
 # uninitialized constant User::ActiveRecord_Relation::DEFAULT_VALUES
+# uninitialized constant User::ActiveRecord_Relation::Elem
 # uninitialized constant User::ActiveRecord_Relation::FROZEN_EMPTY_ARRAY
 # Did you mean?  User::ActiveRecord_Relation::FROZEN_EMPTY_HASH
 # uninitialized constant User::ActiveRecord_Relation::FROZEN_EMPTY_HASH
@@ -14996,6 +15187,7 @@
 # uninitialized constant User::ActiveRecord_Relation::VALID_UNSCOPING_VALUES
 # uninitialized constant User::ActiveRecord_Relation::VALUE_METHODS
 # Did you mean?  User::ActiveRecord_Relation::CLAUSE_METHODS
+# wrong constant name <static-init>
 # wrong constant name build_publication
 # wrong constant name create_publication
 # wrong constant name create_publication!
@@ -15005,6 +15197,8 @@
 # wrong constant name keys=
 # wrong constant name post_ids
 # wrong constant name post_ids=
+# wrong constant name posts
+# wrong constant name posts=
 # wrong constant name publication
 # wrong constant name publication=
 # wrong constant name publication_ids
@@ -15012,6 +15206,9 @@
 # wrong constant name publications
 # wrong constant name publications=
 # wrong constant name reload_publication
+# wrong constant name <static-init>
+# wrong constant name <static-init>
+# wrong constant name <static-init>
 # wrong constant name <static-init>
 # wrong constant name after_add_for_keys
 # wrong constant name after_add_for_keys=
@@ -15064,9 +15261,7 @@
 # uninitialized constant UserDraftsController::REDIRECT_OPTIONS
 # uninitialized constant UserDraftsController::RENDERERS
 # uninitialized constant UserDraftsController::RENDER_FORMATS_IN_PRIORITY
-# uninitialized constant UserDraftsController::SUFFIX
 # uninitialized constant UserDraftsController::URL_OPTIONS
-# uninitialized constant UserDraftsController::VERSION
 # wrong constant name index
 # wrong constant name <static-init>
 # uninitialized constant UserMailer::CALLBACK_FILTER_TYPES
@@ -15090,9 +15285,7 @@
 # uninitialized constant UsersController::REDIRECT_OPTIONS
 # uninitialized constant UsersController::RENDERERS
 # uninitialized constant UsersController::RENDER_FORMATS_IN_PRIORITY
-# uninitialized constant UsersController::SUFFIX
 # uninitialized constant UsersController::URL_OPTIONS
-# uninitialized constant UsersController::VERSION
 # wrong constant name show
 # wrong constant name update
 # wrong constant name <static-init>

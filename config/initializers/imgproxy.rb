@@ -3,7 +3,8 @@
 
 Imgproxy.configure do |config|
   # Full URL to where your imgproxy lives.
-  config.endpoint = ENV.fetch('IMGPROXY_ENDPOINT')
+  config.endpoint =
+    ENV.fetch('IMGPROXY_ENDPOINT')
   # Hex-encoded signature key
   config.hex_key = ENV.fetch('IMGPROXY_KEY')
   # Hex-encoded signature salt

@@ -56,5 +56,5 @@ Rails.application.configure do
   config.action_view.raise_on_missing_translations = true
 
   config.action_cable.url = 'ws://localhost:3334/cable'
-  config.action_cable.allowed_request_origins = [ 'http://localhost:5000', /https:\/\/chuspace.*/ ]
+  config.action_cable.allowed_request_origins = ['http://localhost:5000', %r{https:\/\/chuspace.*}]
 end

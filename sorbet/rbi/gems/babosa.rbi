@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/babosa/all/babosa.rbi
 #
-# babosa-1.0.2
+# babosa-3eb4c6546647
 module Babosa
   def self.jruby15?; end
 end
@@ -35,7 +35,9 @@ module Babosa::UTF8::Proxy
   def upcase(string); end
 end
 module Babosa::UTF8::ActiveSupportProxy
+  def downcase(string); end
   def self.normalize_utf8(string); end
+  def upcase(string); end
   extend ActiveSupport::Multibyte::Unicode
   extend Babosa::UTF8::ActiveSupportProxy
 end

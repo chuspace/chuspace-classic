@@ -1,10 +1,10 @@
 .chu-editor
   @apply font-content
   letter-spacing: 0.015em
-  font-weight: 400
+  font-weight: 500
   font-style: normal
-  font-size: 22px
-  color: rgba(0, 0, 0, 1)
+  font-size: 23px
+  color: rgba(0, 0, 0, 0.8)
   line-height: 1.5
   outline: none
 
@@ -12,19 +12,18 @@
     @apply whitespace-no-wrap
 
   blockquote
-    @apply border-l-2 -ml-4 pl-4 mb-6
+    @apply border-l-2 -ml-4 pl-4 mb-8
     font-style: italic
 
   a
-    text-decoration: underline
     hyphens: auto
     overflow-wrap: break-word
 
   h1, h2, h3, h4, h5, h6, strong
-    @apply mb-6 font-content
+    @apply mb-4 font-headings
 
   code-editor, lazy-image, p
-    @apply mb-6 block
+    @apply mb-8 block
 
   figure, p > div
     @apply whitespace-no-wrap
@@ -40,10 +39,10 @@
     display: none
 
   .title
-    @apply mb-2 font-medium
+    @apply mb-2
 
   .summary
-    @apply text-grey text-2xl font-medium
+    @apply text-grey text-2xl
 
   .insertion
     @apply bg-green-lightest text-green-darkest max-w-full whitespace-normal
@@ -65,7 +64,7 @@
       color: inherit
 
   ul, ol
-    @apply ml-8 mb-6 list-disc
+    @apply ml-8 mb-8 list-disc
 
     li
       p

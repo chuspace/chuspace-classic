@@ -48,14 +48,15 @@ module Git
       def find(repo, commit_id = 'HEAD')
         return Commit.new(commit_id) if commit_id.is_a?(Rugged::Commit)
 
-        obj = case commit_id
-              when String
-                repo.rev_parse_target(commit_id)
-              when Rugged::Tag::Annotation
-                commit_id.target
-              else
-                commit_id
-        end
+        obj =
+          case commit_id
+          when String
+            repo.rev_parse_target(commit_id)
+          when Rugged::Tag::Annotation
+            commit_id.target
+          else
+            commit_id
+          end
 
         return nil unless obj.is_a?(Rugged::Commit)
 
@@ -81,18 +82,17 @@ module Git
       #   }
       # }
 
-      sig { params(repository: Repository, options: {
-        file: {
-          content: String,
-          path: String,
-          previous_path: T.nilable(String)
-        },
-        commit: {
-          message: String,
-          branch: String,
-          committer: T.nilable(User)
-        }
-      }, action: Symbol).returns(String) }
+      sig do
+        params(
+          repository: Repository,
+          options: {
+            file: { content: String, path: String, previous_path: T.nilable(String) },
+            commit: { message: String, branch: String, committer: T.nilable(User) }
+          },
+          action: Symbol
+        )
+          .returns(String)
+      end
       def create(repository:, options:, action: :add)
         rugged = repository.rugged
         file = options[:file]
@@ -137,14 +137,15 @@ module Git
           index.add(path: filename, oid: oid, mode: mode)
         end
 
-        commit_message ||= case action
-                           when :add
-                             "Created #{filename}"
-                           when :update
-                             "Updated #{filename}"
-                           when :remove
-                             "Deleted #{filename}"
-        end
+        commit_message ||=
+          case action
+          when :add
+            "Created #{filename}"
+          when :update
+            "Updated #{filename}"
+          when :remove
+            "Deleted #{filename}"
+          end
 
         opts = {}
         opts[:tree] = index.write_tree(rugged)

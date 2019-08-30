@@ -7,7 +7,7 @@ class RepositoryTest < ActiveSupport::TestCase
   def setup
     @user = users(:gaurav)
     @invalid_repository = Repository.new
-    @valid_repository = Repository.new(name: 'bar', full_name: 'foo/bar.git', path: Git.config.storage_path.join('foo/bar.git'), author: @user)
+    @valid_repository = Repository.new(name: 'bar', path: Git.config.storage_path.join('bar.git'), author: @user)
   end
 
   test 'valid?' do
@@ -32,7 +32,9 @@ class RepositoryTest < ActiveSupport::TestCase
 
   test 'rename' do
     @valid_repository.create
-    @valid_repository.rename(path: Git.config.storage_path.join('foo/bar.git'), new_path:  Git.config.storage_path.join('foo/baz.git'))
+    @valid_repository.rename(
+      path: Git.config.storage_path.join('bar.git'), new_path: Git.config.storage_path.join('baz.git')
+    )
     assert @valid_repository.persisted?
   end
 end

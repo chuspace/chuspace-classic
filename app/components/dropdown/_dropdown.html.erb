@@ -1,4 +1,4 @@
-<details class='relative' data-controller='dropdown'>
+<details class='relative inline-block' data-controller='dropdown'>
   <summary>
     <%= dropdown.opener %>
     <% if dropdown.arrow? %>
@@ -6,7 +6,7 @@
     <% end %>
   </summary>
 
-  <details-menu role="menu" class='dropdown'>
+  <details-menu role="menu" class='<%= dropdown.css_classes %>'>
     <% dropdown.items.each do |item| %>
       <% if item.divider %>
         <%= content_tag :div, nil, class: 'dropdown__divider' %>

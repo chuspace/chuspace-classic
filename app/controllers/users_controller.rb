@@ -17,7 +17,7 @@ class UsersController < ApplicationController
       redirect_to settings_profiles_path
     else
       @user = Current.user.reload
-      render 'settings/profiles/index', layout: 'application'
+      render 'settings/profiles/index'
     end
   end
 

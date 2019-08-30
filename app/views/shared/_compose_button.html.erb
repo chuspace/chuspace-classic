@@ -1,0 +1,7 @@
+<%= component 'dropdown', flush: true, items: publications_items, drop_arrow: :no, css_class: 'dropdown__button' do |d| %>
+  <% d.opener do %>
+    <%= content_tag :div, class: 'button button--default flex items-center' do %>
+      Write post <span class='drop__arrow ml-1'></span>
+    <% end %>
+  <% end %>
+<% end %>

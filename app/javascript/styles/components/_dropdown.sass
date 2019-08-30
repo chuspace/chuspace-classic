@@ -6,10 +6,10 @@ details
       @apply inline-block
 
 .dropdown
-  @apply w-48 absolute bg-white border border-grey-lighter rounded-sm shadow mt-2 right-0
+  @apply w-48 absolute bg-white border border-grey-lightest rounded-sm shadow mt-2 right-0
 
   .dropdown__divider
-    @apply border-t border-grey-lighter block mt-1 mb-1
+    @apply border-t border-grey-lightest block mt-1 mb-1
 
   .dropdown__item
     @apply py-2 px-4 block text-sm
@@ -45,3 +45,16 @@ details
     border-bottom-color: theme('colors.grey-lighter')
     border-width: 8px
     margin-right: -8px
+
+  &.dropdown__button
+    @apply mt-0
+    &:after, &:before
+      content: unset
+    .dropdown__item
+      @apply flex items-center border-b border-grey-lightest
+      &:first-child
+        @apply py-2 px-4
+      &:last-child
+        @apply mb-0 border-b-0
+      .avatar
+        @apply mr-2

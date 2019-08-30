@@ -8,7 +8,6 @@ class Repository
   class NoRepository < StandardError; end
   class InvalidRef < StandardError; end
 
-  DEFAULT_NAME = 'blog'
   START_REF = 'HEAD'
   DEFAULT_BRANCH = 'master'
   GLOBAL_HOOKS_DIRECTORY = Rails.root.join('bin', 'git-hooks')
@@ -36,8 +35,8 @@ class Repository
     !/images/*.jpg
   STRING
 
-  attr_accessor :name, :path, :full_name, :author
-  validates :name, :full_name, :path, :author, presence: true
+  attr_accessor :name, :path, :author
+  validates :name, :path, :author, presence: true
 
   delegate :lookup, :checkout, :empty?, :bare?, :index, :branches, to: :rugged
   delegate :tree, to: :commit
@@ -52,7 +51,7 @@ class Repository
     path.start_with?(IMAGES_ROOT_PATH)
   end
 
-  sig { returns(T::nilable(Rugged::Repository)) }
+  sig { returns(T.nilable(Rugged::Repository)) }
   def rugged
     @rugged ||= Rugged::Repository.bare(path)
   rescue Rugged::RepositoryError, Rugged::OSError, TypeError
@@ -71,7 +70,7 @@ class Repository
     !persisted?
   end
 
-  sig { returns(T::nilable(Rugged::Reference)) }
+  sig { returns(T.nilable(Rugged::Reference)) }
   def head
     rugged.head
   rescue Rugged::ReferenceError
@@ -83,22 +82,22 @@ class Repository
     head&.target&.oid
   end
 
-  sig { params(sha: T::nilable(String)).returns(Rugged::Commit) }
+  sig { params(sha: T.nilable(String)).returns(Rugged::Commit) }
   def commit(sha: commit_sha)
     lookup(sha)
   end
 
-  sig { params(sha: T::nilable(String)).returns(T::Array[Blob]) }
+  sig { params(sha: T.nilable(String)).returns(T::Array[Blob]) }
   def blobs(sha: commit_sha)
     Blob.all(repository: self, commit_sha: sha)
   end
 
-  sig { params(path: String, sha: T::nilable(String)).returns(T.nilable(Blob)) }
+  sig { params(path: String, sha: T.nilable(String)).returns(T.nilable(Blob)) }
   def blob_at(path:, sha: commit_sha)
     Blob.find(repository: self, path: path, commit_sha: sha)
   end
 
-  sig { params(path: String, content: String, commit_message: T::nilable(String), branch: String).returns(Blob) }
+  sig { params(path: String, content: String, commit_message: T.nilable(String), branch: String).returns(Blob) }
   def create_blob(path:, content:, commit_message: nil, branch: DEFAULT_BRANCH)
     Blob.create(repository: self, path: path, content: content, commit_message: commit_message, branch: branch)
   end
@@ -110,7 +109,7 @@ class Repository
 
   sig { returns(String) }
   def ssh_path
-    "git@chuspace.com:#{full_name}.git"
+    "git@chuspace.com:#{name}.git"
   end
 
   def size

@@ -14,9 +14,7 @@
     <%= render 'layouts/header' %>
 
     <section class="container content <%= layout_class %>">
-      <div class='mt-12'>
-        <%= yield %>
-      </div>
+      <%= yield %>
     </section>
 
     <% unless params[:controller].include?('posts') %>

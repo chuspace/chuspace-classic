@@ -13,20 +13,23 @@ class Posts::PublishController < ApplicationController
   def create
     @post.topics = publish_params[:topics]&.split(',')
     @post.parent = publish_params[:parent]
-    @post.blob_id = @post.blob.oid
-    @post.slug = @markdown.title
+    @post.assign_attributes(status: 'published', published_at: Time.now) if @post.may_publish?
     new_blob_path = Pathname.new(@post.repo_dir).join("#{@post.slug}.md").to_path
-    @post.body_html = @markdown.body_html
 
-    if @post.may_publish? && @post.valid?
-      @post.publish
-      @post.assign_attributes(published_at: Time.now, blob_path: new_blob_path)
-    end
+    @post.assign_attributes(
+      blob_id: @post.blob.oid, slug: @markdown.title, body_html: @markdown.body_html, blob_path: new_blob_path
+    )
 
     if @post.save
-      @post.blob.rename(committer: Current.user, new_path: new_blob_path, commit_message: "Publish post #{new_blob_path}") if @post.status_changed?
-      redirect_to user_post_path(@post.author, @post)
+      if @post.blob_path_previously_changed?
+        @post.blob.rename(
+          committer: Current.user, new_path: new_blob_path, commit_message: "Publish post #{new_blob_path}"
+        )
+      end
+      redirect_to publication_post_path(@post.publication, @post)
     else
+      @post.reload
+      puts @post.errors.inspect
       render 'posts/edit'
     end
   end

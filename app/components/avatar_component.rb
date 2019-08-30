@@ -13,12 +13,10 @@ class AvatarComponent < Components::Component
   }.freeze
 
   attribute :avatar
+  attribute :gravatar
   attribute :css_class
   attribute :variant, default: :sm
-  attribute :initials
   attribute :options, default: {}
-
-  validates :initials, presence: true
 
   def size
     VARIANTS[variant][:size]
@@ -26,27 +24,26 @@ class AvatarComponent < Components::Component
 
   def css_classes
     classes = [DEFAULT_CSS_CLASS]
-    classes << 'avatar__badge' if avatar.blank?
     classes << VARIANTS[variant][:class]
     classes << css_class if css_class
     classes.join(' ')
   end
 
   def render
-    avatar.blank? ? initials_badge : image
+    avatar_tag(avatar.present? ? avatar_url : gravatar_url)
   end
 
   private
 
   def avatar_url
-    avatar.imgproxy_url(width: size, height: size, resizing_type: :fill, sharpen: 0.5)
+    avatar.imgproxy_url(width: size * 2, height: size * 2, quality: 100, format: :png)
   end
 
-  def initials_badge
-    @view.content_tag(:div, initials, class: css_classes, **options)
+  def gravatar_url
+    gravatar + "&s=#{size * 2}"
   end
 
-  def image
-    @view.image_tag(avatar_url, class: css_classes, **options)
+  def avatar_tag(url)
+    @view.image_tag(url, class: css_classes, **options)
   end
 end

@@ -21,6 +21,7 @@
         <input-autocomplete
           url="<%= autocomplete_topics_url %>"
           items='<%= post.topics || [] %>'
+          name='post[topics][]'
           maxlength="5"
           keys="name"
           class='w-full block mt-12'
@@ -39,7 +40,12 @@
             <div class='input__container input__container__label--floating' data-label='Topics'>
               <input type='text' class = "input autocomplete__input" >
             </div>
-            <span class="input__hint">Select topics to help readers find your post</span>
+
+            <% if post.errors.include?(:topics) %>
+              <%= content_tag :span, post.errors.full_messages_for(:topics).to_sentence, class: 'input__error text-red block' %>
+            <% else %>
+              <span class="input__hint">Select topics to help readers find your post</span>
+            <% end %>
           </div>
 
           <%= f.input :topics, as: :hidden, input_html: { id: 'selections__input', value: post.topics_list } %>

@@ -1,0 +1,25 @@
+<div class='container w-full sm:w-3/4'>
+  <div class='border-b border-grey-lighter pb-5'>
+    <div class='flex items-center'>
+      <section class='header flex-1'>
+        <h3 class='font-bold'><%= t('.heading') %></h3>
+        <p class='mt-4'>
+          <%= t('.intro') %>
+        </p>
+      </section>
+      <section>
+        <%= link_to 'New publication', new_publication_path, class: 'button button--fill' %>
+      </section>
+    </div>
+  </div>
+
+  <div class='mt-4'>
+    <% if @publications.any? %>
+      <%= render partial: 'publications/publication', collection: @publications %>
+    <% else %>
+      <div class='placeholder'>
+        <h1 class='text-xl'><%= t('publications.none') %></h1>
+      </div>
+    <% end %>
+  </div>
+</div>

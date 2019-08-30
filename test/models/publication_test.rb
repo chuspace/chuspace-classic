@@ -1,4 +1,4 @@
-# typed: strong
+# typed: false
 # frozen_string_literal: true
 
 require 'test_helper'
@@ -6,7 +6,8 @@ require 'test_helper'
 class PublicationTest < ActiveSupport::TestCase
   def setup
     @invalid_publication = Publication.new
-    @valid_publication = Publication.create!(name: 'Ruby', slug: 'ruby', owner: users(:gaurav))
+    @avatar = Rails.root.join('test', 'fixtures', 'files', 'publication.jpeg').read
+    @valid_publication = Publication.create(name: 'Ruby', slug: 'ruby', description: 'Ruby publication', avatar: StringIO.new(@avatar), owner: users(:gaurav))
   end
 
   test 'an invalid publication should not have a repository' do
@@ -23,9 +24,9 @@ class PublicationTest < ActiveSupport::TestCase
     refute @valid_publication.repository.blank?
     assert @valid_publication.repository.valid?
 
-    assert_equal @valid_publication.repository.path, Git.config.storage_path.join('ruby/blog.git').to_s
-    assert_equal @valid_publication.repository.head.name, 'refs/heads/master'
-    assert_equal @valid_publication.repository.blobs.count, 4
+    assert_equal Git.config.storage_path.join('ruby.git').to_s, @valid_publication.repository.path
+    assert_equal 'refs/heads/master', @valid_publication.repository.head.name
+    assert_equal 4, @valid_publication.repository.blobs.count
   end
 
   test 'deleting publication should delete repository' do
@@ -37,7 +38,7 @@ class PublicationTest < ActiveSupport::TestCase
   test 'renaming publication should rename repository' do
     assert @valid_publication.update(name: 'Crystal', slug: 'crystal')
     assert @valid_publication.repository.persisted?
-    assert_equal @valid_publication.repository.path, Git.config.storage_path.join('crystal/blog.git').to_s
+    assert_equal Git.config.storage_path.join('crystal.git').to_s, @valid_publication.repository.path
   end
 
   test 'should not able to create more than one personal publication but unlimited publications' do
@@ -46,14 +47,14 @@ class PublicationTest < ActiveSupport::TestCase
     assert user.publication.repository.persisted?
     assert user.publication.personal
 
-    new_publication = user.publications.create(name: 'Java', slug: 'java', owner: user, personal: true)
+    new_publication = user.publications.create(name: 'Java', slug: 'java', description: 'Java publication', avatar: StringIO.new(@avatar), owner: user, personal: true)
     refute new_publication.valid?
 
-    new_publication = user.publications.create(name: 'Java', slug: 'java', owner: user, personal: false)
+    new_publication = user.publications.create(name: 'Java', slug: 'java', description: 'Java publication', avatar: StringIO.new(@avatar), owner: user, personal: false)
     refute new_publication.valid?
-    assert_equal new_publication.errors.messages[:personal], ["is invalid. It must begin set to either 'nil' or 'true'"]
+    assert_equal ["is invalid. It must begin set to either 'nil' or 'true'"], new_publication.errors.messages[:personal]
 
-    new_publication = user.publications.create(name: 'Java', slug: 'java', owner: user)
+    new_publication = user.publications.create(name: 'Java', slug: 'java', description: 'Java publication', avatar: StringIO.new(@avatar), owner: user)
     assert new_publication.valid?
   end
 end

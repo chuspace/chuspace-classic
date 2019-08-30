@@ -103,18 +103,17 @@ class Post < ApplicationRecord
   def tree
     post_tree = [self] + ancestors.published + descendants.published
 
-    Post.sort_by_ancestry(post_tree) do |a, b|
-      [a.published_at, a.title] <=> [b.published_at, b.title]
-    end
+    Post.sort_by_ancestry(post_tree) { |a, b| [a.published_at, a.title] <=> [b.published_at, b.title] }
   end
 
   def repo_dir
-    dir = case status.to_sym
-          when :draft
-            Repository::DRAFTS_ROOT_PATH
-          when :published
-            Repository::POSTS_ROOT_PATH
-    end
+    dir =
+      case status.to_sym
+      when :draft
+        Repository::DRAFTS_ROOT_PATH
+      when :published
+        Repository::POSTS_ROOT_PATH
+      end
 
     Pathname.new(dir)
   end
@@ -134,26 +133,16 @@ class Post < ApplicationRecord
       follow: true,
       author: author.name,
       'theme-color': '#000000',
-      canonical: canonical_url || Rails.application.routes.url_helpers.user_post_url(author, self),
+      canonical: canonical_url || Rails.application.routes.url_helpers.publication_post_url(author, self),
       og: {
         title: :title,
         type: :article,
         description: :description,
         site_name: :site,
-        url: Rails.application.routes.url_helpers.user_post_url(author, self)
+        url: Rails.application.routes.url_helpers.publication_post_url(author, self)
       },
-      twitter: {
-        title: :title,
-        card: :summary,
-        description: :description,
-        site_name: :site
-      },
-      article: {
-        published_time: published_at,
-        modified_time: updated_at,
-        tag: topics_list,
-        author: author.nickname
-      }
+      twitter: { title: :title, card: :summary, description: :description, site_name: :site },
+      article: { published_time: published_at, modified_time: updated_at, tag: topics_list, author: author.nickname }
     }
   end
 end

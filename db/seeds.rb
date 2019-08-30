@@ -7,16 +7,7 @@ fetched = 0
 total_count = nil
 
 client = Octokit::Client.new(access_token: '84d476ccf244aff5f5bd5f51f006952785f9f883')
-queries = [
-  'web framework',
-  'ruby',
-  'javascript',
-  'go',
-  'python',
-  'c',
-  'c++',
-  'rust'
-]
+queries = ['web framework', 'ruby', 'javascript', 'go', 'python', 'c', 'c++', 'rust']
 
 queries.each do |query|
   page = 1

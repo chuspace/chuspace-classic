@@ -4,8 +4,8 @@
     <% post.tree.each do |post| %>
       <%= link_to(
         post.title,
-        user_post_path(post.author, post),
-        class: "#{link_class(user_post_path(post.author, post))} text-sm text-grey block mt-2 indent__#{post.depth}"
+        publication_post_path(post.author, post),
+        class: "#{link_class(publication_post_path(post.author, post))} text-sm text-grey block mt-2 indent__#{post.depth}"
       )
       %>
     <% end %>

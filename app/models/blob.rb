@@ -50,10 +50,21 @@ class Blob
       blob.persisted? ? blob : nil
     end
 
-    sig { params(repository: Repository, path: String, content: T.any(StringIO, String), branch: String, committer: T.nilable(User), commit_message: T.nilable(String)).returns(Blob) }
+    sig do
+      params(
+        repository: Repository,
+        path: String,
+        content: T.any(StringIO, String),
+        branch: String,
+        committer: T.nilable(User),
+        commit_message: T.nilable(String)
+      )
+        .returns(Blob)
+    end
     def create(repository:, path:, content:, branch:, committer: nil, commit_message: nil)
-      Blob.new(repository: repository, path: path)
-        .save(io: content, committer: committer, commit_message: commit_message, branch: branch)
+      Blob.new(repository: repository, path: path).save(
+        io: content, committer: committer, commit_message: commit_message, branch: branch
+      )
     end
 
     sig { params(name: String).returns(T::Boolean) }
@@ -101,13 +112,19 @@ class Blob
     !!oid
   end
 
-  sig { params(committer: T.nilable(User), io: T.any(StringIO, String), branch: String, commit_message: T.nilable(String)).returns(Blob) }
+  sig do
+    params(committer: T.nilable(User), io: T.any(StringIO, String), branch: String, commit_message: T.nilable(String))
+      .returns(Blob)
+  end
   def save(committer:, io:, branch: Repository::DEFAULT_BRANCH, commit_message: nil)
     @content = encode!(io)
 
     if valid? && Rugged::Repository.hash_data(content, :blob) != oid
       commit_message ||= persisted? ? "Updated #{path}" : "Added #{path}"
-      options = { commit: { message: commit_message, branch: branch, committer: committer }, file: { content: content, path: path } }
+      options = {
+        commit: { message: commit_message, branch: branch, committer: committer },
+        file: { content: content, path: path }
+      }
       @commit_sha = repository.create_commit(options: options)
       @object = nil
     end
@@ -115,10 +132,17 @@ class Blob
     self
   end
 
-  sig { params(committer: T.nilable(User), new_path: String, branch: String, commit_message: T.nilable(String)).returns(Blob) }
+  sig do
+    params(committer: T.nilable(User), new_path: String, branch: String, commit_message: T.nilable(String)).returns(
+      Blob
+    )
+  end
   def rename(committer:, new_path:, branch: Repository::DEFAULT_BRANCH, commit_message: nil)
     commit_message ||= "Moved from #{path} to #{new_path}"
-    options = { commit: { message: commit_message, branch: branch, committer: committer }, file: { content: content, previous_path: path, path: new_path } }
+    options = {
+      commit: { message: commit_message, branch: branch, committer: committer },
+      file: { content: content, previous_path: path, path: new_path }
+    }
     @commit_sha = repository.create_commit(options: options, action: :rename)
 
     @path = new_path
@@ -131,7 +155,10 @@ class Blob
   def destroy(committer:, branch: Repository::DEFAULT_BRANCH, commit_message: nil)
     if persisted?
       commit_message ||= "Deleted #{path}"
-      options = { commit: { message: commit_message, branch: branch, committer: committer }, file: { content: content, path: path } }
+      options = {
+        commit: { message: commit_message, branch: branch, committer: committer },
+        file: { content: content, path: path }
+      }
       @commit_sha = repository.create_commit(options: options, action: :remove)
       @object = nil
       true

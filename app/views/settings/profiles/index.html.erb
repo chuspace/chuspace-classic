@@ -1,14 +1,11 @@
-<%= render 'settings/navigation' %>
+<section class="flex">
+  <%= render 'settings/navigation' %>
 
-<div class="profile">
-  <div class="page-header my-8">
-    <h4>Profile</h4>
-    <p class="mt-2 text-secondary">
-      Update your profile
-    </p>
-  </div>
+  <div class='container'>
+    <%= render 'settings/header', title: 'Edit profile', description: 'Update your personal profile information' %>
 
-  <div class="form border-t border-grey-lighter">
-    <%= render 'settings/profiles/form', user: @user %>
+    <div class="form border-t border-grey-lighter">
+      <%= render 'settings/profiles/form', user: @user %>
+    </div>
   </div>
-</div>
+</section>

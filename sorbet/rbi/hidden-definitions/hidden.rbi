@@ -53,6 +53,15 @@ module ActionCable
   INTERNAL = ::T.let(nil, ::T.untyped)
 end
 
+class ActionCable::Channel::Base
+  include ::ActionPolicy::Channel
+  include ::ActionPolicy::Behaviour
+  include ::ActionPolicy::Behaviours::PolicyFor
+  include ::ActionPolicy::Behaviours::Scoping
+  include ::ActionPolicy::Behaviours::Namespaced
+  include ::ActionPolicy::Behaviours::Namespaced::InstanceMethods
+end
+
 class ActionCable::Channel::TestCase
   include ::ActiveSupport::Testing::ConstantLookup
   include ::ActionCable::Channel::TestCase::Behavior
@@ -445,6 +454,18 @@ class ActionController::Base
   include ::TurbolinksRender::Rendering
   include ::Turbolinks::Controller
   include ::Turbolinks::Redirection
+  include ::ActionPolicy::Controller
+  include ::ActionPolicy::Behaviour
+  include ::ActionPolicy::Behaviours::PolicyFor
+  include ::ActionPolicy::Behaviours::Scoping
+  include ::ActionPolicy::Behaviours::ThreadMemoized
+  include ::ActionPolicy::Behaviours::Memoized
+  include ::ActionPolicy::Behaviours::Namespaced
+  include ::ActionPolicy::Behaviours::ThreadMemoized::InstanceMethods
+  include ::ActionPolicy::Behaviours::Memoized::InstanceMethods
+  include ::ActionPolicy::Behaviours::Namespaced::InstanceMethods
+  def authorize_count=(authorize_count); end
+
   def process(*args, &orig); end
 
   def process_with_mini_profiler(*args, &orig); end
@@ -2055,6 +2076,78 @@ module ActionPack::VERSION
   TINY = ::T.let(nil, ::T.untyped)
 end
 
+module ActionPolicy
+  CACHE_NAMESPACE = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class ActionPolicy::AuthorizationContextMissing
+  MESSAGE_TEMPLATE = ::T.let(nil, ::T.untyped)
+end
+
+module ActionPolicy::Authorizer
+  extend ::ActionPolicy::Rails::Authorizer
+end
+
+class ActionPolicy::Base
+  include ::ActionPolicy::Policy::Rails::Instrumentation
+  def user(); end
+end
+
+class ActionPolicy::Base::APR
+  include ::ActionPolicy::Policy::ResultFailureReasons
+end
+
+module ActionPolicy::Channel
+  include ::ActionPolicy::Behaviours::Namespaced::InstanceMethods
+end
+
+module ActionPolicy::Controller
+  include ::ActionPolicy::Behaviours::ThreadMemoized::InstanceMethods
+  include ::ActionPolicy::Behaviours::Memoized::InstanceMethods
+  include ::ActionPolicy::Behaviours::Namespaced::InstanceMethods
+end
+
+module ActionPolicy::I18n
+  DEFAULT_UNAUTHORIZED_MESSAGE = ::T.let(nil, ::T.untyped)
+end
+
+module ActionPolicy::LookupChain
+  CLASS_POLICY_CLASS = ::T.let(nil, ::T.untyped)
+  INFER_FROM_CLASS = ::T.let(nil, ::T.untyped)
+  INSTANCE_POLICY_CLASS = ::T.let(nil, ::T.untyped)
+  NAMESPACE_LOOKUP = ::T.let(nil, ::T.untyped)
+  SYMBOL_LOOKUP = ::T.let(nil, ::T.untyped)
+end
+
+module ActionPolicy::PerThreadCache
+  CACHE_KEY = ::T.let(nil, ::T.untyped)
+end
+
+module ActionPolicy::Policy::Aliases
+  DEFAULT = ::T.let(nil, ::T.untyped)
+end
+
+module ActionPolicy::Policy::Rails::Instrumentation
+  EVENT_NAME = ::T.let(nil, ::T.untyped)
+end
+
+module ActionPolicy::Rails::Authorizer
+  EVENT_NAME = ::T.let(nil, ::T.untyped)
+end
+
+class ActionPolicy::UnknownNamedScope
+  MESSAGE_TEMPLATE = ::T.let(nil, ::T.untyped)
+end
+
+class ActionPolicy::UnknownScopeType
+  MESSAGE_TEMPLATE = ::T.let(nil, ::T.untyped)
+end
+
+class ActionPolicy::UnrecognizedScopeTarget
+  MESSAGE_TEMPLATE = ::T.let(nil, ::T.untyped)
+end
+
 module ActionView
   ENCODING_FLAG = ::T.let(nil, ::T.untyped)
 end
@@ -2393,6 +2486,9 @@ class ActionView::Template::Inline
 end
 
 class ActionView::Template::Inline
+end
+
+class ActionView::Template::LegacyTemplate
 end
 
 class ActionView::Template::RawFile
@@ -3644,6 +3740,9 @@ module ActiveRecord::AttributeMethods::PrimaryKey::ClassMethods
   ID_ATTRIBUTE_METHODS = ::T.let(nil, ::T.untyped)
 end
 
+class ActiveRecord::AttributeMethods::TimeZoneConversion::TimeZoneConverter
+end
+
 class ActiveRecord::Base
   include ::GlobalID::Identification
   include ::Logidze::HasLogidze
@@ -3735,6 +3834,9 @@ end
 
 class ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Uuid
   ACCEPTABLE_UUID = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata
 end
 
 class ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
@@ -3903,6 +4005,7 @@ module ActiveRecord::FinderMethods
 end
 
 class ActiveRecord::InternalMetadata
+  include ::ActiveRecord::InternalMetadata::GeneratedAttributeMethods
   include ::ActiveRecord::InternalMetadata::GeneratedAssociationMethods
 end
 
@@ -3937,6 +4040,9 @@ module ActiveRecord::InternalMetadata::GeneratedAssociationMethods
 end
 
 module ActiveRecord::InternalMetadata::GeneratedAssociationMethods
+end
+
+module ActiveRecord::InternalMetadata::GeneratedAttributeMethods
 end
 
 module ActiveRecord::InternalMetadata::GeneratedAttributeMethods
@@ -3979,6 +4085,9 @@ end
 
 module ActiveRecord::LegacyYamlAdapter
   def self.convert(klass, coder); end
+end
+
+class ActiveRecord::Locking::LockingType
 end
 
 class ActiveRecord::LogSubscriber
@@ -4174,6 +4283,94 @@ module ActiveRecord::Migration::CommandRecorder::StraightReversions
 end
 
 class ActiveRecord::Migration::CommandRecorder
+end
+
+class ActiveRecord::Migration::Compatibility::V4_2
+  def index_exists?(table_name, column_name, options=T.unsafe(nil)); end
+
+  def remove_index(table_name, options=T.unsafe(nil)); end
+end
+
+module ActiveRecord::Migration::Compatibility::V4_2::TableDefinition
+  def belongs_to(*_, **options); end
+
+  def references(*_, **options); end
+
+  def timestamps(**options); end
+end
+
+module ActiveRecord::Migration::Compatibility::V4_2::TableDefinition
+end
+
+class ActiveRecord::Migration::Compatibility::V4_2
+end
+
+class ActiveRecord::Migration::Compatibility::V5_0
+  def add_belongs_to(table_name, ref_name, **options); end
+
+  def add_column(table_name, column_name, type, options=T.unsafe(nil)); end
+
+  def add_reference(table_name, ref_name, **options); end
+
+  def create_join_table(table_1, table_2, column_options: T.unsafe(nil), **options); end
+end
+
+module ActiveRecord::Migration::Compatibility::V5_0::TableDefinition
+  def belongs_to(*args, **options); end
+
+  def primary_key(name, type=T.unsafe(nil), **options); end
+
+  def references(*args, **options); end
+end
+
+module ActiveRecord::Migration::Compatibility::V5_0::TableDefinition
+end
+
+class ActiveRecord::Migration::Compatibility::V5_0
+end
+
+class ActiveRecord::Migration::Compatibility::V5_1
+  def change_column(table_name, column_name, type, options=T.unsafe(nil)); end
+
+  def create_table(table_name, options=T.unsafe(nil)); end
+end
+
+class ActiveRecord::Migration::Compatibility::V5_1
+end
+
+class ActiveRecord::Migration::Compatibility::V5_2
+  def add_timestamps(table_name, **options); end
+
+  def change_table(table_name, **options); end
+
+  def create_join_table(table_1, table_2, **options); end
+
+  def create_table(table_name, **options); end
+end
+
+module ActiveRecord::Migration::Compatibility::V5_2::CommandRecorder
+  def invert_change_column_comment(args); end
+
+  def invert_change_table_comment(args); end
+
+  def invert_transaction(args, &block); end
+end
+
+module ActiveRecord::Migration::Compatibility::V5_2::CommandRecorder
+end
+
+module ActiveRecord::Migration::Compatibility::V5_2::TableDefinition
+  def timestamps(**options); end
+end
+
+module ActiveRecord::Migration::Compatibility::V5_2::TableDefinition
+end
+
+class ActiveRecord::Migration::Compatibility::V5_2
+end
+
+module ActiveRecord::Migration::Compatibility
+  def self.find(version); end
 end
 
 class ActiveRecord::Migrator
@@ -4393,6 +4590,7 @@ class ActiveRecord::Schema
 end
 
 class ActiveRecord::SchemaMigration
+  include ::ActiveRecord::SchemaMigration::GeneratedAttributeMethods
   include ::ActiveRecord::SchemaMigration::GeneratedAssociationMethods
   def version(); end
 end
@@ -4428,6 +4626,9 @@ module ActiveRecord::SchemaMigration::GeneratedAssociationMethods
 end
 
 module ActiveRecord::SchemaMigration::GeneratedAssociationMethods
+end
+
+module ActiveRecord::SchemaMigration::GeneratedAttributeMethods
 end
 
 module ActiveRecord::SchemaMigration::GeneratedAttributeMethods
@@ -4702,7 +4903,13 @@ ActiveRecord::Type::Float = ActiveModel::Type::Float
 
 ActiveRecord::Type::Integer = ActiveModel::Type::Integer
 
+class ActiveRecord::Type::Serialized
+end
+
 ActiveRecord::Type::String = ActiveModel::Type::String
+
+class ActiveRecord::Type::Time::Value
+end
 
 module ActiveRecord::VERSION
   MAJOR = ::T.let(nil, ::T.untyped)
@@ -5683,7 +5890,6 @@ class ApplicationController
   include ::ParamsSanitizer
   include ::Authentication
   include ::SetCurrentRequestDetails
-  include ::Pundit
   def t(*args, &block); end
 end
 
@@ -5706,27 +5912,17 @@ class ApplicationMailer
 end
 
 class ApplicationPolicy
-  def create?(); end
-
   def destroy?(); end
 
   def edit?(); end
 
-  def index?(); end
-
-  def initialize(user=T.unsafe(nil), record); end
-
   def new?(); end
-
-  def record(); end
 
   def scope(); end
 
   def show?(); end
 
   def update?(); end
-
-  def user(); end
 end
 
 class ApplicationPolicy::Scope
@@ -6895,6 +7091,13 @@ end
 class Babosa::Transliterator::Greek
 end
 
+class Babosa::Transliterator::Hindi
+  APPROXIMATIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Babosa::Transliterator::Hindi
+end
+
 class Babosa::Transliterator::Latin
   APPROXIMATIONS = ::T.let(nil, ::T.untyped)
 end
@@ -6949,6 +7152,12 @@ class Babosa::Transliterator::Swedish
 end
 
 class Babosa::Transliterator::Swedish
+end
+
+class Babosa::Transliterator::Turkish
+end
+
+class Babosa::Transliterator::Turkish
 end
 
 class Babosa::Transliterator::Ukrainian
@@ -12946,13 +13155,6 @@ class KeyError
   def receiver(); end
 end
 
-class LandingpageController
-  def index(); end
-end
-
-class LandingpageController
-end
-
 class LoadError
   def path(); end
 end
@@ -13427,7 +13629,37 @@ class MiniMime::Info
   BINARY_ENCODINGS = ::T.let(nil, ::T.untyped)
 end
 
-MiniTest = Minitest
+module Minitest
+end
+
+MiniTest::Assertions = Minitest::Assertions
+
+MiniTest::Expectations = Minitest::Expectations
+
+MiniTest::Guard = Minitest::Guard
+
+MiniTest::Reportable = Minitest::Reportable
+
+MiniTest::Runnable = Minitest::Runnable
+
+class Minitest::Spec
+end
+
+module Minitest::Spec::DSL
+end
+
+MiniTest::Spec::DSL::InstanceMethods = Minitest::Spec::DSL::InstanceMethods
+
+module Minitest::Spec::DSL
+end
+
+class Minitest::Spec
+end
+
+MiniTest::Test = Minitest::Test
+
+module Minitest
+end
 
 module Minitest
   ENCS = ::T.let(nil, ::T.untyped)
@@ -16745,6 +16977,13 @@ end
 class PG::ZeroLengthCharacterString
 end
 
+class PagesController
+  def index(); end
+end
+
+class PagesController
+end
+
 module ParamsSanitizer
 end
 
@@ -16756,11 +16995,103 @@ module Parlour
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
+class Parlour::ConflictResolver
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Parlour::Plugin
+  extend ::T::Private::Abstract::Hooks
+  extend ::T::InterfaceWrapper::Helpers
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Parlour::RbiGenerator::Options
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class Parlour::RbiGenerator::Parameter
   PREFIXES = ::T.let(nil, ::T.untyped)
 end
 
+class Parlour::RbiGenerator::Parameter
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Parlour::RbiGenerator::RbiObject
+  extend ::T::Private::Abstract::Hooks
+  extend ::T::InterfaceWrapper::Helpers
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Parlour::RbiGenerator
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 ParseError = Racc::ParseError
+
+module Parser
+  MESSAGES = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+Parser::CurrentRuby = Parser::Ruby26
+
+class Parser::Diagnostic
+  LEVELS = ::T.let(nil, ::T.untyped)
+end
+
+class Parser::Lexer
+  ESCAPES = ::T.let(nil, ::T.untyped)
+  KEYWORDS = ::T.let(nil, ::T.untyped)
+  KEYWORDS_BEGIN = ::T.let(nil, ::T.untyped)
+  LEX_STATES = ::T.let(nil, ::T.untyped)
+  PUNCTUATION = ::T.let(nil, ::T.untyped)
+  PUNCTUATION_BEGIN = ::T.let(nil, ::T.untyped)
+  REGEXP_META_CHARACTERS = ::T.let(nil, ::T.untyped)
+end
+
+class Parser::Lexer::Literal
+  DELIMITERS = ::T.let(nil, ::T.untyped)
+  TYPES = ::T.let(nil, ::T.untyped)
+end
+
+module Parser::Meta
+  NODE_TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class Parser::Rewriter
+  DEPRECATION_WARNING = ::T.let(nil, ::T.untyped)
+end
+
+class Parser::Ruby26
+  Racc_arg = ::T.let(nil, ::T.untyped)
+  Racc_debug_parser = ::T.let(nil, ::T.untyped)
+  Racc_token_to_s_table = ::T.let(nil, ::T.untyped)
+end
+
+class Parser::Source::Buffer
+  ENCODING_RE = ::T.let(nil, ::T.untyped)
+end
+
+class Parser::Source::Comment::Associator
+  MAGIC_COMMENT_RE = ::T.let(nil, ::T.untyped)
+end
+
+class Parser::Source::Rewriter
+  DEPRECATION_WARNING = ::T.let(nil, ::T.untyped)
+end
+
+class Parser::Source::TreeRewriter
+  ACTIONS = ::T.let(nil, ::T.untyped)
+  DEPRECATION_WARNING = ::T.let(nil, ::T.untyped)
+  POLICY_TO_LEVEL = ::T.let(nil, ::T.untyped)
+end
 
 module Pastel
   VERSION = ::T.let(nil, ::T.untyped)
@@ -16794,6 +17125,8 @@ class Pathname
 end
 
 class Post
+  include ::Post::GeneratedAttributeMethods
+  include ::Post::GeneratedAssociationMethods
   include ::AASM
   include ::AASM::Persistence::ActiveRecordPersistence
   include ::AASM::Persistence::Base
@@ -16902,6 +17235,10 @@ class Post::ActiveRecord_Relation
 end
 
 module Post::GeneratedAssociationMethods
+  def author(); end
+
+  def author=(value); end
+
   def build_author(*args, &block); end
 
   def build_publication(*args, &block); end
@@ -16921,6 +17258,12 @@ module Post::GeneratedAssociationMethods
   def reload_author(); end
 
   def reload_publication(); end
+end
+
+module Post::GeneratedAssociationMethods
+end
+
+module Post::GeneratedAttributeMethods
 end
 
 module Post::GeneratedAttributeMethods
@@ -16980,6 +17323,10 @@ class Post
   extend ::Ancestry::ClassMethods
   extend ::Ancestry::MaterializedPath
   extend ::Logidze::Model::ClassMethods
+  def self.after_depth(*args); end
+
+  def self.ancestors_of(*args); end
+
   def self.ancestry_base_class(); end
 
   def self.ancestry_base_class=(obj); end
@@ -16988,11 +17335,49 @@ class Post
 
   def self.ancestry_column=(obj); end
 
+  def self.at_depth(*args); end
+
+  def self.before_depth(*args); end
+
+  def self.children_of(*args); end
+
+  def self.descendants_of(*args); end
+
+  def self.draft(*args); end
+
+  def self.from_depth(*args); end
+
+  def self.indirects_of(*args); end
+
+  def self.not_draft(*args); end
+
+  def self.not_published(*args); end
+
+  def self.ordered_by_ancestry(*args); end
+
+  def self.ordered_by_ancestry_and(*args); end
+
   def self.orphan_strategy(); end
+
+  def self.path_of(*args); end
+
+  def self.published(*args); end
+
+  def self.roots(*args); end
+
+  def self.siblings_of(*args); end
+
+  def self.statuses(); end
+
+  def self.subtree_of(*args); end
+
+  def self.to_depth(*args); end
 
   def self.touch_ancestors(); end
 
   def self.touch_ancestors=(obj); end
+
+  def self.with_log_data(*args); end
 end
 
 class PostChannel
@@ -18097,9 +18482,7 @@ class Publication
 
   def before_remove_for_posts?(); end
 
-  def drafts(); end
-
-  def repository(); end
+  def topics_list(); end
 
   def valid_without_database_validations?(context=T.unsafe(nil)); end
 
@@ -18166,6 +18549,11 @@ module Publication::GeneratedAttributeMethods
 end
 
 module Publication::GeneratedRelationMethods
+  def internal(*args, &block); end
+
+  def listed(*args, &block); end
+
+  def personal(*args, &block); end
 end
 
 module Publication::GeneratedRelationMethods
@@ -18196,6 +18584,30 @@ class Publication
   def self.before_remove_for_posts=(val); end
 
   def self.before_remove_for_posts?(); end
+
+  def self.internal(*args); end
+
+  def self.listed(*args); end
+
+  def self.personal(*args); end
+end
+
+class PublicationPolicy
+end
+
+class PublicationsController
+  def create(); end
+
+  def index(); end
+
+  def new(); end
+
+  def show(); end
+
+  def update(); end
+end
+
+class PublicationsController
 end
 
 module Puma
@@ -18354,11 +18766,6 @@ end
 
 module Puma::Util
   DEFAULT_SEP = ::T.let(nil, ::T.untyped)
-end
-
-module Pundit
-  SUFFIX = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
 end
 
 module REXML
@@ -22142,6 +22549,7 @@ class Regexp
 end
 
 module Repoable
+  def repository(); end
 end
 
 module Repoable
@@ -22156,7 +22564,6 @@ class Repository
   include ::ActiveModel::Model
   include ::ActiveModel::AttributeAssignment
   include ::ActiveModel::ForbiddenAttributesProtection
-  include ::ActiveModel::AttributeMethods
   def __callbacks(); end
 
   def __callbacks?(); end
@@ -26304,6 +26711,23 @@ end
 
 SorbetRails::ModelPlugins::Base::Parameter = Parlour::RbiGenerator::Parameter
 
+module SorbetRails::ModelPlugins
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class SorbetRails::ModelRbiFormatter
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+module SorbetRails::ModelUtils
+  extend ::T::Private::Abstract::Hooks
+  extend ::T::InterfaceWrapper::Helpers
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class SortedSet
   def initialize(*args, &block); end
 end
@@ -27131,6 +27555,7 @@ end
 ToRuby = Psych::Visitors::ToRuby
 
 class Topic
+  include ::Topic::GeneratedAttributeMethods
   include ::Topic::GeneratedAssociationMethods
   include ::DatabaseValidations::Validations
   def name=(val); end
@@ -27172,6 +27597,9 @@ module Topic::GeneratedAssociationMethods
 end
 
 module Topic::GeneratedAttributeMethods
+end
+
+module Topic::GeneratedAttributeMethods
   extend ::Mutex_m
 end
 
@@ -27180,6 +27608,9 @@ end
 
 module Topic::GeneratedRelationMethods
   extend ::Mutex_m
+end
+
+class Topic
 end
 
 class TopicsController
@@ -27555,6 +27986,8 @@ class UrlValidator
 end
 
 class User
+  include ::User::GeneratedAttributeMethods
+  include ::User::GeneratedAssociationMethods
   include ::Trackable
   include ::DatabaseValidations::Validations
   def after_add_for_keys(); end
@@ -27703,6 +28136,10 @@ module User::GeneratedAssociationMethods
 
   def post_ids=(ids); end
 
+  def posts(); end
+
+  def posts=(value); end
+
   def publication(); end
 
   def publication=(value); end
@@ -27716,6 +28153,12 @@ module User::GeneratedAssociationMethods
   def publications=(value); end
 
   def reload_publication(); end
+end
+
+module User::GeneratedAssociationMethods
+end
+
+module User::GeneratedAttributeMethods
 end
 
 module User::GeneratedAttributeMethods
@@ -28203,6 +28646,9 @@ end
 
 module Zip::NullInputStream
   include ::ActiveSupport::ToJsonWithActiveSupportEncoder
+end
+
+class Zip::StreamableStream
 end
 
 Zip::ZipCompressionMethodError = Zip::CompressionMethodError

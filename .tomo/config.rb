@@ -10,7 +10,7 @@ plugin 'rbenv'
 plugin 'nodenv'
 plugin './plugins/chuspace.rb'
 
-host 'git@chuspace.com', port: 40423
+host 'git@chuspace.com', port: 40_423
 
 set application: 'chuspace'
 set deploy_to: '/home/git/chuspace.com'
@@ -19,28 +19,11 @@ set nodenv_yarn_version: '1.17.3'
 set rbenv_ruby_version: '2.6-jemalloc'
 set git_url: 'git@github.com:gauravtiwari/chuspace.git'
 set git_branch: 'master'
-set git_exclusions: %w[
-  .tomo/
-  spec/
-  test/
-]
+set git_exclusions: %w[.tomo/ spec/ test/]
 
-set env_vars: {
-  RAILS_ENV: 'production',
-  RACK_ENV: 'production',
-  SECRET_KEY_BASE: :prompt,
-  DATABASE_URL: :prompt
-}
+set env_vars: { RAILS_ENV: 'production', RACK_ENV: 'production', SECRET_KEY_BASE: :prompt, DATABASE_URL: :prompt }
 
-set linked_dirs: %w[
-  .bundle
-  log
-  node_modules
-  public/assets
-  public/packs
-  cache
-  bin/git-hooks
-]
+set linked_dirs: %w[.bundle log node_modules public/assets public/packs cache bin/git-hooks]
 
 setup do
   run 'env:setup'

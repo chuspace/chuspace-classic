@@ -39,6 +39,11 @@ class User < ApplicationRecord
     auth_token_expires_at.to_i >= Time.now.to_i
   end
 
+  def gravatar
+    gravatar_id = Digest::MD5::hexdigest(email)
+    "http://secure.gravatar.com/avatar/#{gravatar_id}?d=identicon"
+  end
+
   private
 
   def standardise_email_and_nickname

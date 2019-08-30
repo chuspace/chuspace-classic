@@ -9,13 +9,13 @@ import without from 'lodash/without'
 
 export default class InputAutocomplete extends LitElement {
   input: HTMLInputElement = this.querySelector('input')
-  selectionsInput: HTMLInputElement = this.querySelector('#selections__input')
   selectionsContainer: HTMLElement = this.querySelector('.autocomplete__selections')
   container: HTMLElement = this.querySelector('.input__container')
 
   static get properties() {
     return {
-      items: { type: Array, reflect: true },
+      items: { type: Array },
+      name: { type: String },
       url: { type: String },
       keys: { types: String },
       maxlength: { type: Number },
@@ -117,7 +117,6 @@ export default class InputAutocomplete extends LitElement {
     this.items = this.items.concat([items])
 
     this.renderItems()
-    this.triggerChange()
 
     if (this.items.length === this.maxlength) {
       this.setAttribute('disabled', true)
@@ -133,12 +132,12 @@ export default class InputAutocomplete extends LitElement {
       this.selectionsContainer.append(spanNode)
 
       render(this.renderItem(label), spanNode)
+      const inputElement = document.createElement('input')
+      inputElement.name = this.name
+      inputElement.value = label
+      inputElement.type = 'hidden'
+      this.selectionsContainer.appendChild(inputElement)
     })
-  }
-
-  triggerChange() {
-    this.selectionsInput.value = this.items
-    this.selectionsInput.onchange && this.selectionsInput.onchange()
   }
 
   renderItem(label: string) {
@@ -179,7 +178,6 @@ export default class InputAutocomplete extends LitElement {
       if (index > -1) {
         this.items = without(this.items, item)
         this.renderItems()
-        this.triggerChange()
       }
 
       this.input && this.input.focus()

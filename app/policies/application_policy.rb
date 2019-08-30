@@ -1,14 +1,7 @@
 # typed: ignore
 # frozen_string_literal: true
 
-class ApplicationPolicy
-  attr_reader :user, :record
-
-  def initialize(user = Current.user, record)
-    @user = user
-    @record = record
-  end
-
+class ApplicationPolicy < ActionPolicy::Base
   def index?
     false
   end

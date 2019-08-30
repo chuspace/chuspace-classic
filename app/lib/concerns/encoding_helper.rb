@@ -1,7 +1,6 @@
 # typed: ignore
 # frozen_string_literal: true
 
-
 require 'charlock_holmes'
 
 module EncodingHelper

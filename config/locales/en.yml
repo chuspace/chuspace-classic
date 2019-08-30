@@ -34,6 +34,7 @@ en:
               blank: can't be blank. should be your full name
             email:
               blank: can't be blank. should be a valid email
+              invalid: should be a valid email
             nickname:
               invalid: should be all lowercase, unique, min 1 character, may have a single hyphen but cannot begin or end with a hyphen.
               blank: can't be blank. should be all lowercase, unique, min 1 character, may have a single hyphen but cannot begin or end with a hyphen.
@@ -54,7 +55,7 @@ en:
   header:
     guest:
       signin_cta: Got an account?
-  landingpage:
+  pages:
     index:
       heading: Blogging platform for developers
       intro: Chuspace is a blogging platform built on Git. Publish, learn and collaborate
@@ -65,13 +66,16 @@ en:
         Chuspace. Please do not forward or share this email.
   magic_login:
     expired: Login link expired! Please request a new one.
-  pundit:
+  policy:
     default: You cannot perform this action.
     post_policy:
       create?: You cannot create posts!
       show?: You cannot view this post!
       update?: You cannot edit this post!
   settings:
+    profiles:
+      form:
+        avatar_hint: Drop images here or click to browse. Maximum image size 5MB
     keys:
       create:
         success: Ssh key successfully added to your account
@@ -96,9 +100,26 @@ en:
     index:
       heading: Join Chuspace
       intro: Blogging platform for developers
+
+  frontpage:
+    no_posts: No posts published yet.
   user_drafts:
-    no_posts: You don't have any posts as draft.
-    no_posts_btn_text: Start writing
+    no_posts: This author does not have any posts yet.
+  publications:
+    none: You don't have any publications
+    no_posts: This publication does not have any posts yet.
+
+    index:
+      heading: Publications
+      intro: Create or follow other publications
+    new:
+      heading: Create a publication
+      intro: Publication helps your organise posts
+    edit:
+      heading: Publication profile
+      intro: Update publication profile
+    form:
+      avatar_hint: Drop images here or click to browse. Maximum image size 5MB
   user_mailer:
     send_magic_login:
       body: Click on the button below to sign in to your Chuspace account. This magic

@@ -3,15 +3,14 @@
 
 Rails.application.routes.draw do
   root to: 'frontpage#index', constraints: PrivateRootConstraint.new, as: :authenticated_root
-  root to: 'landingpage#index'
+  root to: 'pages#index'
 
   get :sw, to: 'service_worker#file', format: :js
   get :manifest, to: 'service_worker#manifest', format: :json
+  get :about, to: 'pages#about', format: :html, as: :about
 
   resources :signins, path: 'signin', only: %i[index create destroy] do
-    collection do
-      resources :tokens, only: %i[index create], as: :signin_token, module: :signins, path: :token
-    end
+    collection { resources :tokens, only: %i[index create], as: :signin_token, module: :signins, path: :token }
   end
 
   resources :signups, path: 'signup', only: %i[index create]
@@ -34,10 +33,11 @@ Rails.application.routes.draw do
   end
 
   resources :images, only: %i[create destroy]
-
-  resources :posts, path: 'p', param: :slug, except: :show do
-    resources :publish, only: %i[index create], module: 'posts'
+  resources :users, path: 'u', param: :nickname, only: %i[show update destroy] do
+    resources :drafts, only: :index, controller: :user_drafts
   end
+
+  resources :publications, only: %i[new create index edit], param: :slug
 
   namespace :mobius do
     resources :post_receive, only: :create, constraints: MobiusConstraint.new
@@ -45,10 +45,12 @@ Rails.application.routes.draw do
 
   mount Easymon::Engine => '/alive' if Rails.env.production?
 
-  resources :users, path: '', param: :nickname, only: %i[show update destroy] do
+  resources :publications, path: '', param: :slug, only: %i[show update destroy] do
     resources :images, only: %i[show destroy]
-    resources :drafts, only: :index, controller: :user_drafts
     resources :posts, path: '', param: :slug, only: %i[show destroy]
+    resources :posts, path: 'p', param: :slug, except: :show do
+      resources :publish, only: %i[index create], module: 'posts'
+    end
     resources :repositories, path: '', param: :slug, only: :show, format: :git
   end
 end

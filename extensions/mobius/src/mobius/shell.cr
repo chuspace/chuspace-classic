@@ -27,15 +27,15 @@ module Mobius
         repo_name = commands.try &.[1].try &.gsub("'", "").try &.lstrip("/")
 
         sql = <<-STRING
-          SELECT id as publication_id, repo_full_name, repo_path
+          SELECT id as publication_id, repo_name, repo_path
           FROM publications
-          WHERE owner_id = $1 AND repo_full_name = $2
+          WHERE owner_id = $1 AND repo_name = $2
           LIMIT 1
         STRING
 
-        publication_id, repo_full_name, repo_path = Mobius.database.query_one sql, user_id, repo_name, as: { Int64, String, String }
+        publication_id, repo_name, repo_path = Mobius.database.query_one sql, user_id, repo_name, as: { Int64, String, String }
 
-        raise RepositoryNotFound.new("Repository not found") if repo_full_name.nil?
+        raise RepositoryNotFound.new("Repository not found") if repo_name.nil?
         raise RepositoryNotFound.new("Repository not found") unless repo_path && Dir.exists?(repo_path)
 
         Process.exec(command, { repo_path }, {
@@ -45,7 +45,7 @@ module Mobius
           "LANG" => fetchEnv("LANG"),
           "GIT_USER_ID" => user_id.to_s,
           "GIT_PUBLICATION_ID" => publication_id.to_s,
-          "GIT_REPO_NAME" => repo_full_name,
+          "GIT_REPO_NAME" => repo_name,
           "GIT_PROTOCOL" => GIT_PROTOCOL
         })
 

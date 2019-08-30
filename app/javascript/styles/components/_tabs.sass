@@ -1,11 +1,26 @@
 .tabs
+  @apply block text-grey
+
+  &--active
+    @apply text-blue-darker font-semibold
+
+.tabs__horizontal
   @apply flex border-b border-grey-lighter
 
-  .tabs__tab
-    @apply block mr-8 pb-2 text-grey
+  .tabs--active
+    @apply flex border-b-2 border-blue
 
-    &--active
-      @apply text-blue-darker font-semibold border-b-2 border-blue-darkest
+  .tabs__tab
+    @apply block mr-10 pb-3
 
     &:last-child
       @apply mr-0
+
+.tabs__vertical
+  @apply w-full border border-grey-lighter
+
+  .tabs__tab
+    @apply py-2 px-4 w-full border-b border-grey-lighter
+
+    &:last-child
+      @apply border-b-0

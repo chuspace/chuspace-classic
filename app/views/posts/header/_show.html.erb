@@ -1,5 +1,5 @@
 <div class='flex items-center flex-1'>
   <div class='flex justify-end items-center flex-1 mr-8'>
-    <%= link_to 'Edit', edit_post_path(post), class: 'button button--active button--slim mr-2' if policy(post).edit? %>
+    <%= link_to 'Edit', edit_post_path(post), class: 'button button--active button--slim mr-2' if allowed_to?(:edit?, post) %>
   </div>
 </div>

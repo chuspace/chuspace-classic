@@ -4,15 +4,13 @@ chuspace:
   name: Chuspace
   slug: chuspace
   description: Chuspace publication platform for developers
-  email: chuspace@chuspace.com
-  repo_name: blog
-  repo_full_name: chuspace/blog.git
-  repo_path: chuspace/blog.git
-  twitter: chuspace
-  facebook: chuspace
+  repo_name: chuspace.git
+  repo_path: <%= Git.config.storage_path.join('chuspace.git') %>
+  twitter: https://twitter.com/chuspace
+  website: https://chuspace.com
   topics:
-    - ruby
-    - rails
+    - blogging
+    - git
   owner: gaurav
   personal: true
 
@@ -20,12 +18,10 @@ rails:
   name: Rails
   slug: rails
   description: Rails publication and everything related to Rails
-  email: rails@rails.com
-  repo_name: blog
-  repo_full_name: rails/blog.git
-  repo_path: <%= Git.config.storage_path.join('rails/blog.git') %>
-  twitter: rails
-  facebook: rails
+  repo_name: rails.git
+  repo_path: <%= Git.config.storage_path.join('rails.git') %>
+  twitter: https://twitter.com/rails
+  website: https://rubyonrails.org
   topics:
     - rails
     - ruby

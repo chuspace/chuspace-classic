@@ -1,14 +1,10 @@
-<%= render 'settings/navigation' %>
+<section class="flex">
+  <%= render 'settings/navigation' %>
 
-<section>
-  <div class="page-header my-8">
-    <h4>Ssh keys</h4>
-    <p class="mt-2 text-secondary">
-      Add a new ssh key
-    </p>
-  </div>
-
-  <div class="form border-t border-grey-lighter">
-    <%= render 'form', user: @user %>
+  <div class='container'>
+    <%= render 'settings/header', title: 'Ssh keys', description: 'Add a new ssh key' %>
+    <div class="form border-t border-grey-lighter">
+      <%= render 'form', user: @user %>
+    </div>
   </div>
 </section>

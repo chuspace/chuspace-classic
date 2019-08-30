@@ -16,7 +16,12 @@ namespace :chuspace do
       binary_src_path = MOBIUS_SRC.join("#{binary}.cr")
       binary_name = File.basename(binary).dasherize
 
-      system(ENV, "cd #{MOBIUS_ROOT} && shards install && crystal build #{binary_src_path} --release -p --no-debug -o #{binary_name}")
+      system(
+        ENV,
+        "cd #{MOBIUS_ROOT} && shards install && crystal build #{binary_src_path} --release -p --no-debug -o #{
+          binary_name
+        }"
+      )
       binary_path = MOBIUS_ROOT.join(binary_name)
 
       if binary.include?('hooks')

@@ -7,7 +7,6 @@ SimpleForm.setup do |config|
                   class: 'form_field__container',
                   error_class: 'form_field__container--invalid',
                   valid_class: 'form_field__container' do |b|
-
     b.use :label, class: 'input__label'
 
     b.wrapper :input_container, tag: 'div', class: 'input__container' do |input|

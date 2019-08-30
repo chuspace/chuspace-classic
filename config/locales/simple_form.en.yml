@@ -12,13 +12,18 @@ en:
         email: Your email
         name: Your name
         nickname: Your username
+      publication:
+        name: Name
+
     hints:
       defaults:
-        name: nice to meet you
+        key: it must begin with 'ssh-ed25519', 'ssh-rsa', 'ssh-dss', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', or 'ecdsa-sha2-nistp521'. Please paste public key only.
         email: we’ll never share your email address with anyone
+        name: nice to meet you
         auth_token: should be 24 characters long
         nickname: should be all lowercase, unique, min 1 character, may have a single hyphen but cannot begin or end with a hyphen.
-        key: it must begin with 'ssh-ed25519', 'ssh-rsa', 'ssh-dss', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', or 'ecdsa-sha2-nistp521'. Please paste public key only.
+      publication:
+        name: should be unique
 
       post:
         topics: Add or change tags (up to 5) so readers know what your story is about

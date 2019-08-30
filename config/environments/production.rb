@@ -34,7 +34,7 @@ Rails.application.configure do
   # Mount Action Cable outside main process or domain
   # config.action_cable.mount_path = nil
   config.action_cable.url = 'wss://live.chuspace.com/cable'
-  config.action_cable.allowed_request_origins = [ 'https://chuspace.com', /https:\/\/chuspace.*/ ]
+  config.action_cable.allowed_request_origins = ['https://chuspace.com', %r{https:\/\/chuspace.*}]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
@@ -59,16 +59,7 @@ Rails.application.configure do
   end
 
   config.action_mailer.perform_caching = false
-
-  config.action_mailer.smtp_settings = {
-    domain: 'notifications.chuspace.com',
-    user_name: ENV['SMTP_USERNAME'],
-    password: ENV['SMTP_PASSWORD'],
-    address: 'smtp.sparkpostmail.com',
-    port: 587,
-    authentication: :login,
-    enable_starttls_auto: true
-  }
+  config.action_mailer.delivery_method = :ses
 
   config.hosts << 'chuspace.com'
   config.hosts << 'localhost'

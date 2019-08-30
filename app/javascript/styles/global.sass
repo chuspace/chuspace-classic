@@ -21,7 +21,7 @@ html, body
   @apply flex flex-col
 
 .content
-  margin-top: 80px
+  margin-top: calc(60px + 2rem)
 
 h1, h2, h3, h4, h5, h6, strong
   @apply font-headings
@@ -29,10 +29,6 @@ h1, h2, h3, h4, h5, h6, strong
 
 code, pre
   @apply font-code
-
-::-webkit-scrollbar
-  width: 0px
-  background: transparent
 
 .dialog-open
   overflow: hidden
@@ -49,20 +45,6 @@ textarea:-webkit-autofill,
 input:-webkit-autofill,
 a:-webkit-autofill
   box-shadow: 0 0 0 30px white inset
-
-hr:before
-  content: '...'
-  display: block
-  margin-left: .6em
-  color: rgba(0,0,0,.68)
-  position: relative
-  top: -55px
-  font-weight: 400
-  font-style: italic
-  font-size: 30px
-  letter-spacing: .6em;
-  text-align: center
-  margin: 50px
 
 summary
   &:focus

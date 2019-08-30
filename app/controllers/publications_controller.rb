@@ -1,0 +1,65 @@
+# typed: ignore
+# frozen_string_literal: true
+
+class PublicationsController < ApplicationController
+  before_action :authenticate!
+  before_action :find_publication, except: %i[index new create]
+  after_action :verify_authorized, only: %i[new edit create destroy]
+
+  def index
+    @publications = Current.user.publications.listed
+  end
+
+  def new
+    @publication = Publication.new(owner: Current.user)
+    authorize! @publication
+  end
+
+  def edit
+    authorize! @publication
+  end
+
+  def create
+    @publication = Publication.new(publication_params)
+    @publication.owner = Current.user
+    authorize! @publication
+
+    if @publication.save
+      redirect_to publication_path(@publication), notice: 'Publication successfully created'
+    else
+      puts @publication.errors.inspect
+      render :new
+    end
+  end
+
+  def show
+    if @publication.personal
+      redirect_to user_path(@publication.owner)
+    else
+      @posts = @publication.posts.published.includes(:author).limit(20).order(id: :desc)
+    end
+  end
+
+  def update
+    @publication.assign_attributes(publication_params)
+    authorize! @publication
+
+    if @publication.save
+      flash[:notice] = "#{@publication.name} publication successfully updated"
+      redirect_to publication_path(@publication)
+    else
+      @publication = @publication.reload
+      render :edit
+    end
+  end
+
+  private
+
+  def publication_params
+    params.require(:publication).permit(:name, :description, :avatar, :twitter, topics: [])
+  end
+
+  def find_publication
+    @publication = Publication.find_by!(slug: params[:slug])
+  end
+end

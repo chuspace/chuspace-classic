@@ -1,0 +1,75 @@
+<%= simple_form_for publication, remote: true do |f| %>
+  <div class='block sm:flex'>
+    <div class='avatar relative w-full sm:w-1/4 mt-8'>
+      <drop-image
+        class='avatar__uploader'
+        hint='<%= t('.avatar_hint') %>'
+        url='<%= @publication.avatar&.imgproxy_url(width: 150, height: 150) %>'
+        errors='<%= publication.errors.full_messages_for(:avatar).to_sentence %>'
+        param='publication[avatar]'
+      >
+        <%= component 'avatar', avatar: publication.avatar, variant: :thumb if publication.avatar %>
+
+        <% if publication.errors.include?(:avatar) %>
+          <%= content_tag :span, publication.errors.full_messages_for(:avatar).to_sentence, class: 'input__error text-red block' %>
+        <% else %>
+          <span class="input__hint avatar__uploader__hint <%= publication.avatar.blank? ? 'avatar__uploader__hint__blank' : '' %>">
+            <%= t('.avatar_hint') %>
+          </span>
+        <% end %>
+
+        <%= f.input(:avatar,
+          as: :file,
+          wrapper: false,
+          label: false,
+          input_html: { accept: "image/*" }
+          )
+        %>
+      </drop-image>
+    </div>
+
+    <div class='form w-full sm:w-3/4'>
+      <%= f.input :name, autofocus: true %>
+      <%= f.input :description, required: true %>
+      <%= f.input :website %>
+      <%= f.input :twitter %>
+
+      <input-autocomplete
+        url="<%= autocomplete_topics_url %>"
+        items='<%= publication.topics || [] %>'
+        maxlength="5"
+        keys="name"
+        class='w-full block mt-4'
+        name='publication[topics][]'
+        noresults
+      >
+        <div class='autocomplete__selections'>
+          <% publication.topics&.each do |topic| %>
+            <span class="autocomplete__item mr-2">
+              <%= topic %>
+              <svg-icon class='autocomplete__item__icon' name='x-circle' width='10' height='10' feather='true' color='none'>&#10005</svg-icon>
+            </span>
+          <% end %>
+        </div>
+
+        <div class='form_field__container'>
+          <label class="input__label" for="publication_topics">Topics</label>
+          <div class='input__container'>
+            <input type='text' class="input autocomplete__input" id='publication_topics' />
+          </div>
+
+          <% if publication.errors.include?(:topics) %>
+            <%= content_tag :span, publication.errors.full_messages_for(:topics).to_sentence, class: 'input__error text-red block' %>
+          <% else %>
+            <span class="input__hint">Select topics to help readers find your publication</span>
+          <% end %>
+        </div>
+      </input-autocomplete>
+    </div>
+  </div>
+
+  <div class='float-right mt-8'>
+    <%= f.submit 'Submit', class: 'button button--fill  mr-2 ' %>
+    <%= link_to 'Cancel', root_path, class: 'button button--default inline-block' %>
+  </div>
+<% end %>

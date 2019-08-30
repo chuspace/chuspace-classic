@@ -12,7 +12,7 @@ module ApplicationHelper
       },
       { divider: true },
       { label: 'Profile', url: user_path(Current.user), options: {} },
-      { label: 'Write post', url: new_post_path, options: {} },
+      { label: 'Publications', url: publications_path, options: {} },
       { label: 'Your posts', url: user_path(Current.user), options: {} },
       { label: 'Settings', url: settings_path, options: {} },
       { divider: true },
@@ -32,14 +32,8 @@ module ApplicationHelper
 
   def layout_classes_mapping
     {
-      posts: {
-        edit: 'layout__narrow',
-        new: 'layout__narrow'
-      },
-
-      'posts/publish': {
-        index: 'layout__narrow'
-      }
+      posts: { edit: 'layout__narrow', new: 'layout__narrow', show: 'layout__narrow' },
+      'posts/publish': { index: 'layout__narrow', create: 'layout__narrow' }
     }
   end
 end

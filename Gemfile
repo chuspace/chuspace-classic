@@ -23,6 +23,10 @@ gem 'fastimage'
 gem 'image_processing'
 gem 'ruby-vips'
 gem 'shrine'
+gem 'shrine-memory', require: false
+
+# SES
+gem 'aws-ses', require: 'aws/ses'
 
 # Logging
 gem 'logidze'
@@ -46,7 +50,7 @@ gem 'hiredis'
 gem 'delayed_job_active_record'
 
 # Auth
-gem 'pundit'
+gem 'action_policy'
 
 # Sitemap
 gem 'sitemap_generator', require: false

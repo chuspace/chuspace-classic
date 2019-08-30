@@ -3,7 +3,8 @@
 
 class LogoComponent < Components::Component
   TYPES = {
-    badge: { css_class: 'logo logo__badge', label: 'chu' }, full: { css_class: 'logo', label: "<span class='logo__badge'>chu</span>space", version: 'axiom' }
+    badge: { css_class: 'logo logo__badge', label: 'chuspace' },
+    full: { css_class: 'logo', label: "<span class='logo__badge'>chu</span>space", version: 'axiom' }
   }.freeze
 
   attribute :type

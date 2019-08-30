@@ -13,23 +13,18 @@ class CreatePublications < ActiveRecord::Migration[6.0]
       t.text :description
       t.jsonb :avatar_data
 
-      t.string :repo_name, default: Repository::DEFAULT_NAME, null: false
-      t.index %i[repo_name slug], unique: true
-
-      t.string :repo_full_name, null: false
-      t.index :repo_full_name, unique: true
+      t.string :repo_name, null: false
+      t.index :repo_name, unique: true
 
       t.string :repo_path, null: false
       t.index :repo_path, unique: true
 
       t.boolean :personal
       t.index %i[owner_id personal], unique: true
+      t.boolean :internal, default: false, null: false
 
       t.references :owner, index: true, null: false, foreign_key: { to_table: :users }
-
-      t.string :email, unique: true
-      t.string :twitter, unique: true
-      t.string :facebook, unique: true
+      t.string :twitter
 
       t.string :topics, array: true, default: []
       t.index :topics, using: 'gin'

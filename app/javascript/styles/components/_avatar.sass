@@ -6,6 +6,23 @@ $variants: ("sm": 32, "md": 64, "lg": 80, "xl": 120, "thumb": 150)
 .avatar__badge
   @apply border border-grey-light inline-block text-center align-middle
 
+.avatar__uploader
+  @apply bg-grey-lightest block rounded
+  width: 150px
+  height: 150px
+
+  .avatar__uploader__hint
+    @apply absolute
+    width: inherit
+    top: 160px
+
+    &__blank
+      @apply relative flex items-center text-center px-2
+      width: inherit
+      height: inherit
+      top: unset
+
+
 @each $variant, $size in $variants
   &.avatar--#{$variant}
     width: #{$size}px

@@ -315,14 +315,13 @@ CREATE TABLE public.publications (
     slug character varying NOT NULL,
     description text,
     avatar_data jsonb,
-    repo_name character varying DEFAULT 'blog'::character varying NOT NULL,
-    repo_full_name character varying NOT NULL,
+    repo_name character varying NOT NULL,
     repo_path character varying NOT NULL,
     personal boolean,
+    internal boolean DEFAULT false NOT NULL,
     owner_id bigint NOT NULL,
-    email character varying,
+    website character varying,
     twitter character varying,
-    facebook character varying,
     topics character varying[] DEFAULT '{}'::character varying[],
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -437,13 +436,9 @@ CREATE INDEX index_publications_on_owner_id ON public.publications USING btree (
 
 CREATE UNIQUE INDEX index_publications_on_owner_id_and_personal ON public.publications USING btree (owner_id, personal);
 
--- Name: index_publications_on_repo_full_name; Type: INDEX
+-- Name: index_publications_on_repo_name; Type: INDEX
 
-CREATE UNIQUE INDEX index_publications_on_repo_full_name ON public.publications USING btree (repo_full_name);
-
--- Name: index_publications_on_repo_name_and_slug; Type: INDEX
-
-CREATE UNIQUE INDEX index_publications_on_repo_name_and_slug ON public.publications USING btree (repo_name, slug);
+CREATE UNIQUE INDEX index_publications_on_repo_name ON public.publications USING btree (repo_name);
 
 -- Name: index_publications_on_repo_path; Type: INDEX
 

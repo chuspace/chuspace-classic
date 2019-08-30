@@ -5,7 +5,8 @@ class UserDraftsController < ApplicationController
   before_action :authenticate!, :find_user
 
   def index
-    @posts = @user.posts.draft.includes(:author, :publication).limit(20).order(id: :desc)
+    @publication = @user.publication
+    @posts = @publication.posts.draft.includes(:author).limit(20).order(id: :desc)
     render 'users/show'
   end
 

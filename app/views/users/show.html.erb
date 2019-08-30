@@ -4,7 +4,7 @@
 
 <div class='block sm:text-left sm:flex'>
   <div class='mb-5 w-full text-center sm:text-left sm:w-1/4'>
-    <%= component 'avatar', avatar: @user.avatar, initials: @user.initials, variant: :thumb, css_class: 'mx-auto sm:mx-0' %>
+    <%= component 'avatar', avatar: @user.avatar, gravatar: Current.user.gravatar, variant: :thumb, css_class: 'mx-auto sm:mx-0' %>
 
     <div class='w-75'>
       <h3 class='text-2xl mt-8'><%= @user.name %></h3>
@@ -34,8 +34,7 @@
       </div>
     <% else %>
       <div class='placeholder'>
-        <h1 class='text-3xl'><%= t("#{params[:controller]}.no_posts") %></h1>
-        <%= link_to t("#{params[:controller]}.no_posts_btn_text"), new_post_path, class: 'button button--fill mt-4 inline-block' %>
+        <h1 class='text-xl'><%= t("#{params[:controller]}.no_posts") %></h1>
       </div>
     <% end %>
   </div>
