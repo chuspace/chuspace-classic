@@ -7,7 +7,14 @@ class PublicationTest < ActiveSupport::TestCase
   def setup
     @invalid_publication = Publication.new
     @avatar = Rails.root.join('test', 'fixtures', 'files', 'publication.jpeg').read
-    @valid_publication = Publication.create(name: 'Ruby', slug: 'ruby', description: 'Ruby publication', avatar: StringIO.new(@avatar), owner: users(:gaurav))
+    @valid_publication =
+      Publication.create(
+        name: 'Ruby',
+        slug: 'ruby',
+        description: 'Ruby publication',
+        avatar: StringIO.new(@avatar),
+        owner: users(:gaurav)
+      )
   end
 
   test 'an invalid publication should not have a repository' do
@@ -47,14 +54,33 @@ class PublicationTest < ActiveSupport::TestCase
     assert user.publication.repository.persisted?
     assert user.publication.personal
 
-    new_publication = user.publications.create(name: 'Java', slug: 'java', description: 'Java publication', avatar: StringIO.new(@avatar), owner: user, personal: true)
+    new_publication =
+      user.publications.create(
+        name: 'Java',
+        slug: 'java',
+        description: 'Java publication',
+        avatar: StringIO.new(@avatar),
+        owner: user,
+        personal: true
+      )
     refute new_publication.valid?
 
-    new_publication = user.publications.create(name: 'Java', slug: 'java', description: 'Java publication', avatar: StringIO.new(@avatar), owner: user, personal: false)
+    new_publication =
+      user.publications.create(
+        name: 'Java',
+        slug: 'java',
+        description: 'Java publication',
+        avatar: StringIO.new(@avatar),
+        owner: user,
+        personal: false
+      )
     refute new_publication.valid?
     assert_equal ["is invalid. It must begin set to either 'nil' or 'true'"], new_publication.errors.messages[:personal]
 
-    new_publication = user.publications.create(name: 'Java', slug: 'java', description: 'Java publication', avatar: StringIO.new(@avatar), owner: user)
+    new_publication =
+      user.publications.create(
+        name: 'Java', slug: 'java', description: 'Java publication', avatar: StringIO.new(@avatar), owner: user
+      )
     assert new_publication.valid?
   end
 end

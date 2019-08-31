@@ -42,16 +42,14 @@ def development_storages
 end
 
 def test_storages
-  {
-    cache: Shrine::Storage::Memory.new,
-    store: Shrine::Storage::Memory.new,
-  }
+  { cache: Shrine::Storage::Memory.new, store: Shrine::Storage::Memory.new }
 end
 
-Shrine.storages = if Rails.env.production?
-  production_storages
-elsif Rails.env.test?
-  test_storages
-else
-  development_storages
-end
+Shrine.storages =
+  if Rails.env.production?
+    production_storages
+  elsif Rails.env.test?
+    test_storages
+  else
+    development_storages
+  end
