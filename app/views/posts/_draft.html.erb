@@ -1,21 +1,21 @@
 <article class='list__item list__item--bordered'>
-  <%= link_to edit_publication_post_path(@publication, draft) do %>
+  <%= link_to edit_publication_post_path(draft.publication, draft) do %>
     <div class='header'>
-      <h3><%= draft.title %></h3>
-      <%= content_tag :p, draft.summary, class: 'text-grey tracking-normal text-sm leading-normal w-2/3 mt-2' %>
+      <h4 class='font-content'><%= draft.title %></h4>
+      <%= content_tag :p, draft.summary, class: 'text-grey font-content mt-1' %>
     </div>
   <% end %>
 
-  <ul class='horizontal__list text-xs mt-2'>
+  <ul class='horizontal__list text-sm mt-2'>
     <li class='text-grey'>
       Last edited <%= distance_of_time_in_words_to_now(draft.updated_at) %> ago
     </li>
     <li>
-      <%= link_to 'Edit', edit_publication_post_path(@publication, draft), class: 'link link--active underline' %>
+      <%= link_to 'Edit', edit_publication_post_path(draft.publication, draft), class: 'link link--active underline' %>
     </li>
     <li>
       <%= link_to 'Delete',
-        publication_post_path(@publication, draft),
+        publication_post_path(draft.publication, draft),
         method: :delete,
         remote: true,
         class: 'link link--danger underline',

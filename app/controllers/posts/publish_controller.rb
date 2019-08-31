@@ -3,16 +3,18 @@
 
 class Posts::PublishController < ApplicationController
   before_action :authenticate!
-  before_action :find_post, :assign_attributes, only: %i[index create]
+  before_action :find_publication, :find_post, :assign_attributes
 
   def index
+    authorize! ::Posts::Publish, context: { post: @post }
     @published_posts = Current.user.posts.published.where.not(id: @post.id)
     render 'posts/edit'
   end
 
   def create
-    @post.topics = publish_params[:topics]&.split(',')
-    @post.parent = publish_params[:parent]
+    authorize! ::Posts::Publish, context: { post: @post }
+
+    @post.assign_attributes(publish_params)
     @post.assign_attributes(status: 'published', published_at: Time.now) if @post.may_publish?
     new_blob_path = Pathname.new(@post.repo_dir).join("#{@post.slug}.md").to_path
 
@@ -37,12 +39,16 @@ class Posts::PublishController < ApplicationController
   private
 
   def publish_params
-    params.require(:post).permit(:parent, :topics, :canonical_url)
+    params.require(:post).permit(:parent, :canonical_url, topics: [])
   end
 
   def assign_attributes
     @markdown = PostMarkdownService.call(content: @post.blob_content)
     @post.assign_attributes(title: @markdown.title, summary: @markdown.summary)
+  end
+
+  def find_publication
+    @publication = Current.user.publications.find_by(slug: params[:publication_slug])
   end
 
   def find_post

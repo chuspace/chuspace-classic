@@ -255,6 +255,17 @@ CREATE TABLE public.ar_internal_metadata (
     updated_at timestamp(6) without time zone NOT NULL
 );
 
+-- Name: collaborators; Type: TABLE
+
+CREATE TABLE public.collaborators (
+    id BIGSERIAL PRIMARY KEY,
+    role integer,
+    publication_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
 -- Name: delayed_jobs; Type: TABLE
 
 CREATE TABLE public.delayed_jobs (
@@ -285,6 +296,16 @@ CREATE TABLE public.keys (
     updated_at timestamp(6) without time zone NOT NULL
 );
 
+-- Name: likes; Type: TABLE
+
+CREATE TABLE public.likes (
+    id BIGSERIAL PRIMARY KEY,
+    post_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
 -- Name: posts; Type: TABLE
 
 CREATE TABLE public.posts (
@@ -302,6 +323,7 @@ CREATE TABLE public.posts (
     topics character varying[] DEFAULT '{}'::character varying[],
     canonical_url character varying,
     published_at timestamp without time zone,
+    likes_count integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     log_data jsonb
@@ -320,9 +342,10 @@ CREATE TABLE public.publications (
     personal boolean,
     internal boolean DEFAULT false NOT NULL,
     owner_id bigint NOT NULL,
-    website character varying,
     twitter character varying,
     topics character varying[] DEFAULT '{}'::character varying[],
+    posts_count integer DEFAULT 0 NOT NULL,
+    collaborators_count integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -352,11 +375,12 @@ CREATE TABLE public.users (
     avatar_data jsonb,
     auth_token character varying DEFAULT ''::character varying NOT NULL,
     auth_token_expires_at timestamp without time zone,
-    posts_count integer DEFAULT 0 NOT NULL,
     bio character varying,
     company character varying,
     location character varying,
     url character varying,
+    posts_count integer DEFAULT 0 NOT NULL,
+    publications_count integer DEFAULT 0 NOT NULL,
     sign_in_count integer DEFAULT 0 NOT NULL,
     current_sign_in_at timestamp without time zone,
     last_sign_in_at timestamp without time zone,
@@ -376,6 +400,18 @@ ALTER TABLE ONLY public.schema_migrations
 
 CREATE INDEX delayed_jobs_priority ON public.delayed_jobs USING btree (priority, run_at);
 
+-- Name: index_collaborators_on_publication_id; Type: INDEX
+
+CREATE INDEX index_collaborators_on_publication_id ON public.collaborators USING btree (publication_id);
+
+-- Name: index_collaborators_on_role; Type: INDEX
+
+CREATE INDEX index_collaborators_on_role ON public.collaborators USING btree (role);
+
+-- Name: index_collaborators_on_user_id; Type: INDEX
+
+CREATE INDEX index_collaborators_on_user_id ON public.collaborators USING btree (user_id);
+
 -- Name: index_keys_on_fingerprint; Type: INDEX
 
 CREATE UNIQUE INDEX index_keys_on_fingerprint ON public.keys USING btree (fingerprint);
@@ -391,6 +427,14 @@ CREATE INDEX index_keys_on_last_used ON public.keys USING btree (last_used);
 -- Name: index_keys_on_user_id; Type: INDEX
 
 CREATE INDEX index_keys_on_user_id ON public.keys USING btree (user_id);
+
+-- Name: index_likes_on_post_id; Type: INDEX
+
+CREATE INDEX index_likes_on_post_id ON public.likes USING btree (post_id);
+
+-- Name: index_likes_on_user_id; Type: INDEX
+
+CREATE INDEX index_likes_on_user_id ON public.likes USING btree (user_id);
 
 -- Name: index_posts_on_ancestry; Type: INDEX
 
@@ -477,10 +521,30 @@ CREATE TRIGGER logidze_on_posts BEFORE INSERT OR UPDATE ON public.posts FOR EACH
 ALTER TABLE ONLY public.posts
     ADD CONSTRAINT fk_rails_04d13ef8c7 FOREIGN KEY (author_id) REFERENCES public.users(id);
 
+-- Name: likes fk_rails_1e09b5dabf; Type: FK CONSTRAINT
+
+ALTER TABLE ONLY public.likes
+    ADD CONSTRAINT fk_rails_1e09b5dabf FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+-- Name: collaborators fk_rails_2d564e3065; Type: FK CONSTRAINT
+
+ALTER TABLE ONLY public.collaborators
+    ADD CONSTRAINT fk_rails_2d564e3065 FOREIGN KEY (publication_id) REFERENCES public.publications(id);
+
 -- Name: keys fk_rails_3d10ea6ad7; Type: FK CONSTRAINT
 
 ALTER TABLE ONLY public.keys
     ADD CONSTRAINT fk_rails_3d10ea6ad7 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+-- Name: collaborators fk_rails_3d4aaacbb1; Type: FK CONSTRAINT
+
+ALTER TABLE ONLY public.collaborators
+    ADD CONSTRAINT fk_rails_3d4aaacbb1 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+-- Name: likes fk_rails_87a8aac469; Type: FK CONSTRAINT
+
+ALTER TABLE ONLY public.likes
+    ADD CONSTRAINT fk_rails_87a8aac469 FOREIGN KEY (post_id) REFERENCES public.posts(id);
 
 -- Name: publications fk_rails_8f49e7c7de; Type: FK CONSTRAINT
 
@@ -506,5 +570,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190709114321'),
 ('20190709114322'),
 ('20190709114442'),
-('20190822161805');
+('20190822161805'),
+('20190831120520'),
+('20190831121959');
 

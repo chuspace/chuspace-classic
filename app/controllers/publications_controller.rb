@@ -4,10 +4,10 @@
 class PublicationsController < ApplicationController
   before_action :authenticate!
   before_action :find_publication, except: %i[index new create]
-  after_action :verify_authorized, only: %i[new edit create destroy]
+  skip_verify_authorized only: :index
 
   def index
-    @publications = Current.user.publications.listed
+    @publications = authorized_scope(Publication.listed)
   end
 
   def new
@@ -33,6 +33,8 @@ class PublicationsController < ApplicationController
   end
 
   def show
+    authorize! @publication
+
     if @publication.personal
       redirect_to user_path(@publication.owner)
     else
@@ -56,7 +58,7 @@ class PublicationsController < ApplicationController
   private
 
   def publication_params
-    params.require(:publication).permit(:name, :description, :avatar, :twitter, topics: [])
+    params.require(:publication).permit(:name, :description, :avatar, :twitter, :website, topics: [])
   end
 
   def find_publication

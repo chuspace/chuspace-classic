@@ -16,7 +16,8 @@ class Publication < ApplicationRecord
   validate :personal_attribute_should_contain_valid_values
 
   has_many :posts, dependent: :destroy
-  db_belongs_to :owner, class_name: 'User', foreign_key: :owner_id
+  has_many :collaborators, dependent: :destroy
+  db_belongs_to :owner, class_name: 'User', foreign_key: :owner_id, counter_cache: true
 
   scope :internal, -> { where(internal: true) }
   scope :personal, -> { where(personal: true) }
@@ -28,6 +29,14 @@ class Publication < ApplicationRecord
 
   def topics_list
     topics&.join(',')
+  end
+
+  def members
+    [owner] + collaborators
+  end
+
+  def members_count
+    collaborators_count + 1
   end
 
   private

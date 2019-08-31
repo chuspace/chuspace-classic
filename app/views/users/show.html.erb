@@ -3,29 +3,9 @@
 <% noindex %>
 
 <div class='block sm:text-left sm:flex'>
-  <div class='mb-5 w-full text-center sm:text-left sm:w-1/4'>
-    <%= component 'avatar', avatar: @user.avatar, gravatar: Current.user.gravatar, variant: :thumb, css_class: 'mx-auto sm:mx-0' %>
+  <%= render 'users/sidebar' %>
 
-    <div class='w-75'>
-      <h3 class='text-2xl mt-8'><%= @user.name %></h3>
-      <h3 class='text-base font-normal text-grey'><%= @user.nickname %></h3>
-      <%= content_tag :p, @user.bio, class: 'text-sm mt-1' unless @user.bio.blank? %>
-
-      <ul class='horizontal__list text-sm'>
-        <%= content_tag :li, @user.company unless @user.company.blank? %>
-        <%= content_tag :li, @user.location unless @user.location.blank? %>
-        <% unless @user.url.blank? %>
-          <%= content_tag :li do %>
-            <%= link_to 'Website', @user.url, class: 'link link--active underline text-sm', target: '_blank', rel: 'noopener noreferer' %>
-          <% end %>
-        <% end %>
-      </ul>
-    </div>
-
-    <%= link_to 'Edit profile', settings_profiles_path, class: 'button button--active inline-block mt-4'%>
-  </div>
-
-  <div class='posts w-full sm:w-3/4 mt-10 sm:mt-0'>
+  <div class='posts w-full sm:w-2/3 mt-10 sm:mt-0'>
     <%= render 'users/tabs' %>
 
     <% if @posts.any? %>

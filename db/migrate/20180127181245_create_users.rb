@@ -18,12 +18,13 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.index :auth_token, unique: true
       t.datetime :auth_token_expires_at
 
-      t.integer :posts_count, null: false, default: 0
-
       t.string :bio
       t.string :company
       t.string :location
       t.string :url
+
+      t.integer :posts_count, null: false, default: 0
+      t.integer :publications_count, null: false, default: 0
 
       t.integer :sign_in_count, default: 0, null: false
       t.datetime :current_sign_in_at

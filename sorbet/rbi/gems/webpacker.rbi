@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/webpacker/all/webpacker.rbi
 #
-# webpacker-3547917a3e56
+# webpacker-d0fa1d1351bf
 class Webpacker::Instance
   def commands; end
   def compiler; end

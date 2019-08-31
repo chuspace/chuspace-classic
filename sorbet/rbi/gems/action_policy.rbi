@@ -388,17 +388,17 @@ end
 module ActionPolicy::ScopeMatchers::ActionControllerParams
   def params_filter(*args, &block); end
 end
-module Anonymous_Module_407
+module Anonymous_Module_409
   def policy_cache_key; end
 end
 class ActiveRecord::Relation
-  include Anonymous_Module_407
-  include Anonymous_Module_408
+  include Anonymous_Module_409
+  include Anonymous_Module_410
 end
 module ActionPolicy::ScopeMatchers::ActiveRecord
   def relation_scope(*args, &block); end
 end
-module Anonymous_Module_408
+module Anonymous_Module_410
   def policy_name; end
 end
 module ActionPolicy::Policy::Rails

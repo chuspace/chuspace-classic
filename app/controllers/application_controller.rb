@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   include Authentication
   include SetCurrentRequestDetails
 
+  after_action :verify_authorized
+
   delegate :t, to: :I18n
   rescue_from ActionPolicy::Unauthorized, with: :user_not_authorized
 
@@ -15,7 +17,7 @@ class ApplicationController < ActionController::Base
     policy_name = exception.policy.class.to_s.underscore
     flash[:error] = t "#{policy_name}.#{exception.rule}", scope: 'policy', default: :default
 
-    redirect_to(request.referrer || root_path)
+    redirect_to root_path
   end
 
   def current_user

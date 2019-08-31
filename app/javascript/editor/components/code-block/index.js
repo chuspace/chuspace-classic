@@ -64,8 +64,6 @@ export default class CodeEditor extends LitElement {
       this.readonly = JSON.parse(this.readonly)
     } catch (e) {}
 
-    console.log(this.content)
-
     const codeNode = this.querySelector('.code-editor')
     this.cm = await this.createCM(codeNode)
     this.cm.refresh()

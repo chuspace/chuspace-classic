@@ -40,7 +40,7 @@ class User < ApplicationRecord
   end
 
   def gravatar
-    gravatar_id = Digest::MD5::hexdigest(email)
+    gravatar_id = Digest::MD5.hexdigest(email)
     "http://secure.gravatar.com/avatar/#{gravatar_id}?d=identicon"
   end
 

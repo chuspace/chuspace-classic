@@ -16,7 +16,7 @@ class SigninsTest < ApplicationSystemTestCase
     assert_selector 'button', text: 'Sign in'
 
     click_button 'Sign in'
-    assert_text "can't be blank"
+    assert_text "We couldn't find that email"
 
     fill_in 'signin_email', with: "gaurav-#{rand(0..100)}"
     click_button 'Sign in'

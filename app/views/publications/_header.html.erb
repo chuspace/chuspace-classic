@@ -1,13 +1,13 @@
-<div class='block sm:flex'>
+<div class='block sm:flex w-full'>
   <div class='mr-4'>
     <%= component 'avatar', avatar: publication.avatar, variant: :lg %>
   </div>
 
-  <div>
+  <div class='flex-1'>
     <h3 class='text-2xl'><%= publication.name %></h3>
     <%= content_tag :p, publication.description, class: 'text-sm mt-1' %>
 
-    <ul class='horizontal__list text-sm mt-2'>
+    <ul class='flex mt-2'>
       <% unless @publication.twitter.blank? %>
         <%= content_tag :li do %>
           <%= link_to @publication.twitter, class: 'link link--active underline text-sm', target: '_blank', rel: 'noopener noreferer' do %>
@@ -15,6 +15,23 @@
           <% end %>
         <% end %>
       <% end %>
+
+      <% unless @publication.website.blank? %>
+        <%= content_tag :li, class: 'ml-2' do %>
+          <%= link_to @publication.website, class: 'link link--active underline text-sm', target: '_blank', rel: 'noopener noreferer' do %>
+            <svg-icon name='link' feather='true'></svg-icon>
+          <% end %>
+        <% end %>
+      <% end %>
     </ul>
+  </div>
+
+  <div class='flex items-center'>
+    <p class='border-r border-grey-lightest pr-6'>
+      Posts
+      <span class='block text-center text-grey'>123</span>
+    </p>
+    <p class='border-r border-grey-lightest px-6'>People <span class='block text-center text-grey'>123</span></p>
+    <p class='pl-6'>Followers <span class='block text-center text-grey'>123</span></p>
   </div>
 </div>

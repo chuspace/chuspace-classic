@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class MagicLoginsController < ApplicationController
+  skip_verify_authorized
+
   def index
     user = User.find_by(auth_token: params[:token])
 

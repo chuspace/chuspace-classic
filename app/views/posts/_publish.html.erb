@@ -1,6 +1,6 @@
 <dialog class='dialog__sm' data-controller='publish'>
   <div class='relative'>
-    <%= link_to edit_post_path(post) do %>
+    <%= link_to edit_publication_post_path(@publication, post) do %>
       <svg-icon
         class='absolute top-0 right-0'
         name='x-circle'
@@ -12,7 +12,7 @@
 
     <h3 class='border-b pb-2 inline-block text-lg'>Publish</h3>
     <div class='card card--default w-full sm:w-3/4 mx-auto mt-8'>
-      <%= simple_form_for post, scope: :post, url: post_publish_index_path(post), method: :post, remote: true do |f| %>
+      <%= simple_form_for post, scope: :post, url: publication_post_publish_index_path(@publication, post), method: :post, remote: true do |f| %>
         <h1 class='title__label title__label--nohover text-3xl'><%= post.title %></h1>
         <%= content_tag :span, post.errors.full_messages_for(:title).to_sentence, class: 'input__error text-red block' if post.errors.include?(:title) %>
         <h2 class='summary__label summary__label--nohover text-grey-light mt-8 text-2xl'><%= post.summary %></h2>
@@ -47,8 +47,6 @@
               <span class="input__hint">Select topics to help readers find your post</span>
             <% end %>
           </div>
-
-          <%= f.input :topics, as: :hidden, input_html: { id: 'selections__input', value: post.topics_list } %>
         </input-autocomplete>
 
         <%= f.input :canonical_url, label: false, input_container_html: { class: 'input__container__label--floating', 'data-label': 'Canonical' } %>

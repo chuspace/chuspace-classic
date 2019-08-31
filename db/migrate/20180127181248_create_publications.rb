@@ -29,6 +29,9 @@ class CreatePublications < ActiveRecord::Migration[6.0]
       t.string :topics, array: true, default: []
       t.index :topics, using: 'gin'
 
+      t.integer :posts_count, null: false, default: 0
+      t.integer :collaborators_count, null: false, default: 0
+
       t.timestamps
     end
   end

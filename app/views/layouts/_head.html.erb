@@ -5,6 +5,7 @@
   <%= render 'layouts/meta' %>
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="prefetch" href="<%= asset_pack_path('application.js') %>" as="style" />
+  <%= preload_pack_asset('media/styles/fonts/noe-display-bold.woff2') %>
   <%= javascript_pack_tag 'application', defer: true, 'data-turbolinks-track': 'reload' %>
   <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 </head>

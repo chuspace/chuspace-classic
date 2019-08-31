@@ -5,7 +5,6 @@ class PostsController < ApplicationController
   before_action :authenticate!, except: %i[show]
   before_action :find_publication
   before_action :find_post, except: %i[show index new create]
-  after_action :verify_authorized, only: %i[new edit create destroy]
 
   def new
     @post = Post.new(author: Current.user)
@@ -15,6 +14,8 @@ class PostsController < ApplicationController
   def show
     @author = Publication.find_by!(slug: params[:publication_slug])
     @post = @author.posts.find_by!(slug: params[:slug])
+
+    authorize! @post
 
     fresh_when @post, public: true
     redirect_to edit_post_path(@post) if @post.draft?
@@ -28,14 +29,14 @@ class PostsController < ApplicationController
     Post.transaction do
       markdown = PostMarkdownService.call(content: post_params[:body])
       slug = markdown.title&.to_slug&.to_ascii&.normalize&.to_s
-      post = Current.user.posts.build(publication: Current.user.publication, slug: slug)
+      post = Current.user.posts.build(publication: @publication, slug: slug)
       authorize! post
       post.blob_path = post.repo_dir.join("#{slug}.md").to_path
-      blob = Current.user.publication.repository.create_blob(path: post.blob_path, content: markdown.content)
+      blob = @publication.repository.create_blob(path: post.blob_path, content: markdown.content)
 
       if blob.persisted? && post.save
         render json: {
-                 redirect: edit_post_path(post),
+                 redirect: edit_publication_post_path(@publication, post),
                  slug: post.slug,
                  header:
                    render_to_string(

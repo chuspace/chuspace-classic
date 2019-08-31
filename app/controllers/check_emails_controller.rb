@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class CheckEmailsController < ApplicationController
+  skip_verify_authorized
+
   def create
     user = User.new(email: params[:value])
 

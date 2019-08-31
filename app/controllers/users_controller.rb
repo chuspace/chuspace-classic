@@ -5,12 +5,14 @@ class UsersController < ApplicationController
   before_action :find_user, only: :show
 
   def show
+    authorize! @user
     @posts = @user.posts.published.includes(:author).limit(20).order(id: :desc)
   end
 
   def update
     @user = Current.user
     @user.assign_attributes(update_params)
+    authorize! @user
 
     if @user.save
       flash[:notice] = 'Profile successfully updated'

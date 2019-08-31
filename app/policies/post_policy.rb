@@ -2,20 +2,15 @@
 # frozen_string_literal: true
 
 class PostPolicy < ApplicationPolicy
-  def new?
-    true
-  end
+  alias_rule :create?, to: :new?
+  alias_rule :destroy?, to: :edit?
 
-  def create?
+  def new?
     true
   end
 
   def edit?
     record.persisted? && user == record.author
-  end
-
-  def destroy?
-    edit?
   end
 
   def publish?

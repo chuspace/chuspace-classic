@@ -57,7 +57,7 @@ export default class SvgIcon extends LitElement {
 
     this.width = 20
     this.height = 20
-    this.color = 'currentColor'
+    this.color = 'none'
     this.stroke = 'currentColor'
 
     try {

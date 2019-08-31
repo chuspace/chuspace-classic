@@ -33,6 +33,8 @@ class CreatePosts < ActiveRecord::Migration[6.0]
       t.datetime :published_at
       t.index :published_at
 
+      t.integer :likes_count, null: false, default: 0
+
       t.timestamps
     end
   end

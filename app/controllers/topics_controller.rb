@@ -1,4 +1,6 @@
 # typed: ignore
 # frozen_string_literal: true
 
-class TopicsController < ApplicationController; end
+class TopicsController < ApplicationController
+  skip_verify_authorized
+end

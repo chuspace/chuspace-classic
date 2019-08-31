@@ -3,6 +3,7 @@
 
 class SignupsController < ApplicationController
   before_action :redirect_if_registered
+  skip_verify_authorized
 
   def index
     @user = User.new

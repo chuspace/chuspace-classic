@@ -1,16 +1,16 @@
 <% if post.draft? %>
   <%= render 'posts/draft', draft: post %>
 <% else %>
-  <%= content_tag :div, class: 'list__item list__item--bordered font-medium font-content' do %>
+  <%= content_tag :div, class: 'list__item list__item--bordered' do %>
     <article>
-      <%= link_to publication_post_path(@publication, post) do %>
+      <%= link_to publication_post_path(post.publication, post) do %>
         <div class='header'>
-          <h4><%= post.title %></h4>
-          <%= content_tag :p, post.summary, class: 'text-grey text-xl mt-2' %>
+          <h4 class='font-content'><%= post.title %></h4>
+          <%= content_tag :p, post.summary, class: 'text-grey font-content mt-1' %>
         </div>
       <% end %>
 
-      <ul class='horizontal__list text-sm font-headings font-normal text-grey mt-6'>
+      <ul class='horizontal__list text-sm text-grey mt-2'>
         <li>
           <span>
             By <%= link_to post.author.name, user_path(post.author), class: 'underline' %>
@@ -24,11 +24,11 @@
         </li>
         <% if allowed_to?(:edit?, post) %>
           <li>
-            <%= link_to 'Edit', edit_publication_post_path(@publication, post), class: 'link link--active underline' %>
+            <%= link_to 'Edit', edit_publication_post_path(post.publication, post), class: 'link link--active underline' %>
           </li>
           <li>
             <%= link_to 'Delete',
-              publication_post_path(@publication, post),
+              publication_post_path(post.publication, post),
               method: :delete,
               remote: true,
               class: 'link link--danger underline',

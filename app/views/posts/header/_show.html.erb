@@ -1,5 +1,9 @@
-<div class='flex items-center flex-1'>
+<div class='flex items-center flex-1 ml-4'>
+  <%= link_to publication_path(@publication), class: "mr-4" do %>
+    <%= component 'avatar', avatar: @publication.avatar, gravatar: @publication.owner.gravatar, variant: :sm %>
+  <% end %>
+
   <div class='flex justify-end items-center flex-1 mr-8'>
-    <%= link_to 'Edit', edit_post_path(post), class: 'button button--active button--slim mr-2' if allowed_to?(:edit?, post) %>
+    <%= link_to 'Edit', edit_publication_post_path(@publication, post), class: 'button button--active button--slim mr-2' if allowed_to?(:edit?, post) %>
   </div>
 </div>

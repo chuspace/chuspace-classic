@@ -21,6 +21,8 @@ class Post < ApplicationRecord
   validates_db_uniqueness_of :slug, scope: %i[publication_id]
   validates_db_uniqueness_of :blob_path, scope: %i[publication_id]
 
+  after_create :sync_topics, if: :topics_changed?
+
   validates :slug, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
   validates :published_at, date: true, if: :published?
 
@@ -144,5 +146,11 @@ class Post < ApplicationRecord
       twitter: { title: :title, card: :summary, description: :description, site_name: :site },
       article: { published_time: published_at, modified_time: updated_at, tag: topics_list, author: author.nickname }
     }
+  end
+
+  private
+
+  def sync_topics
+    topics.each { |name| Topic.find_or_create_by(name: name) }
   end
 end

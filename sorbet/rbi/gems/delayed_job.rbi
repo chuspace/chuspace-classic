@@ -244,3 +244,12 @@ class ActiveRecord::Base
   def self.yaml_new(klass, _tag, val); end
   def to_yaml_properties; end
 end
+class Delayed::PerformableMailer < Delayed::PerformableMethod
+  def perform; end
+end
+module Delayed::DelayMail
+  def delay(options = nil); end
+end
+class Mail::Message
+  def delay(*_args); end
+end

@@ -10,19 +10,25 @@ class PublicationPolicy < ApplicationPolicy
     true
   end
 
+  def show?
+    true
+  end
+
+  def index?
+    record.owner
+  end
+
   def edit?
-    record.persisted? && user == record.owner
+    user == record.owner
   end
 
   def destroy?
     edit?
   end
 
-  def show?
-    record.persisted?
-  end
-
   def update?
     edit?
   end
+
+  relation_scope { |relation| relation.where(owner: user) }
 end

@@ -1,9 +1,9 @@
 <% set_meta_tags @post %>
 <article>
   <% if allowed_to?(:publish?, @post) %>
-    <div class='flex justify-between items-center card card-default'>
+    <div class='flex justify-between items-center card card-default mb-8'>
       <%= content_tag :p, 'You have made some changes to this post.' %>
-      <%= link_to 'Republish', post_publish_index_path(@post), class: 'button button--fill' %>
+      <%= link_to 'Republish', publication_post_publish_index_path(@post.publication, @post), class: 'button button--fill' %>
     </div>
   <% end %>
 

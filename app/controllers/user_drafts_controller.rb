@@ -3,10 +3,10 @@
 
 class UserDraftsController < ApplicationController
   before_action :authenticate!, :find_user
+  skip_verify_authorized
 
   def index
-    @publication = @user.publication
-    @posts = @publication.posts.draft.includes(:author).limit(20).order(id: :desc)
+    @posts = @user.posts.draft.includes(:author).limit(20).order(id: :desc)
     render 'users/show'
   end
 

@@ -225,7 +225,7 @@ class Google::Protobuf::Map
   def to_h; end
   def values; end
 end
-class Anonymous_Struct_406 < Struct
+class Anonymous_Struct_408 < Struct
   def external_enumerator; end
   def external_enumerator=(_); end
   def repeated_field; end
@@ -235,7 +235,7 @@ class Anonymous_Struct_406 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Google::Protobuf::RepeatedField::ProxyingEnumerator < Anonymous_Struct_406
+class Google::Protobuf::RepeatedField::ProxyingEnumerator < Anonymous_Struct_408
   def each(*args, &block); end
 end
 class Google::Protobuf::Error < StandardError
