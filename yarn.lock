@@ -752,6 +752,18 @@
     postcss "^7.0.14"
     purgecss "^1.3.0"
 
+"@github/auto-complete-element@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@github/auto-complete-element/-/auto-complete-element-1.0.5.tgz#c05a2f2f8184651863722ca5d5e47529e47720b9"
+  integrity sha512-mJ2OH82XDcBYtHXLe0LwHXvpoj7CuSDy7rSXiLL/4uvciWAcmxoNS7YdJp9rRNomVIcXfheUPj0+EQb5uISySw==
+  dependencies:
+    "@github/combobox-nav" "^0.3.2"
+
+"@github/combobox-nav@^0.3.2":
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/@github/combobox-nav/-/combobox-nav-0.3.3.tgz#f5a3f6dcf044d5efcf844cf8b1e14368a0efa161"
+  integrity sha512-b4O31k5tIF+VuzPwNaA7LAoqEmS2UkHssZqR54nDkXK79g6hdgOSOD59SoE/kgP749/EX7UviJXw4bWgGawabw==
+
 "@github/details-menu-element@^1.0.4":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@github/details-menu-element/-/details-menu-element-1.0.4.tgz#f341fd1285bbadd507c2d83fe52eb963dbce8fc7"

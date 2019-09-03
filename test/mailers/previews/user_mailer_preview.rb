@@ -10,4 +10,8 @@ class UserMailerPreview < ActionMailer::Preview
   def send_magic_login
     UserMailer.with(user: User.first).send_magic_login
   end
+
+  def invite
+    UserMailer.with(invitation: Invitation.first).invite
+  end
 end

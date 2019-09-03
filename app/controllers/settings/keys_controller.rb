@@ -7,14 +7,17 @@ class Settings::KeysController < ApplicationController
 
   def new
     @key = Current.user.keys.build
+    authorize! @key
   end
 
   def index
     @user = Current.user
+    authorize!
   end
 
   def create
     @key = Current.user.keys.build(key_params)
+    authorize! @key
 
     if @key.save
       redirect_to settings_keys_path, notice: t('settings.keys.create.success')
@@ -24,6 +27,8 @@ class Settings::KeysController < ApplicationController
   end
 
   def destroy
+    authorize! @key
+
     if @key.destroy
       redirect_to settings_keys_path, notice: t('settings.keys.destroy.success')
     else

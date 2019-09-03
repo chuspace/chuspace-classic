@@ -3,6 +3,7 @@
 
 class Settings::ProfilesController < ApplicationController
   before_action :authenticate!
+  skip_verify_authorized
 
   def index
     @user = Current.user

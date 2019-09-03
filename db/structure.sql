@@ -283,6 +283,20 @@ CREATE TABLE public.delayed_jobs (
     updated_at timestamp(6) without time zone
 );
 
+-- Name: invitations; Type: TABLE
+
+CREATE TABLE public.invitations (
+    id BIGSERIAL PRIMARY KEY,
+    sender_id bigint NOT NULL,
+    identifier character varying NOT NULL,
+    role integer NOT NULL,
+    publication_id bigint NOT NULL,
+    code character varying NOT NULL,
+    status integer DEFAULT 0 NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
 -- Name: keys; Type: TABLE
 
 CREATE TABLE public.keys (
@@ -340,8 +354,8 @@ CREATE TABLE public.publications (
     repo_name character varying NOT NULL,
     repo_path character varying NOT NULL,
     personal boolean,
-    internal boolean DEFAULT false NOT NULL,
     owner_id bigint NOT NULL,
+    website character varying,
     twitter character varying,
     topics character varying[] DEFAULT '{}'::character varying[],
     posts_count integer DEFAULT 0 NOT NULL,
@@ -411,6 +425,22 @@ CREATE INDEX index_collaborators_on_role ON public.collaborators USING btree (ro
 -- Name: index_collaborators_on_user_id; Type: INDEX
 
 CREATE INDEX index_collaborators_on_user_id ON public.collaborators USING btree (user_id);
+
+-- Name: index_invitations_on_code; Type: INDEX
+
+CREATE UNIQUE INDEX index_invitations_on_code ON public.invitations USING btree (code);
+
+-- Name: index_invitations_on_identifier_and_publication_id; Type: INDEX
+
+CREATE UNIQUE INDEX index_invitations_on_identifier_and_publication_id ON public.invitations USING btree (identifier, publication_id);
+
+-- Name: index_invitations_on_publication_id; Type: INDEX
+
+CREATE INDEX index_invitations_on_publication_id ON public.invitations USING btree (publication_id);
+
+-- Name: index_invitations_on_sender_id; Type: INDEX
+
+CREATE INDEX index_invitations_on_sender_id ON public.invitations USING btree (sender_id);
 
 -- Name: index_keys_on_fingerprint; Type: INDEX
 
@@ -521,6 +551,11 @@ CREATE TRIGGER logidze_on_posts BEFORE INSERT OR UPDATE ON public.posts FOR EACH
 ALTER TABLE ONLY public.posts
     ADD CONSTRAINT fk_rails_04d13ef8c7 FOREIGN KEY (author_id) REFERENCES public.users(id);
 
+-- Name: invitations fk_rails_08fac6589b; Type: FK CONSTRAINT
+
+ALTER TABLE ONLY public.invitations
+    ADD CONSTRAINT fk_rails_08fac6589b FOREIGN KEY (publication_id) REFERENCES public.publications(id);
+
 -- Name: likes fk_rails_1e09b5dabf; Type: FK CONSTRAINT
 
 ALTER TABLE ONLY public.likes
@@ -545,6 +580,11 @@ ALTER TABLE ONLY public.collaborators
 
 ALTER TABLE ONLY public.likes
     ADD CONSTRAINT fk_rails_87a8aac469 FOREIGN KEY (post_id) REFERENCES public.posts(id);
+
+-- Name: invitations fk_rails_892c9262cb; Type: FK CONSTRAINT
+
+ALTER TABLE ONLY public.invitations
+    ADD CONSTRAINT fk_rails_892c9262cb FOREIGN KEY (sender_id) REFERENCES public.users(id);
 
 -- Name: publications fk_rails_8f49e7c7de; Type: FK CONSTRAINT
 
@@ -572,5 +612,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190709114442'),
 ('20190822161805'),
 ('20190831120520'),
-('20190831121959');
+('20190831121959'),
+('20190901104948');
 

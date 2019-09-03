@@ -12,13 +12,15 @@ class SignupsController < ApplicationController
   def create
     User.transaction do
       @user = User.new(create_params)
+      @user.build_publication(name: @user.name, slug: @user.nickname, personal: true, owner: @user)
       @user.auth_token_expires_at = User::AUTH_TOKEN_LIFE.minutes.from_now
 
       respond_to do |format|
         if @user.save
           UserMailer.with(user: @user).welcome.deliver_later
-          format.html { redirect_to root_path, notice: t('users.create.success') }
+          format.html { redirect_to params[:redirect_to] || root_path, notice: t('users.create.success') }
         else
+          puts @user.errors.inspect
           format.js
           format.html { redirect_to root_path, notice: @user.errors.messages.to_sentence }
         end

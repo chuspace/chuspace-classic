@@ -1,0 +1,21 @@
+<% if @users.any? %>
+  <% @users.each do |user| %>
+    <%= content_tag :li, role: 'option', class: 'dropdown__item', 'data-autocomplete-value': user.nickname, 'aria-disabled': @publication.members.include?(user) do  %>
+      <%= component('avatar', avatar: user.avatar, gravatar: user.gravatar, variant: :sm) %>
+      <div class='flex-1'>
+        <%= user.name %>
+        <span class='text-sm text-grey'><%= user.nickname %></span>
+        <% if @publication.members.include?(user) %>
+          <span class='text-xs'>Already a member</span>
+        <% end %>
+      </div>
+      <% if @publication.members.exclude?(user) %>
+        <svg-icon name='plus' feather='true' width='15' height='15' class='text-grey-lighter ml-2'></svg-icon>
+      <% end %>
+    <% end %>
+  <% end %>
+<% else %>
+   <%= content_tag :li, role: 'option', class: 'dropdown__item', 'data-autocomplete-value': @query do  %>
+      <div class='flex-1'><%= @query %></div> <svg-icon width='15' height='15' name='mail' class='text-grey' class='mr-2' feather='true'></svg-icon>
+    <% end %>
+<% end %>

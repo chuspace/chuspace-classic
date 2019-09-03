@@ -1,8 +1,19 @@
 <ul class="list-reset tabs tabs__horizontal">
   <li class="<%= tabs_class(publication_path(publication)) %>">
-    <%= link_to 'Posts', publication_path(publication) %>
+    <%= link_to publication_path(publication) do %>
+      Posts <span class='badge badge--grey font-bold'><%= publication.posts_count %></span>
+    <% end %>
   </li>
-  <li class="<%= tabs_class(edit_publication_path(publication)) %>">
-    <%= link_to 'Edit', edit_publication_path(publication) %>
+
+  <li class="<%= tabs_class(publication_people_path(publication)) %>">
+    <%= link_to publication_people_path(publication) do %>
+      People <span class='badge badge--grey font-bold'><%= publication.members_count %></span>
+    <% end %>
   </li>
+
+  <% if allowed_to?(:edit?, publication) %>
+    <li class="<%= tabs_class(edit_publication_path(publication)) %>">
+      <%= link_to 'Edit', edit_publication_path(publication) %>
+    </li>
+  <% end %>
 </ul>

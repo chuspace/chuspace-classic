@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 class PublicationsController < ApplicationController
-  before_action :authenticate!
+  before_action :authenticate!, except: :show
   before_action :find_publication, except: %i[index new create]
   skip_verify_authorized only: :index
 

@@ -6,22 +6,20 @@ details
       @apply inline-block
 
 .dropdown
-  @apply w-48 absolute bg-white border border-grey-lightest rounded-sm shadow mt-2 right-0
+  @apply absolute bg-white border border-grey-lighter rounded-sm shadow mt-2 right-0
+  min-width: 12rem
 
   .dropdown__divider
-    @apply border-t border-grey-lightest block mt-1 mb-1
+    @apply border-t border-grey-lightest block
 
   .dropdown__item
-    @apply py-2 px-4 block text-sm
+    @apply py-2 px-4 block text-sm cursor-pointer
 
-    &:last-child
-      @apply mb-1
+    &:hover
+      @apply text-grey
 
     &:first-child
       @apply pt-4
-
-    .link
-      @apply text-grey-light
 
   &:after, &:before
     bottom: 100%
@@ -46,15 +44,24 @@ details
     border-width: 8px
     margin-right: -8px
 
-  &.dropdown__button
+  &.dropdown__button, &.dropdown__autocomplete
     @apply mt-0
+    width: 100%
+    right: unset
+
     &:after, &:before
       content: unset
+
     .dropdown__item
       @apply flex items-center border-b border-grey-lightest
+
+      &[aria-disabled='true']
+        opacity: 0.5
+
       &:first-child
         @apply py-2 px-4
       &:last-child
         @apply mb-0 border-b-0
+
       .avatar
         @apply mr-2

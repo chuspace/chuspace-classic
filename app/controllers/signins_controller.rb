@@ -17,7 +17,7 @@ class SigninsController < ApplicationController
       @user.update(auth_token_expires_at: User::AUTH_TOKEN_LIFE.minutes.from_now)
 
       UserMailer.with(user: @user).send_magic_login.deliver_later
-      redirect_to signins_path, notice: t('signins.create.success')
+      redirect_to params[:redirect_to] || root_path, notice: t('signins.create.success')
     else
       redirect_to signins_path, notice: t('signins.create.failure')
     end

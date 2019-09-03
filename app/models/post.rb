@@ -4,9 +4,6 @@
 class Post < ApplicationRecord
   include AASM
 
-  db_belongs_to :author, class_name: 'User'
-  db_belongs_to :publication
-
   has_ancestry
   has_logidze
 
@@ -20,6 +17,9 @@ class Post < ApplicationRecord
 
   validates_db_uniqueness_of :slug, scope: %i[publication_id]
   validates_db_uniqueness_of :blob_path, scope: %i[publication_id]
+
+  db_belongs_to :author, class_name: 'User', foreign_key: :author_id, counter_cache: true
+  db_belongs_to :publication, counter_cache: true
 
   after_create :sync_topics, if: :topics_changed?
 

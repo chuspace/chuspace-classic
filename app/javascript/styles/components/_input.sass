@@ -35,12 +35,17 @@
         &::before
           @apply block
 
+    &--inline
+      @apply mt-6 flex justify-between
+      &::after
+        content: unset
+
   &.file
     .input__container::after
       @apply border-none
 
 .input
-  @apply py-2 bg-white w-full text-base appearance-none
+  @apply py-2 bg-white w-full text-base
   transition: border-color 0.5s ease
   box-sizing: border-box
 
@@ -50,6 +55,9 @@
   &--slim
     @apply text-sm shadow-md rounded
     padding: 0.2rem 0.5rem
+
+  &--inline
+    @apply inline-block w-auto mr-2
 
 .input__error,
 .input__hint

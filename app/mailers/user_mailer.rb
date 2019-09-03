@@ -13,4 +13,13 @@ class UserMailer < ApplicationMailer
     @subject = t('.subject', name: @user.name)
     mail(to: @user.email, subject: @subject)
   end
+
+  def invite
+    @invitation = params[:invitation]
+    @sender = @invitation.sender
+    @publication = @invitation.publication
+
+    @subject = t('.subject', sender: @sender.nickname, publication: @publication.slug)
+    mail(to: @invitation.recipient_email, subject: @subject)
+  end
 end

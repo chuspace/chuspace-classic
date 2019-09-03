@@ -1,0 +1,16 @@
+
+<table cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      <div class='mb-20 center'>
+        <%= component('avatar', avatar: @publication.avatar, variant: :xl, css_class: 'mx-auto') %>
+      </div>
+    </td>
+  </tr>
+  <tr><td><p class='mb-20'><%= @subject %></p></td></tr>
+  <tr>
+    <td style='text-align: center;' >
+      <%= link_to "Join #{@publication.slug}", accept_publication_invitations_url(@publication, invite_token: @invitation.code), class: 'button my-20' %>
+    </td>
+  </tr>
+</table>

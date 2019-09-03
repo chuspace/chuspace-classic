@@ -47,6 +47,18 @@ Rails.application.routes.draw do
 
   resources :publications, path: '', param: :slug, only: %i[show update destroy] do
     resources :images, only: %i[show destroy]
+    resources :people, path: 'people', only: :index, module: 'publications' do
+      collection do
+        get :autocomplete
+      end
+    end
+
+    resources :invitations, only: :create, module: 'publications' do
+      collection do
+        get :accept
+      end
+    end
+
     resources :posts, path: '', param: :slug, only: %i[show destroy]
     resources :posts, path: 'p', param: :slug, except: :show do
       resources :publish, only: %i[index create], module: 'posts'

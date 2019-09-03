@@ -2,33 +2,16 @@
 # frozen_string_literal: true
 
 class PublicationPolicy < ApplicationPolicy
+  alias_rule :destroy?, :update?, :invite?, to: :edit?
+  alias_rule :create?, :show?, :index?, to: :new?
+
   def new?
     true
   end
 
-  def create?
-    true
-  end
-
-  def show?
-    true
-  end
-
-  def index?
-    record.owner
-  end
-
   def edit?
-    user == record.owner
+    user == record.owner || record.collaborators.where(role: :admin, user: user).exists?
   end
 
-  def destroy?
-    edit?
-  end
-
-  def update?
-    edit?
-  end
-
-  relation_scope { |relation| relation.where(owner: user) }
+  relation_scope { |relation| relation.joins(:members).where(collaborators: { user_id: user.id }) }
 end

@@ -3,6 +3,7 @@
 import 'styles/application'
 import 'animate.css'
 import '@github/details-menu-element'
+import '@github/auto-complete-element'
 import 'custom-elements'
 
 import * as Rails from 'rails-ujs'

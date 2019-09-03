@@ -138,8 +138,15 @@ en:
         any questions.
       salutation: Hey %{name},
       subject: Welcome to Chuspace, %{name}
+    invite:
+      subject: '@%{sender} has invited you to join the @%{publication} publication'
+
   users:
     create:
       success: Welcome aboard! we have sent you an email with login link.
     no_posts: You haven't published any posts yet.
     no_posts_btn_text: Publish one
+
+  invitations:
+    create:
+      success: You've invited %{identifier} to %{publication}! They'll be receiving an email shortly.
