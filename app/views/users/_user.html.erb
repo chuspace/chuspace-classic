@@ -1,7 +1,7 @@
-<%= link_to user_path(user), class: 'list__item list__item--flex list__item--bordered font-medium font-content' do %>
+<%= link_to user_path(user), class: 'list__item list__item--flex list__item--bordered' do %>
   <%= component 'avatar', avatar: user.avatar, gravatar: user.gravatar, variant: :md %>
   <div class='ml-4 flex-1'>
     <h4><%= user.name %></h4>
-    <%= content_tag :p, user.bio, class: 'text-grey text-xl' %>
+    <%= content_tag :p, user.bio, class: 'text-grey text-sm' %>
   </div>
 <% end %>

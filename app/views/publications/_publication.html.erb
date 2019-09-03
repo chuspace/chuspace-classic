@@ -1,11 +1,11 @@
-<%= content_tag :div, class: 'list__item list__item--bordered font-medium font-content' do %>
+<%= content_tag :div, class: 'list__item list__item--bordered' do %>
   <section class='mt-8 list'>
     <%= link_to publication_path(publication) do %>
       <div class='list__item--flex'>
         <%= component 'avatar', avatar: publication.avatar, initials: publication.name, variant: :md %>
         <div class='ml-4 flex-1'>
           <h4><%= publication.name %></h4>
-          <%= content_tag :p, publication.description, class: 'text-grey text-xl' %>
+          <%= content_tag :p, publication.description, class: 'text-grey text-sm' %>
         </div>
       </div>
     <% end %>

@@ -6,7 +6,7 @@ details
       @apply inline-block
 
 .dropdown
-  @apply absolute bg-white border border-grey-lighter rounded-sm shadow mt-2 right-0
+  @apply absolute bg-white border border-grey-lighter rounded-sm shadow mt-2 right-0 z-50
   min-width: 12rem
 
   .dropdown__divider
@@ -17,9 +17,6 @@ details
 
     &:hover
       @apply text-grey
-
-    &:first-child
-      @apply pt-4
 
   &:after, &:before
     bottom: 100%

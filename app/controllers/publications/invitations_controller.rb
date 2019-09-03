@@ -15,7 +15,7 @@ class Publications::InvitationsController < ApplicationController
     if @invitation.save
       redirect_to publication_people_path(@publication), notice: t('invitations.create.success', identifier: @invitation.identifier, publication: @publication.name)
     else
-      render 'publications/people/index'
+      redirect_to publication_people_path(@publication), notice: @invitation.errors.full_messages.to_sentence
     end
   end
 
@@ -34,7 +34,9 @@ class Publications::InvitationsController < ApplicationController
         authorize! @invitation
 
         @publication.collaborators.create(role: @invitation.role, user: @invitation.recipient)
-        redirect_to publication_people_path(@publication), notice: t('invitations.accept.success', publication: @publication.name)
+        @invitation.destroy
+
+        redirect_to publication_people_path(@publication), notice: t('invitations.accept.success', publication: @publication.name, role: @invitation.role)
       end
     else
       redirect_to publication_path(@publication, error: 'Invitation not found')

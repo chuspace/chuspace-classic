@@ -16,4 +16,20 @@ module PublicationHelper
       )
     end
   end
+
+  def collaborator_actions(publication, collaborator)
+    items = Collaborator.roles.except(:owner).map do |role, _|
+      next if collaborator.role == role
+
+      OpenStruct.new(
+        label: "Make #{role}", url: publication_person_path(publication, collaborator, role: role), options: { method: :patch, remote: true }
+      )
+    end.compact
+
+    items << OpenStruct.new(
+      label: "Remove from #{publication.slug}",
+      url: publication_person_path(publication, collaborator),
+      options: { method: :delete, remote: true, 'data-confirm': 'Are you sure?' }
+    )
+  end
 end

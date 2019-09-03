@@ -120,6 +120,13 @@ en:
       intro: Update publication profile
     form:
       avatar_hint: Drop images here or click to browse. Maximum image size 5MB
+
+    people:
+      update:
+        success: Role successfully updated!
+      destroy:
+        success: Removed successfully!
+
   user_mailer:
     send_magic_login:
       body: Click on the button below to sign in to your Chuspace account. This magic
@@ -149,4 +156,6 @@ en:
 
   invitations:
     create:
-      success: You've invited %{identifier} to %{publication}! They'll be receiving an email shortly.
+      success: You've invited %{identifier} to join %{publication} publication! They'll be receiving an email shortly.
+    accept:
+      success: You've successfully joined %{publication} publication as %{role}.

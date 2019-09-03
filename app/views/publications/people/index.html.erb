@@ -9,7 +9,29 @@
   <div class='flex'>
     <div class='w-full sm:w-2/3 mr-12'>
       <div class='mt-8 list'>
-        <%= render partial: 'users/user', collection: @members %>
+        <% @collaborators.each do |collaborator| %>
+          <div class='list__item list__item--flex list__item--bordered'>
+            <%= link_to user_path(collaborator.user), class: 'flex items-center' do %>
+              <%= component 'avatar', avatar: collaborator.user.avatar, gravatar: collaborator.user.gravatar, variant: :md %>
+              <div class='ml-4 flex-1'>
+                <h6><%= collaborator.user.name %>
+                  <span class='badge badge--grey font-normal'>
+              <%= collaborator.role %>
+            </span>
+            </h6>
+                <%= content_tag :p, collaborator.user.bio, class: 'text-grey text-sm' %>
+              </div>
+            <% end %>
+
+            <% if allowed_to?(:update?, collaborator) %>
+              <%= component 'dropdown', flush: true, items: collaborator_actions(@publication, collaborator), drop_arrow: :no do |d| %>
+                <% d.opener do %>
+                  <svg-icon name='more-horizontal' feather='true'></svg-icon>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
       </div>
     </div>
 

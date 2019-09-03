@@ -4,11 +4,26 @@
 class Publications::PeopleController < ApplicationController
   before_action :authenticate!
   before_action :find_publication
-  skip_verify_authorized
+  before_action :find_collaborator, only: %i[update destroy]
+  skip_verify_authorized only: %i[index autocomplete]
 
   def index
-    @members = @publication.members
+    @collaborators = @publication.collaborators.order(:created_at)
     @invitation = @publication.invitations.build
+  end
+
+  def update
+    @collaborator.update(update_params)
+    authorize! @collaborator
+
+    redirect_to publication_people_path(@publication), notice: t('publications.people.update.success')
+  end
+
+  def destroy
+    @collaborator.destroy
+    authorize! @collaborator
+
+    redirect_to publication_people_path(@publication), notice: t('publications.people.destroy.success')
   end
 
   def autocomplete
@@ -22,7 +37,15 @@ class Publications::PeopleController < ApplicationController
 
   private
 
+  def update_params
+    params.permit(:role)
+  end
+
   def find_publication
     @publication = Publication.find_by!(slug: params[:publication_slug])
+  end
+
+  def find_collaborator
+    @collaborator = @publication.collaborators.find(params[:id])
   end
 end

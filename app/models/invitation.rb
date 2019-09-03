@@ -6,6 +6,7 @@ class Invitation < ApplicationRecord
   db_belongs_to :sender, class_name: 'User', foreign_key: :sender_id
 
   validates :identifier, presence: true
+  validates :identifier, presence: true, email: true, if: -> { recipient.blank? }
   validates_db_uniqueness_of :identifier, scope: :publication_id
   validates_db_uniqueness_of :code
   validate :check_if_recipient_can_be_invited
@@ -28,7 +29,7 @@ class Invitation < ApplicationRecord
   private
 
   def check_if_recipient_can_be_invited
-    errors.add(:identifier, "Can't be invited") if publication.members.include?(recipient)
+    errors.add(:identifier, 'Already a member') if publication.members.include?(recipient)
   end
 
   def send_email

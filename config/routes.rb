@@ -47,7 +47,7 @@ Rails.application.routes.draw do
 
   resources :publications, path: '', param: :slug, only: %i[show update destroy] do
     resources :images, only: %i[show destroy]
-    resources :people, path: 'people', only: :index, module: 'publications' do
+    resources :people, path: 'people', only: %i[index update destroy], module: 'publications' do
       collection do
         get :autocomplete
       end

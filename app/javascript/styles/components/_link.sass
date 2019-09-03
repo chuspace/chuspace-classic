@@ -22,6 +22,11 @@
   &.link--disabled
     @apply text-grey-lighter pointer-events-none
 
+  &[data-method="delete"]
+    @apply text-red
+    &:hover
+      @apply text-red-lighter
+
 .button
   @apply py-1 px-3 inline-block text-sm rounded no-underline text-center border bg-white cursor-pointer font-medium
 
