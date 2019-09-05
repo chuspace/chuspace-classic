@@ -1,7 +1,18 @@
-<%= link_to user_path(user), class: 'list__item list__item--flex list__item--bordered' do %>
-  <%= component 'avatar', avatar: user.avatar, gravatar: user.gravatar, variant: :md %>
-  <div class='ml-4 flex-1'>
-    <h4><%= user.name %></h4>
-    <%= content_tag :p, user.bio, class: 'text-grey text-sm' %>
-  </div>
-<% end %>
+<div class='list__item list__item--flex list__item--bordered'>
+  <%= link_to user_path(user), class: 'flex items-center' do %>
+    <%= component 'avatar', avatar: user.avatar, gravatar: user.gravatar, variant: :md %>
+    <div class='ml-4 flex-1'>
+      <h6>
+        <%= user.name %>
+        <% if defined?(badge) %>
+          <span class='badge badge--grey font-normal'>
+            <%= badge %>
+          </span>
+        <% end %>
+      </h6>
+      <%= content_tag :p, user.bio, class: 'text-grey text-sm mt-1' %>
+    </div>
+  <% end %>
+
+  <%= yield %>
+</div>

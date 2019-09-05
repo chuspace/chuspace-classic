@@ -8,35 +8,23 @@
   <%= render 'publications/tabs', publication: @publication %>
   <div class='flex'>
     <div class='w-full sm:w-2/3 mr-12'>
-      <div class='mt-8 list'>
+      <div class='list'>
         <% @collaborators.each do |collaborator| %>
-          <div class='list__item list__item--flex list__item--bordered'>
-            <%= link_to user_path(collaborator.user), class: 'flex items-center' do %>
-              <%= component 'avatar', avatar: collaborator.user.avatar, gravatar: collaborator.user.gravatar, variant: :md %>
-              <div class='ml-4 flex-1'>
-                <h6><%= collaborator.user.name %>
-                  <span class='badge badge--grey font-normal'>
-              <%= collaborator.role %>
-            </span>
-            </h6>
-                <%= content_tag :p, collaborator.user.bio, class: 'text-grey text-sm' %>
-              </div>
-            <% end %>
-
-            <% if allowed_to?(:update?, collaborator) %>
+          <%= render 'users/user', badge: collaborator.role, user: collaborator.user do %>
+            <% if Current.user.present? && allowed_to?(:update?, collaborator) %>
               <%= component 'dropdown', flush: true, items: collaborator_actions(@publication, collaborator), drop_arrow: :no do |d| %>
                 <% d.opener do %>
                   <svg-icon name='more-horizontal' feather='true'></svg-icon>
                 <% end %>
               <% end %>
             <% end %>
-          </div>
+          <% end %>
         <% end %>
       </div>
     </div>
 
     <section class='list w-full hidden sm:block sm:w-1/3 mt-8'>
-      <% if allowed_to?(:invite?, @publication) %>
+      <% if Current.user.present? && allowed_to?(:invite?, @publication) %>
         <div class='border border-grey-lightest p-4'>
           <h1 class='text-base font-normal mb-8'>Add to publication</h1>
           <%= simple_form_for @invitation, url: publication_invitations_path(@publication), remote: true do |f| %>

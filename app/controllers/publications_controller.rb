@@ -4,7 +4,7 @@
 class PublicationsController < ApplicationController
   before_action :authenticate!, except: :show
   before_action :find_publication, except: %i[index new create]
-  skip_verify_authorized only: :index
+  skip_verify_authorized only: %i[index show]
 
   def index
     @publications = authorized_scope(Publication.listed)
@@ -33,8 +33,6 @@ class PublicationsController < ApplicationController
   end
 
   def show
-    authorize! @publication
-
     if @publication.personal
       redirect_to user_path(@publication.owner)
     else

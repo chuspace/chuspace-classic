@@ -3,9 +3,9 @@
 
 class UsersController < ApplicationController
   before_action :find_user, only: :show
+  skip_verify_authorized only: :show
 
   def show
-    authorize! @user
     @posts = @user.posts.published.includes(:author).limit(20).order(id: :desc)
   end
 

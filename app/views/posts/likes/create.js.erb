@@ -1,0 +1,2 @@
+var like = document.getElementById('<%= @post.slug %>_container')
+like.innerHTML = "<%= j render 'posts/likes', publication: @publication, post: @post %>"

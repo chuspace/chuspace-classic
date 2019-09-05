@@ -2,7 +2,7 @@
   <%= component(
     'avatar',
     avatar: @user.avatar,
-    gravatar: Current.user.gravatar,
+    gravatar: @user.gravatar,
     variant: :profile,
     css_class: 'mx-auto sm:mx-0',
     options: { title: @user.name, alt: @user.name }
@@ -13,7 +13,7 @@
     <h3 class='text-2xl mt-8'><%= @user.name %></h3>
     <h3 class='text-base font-normal text-grey'><%= @user.nickname %></h3>
     <%= content_tag :p, @user.bio, class: 'mt-2 text-sm w-3/4' unless @user.bio.blank? %>
-    <%= link_to 'Edit profile', settings_profiles_path, class: 'button button--active inline-block mt-4' if allowed_to?(:edit?, @user) %>
+    <%= link_to 'Edit profile', settings_profiles_path, class: 'button button--active inline-block mt-4' if Current.user && allowed_to?(:edit?, @user) %>
 
     <ul class='mt-4 text-sm'>
       <% if @user.company %>

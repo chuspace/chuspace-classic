@@ -1,13 +1,17 @@
 <ul class="list-reset tabs tabs__horizontal">
   <li class="<%= tabs_class(user_path(@user)) %>">
     <%= link_to user_path(@user) do  %>
-      Posts <span class='badge badge--grey font-bold'><%= @user.posts_count %></span>
+      Posts <span class='badge badge--grey font-bold'>
+        <%= @user.posts.published.count  %>
+      </span>
     <% end %>
   </li>
 
-  <li class="<%= tabs_class(user_drafts_path(@user)) %>">
-    <%= link_to user_drafts_path(@user) do %>
-      Drafts <span class='badge badge--grey font-bold'><%= @user.posts_count %></span>
-    <% end %>
-  </li>
+  <% if Current.user.present? && allowed_to?(:drafts?, @user) %>
+    <li class="<%= tabs_class(user_drafts_path(@user)) %>">
+      <%= link_to user_drafts_path(@user) do %>
+        Drafts <span class='badge badge--grey font-bold'><%= @user.posts.draft.count %></span>
+      <% end %>
+    </li>
+  <% end %>
 </ul>

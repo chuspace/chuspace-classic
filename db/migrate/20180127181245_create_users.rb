@@ -25,6 +25,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
 
       t.integer :posts_count, null: false, default: 0
       t.integer :publications_count, null: false, default: 0
+      t.integer :collaborations_count, null: false, default: 0
 
       t.integer :sign_in_count, default: 0, null: false
       t.datetime :current_sign_in_at

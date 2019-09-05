@@ -18,8 +18,9 @@ class Post < ApplicationRecord
   validates_db_uniqueness_of :slug, scope: %i[publication_id]
   validates_db_uniqueness_of :blob_path, scope: %i[publication_id]
 
-  db_belongs_to :author, class_name: 'User', foreign_key: :author_id, counter_cache: true
-  db_belongs_to :publication, counter_cache: true
+  db_belongs_to :author, class_name: 'User', foreign_key: :author_id, counter_cache: true, touch: true
+  db_belongs_to :publication, counter_cache: true, touch: true
+  has_many :likes, dependent: :destroy
 
   after_create :sync_topics, if: :topics_changed?
 
@@ -146,6 +147,10 @@ class Post < ApplicationRecord
       twitter: { title: :title, card: :summary, description: :description, site_name: :site },
       article: { published_time: published_at, modified_time: updated_at, tag: topics_list, author: author.nickname }
     }
+  end
+
+  def liked_by?(user:)
+    likes.where(user: user).exists?
   end
 
   private

@@ -1,7 +1,7 @@
 <div class='right-nav flex items-center'>
   <% if (params[:controller] != 'posts' && params[:controller] != 'posts/publish') %>
     <div class='mr-8'>
-      <% if Current.user.publications.size > 1 %>
+      <% if Current.user.publications.count > 1 %>
         <%= render 'shared/compose_button' %>
       <% else %>
         <%= link_to 'Write post', new_publication_post_path(Current.user.publication), class: 'button button--default flex items-center'%>

@@ -10,7 +10,7 @@ class PostPolicy < ApplicationPolicy
   end
 
   def edit?
-    record.persisted? && user == record.author
+    record.publication.members.include?(user)
   end
 
   def publish?

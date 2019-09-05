@@ -1,5 +1,6 @@
 <% set_meta_tags @post %>
-<article>
+
+<article class='relative'>
   <% if allowed_to?(:publish?, @post) %>
     <div class='flex justify-between items-center card card-default mb-8'>
       <%= content_tag :p, 'You have made some changes to this post.' %>
@@ -17,23 +18,28 @@
     <% end %>
   </ul>
 
-  <div class='author mt-12 border-t border-grey-lightest'>
-    <%= link_to user_path(@post.author), class: 'block mt-8' do %>
-      <section class='flex items-center'>
-        <%= component 'avatar',
-          avatar: @post.author.avatar,
-          gravatar: @post.author.gravatar,
-          variant: :xl
-        %>
+  <div class='mt-12 flex'>
+    <div class='flex-1' id='<%= @post.slug %>_container'>
+      <%= render 'posts/likes', publication: @post.publication, post: @post %>
+    </div>
 
-        <section class='info ml-4'>
-          <h4><%= @post.author.name %></h4>
-          <%= content_tag :p, @post.author.bio, class: 'text-grey text-sm w-4/5' unless @post.author.bio.blank? %>
-          <h3 class='text-base font-normal text-grey pb-2'>Author</h3>
-          <%= content_tag :time, @post.formatted_published_at, class: 'text-grey text-xs' if @post.published? %>
-        </section>
-      </section>
-    <% end %>
+    <div class='flex'>
+      <%= link_to publication_post_share_path(@post.publication, @post, 'twitter'), class: 'mr-4', target: '_blank', rel: 'noopener noreferrer nofollow' do %>
+        <svg-icon name='twitter' feather='true' width='24' height='24' stroke='#1da1f2' color='#1da1f2'></svg-icon>
+      <% end %>
+
+      <%= link_to publication_post_share_path(@post.publication, @post, 'facebook'), target: '_blank', rel: 'noopener noreferrer nofollow' do %>
+        <svg-icon name='facebook' feather='true' width='24' height='24' stroke='#3b5998' color='#3b5998'></svg-icon>
+      <% end %>
+    </div>
+  </div>
+
+  <div class='author mt-4 mb-24 border-t border-grey-lightest'>
+    <div class='list'>
+      <p class='text-grey'>Written by</p>
+      <%= render 'users/user', badge: 'author', user: @post.author %>
+      <%= render 'publications/publication', badge: 'publication', publication: @post.publication unless @post.publication.personal %>
+    </div>
   </div>
 
   <%= render 'posts/series', post: @post %>

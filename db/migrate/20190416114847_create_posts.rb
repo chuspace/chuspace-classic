@@ -21,6 +21,7 @@ class CreatePosts < ActiveRecord::Migration[6.0]
 
       t.references :author, index: true, null: false, foreign_key: { to_table: :users }
       t.references :publication, null: false, foreign_key: true
+      t.integer :likes_count, null: false, default: 0
 
       t.string :ancestry
       t.index :ancestry
@@ -32,8 +33,6 @@ class CreatePosts < ActiveRecord::Migration[6.0]
 
       t.datetime :published_at
       t.index :published_at
-
-      t.integer :likes_count, null: false, default: 0
 
       t.timestamps
     end

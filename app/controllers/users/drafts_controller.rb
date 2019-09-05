@@ -1,7 +1,7 @@
 # typed: ignore
 # frozen_string_literal: true
 
-class UserDraftsController < ApplicationController
+class Users::DraftsController < ApplicationController
   before_action :authenticate!, :find_user
   skip_verify_authorized
 

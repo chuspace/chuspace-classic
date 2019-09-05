@@ -151,7 +151,7 @@ en:
   users:
     create:
       success: Welcome aboard! we have sent you an email with login link.
-    no_posts: You haven't published any posts yet.
+    no_posts: This author does not have any posts yet.
     no_posts_btn_text: Publish one
 
   invitations:
