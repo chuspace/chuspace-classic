@@ -18,9 +18,9 @@ class Post < ApplicationRecord
   validates_db_uniqueness_of :slug, scope: %i[publication_id]
   validates_db_uniqueness_of :blob_path, scope: %i[publication_id]
 
+  has_many :likes, dependent: :destroy
   db_belongs_to :author, class_name: 'User', foreign_key: :author_id, counter_cache: true, touch: true
   db_belongs_to :publication, counter_cache: true, touch: true
-  has_many :likes, dependent: :destroy
 
   after_create :sync_topics, if: :topics_changed?
 

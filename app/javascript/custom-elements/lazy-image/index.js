@@ -42,20 +42,26 @@ export default class LazyImage extends LitElement {
     return html`
       <figure class="image__container">
         <img alt=${this.alt} data-src="${this.src}" data-sizes="auto" class="lazy" />
-        <figcaption contentEditable="false">
-          ${this.editable
+        ${
+          this.editable
             ? html`
-          <input
-            type="text"
-            @change=${this.onCaptionChange}
-            class="input input--borderless p-0 italic text-center text-sm font-headings"
-            value=${this.alt}
-            maxlength=${70}
-            placeholder="Click to enter caption (optional)"
-          />
-        </div>
-     `
-            : this.alt}
+                <figcaption contentEditable="false">
+                  <input
+                    type="text"
+                    @change=${this.onCaptionChange}
+                    class="input input--borderless p-0 italic text-center text-sm font-headings"
+                    value=${this.alt}
+                    maxlength=${70}
+                    placeholder="Click to enter caption (optional)"
+                  />
+                </figcaption>
+              `
+            : this.alt
+            ? html`
+                <figcaption>${this.alt}</figcaption>
+              `
+            : null
+        }
         </figcaption>
       </figure>
     `

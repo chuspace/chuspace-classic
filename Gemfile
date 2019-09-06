@@ -14,6 +14,7 @@ gem 'pg', '>= 1.x'
 gem 'strong_migrations'
 gem 'database_validations'
 gem 'activerecord-clean-db-structure', github: 'lfittl/activerecord-clean-db-structure'
+gem 'name_of_person'
 
 # File uploads
 gem 'aws-sdk-s3'
@@ -102,6 +103,10 @@ gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 #  SEO
 gem 'meta-tags'
+
+# Cache
+gem 'dalli'
+gem 'connection_pool'
 
 group :production do
   # Resource monitoring

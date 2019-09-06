@@ -32,7 +32,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :images, only: %i[create destroy]
   resources :users, path: 'u', param: :nickname, only: %i[show update destroy] do
     resources :drafts, only: :index, module: 'users'
   end
@@ -46,7 +45,7 @@ Rails.application.routes.draw do
   mount Easymon::Engine => '/alive' if Rails.env.production?
 
   resources :publications, path: '', param: :slug, only: %i[show update destroy] do
-    resources :images, only: %i[show destroy]
+    resources :images, only: %i[create show destroy], module: 'publications'
     resources :drafts, only: :index, module: 'publications'
     resources :people, path: 'people', only: %i[index update destroy], module: 'publications' do
       collection do

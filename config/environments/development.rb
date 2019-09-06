@@ -24,11 +24,10 @@ Rails.application.configure do
   if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
 
-    config.cache_store = :memory_store
+    config.cache_store = :dalli_store
     config.public_file_server.headers = { 'Cache-Control' => "public, max-age=#{2.days.to_i}" }
   else
     config.action_controller.perform_caching = false
-
     config.cache_store = :null_store
   end
 
@@ -41,6 +40,7 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = { host: 'localhost:5000', port: 1_025 }
   config.action_mailer.asset_host = 'http://localhost:5000'
   config.hosts << 'localhost:5000'
+  config.hosts << ENV['IMGPROXY_HOST_WITH_PORT']
   config.default_url_options = { host: 'localhost:5000' }
   Rails.application.routes.default_url_options[:host] = 'localhost:5000'
 

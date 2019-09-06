@@ -55,6 +55,10 @@ module AWS::SES::VERSION
   TINY = ::T.let(nil, ::T.untyped)
 end
 
+module AbstractController::Collector
+  def html_fragment(*args, &block); end
+end
+
 class AbstractController::DoubleRenderError
   DEFAULT_MESSAGE = ::T.let(nil, ::T.untyped)
 end
@@ -1295,6 +1299,15 @@ end
 class ActionDispatch::Session::CacheStore
 end
 
+class ActionDispatch::Session::MemCacheStore
+  include ::ActionDispatch::Session::Compatibility
+  include ::ActionDispatch::Session::StaleSessionCheck
+  include ::ActionDispatch::Session::SessionObject
+end
+
+class ActionDispatch::Session::MemCacheStore
+end
+
 class ActionDispatch::ShowExceptions
   FAILSAFE_RESPONSE = ::T.let(nil, ::T.untyped)
 end
@@ -2437,18 +2450,6 @@ module ActiveModel::Lint::Tests
 end
 
 module ActiveModel::Lint
-end
-
-module ActiveModel::Model
-  include ::ActiveModel::AttributeAssignment
-  include ::ActiveModel::ForbiddenAttributesProtection
-  def initialize(attributes=T.unsafe(nil)); end
-
-  def persisted?(); end
-end
-
-module ActiveModel::Model
-  extend ::ActiveSupport::Concern
 end
 
 module ActiveModel::SecurePassword
@@ -4013,6 +4014,27 @@ class ActiveSupport::Cache::FileStore
   def self.supports_cache_versioning?(); end
 end
 
+class ActiveSupport::Cache::MemCacheStore
+  include ::ActiveSupport::Cache::Strategy::LocalCache
+  include ::ActiveSupport::Cache::MemCacheStore::LocalCacheWithRaw
+  def initialize(*addresses); end
+
+  def stats(); end
+  ESCAPE_KEY_CHARS = ::T.let(nil, ::T.untyped)
+end
+
+module ActiveSupport::Cache::MemCacheStore::LocalCacheWithRaw
+end
+
+module ActiveSupport::Cache::MemCacheStore::LocalCacheWithRaw
+end
+
+class ActiveSupport::Cache::MemCacheStore
+  def self.build_mem_cache(*addresses); end
+
+  def self.supports_cache_versioning?(); end
+end
+
 class ActiveSupport::Cache::MemoryStore
   PER_ENTRY_OVERHEAD = ::T.let(nil, ::T.untyped)
 end
@@ -4952,7 +4974,6 @@ class ApplicationController
   include ::ParamsSanitizer
   include ::Authentication
   include ::SetCurrentRequestDetails
-  def t(*args, &block); end
 end
 
 class ApplicationController
@@ -5099,6 +5120,9 @@ class Autocomplete::TopicsController
 end
 
 module Autocomplete
+end
+
+class AutocompleteInput
 end
 
 class AvatarComponent
@@ -6329,13 +6353,8 @@ class Binding
 end
 
 class Blob
-  include ::ActiveModel::Validations
   include ::ActiveSupport::Callbacks
   include ::ActiveModel::Validations::HelperMethods
-  include ::ActiveModel::Conversion
-  include ::ActiveModel::Model
-  include ::ActiveModel::AttributeAssignment
-  include ::ActiveModel::ForbiddenAttributesProtection
   include ::EncodingHelper
   def __callbacks(); end
 
@@ -6399,6 +6418,9 @@ class Blob
   def self.attribute_method_matchers=(val); end
 
   def self.attribute_method_matchers?(); end
+end
+
+class BlobPolicy
 end
 
 module Bootsnap
@@ -6493,14 +6515,8 @@ class Bundler::Fetcher::AuthenticationRequiredError
   def initialize(remote_uri); end
 end
 
-class Bundler::Fetcher::AuthenticationRequiredError
-end
-
 class Bundler::Fetcher::BadAuthenticationError
   def initialize(remote_uri); end
-end
-
-class Bundler::Fetcher::BadAuthenticationError
 end
 
 class Bundler::Fetcher::Base
@@ -6526,9 +6542,6 @@ end
 
 class Bundler::Fetcher::CertificateFailureError
   def initialize(remote_uri); end
-end
-
-class Bundler::Fetcher::CertificateFailureError
 end
 
 class Bundler::Fetcher::CompactIndex
@@ -6593,12 +6606,6 @@ end
 class Bundler::Fetcher::Downloader
 end
 
-class Bundler::Fetcher::FallbackError
-end
-
-class Bundler::Fetcher::FallbackError
-end
-
 class Bundler::Fetcher::Index
   def fetch_spec(spec); end
 
@@ -6608,17 +6615,8 @@ end
 class Bundler::Fetcher::Index
 end
 
-class Bundler::Fetcher::NetworkDownError
-end
-
-class Bundler::Fetcher::NetworkDownError
-end
-
 class Bundler::Fetcher::SSLError
   def initialize(msg=T.unsafe(nil)); end
-end
-
-class Bundler::Fetcher::SSLError
 end
 
 class Bundler::Fetcher
@@ -6886,58 +6884,11 @@ end
 module Bundler::Plugin::API::Source
 end
 
-class Bundler::Plugin::DSL
-  def _gem(name, *args); end
-
-  def inferred_plugins(); end
-
-  def plugin(name, *args); end
-end
-
-class Bundler::Plugin::DSL::PluginGemfileError
-end
-
-class Bundler::Plugin::DSL::PluginGemfileError
-end
-
-class Bundler::Plugin::DSL
-end
-
 module Bundler::Plugin::Events
   GEM_AFTER_INSTALL = ::T.let(nil, ::T.untyped)
   GEM_AFTER_INSTALL_ALL = ::T.let(nil, ::T.untyped)
   GEM_BEFORE_INSTALL = ::T.let(nil, ::T.untyped)
   GEM_BEFORE_INSTALL_ALL = ::T.let(nil, ::T.untyped)
-end
-
-module Bundler::Plugin::Events
-  def self.defined_event?(event); end
-end
-
-class Bundler::Plugin::Index
-  def command_plugin(command); end
-
-  def commands(); end
-
-  def global_index_file(); end
-
-  def hook_plugins(event); end
-
-  def index_file(); end
-
-  def installed?(name); end
-
-  def load_paths(name); end
-
-  def local_index_file(); end
-
-  def plugin_path(name); end
-
-  def register_plugin(name, path, load_paths, commands, sources, hooks); end
-
-  def source?(source); end
-
-  def source_plugin(name); end
 end
 
 class Bundler::Plugin::Index::CommandConflict
@@ -6952,9 +6903,6 @@ class Bundler::Plugin::Index::SourceConflict
 end
 
 class Bundler::Plugin::Index::SourceConflict
-end
-
-class Bundler::Plugin::Index
 end
 
 class Bundler::Plugin::Installer
@@ -8066,9 +8014,14 @@ end
 class Collaborator
   include ::Collaborator::GeneratedAttributeMethods
   include ::Collaborator::GeneratedAssociationMethods
+  include ::DatabaseValidations::Validations
   def autosave_associated_records_for_publication(*args); end
 
   def autosave_associated_records_for_user(*args); end
+
+  def valid_without_database_validations?(context=T.unsafe(nil)); end
+
+  def validate_associated_records_for_publication(*args); end
 end
 
 class Collaborator::ActiveRecord_AssociationRelation
@@ -8143,7 +8096,11 @@ module Collaborator::GeneratedRelationMethods
 
   def not_editor(*args, &block); end
 
+  def not_owner(*args, &block); end
+
   def not_writer(*args, &block); end
+
+  def owner(*args, &block); end
 
   def writer(*args, &block); end
 end
@@ -8161,11 +8118,18 @@ class Collaborator
 
   def self.not_editor(*args); end
 
+  def self.not_owner(*args); end
+
   def self.not_writer(*args); end
+
+  def self.owner(*args); end
 
   def self.roles(); end
 
   def self.writer(*args); end
+end
+
+class CollaboratorPolicy
 end
 
 module CommonMarker
@@ -8302,6 +8266,15 @@ module Concurrent::Utility::NativeInteger
   MIN_VALUE = ::T.let(nil, ::T.untyped)
 end
 
+class ConnectionPool
+  DEFAULTS = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class ConnectionPool::Wrapper
+  METHODS = ::T.let(nil, ::T.untyped)
+end
+
 class ContentDisposition
   ATTACHMENT = ::T.let(nil, ::T.untyped)
   DEFAULT_TO_ASCII = ::T.let(nil, ::T.untyped)
@@ -8361,6 +8334,38 @@ module DRb::DRbUndumped
 end
 
 module DRb::DRbUndumped
+end
+
+module Dalli
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class Dalli::Client
+  CACHE_NILS = ::T.let(nil, ::T.untyped)
+end
+
+class Dalli::Ring
+  POINTS_PER_SERVER = ::T.let(nil, ::T.untyped)
+end
+
+class Dalli::Server
+  CAS_HEADER = ::T.let(nil, ::T.untyped)
+  DEFAULTS = ::T.let(nil, ::T.untyped)
+  DEFAULT_PORT = ::T.let(nil, ::T.untyped)
+  DEFAULT_WEIGHT = ::T.let(nil, ::T.untyped)
+  FLAG_COMPRESSED = ::T.let(nil, ::T.untyped)
+  FLAG_SERIALIZED = ::T.let(nil, ::T.untyped)
+  FORMAT = ::T.let(nil, ::T.untyped)
+  HEADER = ::T.let(nil, ::T.untyped)
+  KV_HEADER = ::T.let(nil, ::T.untyped)
+  MAX_ACCEPTABLE_EXPIRATION_INTERVAL = ::T.let(nil, ::T.untyped)
+  NORMAL_HEADER = ::T.let(nil, ::T.untyped)
+  NOT_FOUND = ::T.let(nil, ::T.untyped)
+  OPCODES = ::T.let(nil, ::T.untyped)
+  OP_FORMAT = ::T.let(nil, ::T.untyped)
+  REQUEST = ::T.let(nil, ::T.untyped)
+  RESPONSE = ::T.let(nil, ::T.untyped)
+  RESPONSE_CODES = ::T.let(nil, ::T.untyped)
 end
 
 class Data
@@ -9884,15 +9889,13 @@ class File::Stat
 end
 
 class File
-  def self.atomic_write(file_name, temp_dir=T.unsafe(nil)); end
+  def self.empty?(_); end
 
   def self.exists?(_); end
 
   def self.lutime(*_); end
 
   def self.mkfifo(*_); end
-
-  def self.probe_stat_in(dir); end
 
 end
 
@@ -12030,17 +12033,6 @@ module ImageProcessing::Vips
   def self.valid_image?(file); end
 end
 
-class ImagesController
-  def create(); end
-
-  def destroy(); end
-
-  def show(); end
-end
-
-class ImagesController
-end
-
 module Imgproxy
   VERSION = ::T.let(nil, ::T.untyped)
 end
@@ -12082,6 +12074,137 @@ end
 
 class Integer
   def self.sqrt(_); end
+end
+
+class Invitation
+  include ::Invitation::GeneratedAttributeMethods
+  include ::Invitation::GeneratedAssociationMethods
+  include ::DatabaseValidations::Validations
+  def autosave_associated_records_for_publication(*args); end
+
+  def autosave_associated_records_for_sender(*args); end
+
+  def regenerate_code(); end
+
+  def valid_without_database_validations?(context=T.unsafe(nil)); end
+end
+
+class Invitation::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Invitation::GeneratedRelationMethods
+end
+
+class Invitation::ActiveRecord_AssociationRelation
+  extend ::ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
+end
+
+class Invitation::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Invitation::GeneratedRelationMethods
+end
+
+class Invitation::ActiveRecord_Associations_CollectionProxy
+  extend ::ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
+end
+
+class Invitation::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Invitation::GeneratedRelationMethods
+end
+
+class Invitation::ActiveRecord_Relation
+  extend ::ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
+end
+
+module Invitation::GeneratedAssociationMethods
+  def build_publication(*args, &block); end
+
+  def build_sender(*args, &block); end
+
+  def create_publication(*args, &block); end
+
+  def create_publication!(*args, &block); end
+
+  def create_sender(*args, &block); end
+
+  def create_sender!(*args, &block); end
+
+  def publication(); end
+
+  def publication=(value); end
+
+  def reload_publication(); end
+
+  def reload_sender(); end
+
+  def sender(); end
+
+  def sender=(value); end
+end
+
+module Invitation::GeneratedAssociationMethods
+end
+
+module Invitation::GeneratedAttributeMethods
+end
+
+module Invitation::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module Invitation::GeneratedRelationMethods
+  def admin(*args, &block); end
+
+  def editor(*args, &block); end
+
+  def joined(*args, &block); end
+
+  def not_admin(*args, &block); end
+
+  def not_editor(*args, &block); end
+
+  def not_joined(*args, &block); end
+
+  def not_pending(*args, &block); end
+
+  def not_writer(*args, &block); end
+
+  def pending(*args, &block); end
+
+  def writer(*args, &block); end
+end
+
+module Invitation::GeneratedRelationMethods
+  extend ::Mutex_m
+end
+
+class Invitation
+  def self.admin(*args); end
+
+  def self.editor(*args); end
+
+  def self.joined(*args); end
+
+  def self.not_admin(*args); end
+
+  def self.not_editor(*args); end
+
+  def self.not_joined(*args); end
+
+  def self.not_pending(*args); end
+
+  def self.not_writer(*args); end
+
+  def self.pending(*args); end
+
+  def self.roles(); end
+
+  def self.statuses(); end
+
+  def self.writer(*args); end
+end
+
+class InvitationPolicy
 end
 
 module JMESPath
@@ -12293,12 +12416,18 @@ class KeyError
   def receiver(); end
 end
 
+class KeyPolicy
+end
+
 class Like
   include ::Like::GeneratedAttributeMethods
   include ::Like::GeneratedAssociationMethods
+  include ::DatabaseValidations::Validations
   def autosave_associated_records_for_post(*args); end
 
   def autosave_associated_records_for_user(*args); end
+
+  def valid_without_database_validations?(context=T.unsafe(nil)); end
 end
 
 class Like::ActiveRecord_AssociationRelation
@@ -12369,6 +12498,9 @@ end
 
 module Like::GeneratedRelationMethods
   extend ::Mutex_m
+end
+
+class LikePolicy
 end
 
 class LoadError
@@ -13468,9 +13600,6 @@ module Mail::Parsers::ReceivedParser
 end
 
 module Mail::Parsers
-end
-
-class Mail::PartsList
 end
 
 class Mail::PhraseList
@@ -17603,11 +17732,23 @@ class Post
   include ::AASM::Persistence::Base
   include ::AASM::Persistence::ORM
   include ::AASM::Persistence::ActiveRecordPersistence::InstanceMethods
-  include ::DatabaseValidations::Validations
   include ::Ancestry::InstanceMethods
   include ::Ancestry::MaterializedPath::InstanceMethods
   include ::Logidze::Model
   include ::Logidze::IgnoreLogData
+  include ::DatabaseValidations::Validations
+  def after_add_for_likes(); end
+
+  def after_add_for_likes=(val); end
+
+  def after_add_for_likes?(); end
+
+  def after_remove_for_likes(); end
+
+  def after_remove_for_likes=(val); end
+
+  def after_remove_for_likes?(); end
+
   def ancestry_base_class(); end
 
   def ancestry_base_class=(obj); end
@@ -17618,7 +17759,21 @@ class Post
 
   def autosave_associated_records_for_author(*args); end
 
+  def autosave_associated_records_for_likes(*args); end
+
   def autosave_associated_records_for_publication(*args); end
+
+  def before_add_for_likes(); end
+
+  def before_add_for_likes=(val); end
+
+  def before_add_for_likes?(); end
+
+  def before_remove_for_likes(); end
+
+  def before_remove_for_likes=(val); end
+
+  def before_remove_for_likes?(); end
 
   def blob(); end
 
@@ -17627,6 +17782,8 @@ class Post
   def draft(); end
 
   def formatted_published_at(); end
+
+  def liked_by?(user:); end
 
   def log_version(*args, &block); end
 
@@ -17673,6 +17830,8 @@ class Post
   def unpublish!(*args, &block); end
 
   def valid_without_database_validations?(context=T.unsafe(nil)); end
+
+  def validate_associated_records_for_likes(*args); end
   DEFAULT_TITLE = ::T.let(nil, ::T.untyped)
   STATE_DRAFT = ::T.let(nil, ::T.untyped)
   STATE_PUBLISHED = ::T.let(nil, ::T.untyped)
@@ -17721,6 +17880,14 @@ module Post::GeneratedAssociationMethods
   def create_publication(*args, &block); end
 
   def create_publication!(*args, &block); end
+
+  def like_ids(); end
+
+  def like_ids=(ids); end
+
+  def likes(); end
+
+  def likes=(value); end
 
   def publication(); end
 
@@ -17794,7 +17961,19 @@ class Post
   extend ::Ancestry::ClassMethods
   extend ::Ancestry::MaterializedPath
   extend ::Logidze::Model::ClassMethods
+  def self.after_add_for_likes(); end
+
+  def self.after_add_for_likes=(val); end
+
+  def self.after_add_for_likes?(); end
+
   def self.after_depth(*args); end
+
+  def self.after_remove_for_likes(); end
+
+  def self.after_remove_for_likes=(val); end
+
+  def self.after_remove_for_likes?(); end
 
   def self.ancestors_of(*args); end
 
@@ -17808,7 +17987,19 @@ class Post
 
   def self.at_depth(*args); end
 
+  def self.before_add_for_likes(); end
+
+  def self.before_add_for_likes=(val); end
+
+  def self.before_add_for_likes?(); end
+
   def self.before_depth(*args); end
+
+  def self.before_remove_for_likes(); end
+
+  def self.before_remove_for_likes=(val); end
+
+  def self.before_remove_for_likes?(); end
 
   def self.children_of(*args); end
 
@@ -17866,6 +18057,9 @@ end
 class PostPolicy
 end
 
+class Posts::LikesController
+end
+
 class Posts::PublishController
   def create(); end
 
@@ -17877,6 +18071,9 @@ end
 
 class Posts::PublishPolicy
   def post(); end
+end
+
+class Posts::SharesController
 end
 
 class PostsController
@@ -18929,6 +19126,18 @@ class Publication
 
   def after_add_for_collaborators?(); end
 
+  def after_add_for_invitations(); end
+
+  def after_add_for_invitations=(val); end
+
+  def after_add_for_invitations?(); end
+
+  def after_add_for_members(); end
+
+  def after_add_for_members=(val); end
+
+  def after_add_for_members?(); end
+
   def after_add_for_posts(); end
 
   def after_add_for_posts=(val); end
@@ -18941,6 +19150,18 @@ class Publication
 
   def after_remove_for_collaborators?(); end
 
+  def after_remove_for_invitations(); end
+
+  def after_remove_for_invitations=(val); end
+
+  def after_remove_for_invitations?(); end
+
+  def after_remove_for_members(); end
+
+  def after_remove_for_members=(val); end
+
+  def after_remove_for_members?(); end
+
   def after_remove_for_posts(); end
 
   def after_remove_for_posts=(val); end
@@ -18949,7 +19170,13 @@ class Publication
 
   def autosave_associated_records_for_collaborators(*args); end
 
+  def autosave_associated_records_for_invitations(*args); end
+
+  def autosave_associated_records_for_members(*args); end
+
   def autosave_associated_records_for_owner(*args); end
+
+  def autosave_associated_records_for_owning_collaboration(); end
 
   def autosave_associated_records_for_posts(*args); end
 
@@ -18958,6 +19185,18 @@ class Publication
   def before_add_for_collaborators=(val); end
 
   def before_add_for_collaborators?(); end
+
+  def before_add_for_invitations(); end
+
+  def before_add_for_invitations=(val); end
+
+  def before_add_for_invitations?(); end
+
+  def before_add_for_members(); end
+
+  def before_add_for_members=(val); end
+
+  def before_add_for_members?(); end
 
   def before_add_for_posts(); end
 
@@ -18971,15 +19210,25 @@ class Publication
 
   def before_remove_for_collaborators?(); end
 
+  def before_remove_for_invitations(); end
+
+  def before_remove_for_invitations=(val); end
+
+  def before_remove_for_invitations?(); end
+
+  def before_remove_for_members(); end
+
+  def before_remove_for_members=(val); end
+
+  def before_remove_for_members?(); end
+
   def before_remove_for_posts(); end
 
   def before_remove_for_posts=(val); end
 
   def before_remove_for_posts?(); end
 
-  def members(); end
-
-  def members_count(); end
+  def members_count(*args, &block); end
 
   def topics_list(); end
 
@@ -18987,7 +19236,14 @@ class Publication
 
   def validate_associated_records_for_collaborators(*args); end
 
+  def validate_associated_records_for_invitations(*args); end
+
+  def validate_associated_records_for_members(*args); end
+
+  def validate_associated_records_for_owning_collaboration(*args); end
+
   def validate_associated_records_for_posts(*args); end
+  UNLISTED = ::T.let(nil, ::T.untyped)
 end
 
 class Publication::ActiveRecord_AssociationRelation
@@ -19020,6 +19276,8 @@ end
 module Publication::GeneratedAssociationMethods
   def build_owner(*args, &block); end
 
+  def build_owning_collaboration(*args, &block); end
+
   def collaborator_ids(); end
 
   def collaborator_ids=(ids); end
@@ -19032,9 +19290,33 @@ module Publication::GeneratedAssociationMethods
 
   def create_owner!(*args, &block); end
 
+  def create_owning_collaboration(*args, &block); end
+
+  def create_owning_collaboration!(*args, &block); end
+
+  def invitation_ids(); end
+
+  def invitation_ids=(ids); end
+
+  def invitations(); end
+
+  def invitations=(value); end
+
+  def member_ids(); end
+
+  def member_ids=(ids); end
+
+  def members(); end
+
+  def members=(value); end
+
   def owner(); end
 
   def owner=(value); end
+
+  def owning_collaboration(); end
+
+  def owning_collaboration=(value); end
 
   def post_ids(); end
 
@@ -19045,6 +19327,8 @@ module Publication::GeneratedAssociationMethods
   def posts=(value); end
 
   def reload_owner(); end
+
+  def reload_owning_collaboration(); end
 end
 
 module Publication::GeneratedAssociationMethods
@@ -19058,8 +19342,6 @@ module Publication::GeneratedAttributeMethods
 end
 
 module Publication::GeneratedRelationMethods
-  def internal(*args, &block); end
-
   def listed(*args, &block); end
 
   def personal(*args, &block); end
@@ -19076,6 +19358,18 @@ class Publication
 
   def self.after_add_for_collaborators?(); end
 
+  def self.after_add_for_invitations(); end
+
+  def self.after_add_for_invitations=(val); end
+
+  def self.after_add_for_invitations?(); end
+
+  def self.after_add_for_members(); end
+
+  def self.after_add_for_members=(val); end
+
+  def self.after_add_for_members?(); end
+
   def self.after_add_for_posts(); end
 
   def self.after_add_for_posts=(val); end
@@ -19087,6 +19381,18 @@ class Publication
   def self.after_remove_for_collaborators=(val); end
 
   def self.after_remove_for_collaborators?(); end
+
+  def self.after_remove_for_invitations(); end
+
+  def self.after_remove_for_invitations=(val); end
+
+  def self.after_remove_for_invitations?(); end
+
+  def self.after_remove_for_members(); end
+
+  def self.after_remove_for_members=(val); end
+
+  def self.after_remove_for_members?(); end
 
   def self.after_remove_for_posts(); end
 
@@ -19100,6 +19406,18 @@ class Publication
 
   def self.before_add_for_collaborators?(); end
 
+  def self.before_add_for_invitations(); end
+
+  def self.before_add_for_invitations=(val); end
+
+  def self.before_add_for_invitations?(); end
+
+  def self.before_add_for_members(); end
+
+  def self.before_add_for_members=(val); end
+
+  def self.before_add_for_members?(); end
+
   def self.before_add_for_posts(); end
 
   def self.before_add_for_posts=(val); end
@@ -19112,13 +19430,23 @@ class Publication
 
   def self.before_remove_for_collaborators?(); end
 
+  def self.before_remove_for_invitations(); end
+
+  def self.before_remove_for_invitations=(val); end
+
+  def self.before_remove_for_invitations?(); end
+
+  def self.before_remove_for_members(); end
+
+  def self.before_remove_for_members=(val); end
+
+  def self.before_remove_for_members?(); end
+
   def self.before_remove_for_posts(); end
 
   def self.before_remove_for_posts=(val); end
 
   def self.before_remove_for_posts?(); end
-
-  def self.internal(*args); end
 
   def self.listed(*args); end
 
@@ -19127,6 +19455,52 @@ end
 
 class PublicationPolicy
   def __scoping__active_record_relation__default(relation); end
+end
+
+module Publications
+end
+
+class Publications::DraftsController
+  def index(); end
+end
+
+class Publications::DraftsController
+end
+
+class Publications::ImagesController
+  def create(); end
+
+  def destroy(); end
+
+  def show(); end
+end
+
+class Publications::ImagesController
+end
+
+class Publications::InvitationsController
+  def accept(); end
+
+  def create(); end
+end
+
+class Publications::InvitationsController
+end
+
+class Publications::PeopleController
+  def autocomplete(); end
+
+  def destroy(); end
+
+  def index(); end
+
+  def update(); end
+end
+
+class Publications::PeopleController
+end
+
+module Publications
 end
 
 class PublicationsController
@@ -21985,6 +22359,24 @@ class Rack::Session::Abstract::SessionHash
   Unspecified = ::T.let(nil, ::T.untyped)
 end
 
+class Rack::Session::Dalli
+  def destroy_session(env, session_id, options); end
+
+  def find_session(req, sid); end
+
+  def get_session(env, sid); end
+
+  def mutex(); end
+
+  def pool(); end
+
+  def set_session(env, session_id, new_session, options); end
+  DEFAULT_DALLI_OPTIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Rack::Session::Dalli
+end
+
 class Rack::Session::Pool
   def delete_session(req, session_id, options); end
 
@@ -23093,13 +23485,8 @@ module Repoable
 end
 
 class Repository
-  include ::ActiveModel::Validations
   include ::ActiveSupport::Callbacks
   include ::ActiveModel::Validations::HelperMethods
-  include ::ActiveModel::Conversion
-  include ::ActiveModel::Model
-  include ::ActiveModel::AttributeAssignment
-  include ::ActiveModel::ForbiddenAttributesProtection
   def __callbacks(); end
 
   def __callbacks?(); end
@@ -25935,13 +26322,6 @@ end
 module Settings
 end
 
-class SettingsController
-  def index(); end
-end
-
-class SettingsController
-end
-
 module Shellwords
 end
 
@@ -26216,17 +26596,6 @@ module SimpleForm::Components::Labels
   def required_label_text(); end
 end
 
-module SimpleForm::Components::Labels::ClassMethods
-  def translate_required_html(); end
-
-  def translate_required_mark(); end
-
-  def translate_required_text(); end
-end
-
-module SimpleForm::Components::Labels::ClassMethods
-end
-
 module SimpleForm::Components::Labels
   extend ::ActiveSupport::Concern
 end
@@ -26396,6 +26765,17 @@ end
 module SimpleForm::Helpers
 end
 
+module SimpleForm::I18nCache
+  def get_i18n_cache(key); end
+
+  def i18n_cache(key); end
+
+  def reset_i18n_cache(key); end
+end
+
+module SimpleForm::I18nCache
+end
+
 module SimpleForm::Inputs
 end
 
@@ -26469,7 +26849,7 @@ class SimpleForm::Inputs::Base
 end
 
 class SimpleForm::Inputs::Base
-  extend ::SimpleForm::Components::Labels::ClassMethods
+  extend ::SimpleForm::I18nCache
   def self.debug_missing_translation(); end
 
   def self.debug_missing_translation=(obj); end
@@ -28513,11 +28893,29 @@ class User
   include ::User::GeneratedAssociationMethods
   include ::Trackable
   include ::DatabaseValidations::Validations
+  def after_add_for_collaborations(); end
+
+  def after_add_for_collaborations=(val); end
+
+  def after_add_for_collaborations?(); end
+
+  def after_add_for_drafts(); end
+
+  def after_add_for_drafts=(val); end
+
+  def after_add_for_drafts?(); end
+
   def after_add_for_keys(); end
 
   def after_add_for_keys=(val); end
 
   def after_add_for_keys?(); end
+
+  def after_add_for_likes(); end
+
+  def after_add_for_likes=(val); end
+
+  def after_add_for_likes?(); end
 
   def after_add_for_posts(); end
 
@@ -28531,11 +28929,29 @@ class User
 
   def after_add_for_publications?(); end
 
+  def after_remove_for_collaborations(); end
+
+  def after_remove_for_collaborations=(val); end
+
+  def after_remove_for_collaborations?(); end
+
+  def after_remove_for_drafts(); end
+
+  def after_remove_for_drafts=(val); end
+
+  def after_remove_for_drafts?(); end
+
   def after_remove_for_keys(); end
 
   def after_remove_for_keys=(val); end
 
   def after_remove_for_keys?(); end
+
+  def after_remove_for_likes(); end
+
+  def after_remove_for_likes=(val); end
+
+  def after_remove_for_likes?(); end
 
   def after_remove_for_posts(); end
 
@@ -28551,7 +28967,13 @@ class User
 
   def auth_token_valid?(); end
 
+  def autosave_associated_records_for_collaborations(*args); end
+
+  def autosave_associated_records_for_drafts(*args); end
+
   def autosave_associated_records_for_keys(*args); end
+
+  def autosave_associated_records_for_likes(*args); end
 
   def autosave_associated_records_for_posts(*args); end
 
@@ -28559,11 +28981,29 @@ class User
 
   def autosave_associated_records_for_publications(*args); end
 
+  def before_add_for_collaborations(); end
+
+  def before_add_for_collaborations=(val); end
+
+  def before_add_for_collaborations?(); end
+
+  def before_add_for_drafts(); end
+
+  def before_add_for_drafts=(val); end
+
+  def before_add_for_drafts?(); end
+
   def before_add_for_keys(); end
 
   def before_add_for_keys=(val); end
 
   def before_add_for_keys?(); end
+
+  def before_add_for_likes(); end
+
+  def before_add_for_likes=(val); end
+
+  def before_add_for_likes?(); end
 
   def before_add_for_posts(); end
 
@@ -28577,11 +29017,29 @@ class User
 
   def before_add_for_publications?(); end
 
+  def before_remove_for_collaborations(); end
+
+  def before_remove_for_collaborations=(val); end
+
+  def before_remove_for_collaborations?(); end
+
+  def before_remove_for_drafts(); end
+
+  def before_remove_for_drafts=(val); end
+
+  def before_remove_for_drafts?(); end
+
   def before_remove_for_keys(); end
 
   def before_remove_for_keys=(val); end
 
   def before_remove_for_keys?(); end
+
+  def before_remove_for_likes(); end
+
+  def before_remove_for_likes=(val); end
+
+  def before_remove_for_likes?(); end
 
   def before_remove_for_posts(); end
 
@@ -28605,7 +29063,13 @@ class User
 
   def valid_without_database_validations?(context=T.unsafe(nil)); end
 
+  def validate_associated_records_for_collaborations(*args); end
+
+  def validate_associated_records_for_drafts(*args); end
+
   def validate_associated_records_for_keys(*args); end
+
+  def validate_associated_records_for_likes(*args); end
 
   def validate_associated_records_for_posts(*args); end
 
@@ -28645,9 +29109,25 @@ end
 module User::GeneratedAssociationMethods
   def build_publication(*args, &block); end
 
+  def collaboration_ids(); end
+
+  def collaboration_ids=(ids); end
+
+  def collaborations(); end
+
+  def collaborations=(value); end
+
   def create_publication(*args, &block); end
 
   def create_publication!(*args, &block); end
+
+  def draft_ids(); end
+
+  def draft_ids=(ids); end
+
+  def drafts(); end
+
+  def drafts=(value); end
 
   def key_ids(); end
 
@@ -28656,6 +29136,14 @@ module User::GeneratedAssociationMethods
   def keys(); end
 
   def keys=(value); end
+
+  def like_ids(); end
+
+  def like_ids=(ids); end
+
+  def likes(); end
+
+  def likes=(value); end
 
   def post_ids(); end
 
@@ -28698,11 +29186,29 @@ module User::GeneratedRelationMethods
 end
 
 class User
+  def self.after_add_for_collaborations(); end
+
+  def self.after_add_for_collaborations=(val); end
+
+  def self.after_add_for_collaborations?(); end
+
+  def self.after_add_for_drafts(); end
+
+  def self.after_add_for_drafts=(val); end
+
+  def self.after_add_for_drafts?(); end
+
   def self.after_add_for_keys(); end
 
   def self.after_add_for_keys=(val); end
 
   def self.after_add_for_keys?(); end
+
+  def self.after_add_for_likes(); end
+
+  def self.after_add_for_likes=(val); end
+
+  def self.after_add_for_likes?(); end
 
   def self.after_add_for_posts(); end
 
@@ -28716,11 +29222,29 @@ class User
 
   def self.after_add_for_publications?(); end
 
+  def self.after_remove_for_collaborations(); end
+
+  def self.after_remove_for_collaborations=(val); end
+
+  def self.after_remove_for_collaborations?(); end
+
+  def self.after_remove_for_drafts(); end
+
+  def self.after_remove_for_drafts=(val); end
+
+  def self.after_remove_for_drafts?(); end
+
   def self.after_remove_for_keys(); end
 
   def self.after_remove_for_keys=(val); end
 
   def self.after_remove_for_keys?(); end
+
+  def self.after_remove_for_likes(); end
+
+  def self.after_remove_for_likes=(val); end
+
+  def self.after_remove_for_likes?(); end
 
   def self.after_remove_for_posts(); end
 
@@ -28734,11 +29258,29 @@ class User
 
   def self.after_remove_for_publications?(); end
 
+  def self.before_add_for_collaborations(); end
+
+  def self.before_add_for_collaborations=(val); end
+
+  def self.before_add_for_collaborations?(); end
+
+  def self.before_add_for_drafts(); end
+
+  def self.before_add_for_drafts=(val); end
+
+  def self.before_add_for_drafts?(); end
+
   def self.before_add_for_keys(); end
 
   def self.before_add_for_keys=(val); end
 
   def self.before_add_for_keys?(); end
+
+  def self.before_add_for_likes(); end
+
+  def self.before_add_for_likes=(val); end
+
+  def self.before_add_for_likes?(); end
 
   def self.before_add_for_posts(); end
 
@@ -28752,11 +29294,29 @@ class User
 
   def self.before_add_for_publications?(); end
 
+  def self.before_remove_for_collaborations(); end
+
+  def self.before_remove_for_collaborations=(val); end
+
+  def self.before_remove_for_collaborations?(); end
+
+  def self.before_remove_for_drafts(); end
+
+  def self.before_remove_for_drafts=(val); end
+
+  def self.before_remove_for_drafts?(); end
+
   def self.before_remove_for_keys(); end
 
   def self.before_remove_for_keys=(val); end
 
   def self.before_remove_for_keys?(); end
+
+  def self.before_remove_for_likes(); end
+
+  def self.before_remove_for_likes=(val); end
+
+  def self.before_remove_for_likes?(); end
 
   def self.before_remove_for_posts(); end
 
@@ -28769,16 +29329,13 @@ class User
   def self.before_remove_for_publications=(val); end
 
   def self.before_remove_for_publications?(); end
-end
 
-class UserDraftsController
-  def index(); end
-end
-
-class UserDraftsController
+  def self.search(query:); end
 end
 
 class UserMailer
+  def invite(); end
+
   def send_magic_login(); end
 
   def welcome(); end
@@ -28788,6 +29345,19 @@ class UserMailer
 end
 
 class UserPolicy
+end
+
+module Users
+end
+
+class Users::DraftsController
+  def index(); end
+end
+
+class Users::DraftsController
+end
+
+module Users
 end
 
 class UsersController
@@ -29188,9 +29758,6 @@ end
 
 module Zip::NullInputStream
   include ::ActiveSupport::ToJsonWithActiveSupportEncoder
-end
-
-class Zip::StreamableStream
 end
 
 Zip::ZipCompressionMethodError = Zip::CompressionMethodError

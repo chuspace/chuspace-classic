@@ -2,7 +2,7 @@
   spellcheck="false"
   content="<%= @post.blob_content %>"
   id="<%= @post.slug %>"
-  imageProviderPath='<%= images_path %>'
+  imageProviderPath='<%= publication_images_path(@post.publication) %>'
   class='chu-editor'
   channel='PostChannel'
   editable

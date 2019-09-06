@@ -16,8 +16,16 @@ Rails.application.configure do
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
-  config.cache_store =
-    :redis_cache_store, { driver: :hiredis, url: ENV.fetch('REDIS_URL', RedisClient.config[:default_url]) }
+
+  config.cache_store = :dalli_store, Dalli::Client.new(
+    ENV['MEMCACHED_URLS'].split(','),
+    namespace: 'chuspace_fragment_cache',
+    threadsafe: true,
+    failover: true,
+    expires_in: 6.hours.to_i,
+    compress: true,
+    pool_size: 40
+  )
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.

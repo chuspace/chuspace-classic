@@ -12,6 +12,8 @@ module ::Anonymous_Delegator_406; end
 module ::Anonymous_Delegator_437; end
 module ::Anonymous_Delegator_9; end
 module ActiveRecord::CollectionCacheKey; end
+module ActiveStorage::Attachment; end
+module ActiveStorage::Attachment; end
 module T::InterfaceWrapper::Helpers; end
 module T::InterfaceWrapper::Helpers; end
 module T::InterfaceWrapper::Helpers; end

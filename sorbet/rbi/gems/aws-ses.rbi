@@ -40,9 +40,9 @@ class AWS::SES::Response < String
   def result; end
   def server_error?; end
   def success?; end
-  def unmemoized_error_1567254353; end
-  def unmemoized_headers_1567254353; end
-  def unmemoized_parsed_1567254353; end
+  def unmemoized_error_1567765723; end
+  def unmemoized_headers_1567765723; end
+  def unmemoized_parsed_1567765723; end
 end
 class AWS::SES::ResponseError < StandardError
   def code; end
@@ -80,7 +80,7 @@ end
 class AWS::SES::GetSendStatisticsResponse < AWS::SES::Response
   def data_points; end
   def result(reload = nil, *args, &block); end
-  def unmemoized_result_1567254353; end
+  def unmemoized_result_1567765723; end
 end
 class AWS::SES::Base
   def addresses; end
@@ -107,7 +107,7 @@ class AWS::SES::Addresses < AWS::SES::Base
 end
 class AWS::SES::ListVerifiedEmailAddressesResponse < AWS::SES::Response
   def result(reload = nil, *args, &block); end
-  def unmemoized_result_1567254353; end
+  def unmemoized_result_1567765723; end
 end
 class AWS::SES::VerifyEmailAddressResponse < AWS::SES::Response
 end

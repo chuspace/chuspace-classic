@@ -9,6 +9,7 @@ class CreateCollaborators < ActiveRecord::Migration[6.0]
 
       t.references :publication, null: false, foreign_key: true
       t.references :user, null: false, foreign_key: true
+      t.index %i[publication_id user_id], unique: true
 
       t.timestamps
     end

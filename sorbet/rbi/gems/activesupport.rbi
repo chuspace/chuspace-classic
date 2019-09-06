@@ -2118,8 +2118,8 @@ module ActiveSupport::NumericWithFormat
   def to_s(format = nil, options = nil); end
 end
 class File < IO
-  def self.empty?(arg0); end
-  def self.split(arg0); end
+  def self.atomic_write(file_name, temp_dir = nil); end
+  def self.probe_stat_in(dir); end
 end
 module Digest
 end

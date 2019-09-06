@@ -22,12 +22,7 @@ class Publication < ApplicationRecord
   has_many :invitations, dependent: :destroy
   has_many :collaborators, dependent: :destroy
   has_many :members, through: :collaborators, class_name: 'User', source: :user
-  has_many :writers, -> { where(role: 'writer') }, through: :collaborators, class_name: 'User', source: :user
-  has_many :editors, -> { where(role: 'editor') }, class_name: 'User', class_name: 'User', source: :user
-  has_many :admins, -> { where(role: 'admin') }, class_name: 'User', class_name: 'User', source: :user
-
   has_one :owning_collaboration, -> { where(role: 'owner') }, class_name: 'Collaborator', autosave: true, required: true
-
   db_belongs_to :owner, class_name: 'User', foreign_key: :owner_id, counter_cache: true
 
   scope :personal, -> { where(personal: true) }

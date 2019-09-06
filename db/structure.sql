@@ -333,11 +333,11 @@ CREATE TABLE public.posts (
     status integer DEFAULT 0 NOT NULL,
     author_id bigint NOT NULL,
     publication_id bigint NOT NULL,
+    likes_count integer DEFAULT 0 NOT NULL,
     ancestry character varying,
     topics character varying[] DEFAULT '{}'::character varying[],
     canonical_url character varying,
     published_at timestamp without time zone,
-    likes_count integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     log_data jsonb
@@ -395,6 +395,7 @@ CREATE TABLE public.users (
     url character varying,
     posts_count integer DEFAULT 0 NOT NULL,
     publications_count integer DEFAULT 0 NOT NULL,
+    collaborations_count integer DEFAULT 0 NOT NULL,
     sign_in_count integer DEFAULT 0 NOT NULL,
     current_sign_in_at timestamp without time zone,
     last_sign_in_at timestamp without time zone,
@@ -417,6 +418,10 @@ CREATE INDEX delayed_jobs_priority ON public.delayed_jobs USING btree (priority,
 -- Name: index_collaborators_on_publication_id; Type: INDEX
 
 CREATE INDEX index_collaborators_on_publication_id ON public.collaborators USING btree (publication_id);
+
+-- Name: index_collaborators_on_publication_id_and_user_id; Type: INDEX
+
+CREATE UNIQUE INDEX index_collaborators_on_publication_id_and_user_id ON public.collaborators USING btree (publication_id, user_id);
 
 -- Name: index_collaborators_on_role; Type: INDEX
 
@@ -461,6 +466,10 @@ CREATE INDEX index_keys_on_user_id ON public.keys USING btree (user_id);
 -- Name: index_likes_on_post_id; Type: INDEX
 
 CREATE INDEX index_likes_on_post_id ON public.likes USING btree (post_id);
+
+-- Name: index_likes_on_post_id_and_user_id; Type: INDEX
+
+CREATE UNIQUE INDEX index_likes_on_post_id_and_user_id ON public.likes USING btree (post_id, user_id);
 
 -- Name: index_likes_on_user_id; Type: INDEX
 

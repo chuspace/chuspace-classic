@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   include SetCurrentRequestDetails
 
   after_action :verify_authorized
+  around_filter :identity_cache_memoization
 
   delegate :t, to: :I18n
   rescue_from ActionPolicy::Unauthorized, with: :user_not_authorized
@@ -22,5 +23,9 @@ class ApplicationController < ActionController::Base
 
   def current_user
     Current.user
+  end
+
+  def identity_cache_memoization
+    IdentityCache.cache.with_memoization { yield }
   end
 end

@@ -749,3 +749,11 @@ module ActiveModel::Serializers::JSON
   extend ActiveSupport::Concern
   include ActiveModel::Serialization
 end
+module ActiveModel::Model
+  def initialize(attributes = nil); end
+  def persisted?; end
+  extend ActiveSupport::Concern
+  include ActiveModel::AttributeAssignment
+  include ActiveModel::Conversion
+  include ActiveModel::Validations
+end

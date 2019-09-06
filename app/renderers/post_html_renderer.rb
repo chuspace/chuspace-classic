@@ -41,6 +41,7 @@ class PostHtmlRenderer < CommonMarker::HtmlRenderer
       out('<a href="', node.url.nil? ? '' : escape_href(node.url), '"')
       out(' title="', escape_html(node.title), '"') if node.title && !node.title.empty?
       out(' target="', '_blank', '"')
+      out(' data-behaviour="', 'tooltip', '"')
       out(' rel="', 'noopener noreferrer', '"')
       out('>', :children, '</a>')
     else
@@ -64,7 +65,7 @@ class PostHtmlRenderer < CommonMarker::HtmlRenderer
       image_url = Imgproxy.url_for(blob_url, width: 800, resizing_type: :fill)
 
       out('<lazy-image')
-      out('src="', escape_href(image_url), '"')
+      out(' src="', escape_href(image_url), '"')
       plain { out(' alt="', :children, '"') }
       out(' title="', escape_html(node.title), '"') if node.title && !node.title.empty?
       out(' >')

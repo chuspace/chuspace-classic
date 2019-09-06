@@ -14,11 +14,14 @@ class User < ApplicationRecord
   validate :should_have_a_default_publication
 
   has_secure_token :auth_token
+  has_person_name
 
   has_many :keys, dependent: :destroy
+  has_many :likes, dependent: :destroy
   has_many :collaborations, class_name: 'Collaborator', dependent: :destroy
   has_many :publications, through: :collaborations, class_name: 'Publication', source: :publication, dependent: :destroy
   has_many :posts, foreign_key: 'author_id', dependent: :destroy
+  has_many :drafts, -> { where(status: :draft) }, class_name: 'Post', foreign_key: 'author_id', dependent: :destroy
   has_one :publication, -> { where(personal: true) }, foreign_key: 'owner_id', autosave: true, required: true
 
   AUTH_TOKEN_LIFE = 30
@@ -35,14 +38,6 @@ class User < ApplicationRecord
 
   def to_param
     nickname
-  end
-
-  def initials
-    name.gsub(/([[:upper:]])[[:lower:]]+/, '\1').tr(' ', '')
-  end
-
-  def first_name
-    name.split(' ').first
   end
 
   def auth_token_valid?
