@@ -17,10 +17,13 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'user with valid attributes' do
+ @valid_user.valid?
+   puts @valid_user.errors.inspect
     assert @valid_user.valid?
 
+
     assert_equal 'Foo', @valid_user.name.first
-    assert_equal 'FB', @valid_user.initials
+    assert_equal 'FB', @valid_user.name.initials
     assert_equal 'foo', @valid_user.nickname
     assert_equal 'foo@bar.com', @valid_user.email
     assert_equal '', @valid_user.auth_token

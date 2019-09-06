@@ -12,7 +12,6 @@ class SignupsController < ApplicationController
   def create
     User.transaction do
       @user = User.new(create_params)
-      @user.build_publication(name: @user.name, slug: @user.nickname, personal: true, owner: @user)
       @user.auth_token_expires_at = User::AUTH_TOKEN_LIFE.minutes.from_now
 
       respond_to do |format|

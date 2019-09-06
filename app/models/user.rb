@@ -4,6 +4,7 @@
 class User < ApplicationRecord
   include Trackable, AvatarUploader::Attachment.new(:avatar)
 
+  before_validation :build_default_publication, on: :create
   before_validation :standardise_email_and_nickname, if: -> { email_changed? || nickname_changed? }
 
   validates :email, presence: true, email: true
@@ -55,6 +56,10 @@ class User < ApplicationRecord
   def standardise_email_and_nickname
     self.email = email&.downcase
     self.nickname = nickname&.downcase
+  end
+
+  def build_default_publication
+    self.publication = build_publication(name: name, slug: nickname, personal: true, owner: self)
   end
 
   def should_have_a_default_publication

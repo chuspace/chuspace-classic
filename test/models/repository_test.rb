@@ -5,7 +5,7 @@ require 'test_helper'
 
 class RepositoryTest < ActiveSupport::TestCase
   def setup
-    @user = users(:gaurav)
+    @user = User.create!(name: 'Gaurav Tiwari', email: "gaurav-#{Time.now.to_i}@chuspace.com", nickname: 'gauravchuspace')
     @invalid_repository = Repository.new
     @valid_repository = Repository.new(name: 'bar', path: Git.config.storage_path.join('bar.git'), author: @user)
   end

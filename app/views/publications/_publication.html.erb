@@ -1,6 +1,6 @@
 <%= content_tag :div, class: 'list__item list__item--flex list__item--bordered' do %>
   <%= link_to publication_path(publication), class: 'flex items-center' do %>
-    <%= component 'avatar', avatar: publication.avatar, initials: publication.name, variant: :md %>
+    <%= component 'avatar', avatar: publication.avatar, variant: :md %>
     <div class='ml-4 flex-1'>
       <h6>
         <%= publication.name %>
