@@ -19,7 +19,7 @@ class UserTest < ActiveSupport::TestCase
   test 'user with valid attributes' do
     assert @valid_user.valid?
 
-    assert_equal 'Foo', @valid_user.first_name
+    assert_equal 'Foo', @valid_user.name.first
     assert_equal 'FB', @valid_user.initials
     assert_equal 'foo', @valid_user.nickname
     assert_equal 'foo@bar.com', @valid_user.email

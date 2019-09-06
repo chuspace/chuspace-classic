@@ -28893,6 +28893,7 @@ class User
   include ::User::GeneratedAssociationMethods
   include ::Trackable
   include ::DatabaseValidations::Validations
+  include ::NameOfPerson::AssignableName
   def after_add_for_collaborations(); end
 
   def after_add_for_collaborations=(val); end
@@ -29055,9 +29056,13 @@ class User
 
   def first_name(); end
 
+  def first_name=(first_name); end
+
   def gravatar(); end
 
-  def initials(); end
+  def last_name(); end
+
+  def last_name=(last_name); end
 
   def regenerate_auth_token(); end
 

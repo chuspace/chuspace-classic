@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   validates :email, presence: true, email: true
   validates_db_uniqueness_of :email
-  validates :name, :nickname, presence: true
+  validates :first_name, :last_name, :nickname, presence: true
   validates_db_uniqueness_of :nickname
   validates :nickname, length: { in: 1..39 }, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
   validate :should_have_a_default_publication
@@ -28,7 +28,8 @@ class User < ApplicationRecord
 
   def self.search(query:)
     sql = <<-SQL
-      unaccent(users.name) ILIKE unaccent('%#{query}%') OR
+      unaccent(users.first_name) ILIKE unaccent('%#{query}%') OR
+      unaccent(users.last_name) ILIKE unaccent('%#{query}%') OR
       unaccent(users.nickname) ILIKE unaccent('%#{query}%') OR
       unaccent(users.email) ILIKE unaccent('%#{query}%')
     SQL
