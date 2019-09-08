@@ -35,9 +35,9 @@ export default class DropImage extends LitElement {
     this.input.removeEventListener('change', this.handleChange)
   }
 
-  handleDrag = event => event.preventDefault()
+  handleDrag = (event: Event) => event.preventDefault()
 
-  handleDrop = event => {
+  handleDrop = (event: DropImage) => {
     event.preventDefault()
 
     const image = event.dataTransfer.files[0]
@@ -45,17 +45,19 @@ export default class DropImage extends LitElement {
     this.input.files = event.dataTransfer.files
   }
 
-  handleChange = event => {
+  handleChange = (event: Event) => {
+    /* $FlowFixMe */
     const image = event.target.files[0]
     this.insert(image)
   }
 
-  insert = image => {
+  insert = (image: File) => {
     if (ACCEPTED_IMAGES.includes(image.type)) {
       const reader = new FileReader()
 
       reader.readAsDataURL(image)
       reader.onload = file => {
+        /* $FlowFixMe */
         this.url = file.target.result
       }
     }

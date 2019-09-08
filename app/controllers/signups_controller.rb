@@ -19,7 +19,6 @@ class SignupsController < ApplicationController
           UserMailer.with(user: @user).welcome.deliver_later
           format.html { redirect_to params[:redirect_to] || root_path, notice: t('users.create.success') }
         else
-          puts @user.errors.inspect
           format.js
           format.html { redirect_to root_path, notice: @user.errors.messages.to_sentence }
         end

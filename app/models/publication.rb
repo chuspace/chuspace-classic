@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 class Publication < ApplicationRecord
-  include Repoable, AvatarUploader::Attachment.new(:avatar)
+  include Repoable, Avatarable, AvatarUploader::Attachment.new(:avatar)
 
   UNLISTED = %w[policy site]
 
@@ -13,10 +13,13 @@ class Publication < ApplicationRecord
   validates_presence_of :description, :avatar, unless: :personal
   validates :name, length: { in: 1..39 }, format: { with: /\A^[a-zA-Z\s]*$\z/i }
   validates :slug, length: { in: 1..39 }, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
-  validates :description, length: { in: 1..140 }, unless: :personal
+  validates :description, length: { in: 1..80 }, unless: :personal
   validates_db_uniqueness_of :slug, :name
   validates_db_uniqueness_of :personal, scope: :owner_id
   validate :personal_attribute_should_contain_valid_values
+
+  validates :website, url: true, allow_blank: true
+  validates :twitter, url: true, allow_blank: true
 
   has_many :posts, dependent: :destroy
   has_many :invitations, dependent: :destroy

@@ -5,6 +5,7 @@ require 'test_helper'
 
 class PublicationTest < ActiveSupport::TestCase
   def setup
+    @user = User.create!(name: 'Gaurav Tiwari', email: "gaurav-#{Time.now.to_i}@chuspace.com", nickname: "gaurav-#{Time.now.to_i}")
     @invalid_publication = Publication.new
     @avatar = Rails.root.join('test', 'fixtures', 'files', 'publication.jpeg').read
     @valid_publication =
@@ -13,7 +14,7 @@ class PublicationTest < ActiveSupport::TestCase
         slug: 'ruby',
         description: 'Ruby publication',
         avatar: StringIO.new(@avatar),
-        owner: users(:gaurav)
+        owner: @user
       )
   end
 
@@ -49,7 +50,8 @@ class PublicationTest < ActiveSupport::TestCase
   end
 
   test 'should not able to create more than one personal publication but unlimited publications' do
-    user = User.create(name: 'John Doe', nickname: 'johndoe', email: 'john@doe.com')
+    user ||= User.create!(name: 'John Doe', nickname: "john-#{SecureRandom.hex(12)}", email: "john-#{SecureRandom.hex(12)}@doe.com")
+
     assert user.publication.persisted?
     assert user.publication.repository.persisted?
     assert user.publication.personal
@@ -63,10 +65,11 @@ class PublicationTest < ActiveSupport::TestCase
         owner: user,
         personal: true
       )
+
     refute new_publication.valid?
 
     new_publication =
-      user.publications.create(
+      user.publications.build(
         name: 'Java',
         slug: 'java',
         description: 'Java publication',
@@ -74,13 +77,16 @@ class PublicationTest < ActiveSupport::TestCase
         owner: user,
         personal: false
       )
+
     refute new_publication.valid?
     assert_equal ["is invalid. It must begin set to either 'nil' or 'true'"], new_publication.errors.messages[:personal]
 
     new_publication =
-      user.publications.create(
+      user.publications.build(
         name: 'Java', slug: 'java', description: 'Java publication', avatar: StringIO.new(@avatar), owner: user
       )
+
+    new_publication.valid?
     assert new_publication.valid?
   end
 end

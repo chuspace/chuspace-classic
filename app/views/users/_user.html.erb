@@ -1,6 +1,6 @@
 <div class='list__item list__item--flex list__item--bordered'>
   <%= link_to user_path(user), class: 'flex items-center' do %>
-    <%= component 'avatar', avatar: user.avatar, gravatar: user.gravatar, variant: :md %>
+    <%= component 'avatar', avatar_url: user.avatar_url(variant: :md), gravatar_url: user.gravatar_url(variant: :md), variant: :md %>
     <div class='ml-4 flex-1'>
       <h6>
         <%= user.name %>

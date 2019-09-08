@@ -22,6 +22,8 @@ class Post < ApplicationRecord
   db_belongs_to :author, class_name: 'User', foreign_key: :author_id, counter_cache: true, touch: true
   db_belongs_to :publication, counter_cache: true, touch: true
 
+  validates :canonical_url, url: true, allow_blank: true
+
   after_create :sync_topics, if: :topics_changed?
 
   validates :slug, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }

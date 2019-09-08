@@ -6,9 +6,12 @@ module PublicationHelper
     Current.user.publications.map do |publication|
       avatar =
         if publication.personal
-          component('avatar', avatar: avatar, gravatar: Current.user.gravatar, variant: :sm)
+          component(
+            'avatar',
+            avatar_url: Current.user.avatar_url, gravatar_url: Current.user.gravatar_url, variant: :sm
+          )
         else
-          component('avatar', avatar: publication.avatar, variant: :sm)
+          component('avatar', avatar_url: publication.avatar_url, variant: :sm)
         end
 
       OpenStruct.new(
@@ -18,18 +21,22 @@ module PublicationHelper
   end
 
   def collaborator_actions(publication, collaborator)
-    items = Collaborator.roles.except(:owner).map do |role, _|
-      next if collaborator.role == role
+    items =
+      Collaborator.roles.except(:owner).map do |role, _|
+        next if collaborator.role == role
 
+        OpenStruct.new(
+          label: "Make #{role}",
+          url: publication_person_path(publication, collaborator, role: role),
+          options: { method: :patch, remote: true }
+        )
+      end.compact
+
+    items <<
       OpenStruct.new(
-        label: "Make #{role}", url: publication_person_path(publication, collaborator, role: role), options: { method: :patch, remote: true }
+        label: "Remove from #{publication.slug}",
+        url: publication_person_path(publication, collaborator),
+        options: { method: :delete, remote: true, 'data-confirm': 'Are you sure?' }
       )
-    end.compact
-
-    items << OpenStruct.new(
-      label: "Remove from #{publication.slug}",
-      url: publication_person_path(publication, collaborator),
-      options: { method: :delete, remote: true, 'data-confirm': 'Are you sure?' }
-    )
   end
 end

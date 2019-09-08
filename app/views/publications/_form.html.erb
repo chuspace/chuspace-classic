@@ -8,7 +8,7 @@
         errors='<%= publication.errors.full_messages_for(:avatar).to_sentence %>'
         param='publication[avatar]'
       >
-        <%= component 'avatar', avatar: publication.avatar, variant: :thumb if publication.avatar %>
+        <%= component 'avatar', avatar_url: publication.avatar_url(variant: :thumb), variant: :thumb if publication.avatar %>
 
         <% if publication.errors.include?(:avatar) %>
           <%= content_tag :span, publication.errors.full_messages_for(:avatar).to_sentence, class: 'input__error text-red block' %>
@@ -70,6 +70,6 @@
 
   <div class='float-right mt-8'>
     <%= f.submit 'Submit', class: 'button button--fill  mr-2 ' %>
-    <%= link_to 'Cancel', publication_path(publication), class: 'button button--default inline-block' %>
+    <%= link_to 'Cancel', publication.persisted? ? publication_path(publication) : root_path, class: 'button button--default inline-block' %>
   </div>
 <% end %>

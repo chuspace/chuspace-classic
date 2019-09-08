@@ -1,13 +1,17 @@
 <div class='block sm:flex w-full'>
   <div class='mr-4'>
-    <%= component 'avatar', avatar: publication.avatar, variant: :lg %>
+    <%= component 'avatar', avatar_url: publication.avatar_url(variant: :xl), variant: :xl %>
   </div>
 
   <div class='flex-1'>
     <h3 class='text-2xl'><%= publication.name %></h3>
-    <%= content_tag :p, publication.description, class: 'text-sm mt-1' %>
+    <%= content_tag :p, publication.description, class: 'text-sm mt-1 w-1/2' %>
 
-    <ul class='flex mt-2'>
+    <ul class='list-none flex items-center p-0 m-0 mt-2'>
+      <% publication.topics.each do |topic| %>
+        <li class='list-none badge badge--grey mr-2'><%= topic %></li>
+      <% end %>
+
       <% unless @publication.twitter.blank? %>
         <%= content_tag :li do %>
           <%= link_to @publication.twitter, class: 'link link--active underline text-sm', target: '_blank', rel: 'noopener noreferer' do %>

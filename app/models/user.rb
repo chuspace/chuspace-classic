@@ -2,10 +2,10 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  include Trackable, AvatarUploader::Attachment.new(:avatar)
+  include Trackable, Avatarable, AvatarUploader::Attachment.new(:avatar)
 
-  before_validation :build_default_publication, on: :create
   before_validation :standardise_email_and_nickname, if: -> { email_changed? || nickname_changed? }
+  before_validation :build_default_publication, on: :create
 
   validates :email, presence: true, email: true
   validates_db_uniqueness_of :email
@@ -13,6 +13,7 @@ class User < ApplicationRecord
   validates_db_uniqueness_of :nickname
   validates :nickname, length: { in: 1..39 }, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
   validate :should_have_a_default_publication
+  validates :url, url: true, allow_blank: true
 
   has_secure_token :auth_token
   has_person_name
@@ -30,9 +31,13 @@ class User < ApplicationRecord
   def self.search(query:)
     sql = <<-SQL
       unaccent(users.first_name) ILIKE unaccent('%#{query}%') OR
-      unaccent(users.last_name) ILIKE unaccent('%#{query}%') OR
+      unaccent(users.last_name) ILIKE unaccent('%#{
+      query
+    }%') OR
       unaccent(users.nickname) ILIKE unaccent('%#{query}%') OR
-      unaccent(users.email) ILIKE unaccent('%#{query}%')
+      unaccent(users.email) ILIKE unaccent('%#{
+      query
+    }%')
     SQL
 
     where(sql)
@@ -44,11 +49,6 @@ class User < ApplicationRecord
 
   def auth_token_valid?
     auth_token_expires_at.to_i >= Time.now.to_i
-  end
-
-  def gravatar
-    gravatar_id = Digest::MD5.hexdigest(email)
-    "http://secure.gravatar.com/avatar/#{gravatar_id}?d=identicon"
   end
 
   private

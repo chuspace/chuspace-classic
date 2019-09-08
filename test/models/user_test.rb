@@ -17,16 +17,13 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'user with valid attributes' do
- @valid_user.valid?
-   puts @valid_user.errors.inspect
     assert @valid_user.valid?
-
 
     assert_equal 'Foo', @valid_user.name.first
     assert_equal 'FB', @valid_user.name.initials
     assert_equal 'foo', @valid_user.nickname
     assert_equal 'foo@bar.com', @valid_user.email
-    assert_equal '', @valid_user.auth_token
+    assert_nil @valid_user.auth_token
     assert_nil @valid_user.auth_token_expires_at
   end
 
@@ -35,7 +32,7 @@ class UserTest < ActiveSupport::TestCase
     refute_nil @valid_user.publication
 
     assert_equal 'Foo Bar', @valid_user.publication.name
-    assert_equal 'foo-bar', @valid_user.publication.slug
+    assert_equal 'foo', @valid_user.publication.slug
     assert_equal 'foo.git', @valid_user.publication.repo_name
     assert_equal Git.config.storage_path.join('foo.git').to_s, @valid_user.publication.repo_path
     assert_equal @valid_user, @valid_user.publication.owner

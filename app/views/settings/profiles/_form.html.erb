@@ -3,11 +3,11 @@
     <div class='avatar relative w-full sm:w-1/3'>
       <drop-image
         class='avatar__uploader'
-        url='<%= @user.avatar&.imgproxy_url(width: 150, height: 150) %>'
+        url='<%= @user.avatar_url(variant: :thumb) %>'
         hint='<%= t('.avatar_hint') %>'
         param='user[avatar]'
       >
-        <%= component 'avatar', avatar: @user.avatar, variant: :thumb unless @user.avatar.blank?  %>
+        <%= component 'avatar', avatar_url: @user.avatar_url(variant: :thumb), variant: :thumb unless @user.avatar.blank?  %>
         <span class="input__hint avatar__uploader__hint <%= @user.avatar.blank? ? 'avatar__uploader__hint__blank' : '' %>">
           <%= t('.avatar_hint') %>
         </span>
