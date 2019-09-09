@@ -64,37 +64,34 @@ module Mobius
         end
 
         database = DB.open ENV.fetch("DATABASE_URL")
+        unauthorized_role = 0
 
-        begin
-          sql = <<-STRING
-            SELECT
-              "posts"."blob_path"
-            FROM
-              "posts"
-              INNER JOIN "publications" ON "publications"."id" = "posts"."publication_id"
-              INNER JOIN "collaborators" ON "collaborators"."publication_id" = "publications"."id"
-              INNER JOIN "users" ON "users"."id" = "collaborators"."user_id"
-            WHERE
-              "posts"."blob_path" IN ('.gitignore, drafts/.keep, drafts/how-medium-works-with-writers.md, drafts/medium-privacy-policy.md, images/.keep, posts/.keep')
-              AND "collaborators"."user_id" = 1
-              AND "collaborators"."role" = 0
-              AND "posts"."author_id" != 1
-          STRING
+        sql = <<-STRING
+          SELECT
+            "posts"."blob_path"
+          FROM
+            "posts"
+            INNER JOIN "publications" ON "publications"."id" = "posts"."publication_id"
+            INNER JOIN "collaborators" ON "collaborators"."publication_id" = "publications"."id"
+            INNER JOIN "users" ON "users"."id" = "collaborators"."user_id"
+          WHERE
+            "posts"."blob_path" IN ('#{blob_names.join("','")}')
+            AND "collaborators"."user_id" = $1
+            AND "collaborators"."role" = $2
+            AND "posts"."author_id" != $1
+        STRING
 
-          response = database.query sql do |response|
-            response.each do
-              errors << response.read(String)
-            end
+        response = database.query sql, user_id, unauthorized_role do |response|
+          response.each do
+            errors << response.read(String)
           end
+        end
 
-          if errors.any?
-            print(errors.join("\n"))
-            exit 1
-          else
-            exit 0
-          end
-        ensure
-          database.close
+        if errors.any?
+          print(errors.join("\n"))
+          exit 1
+        else
+          exit 0
         end
       end
 
