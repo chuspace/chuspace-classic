@@ -27,13 +27,20 @@ module Mobius
         repo_name = commands.try &.[1].try &.gsub("'", "").try &.lstrip("/")
 
         sql = <<-STRING
-          SELECT id as publication_id, repo_name, repo_path
-          FROM publications
-          WHERE owner_id = $1 AND repo_name = $2
+          SELECT
+            "publications"."id",
+            "publications"."repo_name",
+            "publications"."repo_path"
+          FROM
+            "publications"
+            INNER JOIN "collaborators" ON "collaborators"."publication_id" = "publications"."id"
+          WHERE
+            "publications"."repo_name" = $1
+            AND "collaborators"."user_id" = $2
           LIMIT 1
         STRING
 
-        publication_id, repo_name, repo_path = Mobius.database.query_one sql, user_id, repo_name, as: { Int64, String, String }
+        publication_id, repo_name, repo_path = Mobius.database.query_one sql, repo_name, user_id, as: { Int64, String, String }
 
         raise RepositoryNotFound.new("Repository not found") if repo_name.nil?
         raise RepositoryNotFound.new("Repository not found") unless repo_path && Dir.exists?(repo_path)

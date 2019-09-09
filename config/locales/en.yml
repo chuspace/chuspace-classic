@@ -32,6 +32,10 @@ en:
           attributes:
             personal:
               invalid: is invalid. It must begin set to either 'nil' or 'true'
+            website:
+              invalid: should be a valid web url
+            twitter:
+              invalid: 'should be a valid twitter url. ex: https://twitter.com/chuspace_com'
         user:
           attributes:
             avatar:
@@ -49,6 +53,10 @@ en:
                 a single hyphen but cannot begin or end with a hyphen.
             publication:
               invalid: should have a default publication.
+            url:
+              invalid: should be a valid url
+            location:
+              invalid: should be a valid name, no special characters
   chuspace:
     pitch: |
       Chuspace is a collaborative blogging platform for developers like Github,
@@ -132,7 +140,7 @@ en:
     no_posts: This author does not have any posts yet.
   user_mailer:
     invite:
-      subject: "@%{sender} has invited you to join the @%{publication} publication"
+      subject: '@%{sender} has invited you to join the @%{publication} publication'
     send_magic_login:
       body: Click on the button below to sign in to your Chuspace account. This magic
         link will expire in %{expires_in} minutes and can only be used once.

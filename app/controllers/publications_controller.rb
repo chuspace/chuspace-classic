@@ -27,7 +27,6 @@ class PublicationsController < ApplicationController
     if @publication.save
       redirect_to publication_path(@publication), notice: 'Publication successfully created'
     else
-      puts @publication.errors.inspect
       render :new
     end
   end

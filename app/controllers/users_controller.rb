@@ -18,7 +18,6 @@ class UsersController < ApplicationController
       flash[:notice] = 'Profile successfully updated'
       redirect_to settings_profiles_path
     else
-      @user = Current.user.reload
       render 'settings/profiles/index'
     end
   end

@@ -19,7 +19,7 @@ class Publication < ApplicationRecord
   validate :personal_attribute_should_contain_valid_values
 
   validates :website, url: true, allow_blank: true
-  validates :twitter, url: true, allow_blank: true
+  validates :twitter, url: { twitter: true }, allow_blank: true
 
   has_many :posts, dependent: :destroy
   has_many :invitations, dependent: :destroy

@@ -390,7 +390,7 @@ CREATE TABLE public.users (
     avatar_data jsonb,
     auth_token character varying NOT NULL,
     auth_token_expires_at timestamp without time zone,
-    bio character varying,
+    bio text,
     company character varying,
     location character varying,
     url character varying,

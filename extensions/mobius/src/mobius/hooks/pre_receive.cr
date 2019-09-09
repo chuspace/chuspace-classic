@@ -1,3 +1,9 @@
+require "dotenv"
+require "db"
+require "pg"
+
+Dotenv.load!("/Users/gaurav/personal/chuspace/.env")
+
 module Mobius
   module Hooks
     class PreReceive
@@ -34,6 +40,10 @@ module Mobius
 
       def exec
         errors = [] of String
+        publication_id = ENV.fetch("GIT_PUBLICATION_ID", "")
+        user_id = ENV.fetch("GIT_USER_ID", "")
+        token = ENV.fetch("MOBIUS_TOKEN", "")
+        base_url = ENV.fetch("CHUSPACE_URL", "")
 
         blob_names.each do |file|
           blob = `git show #{refs[1]}:'#{file}'`
@@ -53,11 +63,38 @@ module Mobius
           end
         end
 
-        if errors.any?
-          print(errors.join("\n"))
-          exit 1
-        else
-          exit 0
+        database = DB.open ENV.fetch("DATABASE_URL")
+
+        begin
+          sql = <<-STRING
+            SELECT
+              "posts"."blob_path"
+            FROM
+              "posts"
+              INNER JOIN "publications" ON "publications"."id" = "posts"."publication_id"
+              INNER JOIN "collaborators" ON "collaborators"."publication_id" = "publications"."id"
+              INNER JOIN "users" ON "users"."id" = "collaborators"."user_id"
+            WHERE
+              "posts"."blob_path" IN ('.gitignore, drafts/.keep, drafts/how-medium-works-with-writers.md, drafts/medium-privacy-policy.md, images/.keep, posts/.keep')
+              AND "collaborators"."user_id" = 1
+              AND "collaborators"."role" = 0
+              AND "posts"."author_id" != 1
+          STRING
+
+          response = database.query sql do |response|
+            response.each do
+              errors << response.read(String)
+            end
+          end
+
+          if errors.any?
+            print(errors.join("\n"))
+            exit 1
+          else
+            exit 0
+          end
+        ensure
+          database.close
         end
       end
 

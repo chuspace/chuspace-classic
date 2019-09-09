@@ -31,7 +31,6 @@ class Posts::PublishController < ApplicationController
       redirect_to publication_post_path(@post.publication, @post)
     else
       @post.reload
-      puts @post.errors.inspect
       render 'posts/edit'
     end
   end

@@ -2,6 +2,9 @@
 # frozen_string_literal: true
 
 class UrlValidator < ActiveModel::EachValidator
+  TWITTER_USERNAME_REGEXP = /([A-Za-z0-9_]{1,15})/i
+  TWITTER_URL_REGEXP = %r{\Ahttps?://(?:www\.)?twitter.com/#{TWITTER_USERNAME_REGEXP}\z}i
+
   def initialize(options)
     options[:protocols] ||= options.delete(:protocol) || options.delete(:with) || options.delete(:in)
     super
@@ -11,6 +14,11 @@ class UrlValidator < ActiveModel::EachValidator
     uri = as_uri(value)
     tld_requirement_fullfilled = check_tld_requirement(value)
     record.errors.add(attribute) unless uri && value.to_s =~ uri_regexp && tld_requirement_fullfilled
+
+    if options[:twitter]
+      match = value&.match(TWITTER_URL_REGEXP)
+      record.errors.add(attribute) unless match && !match[1].nil?
+    end
   end
 
   private

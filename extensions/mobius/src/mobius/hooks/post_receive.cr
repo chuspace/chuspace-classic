@@ -1,25 +1,18 @@
 require "dotenv"
 require "http/client"
 
-Dotenv.load!(ENV.fetch("CHUSPACE_ENV_FILE_PATH", "/home/git/chuspace.com/current/.env"))
+Dotenv.load!("/Users/gaurav/personal/chuspace/.env")
 
 module Mobius
   module Hooks
     class PostReceive
-      POST_RECEIVE_CHECK_ENDPOINT= "/mobius/post_receive"
-      DEFAULT_REF = "refs/heads/master"
-      HTTP_HEADERS = HTTP::Headers{
-        "User-Agent" => "Mobius",
-        "Content-Type" => "application/json"
-      }
-
       getter old_commit_sha : String
       getter new_commit_sha : String
       getter ref : String
 
       def initialize
         @old_commit_sha, @new_commit_sha, @ref = STDIN.gets_to_end.split(" ", remove_empty: true)
-        exit 0 unless ref.try &.strip == DEFAULT_REF
+        exit 0 unless ref.try &.strip == "refs/heads/master"
       end
 
       def exec
@@ -29,8 +22,11 @@ module Mobius
         base_url = ENV.fetch("CHUSPACE_URL", "")
 
         HTTP::Client.post(
-          "#{base_url}#{POST_RECEIVE_CHECK_ENDPOINT}",
-          headers: HTTP_HEADERS,
+          "#{base_url}/mobius/post_receive",
+          headers: HTTP::Headers{
+            "User-Agent" => "Mobius",
+            "Content-Type" => "application/json"
+          },
           form: {
             "token" => token,
             "publication_id" => publication_id,

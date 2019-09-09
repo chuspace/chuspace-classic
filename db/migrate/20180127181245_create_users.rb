@@ -19,7 +19,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.index :auth_token, unique: true
       t.datetime :auth_token_expires_at
 
-      t.string :bio
+      t.text :bio
       t.string :company
       t.string :location
       t.string :url

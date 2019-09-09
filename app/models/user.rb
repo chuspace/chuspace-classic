@@ -9,11 +9,14 @@ class User < ApplicationRecord
 
   validates :email, presence: true, email: true
   validates_db_uniqueness_of :email
-  validates :first_name, :last_name, :nickname, presence: true
+  validates :first_name, :last_name, :nickname, :name, presence: true
   validates_db_uniqueness_of :nickname
   validates :nickname, length: { in: 1..39 }, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
   validate :should_have_a_default_publication
   validates :url, url: true, allow_blank: true
+
+  validates :bio, length: { in: 1..80 }, allow_blank: true
+  validates :location, length: { in: 1..39 }, format: { with: /\A^[a-z\s]{0,255}$\z/i }, allow_blank: true
 
   has_secure_token :auth_token
   has_person_name
