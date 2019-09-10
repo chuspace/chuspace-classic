@@ -2,7 +2,7 @@ require "dotenv"
 require "db"
 require "pg"
 
-Dotenv.load!("/Users/gaurav/personal/chuspace/.env")
+Dotenv.load!("/home/git/chuspace.com/current/.env")
 
 module Mobius
   module Hooks
