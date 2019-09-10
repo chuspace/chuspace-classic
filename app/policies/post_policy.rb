@@ -10,7 +10,8 @@ class PostPolicy < ApplicationPolicy
   end
 
   def edit?
-    record.publication.members.include?(user)
+    collaborator ||= record.publication.collaborators.find_by(user: user)
+    record.author == user || collaborator && collaborator.role != 'writer'
   end
 
   def publish?

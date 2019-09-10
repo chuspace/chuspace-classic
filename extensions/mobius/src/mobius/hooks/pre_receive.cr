@@ -34,7 +34,7 @@ module Mobius
       end
 
       def blob_names
-        names = `git ls-tree --name-only -r #{refs[1]}`
+        names = `git diff --name-only #{refs[0]} #{refs[1]}`
         names.split("\n", remove_empty: true).reject(&.blank?)
       end
 
@@ -83,7 +83,7 @@ module Mobius
 
         response = database.query sql, user_id, unauthorized_role do |response|
           response.each do
-            errors << response.read(String)
+            errors << "#{response.read(String)}: You are only allowed to edit your own posts."
           end
         end
 
