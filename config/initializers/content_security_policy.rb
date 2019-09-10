@@ -9,7 +9,7 @@ if Rails.env.production?
   Rails.application.config.content_security_policy do |p|
     p.default_src :self, :https, :wss, '*.chuspace.com'
     p.font_src :self, :https, :data
-    p.img_src :self, :https, :data, 'secure.gravatar.com'
+    p.img_src :self, :https, :data, '*.gravatar.com'
     p.object_src :none
     p.script_src :self, :https, :unsafe_inline, 'assets.chuspace.com'
     p.style_src :self,
