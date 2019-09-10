@@ -12,6 +12,6 @@ module Avatarable
   def gravatar_url(variant: :sm)
     size = AVATAR_VARIANTS[variant] || fail(AvatarVariantNotFound, 'Avatar variant not found')
     gravatar_id = Digest::MD5.hexdigest(email)
-    "http://secure.gravatar.com/avatar/#{gravatar_id}?d=identicon&s=#{size}"
+    "//secure.gravatar.com/avatar/#{gravatar_id}?d=identicon&s=#{size}"
   end
 end
