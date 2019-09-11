@@ -73,6 +73,11 @@ class Post < ApplicationRecord
     end
   end
 
+  def can_edit?(user:)
+    collaborator ||= publication.collaborators.find_by(user: user)
+    author == user || collaborator && collaborator.role != Collaborator::WRITER_ROLE
+  end
+
   def title
     super || draft.title || DEFAULT_TITLE
   end

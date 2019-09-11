@@ -9,4 +9,5 @@ class Collaborator < ApplicationRecord
   enum role: { writer: 0, editor: 1, admin: 2, owner: 3 }
   ROLES = roles.map { |k, _| [k.titlecase, k] unless k == 'owner' }.compact.freeze
   DEFAULT_ROLE = ROLES.first
+  WRITER_ROLE = 'writer'
 end

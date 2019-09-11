@@ -6,6 +6,6 @@ class Posts::PublishPolicy < ApplicationPolicy
   alias_rule :create?, to: :index?
 
   def index?
-    post.author == user && post.outdated?
+    post.can_edit?(user: user)
   end
 end
