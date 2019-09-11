@@ -29,15 +29,11 @@ export default class ChuEditor extends LitElement {
 
   onRecieved = (data: any) => {
     this.saving = false
-    console.log(data)
-  }
-
-  onSubscribed = () => {
-    console.log('connected')
   }
 
   async connectedCallback() {
     await super.connectedCallback()
+
     this.editor = new Editor({
       element: this,
       autoFocus: this.autofocus,
@@ -76,7 +72,6 @@ export default class ChuEditor extends LitElement {
           id: this.id
         },
         {
-          connected: this.onSubscribed,
           received: this.onRecieved
         }
       )
@@ -105,8 +100,8 @@ export default class ChuEditor extends LitElement {
     () => {
       this.subscription.send(this.payload)
     },
-    2000,
-    { maxWait: 2000 }
+    500,
+    { maxWait: 500 }
   )
 
   create = debounce(

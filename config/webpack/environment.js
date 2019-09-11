@@ -1,10 +1,9 @@
-const { environment, config } = require('@rails/webpacker')
+const { environment } = require('@rails/webpacker')
 
 const webpack = require('webpack')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const nullLoader = require('./loaders/null')
 const globImporter = require('node-sass-glob-importer')
-const { resolve } = require('path')
 
 environment.config.merge({
   stats: 'minimal'

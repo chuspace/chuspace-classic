@@ -40,7 +40,10 @@ class PostsController < ApplicationController
                  slug: post.slug,
                  header:
                    render_to_string(
-                     partial: 'posts/header/edit', format: :html, layout: false, locals: { post: post, params: params }
+                     partial: 'posts/header/edit',
+                     format: :html,
+                     layout: false,
+                     locals: { post: post, publication: @publication, params: params }
                    )
                }
       else

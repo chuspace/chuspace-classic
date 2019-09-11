@@ -5,8 +5,6 @@ Rails.application.routes.draw do
   root to: 'frontpage#index', constraints: PrivateRootConstraint.new, as: :authenticated_root
   root to: 'pages#index'
 
-  get :sw, to: 'service_worker#file', format: :js
-  get :manifest, to: 'service_worker#manifest', format: :json
   get :about, to: 'pages#about', format: :html, as: :about
 
   resources :signins, path: 'signin', only: %i[index create destroy] do
@@ -48,15 +46,11 @@ Rails.application.routes.draw do
     resources :images, only: %i[create show destroy], module: 'publications'
     resources :drafts, only: :index, module: 'publications'
     resources :people, path: 'people', only: %i[index update destroy], module: 'publications' do
-      collection do
-        get :autocomplete
-      end
+      collection { get :autocomplete }
     end
 
     resources :invitations, only: :create, module: 'publications' do
-      collection do
-        get :accept
-      end
+      collection { get :accept }
     end
 
     resources :posts, path: '', param: :slug, only: %i[show destroy]

@@ -114,7 +114,9 @@ export default class Editor {
         ArrowLeft: arrowHandler('left'),
         ArrowRight: arrowHandler('right'),
         ArrowUp: arrowHandler('up'),
-        ArrowDown: arrowHandler('down')
+        ArrowDown: arrowHandler('down'),
+        'Ctrl-s': this.handleSave,
+        'Mod-s': this.handleSave
       }),
       keymap(baseKeymap),
       dropCursor(),
@@ -254,6 +256,11 @@ export default class Editor {
     view.dom.classList.add('chu-editor')
 
     return view
+  }
+
+  handleSave = (e: Event) => {
+    this.options.onChange()
+    return true
   }
 
   dispatchTransaction(transaction: Transaction) {

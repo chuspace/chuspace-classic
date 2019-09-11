@@ -11,7 +11,7 @@ module PostHelper
         'posts/header/edit'
       end
 
-    render partial: partial_path, locals: { post: post }
+    render partial: partial_path, locals: { post: post, publication: post.publication }
   end
 
   def edit_items(publication, post)
