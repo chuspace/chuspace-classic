@@ -67,7 +67,7 @@ class PostsController < ApplicationController
   end
 
   def find_publication
-    @publication = Current.user.publications.find_by!(slug: params[:publication_slug])
+    @publication = Publication.find_by!(slug: params[:publication_slug])
   end
 
   def find_post
