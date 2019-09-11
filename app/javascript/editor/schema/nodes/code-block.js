@@ -138,7 +138,6 @@ export default class CodeBlock extends Node {
 
                 if (matches[0]) {
                   const node = schema.nodes.code_block.create({ language })
-                  const selection = Selection.near(state.doc.resolve(from), to)
 
                   tr.replaceWith(pos - matches[0].length - 1, pos, node)
                     .setMeta(this, {
@@ -147,7 +146,6 @@ export default class CodeBlock extends Node {
                       to,
                       text
                     })
-                    .setSelection(selection)
                     .scrollIntoView()
 
                   view.dispatch(tr)
