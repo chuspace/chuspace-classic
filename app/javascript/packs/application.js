@@ -8,7 +8,6 @@ import '@github/auto-complete-element'
 import 'custom-elements'
 
 import * as Rails from 'rails-ujs'
-import * as ServiceWorker from '../service-worker'
 import * as Turbolinks from 'turbolinks'
 
 import { Application } from 'stimulus'
@@ -18,7 +17,7 @@ const application = Application.start()
 const controllersContext = require.context('../controllers', true, /\.js$/)
 application.load(definitionsFromContext(controllersContext))
 
-ServiceWorker.register()
+navigator.serviceWorker.register('/sw.js', { scope: '/' })
 
 Rails.start()
 Turbolinks.start()
