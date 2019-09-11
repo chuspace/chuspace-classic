@@ -17,7 +17,5 @@ const application = Application.start()
 const controllersContext = require.context('../controllers', true, /\.js$/)
 application.load(definitionsFromContext(controllersContext))
 
-navigator.serviceWorker.register('/sw.js', { scope: '/' })
-
 Rails.start()
 Turbolinks.start()
