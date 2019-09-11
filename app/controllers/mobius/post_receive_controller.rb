@@ -9,7 +9,7 @@ module Mobius
       ref = params[:ref]
 
       author = User.find_by(id: params[:author_id])
-      publication = author.publications.find_by(id: params[:publication_id], owner: author)
+      publication = author.publications.find_by(id: params[:publication_id])
       repository = publication&.repository
 
       unless repository

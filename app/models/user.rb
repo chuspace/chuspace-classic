@@ -28,7 +28,9 @@ class User < ApplicationRecord
            through: :collaborations, class_name: 'Publication', source: :publication, dependent: :delete_all
   has_many :posts, foreign_key: 'author_id', dependent: :delete_all
   has_many :drafts, -> { where(status: :draft) }, class_name: 'Post', foreign_key: 'author_id', dependent: :delete_all
-  has_one :publication, -> { where(personal: true) }, foreign_key: 'owner_id', autosave: true, required: true
+  has_one :publication,
+          -> { where(personal: true) },
+          foreign_key: 'owner_id', autosave: true, required: true, dependent: :destroy
 
   AUTH_TOKEN_LIFE = 30
 
