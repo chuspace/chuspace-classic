@@ -17,6 +17,10 @@ class PostPolicy < ApplicationPolicy
     edit?
   end
 
+  def republish?
+    edit? && record.outdated?
+  end
+
   def show?
     record.published?
   end
