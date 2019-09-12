@@ -72,7 +72,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :ses
 
   config.hosts << 'chuspace.com'
-  config.hosts << 'localhost'
+  config.hosts << '127.0.0.1'
 
   config.default_url_options = { host: 'chuspace.com' }
   Rails.application.routes.default_url_options[:host] = 'chuspace.com'
