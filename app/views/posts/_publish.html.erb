@@ -19,7 +19,7 @@
         <%= content_tag :span, post.errors.full_messages_for(:summary).to_sentence, class: 'input__error text-red block' if post.errors.include?(:summary) %>
 
         <input-autocomplete
-          url="<%= autocomplete_topics_url %>"
+          url="<%= autocomplete_topics_path %>"
           items='<%= post.topics || [] %>'
           name='post[topics][]'
           maxlength="5"
