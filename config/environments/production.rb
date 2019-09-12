@@ -73,7 +73,6 @@ Rails.application.configure do
 
   config.hosts << 'chuspace.com'
   config.hosts << 'localhost'
-  config.hosts << '0.0.0.0'
 
   config.default_url_options = { host: 'chuspace.com' }
   Rails.application.routes.default_url_options[:host] = 'chuspace.com'

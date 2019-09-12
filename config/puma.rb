@@ -7,6 +7,8 @@ threads threads_count, threads_count
 
 preload_app!
 
+early_hints true
+
 rackup DefaultRackup
 port ENV['PORT'] || 3_000
 environment ENV['RACK_ENV'] || 'development'
