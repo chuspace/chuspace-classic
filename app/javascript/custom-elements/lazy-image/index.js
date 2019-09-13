@@ -41,7 +41,7 @@ export default class LazyImage extends LitElement {
   render() {
     return html`
       <figure class="image__container">
-        <img alt=${this.alt} data-src="${this.src}" data-sizes="auto" class="lazy" />
+        <img alt=${this.alt} title=${this.alt} data-src="${this.src}" data-sizes="auto" class="lazy" />
         ${
           this.editable
             ? html`

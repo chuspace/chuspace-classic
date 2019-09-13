@@ -11,15 +11,12 @@ if Rails.env.production?
     p.font_src :self, :https, :data
     p.img_src :self, :https, :data, '*.gravatar.com'
     p.object_src :none
-    p.script_src :self, :https, :unsafe_inline, 'assets.chuspace.com'
+    p.script_src :self, :https, :unsafe_inline
     p.style_src :self,
                 :https,
                 :unsafe_inline,
-                'assets.chuspace.com',
-                'https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css',
                 'https://use.typekit.net/oyz0gkh.css',
-                'https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css',
-                'https://use.typekit.net/oyz0gkh.css'
+                'https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css'
     # Specify URI for violation reports
     # p.report_uri "/csp-violation-report-endpoint"
   end

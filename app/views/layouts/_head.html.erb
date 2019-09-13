@@ -3,9 +3,25 @@
   <%= csrf_meta_tags %>
   <%= action_cable_meta_tag %>
   <%= render 'layouts/meta' %>
+
+  <link rel="preload" type="image/png" href="/favicon.png" />
+  <link rel="preload" type="image/png" href="/chuspace-icon-192.png" />
+  <link rel="preload" type="image/png" href="/chuspace-icon-512.png" />
   <link rel="icon" type="image/png" href="/favicon.png" />
-  <link rel="prefetch" href="<%= asset_pack_path('application.js') %>" as="style" />
-  <%= preload_pack_asset('media/styles/fonts/noe-display-bold.woff2') %>
+
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="preconnect" href="//cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="//use.typekit.net">
+  <link rel="preconnect" href="//use.typekit.net">
+  <link rel="dns-prefetch" href="//images.chuspace.com">
+  <link rel="preconnect" href="//images.chuspace.com">
+  <link rel="dns-prefetch" href="//secure.gravatar.com">
+  <link rel="preconnect" href="//secure.gravatar.com">
+
+  <%= preload_pack_asset('media/styles/fonts/noe-display-bold.woff2', as: :font) %>
+  <link rel="preload" href="<%= asset_pack_path('application.css') %>" as="style" />
+  <link rel="preload" href="<%= asset_pack_path('application.js') %>" as="script" />
+
   <%= javascript_pack_tag 'application', defer: true, 'data-turbolinks-track': 'reload' %>
   <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 </head>
