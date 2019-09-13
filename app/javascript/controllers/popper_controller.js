@@ -18,16 +18,22 @@ export default class PopperController extends Controller {
     const template = html`
       <a href=${url} class="block link link--default" rel="noopener noreferrer" target="_blank">
         <div class="flex items-center py-2">
-          <div class="popover-media mr-4 w-1/3">
-            <lazy-image
-              src=${data.thumbnail_url}
-              alt=${data.title}
-              align="none"
-              editable="false"
-              title=${data.title}
-            ></lazy-image>
-          </div>
-          <div class="popover-content text-left w-2/3">
+          ${data.thumbnail_url
+            ? html`
+                <div class="popover-media mr-4">
+                  <img
+                    alt=${data.title}
+                    title=${data.title}
+                    data-src="${data.thumbnail_url}"
+                    width="200"
+                    height="200"
+                    data-sizes="auto"
+                    class="lazy"
+                  />
+                </div>
+              `
+            : null}
+          <div class="popover-content text-left">
             <h1 class="text-base mb-2 font-bold">${data.title}</h1>
 
             <p>${truncate(data.description, { length: 70 })}</p>
@@ -45,10 +51,7 @@ export default class PopperController extends Controller {
   connect() {
     window.iframely &&
       window.iframely.extendOptions({ api_key: '376392514861f59ada33d2', omit_script: 1, omit_css: 1, iframe: 1 })
-
-    const postBody = document.querySelector('.chu-editor')
-    if (!postBody) return
-    const links = Array.from(postBody.querySelectorAll('a'))
+    const links = document.querySelectorAll('[data-behaviour="has-tooltip"]')
 
     const INITIAL_CONTENT = `<div class='flex' style="margin:5px 0;">
       <content-loader type="image" class='w-1/3 mr-2' width='200' height='200'></content-loader>
@@ -60,7 +63,7 @@ export default class PopperController extends Controller {
       animation: 'scale',
       animateFill: false,
       theme: 'light',
-      delay: 500,
+      delay: 300,
       maxWidth: 350,
       lazy: true,
       interactive: true,
