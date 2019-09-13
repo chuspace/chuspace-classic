@@ -9,7 +9,7 @@
     %>
   <% end %>
 
-  <div class='flex justify-end items-center flex-1 mr-8'>
+  <div class='flex justify-end items-center flex-1 mr-4'>
     <%= link_to 'Edit', edit_publication_post_path(@publication, post), class: 'button button--active button--slim mr-2' if Current.user.present? && allowed_to?(:edit?, post) %>
   </div>
 </div>
