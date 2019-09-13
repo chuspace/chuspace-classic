@@ -18,8 +18,7 @@ class AvatarUploader < Shrine
          host: ENV.fetch('AVATAR_ENDPOINT'),
          upload_options: { acl: 'public-read' },
          upload_open_options: { response_content_encoding: 'gzip' },
-         upload: true,
-         expires_in: 90
+         upload: true
 
   unless Rails.env.test?
     plugin :restore_cached_data
