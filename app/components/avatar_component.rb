@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 class AvatarComponent < Components::Component
-  DEFAULT_CSS_CLASS = 'avatar'
+  DEFAULT_CSS_CLASS = 'avatar lazy'
 
   attribute :avatar_url
   attribute :gravatar_url
@@ -28,6 +28,6 @@ class AvatarComponent < Components::Component
   private
 
   def avatar_tag(url:)
-    @view.image_tag(url, class: css_classes, **options)
+    @view.image_tag(url, class: css_classes, 'data-sizes': 'auto', **options)
   end
 end

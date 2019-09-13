@@ -4,11 +4,6 @@ import 'lazysizes/plugins/blur-up/ls.blur-up'
 
 import { LitElement, customElement, html } from 'lit-element'
 
-import lazySizes from 'lazysizes'
-
-lazySizes.cfg.lazyClass = 'lazy'
-lazySizes.cfg.blurupMode = 'auto'
-
 export default class LazyImage extends LitElement {
   static get properties() {
     return {

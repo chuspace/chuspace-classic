@@ -12,6 +12,10 @@ import * as Turbolinks from 'turbolinks'
 
 import { Application } from 'stimulus'
 import { definitionsFromContext } from 'stimulus/webpack-helpers'
+import lazySizes from 'lazysizes'
+
+lazySizes.cfg.lazyClass = 'lazy'
+lazySizes.cfg.blurupMode = 'auto'
 
 const application = Application.start()
 const controllersContext = require.context('../controllers', true, /\.js$/)
