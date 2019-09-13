@@ -15,7 +15,7 @@ class AvatarUploader < Shrine
   plugin :derivation_endpoint,
          secret_key: ENV.fetch('DERIVATION_ENDPOINT_SECRET'),
          prefix: 'avatar/variants',
-         host: ENV.fetch('ASSETS_ENDPOINT'),
+         host: ENV.fetch('AVATAR_ENDPOINT'),
          upload_options: { acl: 'public-read' },
          upload_open_options: { response_content_encoding: 'gzip' },
          upload: true,
