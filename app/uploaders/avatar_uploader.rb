@@ -16,6 +16,8 @@ class AvatarUploader < Shrine
          secret_key: ENV.fetch('DERIVATION_ENDPOINT_SECRET'),
          prefix: 'avatar/variants',
          host: ENV.fetch('AVATAR_ENDPOINT'),
+         upload_options: { acl: 'public-read' },
+         upload_open_options: { response_content_encoding: 'gzip' },
          upload: true,
          upload_redirect: true,
          expires_in: 90
