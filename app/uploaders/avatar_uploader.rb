@@ -12,7 +12,12 @@ class AvatarUploader < Shrine
   plugin :validation_helpers
   plugin :delete_promoted
   plugin :delete_raw
-  plugin :default_url_options, store: { host: ENV.fetch('AVATAR_ENDPOINT') }
+  plugin :derivation_endpoint,
+         secret_key: 'foobar',
+         prefix: 'avatar/variants',
+         host: ENV.fetch('AVATAR_ENDPOINT'),
+         upload: true,
+         upload_redirect: true
 
   unless Rails.env.test?
     plugin :restore_cached_data
@@ -24,5 +29,9 @@ class AvatarUploader < Shrine
   Attacher.validate do
     validate_max_size 5.megabytes, message: 'is too large (max is 5 MB)'
     validate_mime_type_inclusion %w[image/jpeg image/jpg image/png image/gif]
+  end
+
+  derivation :thumbnail do |file, width, height|
+    ImageProcessing::Vips.source(file).resize_to_limit!(width.to_i, height.to_i)
   end
 end

@@ -41,6 +41,7 @@ Rails.application.routes.draw do
   end
 
   mount Easymon::Engine => '/alive' if Rails.env.production?
+  mount AvatarUploader.derivation_endpoint => 'avatar/variants'
 
   resources :publications, path: '', param: :slug, only: %i[show update destroy] do
     resources :images, only: %i[create show destroy], module: 'publications'

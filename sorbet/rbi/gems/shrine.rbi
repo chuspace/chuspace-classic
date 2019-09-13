@@ -324,13 +324,6 @@ class Shrine::Plugins::Instrumentation::LogSubscriber
   def on_upload(event); end
   def self.call(event); end
 end
-module Shrine::Plugins::DefaultUrlOptions
-  def self.configure(uploader, options = nil); end
-end
-module Shrine::Plugins::DefaultUrlOptions::FileMethods
-  def default_url_options; end
-  def url(**options); end
-end
 module Shrine::Plugins::DetermineMimeType
   def self.configure(uploader, opts = nil); end
 end
@@ -438,4 +431,224 @@ module Shrine::Plugins::PrettyLocation::InstanceMethods
   def pretty_location(io, name: nil, record: nil, version: nil, identifier: nil, metadata: nil, **arg6); end
   def record_identifier(record); end
   def record_namespace(record); end
+end
+module Shrine::Plugins::DerivationEndpoint
+  def self.configure(uploader, opts = nil); end
+  def self.load_dependencies(uploader, opts = nil); end
+end
+module Shrine::Plugins::DerivationEndpoint::ClassMethods
+  def derivation(name, &block); end
+  def derivation_endpoint(**options); end
+  def derivation_options; end
+  def derivation_response(env, **options); end
+  def derivations; end
+end
+module Shrine::Plugins::DerivationEndpoint::FileMethods
+  def derivation(name, *args, **options); end
+  def derivation_response(name, *args, env:, **options); end
+  def derivation_url(name, *args, **options); end
+end
+class Shrine::Derivation
+  def args; end
+  def default_cache_control; end
+  def default_filename; end
+  def default_upload_location; end
+  def default_upload_storage; end
+  def delete; end
+  def generate(file = nil); end
+  def initialize(name:, args:, source:, options:); end
+  def name; end
+  def option(name); end
+  def options; end
+  def processed; end
+  def response(env); end
+  def retrieve; end
+  def self.option(name, default: nil, result: nil); end
+  def self.options; end
+  def shrine_class; end
+  def source; end
+  def upload(file = nil); end
+  def upload_location(location); end
+  def url(**options); end
+end
+class Shrine::Derivation::NotFound < Shrine::Error
+end
+class Shrine::Derivation::SourceNotFound < Shrine::Error
+end
+class Shrine::Derivation::Command
+  def derivation; end
+  def initialize(derivation); end
+  def self.delegate(*names); end
+  def shrine_class; end
+end
+class Shrine::Derivation::Url < Shrine::Derivation::Command
+  def args; end
+  def call(host: nil, prefix: nil, **options); end
+  def identifier(expires_in: nil, version: nil, type: nil, filename: nil, disposition: nil, metadata: nil); end
+  def name; end
+  def plain_url(*components, params); end
+  def secret_key; end
+  def signed_url(url); end
+  def source; end
+end
+class Shrine::DerivationEndpoint
+  def call(env); end
+  def check_expiry!(request); end
+  def derivation_options; end
+  def error!(status, message); end
+  def expires_in(request); end
+  def handle_request(request); end
+  def initialize(shrine_class:, options: nil); end
+  def inspect; end
+  def options; end
+  def secret_key; end
+  def shrine_class; end
+  def to_s; end
+  def verify_signature!(request); end
+end
+class Shrine::Derivation::Response < Shrine::Derivation::Command
+  def call(env); end
+  def content_disposition(file); end
+  def disposition; end
+  def file_response(file, env); end
+  def filename; end
+  def local_response(env); end
+  def rack_file_response(path, env); end
+  def type; end
+  def upload; end
+  def upload_open_options; end
+  def upload_redirect; end
+  def upload_redirect_url_options; end
+  def upload_response(env); end
+end
+class Shrine::Derivation::Processed < Shrine::Derivation::Command
+  def call; end
+  def upload; end
+end
+class Shrine::Derivation::Generate < Shrine::Derivation::Command
+  def args; end
+  def call(file = nil); end
+  def derivation_block; end
+  def derive(*args); end
+  def download; end
+  def download_errors; end
+  def download_options; end
+  def download_source; end
+  def generate(file); end
+  def include_uploaded_file; end
+  def instrument_derivation(&block); end
+  def name; end
+  def normalize(derivative); end
+  def source; end
+  def uploader; end
+  def with_downloaded(file, &block); end
+end
+class Shrine::Derivation::Upload < Shrine::Derivation::Command
+  def call(derivative = nil); end
+  def upload_location; end
+  def upload_options; end
+  def upload_storage; end
+  def uploader; end
+  def with_derivative(derivative); end
+end
+class Shrine::Derivation::Retrieve < Shrine::Derivation::Command
+  def call; end
+  def upload_location; end
+  def upload_storage; end
+end
+class Shrine::Derivation::Delete < Shrine::Derivation::Command
+  def call; end
+  def storage; end
+  def upload_location; end
+  def upload_storage; end
+end
+class Shrine::UrlSigner
+  def generate_signature(string); end
+  def initialize(secret_key); end
+  def secret_key; end
+  def sign_url(url); end
+  def verify_signature(string, signature); end
+  def verify_url(url); end
+end
+class Shrine::UrlSigner::InvalidSignature < Shrine::Error
+end
+module Shrine::Plugins::AddMetadata
+  def self.configure(uploader); end
+end
+module Shrine::Plugins::AddMetadata::ClassMethods
+  def _metadata_method(name); end
+  def add_metadata(name = nil, &block); end
+  def metadata_method(*names); end
+end
+module Shrine::Plugins::AddMetadata::InstanceMethods
+  def extract_custom_metadata(io, context); end
+  def extract_metadata(io, context = nil); end
+end
+module Shrine::Plugins::AddMetadata::FileMethods
+end
+module Shrine::Plugins::RackResponse
+end
+module Shrine::Plugins::RackResponse::FileMethods
+  def to_rack_response(**options); end
+end
+class Shrine::Plugins::RackResponse::FileResponse
+  def accept_ranges(range); end
+  def call(**options); end
+  def content_disposition(disposition, filename); end
+  def content_length(range); end
+  def content_range(range); end
+  def content_type(type); end
+  def etag; end
+  def file; end
+  def initialize(file); end
+  def parse_content_range(range_header); end
+  def rack_body(range: nil, **arg1); end
+  def rack_headers(filename: nil, type: nil, disposition: nil, range: nil); end
+  def rack_status(range: nil, **arg1); end
+end
+class Shrine::Plugins::RackResponse::FileBody
+  def close; end
+  def each(&block); end
+  def file; end
+  def initialize(file, range: nil); end
+  def method_missing(name, *args, &block); end
+  def path; end
+  def range; end
+  def read_chunks; end
+  def read_partial_chunks; end
+  def respond_to_missing?(name, include_private = nil); end
+end
+module Shrine::Plugins::UrlsafeSerialization
+end
+module Shrine::Plugins::UrlsafeSerialization::ClassMethods
+  def urlsafe_deserialize(string); end
+  def urlsafe_serialize(hash); end
+  def urlsafe_serializer; end
+end
+module Shrine::Plugins::UrlsafeSerialization::FileMethods
+  def urlsafe_data(metadata: nil); end
+  def urlsafe_dump(**options); end
+end
+module Shrine::Plugins::UrlsafeSerialization::FileClassMethods
+  def urlsafe_dump(file, **options); end
+  def urlsafe_load(string); end
+end
+class Shrine::Plugins::UrlsafeSerialization::Serializer
+  def base64_decode(data); end
+  def base64_encode(data); end
+  def decode(data); end
+  def encode(data); end
+  def json_decode(data); end
+  def json_encode(data); end
+end
+module Shrine::Plugins::RefreshMetadata
+end
+module Shrine::Plugins::RefreshMetadata::FileMethods
+  def refresh_metadata!(**context); end
+end
+module Shrine::Plugins::Recache
+end
+module Shrine::Plugins::Recache::AttacherMethods
+  def recache; end
+  def save; end
 end

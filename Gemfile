@@ -18,7 +18,6 @@ gem 'name_of_person'
 
 # File uploads
 gem 'aws-sdk-s3'
-gem 'imgproxy'
 gem 'mini_mime'
 gem 'fastimage'
 gem 'image_processing'

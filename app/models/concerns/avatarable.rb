@@ -6,7 +6,7 @@ module Avatarable
 
   def avatar_url(variant: :sm)
     size = AVATAR_VARIANTS[variant] || fail(AvatarVariantNotFound, 'Avatar variant not found')
-    avatar&.imgproxy_url(width: size * 2, height: size * 2, quality: 100, format: :png)
+    avatar&.derivation_url(:thumbnail, size * 2, size * 2)
   end
 
   def gravatar_url(variant: :sm)

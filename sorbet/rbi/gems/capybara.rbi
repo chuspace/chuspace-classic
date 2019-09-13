@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/capybara/all/capybara.rbi
 #
-# capybara-3.28.0
+# capybara-3.29.0
 module Capybara
   def self.HTML(html); end
   def self.add_selector(name, **options, &block); end
@@ -743,6 +743,7 @@ class Capybara::Queries::SelectorQuery < Capybara::Queries::BaseQuery
   def matches_id_filter?(node); end
   def matches_locator_filter?(node); end
   def matches_node_filters?(node, errors); end
+  def matches_spatial_filters?(node); end
   def matches_style?(node, styles); end
   def matches_style_filter?(node); end
   def matches_system_filters?(node); end
@@ -756,6 +757,8 @@ class Capybara::Queries::SelectorQuery < Capybara::Queries::BaseQuery
   def node_filters; end
   def normalize_ws; end
   def options; end
+  def position_cache(key); end
+  def rect_cache(key); end
   def resolve_for(node, exact = nil); end
   def selector; end
   def selector_format; end
@@ -768,11 +771,27 @@ class Capybara::Queries::SelectorQuery < Capybara::Queries::BaseQuery
   def use_default_class_filter?; end
   def use_default_id_filter?; end
   def use_default_style_filter?; end
+  def use_spatial_filter?; end
   def valid_keys; end
   def visible; end
   def warn_exact_usage; end
   def xpath(exact = nil); end
   def xpath_text_conditions; end
+end
+class Capybara::Queries::SelectorQuery::Rectangle
+  def above?(other); end
+  def below?(other); end
+  def bottom; end
+  def distance(other); end
+  def distance_segment_segment(l1p1, l1p2, l2p1, l2p2); end
+  def initialize(position); end
+  def left; end
+  def left_of?(other); end
+  def line_segments; end
+  def near?(other); end
+  def right; end
+  def right_of?(other); end
+  def top; end
 end
 class Capybara::Queries::TextQuery < Capybara::Queries::BaseQuery
   def build_message(report_on_invisible); end
@@ -998,6 +1017,7 @@ class Capybara::Node::Element < Capybara::Node::Base
   def path; end
   def perform_click_action(keys, wait: nil, **options); end
   def readonly?; end
+  def rect; end
   def reload; end
   def right_click(*keys, **options); end
   def scroll_to(pos_or_el_or_x, y = nil, align: nil, offset: nil); end
@@ -1082,6 +1102,7 @@ class Capybara::Driver::Node
   def obscured?; end
   def path; end
   def readonly?; end
+  def rect; end
   def right_click(keys = nil, **options); end
   def scroll_by(x, y); end
   def scroll_to(element, alignment, position = nil); end
@@ -1166,6 +1187,7 @@ class Capybara::RackTest::Node < Capybara::Driver::Node
   def tag_name(*args); end
   def text_or_password?; end
   def textarea?; end
+  def toggle_details; end
   def type; end
   def unchecked_all_text; end
   def unchecked_checked?; end
@@ -1246,13 +1268,13 @@ end
 module Capybara::Selenium
 end
 module Capybara::Selenium::Find
-  def build_hints_js(uses_visibility, styles); end
+  def build_hints_js(uses_visibility, styles, position); end
   def es_context; end
   def filter_by_text(elements, texts); end
-  def find_by(format, selector, uses_visibility:, texts:, styles:); end
-  def find_css(selector, uses_visibility: nil, texts: nil, styles: nil, **_options); end
-  def find_xpath(selector, uses_visibility: nil, styles: nil, **_options); end
-  def gather_hints(elements, uses_visibility:, styles:); end
+  def find_by(format, selector, uses_visibility:, texts:, styles:, position:); end
+  def find_css(selector, uses_visibility: nil, texts: nil, styles: nil, position: nil, **_options); end
+  def find_xpath(selector, uses_visibility: nil, styles: nil, position: nil, **_options); end
+  def gather_hints(elements, uses_visibility:, styles:, position:); end
   def is_displayed_atom; end
 end
 module Capybara::Selenium::Scroll
@@ -1290,6 +1312,7 @@ class Capybara::Selenium::Node < Capybara::Driver::Node
   def obscured?(x: nil, y: nil); end
   def path; end
   def readonly?; end
+  def rect; end
   def right_click(keys = nil, **options); end
   def scroll_if_needed; end
   def scroll_to_center; end
@@ -1342,6 +1365,12 @@ module Capybara::Selenium::Node::Html5Drag
   def perform_html5_drag(element, delay); end
   def perform_legacy_drag(element); end
 end
+module Capybara::Selenium::Node::FileInputClickEmulation
+  def attaching_file?; end
+  def click(keys = nil, **options); end
+  def emulate_click; end
+  def visible_file_field?; end
+end
 class Capybara::Selenium::ChromeNode < Capybara::Selenium::Node
   def browser_version(to_float = nil); end
   def capabilities; end
@@ -1359,6 +1388,7 @@ class Capybara::Selenium::ChromeNode < Capybara::Selenium::Node
   def set_text(value, clear: nil, **_unused); end
   def visible?; end
   def w3c?; end
+  include Capybara::Selenium::Node::FileInputClickEmulation
   include Capybara::Selenium::Node::Html5Drag
 end
 module Capybara::Selenium::ChromeLogs
@@ -1396,6 +1426,7 @@ class Capybara::Selenium::FirefoxNode < Capybara::Selenium::Node
   def set_file(value); end
   def upload(local_file); end
   def visible?; end
+  include Capybara::Selenium::Node::FileInputClickEmulation
   include Capybara::Selenium::Node::Html5Drag
 end
 module Capybara::Selenium::Driver::FirefoxDriver

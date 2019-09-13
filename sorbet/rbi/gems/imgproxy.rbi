@@ -46,10 +46,8 @@ class Imgproxy::UrlAdapters::ShrineS3 < Imgproxy::UrlAdapters::Shrine
   def applicable?(image); end
   def url(image); end
 end
-class Imgproxy::UrlAdapters::NotFound < StandardError
-end
-class Imgproxy::UrlAdapters::NotConfigured < StandardError
-end
+class Imgproxy::UrlAdapters::NotFound < StandardError; end
+class Imgproxy::UrlAdapters::NotConfigured < StandardError; end
 class Imgproxy::Config
   def endpoint; end
   def endpoint=(arg0); end
@@ -91,8 +89,7 @@ class Imgproxy::Builder
   def url_for(image); end
   def wrap_array(value); end
 end
-module Imgproxy::Extensions
-end
+module Imgproxy::Extensions; end
 module Imgproxy::Extensions::ActiveStorage
   def imgproxy_url(options = nil); end
 end
