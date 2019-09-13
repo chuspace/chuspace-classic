@@ -21,6 +21,7 @@ module ActiveStorage::Blob::Identifiable; end
 module ActiveStorage::Blob::Identifiable; end
 module ActiveStorage::Blob::Identifiable; end
 module ActiveStorage::Variant; end
+module PostHtmlRenderer::Imgproxy; end
 module T::InterfaceWrapper::Helpers; end
 module T::InterfaceWrapper::Helpers; end
 module T::InterfaceWrapper::Helpers; end

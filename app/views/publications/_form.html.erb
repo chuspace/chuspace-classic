@@ -4,7 +4,7 @@
       <drop-image
         class='avatar__uploader'
         hint='<%= t('.avatar_hint') %>'
-        url='<%= @publication.avatar&.imgproxy_url(width: 150, height: 150) %>'
+        url='<%= @publication.avatar_url(variant: :thumb) %>'
         errors='<%= publication.errors.full_messages_for(:avatar).to_sentence %>'
         param='publication[avatar]'
       >

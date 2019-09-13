@@ -217,7 +217,6 @@ GEM
     image_processing (1.9.3)
       mini_magick (>= 4.9.5, < 5)
       ruby-vips (>= 2.0.13, < 3)
-    imgproxy (1.0.5)
     jaro_winkler (1.5.3)
     jmespath (1.4.0)
     json (2.2.0)
@@ -465,7 +464,6 @@ DEPENDENCIES
   fastimage
   hiredis
   image_processing
-  imgproxy
   logidze
   meta-tags
   mini_mime
