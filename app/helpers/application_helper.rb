@@ -28,6 +28,10 @@ module ApplicationHelper
     layout ? layout[action.to_sym] : nil
   end
 
+  def turbolinks_cache_control_meta_tag
+    tag :meta, name: 'turbolinks-cache-control', content: @turbolinks_cache_control || 'cache'
+  end
+
   private
 
   def layout_classes_mapping

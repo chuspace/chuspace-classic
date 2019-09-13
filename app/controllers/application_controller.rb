@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   include ParamsSanitizer
   include Authentication
   include SetCurrentRequestDetails
+  include TurbolinksCacheControl
 
   after_action :verify_authorized
 
