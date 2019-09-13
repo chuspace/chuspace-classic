@@ -19,7 +19,6 @@ class AvatarUploader < Shrine
          upload_options: { acl: 'public-read' },
          upload_open_options: { response_content_encoding: 'gzip' },
          upload: true,
-         upload_redirect: true,
          expires_in: 90
 
   unless Rails.env.test?
