@@ -22,7 +22,7 @@
         <li>
           Published at <time><%= distance_of_time_in_words_to_now(post.published_at) %></time>
         </li>
-        <% if allowed_to?(:edit?, post) %>
+        <% if Current.user.present? && allowed_to?(:edit?, post) %>
           <li>
             <%= link_to 'Edit', edit_publication_post_path(post.publication, post), class: 'link link--active underline' %>
           </li>

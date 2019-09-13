@@ -32,6 +32,6 @@ module Authentication
   end
 
   def authenticate!
-    redirect_to root_url unless authenticate
+    redirect_to signins_path unless authenticate
   end
 end

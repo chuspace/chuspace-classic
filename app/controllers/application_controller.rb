@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
     policy_name = exception.policy.class.to_s.underscore
     flash[:error] = t "#{policy_name}.#{exception.rule}", scope: 'policy', default: :default
 
-    redirect_to root_path
+    raise ActionController::RoutingError.new('Not Found')
   end
 
   def current_user

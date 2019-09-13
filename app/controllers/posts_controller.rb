@@ -5,6 +5,7 @@ class PostsController < ApplicationController
   before_action :authenticate!, except: %i[show]
   before_action :find_publication
   before_action :find_post, except: %i[show index new create]
+  skip_verify_authorized only: :show
 
   def new
     @post = Post.new(author: Current.user)
@@ -14,8 +15,6 @@ class PostsController < ApplicationController
   def show
     @author = Publication.find_by!(slug: params[:publication_slug])
     @post = @author.posts.find_by!(slug: params[:slug])
-
-    authorize! @post
 
     fresh_when @post, public: true
     redirect_to edit_post_path(@post) if @post.draft?

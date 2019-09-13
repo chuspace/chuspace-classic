@@ -22,6 +22,6 @@ class PostPolicy < ApplicationPolicy
   end
 
   def show?
-    record.published?
+    true
   end
 end
