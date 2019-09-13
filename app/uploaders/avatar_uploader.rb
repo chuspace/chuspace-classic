@@ -13,11 +13,12 @@ class AvatarUploader < Shrine
   plugin :delete_promoted
   plugin :delete_raw
   plugin :derivation_endpoint,
-         secret_key: 'foobar',
+         secret_key: ENV.fetch('DERIVATION_ENDPOINT_SECRET'),
          prefix: 'avatar/variants',
          host: ENV.fetch('AVATAR_ENDPOINT'),
          upload: true,
-         upload_redirect: true
+         upload_redirect: true,
+         expires_in: 90
 
   unless Rails.env.test?
     plugin :restore_cached_data

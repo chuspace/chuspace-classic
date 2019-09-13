@@ -1,3 +1,4 @@
+# typed: false
 module Avatarable
   AVATAR_VARIANTS = { sm: 32, md: 64, lg: 80, xl: 120, thumb: 150, profile: 250 }.freeze
   class AvatarVariantNotFound < StandardError; end
