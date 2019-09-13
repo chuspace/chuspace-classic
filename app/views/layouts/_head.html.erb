@@ -3,9 +3,9 @@
   <%= action_cable_meta_tag %>
   <%= render 'layouts/meta' %>
 
-  <link rel="preload" type="image/png" href="/favicon.png" as="image" type="image/png" />
-  <link rel="preload" type="image/png" href="/chuspace-icon-192.png" as="image" type="image/png" />
-  <link rel="preload" type="image/png" href="/chuspace-icon-512.png" as="image" type="image/png" />
+  <%= preload_pack_asset('media/styles/fonts/noe-display-bold.woff2') %>
+  <%= preload_pack_asset('application.css') %>
+  <%= preload_pack_asset('application.js') %>
 
   <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
   <link rel="preconnect" href="//cdn.jsdelivr.net">
@@ -15,10 +15,6 @@
   <link rel="preconnect" href="//images.chuspace.com">
   <link rel="dns-prefetch" href="//secure.gravatar.com">
   <link rel="preconnect" href="//secure.gravatar.com">
-
-  <%= preload_pack_asset('media/styles/fonts/noe-display-bold.woff2') %>
-  <%= preload_pack_asset('application.css') %>
-  <%= preload_pack_asset('application.js') %>
 
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="apple-touch-icon" href="/chuspace-icon-192.png">
