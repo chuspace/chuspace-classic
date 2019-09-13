@@ -16,7 +16,6 @@ class PostsController < ApplicationController
     @author = Publication.find_by!(slug: params[:publication_slug])
     @post = @author.posts.find_by!(slug: params[:slug])
 
-    fresh_when @post, public: true
     redirect_to edit_post_path(@post) if @post.draft?
   end
 
