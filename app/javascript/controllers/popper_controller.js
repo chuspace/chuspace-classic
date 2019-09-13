@@ -98,6 +98,7 @@ export default class PopperController extends Controller {
           instance.state.isFetching = false
         }
       },
+
       onHidden(instance) {
         const { tooltip } = instance.popperChildren
         instance.state.canFetch = true

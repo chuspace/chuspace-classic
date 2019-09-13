@@ -19,6 +19,7 @@ export default class extends Controller {
         notBottom: 'header--not-bottom'
       }
     })
+
     this.headroom.init()
   }
 }

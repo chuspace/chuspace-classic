@@ -5,22 +5,23 @@
     <article>
       <%= link_to publication_post_path(post.publication, post) do %>
         <div class='header'>
-          <h4 class='font-content'><%= post.title %></h4>
-          <%= content_tag :p, post.summary, class: 'text-grey font-content mt-1' %>
+          <h3 class='font-content'><%= post.title %></h3>
+          <%= content_tag :p, post.summary, class: 'text-grey mt-1' %>
         </div>
       <% end %>
 
-      <ul class='horizontal__list text-sm text-grey mt-2'>
+      <ul class='horizontal__list text-sm text-grey mt-4'>
         <li>
-          <span>
-            By <%= link_to post.author.name, user_path(post.author), class: 'underline' %>
-          </span>
+          By <%= link_to post.author.name, user_path(post.author), class: 'underline' %>
         </li>
         <li>
-          Last edited <%= distance_of_time_in_words_to_now(post.updated_at) %> ago
+          <% unless post.publication.personal? %>
+            in
+            <%= link_to post.publication.name, publication_path(post.publication), class: 'underline' %>
+          <% end %>
         </li>
         <li>
-          Published at <time><%= distance_of_time_in_words_to_now(post.published_at) %></time>
+          <time><%= post.published_at.strftime("%b %d, %Y") %></time>
         </li>
         <% if Current.user.present? && allowed_to?(:edit?, post) %>
           <li>
