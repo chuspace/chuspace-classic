@@ -1,5 +1,4 @@
 <head>
-  <title>Chuspace | Blogging platform for developers</title>
   <%= csrf_meta_tags %>
   <%= action_cable_meta_tag %>
   <%= render 'layouts/meta' %>
@@ -7,7 +6,6 @@
   <link rel="preload" type="image/png" href="/favicon.png" as="image" type="image/png" />
   <link rel="preload" type="image/png" href="/chuspace-icon-192.png" as="image" type="image/png" />
   <link rel="preload" type="image/png" href="/chuspace-icon-512.png" as="image" type="image/png" />
-  <link rel="icon" type="image/png" href="/favicon.png" as="image" type="image/png" />
 
   <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
   <link rel="preconnect" href="//cdn.jsdelivr.net">
@@ -21,6 +19,12 @@
   <%= preload_pack_asset('media/styles/fonts/noe-display-bold.woff2') %>
   <%= preload_pack_asset('application.css') %>
   <%= preload_pack_asset('application.js') %>
+
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/chuspace-icon-192.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/chuspace-icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/chuspace-icon-192.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="/chuspace-icon-192.png">
 
   <%= javascript_pack_tag 'application', defer: true, 'data-turbolinks-track': 'reload' %>
   <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
