@@ -7,7 +7,7 @@ class Posts::PublishController < ApplicationController
 
   def index
     authorize! ::Posts::Publish, context: { post: @post }
-    @published_posts = Current.user.posts.published.where.not(id: @post.id)
+    @published_posts = @publication.posts.published.where.not(id: @post.id)
     render 'posts/edit'
   end
 
@@ -21,6 +21,8 @@ class Posts::PublishController < ApplicationController
     @post.assign_attributes(
       blob_id: @post.blob.oid, slug: @markdown.title, body_html: @markdown.body_html, blob_path: new_blob_path
     )
+
+    puts @post.inspect
 
     if @post.save
       if @post.blob_path_previously_changed?
@@ -51,6 +53,6 @@ class Posts::PublishController < ApplicationController
   end
 
   def find_post
-    @post = Current.user.posts.find_by(slug: params[:post_slug])
+    @post = @publication.posts.find_by(slug: params[:post_slug])
   end
 end

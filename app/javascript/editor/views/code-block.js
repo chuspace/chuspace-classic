@@ -83,7 +83,6 @@ export default class CodeBlockView extends BaseView {
     this.cm.on('focus', () => this.forwardSelection())
 
     if (!this.content) this.cm.focus()
-    this.cm.refresh()
   }
 
   /* Component calls to set cm instance mode and node attrs */

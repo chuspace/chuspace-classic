@@ -45,6 +45,11 @@ export default class CodeEditor extends LitElement {
 
     this.loaded = false
     this.lines = 0
+    this.options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: [0, 0.25, 0.5, 0.75, 1]
+    }
   }
 
   setMode = async (mode: string) => {
@@ -54,23 +59,52 @@ export default class CodeEditor extends LitElement {
     this.onLanguageChange(mode)
   }
 
+  attachObserver = () => {
+    if (this.observer) {
+      this.removeObserver()
+    }
+
+    this.observer = new IntersectionObserver(this.handleIntersection.bind(this), this.options)
+    this.observer.observe(this)
+  }
+
+  removeObserver = () => {
+    this.observer.unobserve(this)
+    this.observer = null
+  }
+
+  handleIntersection(entries: Array<any>) {
+    entries.forEach(({ intersectionRatio }) => {
+      if (intersectionRatio === 0) {
+        if (this.timer) {
+          clearTimeout(this.timer)
+          this.timer = null
+        }
+      } else if (intersectionRatio > 0.2) {
+        this.timer = setTimeout(() => this.loadEditor(), this.delay)
+      }
+    })
+  }
+
+  loadEditor = async () => {
+    if (this.cm) return
+    const codeNode = this.querySelector('.code-editor')
+    await loadMode(this.mode)
+    this.cm = await this.createCM(codeNode)
+    if (this.onInit) await this.onInit(this.cm)
+
+    this.loaded = true
+  }
+
   async connectedCallback() {
     super.connectedCallback()
     this.lines = this.content.split(/\r\n|\r|\n/).length
-
-    await loadMode(this.mode)
 
     try {
       this.readonly = JSON.parse(this.readonly)
     } catch (e) {}
 
-    const codeNode = this.querySelector('.code-editor')
-    this.cm = await this.createCM(codeNode)
-    this.cm.refresh()
-
-    if (this.onInit) await this.onInit(this.cm)
-
-    this.loaded = true
+    this.attachObserver()
   }
 
   createRenderRoot() {
