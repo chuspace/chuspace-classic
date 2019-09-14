@@ -61,7 +61,6 @@ export default class PopperController extends Controller {
     tippy(links, {
       content: INITIAL_CONTENT,
       animation: 'scale',
-      animateFill: false,
       theme: 'light',
       delay: 300,
       maxWidth: 350,
@@ -92,6 +91,8 @@ export default class PopperController extends Controller {
           }
 
           instance.setContent(this.tooltipMarkup(href, data))
+          const height = instance.popperChildren.tooltip.clientHeight
+          instance.popper.style.height = height + 'px'
         } catch (error) {
           instance.setContent('Link preview unavailable')
         } finally {

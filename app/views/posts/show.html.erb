@@ -15,10 +15,7 @@
     <%= link_to user_path(@post.author), class: 'flex items-center' do %>
       <%= component 'avatar', avatar_url: @post.author.avatar_url(variant: :sm), gravatar_url: @post.author.gravatar_url(variant: :sm), variant: :sm %>
       <div class='ml-4 flex-1 text-sm'>
-        <p>
-          <%= @post.author.name %>
-        </p>
-
+        <p><%= @post.author.name %></p>
         <%= content_tag :p, @post.published_at.strftime("%b %d, %Y"), class: 'text-grey' %>
       </div>
     <% end %>

@@ -32,7 +32,6 @@ class Post < ApplicationRecord
   delegate :content, to: :blob, prefix: true
 
   DEFAULT_TITLE = 'Untitled'
-  DEFAULT_SUMMARY = 'No summary'
 
   aasm column: :status, enum: true do
     state :draft, initial: true
@@ -84,7 +83,7 @@ class Post < ApplicationRecord
   end
 
   def summary
-    super || draft.summary.presence&.squish || DEFAULT_SUMMARY
+    super || draft.summary.presence&.squish
   end
 
   def outdated?
