@@ -8,10 +8,10 @@ module PublicationHelper
         if publication.personal
           component(
             'avatar',
-            avatar_url: Current.user.avatar_url, gravatar_url: Current.user.gravatar_url, variant: :sm
+            avatar_url: Current.user.avatar_url, gravatar_url: Current.user.gravatar_url, variant: :xs
           )
         else
-          component('avatar', avatar_url: publication.avatar_url, variant: :sm)
+          component('avatar', avatar_url: publication.avatar_url, variant: :xs)
         end
 
       OpenStruct.new(

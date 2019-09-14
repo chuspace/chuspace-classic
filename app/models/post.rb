@@ -10,9 +10,9 @@ class Post < ApplicationRecord
   enum status: { draft: 0, published: 1 }
 
   validates_presence_of :slug, :blob_path, :status
-  validates_presence_of :title, :summary, :topics, :body_html, :published_at, :blob_id, if: :published?
+  validates_presence_of :title, :topics, :body_html, :published_at, :blob_id, if: :published?
   validates_length_of :title, :slug, maximum: 100, if: :published?
-  validates_length_of :summary, maximum: 140, if: :published?
+  validates_length_of :summary, maximum: 140, if: :published?, allow_blank: true
   validates_length_of :topics, maximum: 5, if: :published?
 
   validates_db_uniqueness_of :slug, scope: %i[publication_id]
@@ -32,6 +32,7 @@ class Post < ApplicationRecord
   delegate :content, to: :blob, prefix: true
 
   DEFAULT_TITLE = 'Untitled'
+  DEFAULT_SUMMARY = 'No summary'
 
   aasm column: :status, enum: true do
     state :draft, initial: true
@@ -79,11 +80,11 @@ class Post < ApplicationRecord
   end
 
   def title
-    super || draft.title || DEFAULT_TITLE
+    super || draft.title.presence&.squish || DEFAULT_TITLE
   end
 
   def summary
-    super || draft.summary
+    super || draft.summary.presence&.squish || DEFAULT_SUMMARY
   end
 
   def outdated?

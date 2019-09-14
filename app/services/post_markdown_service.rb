@@ -3,49 +3,46 @@
 
 class PostMarkdownService
   extend T::Sig
-
-  attr_reader :content, :markdown_doc
+  attr_reader :content, :markdown_doc, :title, :summary, :body_md, :body_html
 
   sig { params(content: T.nilable(String)).returns(CommonMarker::Node) }
   def initialize(content:)
+    @title = nil
+    @summary = nil
+    @body_md = nil
+    @body_html = nil
+
     @content = content
     @markdown_doc ||= CommonMarker.render_doc(content || '')
   end
 
   sig { params(content: T.nilable(String)).returns(PostMarkdownService) }
   def self.call(content:)
-    new(content: content)
+    new(content: content).parse
   end
 
-  sig { returns(T.nilable(String)) }
-  def title
-    title = nil
+  sig { returns(T.nilable(PostMarkdownService)) }
+  def parse
+    @markdown_doc.each do |node|
+      if title?(node) && @title.blank?
+        @title = string_content_for(node).presence
+        node.delete
+        next
+      end
 
-    markdown_doc.each do |node|
-      title = string_content_for(node) if title?(node) || node.type == :header || node.type == :paragraph
-      break if title.present?
+      if summary?(node) && @summary.blank?
+        @summary = string_content_for(node).presence
+        node.delete
+        next
+      end
+
+      @body_md = @markdown_doc
+      @body_html = PostHtmlRenderer.new.render(@markdown_doc)
+
+      break if @body_md.present?
     end
 
-    title
-  end
-
-  sig { returns(T.nilable(String)) }
-  def summary
-    summary = nil
-
-    markdown_doc.each do |node|
-      next if title?(node) || string_content_for(node) == title
-
-      summary = string_content_for(node) if summary?(node) || node.type == :header || node.type == :paragraph
-      break if summary.present?
-    end
-
-    summary
-  end
-
-  sig { returns(T.nilable(String)) }
-  def body_html
-    PostHtmlRenderer.new.render(markdown_doc)
+    self
   end
 
   private

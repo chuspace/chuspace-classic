@@ -1,14 +1,17 @@
 <div class='flex items-center flex-1' id='post_header'>
   <div class='flex-1 flex items-center ml-4'>
-    <%= link_to publication_path(@publication), class: "mr-4" do %>
-      <%= component(
-          'avatar',
-          avatar_url: @publication.avatar_url || @publication.owner.avatar_url,
-          gravatar_url: @publication.owner.gravatar_url,
-          variant: :sm
-        )
-      %>
+    <% unless @publication.personal %>
+      <%= link_to publication_path(@publication), class: "mr-4" do %>
+        <%= component(
+            'avatar',
+            avatar_url: @publication.avatar_url || @publication.owner.avatar_url,
+            gravatar_url: @publication.owner.gravatar_url,
+            variant: :xs
+          )
+        %>
+      <% end %>
     <% end %>
+
     <div class="mr-4 badge badge--grey"><%= post.status.titlecase %></div>
     <div class="text-grey text-sm" id='editor-status'><%= post.status_label %></div>
   </div>

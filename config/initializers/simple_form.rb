@@ -27,7 +27,8 @@ SimpleForm.setup do |config|
   config.default_form_class = 'form'
   config.label_text = ->(label, required, explicit_label) { "#{label} #{required}" }
 
-  config.wrappers :vertical_radio_and_checkboxes, tag: 'div', class: 'form_field__container', error_class: 'form_field__container--invalid' do |b|
+  config.wrappers :vertical_radio_and_checkboxes,
+                  tag: 'div', class: 'form_field__container', error_class: 'form_field__container--invalid' do |b|
     b.use :html5
     b.wrapper tag: 'label', class: 'input__label' do |bb|
       bb.use :label_text
@@ -36,7 +37,7 @@ SimpleForm.setup do |config|
     b.wrapper tag: 'div', class: 'input__container input__container--inline' do |ba|
       ba.use :input, class: 'input input--inline'
       ba.use :error, wrap_with: { tag: 'span', class: 'input__hint--inline' }
-      ba.use :hint,  wrap_with: { tag: 'div', class: 'input__hint' }
+      ba.use :hint, wrap_with: { tag: 'div', class: 'input__hint' }
     end
   end
 
@@ -50,7 +51,6 @@ SimpleForm.setup do |config|
   config.i18n_scope = 'form'
 
   config.wrapper_mappings = {
-    check_boxes: :vertical_radio_and_checkboxes,
-    radio_buttons: :vertical_radio_and_checkboxes
+    check_boxes: :vertical_radio_and_checkboxes, radio_buttons: :vertical_radio_and_checkboxes
   }
 end

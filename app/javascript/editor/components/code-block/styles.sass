@@ -8,8 +8,11 @@ code-editor
     @apply rounded shadow-lg pb-4
 
     .CodeMirror
-      @apply rounded-b max-w-full pt-4 pb-4 font-normal overflow-y-auto
-      min-height: 600px
+      @apply rounded-b max-w-full pt-4 font-normal overflow-y-auto
+      height: auto
+
+      .CodeMirror-scroll
+        max-height: 600px
 
   .code-editor-toolbar
     @apply flex items-center p-4 w-full relative rounded-t text-base bg-white text-sm bg-grey-lightest

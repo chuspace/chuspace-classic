@@ -22,8 +22,6 @@ class Posts::PublishController < ApplicationController
       blob_id: @post.blob.oid, slug: @markdown.title, body_html: @markdown.body_html, blob_path: new_blob_path
     )
 
-    puts @post.inspect
-
     if @post.save
       if @post.blob_path_previously_changed?
         @post.blob.rename(

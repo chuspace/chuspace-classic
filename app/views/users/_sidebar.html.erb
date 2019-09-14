@@ -42,7 +42,7 @@
   <div class='flex items-center mt-4' role='img' aria-label='List of <%= @user.name %> publications'>
     <% @user.publications.listed.each do |publication| %>
       <%= link_to publication_path(publication) do %>
-        <%= component 'avatar', avatar_url: publication.avatar_url, variant: :sm, css_class: 'mr-2', options: { title: publication.name, alt: publication.name } %>
+        <%= component 'avatar', avatar_url: publication.avatar_url, variant: :xs, css_class: 'mr-2', options: { title: publication.name, alt: publication.name } %>
       <% end %>
     <% end %>
   </div>

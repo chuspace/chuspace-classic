@@ -11,7 +11,7 @@
 
   <%= component 'dropdown', flush: true, items: nav_items do |d| %>
     <% d.opener do %>
-      <%= component('avatar', avatar_url: Current.user.avatar_url, gravatar_url: Current.user.gravatar_url, variant: :sm) %>
+      <%= component('avatar', avatar_url: Current.user.avatar_url, gravatar_url: Current.user.gravatar_url, variant: :xs) %>
     <% end %>
   <% end %>
 </div>
