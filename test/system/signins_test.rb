@@ -7,7 +7,8 @@ class SigninsTest < ApplicationSystemTestCase
   include ActiveJob::TestHelper
 
   def setup
-    @email = 'gaurav@chuspace.com'
+    @email = "gaurav-#{Time.now.to_i}@chuspace.com"
+    @user = User.create!(name: 'Gaurav Tiwari', email: @email, nickname: "gaurav-#{Time.now.to_i}")
   end
 
   test 'Creating signin' do
