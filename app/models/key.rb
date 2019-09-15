@@ -13,7 +13,6 @@ class Key < ApplicationRecord
   private
 
   def assign_fingerprint
-    puts SSHKey.valid_ssh_public_key?(key).inspect
     self.fingerprint = SSHKey.fingerprint(key) if key && SSHKey.valid_ssh_public_key?(key)
   end
 

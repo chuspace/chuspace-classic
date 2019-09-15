@@ -40,14 +40,12 @@ class PublicationsController < ApplicationController
   end
 
   def update
-    @publication.assign_attributes(publication_params)
     authorize! @publication
 
-    if @publication.save
+    if @publication.update(publication_params)
       flash[:notice] = "#{@publication.name} publication successfully updated"
       redirect_to publication_path(@publication)
     else
-      @publication = @publication.reload
       render :edit, turbolinks: true
     end
   end

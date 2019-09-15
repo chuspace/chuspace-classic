@@ -22,7 +22,7 @@ class Settings::KeysController < ApplicationController
     if @key.save
       redirect_to settings_keys_path, notice: t('settings.keys.create.success')
     else
-      render :new
+      render :new, turblinks: true
     end
   end
 
