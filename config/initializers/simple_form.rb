@@ -17,7 +17,7 @@ SimpleForm.setup do |config|
       input.optional :pattern
       input.optional :min_max
       input.optional :readonly
-      input.use :input, class: 'input', autocomplete: 'off', spellcheck: 'off'
+      input.use :input, class: 'input', autocomplete: 'off', spellcheck: 'off', 'data-gramm': false
     end
 
     b.use :hint, wrap_with: { tag: :span, class: 'input__hint' }
