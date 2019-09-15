@@ -29,6 +29,7 @@ class PostsController < ApplicationController
       slug = markdown.title&.to_slug&.to_ascii&.normalize&.to_s
       post = Current.user.posts.build(publication: @publication, slug: slug)
       authorize! post
+
       post.blob_path = post.repo_dir.join("#{slug}.md").to_path
       blob = @publication.repository.create_blob(path: post.blob_path, content: markdown.content)
 
@@ -51,8 +52,10 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    if @post.blob.destroy(committer: Current.user) && @post.destroy
-      redirect_to user_drafts_path(@post.author)
+    authorize! @post
+
+    if @post.destroy && @post.blob.destroy(committer: Current.user)
+      redirect_back(fallback_location: publication_path(@publication))
     else
       redirect_to post_path(@post)
     end
@@ -69,6 +72,6 @@ class PostsController < ApplicationController
   end
 
   def find_post
-    @post = Post.find_by!(slug: params[:slug])
+    @post = @publication.posts.find_by!(slug: params[:slug])
   end
 end

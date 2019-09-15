@@ -7,7 +7,7 @@ class AvatarComponent < Components::Component
   attribute :avatar_url
   attribute :gravatar_url
   attribute :css_class
-  attribute :variant, default: :sm
+  attribute :variant, default: :xs
   attribute :options, default: {}
 
   def size

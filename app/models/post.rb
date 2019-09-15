@@ -24,7 +24,7 @@ class Post < ApplicationRecord
 
   validates :canonical_url, url: true, allow_blank: true
 
-  after_create :sync_topics, if: :topics_changed?
+  after_update :sync_topics, if: :topics_previously_changed?
 
   validates :slug, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
   validates :published_at, date: true, if: :published?
@@ -32,6 +32,7 @@ class Post < ApplicationRecord
   delegate :content, to: :blob, prefix: true
 
   DEFAULT_TITLE = 'Untitled'
+  WORDS_PER_MINUTE = 200
 
   aasm column: :status, enum: true do
     state :draft, initial: true
@@ -96,6 +97,15 @@ class Post < ApplicationRecord
 
   def formatted_published_at
     published_at.strftime('%b %d, %Y')
+  end
+
+  def words_count
+    text = Nokogiri.HTML(body_html).at('body').inner_text
+    text.scan(/\w+/).size
+  end
+
+  def reading_time
+    (words_count / WORDS_PER_MINUTE).to_i
   end
 
   def topics_list
