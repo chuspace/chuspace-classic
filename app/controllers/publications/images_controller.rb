@@ -17,7 +17,7 @@ class Publications::ImagesController < ApplicationController
     if blob.persisted?
       render json: { created: true, url: publication_image_path(@publication, name) }
     else
-      render json: { message: blob.errors.full_messages.to_sentence, created: false }, status: :unprocessable_entity
+      render json: { created: false, message: blob.errors.full_messages.to_sentence }, status: :unprocessable_entity
     end
   end
 

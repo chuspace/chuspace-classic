@@ -12,15 +12,12 @@ class Posts::PublishController < ApplicationController
   end
 
   def create
-    authorize! ::Posts::Publish, context: { post: @post }
-
     @post.assign_attributes(publish_params)
     @post.assign_attributes(status: 'published', published_at: Time.now) if @post.may_publish?
     new_blob_path = Pathname.new(@post.repo_dir).join("#{@post.slug}.md").to_path
+    @post.assign_attributes(blob_id: @post.blob.oid, body_html: @markdown.body_html, blob_path: new_blob_path)
 
-    @post.assign_attributes(
-      blob_id: @post.blob.oid, slug: @markdown.title, body_html: @markdown.body_html, blob_path: new_blob_path
-    )
+    authorize! ::Posts::Publish, context: { post: @post }
 
     if @post.save
       if @post.blob_path_previously_changed?
@@ -31,7 +28,7 @@ class Posts::PublishController < ApplicationController
       redirect_to publication_post_path(@post.publication, @post)
     else
       @post.reload
-      render 'posts/edit'
+      render 'posts/edit', turbolinks: true
     end
   end
 

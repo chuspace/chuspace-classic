@@ -8,14 +8,18 @@ class Publications::InvitationsController < ApplicationController
   skip_verify_authorized only: :accept, if: -> { Current.user.blank? }
 
   def create
+    @collaborators = @publication.collaborators.order(:created_at)
     @invitation = @publication.invitations.build(invitation_params)
     @invitation.sender = Current.user
     authorize! @invitation
 
     if @invitation.save
-      redirect_to publication_people_path(@publication), notice: t('invitations.create.success', identifier: @invitation.identifier, publication: @publication.name)
+      redirect_to(
+        publication_people_path(@publication),
+        notice: t('invitations.create.success', identifier: @invitation.identifier, publication: @publication.name)
+      )
     else
-      redirect_to publication_people_path(@publication), notice: @invitation.errors.full_messages.to_sentence
+      render 'publications/people/index', turbolinks: true
     end
   end
 
@@ -25,9 +29,13 @@ class Publications::InvitationsController < ApplicationController
     if @invitation
       if Current.user.blank?
         if @invitation.recipient.blank?
-          redirect_to(signups_path(return_to: accept_publication_invitations_path(@publication, invite_token: @invitation.code)))
+          redirect_to(
+            signups_path(return_to: accept_publication_invitations_path(@publication, invite_token: @invitation.code))
+          )
         else
-          redirect_to(signins_path(return_to: accept_publication_invitations_path(@publication, invite_token: @invitation.code)))
+          redirect_to(
+            signins_path(return_to: accept_publication_invitations_path(@publication, invite_token: @invitation.code))
+          )
         end
       else
         @invitation = @publication.invitations.find_by_code(params[:invite_token])
@@ -36,7 +44,10 @@ class Publications::InvitationsController < ApplicationController
         @publication.collaborators.create(role: @invitation.role, user: @invitation.recipient)
         @invitation.destroy
 
-        redirect_to publication_people_path(@publication), notice: t('invitations.accept.success', publication: @publication.name, role: @invitation.role)
+        redirect_to(
+          publication_people_path(@publication),
+          notice: t('invitations.accept.success', publication: @publication.name, role: @invitation.role)
+        )
       end
     else
       redirect_to publication_path(@publication, error: 'Invitation not found')

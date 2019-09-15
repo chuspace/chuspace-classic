@@ -2,10 +2,11 @@
 # frozen_string_literal: true
 
 class Post < ApplicationRecord
-  include AASM
+  include AASM, Topicable, Slugable
 
   has_ancestry
   has_logidze
+  sluggable :title
 
   enum status: { draft: 0, published: 1 }
 
@@ -13,7 +14,6 @@ class Post < ApplicationRecord
   validates_presence_of :title, :topics, :body_html, :published_at, :blob_id, if: :published?
   validates_length_of :title, :slug, maximum: 100, if: :published?
   validates_length_of :summary, maximum: 140, if: :published?, allow_blank: true
-  validates_length_of :topics, maximum: 5, if: :published?
 
   validates_db_uniqueness_of :slug, scope: %i[publication_id]
   validates_db_uniqueness_of :blob_path, scope: %i[publication_id]
@@ -23,10 +23,6 @@ class Post < ApplicationRecord
   db_belongs_to :publication, counter_cache: true, touch: true
 
   validates :canonical_url, url: true, allow_blank: true
-
-  after_update :sync_topics, if: :topics_previously_changed?
-
-  validates :slug, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
   validates :published_at, date: true, if: :published?
 
   delegate :content, to: :blob, prefix: true
@@ -49,18 +45,6 @@ class Post < ApplicationRecord
 
   def blob
     @blob ||= publication.repository.blob_at(path: blob_path)
-  end
-
-  def to_param
-    slug
-  end
-
-  def slug=(val)
-    super(val&.to_slug&.to_ascii&.normalize&.to_s)
-  end
-
-  def topics=(val)
-    super(val&.map { |topic| topic&.to_slug&.to_ascii&.normalize&.to_s })
   end
 
   def parent=(val)
@@ -108,10 +92,6 @@ class Post < ApplicationRecord
     (words_count / WORDS_PER_MINUTE).to_i
   end
 
-  def topics_list
-    topics&.join(',')
-  end
-
   def publish_label
     published? ? 'Republish' : 'Publish'
   end
@@ -152,7 +132,6 @@ class Post < ApplicationRecord
       index: true,
       follow: true,
       author: author.name,
-      'theme-color': '#000000',
       canonical: canonical_url || Rails.application.routes.url_helpers.publication_post_url(author, self),
       og: {
         title: :title,
@@ -168,11 +147,5 @@ class Post < ApplicationRecord
 
   def liked_by?(user:)
     likes.where(user: user).exists?
-  end
-
-  private
-
-  def sync_topics
-    topics.each { |name| Topic.find_or_create_by(name: name) }
   end
 end

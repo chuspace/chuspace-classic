@@ -55,7 +55,7 @@
         <div class='form_field__container'>
           <label class="input__label" for="publication_topics">Topics</label>
           <div class='input__container'>
-            <input type='text' class="input autocomplete__input" id='publication_topics' />
+            <input type='text' class="input autocomplete__input" id='publication_topics' name='publication[topics][]' value='' />
           </div>
 
           <% if publication.errors.include?(:topics) %>

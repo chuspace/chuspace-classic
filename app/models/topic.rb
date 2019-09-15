@@ -2,15 +2,15 @@
 # frozen_string_literal: true
 
 class Topic < ApplicationRecord
+  before_validation :format_name
+
   validates :name, presence: true
   validates :name, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
   validates_db_uniqueness_of :name
 
-  def name=(val)
-    super(val&.to_slug&.to_ascii&.normalize&.to_s)
-  end
+  private
 
-  def to_param
-    name
+  def format_name
+    self.name = name&.to_slug&.to_ascii&.normalize&.to_s
   end
 end

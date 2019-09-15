@@ -27,7 +27,7 @@ class PublicationsController < ApplicationController
     if @publication.save
       redirect_to publication_path(@publication), notice: 'Publication successfully created'
     else
-      render :new
+      render :new, turbolinks: true
     end
   end
 
@@ -48,7 +48,7 @@ class PublicationsController < ApplicationController
       redirect_to publication_path(@publication)
     else
       @publication = @publication.reload
-      render :edit
+      render :edit, turbolinks: true
     end
   end
 

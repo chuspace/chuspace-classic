@@ -30,9 +30,7 @@ class Publications::PeopleController < ApplicationController
     @query = params[:q]
     @users = User.search(query: @query)
 
-    respond_to do |type|
-      type.html_fragment { render partial: 'publications/people/autocomplete' }
-    end
+    respond_to { |type| type.html_fragment { render partial: 'publications/people/autocomplete' } }
   end
 
   private

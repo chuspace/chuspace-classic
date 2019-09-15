@@ -2,11 +2,10 @@
 # frozen_string_literal: true
 
 class Publication < ApplicationRecord
-  include Repoable, Avatarable, AvatarUploader::Attachment.new(:avatar)
-
+  include Repoable, Avatarable, Topicable, Slugable, AvatarUploader::Attachment.new(:avatar)
   UNLISTED = %w[policy site]
 
-  before_validation :assign_slug, if: -> { name_changed? && !slug_changed? }
+  sluggable :name
   before_validation :add_owning_collaboration, on: :create
 
   validates_presence_of :name, :slug
@@ -33,19 +32,7 @@ class Publication < ApplicationRecord
 
   delegate :count, to: :members, prefix: true
 
-  def to_param
-    slug
-  end
-
-  def topics_list
-    topics&.join(',')
-  end
-
   private
-
-  def assign_slug
-    self.slug = name&.to_slug&.to_ascii&.normalize&.to_s
-  end
 
   def add_owning_collaboration
     self.owning_collaboration = build_owning_collaboration(user: owner, publication: self, role: 'owner')

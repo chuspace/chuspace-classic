@@ -58,6 +58,13 @@ en:
               invalid: should be a valid url
             location:
               invalid: should be a valid name, no special characters
+        invitation:
+          attributes:
+            identifier:
+              error: is invalid. Should be either email or username
+              invalid: is invalid. Should be either email or username
+              taken: is already invited
+
   chuspace:
     pitch: |
       Chuspace is a collaborative blogging platform for developers like Github,

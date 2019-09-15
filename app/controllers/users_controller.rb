@@ -18,7 +18,7 @@ class UsersController < ApplicationController
       flash[:notice] = 'Profile successfully updated'
       redirect_to settings_profiles_path
     else
-      render 'settings/profiles/index'
+      render 'settings/profiles/index', turbolinks: true
     end
   end
 

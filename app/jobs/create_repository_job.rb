@@ -1,3 +1,6 @@
+# typed: false
+# frozen_string_literal: true
+
 class CreateRepositoryJob < ApplicationJob
   queue_as :default
 

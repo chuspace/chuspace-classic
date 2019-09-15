@@ -10,7 +10,7 @@
   </input-check>
 
   <div class='flex items-center mt-8'>
-    <%= f.button :button, 'Sign up for Chuspace' %>
+    <%= f.button :button, 'Sign up for Chuspace', data: { 'disable-with': 'Signing up...' } %>
     <%= link_to('Sign in', signins_path, class: 'link link--default text-sm underline ml-4') %>
   </div>
 <% end %>
