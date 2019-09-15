@@ -19,8 +19,9 @@ class TopicTest < ActiveSupport::TestCase
   end
 
   test 'topic name uniqueness' do
-    topic = Topic.new(name: 'ruby')
-    refute topic.valid?
-    assert_equal ['Name has already been taken'], topic.errors.full_messages_for(:name)
+    topic = Topic.create(name: 'ruby')
+    topic1 = Topic.new(name: 'ruby')
+    refute topic1.valid?
+    assert_equal ['Name has already been taken'], topic1.errors.full_messages_for(:name)
   end
 end

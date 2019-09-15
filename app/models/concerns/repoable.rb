@@ -10,7 +10,7 @@ module Repoable
     validates_db_uniqueness_of :repo_path
 
     before_validation :assign_default_attributes
-    after_create -> { CreateRepositoryJob.perform_later(name: repo_name, path: repo_path, author_id: owner.id) }
+    after_create -> { repository&.create }
     before_update :rename, if: :repo_path_changed?
 
     after_commit -> { @repository = nil }
