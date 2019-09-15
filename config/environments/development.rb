@@ -36,9 +36,9 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   # Use mailcatcher for delivery. View emails at http://localhost:1080/
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = { host: 'localhost:5000', port: 1_025 }
-  config.action_mailer.asset_host = 'http://localhost:5000'
+  config.action_mailer.delivery_method = :ses
+  # config.action_mailer.smtp_settings = { host: 'localhost:5000', port: 1_025 }
+  # config.action_mailer.asset_host = 'http://localhost:5000'
   config.hosts << 'localhost:5000'
   config.hosts << ENV['IMGPROXY_HOST_WITH_PORT']
   config.default_url_options = { host: 'localhost:5000' }

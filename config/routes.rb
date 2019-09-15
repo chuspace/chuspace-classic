@@ -7,10 +7,7 @@ Rails.application.routes.draw do
 
   get :about, to: 'pages#about', format: :html, as: :about
 
-  resources :signins, path: 'signin', only: %i[index create destroy] do
-    collection { resources :tokens, only: %i[index create], as: :signin_token, module: :signins, path: :token }
-  end
-
+  resources :signins, path: 'signin', only: %i[index create destroy]
   resources :signups, path: 'signup', only: %i[index create]
 
   resources :check_nicknames, only: :create

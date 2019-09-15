@@ -1,135 +1,138 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
-  <head>
-    <!--[if gte mso 9]>
-    <xml>
-    <o:OfficeDocumentSettings>
-    <o:AllowPNG/>
-    <o:PixelsPerInch>96</o:PixelsPerInch>
-    </o:OfficeDocumentSettings>
-    </xml>
-    <![endif]-->
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="format-detection" content="date=no" />
-    <meta name="format-detection" content="address=no" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="x-apple-disable-message-reformatting" />
+<head>
+	<!--[if gte mso 9]>
+	<xml>
+		<o:OfficeDocumentSettings>
+		<o:AllowPNG/>
+		<o:PixelsPerInch>96</o:PixelsPerInch>
+		</o:OfficeDocumentSettings>
+	</xml>
+	<![endif]-->
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="format-detection" content="date=no" />
+	<meta name="format-detection" content="address=no" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="x-apple-disable-message-reformatting" />
     <!--[if !mso]><!-->
-    <link href="https://rsms.me/inter/inter.css" rel="stylesheet" />
-    <!--<![endif]-->
-    <title><%= @subject %></title>
-    <!--[if gte mso 9]>
-    <style type="text/css" media="all">
-      sup { font-size: 100% !important; }
-    </style>
-    <![endif]-->
+  <link href="https://rsms.me/inter/inter.css" rel="stylesheet" />
+  <%= preload_pack_asset 'media/styles/fonts/noe-display-bold.woff2' %>
 
-	  <style type="text/css" media="screen">
-      html, body {
-        font-family: 'Inter', 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif!important;
-        box-sizing: border-box;
-        font-size: 16px;
-        -webkit-font-smoothing: antialiased;
-        -webkit-text-size-adjust: none;
-        width: 100% !important;
-        height: 100%;
-        line-height: 1.6;
-        background: #fff;
-        margin: 0;
-        padding: 0;
-        color: #222;
-      }
+  <!--<![endif]-->
+	<title><%= @subject %></title>
+	<!--[if gte mso 9]>
+	<style type="text/css" media="all">
+		sup { font-size: 100% !important; }
+	</style>
+	<![endif]-->
 
-      * { margin: 0; padding: 0; font-family: 'Inter', 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif!important; }
-      .mt-20 { margin-top: 20px; }
-      .mt-40 { margin-top: 40px; }
-      .mb-10 { margin-bottom: 10px; }
-      .mb-20 { margin-bottom: 20px; }
-      .my-20 { margin-top: 20px; margin-bottom: 20px; }
-      .bordered__box { border: 1px solid #ccc; padding: 10px; }
-      .center { text-align: center; }
-      .mx-auto { margin-left: auto; margin-right: auto; }
-      .avatar--xl { width: 120px; height: 120px; border-radius: 4px; }
 
-      .container {
-        min-width: 600px;
-        width: 600px;
-        margin: 0 auto;
-        vertical-align: top;
-        display: block;
-      }
+	<style type="text/css" media="screen">
+    @font-face {
+      font-family: 'Logo';
+      src: url('<%= asset_pack_url('media/styles/fonts/noe-display-bold.woff2') %>');
+      src: url('<%= asset_pack_url('media/styles/fonts/noe-display-bold.woff2') %>') format("embedded-opentype"), url('<%= asset_pack_url('media/styles/fonts/noe-display-bold.eot') %>') format("eot"), url('<%= asset_pack_url('media/styles/fonts/noe-display-bold.woff') %>') format("woff"), url('<%= asset_pack_url('media/styles/fonts/noe-display-bold.ttf') %>') format("truetype")
+      font-weight: normal;
+      font-style: normal;
+    }
 
-      .section {
-        margin-top: 50px;
-      }
+		body { font-family: 'Inter', 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif!important; line-height: 1.6; font-size: 16px; padding:0 !important; margin:0 !important; display:block !important; min-width:100% !important; width:100% !important; background:#ffffff; -webkit-text-size-adjust:none }
+		a { color:#222; text-decoration:none; font-family: 'Inter', 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif!important; }
+		img { -ms-interpolation-mode: bicubic; }
+    p { line-height: 1.6; font-size: 16px; font-weight: 300; font-family: 'Inter', 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif!important; color:#222; }
+    .salutation { font-weight: 500!important; font-size: 18px!important; }
+    .logo { font-family: 'Logo',  Inter, BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif!important; }
+    .small__text { font-size: 12px; color: #999999; font-weight: normal; font-family: 'Inter', 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif!important; }
+    .mt-20 { margin-top: 20px; }
+    .mt-40 { margin-top: 40px; }
+    .mb-10 { margin-bottom: 10px; }
+    .mb-20 { margin-bottom: 20px; }
+    .my-20 { margin-top: 20px; margin-bottom: 20px; }
+    .center { text-align: center; }
+    .mx-auto { margin-left: auto; margin-right: auto; }
+    .avatar--xl { width: 120px; height: 120px; border-radius: 4px; }
+    .section { margin-top: 50px; }
+    .button {
+      display: inline-block;
+      font-size: 15px;
+      color: #ffffff!important;
+      text-decoration: none;
+      font-weight: medium;
+      text-align: center;
+      border-radius: 5px;
+      background: #6898da;
+      padding: 5px 15px;
+    }
 
-      .small__text {
-        font-size: 12px;
-        color: #999999;
-        font-weight: normal;
-      }
+		@media only screen and (max-device-width: 480px), only screen and (max-width: 480px) {
+			.mobile-shell { width: 100% !important; min-width: 100% !important; }
+			.center { margin: 0 auto !important; }
+      .td { width: 100% !important; min-width: 100% !important; }
+      .p20-15 { padding: 20px 15px !important; }
+		}
+	</style>
+</head>
+<body class="body" style="padding:0 !important; margin:0 !important; display:block !important; min-width:100% !important; width:100% !important; background:#ffffff; -webkit-text-size-adjust:none">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
+		<tr>
+			<td align="center" valign="top">
+				<table width="800" border="0" cellspacing="0" cellpadding="0" class="mobile-shell">
+					<tr>
+						<td class="td" style="width:800px; min-width:800px; padding:0; margin:0; font-weight:normal;">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td style="padding: 30px 150px 0;" class="p20-15">
+										<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<tr>
+												<td style="padding-bottom: 38px;">
+													<table width="100%" border="0" cellspacing="0" cellpadding="0">
+														<tr>
+															<td style='font-size: 30px; font-weight: 700;'>
+																<%= link_to root_url, target: :blank, style: 'color:#222', class: 'logo' do %>
+																	Chuspace <span class='small__text'>axiom</span>
+																<% end %>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+											<%= yield %>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
 
-      .grey__text {
-        color: #999999;
-        font-size: 14px;
-      }
-
-      .button {
-        display: inline-block;
-        color: #ffffff!important;
-        text-decoration: none;
-        font-weight: bold;
-        text-align: center;
-        border-radius: 5px;
-        background: #6898da;
-        padding: 10px 15px;
-      }
-
-      @media only screen and (max-device-width: 480px), only screen and (max-width: 480px) {
-        .container {
-          max-width: 100%;
-          padding: 0 20px;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <table style="width: 100%;" width='100%'>
-      <tr>
-        <td class='container'>
-          <div class='section'>
-            <table>
-              <tr>
-                <td style="font-size: 30px; font-weight: 700;">
-                  <span style='background-color: rgba(0, 0, 0, 0.2); padding-left: 5px;'>Chu</span>space
-                  <span class='small__text'>axiom</span>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class='section'>
-                    <%= yield %>
-                  </div>
-                </td>
-              </tr>
-            </table>
-
-            <div class='section grey__text'>
-              <table>
-                <tr>
-                  <td><p class='mb-10'><%= t('.do_not_share') %></p></td>
-                </tr>
-                <tr>
-                  <td><p class='small__text'>&#169; Chuspace <%= Time.now.year %></p></td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </body>
+		<tr>
+			<td style="padding-bottom: 50px;" align="center" valign="top">
+				<table width="800" border="0" cellspacing="0" cellpadding="0" class="mobile-shell">
+					<tr>
+						<td class="td" style="width:800px; min-width:800px; padding:0; margin:0; font-weight:normal;">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td style="padding: 0 150px;" class="p20-15">
+										<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<tr>
+												<td>
+													<p class='mb-10 small__text'><%= t('.do_not_share') %></p>
+													<p class='small__text mt-20'>&copy; Chuspace <%= Time.now.year %>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
 </html>

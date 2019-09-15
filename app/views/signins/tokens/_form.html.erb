@@ -1,7 +1,0 @@
-<%= simple_form_for @user, as: :signin, url: signin_token_index_path, remote: true do |f| %>
-  <%= f.input :auth_token, autofocus: true, required: true %>
-  <div class='flex items-center mt-8'>
-    <%= f.button :button, 'Login' %>
-    <%= link_to('Request a new one', signins_path, class: 'link text-sm underline ml-4') %>
-  </div>
-<% end %>
