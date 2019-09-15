@@ -69,7 +69,7 @@
   </div>
 
   <div class='float-right mt-8'>
-    <%= f.submit 'Submit', class: 'button button--fill  mr-2 ' %>
+    <%= f.submit publication.new_record? ? 'Create' : 'Save', class: 'button button--fill  mr-2', data: { 'disable-with': publication.new_record? ? 'Creating...' : 'Saving...' } %>
     <%= link_to 'Cancel', publication.persisted? ? publication_path(publication) : root_path, class: 'button button--default inline-block' %>
   </div>
 <% end %>

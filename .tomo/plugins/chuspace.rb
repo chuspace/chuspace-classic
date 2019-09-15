@@ -14,5 +14,5 @@ def copy_sshd_config
 end
 
 def restart_puma_and_anycable
-  remote.run 'systemctl --user restart anycable puma.service'
+  remote.run 'systemctl --user restart anycable puma.service delayed_job'
 end
