@@ -2,6 +2,7 @@
 
 import 'styles/application'
 import 'animate.css'
+import '../images/logo.png'
 import 'details-element-polyfill'
 import '@github/details-menu-element'
 import '@github/auto-complete-element'
