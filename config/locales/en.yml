@@ -46,6 +46,7 @@ en:
               invalid: should be a valid email
             name:
               blank: can't be blank. should be your full name
+              invalid_last_name: last name can't be blank
             nickname:
               blank: can't be blank. should be all lowercase, unique, min 1 character,
                 may have a single hyphen but cannot begin or end with a hyphen.
