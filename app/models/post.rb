@@ -100,7 +100,7 @@ class Post < ApplicationRecord
   end
 
   def reading_time
-    (words_count / WORDS_PER_MINUTE).to_i
+    (words_count / WORDS_PER_MINUTE).round
   end
 
   def publish_label

@@ -18,7 +18,7 @@ export default class ContentLoader extends LitElement {
     super()
     this.type = 'default'
 
-    this.width = 750
+    this.width = 730
     this.height = 300
 
     this.lines = 1
@@ -56,13 +56,13 @@ export default class ContentLoader extends LitElement {
     const clipPath = `url(${props.baseUrl}#${idClip})`
 
     this.boxHeight = this.height
-    if (this.type !== 'image') this.boxHeight = this.lines * 15
+    if (this.type !== 'image') this.boxHeight = this.lines * 20
 
     return svg`
       <svg
         role="img"
         aria-labelledby=${props.ariaLabel ? props.ariaLabel : null}
-        viewBox=${`0 0 ${this.width} ${this.boxHeight}`}
+        viewBox=${`0 0 750 ${this.boxHeight}`}
         preserveAspectRatio=${props.preserveAspectRatio}
       >
         ${
@@ -89,7 +89,7 @@ export default class ContentLoader extends LitElement {
               : Array.from({ length: this.lines }, (v, i) => i + 1).map(
                   (_, index) =>
                     svg`
-                  <rect x="15" y="${index * 15}" rx="2" ry="2" width=${this.width} height='10' />
+                  <rect x="15" y="${index * 20}" rx="2" ry="2" width=${this.width} height='15' />
                 `
                 )
           }

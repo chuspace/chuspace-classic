@@ -1,5 +1,7 @@
 <% set_meta_tags @post %>
 
+<%= render 'posts/series', post: @post %>
+
 <article class='relative'>
   <% if Current.user.present? && allowed_to?(:republish?, @post) %>
     <div class='flex justify-between items-center card card-default mb-8'>
@@ -59,6 +61,4 @@
       <%= render 'publications/publication', badge: 'publication', publication: @post.publication unless @post.publication.personal %>
     </div>
   </div>
-
-  <%= render 'posts/series', post: @post %>
 </article>
