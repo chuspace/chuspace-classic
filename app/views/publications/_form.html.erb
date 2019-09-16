@@ -41,21 +41,23 @@
         keys="name"
         class='w-full block mt-4'
         name='publication[topics][]'
-        noresults
       >
-        <div class='autocomplete__selections'>
-          <% publication.topics&.each do |topic| %>
-            <span class="autocomplete__item mr-2">
-              <%= topic %>
-              <svg-icon class='autocomplete__item__icon' name='x-circle' width='10' height='10' feather='true' color='none'>&#10005</svg-icon>
-            </span>
-          <% end %>
-        </div>
-
         <div class='form_field__container'>
           <label class="input__label" for="publication_topics">Topics</label>
+
           <div class='input__container'>
-            <input type='text' class="input autocomplete__input" id='publication_topics' name='publication[topics][]' value='' />
+            <div class='autocomplete__selections'>
+              <% publication.topics&.each do |topic| %>
+                <span class="autocomplete__item mr-2">
+                  <%= topic %>
+                  <svg-icon class='autocomplete__item__icon' name='x-circle' width='10' height='10' feather='true' color='none'>&#10005</svg-icon>
+                </span>
+              <% end %>
+            </div>
+
+            <div class='input__dropdown__group relative'>
+              <input type='text' class="input autocomplete__input" autocomplete='off' spellcheck='off' />
+            </div>
           </div>
 
           <% if publication.errors.include?(:topics) %>

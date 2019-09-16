@@ -15,7 +15,7 @@
     <% end %>
   <% end %>
 <% else %>
-   <%= content_tag :li, role: 'option', class: 'dropdown__item', 'data-autocomplete-value': @query do  %>
-      <div class='flex-1'><%= @query %></div> <svg-icon width='15' height='15' name='mail' class='text-grey' class='mr-2' feather='true'></svg-icon>
-    <% end %>
+  <%= content_tag :li, role: 'option', class: 'dropdown__item', 'data-autocomplete-value': @query do  %>
+    <div class='flex-1'><%= @query %></div> <svg-icon width='15' height='15' name='mail' class='text-grey' class='mr-2' feather='true'></svg-icon>
+  <% end %>
 <% end %>

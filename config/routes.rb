@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   resources :publications, path: '', param: :slug, only: %i[show update destroy] do
     resources :images, only: %i[create show destroy], module: 'publications'
     resources :drafts, only: :index, module: 'publications'
+
     resources :people, path: 'people', only: %i[index update destroy], module: 'publications' do
       collection { get :autocomplete }
     end
@@ -56,6 +57,7 @@ Rails.application.routes.draw do
       resources :publish, only: %i[index create], module: 'posts'
       resources :shares, only: :show, module: 'posts'
       resources :likes, path: 'like', only: :create, module: 'posts'
+      resources :autocomplete, only: :index, module: 'posts'
     end
     resources :repositories, path: '', param: :slug, only: :show, format: :git
   end

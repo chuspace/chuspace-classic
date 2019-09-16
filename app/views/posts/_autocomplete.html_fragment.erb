@@ -1,0 +1,11 @@
+<% if @posts.any? %>
+  <% @posts.each do |post| %>
+    <%= content_tag :li, role: 'option', class: 'dropdown__item', 'data-autocomplete-value': post.slug, 'aria-disabled': @post.slug == post.slug do  %>
+      <%= post.title %>
+    <% end %>
+  <% end %>
+<% else %>
+  <%= content_tag :li, role: 'option', class: 'dropdown__item', 'aria-disabled': true do  %>
+    No published posts found
+  <% end %>
+<% end %>

@@ -25,20 +25,21 @@
           maxlength="5"
           keys="name"
           class='w-full block mt-12'
-          noresults
         >
-          <div class='autocomplete__selections'>
-            <% post.topics&.each do |topic| %>
-              <span class="autocomplete__item mr-2">
-                <%= topic %>
-                <svg-icon class='autocomplete__item__icon' name='x-circle' width='10' height='10' feather='true' color='none'>&#10005</svg-icon>
-              </span>
-            <% end %>
-          </div>
-
           <div class='form_field__container'>
             <div class='input__container input__container__label--floating' data-label='Topics'>
-              <input type='text' class = "input autocomplete__input" >
+              <div class='autocomplete__selections'>
+                <% post.topics&.each do |topic| %>
+                  <span class="autocomplete__item mr-2">
+                    <%= topic %>
+                    <svg-icon class='autocomplete__item__icon' name='x-circle' width='10' height='10' feather='true' color='none'>&#10005</svg-icon>
+                  </span>
+                <% end %>
+              </div>
+
+              <div class='input__dropdown__group relative'>
+                <input type='text' class="input autocomplete__input" autocomplete='off' spellcheck='off' autofocus />
+              </div>
             </div>
 
             <% if post.errors.include?(:topics) %>
@@ -50,7 +51,15 @@
         </input-autocomplete>
 
         <%= f.input :canonical_url, label: false, input_container_html: { class: 'input__container__label--floating', 'data-label': 'Canonical' } %>
-        <%= f.input :parent, label: false, collection: @published_posts, selected: post.parent&.slug, value_method: :slug, label_method: :slug, input_container_html: { class: 'input__container__label--floating', data: { label: 'Parent' } }, prompt: "Choose a parent post" %>
+
+        <auto-complete
+          src="<%= publication_post_autocomplete_index_path(@publication, post) %>"
+          aria-owns="posts-popup"
+          class='relative block'
+        >
+          <%= f.input :parent, label: false, as: :autocomplete, input_container_html: { class: 'input__container__label--floating', data: { label: 'Parent' } }, input_html: { popup_id: 'posts-popup', class: 'input', value: post.parent&.slug } %>
+        </auto-complete>
+
         <%= f.submit 'Publish now', class: 'button button--fill float-right mt-12 text-base' %>
       <% end %>
     </div>

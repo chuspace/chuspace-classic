@@ -10,7 +10,7 @@ input-autocomplete
     li
       @apply border-b border-grey-lighter p-2 cursor-pointer
 
-      &:hover
+      &:hover, &:focus
         @apply bg-grey-lightest
 
       &:last-child
@@ -20,13 +20,13 @@ input-autocomplete
       @apply font-bold
 
   .autocomplete__item
-    @apply px-2 py-1 text-sm rounded leading-tight bg-grey-lighter flex items-center whitespace-no-wrap mb-1
+    @apply px-2 py-1 text-sm rounded leading-tight bg-grey-lightest flex items-center whitespace-no-wrap mb-1
 
     &__icon
       @apply text-xs ml-2 text-grey font-bold cursor-pointer
 
   .input__container
-    @apply flex items-center
+    @apply flex items-center flex-wrap
 
     .autocomplete__input
       @apply text-base py-2 mb-1

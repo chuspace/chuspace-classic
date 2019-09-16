@@ -34,9 +34,9 @@
               class='relative block'
             >
               <%= f.input :identifier, label: 'Email or Username', as: :autocomplete, autofocus: true, input_html: { popup_id: 'users-popup', class: 'input', autocomplete: 'off', spellcheck: 'off' } %>
-              <%= f.input :role, as: :radio_buttons, collection: Collaborator::ROLES, checked: Collaborator::DEFAULT_ROLE, required: true %>
             </auto-complete>
 
+            <%= f.input :role, as: :radio_buttons, collection: Collaborator::ROLES, checked: Collaborator::DEFAULT_ROLE, required: true %>
             <div class='mt-8'>
               <%= f.submit 'Invite', class: 'button button--fill' %>
             </div>

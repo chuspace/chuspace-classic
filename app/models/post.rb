@@ -43,6 +43,17 @@ class Post < ApplicationRecord
     end
   end
 
+  def self.autocomplete_search(query:)
+    sql = <<-SQL
+      unaccent(posts.title) ILIKE unaccent('%#{query}%') OR
+      unaccent(posts.slug) ILIKE unaccent('%#{
+      query
+    }%')
+    SQL
+
+    published.where(sql)
+  end
+
   def blob
     @blob ||= publication.repository.blob_at(path: blob_path)
   end

@@ -10,7 +10,7 @@ import without from 'lodash/without'
 export default class InputAutocomplete extends LitElement {
   input: HTMLInputElement = this.querySelector('input')
   selectionsContainer: HTMLElement = this.querySelector('.autocomplete__selections')
-  container: HTMLElement = this.querySelector('.input__container')
+  container: HTMLElement = this.querySelector('.input__dropdown__group')
 
   static get properties() {
     return {
@@ -18,8 +18,7 @@ export default class InputAutocomplete extends LitElement {
       name: { type: String },
       url: { type: String },
       keys: { types: String },
-      maxlength: { type: Number },
-      noresults: { type: Boolean }
+      maxlength: { type: Number }
     }
   }
 
@@ -27,7 +26,6 @@ export default class InputAutocomplete extends LitElement {
     super()
 
     this.placeHolder = 'Type something...'
-    this.noresults = false
   }
 
   createRenderRoot() {
@@ -48,8 +46,10 @@ export default class InputAutocomplete extends LitElement {
     this.autocompleteInstance = new autoComplete({
       data: {
         src: async () => {
-          const source = await fetch(`${this.url}?q=${this.input.value}`)
+          const query = this.input.value.trim()
+          const source = await fetch(`${this.url}?q=${query}`)
           const data = await source.json()
+          if (!data.find(item => item[this.keys] === query)) data.push({ name: query, custom: true })
 
           return data.filter(items => this.items.indexOf(items[this.keys]) === -1)
         },
@@ -74,32 +74,12 @@ export default class InputAutocomplete extends LitElement {
         element: 'ul'
       },
       resultItem: {
-        content: function(data, source) {
-          source.innerHTML = data.match
+        content: (data, source) => {
+          const custom = `Not found. Create <span class='autocomplete__item__custom'>${this.input.value.trim()}</span>`
+          source.innerHTML = data.value.custom ? custom : data.match
           source.removeAttribute('id')
         },
         element: 'li'
-      },
-      noResults: () => {
-        if (this.noresults) {
-          const item = document.createElement('li')
-          const list = this.querySelector('.autocomplete__list')
-          const inputValue = this.input.value.trim()
-
-          if (this.isInvalid(inputValue)) return
-
-          if (this.items.indexOf(inputValue) === -1) {
-            item.setAttribute('tabindex', '1')
-            item.innerHTML = `Not found. Create <span class='autocomplete__item__custom'>${inputValue}</span>`
-            list && list.appendChild(item)
-            item.addEventListener('click', (e: MouseEvent) => {
-              const customTopic = item.querySelector('.autocomplete__item__custom')
-              customTopic && this.add(customTopic.textContent)
-              item.remove()
-              this.input.value = ''
-            })
-          }
-        }
       },
       onSelection: feedback => {
         this.add(feedback.selection.value[this.keys])
@@ -120,8 +100,9 @@ export default class InputAutocomplete extends LitElement {
 
     if (this.items.length === this.maxlength) {
       this.setAttribute('disabled', true)
-      return
     }
+
+    this.input && this.input.focus()
   }
 
   renderItems() {
