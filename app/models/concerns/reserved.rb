@@ -9,6 +9,7 @@ module Reserved
     edit
     index
     terms
+    chu
     settings
     ssh-keys
     ssh
