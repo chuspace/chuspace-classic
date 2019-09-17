@@ -2,10 +2,11 @@
 # frozen_string_literal: true
 
 class Publication < ApplicationRecord
-  include Repoable, Avatarable, Topicable, Slugable, AvatarUploader::Attachment.new(:avatar)
+  include Repoable, Avatarable, Topicable, Reserved, Slugable, AvatarUploader::Attachment.new(:avatar)
   UNLISTED = %w[policy site]
 
   sluggable :name
+  reserved :name
   before_validation :add_owning_collaboration, on: :create
 
   validates_presence_of :name, :slug

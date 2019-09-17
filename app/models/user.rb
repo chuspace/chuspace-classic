@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  include Trackable, Avatarable, AvatarUploader::Attachment.new(:avatar)
+  include Trackable, Avatarable, Reserved, AvatarUploader::Attachment.new(:avatar)
 
   before_validation :standardise_email_and_nickname, if: -> { email_changed? || nickname_changed? }
   before_validation :build_default_publication, on: :create
@@ -20,6 +20,7 @@ class User < ApplicationRecord
 
   has_secure_token :auth_token
   has_person_name
+  reserved :nickname
 
   has_many :keys, dependent: :delete_all
   has_many :likes, dependent: :destroy
