@@ -67,11 +67,17 @@
           <% end %>
         </div>
       </input-autocomplete>
-    </div>
-  </div>
 
-  <div class='float-right mt-8'>
-    <%= f.submit publication.new_record? ? 'Create' : 'Save', class: 'button button--fill  mr-2', data: { 'disable-with': publication.new_record? ? 'Creating...' : 'Saving...' } %>
-    <%= link_to 'Cancel', publication.persisted? ? publication_path(publication) : root_path, class: 'button button--default inline-block' %>
+      <div class='float-left mt-8'>
+        <%= f.submit publication.new_record? ? 'Create' : 'Save', class: 'button button--fill mr-2', data: { 'disable-with': publication.new_record? ? 'Creating...' : 'Saving...' } %>
+        <%= link_to 'Go back', publication.persisted? ? publication_path(publication) : root_path, class: 'button button--default inline-block' %>
+      </div>
+
+      <div class='float-right mt-8'>
+        <% if Current.user.present? && publication.persisted? && allowed_to?(:destroy?, publication) %>
+          <%= link_to 'Delete',  publication_path(publication), class: 'button button--danger inline-block mr-2', method: :delete, data: { confirm: "This will delete #{publication.name} publication and associated posts. Are you sure?" } %>
+        <% end %>
+      </div>
+    </div>
   </div>
 <% end %>

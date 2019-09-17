@@ -50,6 +50,17 @@ class PublicationsController < ApplicationController
     end
   end
 
+  def destroy
+    authorize! @publication
+
+    if @publication.destroy
+      flash[:notice] = "#{@publication.name} publication successfully deleted"
+      redirect_to root_path
+    else
+      redirect_to publication_path(@publication)
+    end
+  end
+
   private
 
   def publication_params

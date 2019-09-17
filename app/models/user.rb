@@ -22,15 +22,13 @@ class User < ApplicationRecord
   has_person_name
 
   has_many :keys, dependent: :delete_all
-  has_many :likes, dependent: :delete_all
-  has_many :collaborations, class_name: 'Collaborator', dependent: :delete_all
-  has_many :publications,
-           through: :collaborations, class_name: 'Publication', source: :publication, dependent: :delete_all
-  has_many :posts, foreign_key: 'author_id', dependent: :delete_all
-  has_many :drafts, -> { where(status: :draft) }, class_name: 'Post', foreign_key: 'author_id', dependent: :delete_all
-  has_one :publication,
-          -> { where(personal: true) },
-          foreign_key: 'owner_id', autosave: true, required: true, dependent: :destroy
+  has_many :likes, dependent: :destroy
+  has_many :collaborations, class_name: 'Collaborator'
+  has_many :owning_publications, class_name: 'Publication', foreign_key: 'owner_id', dependent: :destroy
+  has_many :publications, through: :collaborations, class_name: 'Publication', source: :publication
+  has_many :posts, foreign_key: 'author_id'
+  has_many :drafts, -> { where(status: :draft) }, class_name: 'Post', foreign_key: 'author_id'
+  has_one :publication, -> { where(personal: true) }, foreign_key: 'owner_id', autosave: true, required: true
 
   AUTH_TOKEN_LIFE = 30
 

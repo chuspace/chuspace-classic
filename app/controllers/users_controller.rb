@@ -22,6 +22,17 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    authorize! Current.user
+
+    if Current.user.destroy
+      flash[:notice] = 'Successfully deleted your account'
+      redirect_to root_path
+    else
+      render 'settings/profiles/index', turbolinks: true
+    end
+  end
+
   private
 
   def update_params

@@ -20,9 +20,9 @@ class Publication < ApplicationRecord
   validates :website, url: true, allow_blank: true
   validates :twitter, url: { twitter: true }, allow_blank: true
 
-  has_many :posts, dependent: :delete_all
-  has_many :invitations, dependent: :delete_all
-  has_many :collaborators, dependent: :delete_all
+  has_many :posts, dependent: :destroy
+  has_many :invitations, dependent: :destroy
+  has_many :collaborators, dependent: :destroy
   has_many :members, through: :collaborators, class_name: 'User', source: :user
   has_one :owning_collaboration, -> { where(role: 'owner') }, class_name: 'Collaborator', autosave: true, required: true
   db_belongs_to :owner, class_name: 'User', foreign_key: :owner_id, counter_cache: true
