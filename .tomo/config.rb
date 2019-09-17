@@ -55,5 +55,6 @@ deploy do
   run 'chuspace:copy_env_vars'
   run 'chuspace:copy_sshd_config'
   run 'chuspace:compile_mobius'
+  run 'chuspace:setup_error_pages'
   run 'chuspace:restart_puma_and_anycable'
 end

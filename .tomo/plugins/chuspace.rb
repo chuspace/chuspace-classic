@@ -19,5 +19,5 @@ end
 
 def setup_error_pages
   public_500_html = File.join(paths.release, 'public/500.html')
-  execute :curl, '-k', "https://#{host.address}/500", "> #{public_500_html}"
+  execute :curl, '-k', 'https://chuspace.com/500', "> #{public_500_html}"
 end
