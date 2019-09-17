@@ -36,5 +36,8 @@ module Chuspace
 
     # Turbolinks render
     Rails.application.config.turbolinks_render.render_with_turbolinks_by_default = false
+
+    # Custom error pages
+    config.exceptions_app = self.routes
   end
 end

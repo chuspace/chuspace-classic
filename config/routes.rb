@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   root to: 'frontpage#index', constraints: PrivateRootConstraint.new, as: :authenticated_root
   root to: 'pages#index'
 
+  match '/404', to: 'errors#not_found', via: :all
+  match '/500', to: 'errors#internal_server_error', via: :all
   get :about, to: 'pages#about', format: :html, as: :about
 
   resources :signins, path: 'signin', only: %i[index create destroy]
