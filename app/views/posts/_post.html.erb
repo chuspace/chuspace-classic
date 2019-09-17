@@ -14,12 +14,12 @@
         <li>
           By <%= link_to post.author.name, user_path(post.author), class: 'underline' %>
         </li>
-        <li>
-          <% unless post.publication.personal? %>
+        <% unless post.publication.personal? %>
+          <li>
             in
             <%= link_to post.publication.name, publication_path(post.publication), class: 'underline' %>
-          <% end %>
-        </li>
+          </li>
+        <% end %>
         <li>
           <time><%= post.published_at.strftime("%b %d, %Y") %></time>
         </li>
