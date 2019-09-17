@@ -54,6 +54,10 @@ class Post < ApplicationRecord
     published.where(sql)
   end
 
+  def published_blob
+    @published_blob ||= publication.repository.lookup(blob_id)
+  end
+
   def blob
     @blob ||= publication.repository.blob_at(path: blob_path)
   end
@@ -95,8 +99,7 @@ class Post < ApplicationRecord
   end
 
   def words_count
-    text = Nokogiri.HTML(body_html).at('body').inner_text
-    text.scan(/\w+/).size
+    published_blob&.content&.scan(/\w+/)&.size || 0
   end
 
   def reading_time
