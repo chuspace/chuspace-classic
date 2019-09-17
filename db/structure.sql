@@ -384,7 +384,7 @@ CREATE TABLE public.topics (
 CREATE TABLE public.users (
     id BIGSERIAL PRIMARY KEY,
     first_name character varying NOT NULL,
-    last_name character varying NOT NULL,
+    last_name character varying,
     email character varying NOT NULL,
     nickname character varying NOT NULL,
     avatar_data jsonb,

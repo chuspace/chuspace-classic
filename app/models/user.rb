@@ -6,11 +6,10 @@ class User < ApplicationRecord
 
   before_validation :standardise_email_and_nickname, if: -> { email_changed? || nickname_changed? }
   before_validation :build_default_publication, on: :create
-  before_validation :invalidate_name_if_last_name_is_not_given
 
   validates :email, presence: true, email: true
   validates_db_uniqueness_of :email
-  validates :first_name, :last_name, :nickname, :name, presence: true
+  validates :first_name, :nickname, :name, presence: true
   validates_db_uniqueness_of :nickname
   validates :nickname, length: { in: 1..39 }, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
   validate :should_have_a_default_publication
@@ -71,9 +70,5 @@ class User < ApplicationRecord
 
   def should_have_a_default_publication
     errors.add(:publication, :invalid) if publication.blank?
-  end
-
-  def invalidate_name_if_last_name_is_not_given
-    errors.add(:name, :invalid_last_name) if first_name.present? && last_name.blank?
   end
 end
