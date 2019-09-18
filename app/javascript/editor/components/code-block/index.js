@@ -135,13 +135,18 @@ export default class CodeEditor extends LitElement {
     const clipboard = new ClipboardJS(node, { text: trigger => this.cm && this.cm.getDoc().getValue() })
 
     clipboard.on('success', e => {
-      tippy(node, {
+      this.cm && this.cm.execCommand('selectAll')
+      const instance = tippy(node, {
         arrow: true,
-        delay: [0, 300],
         showOnInit: true,
         trigger: 'click',
         content: 'Copied'
       })
+
+      setTimeout(() => {
+        this.cm && this.cm.execCommand('undoSelection')
+        instance.destroy()
+      }, 1000)
     })
   }
 

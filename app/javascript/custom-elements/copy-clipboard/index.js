@@ -23,13 +23,16 @@ export default class CopyClipboard extends LitElement {
       const clipboard = new ClipboardJS(this)
 
       clipboard.on('success', e => {
-        tippy(this, {
+        const instance = tippy(this, {
           arrow: true,
-          delay: [0, 300],
           showOnInit: true,
           trigger: 'click',
           content: 'Copied'
         })
+
+        setTimeout(() => {
+          instance.destroy()
+        }, 1000)
       })
     }
   }
