@@ -3,6 +3,7 @@
 import { LitElement, customElement, html } from 'lit-element'
 
 import ClipboardJS from 'clipboard'
+import tippy from 'tippy.js'
 
 const SVG_RATIO = 0.81
 
@@ -19,7 +20,17 @@ export default class CopyClipboard extends LitElement {
     if (this.initClipboardJS) {
       this.initClipboardJS(this)
     } else {
-      new ClipboardJS(this)
+      const clipboard = new ClipboardJS(this)
+
+      clipboard.on('success', e => {
+        tippy(this, {
+          arrow: true,
+          delay: [0, 300],
+          showOnInit: true,
+          trigger: 'click',
+          content: 'Copied'
+        })
+      })
     }
   }
 

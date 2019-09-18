@@ -4,6 +4,7 @@
 class DropdownComponent < Components::Component
   DEFAULT_CSS_CLASS = 'dropdown'
   element :opener
+  element :content
   attribute :items
   attribute :drop_arrow, default: :yes
   attribute :css_class

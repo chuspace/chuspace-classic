@@ -109,7 +109,7 @@ class Repository
 
   sig { returns(String) }
   def ssh_path
-    "git@chuspace.com:#{name}.git"
+    "git@chuspace.com:#{name}"
   end
 
   def size

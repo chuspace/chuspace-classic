@@ -22,6 +22,7 @@ import ClipboardJS from 'clipboard'
 import Controls from './controls'
 import { CopyClipboard } from 'editor/components'
 import { EditorView } from 'prosemirror-view'
+import tippy from 'tippy.js'
 
 export default class CodeEditor extends LitElement {
   cm: ?CodeMirror
@@ -130,8 +131,19 @@ export default class CodeEditor extends LitElement {
       matchTags: !this.readonly
     })
 
-  initClipboardJS = (node: ?HTMLElement) =>
-    new ClipboardJS(node, { text: trigger => this.cm && this.cm.getDoc().getValue() })
+  initClipboardJS = (node: ?HTMLElement) => {
+    const clipboard = new ClipboardJS(node, { text: trigger => this.cm && this.cm.getDoc().getValue() })
+
+    clipboard.on('success', e => {
+      tippy(node, {
+        arrow: true,
+        delay: [0, 300],
+        showOnInit: true,
+        trigger: 'click',
+        content: 'Copied'
+      })
+    })
+  }
 
   render = () => {
     return html`
@@ -150,6 +162,7 @@ export default class CodeEditor extends LitElement {
                     .setMode=${this.setMode}
                   ></code-editor-language-switcher>
                 `}
+
             <copy-clipboard .initClipboardJS=${this.initClipboardJS}></copy-clipboard>
           </div>
         </div>

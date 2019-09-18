@@ -7,12 +7,16 @@
   </summary>
 
   <details-menu role="menu" class='<%= dropdown.css_classes %>'>
-    <% dropdown.items.each do |item| %>
-      <% if item.divider %>
-        <%= content_tag :div, nil, class: 'dropdown__divider' %>
-      <% else %>
-        <%= link_to item.label.html_safe, item.url, class: "link link--#{item.link_type || 'default'} dropdown__item", role: 'menuitem', tabindex: '-1', **item.options %>
+    <% if dropdown.items&.any? %>
+      <% dropdown.items.each do |item| %>
+        <% if item.divider %>
+          <%= content_tag :div, nil, class: 'dropdown__divider' %>
+        <% else %>
+          <%= link_to item.label.html_safe, item.url, class: "link link--#{item.link_type || 'default'} dropdown__item", role: 'menuitem', tabindex: '-1', **item.options %>
+        <% end %>
       <% end %>
+    <% else %>
+      <%= dropdown.content %>
     <% end %>
   </details-menu>
 </details>
