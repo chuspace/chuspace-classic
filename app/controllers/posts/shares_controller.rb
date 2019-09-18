@@ -21,7 +21,7 @@ class Posts::SharesController < ApplicationController
     {
       facebook: {
         url: 'https://www.facebook.com/sharer/sharer.php?',
-        query: { u: publication_post_url(@post.publication, @post), t: @post.title, hashtag: @post.topics_list }
+        query: { u: publication_post_url(@post.publication, @post), t: @post.title }
       },
       twitter: {
         url: 'https://twitter.com/intent/tweet?',
