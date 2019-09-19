@@ -19,15 +19,15 @@ Rails.application.configure do
 
   config.cache_store =
     :dalli_store,
-    Dalli::Client.new(
-      ENV['MEMCACHED_URLS'].split(','),
+    ENV['MEMCACHED_URLS'],
+    {
       namespace: 'chuspace_fragment_cache',
       threadsafe: true,
       failover: true,
       expires_in: 6.hours.to_i,
       compress: true,
       pool_size: 40
-    )
+    }
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
