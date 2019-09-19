@@ -11,7 +11,7 @@ if Rails.env.production?
     p.font_src :self, :https, :data
     p.img_src :self, :https, :data, '*.gravatar.com'
     p.object_src :none
-    p.script_src :self, :https, :unsafe_inline
+    p.script_src :self, :https, :unsafe_inline, 'https://www.googletagmanager.com/gtag/js?id=UA-148358141-1'
     p.style_src :self,
                 :https,
                 :unsafe_inline,
