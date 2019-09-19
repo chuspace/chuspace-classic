@@ -42,8 +42,6 @@ module Mobius
         errors = [] of String
         publication_id = ENV.fetch("GIT_PUBLICATION_ID", "")
         user_id = ENV.fetch("GIT_USER_ID", "")
-        token = ENV.fetch("MOBIUS_TOKEN", "")
-        base_url = ENV.fetch("CHUSPACE_URL", "")
 
         blob_names.each do |file|
           blob = `git show #{refs[1]}:'#{file}'`
