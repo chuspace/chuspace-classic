@@ -4,8 +4,12 @@ namespace :chuspace do
   task :setup do
     desc 'Post deployment tasks'
     GLOBAL_HOOKS_DIRECTORY =
-      Rails.env.production? ? '/home/git/chuspace.com/mobius/git-hooks' : Rails.root.join('bin', 'git-hooks')
-    MOBIUS_DEST = Rails.env.production? ? '/home/git/chuspace.com/mobius' : Rails.root.join('bin')
+      if Rails.env.production?
+        Pathname.new('/home/git/chuspace.com/mobius/git-hooks')
+      else
+        Rails.root.join('bin', 'git-hooks')
+      end
+    MOBIUS_DEST = Rails.env.production? ? Pathname.new('/home/git/chuspace.com/mobius') : Rails.root.join('bin')
     MOBIUS_ROOT = Rails.root.join('extensions', 'mobius')
     MOBIUS_SRC = MOBIUS_ROOT.join('src')
     MOBIUS_BINARIES = %w[mobius/hooks/pre_receive mobius/hooks/post_receive mobius]
