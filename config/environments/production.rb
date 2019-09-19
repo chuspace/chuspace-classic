@@ -70,7 +70,8 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :ses
 
-  config.hosts.clear
+  config.hosts << 'chuspace.com'
+  config.hosts << '127.0.0.1'
 
   config.default_url_options = { host: 'chuspace.com' }
   Rails.application.routes.default_url_options[:host] = 'chuspace.com'
