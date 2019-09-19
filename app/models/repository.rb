@@ -10,7 +10,8 @@ class Repository
 
   START_REF = 'HEAD'
   DEFAULT_BRANCH = 'master'
-  GLOBAL_HOOKS_DIRECTORY = Rails.root.join('bin', 'git-hooks')
+  GLOBAL_HOOKS_DIRECTORY =
+    Rails.env.production? ? '/home/git/chuspace.com/mobius/git-hooks' : Rails.root.join('bin', 'git-hooks')
   GITIGNORE_PATH = '.gitignore'
   IMAGES_ROOT_PATH = 'images'
   DRAFTS_ROOT_PATH = 'drafts'
