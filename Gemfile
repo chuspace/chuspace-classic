@@ -107,6 +107,13 @@ gem 'meta-tags'
 gem 'dalli'
 gem 'connection_pool'
 
+# User visit tracking
+gem 'ahoy_matey'
+gem 'maxminddb'
+
+# Error tracking
+gem 'sentry-raven'
+
 group :production do
   # Resource monitoring
   gem 'easymon'

@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   include TurbolinksCacheControl
 
   after_action :verify_authorized
+  before_action :set_raven_context
 
   delegate :t, to: :I18n
   rescue_from ActionPolicy::Unauthorized, with: :user_not_authorized
@@ -19,6 +20,11 @@ class ApplicationController < ActionController::Base
     flash[:error] = t "#{policy_name}.#{exception.rule}", scope: 'policy', default: :default
 
     raise ActionController::RoutingError.new('Not Found')
+  end
+
+  def set_raven_context
+    Raven.user_context(id: current_user&.id)
+    Raven.extra_context(params: params.to_unsafe_h, url: request.url)
   end
 
   def current_user

@@ -283,6 +283,17 @@ CREATE TABLE public.delayed_jobs (
     updated_at timestamp(6) without time zone
 );
 
+-- Name: events; Type: TABLE
+
+CREATE TABLE public.events (
+    id BIGSERIAL PRIMARY KEY,
+    visit_id bigint,
+    user_id bigint,
+    name character varying,
+    properties jsonb,
+    "time" timestamp without time zone
+);
+
 -- Name: invitations; Type: TABLE
 
 CREATE TABLE public.invitations (
@@ -406,6 +417,37 @@ CREATE TABLE public.users (
     updated_at timestamp without time zone NOT NULL
 );
 
+-- Name: visits; Type: TABLE
+
+CREATE TABLE public.visits (
+    id BIGSERIAL PRIMARY KEY,
+    visit_token character varying,
+    visitor_token character varying,
+    user_id bigint,
+    ip character varying,
+    user_agent text,
+    referrer text,
+    referring_domain character varying,
+    landing_page text,
+    browser character varying,
+    os character varying,
+    device_type character varying,
+    country character varying,
+    region character varying,
+    city character varying,
+    latitude double precision,
+    longitude double precision,
+    utm_source character varying,
+    utm_medium character varying,
+    utm_term character varying,
+    utm_content character varying,
+    utm_campaign character varying,
+    app_version character varying,
+    os_version character varying,
+    platform character varying,
+    started_at timestamp without time zone
+);
+
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
 
@@ -431,6 +473,22 @@ CREATE INDEX index_collaborators_on_role ON public.collaborators USING btree (ro
 -- Name: index_collaborators_on_user_id; Type: INDEX
 
 CREATE INDEX index_collaborators_on_user_id ON public.collaborators USING btree (user_id);
+
+-- Name: index_events_on_name_and_time; Type: INDEX
+
+CREATE INDEX index_events_on_name_and_time ON public.events USING btree (name, "time");
+
+-- Name: index_events_on_properties; Type: INDEX
+
+CREATE INDEX index_events_on_properties ON public.events USING gin (properties jsonb_path_ops);
+
+-- Name: index_events_on_user_id; Type: INDEX
+
+CREATE INDEX index_events_on_user_id ON public.events USING btree (user_id);
+
+-- Name: index_events_on_visit_id; Type: INDEX
+
+CREATE INDEX index_events_on_visit_id ON public.events USING btree (visit_id);
 
 -- Name: index_invitations_on_code; Type: INDEX
 
@@ -552,6 +610,14 @@ CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
 
 CREATE UNIQUE INDEX index_users_on_nickname ON public.users USING btree (nickname);
 
+-- Name: index_visits_on_user_id; Type: INDEX
+
+CREATE INDEX index_visits_on_user_id ON public.visits USING btree (user_id);
+
+-- Name: index_visits_on_visit_token; Type: INDEX
+
+CREATE UNIQUE INDEX index_visits_on_visit_token ON public.visits USING btree (visit_token);
+
 -- Name: posts logidze_on_posts; Type: TRIGGER
 
 CREATE TRIGGER logidze_on_posts BEFORE INSERT OR UPDATE ON public.posts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE PROCEDURE public.logidze_logger('5', 'updated_at', '{id, title, summary, body, author_id, blob_path, blob_id, repository_id, ancestry, status, topics, published_at, created_at, updated_at}');
@@ -623,5 +689,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190822161805'),
 ('20190831120520'),
 ('20190831121959'),
-('20190901104948');
+('20190901104948'),
+('20190901104958');
 

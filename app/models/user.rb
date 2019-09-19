@@ -25,6 +25,8 @@ class User < ApplicationRecord
   has_many :keys, dependent: :delete_all
   has_many :likes, dependent: :destroy
   has_many :collaborations, class_name: 'Collaborator'
+  has_many :visits, class_name: 'Ahoy::Visit', dependent: :delete_all
+  has_many :events, dependent: :delete_all
   has_many :owning_publications, class_name: 'Publication', foreign_key: 'owner_id', dependent: :destroy
   has_many :publications, through: :collaborations, class_name: 'Publication', source: :publication
   has_many :posts, foreign_key: 'author_id'

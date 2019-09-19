@@ -39,5 +39,8 @@ module Chuspace
 
     # Custom error pages
     config.exceptions_app = self.routes
+
+    # Error tracking
+    Raven.configure { |config| config.dsn = ENV.fetch('SENTRY_DSN') }
   end
 end
