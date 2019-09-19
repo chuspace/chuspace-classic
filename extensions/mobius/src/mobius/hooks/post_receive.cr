@@ -19,7 +19,7 @@ module Mobius
         publication_id = ENV.fetch("GIT_PUBLICATION_ID", "")
         user_id = ENV.fetch("GIT_USER_ID", "")
         token = ENV.fetch("MOBIUS_TOKEN", "")
-        base_url = ENV.fetch("CHUSPACE_URL", "")
+        base_url = 'http://localhost:8083'
 
         HTTP::Client.post(
           "#{base_url}/mobius/post_receive",
