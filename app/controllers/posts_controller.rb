@@ -6,6 +6,7 @@ class PostsController < ApplicationController
   before_action :find_publication
   before_action :find_post, except: %i[show index new create]
   skip_verify_authorized only: :show
+  after_action :track_action, only: :show
 
   def new
     @post = Post.new(author: Current.user)
@@ -73,5 +74,9 @@ class PostsController < ApplicationController
 
   def find_post
     @post = @publication.posts.find_by!(slug: params[:slug])
+  end
+
+  def track_action
+    ahoy.track 'Viewed post', request.path_parameters.merge(post_id: @post.id, publication_id: @publication.id)
   end
 end
