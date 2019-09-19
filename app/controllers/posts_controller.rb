@@ -56,7 +56,7 @@ class PostsController < ApplicationController
     authorize! @post
 
     if @post.destroy && @post.blob.destroy(committer: Current.user)
-      redirect_back(fallback_location: publication_path(@publication))
+      redirect_to publication_path(@publication)
     else
       redirect_to post_path(@post)
     end
