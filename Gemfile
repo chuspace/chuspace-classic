@@ -113,6 +113,7 @@ gem 'maxminddb'
 
 # Error tracking
 gem 'sentry-raven'
+gem 'skylight'
 
 group :production do
   # Resource monitoring

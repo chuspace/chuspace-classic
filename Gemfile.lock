@@ -378,6 +378,10 @@ GEM
     simplecov-lcov (0.7.0)
     sitemap_generator (6.0.2)
       builder (~> 3.0)
+    skylight (4.1.2)
+      skylight-core (= 4.1.2)
+    skylight-core (4.1.2)
+      activesupport (>= 4.2.0)
     sorbet (0.4.4775)
       sorbet-static (= 0.4.4775)
     sorbet-rails (0.5.6)
@@ -519,6 +523,7 @@ DEPENDENCIES
   simplecov
   simplecov-lcov
   sitemap_generator
+  skylight
   sorbet
   sorbet-rails
   sorbet-runtime
