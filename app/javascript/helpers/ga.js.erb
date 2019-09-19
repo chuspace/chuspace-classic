@@ -1,0 +1,8 @@
+document.addEventListener('turbolinks:load', function(event) {
+  if (typeof gtag === 'function') {
+    console.log('i run')
+    gtag('config', "<%= ENV.fetch('GA_KEY') %>", {
+      'page_location': event.data.url
+    })
+  }
+})

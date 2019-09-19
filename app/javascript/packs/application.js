@@ -7,6 +7,7 @@ import 'details-element-polyfill'
 import '@github/details-menu-element'
 import '@github/auto-complete-element'
 import 'custom-elements'
+import 'helpers/ga.js.erb'
 
 import * as Rails from 'rails-ujs'
 import * as Turbolinks from 'turbolinks'
