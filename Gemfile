@@ -13,7 +13,7 @@ gem 'bundler', '1.17.2'
 gem 'pg', '>= 1.x'
 gem 'strong_migrations'
 gem 'database_validations'
-gem 'activerecord-clean-db-structure', github: 'lfittl/activerecord-clean-db-structure'
+gem 'activerecord-clean-db-structure'
 gem 'name_of_person'
 
 # File uploads
