@@ -62,7 +62,7 @@ export default class ContentLoader extends LitElement {
       <svg
         role="img"
         aria-labelledby=${props.ariaLabel ? props.ariaLabel : null}
-        viewBox=${`0 0 750 ${this.boxHeight}`}
+        viewBox=${`0 0 ${this.width} ${this.boxHeight}`}
         preserveAspectRatio=${props.preserveAspectRatio}
       >
         ${
