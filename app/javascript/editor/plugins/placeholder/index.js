@@ -69,6 +69,15 @@ export default class Placeholder extends Element {
 
               if (isTitle || (isSummary || isEmptyBody)) {
                 decorations.push(this.getDecoration(node, pos))
+              } else {
+                if (node.type.name == 'heading') {
+                  decorations.push(
+                    Decoration.node(pos, pos + node.nodeSize, {
+                      class: 'editor__heading_label',
+                      'data-empty-text': `h${node.attrs.level}`
+                    })
+                  )
+                }
               }
             })
 
