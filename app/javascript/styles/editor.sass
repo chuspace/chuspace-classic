@@ -1,6 +1,6 @@
 .chu-editor
   @apply font-content
-  letter-spacing: -0.004em
+  letter-spacing: -0.004rem
   font-weight: 400
   font-style: normal
   font-size: 23px
@@ -17,11 +17,19 @@
 
   a
     hyphens: auto
-    overflow-wrap: break-word
+    cursor: pointer
     text-decoration: underline
+    overflow-wrap: break-word
 
-  h1, h2, h3, h4, h5, h6, strong
-    @apply mb-4 font-content
+  h1, h2, h3, h4, h5, h6
+    @apply mb-6
+    letter-spacing: -0.07rem
+
+    a
+      text-decoration: none
+
+  strong
+    @apply mb-6 font-content
 
   code-editor, lazy-image, p
     @apply mb-8 block
