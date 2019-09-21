@@ -23,7 +23,7 @@ import { setBlockType, toggleBlockType } from 'editor/commands'
 
 import { Node } from 'editor/base'
 import { Node as PMNode } from 'prosemirror-model'
-import TableNodes from './tabel-nodes'
+import TableNodes from './table-nodes'
 import { createTable } from 'prosemirror-utils'
 import { textblockTypeInputRule } from 'prosemirror-inputrules'
 

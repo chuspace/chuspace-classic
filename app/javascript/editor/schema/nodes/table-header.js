@@ -1,5 +1,7 @@
+// @flow
+
 import { Node } from 'editor/base'
-import TableNodes from './tabel-nodes'
+import TableNodes from './table-nodes'
 
 export default class TableHeader extends Node {
   name = 'table_header'

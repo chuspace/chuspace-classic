@@ -1,3 +1,5 @@
+// @flow
+
 import { tableNodes } from 'prosemirror-tables'
 
 export default tableNodes({
