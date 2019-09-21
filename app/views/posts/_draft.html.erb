@@ -1,7 +1,7 @@
 <article class='list__item list__item--bordered'>
   <%= link_to edit_publication_post_path(draft.publication, draft) do %>
     <div class='header'>
-      <h3 class='font-content'><%= draft.title %></h3>
+      <h2 class='font-content'><%= draft.title %></h2>
       <%= content_tag :p, draft.summary, class: 'text-grey mt-1' %>
     </div>
   <% end %>

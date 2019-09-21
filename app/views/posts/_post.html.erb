@@ -5,7 +5,7 @@
     <article>
       <%= link_to publication_post_path(post.publication, post) do %>
         <div class='header'>
-          <h3 class='font-content'><%= post.title %></h3>
+          <h2 class='font-content'><%= post.title %></h2>
           <%= content_tag :p, post.summary, class: 'text-grey mt-1' %>
         </div>
       <% end %>
