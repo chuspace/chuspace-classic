@@ -10,30 +10,9 @@ class PostHtmlRenderer < CommonMarker::HtmlRenderer
   end
 
   def header(node)
-    header_class =
-      if @count == 1 && node.header_level == 1
-        'title'
-      elsif @count == 2 && node.header_level == 2
-        'summary'
-      end
-
     slug = string_content_for(node).to_slug&.to_ascii&.normalize&.to_s
 
-    block do
-      out(
-        '<h',
-        node.header_level,
-        ' id="',
-        slug,
-        '" class="',
-        header_class,
-        '">',
-        :children,
-        '</h',
-        node.header_level,
-        '>'
-      )
-    end
+    block { out('<h', node.header_level, ' id="', slug, '">', :children, '</h', node.header_level, '>') }
   end
 
   def link(node)
