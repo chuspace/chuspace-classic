@@ -1,9 +1,7 @@
 <footer class='footer text-xs'>
   <div class='flex items-center'>
     <ul class='flex-1 text-xs'>
-      <li>
-        © <%= Time.current.year %> <strong class='text-secondary'>Chuspace</strong>
-      </li>
+      <li>© <%= Time.current.year %> <strong class='text-secondary'>Chuspace</strong></li>
     </ul>
 
     <ul class='flex items-center'>
@@ -12,15 +10,15 @@
       </li>
 
       <li class='mr-4'>
-        <strong><%= link_to 'Privacy', about_path, class: 'underline' %></strong>
+        <strong><%= link_to 'Privacy', 'https://chuspace.com/policy/chuspace-privacy-statement', class: 'underline' %></strong>
       </li>
 
       <li class='mr-4'>
-        <strong><%= link_to 'Terms', about_path, class: 'underline' %></strong>
+        <strong><%= link_to 'Terms', 'https://chuspace.com/policy/chuspace-terms-of-service', class: 'underline' %></strong>
       </li>
 
       <li>
-        <strong><%= link_to 'Contact', about_path, class: 'underline' %></strong>
+        <strong><%= link_to 'Contact', contact_path, class: 'underline' %></strong>
       </li>
     </ul>
   </div>

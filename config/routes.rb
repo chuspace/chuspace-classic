@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   match '/404', to: 'errors#not_found', via: :all
   match '/422', to: 'errors#unprocessible_entity', via: :all
   match '/500', to: 'errors#internal_server_error', via: :all
+
   get :about, to: 'pages#about', format: :html, as: :about
+  get :contact, to: 'pages#contact', format: :html, as: :contact
 
   resources :signins, path: 'signin', only: %i[index create destroy]
   resources :signups, path: 'signup', only: %i[index create]
