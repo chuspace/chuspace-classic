@@ -27,7 +27,7 @@ class Post < ApplicationRecord
 
   delegate :content, to: :blob, prefix: true
 
-  scope :frontpage, -> { published.where(unlisted: false) }
+  scope :listed, -> { published.where(unlisted: false) }
 
   DEFAULT_TITLE = 'Untitled'
   WORDS_PER_MINUTE = 200
