@@ -61,7 +61,7 @@ class PostHtmlRenderer < CommonMarker::HtmlRenderer
       super(node)
     else
       image_url = node.url
-      blob_url = URI.join(ENV.fetch('CHUSPACE_URL'), image_url)
+      blob_url = URI.join(ENV.fetch('CHUSPACE_URL'), image_url).to_s
 
       out('<lazy-image')
       out(' src="', escape_href(blob_url), '"')
