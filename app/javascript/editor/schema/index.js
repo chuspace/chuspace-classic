@@ -4,6 +4,8 @@ import * as marks from './nodes'
 import * as nodes from './marks'
 import * as plugins from 'editor/plugins'
 
+import { ellipsis, emDash, smartQuotes } from 'prosemirror-inputrules'
+
 import { Schema } from 'prosemirror-model'
 import { keymap } from 'prosemirror-keymap'
 import toArray from 'lodash/toArray'
@@ -64,7 +66,7 @@ class SchemaManager {
     return [...elementKeymaps, ...nodeMarkKeymaps].map(keys => keymap(keys))
   }
 
-  inputRules({ schema }: any) {
+  inputRules({ schema }: any): [] {
     const elementInputRules = this.elements
       .filter(element => ['element'].includes(element.type))
       .filter(element => element.inputRules)
@@ -80,7 +82,9 @@ class SchemaManager {
         })
       )
 
-    return [...elementInputRules, ...nodeMarkInputRules].reduce(
+    const otherRules = [smartQuotes.concat(ellipsis, emDash)]
+
+    return [...elementInputRules, ...nodeMarkInputRules, ...otherRules].reduce(
       (allInputRules, inputRules) => [...allInputRules, ...inputRules],
       []
     )
