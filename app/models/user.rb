@@ -66,7 +66,7 @@ class User < ApplicationRecord
   end
 
   def build_default_publication
-    self.publication = build_publication(name: name, slug: nickname, personal: true, owner: self)
+    self.publication = build_publication(name: name, slug: nickname, personal: true, owner: self, unlisted: true)
   end
 
   def should_have_a_default_publication

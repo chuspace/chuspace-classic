@@ -35,8 +35,7 @@ class Publication < ApplicationRecord
   private
 
   def add_owning_collaboration
-    self.owning_collaboration =
-      build_owning_collaboration(user: owner, publication: self, role: 'owner', unlisted: true)
+    self.owning_collaboration = build_owning_collaboration(user: owner, publication: self, role: 'owner')
   end
 
   def personal_attribute_should_contain_valid_values
