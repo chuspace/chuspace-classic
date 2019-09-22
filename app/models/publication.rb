@@ -3,7 +3,6 @@
 
 class Publication < ApplicationRecord
   include Repoable, Avatarable, Topicable, Reserved, Slugable, AvatarUploader::Attachment.new(:avatar)
-  UNLISTED = %w[policy site]
 
   sluggable :name
   reserved :name
@@ -29,14 +28,15 @@ class Publication < ApplicationRecord
   db_belongs_to :owner, class_name: 'User', foreign_key: :owner_id, counter_cache: true
 
   scope :personal, -> { where(personal: true) }
-  scope :listed, -> { where(personal: nil) }
+  scope :listed, -> { where(unlisted: false) }
 
   delegate :count, to: :members, prefix: true
 
   private
 
   def add_owning_collaboration
-    self.owning_collaboration = build_owning_collaboration(user: owner, publication: self, role: 'owner')
+    self.owning_collaboration =
+      build_owning_collaboration(user: owner, publication: self, role: 'owner', unlisted: true)
   end
 
   def personal_attribute_should_contain_valid_values

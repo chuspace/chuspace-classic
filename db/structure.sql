@@ -351,7 +351,8 @@ CREATE TABLE public.posts (
     published_at timestamp without time zone,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    log_data jsonb
+    log_data jsonb,
+    unlisted boolean DEFAULT false
 );
 
 -- Name: publications; Type: TABLE
@@ -372,7 +373,8 @@ CREATE TABLE public.publications (
     posts_count integer DEFAULT 0 NOT NULL,
     collaborators_count integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    unlisted boolean DEFAULT false
 );
 
 -- Name: schema_migrations; Type: TABLE
@@ -566,6 +568,10 @@ CREATE INDEX index_posts_on_status ON public.posts USING btree (status);
 
 CREATE INDEX index_posts_on_topics ON public.posts USING gin (topics);
 
+-- Name: index_posts_on_unlisted; Type: INDEX
+
+CREATE INDEX index_posts_on_unlisted ON public.posts USING btree (unlisted);
+
 -- Name: index_publications_on_name; Type: INDEX
 
 CREATE UNIQUE INDEX index_publications_on_name ON public.publications USING btree (name);
@@ -593,6 +599,10 @@ CREATE UNIQUE INDEX index_publications_on_slug ON public.publications USING btre
 -- Name: index_publications_on_topics; Type: INDEX
 
 CREATE INDEX index_publications_on_topics ON public.publications USING gin (topics);
+
+-- Name: index_publications_on_unlisted; Type: INDEX
+
+CREATE INDEX index_publications_on_unlisted ON public.publications USING btree (unlisted);
 
 -- Name: index_topics_on_name; Type: INDEX
 
@@ -690,5 +700,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190831120520'),
 ('20190831121959'),
 ('20190901104948'),
-('20190901104958');
+('20190901104958'),
+('20190922093833'),
+('20190922093918');
 
