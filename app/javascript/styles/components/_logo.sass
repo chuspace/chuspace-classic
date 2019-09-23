@@ -1,8 +1,7 @@
 .logo
-  @apply text-3xl font-bold inline-block font-logo
+  @apply text-3xl font-bold inline-block font-logo text-black
 
   &__badge
-    @apply text-black
     &:after
       content: 'chu'
 
@@ -11,8 +10,9 @@
         &:after
           content: 'chuspace'
 
-    &--black
-      @apply text-black
+  &__full
+    &:after
+      content: 'chuspace'
 
   &__version
     @apply text-grey text-xs
