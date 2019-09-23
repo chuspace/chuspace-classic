@@ -18,9 +18,6 @@ export default class Link extends Mark {
       attrs: {
         href: {
           default: null
-        },
-        title: {
-          default: null
         }
       },
       inclusive: false,
@@ -28,8 +25,7 @@ export default class Link extends Mark {
         {
           tag: 'a[href]',
           getAttrs: (dom: PMMark) => ({
-            href: dom.getAttribute('href'),
-            title: dom.getAttribute('title')
+            href: dom.getAttribute('href')
           })
         }
       ],
@@ -89,7 +85,7 @@ export default class Link extends Mark {
     return [
       new Plugin({
         props: {
-          handleClick(view, pos) {
+          handleClick: (view, pos) => {
             const { schema, doc, tr } = view.state
             const range = getMarkRange(doc.resolve(pos), schema.marks.link)
 
@@ -99,9 +95,16 @@ export default class Link extends Mark {
 
             const $start = doc.resolve(range.from)
             const $end = doc.resolve(range.to)
-            const transaction = tr.setSelection(new TextSelection($start, $end))
 
-            view.dispatch(transaction)
+            let parent = $start.parent
+            let child = parent.childAfter($start.parentOffset)
+            if (!child.node) return
+
+            let link = child.node.marks.find(mark => mark.type.name == this.name)
+            const markdownString = `[${child.node.text}](${link.attrs.href})`
+            const newTr = tr.insertText(markdownString, range.from, range.to)
+
+            view.dispatch(newTr)
           }
         }
       })

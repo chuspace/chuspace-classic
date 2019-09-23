@@ -4,6 +4,6 @@
 class ApplicationMailer < ActionMailer::Base
   add_template_helper(Components::ComponentHelper)
 
-  default from: 'hello@notifications.chuspace.com'
+  default from: 'Chuspace <hello@notifications.chuspace.com>'
   layout 'mailer'
 end

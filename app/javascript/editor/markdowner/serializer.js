@@ -1,7 +1,6 @@
 // @flow
 
 import { MarkdownSerializer } from 'prosemirror-markdown'
-import queryString from 'query-string'
 
 export default new MarkdownSerializer(
   {
