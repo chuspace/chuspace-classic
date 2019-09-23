@@ -12,26 +12,26 @@
   <div>
     <h3 class='text-2xl mt-8'><%= @user.name %></h3>
     <h3 class='text-base font-normal text-grey'><%= @user.nickname %></h3>
-    <%= content_tag :p, @user.bio, class: 'mt-2 text-sm w-3/4' unless @user.bio.blank? %>
+    <%= content_tag :p, @user.bio, class: 'mt-2 text-sm w-full sm:w-3/4' unless @user.bio.blank? %>
     <%= link_to 'Edit profile', settings_profiles_path, class: 'button button--active inline-block mt-4' if Current.user && allowed_to?(:edit?, @user) %>
 
     <ul class='mt-4 text-sm'>
       <% if @user.company.present? %>
-        <%= content_tag :li, class: 'flex items-center' do  %>
+        <%= content_tag :li, class: 'flex items-center justify-center sm:justify-start' do  %>
           <svg-icon name='users' feather='true' width='15' height='15' class='text-grey mr-2'></svg-icon>
           <%= @user.company %>
         <% end %>
       <% end %>
 
       <% if @user.location.present? %>
-        <%= content_tag :li, class: 'flex items-center' do  %>
+        <%= content_tag :li, class: 'flex items-center justify-center sm:justify-start' do  %>
           <svg-icon name='map-pin' feather='true' width='15' height='15' class='text-grey mr-2'></svg-icon>
           <%= @user.location %>
         <% end %>
       <% end %>
 
         <% if @user.url.present? %>
-        <%= content_tag :li, class: 'flex items-center' do  %>
+        <%= content_tag :li, class: 'flex items-center justify-center sm:justify-start' do  %>
           <svg-icon name='link' feather='true' width='15' height='15' class='text-grey mr-2'></svg-icon>
           <%= link_to @user.url, @user.url, class: 'link link--default' %>
         <% end %>
