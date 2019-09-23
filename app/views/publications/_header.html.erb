@@ -1,13 +1,13 @@
-<div class='block sm:flex sm:items-center w-full'>
+<div class='block sm:flex sm:items-center text-center sm:text-left w-full'>
   <div class='mr-4'>
-    <%= component 'avatar', avatar_url: publication.avatar_url(variant: :xl), variant: :xl %>
+    <%= component 'avatar', avatar_url: publication.avatar_url(variant: :xl), variant: :xl, css_class: 'mx-auto sm:mx-0' %>
   </div>
 
   <div class='flex-1'>
-    <h3 class='text-2xl'><%= publication.name %></h3>
-    <%= content_tag :p, publication.description, class: 'text-sm mt-1 w-1/2' %>
+    <h3 class='text-2xl mt-4 sm:mt-0'><%= publication.name %></h3>
+    <%= content_tag :p, publication.description, class: 'text-sm mt-1 sm:w-1/2' %>
 
-    <ul class='list-none flex items-center p-0 m-0 mt-2'>
+    <ul class='list-none flex items-center justify-center sm:justify-start p-0 m-0 mt-4 sm:mt-2'>
       <% publication.topics.each do |topic| %>
         <li class='list-none badge badge--grey mr-2'><%= topic %></li>
       <% end %>
