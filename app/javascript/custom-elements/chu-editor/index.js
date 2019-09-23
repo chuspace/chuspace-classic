@@ -17,6 +17,7 @@ export default class ChuEditor extends LitElement {
     return {
       url: { type: String, reflect: true },
       id: { type: String },
+      publicationId: { type: String },
       original: { type: String },
       content: { type: String },
       channel: { type: String },
@@ -69,6 +70,7 @@ export default class ChuEditor extends LitElement {
       this.subscription = ActioncableClient.subscribe(
         {
           channel: this.channel,
+          publication_id: this.publicationId,
           id: this.id
         },
         {
