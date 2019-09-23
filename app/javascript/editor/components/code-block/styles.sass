@@ -1,8 +1,7 @@
 
 code-editor
   @apply whitespace-no-wrap relative
-  width: 750px
-  left: calc((100% - 750px) / 2)
+  width: 100%
 
   .code-editor-container
     @apply rounded shadow-lg pb-4
@@ -44,3 +43,8 @@ code-editor
 
       &:last-child
         @apply border-b-0
+
+  @screen md
+    &
+      width: 750px
+      left: calc((100% - 750px) / 2)
