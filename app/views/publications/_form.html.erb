@@ -75,7 +75,7 @@
 
       <div class='float-right mt-8'>
         <% if Current.user.present? && publication.persisted? && allowed_to?(:destroy?, publication) %>
-          <%= link_to 'Delete',  publication_path(publication), class: 'button button--danger inline-block mr-2', method: :delete, data: { confirm: "This will delete #{publication.name} publication and associated posts. Are you sure?" } %>
+          <%= link_to 'Delete publication',  publication_path(publication), class: 'button button--danger inline-block mr-2', method: :delete, data: { confirm: "This will delete #{publication.name} publication and associated posts. Are you sure?" } %>
         <% end %>
       </div>
     </div>

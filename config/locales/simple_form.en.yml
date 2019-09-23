@@ -9,9 +9,9 @@ en:
       default_message: 'Please review the problems below:'
     labels:
       defaults:
-        email: Your email
-        name: Your name
-        nickname: Your username
+        email: Email
+        name: Full name
+        nickname: Username
       publication:
         name: Name
 

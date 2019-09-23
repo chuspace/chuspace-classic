@@ -29,13 +29,13 @@
       <%= f.input :company, placeholder: 'Company' %>
 
       <div class='float-left mt-8'>
-        <%= f.submit 'Submit', class: 'button button--fill  mr-2 ' %>
+        <%= f.submit 'Save', class: 'button button--fill  mr-2 ' %>
         <%= link_to 'Cancel', user_path(@user), class: 'button button--default inline-block' %>
       </div>
 
       <div class='float-right mt-8'>
         <% if Current.user.present? && allowed_to?(:destroy?, @user) %>
-          <%= link_to 'Purge',  user_path(@user), class: 'button button--danger inline-block mr-2', method: :delete, data: { confirm: 'This will remove your account and purge all the associated data. Are you sure?' } %>
+          <%= link_to 'Delete account',  user_path(@user), class: 'button button--danger inline-block mr-2', method: :delete, data: { confirm: 'This will remove your account and purge all the associated data. Are you sure?' } %>
         <% end %>
       </div>
     </div>
