@@ -15,7 +15,11 @@
     <% else %>
       <div class='placeholder'>
         <h1 class='text-xl'>
-          This author does not have any drafts yet
+          <% if Current.user == @user %>
+            You haven't published any posts yet
+          <% else %>
+            This author haven't published any posts yet
+          <% end %>
         </h1>
       </div>
     <% end %>

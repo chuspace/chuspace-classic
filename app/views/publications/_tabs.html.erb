@@ -31,22 +31,7 @@
 
   <% if Current.user.present? && allowed_to?(:edit?, publication) %>
     <li class="tabs__tab mx-auto">
-      <%= component 'dropdown', flush: true, drop_arrow: :no, css_class: 'dropdown__button' do |d| %>
-        <% d.opener do %>
-          <%= content_tag :div, class: 'button button--fill flex items-center' do %>
-            Clone <span class='drop__arrow drop__arrow--white ml-1'></span>
-          <% end %>
-        <% end %>
-
-        <% d.content do %>
-          <%= content_tag :div, class: 'flex items-center' do %>
-            <%= text_field_tag 'repository_path', publication.repository.ssh_path, class: 'input py-2 px-4 w-64', readonly: true, id: 'copy_repository_path' %>
-            <div class='bg-grey-lightest p-4'>
-              <copy-clipboard data-clipboard-target="#copy_repository_path"></copy-clipboard>
-            </div>
-          <% end %>
-        <% end %>
-      <% end %>
+      <%= render 'shared/clone_button', ssh_path: publication.repository.ssh_path %>
     </li>
   <% end %>
 </ul>
