@@ -56,9 +56,13 @@ class PostsController < ApplicationController
     authorize! @post
 
     if @post.destroy && @post.blob.destroy(committer: Current.user)
-      redirect_to publication_path(@publication)
+      if request.referrer == edit_publication_post_url(@publication, @post)
+        redirect_to publication_path(@publication)
+      else
+        redirect_back(fallback_location: root_path)
+      end
     else
-      redirect_to post_path(@post)
+      redirect_to publication_post_path(@publication, @post)
     end
   end
 
