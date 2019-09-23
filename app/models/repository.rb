@@ -142,6 +142,7 @@ class Repository
       repo.config['user.name'] = author.name
       repo.config['user.email'] = author.email
       repo.config['user.nickname'] = author.nickname
+      repo.config['gc.auto'] = 1_000
       repo.close
 
       Rails.logger.info "Created repository <#{name}> at <#{path}>."
