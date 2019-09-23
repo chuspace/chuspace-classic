@@ -3,6 +3,13 @@
 
   &__badge
     @apply text-black
+    &:after
+      content: 'chu'
+
+    &
+      @screen sm
+        &:after
+          content: 'chuspace'
 
     &--black
       @apply text-black
