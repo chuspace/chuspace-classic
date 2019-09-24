@@ -70,6 +70,8 @@ export default class Editor {
     this.state = this.createState()
     this.view = this.createView()
     this.commands = this.createCommands()
+
+    this.view.props.commands = this.commands
     this.setActiveNodesAndMarks()
     if (this.options.autoFocus) this.focus()
   }

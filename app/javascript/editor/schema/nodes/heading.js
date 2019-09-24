@@ -4,6 +4,8 @@ import { setBlockType, toggleBlockType } from 'editor/commands'
 
 import { Node } from 'editor/base'
 import { Node as PMNode } from 'prosemirror-model'
+import { Plugin } from 'prosemirror-state'
+import { findParentNodeOfType } from 'prosemirror-utils'
 import { textblockTypeInputRule } from 'prosemirror-inputrules'
 
 type Options = {
@@ -63,5 +65,28 @@ export default class Heading extends Node {
         level
       }))
     )
+  }
+
+  get plugins() {
+    return [
+      new Plugin({
+        props: {
+          handleKeyDown: (view, event) => {
+            const { schema, doc, tr, selection } = view.state
+            const parent = findParentNodeOfType(schema.nodes.heading)(selection)
+
+            if (!parent) return
+            if (!parent.node) return
+
+            if (event.code === 'Backspace' && parent.node.textContent.length === 0) {
+              view.props.commands.heading({})
+              return true
+            }
+
+            return false
+          }
+        }
+      })
+    ]
   }
 }
