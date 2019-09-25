@@ -5,7 +5,7 @@ class Post < ApplicationRecord
   include AASM, Topicable, Previewable, PreviewImageUploader::Attachment.new(:preview_image)
   extend FriendlyId
 
-  friendly_id :title, use: %i[slugged history]
+  friendly_id :slug_candidates, use: %i[slugged history]
   has_ancestry
 
   enum status: { draft: 0, published: 1 }
@@ -56,8 +56,16 @@ class Post < ApplicationRecord
     published.where(sql)
   end
 
+  def slug_candidates
+    [:title, %i[title short_blob_id]]
+  end
+
   def published_blob
     @published_blob ||= publication.repository.lookup(blob_id)
+  end
+
+  def short_blob_id
+    blob.oid[0..8]
   end
 
   def blob
