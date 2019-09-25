@@ -1,10 +1,12 @@
 <div class='block'>
-  <section class='list w-full sm:w-4/6 sm:mx-auto'>
+  <section class='w-full sm:w-4/6 sm:mx-auto sm:mt-8'>
     <h3 class='border-b border-grey-lightest pb-5 font-bold'>Latest</h3>
     <% if @posts.any? %>
-      <% @posts.each do |post| %>
-        <%= render 'posts/post', post: post %>
-      <% end %>
+      <div class='list'>
+        <% @posts.each do |post| %>
+          <%= render 'posts/post', post: post %>
+        <% end %>
+      </div>
     <% else %>
       <div class='placeholder'>
         <h1 class='text-xl'><%= t('frontpage.no_posts') %></h1>
