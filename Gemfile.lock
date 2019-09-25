@@ -230,6 +230,8 @@ GEM
     jaro_winkler (1.5.3)
     jmespath (1.4.0)
     json (2.2.0)
+    logidze (0.11.0)
+      rails (>= 4.2)
     loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -490,6 +492,7 @@ DEPENDENCIES
   friendly_id
   hiredis
   image_processing
+  logidze
   maxminddb
   meta-tags
   mini_mime

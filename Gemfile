@@ -32,6 +32,9 @@ gem 'aws-ses', require: 'aws/ses'
 #  Nested tree
 gem 'ancestry'
 
+# Logging
+gem 'logidze'
+
 # Forms
 gem 'simple_form'
 
