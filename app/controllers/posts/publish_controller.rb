@@ -8,27 +8,31 @@ class Posts::PublishController < ApplicationController
   def index
     authorize! ::Posts::Publish, context: { post: @post }
     @published_posts = @publication.posts.published.where.not(id: @post.id)
-    render 'posts/edit'
   end
 
   def create
-    @post.assign_attributes(publish_params)
-    @post.assign_attributes(status: 'published', published_at: Time.now) if @post.may_publish?
-    new_blob_path = Pathname.new(@post.repo_dir).join("#{@post.slug}.md").to_path
-    @post.assign_attributes(blob_id: @post.blob.oid, body_html: @markdown.body_html, blob_path: new_blob_path)
+    @post.transaction do
+      @post.assign_attributes(publish_params)
+      @post.assign_attributes(status: 'published', published_at: Time.now) if @post.may_publish?
+      @post.valid?
 
-    authorize! ::Posts::Publish, context: { post: @post }
+      new_blob_path = Pathname.new(@post.repo_dir).join("#{@post.slug}.md").to_path
+      @post.assign_attributes(blob_id: @post.blob.oid, body_html: @markdown.body_html, blob_path: new_blob_path)
 
-    if @post.save
-      if @post.blob_path_previously_changed?
-        @post.blob.rename(
-          committer: Current.user, new_path: new_blob_path, commit_message: "Publish post #{new_blob_path}"
-        )
+      authorize! ::Posts::Publish, context: { post: @post }
+
+      if @post.save
+        if @post.saved_change_to_blob_path?
+          @post.blob.rename(
+            committer: Current.user, new_path: new_blob_path, commit_message: "Publish post #{new_blob_path}"
+          )
+        end
+
+        redirect_to publication_post_path(@post.publication, @post)
+      else
+        @post.reload
+        render 'posts/edit', turbolinks: true
       end
-      redirect_to publication_post_path(@post.publication, @post)
-    else
-      @post.reload
-      render 'posts/edit', turbolinks: true
     end
   end
 
@@ -41,13 +45,14 @@ class Posts::PublishController < ApplicationController
   def assign_attributes
     @markdown = PostMarkdownService.call(content: @post.blob_content)
     @post.assign_attributes(title: @markdown.title, summary: @markdown.summary)
+    @post.preview_image_remote_url = @markdown.preview_image if @markdown.preview_image.present?
   end
 
   def find_publication
-    @publication = Current.user.publications.find_by!(slug: params[:publication_slug])
+    @publication = Current.user.publications.friendly.find(params[:publication_slug])
   end
 
   def find_post
-    @post = @publication.posts.find_by!(slug: params[:post_slug])
+    @post = @publication.posts.friendly.find(params[:post_slug])
   end
 end

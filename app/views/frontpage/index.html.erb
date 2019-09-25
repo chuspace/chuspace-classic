@@ -1,6 +1,6 @@
 <div class='block'>
   <section class='list w-full sm:w-4/6 sm:mx-auto'>
-    <h3 class='border-b border-grey-lightest pb-5 font-semibold'>Latest</h3>
+    <h3 class='border-b border-grey-lightest pb-5 font-bold'>Latest</h3>
     <% if @posts.any? %>
       <% @posts.each do |post| %>
         <%= render 'posts/post', post: post %>

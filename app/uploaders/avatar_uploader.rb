@@ -2,16 +2,7 @@
 
 # typed: false
 
-class AvatarUploader < Shrine
-  include ImageProcessing::Vips
-
-  plugin :pretty_location
-  plugin :add_metadata
-  plugin :determine_mime_type
-  plugin :store_dimensions
-  plugin :validation_helpers
-  plugin :delete_promoted
-  plugin :delete_raw
+class AvatarUploader < AppUploader
   plugin :derivation_endpoint,
          secret_key: ENV.fetch('DERIVATION_ENDPOINT_SECRET'),
          prefix: 'avatar/variants',
@@ -19,13 +10,6 @@ class AvatarUploader < Shrine
          upload_options: { acl: 'public-read' },
          upload_open_options: { response_content_encoding: 'gzip' },
          upload: true
-
-  unless Rails.env.test?
-    plugin :restore_cached_data
-    plugin :cached_attachment_data
-    plugin :instrumentation
-    plugin :recache
-  end
 
   Attacher.validate do
     validate_max_size 5.megabytes, message: 'is too large (max is 5 MB)'

@@ -1,0 +1,65 @@
+<dialog class='dialog__full' data-controller='publish'>
+  <div class='container relative'>
+    <%= link_to edit_publication_post_path(@publication, @post) do %>
+      <svg-icon
+        class='absolute top-0 right-0'
+        name='x-circle'
+        feather='true'
+        stroke='rgba(0, 0, 0, 0.5)'
+        color='none' width='24' height='24'>
+      </svg-icon>
+    <% end %>
+
+    <h3 class='border-b pb-2 inline-block text-lg'>Publish</h3>
+    <div class='card card--default w-2/3 mx-auto mt-16 list'>
+      <%= render 'posts/draft', draft: @post, show_placeholder: true %>
+
+      <%= simple_form_for @post, scope: :post, url: publication_post_publish_index_path(@publication, @post), method: :post, remote: true do |f| %>
+        <div class='w-full'>
+          <input-autocomplete
+            url="<%= autocomplete_topics_path %>"
+            items='<%= @post.topics || [] %>'
+            name='post[topics][]'
+            maxlength="5"
+            keys="name"
+            class='w-full block mt-12'
+          >
+            <div class='form_field__container'>
+              <div class='input__container input__container__label--floating' data-label='Topics'>
+                <div class='autocomplete__selections'>
+                  <% @post.topics&.each do |topic| %>
+                    <span class="autocomplete__item mr-2">
+                      <%= topic %>
+                      <svg-icon class='autocomplete__item__icon' name='x-circle' width='10' height='10' feather='true' color='none'>&#10005</svg-icon>
+                    </span>
+                  <% end %>
+                </div>
+
+                <div class='input__dropdown__group relative'>
+                  <input type='text' class="input autocomplete__input" autocomplete='off' spellcheck='off' autofocus />
+                </div>
+              </div>
+
+              <% if @post.errors.include?(:topics) %>
+                <%= content_tag :span, @post.errors.full_messages_for(:topics).to_sentence, class: 'input__error text-red block' %>
+              <% else %>
+                <span class="input__hint">Select topics to help readers find your post</span>
+              <% end %>
+            </div>
+          </input-autocomplete>
+
+          <%= f.input :canonical_url, label: false, input_container_html: { class: 'input__container__label--floating', 'data-label': 'Canonical' } %>
+
+          <auto-complete
+            src="<%= publication_post_autocomplete_index_path(@publication, @post) %>"
+            aria-owns="posts-popup"
+            class='relative block'
+          >
+            <%= f.input :parent, label: false, as: :autocomplete, input_container_html: { class: 'input__container__label--floating', data: { label: 'Parent' } }, input_html: { popup_id: 'posts-popup', class: 'input', value: @post.parent&.slug } %>
+          </auto-complete>
+          <%= f.submit 'Publish now', class: 'button button--fill float-right mt-12 text-base' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</dialog>

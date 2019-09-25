@@ -1,26 +1,44 @@
-<article class='list__item list__item--bordered'>
-  <%= link_to edit_publication_post_path(draft.publication, draft) do %>
-    <div class='header'>
-      <h2 class='font-content'><%= draft.title %></h2>
-      <%= content_tag :p, draft.summary, class: 'text-grey mt-1' %>
-    </div>
-  <% end %>
+<%= content_tag :div, class: 'list__item list__item--bordered' do %>
+  <article class='flex w-full'>
+    <div class='pr-8 w-3/4'>
+      <%= link_to edit_publication_post_path(draft.publication, draft) do %>
+        <div class='header'>
+          <h3><%= draft.title %></h3>
+          <%= content_tag :p, draft.summary, class: 'text-grey text-sm mt-1 w-4/5' %>
+        </div>
+      <% end %>
 
-  <ul class='horizontal__list text-sm mt-2'>
-    <li class='text-grey'>
-      Last edited <%= distance_of_time_in_words_to_now(draft.updated_at) %> ago
-    </li>
-    <li>
-      <%= link_to 'Edit', edit_publication_post_path(draft.publication, draft), class: 'link link--active underline' %>
-    </li>
-    <li>
-      <%= link_to 'Delete',
-        publication_post_path(draft.publication, draft),
-        method: :delete,
-        remote: true,
-        class: 'link link--danger underline',
-        data: { confirm: 'Are you sure?' }
-      %>
-    </li>
-  </ul>
-</article>
+      <ul class='horizontal__list text-sm mt-2'>
+        <li class='text-grey'>
+          Last edited <%= distance_of_time_in_words_to_now(draft.updated_at) %> ago
+        </li>
+        <li>
+          <%= link_to 'Edit', edit_publication_post_path(draft.publication, draft), class: 'link link--active underline' %>
+        </li>
+        <li>
+          <%= link_to 'Delete',
+            publication_post_path(draft.publication, draft),
+            method: :delete,
+            remote: true,
+            class: 'link link--danger underline',
+            data: { confirm: 'Are you sure?' }
+          %>
+        </li>
+      </ul>
+    </div>
+
+    <% if defined?(show_placeholder) && draft.preview_image.blank?  %>
+      <div class='preview__image__uploader'></div>
+    <% elsif draft.preview_image.present? %>
+      <div class='preview__image__container--list'>
+        <%= link_to(
+            '',
+            publication_post_path(draft.publication, draft),
+            class: 'preview__image',
+            style: "background-image: url('#{draft.preview_image_url(variant: :list)}');"
+          )
+        %>
+      </div>
+    <% end %>
+  </article>
+<% end %>

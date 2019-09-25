@@ -2,11 +2,11 @@
 # frozen_string_literal: true
 
 class Post < ApplicationRecord
-  include AASM, Topicable, Slugable
+  include AASM, Topicable, Previewable, PreviewImageUploader::Attachment.new(:preview_image)
+  extend FriendlyId
 
+  friendly_id :title, use: %i[slugged history]
   has_ancestry
-  has_logidze
-  sluggable :title
 
   enum status: { draft: 0, published: 1 }
 
@@ -163,5 +163,9 @@ class Post < ApplicationRecord
 
   def liked_by?(user:)
     likes.where(user: user).exists?
+  end
+
+  def should_generate_new_friendly_id?
+    title_changed? || super
   end
 end

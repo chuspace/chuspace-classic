@@ -97,6 +97,9 @@ en:
       create?: You cannot create posts!
       show?: You cannot view this post!
       update?: You cannot edit this post!
+  posts:
+    publish:
+      preview_image_hint: Drop images here or click to browse. Maximum image size 5MB
   publications:
     edit:
       heading: Publication profile

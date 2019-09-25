@@ -2,10 +2,12 @@
 # frozen_string_literal: true
 
 class Publication < ApplicationRecord
-  include Repoable, Avatarable, Topicable, Reserved, Slugable, AvatarUploader::Attachment.new(:avatar)
+  include Repoable, Avatarable, Topicable, Reserved, AvatarUploader::Attachment.new(:avatar)
+  extend FriendlyId
 
-  sluggable :name
+  friendly_id :name, use: %i[slugged history]
   reserved :name
+
   before_validation :add_owning_collaboration, on: :create
 
   validates_presence_of :name, :slug
@@ -31,6 +33,10 @@ class Publication < ApplicationRecord
   scope :listed, -> { where(unlisted: false) }
 
   delegate :count, to: :members, prefix: true
+
+  def should_generate_new_friendly_id?
+    name_changed? || super
+  end
 
   private
 

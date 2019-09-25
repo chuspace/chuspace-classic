@@ -15,6 +15,7 @@ gem 'strong_migrations'
 gem 'database_validations'
 gem 'activerecord-clean-db-structure'
 gem 'name_of_person'
+gem 'friendly_id'
 
 # File uploads
 gem 'aws-sdk-s3'
@@ -27,9 +28,6 @@ gem 'shrine-memory', require: false
 
 # SES
 gem 'aws-ses', require: 'aws/ses'
-
-# Logging
-gem 'logidze'
 
 #  Nested tree
 gem 'ancestry'

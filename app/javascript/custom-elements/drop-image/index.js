@@ -7,7 +7,6 @@ const ACCEPTED_IMAGES = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
 export default class DropImage extends LitElement {
   static get properties() {
     return {
-      url: { type: String },
       hint: { type: String },
       errors: { type: String },
       param: { type: String }
@@ -18,7 +17,10 @@ export default class DropImage extends LitElement {
     await super.connectedCallback()
 
     this.input = this.querySelector('#drop_input')
-    this.image = this.querySelector('#drop_preview')
+
+    this.input.classList.add('hidden')
+
+    console.log(this)
 
     this.addEventListener('click', this.handleClick)
     this.addEventListener('dragover', this.handleDrag)
@@ -57,8 +59,9 @@ export default class DropImage extends LitElement {
 
       reader.readAsDataURL(image)
       reader.onload = file => {
+        const image = this.querySelector('img')
         /* $FlowFixMe */
-        this.url = file.target.result
+        image.src = file.target.result
       }
     }
   }
@@ -67,26 +70,6 @@ export default class DropImage extends LitElement {
 
   createRenderRoot() {
     return this
-  }
-
-  render() {
-    return html`
-      ${this.url
-        ? html`
-            <img class="avatar avatar--thumb" id="drop_preview" src=${this.url} />
-          `
-        : ''}
-
-      <input id="drop_input" accept="image/*" type="file" name="${this.param}" class="hidden" />
-      <span class="input__hint avatar__uploader__hint ${this.url ? '' : 'avatar__uploader__hint__blank'}">
-        ${this.hint}
-      </span>
-      ${this.url
-        ? null
-        : html`
-            <span class="input__error text-red block">${this.errors}</span>
-          `}
-    `
   }
 }
 

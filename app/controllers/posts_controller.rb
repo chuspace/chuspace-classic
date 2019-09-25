@@ -4,7 +4,7 @@
 class PostsController < ApplicationController
   before_action :authenticate!, except: %i[show]
   before_action :find_publication
-  before_action :find_post, except: %i[show index new create]
+  before_action :find_post, except: %i[index new create]
   skip_verify_authorized only: :show
   after_action :track_action, only: :show
 
@@ -14,8 +14,9 @@ class PostsController < ApplicationController
   end
 
   def show
-    @author = Publication.find_by!(slug: params[:publication_slug])
-    @post = @author.posts.find_by!(slug: params[:slug])
+    if request.path != publication_post_path(@publication, @post)
+      return redirect_to publication_post_path(@publication, @post), status: :moved_permanently
+    end
 
     redirect_to edit_publication_post_path(@publication, @post) if @post.draft?
   end
@@ -73,11 +74,11 @@ class PostsController < ApplicationController
   end
 
   def find_publication
-    @publication = Publication.find_by!(slug: params[:publication_slug])
+    @publication = Publication.friendly.find(params[:publication_slug])
   end
 
   def find_post
-    @post = @publication.posts.find_by!(slug: params[:slug])
+    @post = @publication.posts.friendly.find(params[:slug])
   end
 
   def track_action

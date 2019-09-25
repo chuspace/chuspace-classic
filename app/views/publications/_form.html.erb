@@ -1,19 +1,19 @@
-<%= simple_form_for publication, remote: true do |f| %>
+<%= simple_form_for publication, remote: true, html: { id: 'publication_form' } do |f| %>
   <div class='block sm:flex'>
     <div class='avatar relative w-full sm:w-1/4 mt-8'>
-      <drop-image
-        class='avatar__uploader'
-        hint='<%= t('.avatar_hint') %>'
-        url='<%= @publication.avatar_url(variant: :thumb) %>'
-        errors='<%= publication.errors.full_messages_for(:avatar).to_sentence %>'
-        param='publication[avatar]'
-      >
-        <%= component 'avatar', avatar_url: publication.avatar_url(variant: :thumb), variant: :thumb if publication.avatar %>
+      <drop-image>
+        <div class='avatar__uploader'>
+          <% if publication.avatar.present? %>
+            <%= component 'avatar', avatar_url: publication.avatar_url(variant: :thumb), variant: :thumb, options: { id: 'drop_preview'} %>
+          <% else %>
+            <img class='avatar avatar--thumb' id= 'drop_preview'>
+          <% end %>
+        </div>
 
         <% if publication.errors.include?(:avatar) %>
           <%= content_tag :span, publication.errors.full_messages_for(:avatar).to_sentence, class: 'input__error text-red block' %>
         <% else %>
-          <span class="input__hint avatar__uploader__hint <%= publication.avatar.blank? ? 'avatar__uploader__hint__blank' : '' %>">
+          <span class="input__hint avatar__uploader__hint">
             <%= t('.avatar_hint') %>
           </span>
         <% end %>
@@ -22,7 +22,7 @@
           as: :file,
           wrapper: false,
           label: false,
-          input_html: { accept: "image/*" }
+          input_html: { accept: "image/*", id: 'drop_input' }
           )
         %>
       </drop-image>

@@ -2,42 +2,54 @@
   <%= render 'posts/draft', draft: post %>
 <% else %>
   <%= content_tag :div, class: 'list__item list__item--bordered' do %>
-    <article>
-      <%= link_to publication_post_path(post.publication, post) do %>
-        <div class='header'>
-          <h2 class='font-content'><%= post.title %></h2>
-          <%= content_tag :p, post.summary, class: 'text-grey mt-1' %>
-        </div>
-      <% end %>
+    <article class='flex w-full'>
+      <div class='w-3/4'>
+        <%= link_to publication_post_path(post.publication, post) do %>
+          <div class='header'>
+            <h3><%= post.title %></h3>
+            <%= content_tag :p, post.summary, class: 'text-grey text-sm mt-1 w-4/5' %>
+          </div>
+        <% end %>
 
-      <ul class='horizontal__list text-sm text-grey mt-4'>
-        <li>
-          By <%= link_to post.author.name, user_path(post.author), class: 'underline' %>
-        </li>
-        <% unless post.publication.personal? %>
+        <ul class='horizontal__list text-sm text-grey mt-4'>
           <li>
-            in
-            <%= link_to post.publication.name, publication_path(post.publication), class: 'underline' %>
+            By <%= link_to post.author.name, user_path(post.author), class: 'underline' %>
           </li>
-        <% end %>
-        <li>
-          <time><%= post.published_at.strftime("%b %d, %Y") %></time>
-        </li>
-        <% if Current.user.present? && allowed_to?(:edit?, post) %>
+          <% unless post.publication.personal? %>
+            <li>
+              in
+              <%= link_to post.publication.name, publication_path(post.publication), class: 'underline' %>
+            </li>
+          <% end %>
           <li>
-            <%= link_to 'Edit', edit_publication_post_path(post.publication, post), class: 'link link--active underline' %>
+            <time><%= post.published_at.strftime("%b %d, %Y") %></time>
           </li>
-          <li>
-            <%= link_to 'Delete',
-              publication_post_path(post.publication, post),
-              method: :delete,
-              remote: true,
-              class: 'link link--danger underline',
-              data: { confirm: 'Are you sure?' }
-            %>
-          </li>
-        <% end %>
-      </ul>
+          <% if Current.user.present? && allowed_to?(:edit?, post) %>
+            <li>
+              <%= link_to 'Edit', edit_publication_post_path(post.publication, post), class: 'link link--active underline' %>
+            </li>
+            <li>
+              <%= link_to 'Delete',
+                publication_post_path(post.publication, post),
+                method: :delete,
+                remote: true,
+                class: 'link link--danger underline',
+                data: { confirm: 'Are you sure?' }
+              %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class='preview__image__container--list'>
+        <%= link_to(
+            '',
+            publication_post_path(post.publication, post),
+            class: 'preview__image',
+            style: "background-image: url('#{post.preview_image_url(variant: :list)}');"
+          )
+        %>
+      </div>
     </article>
   <% end %>
 <% end %>

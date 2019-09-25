@@ -3,13 +3,14 @@
 
 class PostMarkdownService
   extend T::Sig
-  attr_reader :content, :markdown_doc, :title, :summary, :body_md, :body_html
+  attr_reader :content, :markdown_doc, :title, :preview_image, :summary, :body_md, :body_html
 
   sig { params(content: T.nilable(String)).returns(CommonMarker::Node) }
   def initialize(content:)
     @title = nil
     @summary = nil
     @body_md = nil
+    @preview_image = nil
     @body_html = nil
 
     @content = content
@@ -23,6 +24,13 @@ class PostMarkdownService
 
   sig { returns(T.nilable(PostMarkdownService)) }
   def parse
+    @markdown_doc.walk do |node|
+      if node.type == :image
+        @preview_image = url_or_mailto?(node.url) ? node.url : URI.join(ENV.fetch('CHUSPACE_URL'), node.url).to_s
+        break
+      end
+    end
+
     @markdown_doc.each do |node|
       if title?(node) && @title.blank?
         @title = string_content_for(node).presence
@@ -69,5 +77,10 @@ class PostMarkdownService
     end
 
     content
+  end
+
+  def url_or_mailto?(url_str)
+    url = URI.parse(url_str)
+    T.unsafe(url.kind_of?(URI::HTTP)) || T.unsafe(url.kind_of?(URI::HTTPS)) || T.unsafe(url.kind_of?(URI::MailTo))
   end
 end

@@ -24,10 +24,13 @@ class PublicationsController < ApplicationController
     @publication.owner = Current.user
     authorize! @publication
 
-    if @publication.save
-      redirect_to publication_path(@publication), notice: 'Publication successfully created'
-    else
-      render :new, turbolinks: true
+    respond_to do |format|
+      if @publication.save
+        format.html { redirect_to publication_path(@publication), notice: 'Publication successfully created' }
+      else
+        format.js
+        format.html { redirect_to new_publication_path, notice: @publication.errors.messages.to_sentence }
+      end
     end
   end
 
@@ -42,11 +45,18 @@ class PublicationsController < ApplicationController
   def update
     authorize! @publication
 
-    if @publication.update(publication_params)
-      flash[:notice] = "#{@publication.name} publication successfully updated"
-      redirect_to publication_path(@publication)
-    else
-      render :edit, turbolinks: true
+    respond_to do |format|
+      if @publication.update(publication_params)
+        format.html do
+          redirect_to edit_publication_path(@publication),
+                      notice: "#{@publication.name} publication successfully updated"
+        end
+      else
+        format.js { render :create }
+        format.html do
+          redirect_to edit_publication_path(@publication), notice: @publication.errors.messages.to_sentence
+        end
+      end
     end
   end
 
@@ -68,6 +78,6 @@ class PublicationsController < ApplicationController
   end
 
   def find_publication
-    @publication = Publication.find_by!(slug: params[:slug])
+    @publication = Publication.friendly.find(params[:slug])
   end
 end
