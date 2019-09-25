@@ -19,10 +19,13 @@ class Settings::KeysController < ApplicationController
     @key = Current.user.keys.build(key_params)
     authorize! @key
 
-    if @key.save
-      redirect_to settings_keys_path, notice: t('settings.keys.create.success')
-    else
-      render :new, turblinks: true
+    respond_to do |format|
+      if @key.save
+        format.html { redirect_to settings_keys_path, notice: t('settings.keys.create.success') }
+      else
+        format.js
+        format.html { redirect_to new_settings_keys_path, notice: @key.errors.full_messages.to_sentence }
+      end
     end
   end
 

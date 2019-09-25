@@ -17,10 +17,7 @@ export default class DropImage extends LitElement {
     await super.connectedCallback()
 
     this.input = this.querySelector('#drop_input')
-
     this.input.classList.add('hidden')
-
-    console.log(this)
 
     this.addEventListener('click', this.handleClick)
     this.addEventListener('dragover', this.handleDrag)
