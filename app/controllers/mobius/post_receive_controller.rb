@@ -37,7 +37,7 @@ module Mobius
           when :added, :modified
             markdown = PostMarkdownService.call(content: git_blob.content)
             slug = markdown.title&.to_slug&.to_ascii&.normalize&.to_s || git_blob.oid[0..8]
-            post = publication.posts.find_or_initialize_by(blob_path: git_blob.path, publication: publication)
+            post = publication.posts.find_or_initialize_by(blob_path: git_blob.path, author: author)
             post.assign_attributes(slug: slug) if post.new_record?
             post.save!
           when :renamed
