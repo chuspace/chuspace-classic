@@ -3,21 +3,28 @@
 
 module Mobius
   class PostReceiveController < BaseController
+    class MobiusUnauthorisedError < StandardError; end
+
     def create
       old_commit_sha = params[:old_commit_sha]
       new_commit_sha = params[:new_commit_sha]
       ref = params[:ref]
 
       author = User.find_by(id: params[:author_id])
-      publication = author.publications.find_by(id: params[:publication_id])
+      publication = Publication.find_by(id: params[:publication_id])
       repository = publication&.repository
 
-      unless repository
-        Rails.logger.error("Repository not found: author-#{author.id} repository-#{repository.id}")
+      unless publication.members.include?(author)
+        Rails.logger.error("You are not allowed to update: publication-#{publication.id} repository-#{repository.id}")
         return
       end
 
-      author.transaction do
+      unless repository
+        Rails.logger.error("Repository not found: publication-#{publication.id} repository-#{repository.id}")
+        return
+      end
+
+      Post.transaction do
         old_commit = repository.lookup(old_commit_sha)
         new_commit = repository.lookup(new_commit_sha)
         diff = old_commit.diff(new_commit).find_similar!(renames: true)
@@ -30,13 +37,13 @@ module Mobius
           when :added, :modified
             markdown = PostMarkdownService.call(content: git_blob.content)
             slug = markdown.title&.to_slug&.to_ascii&.normalize&.to_s || git_blob.oid[0..8]
-            post = author.posts.find_or_initialize_by(blob_path: git_blob.path, publication: publication)
+            post = publication.posts.find_or_initialize_by(blob_path: git_blob.path, publication: publication)
             post.assign_attributes(slug: slug) if post.new_record?
             post.save!
           when :renamed
-            author.posts.find_by(blob_path: delta.old_file[:path])&.update!(blob_path: delta.new_file[:path])
+            publication.posts.find_by(blob_path: delta.old_file[:path])&.update!(blob_path: delta.new_file[:path])
           when :deleted
-            author.posts.find_by(blob_path: delta.old_file[:path])&.destroy!
+            publication.posts.find_by(blob_path: delta.old_file[:path])&.destroy!
           end
         end
       end
