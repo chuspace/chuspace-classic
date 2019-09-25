@@ -3,7 +3,7 @@
     <div class='pr-8 w-3/4'>
       <%= link_to edit_publication_post_path(draft.publication, draft) do %>
         <div class='header'>
-          <h3><%= draft.title %></h3>
+          <h3><%= draft.title || Post::DEFAULT_TITLE %></h3>
           <%= content_tag :p, draft.summary, class: 'text-grey text-sm mt-1 w-4/5' %>
         </div>
       <% end %>

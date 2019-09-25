@@ -14,22 +14,27 @@ class UsersController < ApplicationController
     @user.assign_attributes(update_params)
     authorize! @user
 
-    if @user.save
-      flash[:notice] = 'Profile successfully updated'
-      redirect_to settings_profiles_path
-    else
-      render 'settings/profiles/index', turbolinks: true
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to settings_profiles_path, notice: 'Profile successfully updated' }
+      else
+        format.js
+        format.html { redirect_to settings_profiles_path, notice: @user.errors.full_messages.to_sentence }
+      end
     end
   end
 
   def destroy
-    authorize! Current.user
+    @user = Current.user
+    authorize! @user
 
-    if Current.user.destroy
-      flash[:notice] = 'Successfully deleted your account'
-      redirect_to root_path
-    else
-      render 'settings/profiles/index', turbolinks: true
+    respond_to do |format|
+      if @user.destroy
+        format.html { redirect_to root_path, notice: 'Successfully deleted your account' }
+      else
+        format.js { render :update }
+        format.html { redirect_to settings_profiles_path, notice: @user.errors.full_messages.to_sentence }
+      end
     end
   end
 

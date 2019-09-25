@@ -1,0 +1,15 @@
+<h1 class='text-base font-normal mb-8'>Add to publication</h1>
+<%= simple_form_for invitation, url: publication_invitations_path(publication), remote: true do |f| %>
+  <auto-complete
+    src="<%= autocomplete_publication_people_path(publication) %>"
+    aria-owns="users-popup"
+    class='relative block'
+  >
+    <%= f.input :identifier, label: 'Email or Username', as: :autocomplete, autofocus: true, input_html: { popup_id: 'users-popup', class: 'input', autocomplete: 'off', spellcheck: 'off' } %>
+  </auto-complete>
+
+  <%= f.input :role, as: :radio_buttons, collection: Collaborator::ROLES, checked: Collaborator::DEFAULT_ROLE, required: true %>
+  <div class='mt-8'>
+    <%= f.submit 'Invite', class: 'button button--fill' %>
+  </div>
+<% end %>

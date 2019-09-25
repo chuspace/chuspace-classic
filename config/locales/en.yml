@@ -23,6 +23,8 @@ en:
               nonunique_key: is already taken
         post:
           attributes:
+            title:
+              blank: is required. Go back to editor to add the title
             slug:
               invalid: should be all lowercase, unique, min 10 character, may have
                 a single hyphen and no special characters.

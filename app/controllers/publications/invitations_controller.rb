@@ -13,13 +13,20 @@ class Publications::InvitationsController < ApplicationController
     @invitation.sender = Current.user
     authorize! @invitation
 
-    if @invitation.save
-      redirect_to(
-        publication_people_path(@publication),
-        notice: t('invitations.create.success', identifier: @invitation.identifier, publication: @publication.name)
-      )
-    else
-      render 'publications/people/index', turbolinks: true
+    respond_to do |format|
+      if @invitation.save
+        format.html do
+          redirect_to(
+            publication_people_path(@publication),
+            notice: t('invitations.create.success', identifier: @invitation.identifier, publication: @publication.name)
+          )
+        end
+      else
+        format.js
+        format.html do
+          redirect_to publication_people_path(@publication), notice: @invitation.errors.full_messages.to_sentence
+        end
+      end
     end
   end
 

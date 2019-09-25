@@ -21,17 +21,22 @@ class Posts::PublishController < ApplicationController
 
       authorize! ::Posts::Publish, context: { post: @post }
 
-      if @post.save
-        if @post.saved_change_to_blob_path?
-          @post.blob.rename(
-            committer: Current.user, new_path: new_blob_path, commit_message: "Publish post #{new_blob_path}"
-          )
-        end
+      respond_to do |format|
+        if @post.save
+          if @post.saved_change_to_blob_path?
+            @post.blob.rename(
+              committer: Current.user, new_path: new_blob_path, commit_message: "Publish post #{new_blob_path}"
+            )
+          end
 
-        redirect_to publication_post_path(@post.publication, @post)
-      else
-        @post.reload
-        render 'posts/edit', turbolinks: true
+          format.html { redirect_to publication_post_path(@publication, @post) }
+        else
+          format.js
+          format.html do
+            redirect_to publication_post_publish_index_path(@publication, @post),
+                        notice: @post.errors.messages.to_sentence
+          end
+        end
       end
     end
   end

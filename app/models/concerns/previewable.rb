@@ -3,7 +3,9 @@
 # typed: false
 
 module Previewable
-  PREVIEW_IMAGE_VARIANTS = { list: { width: 150, height: 150 }, thumb: { width: 320, height: 220 } }.freeze
+  PREVIEW_IMAGE_VARIANTS = {
+    list: { width: 150, height: 150 }, thumb: { width: 320, height: 220 }, social: { width: 600, height: 315 }
+  }.freeze
   class PreviewImageVariantNotFound < StandardError; end
 
   extend ActiveSupport::Concern

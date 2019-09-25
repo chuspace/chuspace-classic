@@ -34,9 +34,6 @@ module Chuspace
     config.active_job.queue_adapter = :delayed_job
     config.action_mailer.deliver_later_queue_name = 'low'
 
-    # Turbolinks render
-    Rails.application.config.turbolinks_render.render_with_turbolinks_by_default = false
-
     # Custom error pages
     config.exceptions_app = self.routes
 

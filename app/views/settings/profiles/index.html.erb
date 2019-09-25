@@ -4,7 +4,7 @@
   <div class='container'>
     <%= render 'settings/header', title: 'Edit profile', description: 'Update your personal profile information' %>
 
-    <div class="form border-t border-grey-lighter">
+    <div class="form border-t border-grey-lighter" id='settings_profile_form'>
       <%= render 'settings/profiles/form', user: @user %>
     </div>
   </div>

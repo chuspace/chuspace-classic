@@ -81,7 +81,7 @@ class Post < ApplicationRecord
   end
 
   def title
-    super || draft.title.presence&.squish || DEFAULT_TITLE
+    super || draft.title.presence&.squish
   end
 
   def summary
@@ -143,6 +143,7 @@ class Post < ApplicationRecord
       site: 'Chuspace',
       charset: 'en',
       title: title,
+      image_src: preview_image_url(variant: :list),
       description: summary,
       keywords: topics_list,
       index: true,
@@ -154,9 +155,17 @@ class Post < ApplicationRecord
         type: :article,
         description: :description,
         site_name: :site,
+        image: preview_image_url(variant: :social),
         url: Rails.application.routes.url_helpers.publication_post_url(author, self)
       },
-      twitter: { title: :title, card: :summary, description: :description, site_name: :site },
+      twitter: {
+        title: :title,
+        card: :summary,
+        description: :description,
+        site: '@chuspace_com',
+        url: Rails.application.routes.url_helpers.publication_post_url(author, self),
+        image: preview_image_url(variant: :social)
+      },
       article: { published_time: published_at, modified_time: updated_at, tag: topics_list, author: author.nickname }
     }
   end
