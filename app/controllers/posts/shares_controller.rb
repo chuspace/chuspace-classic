@@ -2,8 +2,8 @@
 # frozen_string_literal: true
 
 class Posts::SharesController < ApplicationController
-  before_action :find_publication, :find_post
   skip_verify_authorized
+  include PublicationFinder, PostFinder
 
   def show
     shareable = options[params[:id]&.to_sym]
@@ -33,13 +33,5 @@ class Posts::SharesController < ApplicationController
         }
       }
     }
-  end
-
-  def find_publication
-    @publication = Publication.find_by(slug: params[:publication_slug])
-  end
-
-  def find_post
-    @post = @publication.posts.find_by!(slug: params[:post_slug])
   end
 end
