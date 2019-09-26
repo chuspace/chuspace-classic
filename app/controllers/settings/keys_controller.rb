@@ -3,7 +3,7 @@
 
 class Settings::KeysController < ApplicationController
   before_action :authenticate!
-  before_action :find_key, only: :destroy
+  before_action :find_key, only: %i[update destroy]
 
   def new
     @key = Current.user.keys.build
@@ -46,6 +46,6 @@ class Settings::KeysController < ApplicationController
   end
 
   def find_key
-    @key = Current.user.keys.find(params[:id])
+    @key = Key.find(params[:id])
   end
 end

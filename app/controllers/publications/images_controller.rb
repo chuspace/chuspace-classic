@@ -3,7 +3,7 @@
 
 class Publications::ImagesController < ApplicationController
   before_action :authenticate!, only: :create
-  include PublicationFinder
+  before_action :find_publication
   skip_verify_authorized only: :show
 
   def create
@@ -42,5 +42,11 @@ class Publications::ImagesController < ApplicationController
     else
       render json: { message: @image.errors.full_messages.to_sentence, destroyed: false }, status: :unprocessable_entity
     end
+  end
+
+  private
+
+  def find_publication
+    @publication = Publication.find_by(slug: params[:publication_slug])
   end
 end

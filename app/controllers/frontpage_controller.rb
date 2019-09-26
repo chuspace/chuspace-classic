@@ -6,6 +6,6 @@ class FrontpageController < ApplicationController
   skip_verify_authorized
 
   def index
-    @posts = Post.listed.includes(:author, :publication).limit(20).order(id: :desc)
+    @posts = Post.listed.limit(20).order(id: :desc)
   end
 end

@@ -3,7 +3,7 @@
 
 class Publications::PeopleController < ApplicationController
   before_action :authenticate!, except: :index
-  include PublicationFinder
+  before_action :find_publication
   before_action :find_collaborator, only: %i[update destroy]
   skip_verify_authorized only: %i[index autocomplete]
 
@@ -37,6 +37,10 @@ class Publications::PeopleController < ApplicationController
 
   def update_params
     params.permit(:role)
+  end
+
+  def find_publication
+    @publication = Publication.find_by!(slug: params[:publication_slug])
   end
 
   def find_collaborator

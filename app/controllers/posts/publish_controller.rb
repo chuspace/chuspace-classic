@@ -3,9 +3,7 @@
 
 class Posts::PublishController < ApplicationController
   before_action :authenticate!
-  include PublicationFinder, PostFinder
-
-  before_action :assign_attributes
+  before_action :find_publication, :find_post, :assign_attributes
 
   def index
     authorize! ::Posts::Publish, context: { post: @post }
@@ -53,5 +51,13 @@ class Posts::PublishController < ApplicationController
     @markdown = PostMarkdownService.call(content: @post.blob_content)
     @post.assign_attributes(title: @markdown.title, summary: @markdown.summary)
     @post.preview_image_remote_url = @markdown.preview_image if @markdown.preview_image.present?
+  end
+
+  def find_publication
+    @publication = Current.user.publications.friendly.find(params[:publication_slug])
+  end
+
+  def find_post
+    @post = @publication.posts.friendly.find(params[:post_slug])
   end
 end

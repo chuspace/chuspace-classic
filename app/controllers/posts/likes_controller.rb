@@ -3,7 +3,7 @@
 
 class Posts::LikesController < ApplicationController
   before_action :authenticate!
-  include PublicationFinder, PostFinder
+  before_action :find_publication, :find_post
 
   def create
     if @post.liked_by?(user: Current.user)
@@ -31,5 +31,13 @@ class Posts::LikesController < ApplicationController
       format.js
       format.html { redirect_to publication_post_path(@publication, @post) }
     end
+  end
+
+  def find_publication
+    @publication = Publication.find_by(slug: params[:publication_slug])
+  end
+
+  def find_post
+    @post = @publication.posts.find_by(slug: params[:post_slug])
   end
 end

@@ -4,7 +4,7 @@
 class Publications::InvitationsController < ApplicationController
   before_action :authenticate!, except: :accept
   before_action :authenticate, only: :accept
-  include PublicationFinder
+  before_action :find_publication
   skip_verify_authorized only: :accept, if: -> { Current.user.blank? }
 
   def create
@@ -65,5 +65,9 @@ class Publications::InvitationsController < ApplicationController
 
   def invitation_params
     params.require(:invitation).permit(:identifier, :role)
+  end
+
+  def find_publication
+    @publication = Publication.find_by!(slug: params[:publication_slug])
   end
 end

@@ -2,12 +2,17 @@
 # frozen_string_literal: true
 
 class Publications::DraftsController < ApplicationController
-  before_action :authenticate!
+  before_action :authenticate!, :find_publication
   skip_verify_authorized
-  include PublicationFinder
 
   def index
     @posts = @publication.posts.draft.includes(:author).limit(20).order(id: :desc)
     render 'publications/show'
+  end
+
+  private
+
+  def find_publication
+    @publication = Publication.find_by!(slug: params[:publication_slug])
   end
 end
