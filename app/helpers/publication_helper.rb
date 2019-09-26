@@ -3,7 +3,7 @@
 
 module PublicationHelper
   def publications_items
-    Current.user.publications.map do |publication|
+    Current.user.publications.limit(5).map do |publication|
       avatar =
         if publication.personal
           component(

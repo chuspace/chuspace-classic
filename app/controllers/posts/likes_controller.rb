@@ -34,10 +34,10 @@ class Posts::LikesController < ApplicationController
   end
 
   def find_publication
-    @publication = Publication.find_by(slug: params[:publication_slug])
+    @publication = Publication.friendly.find(params[:publication_slug])
   end
 
   def find_post
-    @post = @publication.posts.find_by(slug: params[:post_slug])
+    @post = @publication.posts.friendly.find(params[:post_slug])
   end
 end

@@ -68,6 +68,6 @@ class Publications::InvitationsController < ApplicationController
   end
 
   def find_publication
-    @publication = Publication.find_by!(slug: params[:publication_slug])
+    @publication = Publication.friendly.find(params[:publication_slug])
   end
 end

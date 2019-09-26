@@ -54,7 +54,7 @@ class Posts::PublishController < ApplicationController
   end
 
   def find_publication
-    @publication = Current.user.publications.friendly.find(params[:publication_slug])
+    @publication = Publication.friendly.find(params[:publication_slug])
   end
 
   def find_post
