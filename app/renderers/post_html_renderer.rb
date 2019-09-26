@@ -36,19 +36,15 @@ class PostHtmlRenderer < CommonMarker::HtmlRenderer
   end
 
   def image(node)
-    if url_or_mailto?(node.url)
-      super(node)
-    else
-      image_url = node.url
-      blob_url = URI.join(ENV.fetch('CHUSPACE_URL'), image_url).to_s
+    image_url = node.url
+    blob_url = URI.join(ENV.fetch('CHUSPACE_URL'), image_url).to_s
 
-      out('<lazy-image')
-      out(' src="', escape_href(blob_url), '"')
-      plain { out(' alt="', :children, '"') }
-      out(' title="', escape_html(node.title), '"') if node.title && !node.title.empty?
-      out(' >')
-      out('</lazy-image>')
-    end
+    out('<lazy-image')
+    out(' src="', escape_href(blob_url), '"')
+    plain { out(' alt="', :children, '"') }
+    out(' title="', escape_html(node.title), '"') if node.title && !node.title.empty?
+    out(' >')
+    out('</lazy-image>')
   end
 
   def code_block(node)

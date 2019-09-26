@@ -8,6 +8,8 @@ import '@github/details-menu-element'
 import '@github/auto-complete-element'
 import 'custom-elements'
 import 'helpers/ga.js.erb'
+import 'lazysizes/plugins/blur-up/ls.blur-up'
+import 'lazysizes/plugins/parent-fit/ls.parent-fit'
 
 import * as Rails from 'rails-ujs'
 import * as Turbolinks from 'turbolinks'

@@ -1,7 +1,5 @@
 // @flow
 
-import 'lazysizes/plugins/blur-up/ls.blur-up'
-
 import { LitElement, customElement, html } from 'lit-element'
 
 export default class LazyImage extends LitElement {
@@ -36,7 +34,7 @@ export default class LazyImage extends LitElement {
   render() {
     return html`
       <figure class="image__container">
-        <img alt=${this.alt} data-src="${this.src}" data-sizes="auto" class="lazy" />
+        <img alt=${this.alt} data-src="${this.src}" data-sizes="auto" class="lazy blur-up" />
         ${
           this.editable
             ? html`

@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 class AvatarComponent < Components::Component
-  DEFAULT_CSS_CLASS = 'avatar lazy'
+  DEFAULT_CSS_CLASS = 'avatar lazy blur-up'
 
   attribute :avatar_url
   attribute :gravatar_url
