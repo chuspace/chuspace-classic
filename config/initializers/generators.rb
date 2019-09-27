@@ -9,5 +9,6 @@ Rails.application.configure do
     generate.assets false
     generate.view_specs false
     generate.channel assets: false
+    generate.fixture_replacement :factory_bot
   end
 end

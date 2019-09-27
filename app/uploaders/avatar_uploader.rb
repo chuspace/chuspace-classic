@@ -3,6 +3,7 @@
 # typed: false
 
 class AvatarUploader < AppUploader
+  plugin :remote_url, max_size: 5.megabytes
   plugin :derivation_endpoint,
          secret_key: ENV.fetch('DERIVATION_ENDPOINT_SECRET'),
          prefix: 'avatar/variants',

@@ -124,6 +124,8 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec_junit_formatter'
+  gem 'factory_bot_rails'
+  gem 'faker'
   gem 'coveralls', require: false
   gem 'minitest'
   gem 'rack-proxy'
@@ -142,7 +144,6 @@ group :development do
   # Pry
   gem 'pry-rails'
   # Fake data
-  gem 'faker'
   gem 'sorbet'
   gem 'database_consistency', require: false
   gem 'tomo', github: 'gauravtiwari/tomo', require: false

@@ -5,16 +5,15 @@ require 'test_helper'
 
 class PublicationTest < ActiveSupport::TestCase
   def setup
-    @user = User.create!(name: 'Gaurav Tiwari', email: "gaurav-#{Time.now.to_i}@chuspace.com", nickname: "gaurav-#{Time.now.to_i}")
+    @user =
+      User.create!(
+        name: 'Gaurav Tiwari', email: "gaurav-#{Time.now.to_i}@chuspace.com", nickname: "gaurav-#{Time.now.to_i}"
+      )
     @invalid_publication = Publication.new
     @avatar = Rails.root.join('test', 'fixtures', 'files', 'publication.jpeg').read
     @valid_publication =
       Publication.create(
-        name: 'Ruby',
-        slug: 'ruby',
-        description: 'Ruby publication',
-        avatar: StringIO.new(@avatar),
-        owner: @user
+        name: 'Ruby', slug: 'ruby', description: 'Ruby publication', avatar: StringIO.new(@avatar), owner: @user
       )
   end
 
@@ -50,7 +49,10 @@ class PublicationTest < ActiveSupport::TestCase
   end
 
   test 'should not able to create more than one personal publication but unlimited publications' do
-    user ||= User.create!(name: 'John Doe', nickname: "john-#{SecureRandom.hex(12)}", email: "john-#{SecureRandom.hex(12)}@doe.com")
+    user ||=
+      User.create!(
+        name: 'John Doe', nickname: "john-#{SecureRandom.hex(12)}", email: "john-#{SecureRandom.hex(12)}@doe.com"
+      )
 
     assert user.publication.persisted?
     assert user.publication.repository.persisted?

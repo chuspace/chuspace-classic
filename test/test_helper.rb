@@ -15,6 +15,7 @@ SimpleCov.start 'rails' do
 end
 
 class ActiveSupport::TestCase
+  include FactoryBot::Syntax::Methods
   fixtures :all
   self.use_transactional_tests = true
 
