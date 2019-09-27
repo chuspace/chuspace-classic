@@ -36,8 +36,7 @@ class PostHtmlRenderer < CommonMarker::HtmlRenderer
   end
 
   def image(node)
-    image_url = node.url
-    blob_url = URI.join(ENV.fetch('CHUSPACE_URL'), image_url).to_s
+    blob_url = url_or_mailto?(node.url) ? node.url : URI.join(ENV.fetch('IMAGES_ENDPOINT'), node.url).to_s
 
     out('<lazy-image')
     out(' src="', escape_href(blob_url), '"')
