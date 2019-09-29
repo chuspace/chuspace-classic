@@ -21,6 +21,10 @@ class PostPolicy < ApplicationPolicy
     edit? && record.outdated?
   end
 
+  def contribute?
+    !edit?
+  end
+
   def show?
     true
   end
