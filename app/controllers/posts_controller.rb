@@ -28,27 +28,32 @@ class PostsController < ApplicationController
   def create
     Post.transaction do
       markdown = PostMarkdownService.call(content: post_params[:body])
-      slug = markdown.title&.to_slug&.to_ascii&.normalize&.to_s
-      post = Current.user.posts.build(publication: @publication, slug: slug)
+      current_commit = @publication.repository.commit
+      post = Current.user.posts.build(publication: @publication, title: markdown.title)
+
       authorize! post
 
-      post.blob_path = post.repo_dir.join("#{slug}.md").to_path
-      blob = @publication.repository.create_blob(path: post.blob_path, content: markdown.content)
+      if post.valid?
+        blob = @publication.repository.create_blob(path: post.blob_path, content: markdown.content)
 
-      if blob.persisted? && post.save
-        render json: {
-                 redirect: edit_publication_post_path(@publication, post),
-                 slug: post.slug,
-                 header:
-                   render_to_string(
-                     partial: 'posts/header/edit',
-                     format: :html,
-                     layout: false,
-                     locals: { post: post, publication: @publication, params: params }
-                   )
-               }
+        if blob.persisted? && post.save
+          render json: {
+                   redirect: edit_publication_post_path(@publication, post),
+                   slug: post.slug,
+                   header:
+                     render_to_string(
+                       partial: 'posts/header/edit',
+                       format: :html,
+                       layout: false,
+                       locals: { post: post, publication: @publication, params: params }
+                     )
+                 }
+        else
+          publication.repository.rugged.reset(current_commit, :soft) if blob&.persisted?
+          render json: { created: false, message: blob.errors.full_messages.to_sentence }, status: :unprocessable_entity
+        end
       else
-        render json: { created: false, message: blob.errors.full_messages.to_sentence }, status: :unprocessable_entity
+        render json: { created: false, message: post.errors.full_messages.to_sentence }, status: :unprocessable_entity
       end
     end
   end

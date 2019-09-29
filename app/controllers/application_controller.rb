@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
 
   after_action :verify_authorized
   before_action :set_raven_context
+  helper_method :signed_in?
 
   delegate :t, to: :I18n
   rescue_from ActionPolicy::Unauthorized, with: :user_not_authorized
@@ -29,5 +30,9 @@ class ApplicationController < ActionController::Base
 
   def current_user
     Current.user
+  end
+
+  def signed_in?
+    Current.user.present?
   end
 end
