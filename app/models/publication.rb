@@ -12,7 +12,7 @@ class Publication < ApplicationRecord
 
   validates_presence_of :name, :slug
   validates_presence_of :description, :avatar, unless: :personal
-  validates :name, length: { in: 1..39 }, format: { with: /\A^[a-zA-Z\s]*$\z/i }
+  validates :name, length: { in: 1..39 }, format: { with: /\A^[a-zA-Z0-9\s]*$\z/i }
   validates :slug, length: { in: 1..39 }, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
   validates :description, length: { in: 1..80 }, unless: :personal
   validates_db_uniqueness_of :slug, :name

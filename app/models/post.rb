@@ -5,10 +5,12 @@ class Post < ApplicationRecord
   include AASM, Topicable, Previewable, PreviewImageUploader::Attachment.new(:preview_image)
   extend FriendlyId
 
-  friendly_id :slug_candidates, use: %i[slugged history]
+  friendly_id :title, use: %i[slugged history]
   has_ancestry
 
   enum status: { draft: 0, published: 1 }
+
+  before_validation :set_blob_path
 
   validates_presence_of :slug, :blob_path, :status
   validates_presence_of :title, :topics, :body_html, :published_at, :blob_id, if: :published?
@@ -56,16 +58,8 @@ class Post < ApplicationRecord
     published.where(sql)
   end
 
-  def slug_candidates
-    [:title, %i[title short_blob_id]]
-  end
-
   def published_blob
     @published_blob ||= publication.repository.lookup(blob_id)
-  end
-
-  def short_blob_id
-    blob.oid[0..8]
   end
 
   def blob
@@ -184,5 +178,11 @@ class Post < ApplicationRecord
 
   def should_generate_new_friendly_id?
     title_changed? || super
+  end
+
+  private
+
+  def set_blob_path
+    self.blob_path = repo_dir.join("#{slug}.md").to_path
   end
 end
