@@ -3,21 +3,24 @@
 
 module PublicationHelper
   def publications_items
-    Current.user.publications.limit(5).map do |publication|
-      avatar =
-        if publication.personal
-          component(
-            'avatar',
-            avatar_url: Current.user.avatar_url, gravatar_url: Current.user.gravatar_url, variant: :xs
-          )
-        else
-          component('avatar', avatar_url: publication.avatar_url, variant: :xs)
-        end
+    items =
+      Current.user.publications.limit(5).order(:id).map do |publication|
+        avatar =
+          if publication.personal
+            component(
+              'avatar',
+              avatar_url: Current.user.avatar_url, gravatar_url: Current.user.gravatar_url, variant: :xs
+            )
+          else
+            component('avatar', avatar_url: publication.avatar_url, variant: :xs)
+          end
 
-      OpenStruct.new(
-        label: "#{avatar}#{publication.name}".html_safe, url: new_publication_post_path(publication), options: {}
-      )
-    end
+        OpenStruct.new(
+          label: "#{avatar} Write post".html_safe, url: new_publication_post_path(publication), options: {}
+        )
+      end
+
+    items.push(OpenStruct.new(label: 'New publication'.html_safe, url: new_publication_path, options: {}))
   end
 
   def collaborator_actions(publication, collaborator)
