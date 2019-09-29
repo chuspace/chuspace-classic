@@ -16,7 +16,9 @@
     <div class="text-grey text-sm" id='editor-status'><%= post.status_label %></div>
   </div>
 
-  <div class='flex justify-end items-center flex-1 mr-2'>
-    <%= render 'posts/header/actions', publication: @publication, post: post %>
-  </div>
+  <% if signed_in? && allowed_to?(:edit?, post) %>
+    <div class='flex justify-end items-center flex-1 mr-2'>
+      <%= render 'posts/header/actions', publication: @publication, post: post %>
+    </div>
+  <% end %>
 </div>

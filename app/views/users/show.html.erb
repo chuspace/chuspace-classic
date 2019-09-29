@@ -15,10 +15,11 @@
     <% else %>
       <div class='placeholder'>
         <h1 class='text-xl'>
+          <% label = params[:controller].include?('drafts') ? 'drafts' : 'posts' %>
           <% if Current.user == @user %>
-            You haven't published any posts yet
+            You don't have any <%= label %> yet
           <% else %>
-            This author haven't published any posts yet
+            <%= @user.nickname %> doesn't have any <%= label %> yet
           <% end %>
         </h1>
       </div>

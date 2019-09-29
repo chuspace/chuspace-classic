@@ -13,9 +13,9 @@
       <% end %>
 
       <% unless @publication.twitter.blank? %>
-        <%= content_tag :li do %>
+        <%= content_tag :li, class: 'ml-2' do %>
           <%= link_to @publication.twitter, class: 'link link--active underline text-sm', target: '_blank', rel: 'noopener noreferer' do %>
-            <svg-icon name='twitter' feather='true'></svg-icon>
+            <svg-icon name='twitter' stroke="#1da1f2" color="#1da1f2" feather='true'></svg-icon>
           <% end %>
         <% end %>
       <% end %>

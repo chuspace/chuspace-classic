@@ -1,6 +1,6 @@
 <%= simple_form_for publication, remote: true, html: { id: 'publication_form' } do |f| %>
   <div class='block sm:flex'>
-    <div class='relative w-full sm:w-1/4 mt-8'>
+    <div class='relative w-full sm:w-1/3 mt-8'>
       <drop-image>
         <div class='avatar__uploader'>
           <% if publication.avatar.present? %>
@@ -13,7 +13,7 @@
         <% if publication.errors.include?(:avatar) %>
           <%= content_tag :span, publication.errors.full_messages_for(:avatar).to_sentence, class: 'input__error text-red block' %>
         <% else %>
-          <span class="input__hint avatar__uploader__hint">
+          <span class="input__hint avatar__uploader__hint w-3/4">
             <%= t('.avatar_hint') %>
           </span>
         <% end %>
@@ -28,7 +28,7 @@
       </drop-image>
     </div>
 
-    <div class='form w-full sm:w-3/4'>
+    <div class='form w-full sm:w-2/3'>
       <%= f.input :name, autofocus: true %>
       <%= f.input :description, required: true %>
       <%= f.input :website %>
@@ -70,7 +70,7 @@
 
       <div class='float-left mt-8'>
         <%= f.submit publication.new_record? ? 'Create' : 'Save', class: 'button button--fill mr-2', data: { 'disable-with': publication.new_record? ? 'Creating...' : 'Saving...' } %>
-        <%= link_to 'Go back', publication.persisted? ? publication_path(publication) : root_path, class: 'button button--default inline-block' %>
+        <%= link_to 'Cancel', publication.persisted? ? publication_path(publication) : root_path, class: 'button button--default inline-block' %>
       </div>
 
       <div class='float-right mt-8'>

@@ -3,7 +3,7 @@
 <%= render 'posts/series', post: @post %>
 
 <article class='relative'>
-  <% if Current.user.present? && allowed_to?(:republish?, @post) %>
+  <% if signed_in? && allowed_to?(:republish?, @post) %>
     <div class='flex justify-between items-center card card-default mb-8'>
       <%= content_tag :p, 'You have made some changes to this post.' %>
       <%= link_to 'Republish', publication_post_publish_index_path(@post.publication, @post), class: 'button button--fill' %>
@@ -56,7 +56,6 @@
 
   <div class='author mt-4 mb-24 border-t border-grey-lightest'>
     <div class='list'>
-      <p class='text-grey'>Written by</p>
       <%= render 'users/user', badge: 'author', user: @post.author %>
       <%= render 'publications/publication', badge: 'publication', publication: @post.publication unless @post.publication.personal %>
     </div>

@@ -35,7 +35,7 @@ class Publication < ApplicationRecord
   delegate :count, to: :members, prefix: true
 
   def should_generate_new_friendly_id?
-    name_changed? || super
+    !slug_changed? && (name_changed? || super)
   end
 
   private
