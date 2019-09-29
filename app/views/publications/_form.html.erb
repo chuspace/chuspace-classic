@@ -1,6 +1,6 @@
 <%= simple_form_for publication, remote: true, html: { id: 'publication_form' } do |f| %>
   <div class='block sm:flex'>
-    <div class='avatar relative w-full sm:w-1/4 mt-8'>
+    <div class='relative w-full sm:w-1/4 mt-8'>
       <drop-image>
         <div class='avatar__uploader'>
           <% if publication.avatar.present? %>
