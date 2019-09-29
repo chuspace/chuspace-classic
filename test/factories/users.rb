@@ -4,6 +4,7 @@ FactoryBot.define do
     last_name { Faker::Name.unique.last_name }
     email { Faker::Internet.unique.email }
     nickname { Faker::Internet.unique.username(separators: %w[-]) }
+    avatar { StringIO.new(Rails.root.join('test', 'fixtures', 'files', 'avatar.jpeg').read) }
     bio { 'Lorem ipsum' }
     company { 'chuspace' }
     location { 'Earth' }
