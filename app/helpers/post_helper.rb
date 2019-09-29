@@ -17,6 +17,15 @@ module PostHelper
   def edit_items(publication, post)
     items = []
 
+    if allowed_to?(:edit?, post) && %w[edit create].exclude?(params[:action])
+      items.push(
+        label: 'Edit',
+        url: edit_publication_post_path(publication, post),
+        active: link_class(edit_publication_post_path(publication, post)),
+        options: {}
+      )
+    end
+
     if allowed_to?(:publish?, post)
       items.push(
         label: post.publish_label,
@@ -29,8 +38,8 @@ module PostHelper
     if allowed_to?(:destroy?, post)
       items.push(
         label: 'Delete',
-        url: link_class(publication_post_path(publication, post)),
-        active: true,
+        url: publication_post_path(publication, post),
+        active: link_class(publication_post_path(publication, post)),
         link_type: :danger,
         options: {
           css_class: 'button button--danger button--slim', method: :delete, data: { confirm: 'Are you sure?' }

@@ -13,7 +13,7 @@ details
     @apply border-t border-grey-lightest block mt-3
 
   .dropdown__item
-    @apply pt-3 px-4 flex items-center text-sm cursor-pointer
+    @apply pt-3 px-4 block text-sm cursor-pointer
 
     .avatar
       @apply mr-2
@@ -48,13 +48,15 @@ details
     margin-right: -8px
 
   &.dropdown__button, &.dropdown__autocomplete
-    @apply mt-0 w-auto
+    @apply w-auto
 
-    &:after, &:before
-      content: unset
+    &--no-arrow
+      @apply mt-0
+      &:after, &:before
+        content: unset
 
     .dropdown__item
-      @apply py-2 border-b border-grey-lightest
+      @apply py-2 flex items-center border-b border-grey-lightest
 
       &[aria-disabled='true']
         opacity: 0.5

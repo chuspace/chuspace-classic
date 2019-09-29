@@ -1,0 +1,11 @@
+<% if signed_in? %>
+  <%= component 'dropdown', flush: true, items: edit_items(publication, post), drop_arrow: :no, css_class: 'dropdown' do |d| %>
+    <% d.opener do %>
+      <div class='flex items-center'>
+        <svg-icon name='settings' feather='true' width='20' height='20' class='mr-1'></svg-icon>
+      </div>
+    <% end %>
+  <% end %>
+<% else %>
+  <%= link_to 'Contribute', signins_path, class: 'button button--fill button--slim mr-2' %>
+<% end %>

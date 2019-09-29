@@ -1,6 +1,6 @@
-<%= component 'dropdown', flush: true, items: publications_items, drop_arrow: :no, css_class: 'dropdown' do |d| %>
+<%= component 'dropdown', flush: true, items: publications_items, drop_arrow: :no, css_class: 'dropdown__button' do |d| %>
   <% d.opener do %>
-    <div class='flex items-center mr-4'>
+    <div class='flex items-center mr-2'>
       <svg-icon name='plus' feather='true' width='20' height='20'></svg-icon>
       <span class='drop__arrow ml-1'></span>
     </div>

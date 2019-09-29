@@ -16,16 +16,7 @@
     <div class="text-grey text-sm" id='editor-status'><%= post.status_label %></div>
   </div>
 
-  <div class='block sm:hidden'>
-    <%= component 'dropdown', flush: true, items: edit_items(publication, post), drop_arrow: :no do |d| %>
-      <% d.opener do %>
-        <svg-icon name='more-horizontal' class='mr-4 block' width='30' height='30' feature='true'></svg-icon>
-      <% end %>
-    <% end %>
-  </div>
-
-  <div class='justify-end items-center flex-1 mr-4 hidden sm:flex'>
-    <%= link_to post.publish_label, publication_post_publish_index_path(publication, post), class: 'button button--active button--slim mr-2' %>
-    <%= link_to 'Delete', publication_post_path(publication, post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'button button--danger button--slim' if allowed_to?(:destroy?, post) %>
+  <div class='flex justify-end items-center flex-1 mr-2'>
+    <%= render 'posts/header/actions', publication: @publication, post: post %>
   </div>
 </div>
