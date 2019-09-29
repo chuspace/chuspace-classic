@@ -11,11 +11,11 @@ module ApplicationHelper
         options: { css_class: 'whitespace-normal' }
       },
       { divider: true },
-      { label: 'Profile', url: user_path(Current.user), options: {} },
-      { label: 'Publications', url: publications_path, options: {} },
+      { label: 'Your profile', url: user_path(Current.user), options: {} },
+      { label: 'Your publications', url: publications_path, options: {} },
       { label: 'Your posts', url: user_path(Current.user), options: {} },
-      { label: 'Settings', url: settings_path, options: {} },
       { divider: true },
+      { label: 'Settings', url: settings_path, options: {} },
       { label: 'Sign out', url: signin_path(Current.user), options: { method: :delete } }
     ].map { |hash| OpenStruct.new(hash) }.freeze
   end
