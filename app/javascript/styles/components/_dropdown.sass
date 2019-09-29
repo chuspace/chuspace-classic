@@ -7,13 +7,19 @@ details
 
 .dropdown
   @apply absolute bg-white border border-grey-lighter rounded-sm shadow mt-2 right-0 z-50
-  min-width: 15rem
+  min-width: 12rem
 
   .dropdown__divider
-    @apply border-t border-grey-lightest block
+    @apply border-t border-grey-lightest block mt-3
 
   .dropdown__item
-    @apply py-2 px-4 block text-sm cursor-pointer
+    @apply pt-3 px-4 flex items-center text-sm cursor-pointer
+
+    .avatar
+      @apply mr-2
+
+    &:last-child
+      @apply pb-3
 
     &:hover
       @apply text-grey
@@ -48,13 +54,14 @@ details
       content: unset
 
     .dropdown__item
-      @apply flex items-center border-b border-grey-lightest
+      @apply py-2 border-b border-grey-lightest
 
       &[aria-disabled='true']
         opacity: 0.5
 
       &:first-child
         @apply py-2 px-4
+
       &:last-child
         @apply mb-0 border-b-0
 
