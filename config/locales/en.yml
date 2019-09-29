@@ -69,8 +69,8 @@ en:
 
   chuspace:
     pitch: |
-      Chuspace is a collaborative blogging platform for developers like Github,
-      where articles can be shared and maintained just like code.
+      Chuspace is a collaborative blogging platform for developers like GitHub,
+      where articles can be published and maintained just like code.
   frontpage:
     no_posts: No posts published yet.
   header:
