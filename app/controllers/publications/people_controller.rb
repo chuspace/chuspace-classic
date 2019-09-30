@@ -7,7 +7,7 @@ class Publications::PeopleController < ApplicationController
   before_action :find_collaborator, only: %i[update destroy]
 
   def index
-    authorize! @publication, to: :publish?
+    authorize! @publication, to: :show?
 
     @collaborators = @publication.collaborators.order(:created_at)
     @invitation = @publication.invitations.build
