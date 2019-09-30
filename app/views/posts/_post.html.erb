@@ -24,20 +24,6 @@
           <li>
             <time><%= post.published_at.strftime("%b %d, %Y") %></time>
           </li>
-          <% if Current.user.present? && allowed_to?(:edit?, post) %>
-            <li>
-              <%= link_to 'Edit', edit_publication_post_path(post.publication, post), class: 'link link--active underline' %>
-            </li>
-            <li>
-              <%= link_to 'Delete',
-                publication_post_path(post.publication, post),
-                method: :delete,
-                remote: true,
-                class: 'link link--danger underline',
-                data: { confirm: 'Are you sure?' }
-              %>
-            </li>
-          <% end %>
         </ul>
       </div>
 

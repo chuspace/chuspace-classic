@@ -12,9 +12,19 @@
         <% @collaborators.each do |collaborator| %>
           <%= render 'users/user', badge: collaborator.role, user: collaborator.user do %>
             <% if Current.user.present? && allowed_to?(:update?, collaborator) %>
-              <%= component 'dropdown', flush: true, items: collaborator_actions(@publication, collaborator), drop_arrow: :no do |d| %>
+              <%= component 'dropdown', flush: true, drop_arrow: :no do |d| %>
                 <% d.opener do %>
                   <svg-icon name='more-horizontal' feather='true'></svg-icon>
+                <% end %>
+
+                <% d.content do %>
+                  <% Collaborator.roles.except(:owner).map do |role, _| %>
+                    <% unless collaborator.role == role %>
+                      <%= link_to "Make #{role}", publication_person_path(@publication, collaborator, role: role), class: "link link--default dropdown__item", role: "menuitem", tabindex: "-1", method: :patch, remote: true %>
+                    <% end %>
+                  <% end %>
+
+                  <%= link_to "Remove from #{@publication.slug}", publication_person_path(@publication, collaborator), class: "link link--danger dropdown__item", role: "menuitem", tabindex: "-1", method: :delete, remote: true, 'data-confirm': 'Are you sure?' %>
                 <% end %>
               <% end %>
             <% end %>

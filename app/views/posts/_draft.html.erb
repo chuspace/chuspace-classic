@@ -12,18 +12,6 @@
         <li class='text-grey'>
           Last edited <%= distance_of_time_in_words_to_now(draft.updated_at) %> ago
         </li>
-        <li>
-          <%= link_to 'Edit', edit_publication_post_path(draft.publication, draft), class: 'link link--active underline' %>
-        </li>
-        <li>
-          <%= link_to 'Delete',
-            publication_post_path(draft.publication, draft),
-            method: :delete,
-            remote: true,
-            class: 'link link--danger underline',
-            data: { confirm: 'Are you sure?' }
-          %>
-        </li>
       </ul>
     </div>
 

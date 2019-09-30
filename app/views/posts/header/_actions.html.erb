@@ -1,9 +1,15 @@
 <% if signed_in? %>
-  <%= component 'dropdown', flush: true, items: edit_items(publication, post), drop_arrow: :no, css_class: 'dropdown' do |d| %>
+  <%= component 'dropdown', flush: true, drop_arrow: :no, css_class: 'dropdown' do |d| %>
     <% d.opener do %>
       <div class='flex items-center'>
         <svg-icon name='settings' feather='true' width='20' height='20' class='mr-1'></svg-icon>
       </div>
+    <% end %>
+
+    <% d.content do %>
+      <%= link_to 'Edit', edit_publication_post_path(publication, post), class: "#{link_class(edit_publication_post_path(publication, post))} dropdown__item" unless %[new edit create].include?(params[:action]) %>
+      <%= link_to 'Publish', publication_post_publish_index_path(publication, post), class: "#{link_class(publication_post_publish_index_path(publication, post))} dropdown__item" %>
+      <%= link_to 'Delete', publication_post_path(publication, post), class: 'link link--danger dropdown__item', method: :delete, data: { confirm: 'Are you sure?' } %>
     <% end %>
   <% end %>
 <% else %>

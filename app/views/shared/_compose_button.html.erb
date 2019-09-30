@@ -1,8 +1,24 @@
-<%= component 'dropdown', flush: true, items: publications_items, drop_arrow: :no, css_class: 'dropdown__button' do |d| %>
+<%= component 'dropdown', flush: true, drop_arrow: :no, css_class: 'dropdown__button' do |d| %>
   <% d.opener do %>
     <div class='flex items-center mr-2'>
       <svg-icon name='plus' feather='true' width='20' height='20'></svg-icon>
       <span class='drop__arrow ml-1'></span>
     </div>
+  <% end %>
+
+  <% d.content do %>
+    <% Current.user.publications.limit(5).order(:id).each do |publication| %>
+      <div class='dropdown__item'>
+        <% if publication.personal %>
+          <%= component('avatar', avatar_url: publication.owner.avatar_url, gravatar_url: publication.owner.gravatar_url, variant: :xs) %>
+        <% else %>
+          <%= component('avatar', avatar_url: publication.avatar_url, variant: :xs) %>
+        <% end %>
+
+        <%= link_to 'Write post', new_publication_post_path(publication), class: "link link--default", role: "menuitem", tabindex: "-1" %>
+      </div>
+    <% end %>
+
+    <%= link_to 'New publication'.html_safe, new_publication_path, class: "link link--default dropdown__item", role: "menuitem", tabindex: "-1" %>
   <% end %>
 <% end %>

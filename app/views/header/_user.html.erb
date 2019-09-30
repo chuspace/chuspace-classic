@@ -3,9 +3,21 @@
     <%= render 'shared/compose_button' %>
   </div>
 
-  <%= component 'dropdown', flush: true, items: nav_items do |d| %>
+  <%= component 'dropdown', flush: true do |d| %>
     <% d.opener do %>
       <%= component('avatar', avatar_url: Current.user.avatar_url, gravatar_url: Current.user.gravatar_url, variant: :xs) %>
+    <% end %>
+
+    <% d.content do %>
+      <%= content_tag :div, "Signed in as <strong>#{Current.user.nickname}</strong>".html_safe, class: "dropdown__item whitespace-normal", role: "menuitem", tabindex: "-1" %>
+      <div class='dropdown__divider'></div>
+      <%= link_to "Your profile", user_path(Current.user), class: "#{link_class(user_path(Current.user))} dropdown__item", role: "menuitem", tabindex: "-1" %>
+      <%= link_to "Your publications", publications_path, class: "#{link_class(publications_path)} dropdown__item", role: "menuitem", tabindex: "-1" %>
+      <%= link_to "Your posts", user_path(Current.user), class: "link link--default dropdown__item", role: "menuitem", tabindex: "-1" %>
+      <%= link_to "Your drafts", user_drafts_path(Current.user), class: "#{link_class(user_drafts_path(Current.user))} dropdown__item", role: "menuitem", tabindex: "-1" %>
+      <div class='dropdown__divider'></div>
+      <%= link_to "Settings", settings_profiles_path, class: "#{link_class(settings_profiles_path)} dropdown__item", role: "menuitem", tabindex: "-1" %>
+      <%= link_to "Sign out", signin_path(Current.user), class: "link link--danger dropdown__item", role: "menuitem", tabindex: "-1", method: :delete, remote: true %>
     <% end %>
   <% end %>
 </div>
