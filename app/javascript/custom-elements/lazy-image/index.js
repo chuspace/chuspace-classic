@@ -34,16 +34,7 @@ export default class LazyImage extends LitElement {
   }
 
   delete = (e: Event) => {
-    Rails.ajax({
-      type: 'DELETE',
-      url: this.src,
-      success: data => {
-        this.handleDelete()
-      },
-      error: () => {
-        console.error('Something went wrong')
-      }
-    })
+    this.handleDelete()
   }
 
   render() {

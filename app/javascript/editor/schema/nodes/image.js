@@ -73,27 +73,6 @@ export default class Image extends Node {
         key: new PluginKey('image'),
         props: {
           handleDOMEvents: {
-            keydown: (view, event) => {
-              const { schema, doc, tr, selection } = view.state
-              const node = tr.curSelection.$anchor.nodeBefore
-
-              if (node.type.name !== 'image') {
-                return false
-              }
-
-              Rails.ajax({
-                type: 'DELETE',
-                url: node.attrs.src,
-                success: data => {
-                  return true
-                },
-                error: data => {
-                  console.error('unable to remove')
-                }
-              })
-
-              return true
-            },
             drop(view, event) {
               const hasFiles = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length
 
