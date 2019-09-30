@@ -12,7 +12,7 @@ class Publications::ImagesController < ApplicationController
     blob_path = Pathname.new(Repository::IMAGES_ROOT_PATH).join(name).to_path
     blob = @publication.repository.create_blob(path: blob_path, content: image_blob.read)
 
-    authorize! blob
+    authorize! @publication, to: :publish?
 
     if blob.persisted?
       render json: { created: true, url: publication_image_path(@publication, name) }
@@ -35,7 +35,7 @@ class Publications::ImagesController < ApplicationController
   def destroy
     @image = @publication.repository.blobs.find { |blob| blob.name == params[:id] }
 
-    authorize! @image
+    authorize! @publication, to: :publish?
 
     if @image.destroy(committer: Current.user)
       render json: { destroyed: true, url: nil }

@@ -10,6 +10,10 @@ class PublicationPolicy < ApplicationPolicy
   end
 
   def edit?
+    user == record.owner || record.members.where.not(role: Collaborator::WRITER_ROLE).include?(user)
+  end
+
+  def publish?
     user == record.owner || record.members.include?(user)
   end
 
