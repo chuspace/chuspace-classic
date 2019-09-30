@@ -34,17 +34,21 @@ class PostsController < ApplicationController
       if post.save
         blob = @publication.repository.create_blob(path: post.blob_path, content: markdown.content)
 
-        render json: {
-                 redirect: edit_publication_post_path(@publication, post),
-                 slug: post.slug,
-                 header:
-                   render_to_string(
-                     partial: 'posts/header/edit',
-                     format: :html,
-                     layout: false,
-                     locals: { post: post, publication: @publication, params: params }
-                   )
-               }
+        if blob&.persisted?
+          render json: {
+                   redirect: edit_publication_post_path(@publication, post),
+                   slug: post.slug,
+                   header:
+                     render_to_string(
+                       partial: 'posts/header/edit',
+                       format: :html,
+                       layout: false,
+                       locals: { post: post, publication: @publication, params: params }
+                     )
+                 }
+        else
+          render json: { created: false, message: blob.errors.full_messages.to_sentence }, status: :unprocessable_entity
+        end
       else
         render json: { created: false, message: post.errors.full_messages.to_sentence }, status: :unprocessable_entity
       end
@@ -55,11 +59,7 @@ class PostsController < ApplicationController
     authorize! @post
 
     if @post.destroy && @post.blob.destroy(committer: Current.user)
-      if request.referrer == edit_publication_post_url(@publication, @post)
-        redirect_to publication_path(@publication)
-      else
-        redirect_back(fallback_location: root_path)
-      end
+      redirect_to publication_path(@publication)
     else
       redirect_to publication_post_path(@publication, @post)
     end

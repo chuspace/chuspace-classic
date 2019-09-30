@@ -10,16 +10,19 @@ details
   min-width: 12rem
 
   .dropdown__divider
-    @apply border-t border-grey-lightest block mt-3
+    @apply border-t border-grey-lightest block my-1
 
   .dropdown__item
-    @apply pt-3 px-4 block text-sm cursor-pointer
+    @apply py-1 px-4 block text-sm cursor-pointer
 
     .avatar
       @apply mr-2
 
     &:last-child
-      @apply pb-3
+      @apply pb-2
+
+    &:first-child
+      @apply pt-2
 
     &:hover
       @apply text-grey

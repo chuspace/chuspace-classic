@@ -46,7 +46,7 @@ export default class LazyImage extends LitElement {
                 <svg-icon
                   name="x-circle"
                   feather="true"
-                  class="absolute z-50 right-0 cursor-pointer bg-white p-2 shadow-md"
+                  class="absolute close right-0 cursor-pointer bg-white p-2 shadow-md"
                   stroke="#000"
                   @click=${this.delete}
                 ></svg-icon>

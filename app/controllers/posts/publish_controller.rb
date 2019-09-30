@@ -14,10 +14,7 @@ class Posts::PublishController < ApplicationController
     @post.transaction do
       @post.assign_attributes(publish_params)
       @post.assign_attributes(status: 'published', published_at: Time.now) if @post.may_publish?
-      @post.valid?
-
-      new_blob_path = Pathname.new(@post.repo_dir).join("#{@post.slug}.md").to_path
-      @post.assign_attributes(blob_id: @post.blob.oid, body_html: @markdown.body_html, blob_path: new_blob_path)
+      @post.assign_attributes(blob_id: @post.blob.oid, body_html: @markdown.body_html)
 
       authorize! ::Posts::Publish, context: { post: @post }
 
@@ -25,7 +22,7 @@ class Posts::PublishController < ApplicationController
         if @post.save
           if @post.saved_change_to_blob_path?
             @post.blob.rename(
-              committer: Current.user, new_path: new_blob_path, commit_message: "Publish post #{new_blob_path}"
+              committer: Current.user, new_path: @post.blob_path, commit_message: "Publish post #{@post.blob_path}"
             )
           end
 

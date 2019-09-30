@@ -138,13 +138,12 @@ class Post < ApplicationRecord
   end
 
   def draft
-    @draft ||= PostMarkdownService.call(content: blob.content)
+    @draft ||= PostMarkdownService.call(content: blob&.content)
   end
 
   def to_meta_tags
     {
       site: 'Chuspace',
-      charset: 'en',
       title: title,
       image_src: preview_image_url(variant: :list),
       description: summary,
@@ -184,6 +183,6 @@ class Post < ApplicationRecord
   private
 
   def set_blob_path
-    self.blob_path = repo_dir.join("#{self.slug}.md").to_path
+    self.blob_path = repo_dir.join("#{slug}.md").to_path
   end
 end

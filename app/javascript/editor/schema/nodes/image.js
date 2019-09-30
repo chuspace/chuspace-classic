@@ -8,7 +8,6 @@ import { EditorState, Plugin, PluginKey, Transaction } from 'prosemirror-state'
 
 import { Node } from 'editor/base'
 import { Node as PMNode } from 'prosemirror-model'
-import { getMarkRange } from 'editor/helpers'
 import nanoid from 'nanoid/generate'
 import { nodeInputRule } from 'editor/commands'
 
