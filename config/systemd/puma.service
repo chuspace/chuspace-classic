@@ -8,6 +8,9 @@ Type=simple
 WorkingDirectory=/home/git/chuspace.com/current
 EnvironmentFile=/home/git/chuspace.com/current/.env
 ExecStart=/usr/bin/rbenv exec bundle exec puma -C /home/git/chuspace.com/current/config/puma.rb
+PIDFile=/home/git/chuspace.com/shared/puma.pid
+Restart=no
+TimeoutSec=30
 Restart=always
 
 [Install]

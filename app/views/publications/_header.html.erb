@@ -22,7 +22,7 @@
 
       <% unless @publication.website.blank? %>
         <%= content_tag :li, class: 'ml-2' do %>
-          <%= link_to @publication.website, class: 'link link--active underline text-sm', target: '_blank', rel: 'noopener noreferer' do %>
+          <%= link_to sanitize(@publication.website), class: 'link link--active underline text-sm', target: '_blank', rel: 'noopener noreferer' do %>
             <svg-icon name='link' feather='true'></svg-icon>
           <% end %>
         <% end %>

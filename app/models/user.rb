@@ -37,17 +37,13 @@ class User < ApplicationRecord
 
   def self.search(query:)
     sql = <<-SQL
-      unaccent(users.first_name) ILIKE unaccent('%#{query}%') OR
-      unaccent(users.last_name) ILIKE unaccent('%#{
-      query
-    }%') OR
-      unaccent(users.nickname) ILIKE unaccent('%#{query}%') OR
-      unaccent(users.email) ILIKE unaccent('%#{
-      query
-    }%')
+      unaccent(users.first_name) ILIKE unaccent(concat('%', ?, '%')) OR
+      unaccent(users.last_name) ILIKE unaccent(concat('%', ?, '%')) OR
+      unaccent(users.nickname) ILIKE unaccent(concat('%', ?, '%')) OR
+      unaccent(users.email) ILIKE unaccent(concat('%', ?, '%'))
     SQL
 
-    where(sql)
+    where(sql, query, query, query, query)
   end
 
   def to_param

@@ -38,7 +38,7 @@ class Publications::PeopleController < ApplicationController
   private
 
   def update_params
-    params.permit(:role)
+    params.require(:collaborator).permit(:role)
   end
 
   def find_publication

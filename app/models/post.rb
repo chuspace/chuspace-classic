@@ -50,13 +50,11 @@ class Post < ApplicationRecord
 
   def self.autocomplete_search(query:)
     sql = <<-SQL
-      unaccent(posts.title) ILIKE unaccent('%#{query}%') OR
-      unaccent(posts.slug) ILIKE unaccent('%#{
-      query
-    }%')
+      unaccent(posts.title) ILIKE unaccent(concat('%', ?, '%')) OR
+      unaccent(posts.slug) ILIKE unaccent(concat('%', ?, '%'))
     SQL
 
-    published.where(sql)
+    published.where(sql, query, query)
   end
 
   def published_blob
