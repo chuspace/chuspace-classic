@@ -2,13 +2,12 @@
 # frozen_string_literal: true
 
 class Publications::PeopleController < ApplicationController
-  before_action :authenticate!, except: :index
+  before_action :authenticate!
   before_action :find_publication
   before_action :find_collaborator, only: %i[update destroy]
+  skip_verify_authorized only: :index
 
   def index
-    authorize! @publication, to: :show?
-
     @collaborators = @publication.collaborators.order(:created_at)
     @invitation = @publication.invitations.build
   end

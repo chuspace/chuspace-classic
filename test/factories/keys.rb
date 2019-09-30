@@ -1,3 +1,6 @@
+# typed: ignore
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :key do
     title { 'Mac' }

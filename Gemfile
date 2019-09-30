@@ -115,6 +115,9 @@ gem 'maxminddb'
 gem 'sentry-raven'
 gem 'skylight'
 
+# Cron jobs
+gem 'whenever', require: false
+
 group :production do
   # Resource monitoring
   gem 'easymon'
