@@ -2,8 +2,8 @@
   <nav class='container flex justify-between items-center py-2'>
     <%= component 'logo', type: Current.user.present? ? :badge : :full %>
 
-    <% if params[:controller].include?('posts') %>
-      <%= post_header(@post) %>
+    <% if params[:controller] == 'posts' %>
+      <%= render "posts/header/#{params[:action]}", post: @post, publication: @publication %>
     <% end %>
 
     <%= render "header/#{Current.user.present? ? 'user' : 'guest'}"  %>
