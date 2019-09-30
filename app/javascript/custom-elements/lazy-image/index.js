@@ -1,5 +1,7 @@
 // @flow
 
+import * as Rails from 'rails-ujs'
+
 import { LitElement, customElement, html } from 'lit-element'
 
 export default class LazyImage extends LitElement {
@@ -31,9 +33,35 @@ export default class LazyImage extends LitElement {
     this.editable && this.handleChange({ alt: this.alt })
   }
 
+  delete = (e: Event) => {
+    Rails.ajax({
+      type: 'DELETE',
+      url: this.src,
+      success: data => {
+        this.handleDelete()
+      },
+      error: () => {
+        console.error('Something went wrong')
+      }
+    })
+  }
+
   render() {
     return html`
       <figure class="image__container">
+        ${
+          this.editable
+            ? html`
+                <svg-icon
+                  name="x-circle"
+                  feather="true"
+                  class="absolute z-50 right-0 cursor-pointer bg-white p-2 shadow-md"
+                  stroke="#000"
+                  @click=${this.delete}
+                ></svg-icon>
+              `
+            : null
+        }
         <img alt=${this.alt} data-src="${this.src}" data-sizes="auto" class="lazy blur-up" />
         ${
           this.editable

@@ -8,6 +8,7 @@ import { EditorState, Plugin, PluginKey, Transaction } from 'prosemirror-state'
 
 import { Node } from 'editor/base'
 import { Node as PMNode } from 'prosemirror-model'
+import { getMarkRange } from 'editor/helpers'
 import nanoid from 'nanoid/generate'
 import { nodeInputRule } from 'editor/commands'
 
@@ -68,32 +69,31 @@ export default class Image extends Node {
 
   get plugins() {
     return [
-      // new Plugin({
-      //   key: new PluginKey('image-remove'),
-      //   filterTransaction(tr, state) {
-      //     console.log(tr)
-      //     console.log(state)
-
-      //     console.log(tr.before.resolve(845))
-
-      //     // Rails.ajax({
-      //     //   type: 'DELETE',
-      //     //   url: this.node.attrs.src,
-      //     //   success: data => {
-      //     //     this.containerNode.remove()
-      //     //   },
-      //     //   error: data => {
-      //     //     console.error('unable to remove')
-      //     //   }
-      //     // })
-
-      //     return true
-      //   }
-      // }),
       new Plugin({
         key: new PluginKey('image'),
         props: {
           handleDOMEvents: {
+            keydown: (view, event) => {
+              const { schema, doc, tr, selection } = view.state
+              const node = tr.curSelection.$anchor.nodeBefore
+
+              if (node.type.name !== 'image') {
+                return false
+              }
+
+              Rails.ajax({
+                type: 'DELETE',
+                url: node.attrs.src,
+                success: data => {
+                  return true
+                },
+                error: data => {
+                  console.error('unable to remove')
+                }
+              })
+
+              return true
+            },
             drop(view, event) {
               const hasFiles = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length
 

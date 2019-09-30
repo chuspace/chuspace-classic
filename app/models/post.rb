@@ -30,6 +30,7 @@ class Post < ApplicationRecord
   delegate :content, to: :blob, prefix: true
 
   scope :listed, -> { published.where(unlisted: false) }
+  scope :featured, -> { published.listed.where(featured: true) }
 
   DEFAULT_TITLE = 'Untitled'
   WORDS_PER_MINUTE = 200

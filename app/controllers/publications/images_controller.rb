@@ -33,8 +33,8 @@ class Publications::ImagesController < ApplicationController
   end
 
   def destroy
-    @publication = Publication.find_by(slug: params[:publication_slug])
-    @image = @publication.repository.blobs.find { |blob| blob.oid == params[:id] }
+    @image = @publication.repository.blobs.find { |blob| blob.name == params[:id] }
+
     authorize! @image
 
     if @image.destroy(committer: Current.user)

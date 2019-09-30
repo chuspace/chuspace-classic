@@ -25,6 +25,7 @@ export default class ImageView extends BaseView {
           alt=${this.node.attrs.alt || ''}
           title=${this.node.attrs.title || this.node.attrs.alt || ''}
           .handleChange=${this.handleChange}
+          .handleDelete=${this.handleDelete}
         ></lazy-image>
       `,
       this.containerNode
@@ -37,6 +38,10 @@ export default class ImageView extends BaseView {
     this.node.attrs = Object.assign({}, this.node.attrs, attrs)
     this.renderElement()
     this.view.dispatch(this.view.state.tr.setNodeMarkup(this.getPos(), null, this.node.attrs))
+  }
+
+  handleDelete = () => {
+    this.destroy()
   }
 
   stopEvent = () => true
