@@ -1,4 +1,4 @@
-<header <%= "data-controller=headroom" if params[:controller] == 'posts' %>>
+<header <%= "data-controller=headroom" if @headroom %>>
   <nav class='container flex justify-between items-center py-2'>
     <%= component 'logo', type: Current.user.present? ? :badge : :full %>
 

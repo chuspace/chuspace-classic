@@ -14,6 +14,8 @@ class PostsController < ApplicationController
   end
 
   def show
+    @headroom = true
+
     if request.path != publication_post_path(@publication, @post)
       return redirect_to publication_post_path(@publication, @post), status: :moved_permanently
     end
