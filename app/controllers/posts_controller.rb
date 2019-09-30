@@ -28,30 +28,23 @@ class PostsController < ApplicationController
   def create
     Post.transaction do
       markdown = PostMarkdownService.call(content: post_params[:body])
-      current_commit = @publication.repository.commit
       post = Current.user.posts.build(publication: @publication, title: markdown.title)
-
       authorize! post
 
-      if post.valid?
+      if post.save
         blob = @publication.repository.create_blob(path: post.blob_path, content: markdown.content)
 
-        if blob.persisted? && post.save
-          render json: {
-                   redirect: edit_publication_post_path(@publication, post),
-                   slug: post.slug,
-                   header:
-                     render_to_string(
-                       partial: 'posts/header/edit',
-                       format: :html,
-                       layout: false,
-                       locals: { post: post, publication: @publication, params: params }
-                     )
-                 }
-        else
-          publication.repository.rugged.reset(current_commit, :soft) if blob&.persisted?
-          render json: { created: false, message: blob.errors.full_messages.to_sentence }, status: :unprocessable_entity
-        end
+        render json: {
+                 redirect: edit_publication_post_path(@publication, post),
+                 slug: post.slug,
+                 header:
+                   render_to_string(
+                     partial: 'posts/header/edit',
+                     format: :html,
+                     layout: false,
+                     locals: { post: post, publication: @publication, params: params }
+                   )
+               }
       else
         render json: { created: false, message: post.errors.full_messages.to_sentence }, status: :unprocessable_entity
       end

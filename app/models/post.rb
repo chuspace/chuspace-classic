@@ -5,7 +5,7 @@ class Post < ApplicationRecord
   include AASM, Topicable, Previewable, PreviewImageUploader::Attachment.new(:preview_image)
   extend FriendlyId
 
-  friendly_id :title, use: %i[slugged history]
+  friendly_id :title, use: %i[slugged history], slug_limit: 100
   has_ancestry
 
   enum status: { draft: 0, published: 1 }
@@ -184,6 +184,6 @@ class Post < ApplicationRecord
   private
 
   def set_blob_path
-    self.blob_path = repo_dir.join("#{slug}.md").to_path
+    self.blob_path = repo_dir.join("#{self.slug}.md").to_path
   end
 end
