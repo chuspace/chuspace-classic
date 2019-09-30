@@ -7,17 +7,17 @@ class Settings::KeysController < ApplicationController
 
   def new
     @key = Current.user.keys.build
-    authorize! @key
+    authorize! Current.user, to: :edit?
   end
 
   def index
     @user = Current.user
-    authorize!
+    authorize! Current.user, to: :edit?
   end
 
   def create
     @key = Current.user.keys.build(key_params)
-    authorize! @key
+    authorize! Current.user, to: :edit?
 
     respond_to do |format|
       if @key.save

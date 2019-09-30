@@ -5,9 +5,10 @@ class Publications::PeopleController < ApplicationController
   before_action :authenticate!, except: :index
   before_action :find_publication
   before_action :find_collaborator, only: %i[update destroy]
-  skip_verify_authorized only: %i[index autocomplete]
 
   def index
+    authorize! @publication, to: :publish?
+
     @collaborators = @publication.collaborators.order(:created_at)
     @invitation = @publication.invitations.build
   end
@@ -27,6 +28,8 @@ class Publications::PeopleController < ApplicationController
   end
 
   def autocomplete
+    authorize! @publication, to: :invite?
+
     @query = params[:q]
     @users = User.search(query: @query)
 

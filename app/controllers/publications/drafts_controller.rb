@@ -3,9 +3,10 @@
 
 class Publications::DraftsController < ApplicationController
   before_action :authenticate!, :find_publication
-  skip_verify_authorized
 
   def index
+    authorize! @publication, to: :publish?
+
     @posts = @publication.posts.draft.includes(:author).limit(20).order(id: :desc)
     render 'publications/show'
   end

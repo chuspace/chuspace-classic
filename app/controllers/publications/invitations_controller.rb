@@ -11,6 +11,7 @@ class Publications::InvitationsController < ApplicationController
     @collaborators = @publication.collaborators.order(:created_at)
     @invitation = @publication.invitations.build(invitation_params)
     @invitation.sender = Current.user
+
     authorize! @invitation
 
     respond_to do |format|
