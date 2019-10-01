@@ -33,7 +33,7 @@
         <% if @user.url.present? %>
         <%= content_tag :li, class: 'flex items-center justify-center sm:justify-start' do  %>
           <svg-icon name='link' feather='true' width='15' height='15' class='text-grey mr-2'></svg-icon>
-          <%= link_to @user.url, @user.url, class: 'link link--default' %>
+          <%= sanitize(link_to @user.url, @user.url, class: 'link link--default') %>
         <% end %>
       <% end %>
     </ul>

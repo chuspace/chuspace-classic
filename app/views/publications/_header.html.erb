@@ -14,7 +14,7 @@
 
       <% unless @publication.twitter.blank? %>
         <%= content_tag :li, class: 'ml-2' do %>
-          <%= link_to @publication.twitter, class: 'link link--active underline text-sm', target: '_blank', rel: 'noopener noreferer' do %>
+          <%= sanitize(link_to @publication.twitter, class: 'link link--active underline text-sm', target: '_blank', rel: 'noopener noreferer') do %>
             <svg-icon name='twitter' stroke="#1da1f2" color="#1da1f2" feather='true'></svg-icon>
           <% end %>
         <% end %>
@@ -22,7 +22,7 @@
 
       <% unless @publication.website.blank? %>
         <%= content_tag :li, class: 'ml-2' do %>
-          <%= link_to sanitize(@publication.website), class: 'link link--active underline text-sm', target: '_blank', rel: 'noopener noreferer' do %>
+          <%= sanitize(link_to @publication.website, class: 'link link--active underline text-sm', target: '_blank', rel: 'noopener noreferer') do %>
             <svg-icon name='link' feather='true'></svg-icon>
           <% end %>
         <% end %>
