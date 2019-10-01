@@ -56,4 +56,12 @@ Rails.application.configure do
 
   config.action_cable.url = 'ws://localhost:3334/cable'
   config.action_cable.allowed_request_origins = ['http://localhost:5000', %r{https:\/\/chuspace.*}]
+
+  # Bullet
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.bullet_logger = true
+    Bullet.console = true
+    Bullet.rails_logger = true
+  end
 end

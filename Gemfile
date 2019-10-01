@@ -140,6 +140,7 @@ group :development do
   # Code linting
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
+  gem 'bullet'
   # Security
   gem 'brakeman', require: false
   gem 'bundler-audit', require: false

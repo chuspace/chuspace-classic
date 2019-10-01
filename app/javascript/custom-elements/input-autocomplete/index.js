@@ -61,7 +61,7 @@ export default class InputAutocomplete extends LitElement {
       threshold: 1,
       debounce: 300,
       searchEngine: 'strict',
-      maxResults: 5,
+      maxResults: 6,
       highlight: true,
       resultsList: {
         render: true,
