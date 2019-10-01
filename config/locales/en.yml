@@ -60,6 +60,8 @@ en:
               invalid: should be a valid url
             location:
               invalid: should be a valid name, no special characters
+            company:
+              invalid: should be a valid name, no special characters
         invitation:
           attributes:
             identifier:

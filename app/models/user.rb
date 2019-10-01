@@ -17,6 +17,7 @@ class User < ApplicationRecord
 
   validates :bio, length: { in: 1..80 }, allow_blank: true
   validates :location, length: { in: 1..39 }, format: { with: /\A^[a-z\s]{0,255}$\z/i }, allow_blank: true
+  validates :company, length: { in: 1..70 }, format: { with: /\A^[a-z\s]{0,255}$\z/i }, allow_blank: true
 
   has_secure_token :auth_token
   has_person_name
