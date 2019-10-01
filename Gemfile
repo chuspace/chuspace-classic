@@ -142,6 +142,7 @@ group :development do
   gem 'rubocop-performance', require: false
   # Security
   gem 'brakeman', require: false
+  gem 'bundler-audit', require: false
   # Better messages
   gem 'awesome_print'
   # Pry
