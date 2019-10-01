@@ -11,9 +11,11 @@
     <% end %>
   <% end %>
 
-  <% if signed_in? && allowed_to?(:edit?, post) %>
-    <div class='flex justify-end items-center flex-1 mr-2'>
+  <div class='flex justify-end items-center flex-1 mr-2'>
+    <% if signed_in? && allowed_to?(:edit?, post) %>
       <%= render 'posts/header/actions', publication: @publication, post: post %>
-    </div>
-  <% end %>
+    <% else %>
+      <%= link_to 'Contribute', signins_path, class: 'button button--fill button--slim mr-2' %>
+    <% end %>
+  </div>
 </div>
