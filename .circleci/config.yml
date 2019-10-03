@@ -26,6 +26,23 @@ jobs:
           name: Installing vips
           command: sudo apt install libvips libvips-dev
 
+      - run:
+        name: Installing crystal
+        command: \
+          curl -sSL https://dist.crystal-lang.org/apt/setup.sh | sudo bash
+          curl -sL "https://keybase.io/crystal/pgp_keys.asc" | sudo apt-key add -
+          echo "deb https://dist.crystal-lang.org/apt crystal main" | sudo tee /etc/apt/sources.list.d/crystal.list
+          sudo apt-get update
+          sudo apt install crystal
+
+      - run:
+        name: Installing postgres client
+        command: |
+          echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+          wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+          sudo apt-get update
+          sudo apt-get install postgresql-client-11
+
       - restore_cache:
           keys:
             - v2-node-dependencies-{{ checksum "package.json" }}
@@ -63,18 +80,22 @@ jobs:
 
       - run:
           name: Setting databases...
-          command: bundle exec rake db:create && bundle exec rake db:schema:load
+          command: bundle exec rails db:create && bundle exec rails db:structure:load
 
       - run:
           name: Setup configs...
           command: |
-            cp config/git.yml.example config/git.yml &&
-            cp openssh/sshd_config.example openssh/sshd_config &&
+            cp config/git.yml.example config/git.yml
+            cp openssh/sshd_config.example openssh/sshd_config
             ssh-keygen -t rsa -b 4096 -C "gaurav@gauravtiwari.co.uk" -f ./openssh/ssh_host_rsa_key -q -N ""
 
       - run:
           name: Run linters
           command: bin/rubocop && brakeman -q -w2 && bundle audit --update
+
+      - run:
+          name: Copying mobius
+          command: sudo cp bin/mobius /etc/git/mobius
 
       - run:
           name: run tests
