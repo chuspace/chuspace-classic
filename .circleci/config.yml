@@ -49,9 +49,9 @@ jobs:
           command: |
             bundle install --jobs=4 --retry=3 --path vendor/bundle
 
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:schema:load
-      - run: CI=yes bundle exec rails assets:precompile
+      - run:
+          name: Compiling assets...
+          command: CI=yes bundle exec rails assets:precompile
 
       - save_cache:
           paths:
@@ -61,10 +61,20 @@ jobs:
             - ./public/assets/**/*
           key: v2-rails-dependencies-{{ checksum "Gemfile.lock" }}
 
-      - run: cp config/git.yml.example config/git.yml
-      - run: cp openssh/sshd_config.example openssh/sshd_config
-      - run: ssh-keygen -t rsa -b 4096 -C "gaurav@gauravtiwari.co.uk" -f ./openssh/ssh_host_rsa_key
-      - run: bin/rubocop
+      - run:
+          name: Setting databases...
+          command: bundle exec rake db:create && bundle exec rake db:schema:load
+
+      - run:
+          name: Setup configs...
+          command: |
+            cp config/git.yml.example config/git.yml &&
+            cp openssh/sshd_config.example openssh/sshd_config &&
+            ssh-keygen -t rsa -b 4096 -C "gaurav@gauravtiwari.co.uk" -f ./openssh/ssh_host_rsa_key -q -N ""
+
+      - run:
+          name: Run linters
+          command: bin/rubocop && brakeman -q -w2 && bundle audit --update
 
       - run:
           name: run tests
