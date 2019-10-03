@@ -22,6 +22,10 @@ jobs:
           name: Installing GCC
           command: 'sudo apt-get update && sudo apt-get install gcc g++ cmake'
 
+      - run:
+          name: Installing vips
+          command: sudo apt install libvips libvips-dev
+
       - restore_cache:
           keys:
             - v2-node-dependencies-{{ checksum "package.json" }}
@@ -58,8 +62,9 @@ jobs:
           key: v2-rails-dependencies-{{ checksum "Gemfile.lock" }}
 
       - run: cp config/git.yml.example config/git.yml
-      - run: ./bin/openssh_install
-      - run: bundle exec rubocop
+      - run: cp openssh/sshd_config.example openssh/sshd_config
+      - run: ssh-keygen -t rsa -b 4096 -C "gaurav@gauravtiwari.co.uk" -f ./openssh/ssh_host_rsa_key
+      - run: bin/rubocop
 
       - run:
           name: run tests
