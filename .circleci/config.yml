@@ -90,11 +90,11 @@ jobs:
 
       - run:
           name: Run linters
-          command: bin/rubocop && brakeman -q -w2 && bundle audit --update
+          command: bundle exec rubocop && bundle exec srb tc && brakeman -q -w2 && bundle audit --update
 
       - run:
           name: Copying mobius
-          command: sudo cp bin/mobius /etc/git/mobius
+          command: bundle exec rails chuspace:setup && sudo cp bin/mobius /etc/git/mobius
 
       - run:
           name: run tests
