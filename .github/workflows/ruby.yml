@@ -1,0 +1,57 @@
+name: Chuspace
+on: [push, pull_request]
+
+jobs:
+  verify:
+    name: Build
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: chuspace_test
+          POSTGRES_PASSWORD: ''
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.6.3
+      - name: Set up Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.13.0
+      - name: Install dependencies
+        run: |
+          sudo apt-get -yqq install libpq-dev chromium-chromedriver
+          gem install bundler
+          bundle install
+          yarn install
+      - name: Setup test database
+        env:
+          RAILS_ENV: test
+          PGHOST: localhost
+          PGUSER: postgres
+        run: |
+          bin/rails db:create
+          bin/rails db:migrate
+
+      - name: Run Rubocop
+        run: bin/rubocop
+      - name: Run Bundler Audit
+        run: bin/bundler-audit --update
+      - name: Run Brakeman
+        run: bin/brakeman -q -w2
+      - name: Run tests
+        run: bundle exec rails test
+      - name: Run system tests
+        run: bundle exec rails test:system
