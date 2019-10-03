@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@v1
       - name: Install dependencies
         run: |
-          npm -g install chromedriver
+          sudo npm -g install chromedriver
           gem install bundler
           bundle install
           yarn install
