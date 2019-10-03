@@ -11,8 +11,8 @@ jobs:
       - image: postgres:11.2-alpine
         environment:
           POSTGRES_USER: postgres
-          POSTGRES_DB: postgres_test
-          POSTGRES_PASSWORD: ""
+          POSTGRES_DB: chuspace_test
+          POSTGRES_PASSWORD: ''
       - image: redis:5.0.4-alpine
 
     steps:
@@ -24,8 +24,8 @@ jobs:
 
       - restore_cache:
           keys:
-          - v2-node-dependencies-{{ checksum "package.json" }}
-          - v2-node-dependencies-
+            - v2-node-dependencies-{{ checksum "package.json" }}
+            - v2-node-dependencies-
 
       - run: yarn install
 
@@ -37,8 +37,8 @@ jobs:
 
       - restore_cache:
           keys:
-          - v2-rails-dependencies-{{ checksum "Gemfile.lock" }}
-          - v2-rails-dependencies-
+            - v2-rails-dependencies-{{ checksum "Gemfile.lock" }}
+            - v2-rails-dependencies-
 
       - run:
           name: install dependencies
