@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/repo
     docker:
-      - image: circleci/ruby:2.6.3-node-browsers
+      - image: circleci/ruby:2.6.4-node-browsers
         environment:
           PGHOST: localhost
           PGUSER: postgres
