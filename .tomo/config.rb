@@ -14,7 +14,7 @@ host 'git@chuspace.com', port: 40_423
 
 set application: 'chuspace'
 set deploy_to: '/home/git/chuspace.com'
-set nodenv_node_version: '10.16.0'
+set nodenv_node_version: '10.16.3'
 set nodenv_yarn_version: '1.17.3'
 set rbenv_ruby_version: '2.6-jemalloc'
 set git_url: 'git@github.com:chuspace/chuspace.git'
