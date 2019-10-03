@@ -1,0 +1,118 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 105,
+      "fingerprint": "0dc0ce6a0b9a9afd9d62378dae9970aac5a4d4d947da3a1e797e1fe4d3796175",
+      "check_name": "PermitAttributes",
+      "message": "Potentially dangerous key allowed for mass assignment",
+      "file": "app/controllers/publications/people_controller.rb",
+      "line": 41,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.require(:collaborator).permit(:role)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Publications::PeopleController",
+        "method": "update_params"
+      },
+      "user_input": ":role",
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "33bb5edd036b76e6f94ec0468de0fa02bebff4ec61a7c09b834bf72e2a420d03",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/posts/show.html.erb",
+      "line": 32,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "Publication.friendly.find(params[:publication_slug]).posts.friendly.find(params[:slug]).body_html",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "PostsController",
+          "method": "show",
+          "line": 24,
+          "file": "app/controllers/posts_controller.rb",
+          "rendered": {
+            "name": "posts/show",
+            "file": "app/views/posts/show.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "posts/show"
+      },
+      "user_input": null,
+      "confidence": "High",
+      "note": ""
+    },
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 105,
+      "fingerprint": "67b852df4d08ace689492be5ed579cd0cca4ae5165951a8e4210e92e90dc4e91",
+      "check_name": "PermitAttributes",
+      "message": "Potentially dangerous key allowed for mass assignment",
+      "file": "app/controllers/publications/invitations_controller.rb",
+      "line": 68,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.require(:invitation).permit(:identifier, :role)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Publications::InvitationsController",
+        "method": "invitation_params"
+      },
+      "user_input": ":role",
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 4,
+      "fingerprint": "baf0d380aebfeddee7b5bee8ad9a1c7b56ea1fc60d33214ddc9bde7c0b153667",
+      "check_name": "LinkToHref",
+      "message": "Potentially unsafe model attribute in `link_to` href",
+      "file": "app/views/publications/_header.html.erb",
+      "line": 25,
+      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
+      "code": "link_to(sanitize(Publication.friendly.find(params[:publication_slug]).website), :class => \"link link--active underline text-sm\", :target => \"_blank\", :rel => \"noopener noreferer\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Publications::DraftsController",
+          "method": "index",
+          "line": 11,
+          "file": "app/controllers/publications/drafts_controller.rb",
+          "rendered": {
+            "name": "publications/show",
+            "file": "app/views/publications/show.html.erb"
+          }
+        },
+        {
+          "type": "template",
+          "name": "publications/show",
+          "line": 5,
+          "file": "app/views/publications/show.html.erb",
+          "rendered": {
+            "name": "publications/_header",
+            "file": "app/views/publications/_header.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "publications/_header"
+      },
+      "user_input": "Publication.friendly.find(params[:publication_slug]).website",
+      "confidence": "Weak",
+      "note": ""
+    }
+  ],
+  "updated": "2019-10-03 19:25:25 +0100",
+  "brakeman_version": "4.6.1"
+}
