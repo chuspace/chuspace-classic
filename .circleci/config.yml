@@ -90,7 +90,7 @@ jobs:
 
       - run:
           name: Running linters...
-          command: bundle exec rubocop && bundle exec brakeman -q -w2 && bundle audit --update
+          command: bundle exec rubocop && bundle exec brakeman -q -w2 && bundle exec bundler-audit --update
 
       - run:
           name: Copying mobius...
