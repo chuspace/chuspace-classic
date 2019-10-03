@@ -139,6 +139,7 @@ group :development do
   gem 'web-console', '>= 3.3.0', require: false
   # Code linting
   gem 'rubocop', require: false
+  gem 'rubocop-sorbet', require: false
   gem 'rubocop-performance', require: false
   gem 'bullet'
   # Security

@@ -2,6 +2,7 @@ require:
   - rubocop-performance
   - database_validations/rubocop/cops
   - anycable/rails/compatibility/rubocop
+  - rubocop-sorbet
 
 AllCops:
   TargetRubyVersion: 2.6.3
