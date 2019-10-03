@@ -73,7 +73,7 @@ jobs:
       - save_cache:
           paths:
             - ./vendor/bundle
-            - ./tmp/cache/webpacker/*
+            - ./tmp/cache/webpacker/**/*
             - ./public/packs-test/**/*
             - ./public/assets/**/*
           key: v2-rails-dependencies-{{ checksum "Gemfile.lock" }}
@@ -85,7 +85,6 @@ jobs:
       - run:
           name: Setup configs...
           command: |
-            cp config/git.yml.example config/git.yml
             cp openssh/sshd_config.example openssh/sshd_config
             ssh-keygen -t rsa -b 4096 -C "gaurav@gauravtiwari.co.uk" -f ./openssh/ssh_host_rsa_key -q -N ""
 
