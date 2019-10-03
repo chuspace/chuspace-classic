@@ -19,11 +19,11 @@ jobs:
       - checkout
 
       - run:
-          name: Installing GCC
+          name: Installing GCC...
           command: 'sudo apt-get update && sudo apt-get install gcc g++ cmake'
 
       - run:
-          name: Installing vips
+          name: Installing vips...
           command: sudo apt install libvips libvips-dev
 
       - run:
@@ -36,7 +36,7 @@ jobs:
             sudo apt install crystal
 
       - run:
-          name: Installing postgres client
+          name: Installing postgres client...
           command: |
             echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
             wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
@@ -62,7 +62,7 @@ jobs:
             - v2-rails-dependencies-
 
       - run:
-          name: install dependencies
+          name: Installing dependencies...
           command: |
             bundle install --jobs=4 --retry=3 --path vendor/bundle
 
@@ -83,29 +83,24 @@ jobs:
           command: bundle exec rails db:create && bundle exec rails db:structure:load
 
       - run:
-          name: Setup configs...
+          name: Setting configs...
           command: |
             cp openssh/sshd_config.example openssh/sshd_config
             ssh-keygen -t rsa -b 4096 -C "gaurav@gauravtiwari.co.uk" -f ./openssh/ssh_host_rsa_key -q -N ""
 
       - run:
-          name: Run linters
+          name: Running linters...
           command: bundle exec rubocop && bundle exec srb tc && brakeman -q -w2 && bundle audit --update
 
       - run:
-          name: Copying mobius
+          name: Copying mobius...
           command: bundle exec rails chuspace:setup && sudo cp bin/mobius /etc/git/mobius
 
       - run:
-          name: run tests
+          name: Running tests...
           command: |
             mkdir /tmp/test-results
-            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
-            bundle exec rspec --format progress \
-                            --format RspecJunitFormatter \
-                            --out /tmp/test-results/rspec.xml \
-                            --format progress \
-                            $TEST_FILES
+            bundle exec rails test && bundle exec rails test:system
 
       - store_test_results:
           path: /tmp/test-results
