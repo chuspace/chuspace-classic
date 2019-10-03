@@ -32,9 +32,9 @@ class UserTest < ActiveSupport::TestCase
     refute_nil @valid_user.publication
 
     assert_equal 'Foo Bar', @valid_user.publication.name
-    assert_equal 'foo-bar', @valid_user.publication.slug
-    assert_equal 'foo-bar.git', @valid_user.publication.repo_name
-    assert_equal Git.config.storage_path.join('foo-bar.git').to_s, @valid_user.publication.repo_path
+    assert_equal 'foo', @valid_user.publication.slug
+    assert_equal 'foo.git', @valid_user.publication.repo_name
+    assert_equal Git.config.storage_path.join('foo.git').to_s, @valid_user.publication.repo_path
     assert_equal @valid_user, @valid_user.publication.owner
   end
 
