@@ -954,7 +954,7 @@ module Octokit::EnterpriseManagementConsoleClient::ManagementConsole
 end
 module Octokit::Middleware
 end
-class Octokit::Middleware::RedirectLimitReached < Faraday::ClientError
+class Octokit::Middleware::RedirectLimitReached < Faraday::Error::ClientError
   def initialize(response); end
   def response; end
 end

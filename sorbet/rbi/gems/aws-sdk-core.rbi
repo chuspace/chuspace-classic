@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/aws-sdk-core/all/aws-sdk-core.rbi
 #
-# aws-sdk-core-3.67.0
+# aws-sdk-core-3.68.0
 module Seahorse
 end
 module Seahorse::Util
@@ -969,6 +969,7 @@ end
 class Aws::SharedConfig
   def assume_role_credentials_from_config(opts = nil); end
   def assume_role_from_profile(cfg, profile, opts, chain_config); end
+  def assume_role_process_credentials_from_config(profile); end
   def assume_role_web_identity_credentials_from_config(profile); end
   def config_enabled?; end
   def config_path; end
@@ -997,7 +998,7 @@ class Aws::SharedConfig
   def loadable?(path); end
   def profile_name; end
   def region(opts = nil); end
-  def resolve_source_profile(src); end
+  def resolve_source_profile(profile); end
   def validate_profile_exists(profile); end
 end
 module Aws::Structure

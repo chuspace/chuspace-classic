@@ -9,6 +9,12 @@
 #
 # down-4.8.1
 module Down
+  def backend(value = nil); end
+  def download(*args, &block); end
+  def open(*args, &block); end
+  def self.backend(value = nil); end
+  def self.download(*args, &block); end
+  def self.open(*args, &block); end
 end
 class Down::ChunkedIO
   def cache; end
@@ -35,4 +41,58 @@ class Down::ChunkedIO
   def rewindable?; end
   def size; end
   def size=(arg0); end
+end
+class Down::Error < StandardError
+end
+class Down::TooLarge < Down::Error
+end
+class Down::NotFound < Down::Error
+end
+class Down::InvalidUrl < Down::NotFound
+end
+class Down::TooManyRedirects < Down::NotFound
+end
+class Down::ResponseError < Down::NotFound
+  def initialize(message, response: nil); end
+  def response; end
+end
+class Down::ClientError < Down::ResponseError
+end
+class Down::ServerError < Down::ResponseError
+end
+class Down::ConnectionError < Down::NotFound
+end
+class Down::TimeoutError < Down::ConnectionError
+end
+class Down::SSLError < Down::NotFound
+end
+module Down::Utils
+  def filename_from_content_disposition(content_disposition); end
+  def filename_from_path(path); end
+  def self.filename_from_content_disposition(content_disposition); end
+  def self.filename_from_path(path); end
+end
+class Down::Backend
+  def download_result(tempfile, destination); end
+  def self.download(*args, &block); end
+  def self.open(*args, &block); end
+end
+class Down::NetHttp < Down::Backend
+  def addressable_normalize(url); end
+  def create_net_http(uri, options); end
+  def download(url, options = nil); end
+  def ensure_tempfile(io, extension); end
+  def ensure_uri(url, allow_relative: nil); end
+  def initialize(options = nil); end
+  def net_http_request(uri, options, follows_remaining: nil, &block); end
+  def open(url, options = nil); end
+  def open_uri(uri, options, follows_remaining: nil); end
+  def rebuild_response_from_open_uri_exception(exception); end
+  def request_error!(exception); end
+  def response_error!(response); end
+  def stream_body(response, &block); end
+end
+module Down::NetHttp::DownloadedFile
+  def content_type; end
+  def original_filename; end
 end

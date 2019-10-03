@@ -568,6 +568,8 @@ end
 class Rails::BacktraceCleaner < ActiveSupport::BacktraceCleaner
   def initialize; end
 end
+class Rails::Rack::Logger < ActiveSupport::LogSubscriber
+end
 class Rails::Application::DefaultMiddlewareStack
   def app; end
   def build_stack; end
@@ -576,6 +578,4 @@ class Rails::Application::DefaultMiddlewareStack
   def load_rack_cache; end
   def paths; end
   def show_exceptions_app; end
-end
-class Rails::Rack::Logger < ActiveSupport::LogSubscriber
 end

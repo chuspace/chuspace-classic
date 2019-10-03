@@ -103,10 +103,6 @@ gem 'dotenv-rails', require: 'dotenv/rails-now'
 #  SEO
 gem 'meta-tags'
 
-# Cache
-gem 'dalli'
-gem 'connection_pool'
-
 # User visit tracking
 gem 'ahoy_matey'
 gem 'maxminddb'

@@ -114,7 +114,7 @@ module TTY::Reader::Keys
   def self.win_keys; end
   def win_keys; end
 end
-class Anonymous_Struct_434 < Struct
+class Anonymous_Struct_437 < Struct
   def ctrl; end
   def ctrl=(_); end
   def meta; end
@@ -128,10 +128,10 @@ class Anonymous_Struct_434 < Struct
   def shift; end
   def shift=(_); end
 end
-class TTY::Reader::Key < Anonymous_Struct_434
+class TTY::Reader::Key < Anonymous_Struct_437
   def initialize(*arg0); end
 end
-class Anonymous_Struct_435 < Struct
+class Anonymous_Struct_438 < Struct
   def key; end
   def key=(_); end
   def line; end
@@ -143,7 +143,7 @@ class Anonymous_Struct_435 < Struct
   def value; end
   def value=(_); end
 end
-class TTY::Reader::KeyEvent < Anonymous_Struct_435
+class TTY::Reader::KeyEvent < Anonymous_Struct_438
   def self.from(keys, char, line = nil); end
   def trigger?; end
 end

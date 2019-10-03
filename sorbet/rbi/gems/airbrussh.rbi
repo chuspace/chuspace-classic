@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/airbrussh/all/airbrussh.rbi
 #
-# airbrussh-1.3.3
+# airbrussh-1.3.4
 module Airbrussh
   def self.configuration(options = nil); end
   def self.configure; end

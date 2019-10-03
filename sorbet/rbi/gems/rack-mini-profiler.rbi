@@ -7,10 +7,11 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rack-mini-profiler/all/rack-mini-profiler.rbi
 #
-# rack-mini-profiler-1.0.2
+# rack-mini-profiler-1.1.0
 module Rack
 end
 class Rack::MiniProfiler
+  def advanced_debugging_enabled?; end
   def analyze_memory; end
   def call(env); end
   def cancel_auto_inject(env); end
@@ -25,11 +26,11 @@ class Rack::MiniProfiler
   def help(client_settings, env); end
   def ids(env); end
   def ids_comma_separated(env); end
-  def ids_json(env); end
   def initialize(app, config = nil); end
   def inject(fragment, script); end
   def inject_profiler(env, status, headers, body); end
   def make_link(postfix, env); end
+  def self.advanced_tools_message; end
   def self.authorize_request; end
   def self.config; end
   def self.create_current(env = nil, options = nil); end
@@ -45,6 +46,7 @@ class Rack::MiniProfiler
   def serve_html(env); end
   def serve_results(env); end
   def text_result(body); end
+  def tool_disabled_message(client_settings); end
   def trim_strings(strings, max_size); end
   def user(env); end
 end
@@ -201,8 +203,8 @@ class Rack::MiniProfiler::Config
   def collapse_results=(arg0); end
   def disable_caching; end
   def disable_caching=(arg0); end
-  def disable_env_dump; end
-  def disable_env_dump=(arg0); end
+  def enable_advanced_debugging_tools; end
+  def enable_advanced_debugging_tools=(arg0); end
   def enabled; end
   def enabled=(arg0); end
   def flamegraph_sample_rate; end

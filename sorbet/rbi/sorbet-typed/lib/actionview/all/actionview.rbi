@@ -7,6 +7,25 @@
 #
 # typed: strong
 
+module ActionView
+  class ActionViewError < StandardError; end
+  class EncodingError < StandardError; end
+  class WrongEncodingError < EncodingError; end
+
+  class MissingTemplate < ActionViewError
+    sig { returns(String) }
+    def path; end
+  end
+
+  class Template
+    class Error < ActionViewError; end
+  end
+
+  TemplateError = T.type_alias(Template::Error)
+
+  class SyntaxErrorInTemplate < Template::Error; end
+end
+
 # Provides a set of methods for making links and getting URLs that
 # depend on the routing subsystem (see ActionDispatch::Routing).
 # This allows you to use the same format for links in views
@@ -272,4 +291,24 @@ module ActionView::Helpers::UrlHelper
   # We can also pass in the symbol arguments instead of strings.
   sig { params(options: T.untyped, check_parameters: T::Boolean).returns(T::Boolean) }
   def current_page?(options, check_parameters: false); end
+end
+
+module ActionView::Layouts
+  extend T::Helpers
+
+  module ClassMethods; end
+
+  mixes_in_class_methods(ActionView::Layouts::ClassMethods)
+end
+
+module ActionView::Rendering
+  extend T::Helpers
+
+  mixes_in_class_methods(ActionView::Rendering::ClassMethods)
+end
+
+module ActionView::ViewPaths
+  extend T::Helpers
+
+  mixes_in_class_methods(ActionView::ViewPaths::ClassMethods)
 end

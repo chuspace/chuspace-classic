@@ -18,15 +18,14 @@ Rails.application.configure do
   config.action_controller.perform_caching = true
 
   config.cache_store =
-    :dalli_store,
-    ENV['MEMCACHED_URLS'],
+    :redis_cache_store,
     {
-      namespace: 'chuspace_fragment_cache',
-      threadsafe: true,
-      failover: true,
-      expires_in: 6.hours.to_i,
-      compress: true,
-      pool_size: 40
+      url: ENV.fetch('REDIS_CACHE_URL'),
+      namespace: 'cache',
+      reconnect_attempts: 1,
+      error_handler: lambda do |method:, returning:, exception:|
+        Raven.capture_exception exception, level: 'warning', tags: { method: method, returning: returning }
+      end
     }
 
   # Disable serving static files from the `/public` folder by default since

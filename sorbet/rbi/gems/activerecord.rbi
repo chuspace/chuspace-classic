@@ -5658,6 +5658,200 @@ class ActiveRecord::Result
   def to_hash; end
   include Enumerable
 end
+class ActiveRecord::Associations::Preloader
+  def grouped_records(association, records, polymorphic_parent); end
+  def preload(records, associations, preload_scope = nil); end
+  def preloader_for(reflection, owners); end
+  def preloaders_for_hash(association, records, scope, polymorphic_parent); end
+  def preloaders_for_one(association, records, scope, polymorphic_parent); end
+  def preloaders_for_reflection(reflection, records, scope); end
+  def preloaders_on(association, records, scope, polymorphic_parent = nil); end
+  extend ActiveSupport::Autoload
+end
+class ActiveRecord::Associations::Preloader::AlreadyLoaded
+  def initialize(klass, owners, reflection, preload_scope); end
+  def owners; end
+  def preloaded_records; end
+  def records_by_owner; end
+  def reflection; end
+  def run; end
+end
+class ActiveRecord::Associations::Preloader::Association
+  def associate_records_to_owner(owner, records); end
+  def association_key_name; end
+  def association_key_type; end
+  def build_scope; end
+  def convert_key(key); end
+  def initialize(klass, owners, reflection, preload_scope); end
+  def key_conversion_required?; end
+  def klass; end
+  def model; end
+  def owner_key_name; end
+  def owner_key_type; end
+  def owner_keys; end
+  def owners; end
+  def owners_by_key; end
+  def preload_scope; end
+  def preloaded_records; end
+  def records_by_owner; end
+  def records_for(ids); end
+  def reflection; end
+  def reflection_scope; end
+  def run; end
+  def scope; end
+end
+class ActiveRecord::Associations::Preloader::ThroughAssociation < ActiveRecord::Associations::Preloader::Association
+  def initialize(*arg0); end
+  def middle_records; end
+  def preload_index; end
+  def preloaded_records; end
+  def records_by_owner; end
+  def source_preloaders; end
+  def source_reflection; end
+  def through_preloaders; end
+  def through_reflection; end
+  def through_scope; end
+end
+class ActiveRecord::Associations::JoinDependency
+  def alias_tracker; end
+  def aliases; end
+  def apply_column_aliases(relation); end
+  def build(associations, base_klass); end
+  def construct(ar_parent, parent, row, seen, model_cache); end
+  def construct_model(record, node, row, model_cache, id); end
+  def construct_tables!(join_root); end
+  def find_reflection(klass, name); end
+  def initialize(base, table, associations, join_type); end
+  def instantiate(result_set, &block); end
+  def join_constraints(joins_to_add, alias_tracker); end
+  def join_root; end
+  def join_type; end
+  def make_constraints(parent, child, join_type); end
+  def make_join_constraints(join_root, join_type); end
+  def reflections; end
+  def self.make_tree(associations); end
+  def self.walk_tree(associations, hash); end
+  def table_alias_for(reflection, parent, join); end
+  def table_aliases_for(parent, node); end
+  def walk(left, right, join_type); end
+end
+class ActiveRecord::Associations::JoinDependency::Aliases
+  def column_alias(node, column); end
+  def column_aliases(node); end
+  def columns; end
+  def initialize(tables); end
+end
+class ActiveRecord::Associations::JoinDependency::Aliases::Table < Struct
+  def column_aliases; end
+  def columns; end
+  def columns=(_); end
+  def node; end
+  def node=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class ActiveRecord::Associations::JoinDependency::Aliases::Column < Struct
+  def alias; end
+  def alias=(_); end
+  def name; end
+  def name=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class ActiveRecord::Associations::CollectionAssociation < ActiveRecord::Associations::Association
+  def _create_record(attributes, raise = nil, &block); end
+  def add_to_target(record, skip_callbacks = nil, &block); end
+  def build(attributes = nil, &block); end
+  def callback(method, record); end
+  def callbacks_for(callback_name); end
+  def concat(*records); end
+  def concat_records(records, raise = nil); end
+  def delete(*records); end
+  def delete_all(dependent = nil); end
+  def delete_or_destroy(records, method); end
+  def delete_records(records, method); end
+  def destroy(*records); end
+  def destroy_all; end
+  def empty?; end
+  def find(*args); end
+  def find_by_scan(*args); end
+  def find_from_target?; end
+  def ids_reader; end
+  def ids_writer(ids); end
+  def include?(object); end
+  def include_in_memory?(record); end
+  def insert_record(record, validate = nil, raise = nil, &block); end
+  def load_target; end
+  def merge_target_lists(persisted, memory); end
+  def null_scope?; end
+  def reader; end
+  def remove_records(existing_records, records, method); end
+  def replace(other_array); end
+  def replace_common_records_in_memory(new_target, original_target); end
+  def replace_on_target(record, index, skip_callbacks); end
+  def replace_records(new_target, original_target); end
+  def reset; end
+  def scope; end
+  def size; end
+  def transaction(*args); end
+  def writer(records); end
+end
+class ActiveRecord::Associations::SingularAssociation < ActiveRecord::Associations::Association
+  def _create_record(attributes, raise_error = nil, &block); end
+  def build(attributes = nil, &block); end
+  def find_target; end
+  def force_reload_reader; end
+  def reader; end
+  def replace(record); end
+  def scope_for_create; end
+  def set_new_record(record); end
+  def writer(record); end
+end
+module ActiveRecord::Associations::ForeignAssociation
+  def foreign_key_present?; end
+  def nullified_owner_attributes; end
+end
+class ActiveRecord::Associations::HasManyAssociation < ActiveRecord::Associations::CollectionAssociation
+  def _create_record(attributes, *arg1); end
+  def concat_records(records, *arg1); end
+  def count_records; end
+  def delete_count(method, scope); end
+  def delete_or_nullify_all_records(method); end
+  def delete_records(records, method); end
+  def difference(a, b); end
+  def handle_dependency; end
+  def insert_record(record, validate = nil, raise = nil); end
+  def intersection(a, b); end
+  def update_counter(difference, reflection = nil); end
+  def update_counter_if_success(saved_successfully, difference); end
+  def update_counter_in_memory(difference, reflection = nil); end
+  include ActiveRecord::Associations::ForeignAssociation
+end
+class ActiveRecord::Associations::BelongsToAssociation < ActiveRecord::Associations::SingularAssociation
+  def decrement_counters; end
+  def decrement_counters_before_last_save; end
+  def default(&block); end
+  def find_target?; end
+  def foreign_key_present?; end
+  def handle_dependency; end
+  def increment_counters; end
+  def inversed_from(record); end
+  def invertible_for?(record); end
+  def primary_key(klass); end
+  def replace(record); end
+  def replace_keys(record); end
+  def require_counter_update?; end
+  def reset; end
+  def stale_state; end
+  def target_changed?; end
+  def update_counters(by); end
+  def update_counters_via_scope(klass, foreign_key, by); end
+  def updated?; end
+end
 module ActiveRecord::Migration::Compatibility
   def self.find(version); end
 end

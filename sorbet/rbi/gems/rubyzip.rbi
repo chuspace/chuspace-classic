@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rubyzip/all/rubyzip.rbi
 #
-# rubyzip-1.2.4
+# rubyzip-1.3.0
 module Zip
   def case_insensitive_match; end
   def case_insensitive_match=(arg0); end
@@ -25,6 +25,8 @@ module Zip
   def sort_entries=(arg0); end
   def unicode_names; end
   def unicode_names=(arg0); end
+  def validate_entry_sizes; end
+  def validate_entry_sizes=(arg0); end
   def warn_invalid_date; end
   def warn_invalid_date=(arg0); end
   def write_zip64_support; end
@@ -324,6 +326,7 @@ class Zip::CentralDirectory
 end
 class Zip::File < Zip::CentralDirectory
   def add(entry, src_path, &continue_on_exists_proc); end
+  def add_stored(entry, src_path, &continue_on_exists_proc); end
   def check_entry_exists(entryName, continue_on_exists_proc, procedureName); end
   def check_file(path); end
   def close; end
@@ -506,7 +509,7 @@ class Zip::Deflater < Zip::Compressor
   def initialize(output_stream, level = nil, encrypter = nil); end
   def size; end
 end
-class Zip::StreamableStream < Anonymous_Delegator_437
+class Zip::StreamableStream < Anonymous_Delegator_440
   def clean_up; end
   def get_input_stream; end
   def get_output_stream; end
@@ -525,6 +528,8 @@ end
 class Zip::CompressionMethodError < Zip::Error
 end
 class Zip::EntryNameError < Zip::Error
+end
+class Zip::EntrySizeError < Zip::Error
 end
 class Zip::InternalError < Zip::Error
 end

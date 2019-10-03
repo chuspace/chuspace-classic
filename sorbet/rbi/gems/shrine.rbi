@@ -586,6 +586,33 @@ module Shrine::Plugins::AddMetadata::InstanceMethods
 end
 module Shrine::Plugins::AddMetadata::FileMethods
 end
+module Shrine::Plugins::RefreshMetadata
+end
+module Shrine::Plugins::RefreshMetadata::FileMethods
+  def refresh_metadata!(**context); end
+end
+module Shrine::Plugins::Recache
+end
+module Shrine::Plugins::Recache::AttacherMethods
+  def recache; end
+  def save; end
+end
+module Shrine::Plugins::RemoteUrl
+  def self.configure(uploader, opts = nil); end
+end
+module Shrine::Plugins::RemoteUrl::ClassMethods
+  def instrument_remote_url(url, options, &block); end
+  def remote_url(url, **options); end
+end
+module Shrine::Plugins::RemoteUrl::AttachmentMethods
+  def initialize(name, **options); end
+end
+module Shrine::Plugins::RemoteUrl::AttacherMethods
+  def assign_remote_url(url, downloader: nil, **options); end
+  def download_error_message(url, error); end
+  def remote_url; end
+  def remote_url=(url); end
+end
 module Shrine::Plugins::RackResponse
 end
 module Shrine::Plugins::RackResponse::FileMethods
@@ -641,14 +668,22 @@ class Shrine::Plugins::UrlsafeSerialization::Serializer
   def json_decode(data); end
   def json_encode(data); end
 end
-module Shrine::Plugins::RefreshMetadata
+module Shrine::Plugins::InferExtension
+  def self.configure(uploader, opts = nil); end
 end
-module Shrine::Plugins::RefreshMetadata::FileMethods
-  def refresh_metadata!(**context); end
+module Shrine::Plugins::InferExtension::ClassMethods
+  def extension_inferrer(name); end
+  def extension_inferrers; end
+  def infer_extension(mime_type); end
+  def instrument_extension(mime_type, &block); end
 end
-module Shrine::Plugins::Recache
+module Shrine::Plugins::InferExtension::InstanceMethods
+  def basic_location(io, metadata:); end
+  def infer_extension(mime_type); end
 end
-module Shrine::Plugins::Recache::AttacherMethods
-  def recache; end
-  def save; end
+class Shrine::Plugins::InferExtension::ExtensionInferrer
+  def call(mime_type); end
+  def infer_with_mime_types(mime_type); end
+  def infer_with_mini_mime(mime_type); end
+  def initialize(tool); end
 end

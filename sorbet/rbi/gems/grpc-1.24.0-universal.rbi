@@ -5,9 +5,92 @@
 #
 # If you would like to make changes to this file, great! Please create the gem's shim here:
 #
-#   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/grpc-1.23.0-universal/all/grpc-1.23.0-universal.rbi
+#   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/grpc-1.24.0-universal/all/grpc-1.24.0-universal.rbi
 #
-# grpc-1.23.0-universal-darwin
+# grpc-1.24.0-universal-darwin
+class Struct::Status < Struct
+  def code; end
+  def code=(_); end
+  def details; end
+  def details=(_); end
+  def metadata; end
+  def metadata=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+module GRPC
+  extend GRPC::DefaultLogger
+end
+module GRPC::Core
+end
+module GRPC::Core::StatusCodes
+end
+class GRPC::GoogleRpcStatusUtils
+  def self.extract_google_rpc_status(status); end
+end
+class GRPC::BadStatus < StandardError
+  def code; end
+  def details; end
+  def initialize(code, details = nil, metadata = nil); end
+  def metadata; end
+  def self.new_status_exception(code, details = nil, metadata = nil); end
+  def to_rpc_status; end
+  def to_status; end
+  include GRPC::Core::StatusCodes
+end
+class GRPC::Ok < GRPC::BadStatus
+  def initialize(details = nil, metadata = nil); end
+end
+class GRPC::Cancelled < GRPC::BadStatus
+  def initialize(details = nil, metadata = nil); end
+end
+class GRPC::Unknown < GRPC::BadStatus
+  def initialize(details = nil, metadata = nil); end
+end
+class GRPC::InvalidArgument < GRPC::BadStatus
+  def initialize(details = nil, metadata = nil); end
+end
+class GRPC::DeadlineExceeded < GRPC::BadStatus
+  def initialize(details = nil, metadata = nil); end
+end
+class GRPC::NotFound < GRPC::BadStatus
+  def initialize(details = nil, metadata = nil); end
+end
+class GRPC::AlreadyExists < GRPC::BadStatus
+  def initialize(details = nil, metadata = nil); end
+end
+class GRPC::PermissionDenied < GRPC::BadStatus
+  def initialize(details = nil, metadata = nil); end
+end
+class GRPC::Unauthenticated < GRPC::BadStatus
+  def initialize(details = nil, metadata = nil); end
+end
+class GRPC::ResourceExhausted < GRPC::BadStatus
+  def initialize(details = nil, metadata = nil); end
+end
+class GRPC::FailedPrecondition < GRPC::BadStatus
+  def initialize(details = nil, metadata = nil); end
+end
+class GRPC::Aborted < GRPC::BadStatus
+  def initialize(details = nil, metadata = nil); end
+end
+class GRPC::OutOfRange < GRPC::BadStatus
+  def initialize(details = nil, metadata = nil); end
+end
+class GRPC::Unimplemented < GRPC::BadStatus
+  def initialize(details = nil, metadata = nil); end
+end
+class GRPC::Internal < GRPC::BadStatus
+  def initialize(details = nil, metadata = nil); end
+end
+class GRPC::Unavailable < GRPC::BadStatus
+  def initialize(details = nil, metadata = nil); end
+end
+class GRPC::DataLoss < GRPC::BadStatus
+  def initialize(details = nil, metadata = nil); end
+end
 class Struct::NewServerRpc < Struct
   def call; end
   def call=(_); end
@@ -19,18 +102,6 @@ class Struct::NewServerRpc < Struct
   def metadata=(_); end
   def method; end
   def method=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Struct::Status < Struct
-  def code; end
-  def code=(_); end
-  def details; end
-  def details=(_); end
-  def metadata; end
-  def metadata=(_); end
   def self.[](*arg0); end
   def self.inspect; end
   def self.members; end
@@ -128,70 +199,6 @@ class GRPC::Core::CompressionOptions
   def to_channel_arg_hash; end
   def to_hash; end
 end
-module GRPC
-  extend GRPC::DefaultLogger
-end
-class GRPC::BadStatus < StandardError
-  def code; end
-  def details; end
-  def initialize(code, details = nil, metadata = nil); end
-  def metadata; end
-  def self.new_status_exception(code, details = nil, metadata = nil); end
-  def to_rpc_status; end
-  def to_status; end
-  include GRPC::Core::StatusCodes
-end
-class GRPC::Ok < GRPC::BadStatus
-  def initialize(details = nil, metadata = nil); end
-end
-class GRPC::Cancelled < GRPC::BadStatus
-  def initialize(details = nil, metadata = nil); end
-end
-class GRPC::Unknown < GRPC::BadStatus
-  def initialize(details = nil, metadata = nil); end
-end
-class GRPC::InvalidArgument < GRPC::BadStatus
-  def initialize(details = nil, metadata = nil); end
-end
-class GRPC::DeadlineExceeded < GRPC::BadStatus
-  def initialize(details = nil, metadata = nil); end
-end
-class GRPC::NotFound < GRPC::BadStatus
-  def initialize(details = nil, metadata = nil); end
-end
-class GRPC::AlreadyExists < GRPC::BadStatus
-  def initialize(details = nil, metadata = nil); end
-end
-class GRPC::PermissionDenied < GRPC::BadStatus
-  def initialize(details = nil, metadata = nil); end
-end
-class GRPC::Unauthenticated < GRPC::BadStatus
-  def initialize(details = nil, metadata = nil); end
-end
-class GRPC::ResourceExhausted < GRPC::BadStatus
-  def initialize(details = nil, metadata = nil); end
-end
-class GRPC::FailedPrecondition < GRPC::BadStatus
-  def initialize(details = nil, metadata = nil); end
-end
-class GRPC::Aborted < GRPC::BadStatus
-  def initialize(details = nil, metadata = nil); end
-end
-class GRPC::OutOfRange < GRPC::BadStatus
-  def initialize(details = nil, metadata = nil); end
-end
-class GRPC::Unimplemented < GRPC::BadStatus
-  def initialize(details = nil, metadata = nil); end
-end
-class GRPC::Internal < GRPC::BadStatus
-  def initialize(details = nil, metadata = nil); end
-end
-class GRPC::Unavailable < GRPC::BadStatus
-  def initialize(details = nil, metadata = nil); end
-end
-class GRPC::DataLoss < GRPC::BadStatus
-  def initialize(details = nil, metadata = nil); end
-end
 module GRPC::DefaultLogger
   def logger; end
 end
@@ -207,8 +214,6 @@ class GRPC::Notifier
   def notify(payload); end
   def payload; end
   def wait; end
-end
-module GRPC::Core
 end
 module GRPC::Core::TimeConsts
   def from_relative_time(timeish); end

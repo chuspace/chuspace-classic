@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/simple_form/all/simple_form.rbi
 #
-# simple_form-4.1.0
+# simple_form-5.0.0
 module SimpleForm
   def boolean_label_class; end
   def boolean_label_class=(obj); end
@@ -43,8 +43,6 @@ module SimpleForm
   def error_notification_tag=(obj); end
   def field_error_proc; end
   def field_error_proc=(obj); end
-  def file_methods; end
-  def file_methods=(obj); end
   def form_class; end
   def generate_additional_classes_for; end
   def generate_additional_classes_for=(obj); end
@@ -112,7 +110,7 @@ module SimpleForm
   def self.field_error_proc; end
   def self.field_error_proc=(obj); end
   def self.file_methods; end
-  def self.file_methods=(obj); end
+  def self.file_methods=(file_methods); end
   def self.form_class; end
   def self.form_class=(value); end
   def self.generate_additional_classes_for; end

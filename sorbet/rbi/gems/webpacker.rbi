@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/webpacker/all/webpacker.rbi
 #
-# webpacker-d0fa1d1351bf
+# webpacker-2cef2fd6c208
 class Webpacker::Instance
   def commands; end
   def compiler; end
@@ -110,6 +110,7 @@ class Webpacker::Compiler
 end
 class Webpacker::Commands
   def bootstrap; end
+  def clean(count_to_keep = nil); end
   def clobber; end
   def compile; end
   def compiler(*args, &block); end
@@ -139,6 +140,7 @@ module Webpacker::Helper
   def asset_pack_path(name, **options); end
   def asset_pack_url(name, **options); end
   def current_webpacker_instance; end
+  def favicon_pack_tag(name, **options); end
   def image_pack_tag(name, **options); end
   def javascript_pack_tag(*names, **options); end
   def javascript_packs_with_chunks_tag(*names, **options); end
@@ -161,6 +163,7 @@ class Webpacker::Engine < Rails::Engine
 end
 module Webpacker
   def bootstrap(*args, &block); end
+  def clean(*args, &block); end
   def clobber(*args, &block); end
   def commands(*args, &block); end
   def compile(*args, &block); end

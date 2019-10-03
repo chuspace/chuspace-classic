@@ -2512,6 +2512,86 @@ class ActionDispatch::Callbacks
   extend ActiveSupport::DescendantsTracker
   include ActiveSupport::Callbacks
 end
+class ActionDispatch::RequestId
+  def call(env); end
+  def initialize(app); end
+  def internal_request_id; end
+  def make_request_id(request_id); end
+end
+module ActionDispatch::Assertions
+  def html_document; end
+  extend ActiveSupport::Concern
+  include ActionDispatch::Assertions::ResponseAssertions
+  include ActionDispatch::Assertions::RoutingAssertions
+  include Rails::Dom::Testing::Assertions
+end
+module ActionDispatch::Assertions::ResponseAssertions
+  def assert_redirected_to(options = nil, message = nil); end
+  def assert_response(type, message = nil); end
+  def code_with_name(code_or_name); end
+  def generate_response_message(expected, actual = nil); end
+  def location_if_redirected; end
+  def normalize_argument_to_redirection(fragment); end
+  def parameterize(value); end
+  def response_body_if_short; end
+end
+module ActionDispatch::Assertions::RoutingAssertions
+  def assert_generates(expected_path, options, defaults = nil, extras = nil, message = nil); end
+  def assert_recognizes(expected_options, path, extras = nil, msg = nil); end
+  def assert_routing(path, options, defaults = nil, extras = nil, message = nil); end
+  def fail_on(exception_class, message); end
+  def method_missing(selector, *args, &block); end
+  def recognized_request_for(path, extras = nil, msg); end
+  def setup; end
+  def with_routing; end
+end
+class ActionDispatch::HostAuthorization
+  def authorized?(request); end
+  def call(env); end
+  def initialize(app, hosts, response_app = nil); end
+  def mark_as_authorized(request); end
+end
+class ActionDispatch::HostAuthorization::Permissions
+  def allows?(host); end
+  def empty?; end
+  def initialize(hosts); end
+  def sanitize_hosts(hosts); end
+  def sanitize_regexp(host); end
+  def sanitize_string(host); end
+end
+class ActionDispatch::FileHandler
+  def call(env); end
+  def content_type(path); end
+  def ext; end
+  def gzip_encoding_accepted?(request); end
+  def gzip_file_path(path); end
+  def initialize(root, index: nil, headers: nil); end
+  def match?(path); end
+  def serve(request); end
+end
+class ActionDispatch::Static
+  def call(env); end
+  def initialize(app, path, index: nil, headers: nil); end
+end
+class ActionDispatch::Executor
+  def call(env); end
+  def initialize(app, executor); end
+end
+class ActionDispatch::RemoteIp
+  def call(env); end
+  def check_ip; end
+  def initialize(app, ip_spoofing_check = nil, custom_proxies = nil); end
+  def proxies; end
+end
+class ActionDispatch::RemoteIp::IpSpoofAttackError < StandardError
+end
+class ActionDispatch::RemoteIp::GetIp
+  def calculate_ip; end
+  def filter_proxies(ips); end
+  def initialize(req, check_ip, proxies); end
+  def ips_from(header); end
+  def to_s; end
+end
 class ActionDispatch::ShowExceptions
   def call(env); end
   def initialize(app, exceptions_app); end
@@ -2580,102 +2660,13 @@ class ActionDispatch::DebugExceptions
   def log_error(request, wrapper); end
   def logger(request); end
   def render(status, body, format); end
-  def render_exception(request, exception); end
+  def render_exception(env_or_request, exception); end
   def render_for_api_request(content_type, wrapper); end
   def render_for_browser_request(request, wrapper); end
   def routes_inspector(exception); end
   def self.interceptors; end
   def self.register_interceptor(object = nil, &block); end
   def stderr_logger; end
-end
-module ActionDispatch::Assertions
-  def html_document; end
-  extend ActiveSupport::Concern
-  include ActionDispatch::Assertions::ResponseAssertions
-  include ActionDispatch::Assertions::RoutingAssertions
-  include Rails::Dom::Testing::Assertions
-end
-module ActionDispatch::Assertions::ResponseAssertions
-  def assert_redirected_to(options = nil, message = nil); end
-  def assert_response(type, message = nil); end
-  def code_with_name(code_or_name); end
-  def generate_response_message(expected, actual = nil); end
-  def location_if_redirected; end
-  def normalize_argument_to_redirection(fragment); end
-  def parameterize(value); end
-  def response_body_if_short; end
-end
-module ActionDispatch::Assertions::RoutingAssertions
-  def assert_generates(expected_path, options, defaults = nil, extras = nil, message = nil); end
-  def assert_recognizes(expected_options, path, extras = nil, msg = nil); end
-  def assert_routing(path, options, defaults = nil, extras = nil, message = nil); end
-  def fail_on(exception_class, message); end
-  def method_missing(selector, *args, &block); end
-  def recognized_request_for(path, extras = nil, msg); end
-  def setup; end
-  def with_routing; end
-end
-class ActionDispatch::HostAuthorization
-  def authorized?(request); end
-  def call(env); end
-  def initialize(app, hosts, response_app = nil); end
-  def mark_as_authorized(request); end
-end
-class ActionDispatch::HostAuthorization::Permissions
-  def allows?(host); end
-  def empty?; end
-  def initialize(hosts); end
-  def sanitize_hosts(hosts); end
-  def sanitize_regexp(host); end
-  def sanitize_string(host); end
-end
-class ActionDispatch::FileHandler
-  def call(env); end
-  def content_type(path); end
-  def ext; end
-  def gzip_encoding_accepted?(request); end
-  def gzip_file_path(path); end
-  def initialize(root, index: nil, headers: nil); end
-  def match?(path); end
-  def serve(request); end
-end
-class ActionDispatch::Static
-  def call(env); end
-  def initialize(app, path, index: nil, headers: nil); end
-end
-class ActionDispatch::Executor
-  def call(env); end
-  def initialize(app, executor); end
-end
-class ActionDispatch::RequestId
-  def call(env); end
-  def initialize(app); end
-  def internal_request_id; end
-  def make_request_id(request_id); end
-end
-class ActionDispatch::RemoteIp
-  def call(env); end
-  def check_ip; end
-  def initialize(app, ip_spoofing_check = nil, custom_proxies = nil); end
-  def proxies; end
-end
-class ActionDispatch::RemoteIp::IpSpoofAttackError < StandardError
-end
-class ActionDispatch::RemoteIp::GetIp
-  def calculate_ip; end
-  def filter_proxies(ips); end
-  def initialize(req, check_ip, proxies); end
-  def ips_from(header); end
-  def to_s; end
-end
-class ActionDispatch::PublicExceptions
-  def call(env); end
-  def initialize(public_path); end
-  def public_path; end
-  def public_path=(arg0); end
-  def render(status, content_type, body); end
-  def render_format(status, content_type, body); end
-  def render_html(status); end
 end
 class ActionDispatch::ActionableExceptions
   def actionable_request?(request); end

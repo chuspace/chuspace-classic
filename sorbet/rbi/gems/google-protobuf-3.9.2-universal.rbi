@@ -5,9 +5,9 @@
 #
 # If you would like to make changes to this file, great! Please create the gem's shim here:
 #
-#   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/google-protobuf-3.9.1-universal/all/google-protobuf-3.9.1-universal.rbi
+#   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/google-protobuf-3.9.2-universal/all/google-protobuf-3.9.2-universal.rbi
 #
-# google-protobuf-3.9.1-universal-darwin
+# google-protobuf-3.9.2-universal-darwin
 module Google
 end
 module Google::Protobuf

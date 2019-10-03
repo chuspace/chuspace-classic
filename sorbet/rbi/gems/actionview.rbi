@@ -1126,6 +1126,23 @@ class ActionView::PartialRenderer < ActionView::AbstractRenderer
   def setup(context, options, as, block); end
   include ActionView::CollectionCaching
 end
+class ActionView::TemplateRenderer < ActionView::AbstractRenderer
+  def determine_template(options); end
+  def find_layout(layout, keys, formats); end
+  def render(context, options); end
+  def render_template(view, template, layout_name, locals); end
+  def render_with_layout(*args, &block); end
+  def resolve_layout(layout, keys, formats); end
+end
+class ActionView::StreamingTemplateRenderer < ActionView::TemplateRenderer
+  def delayed_render(buffer, template, layout, view, locals); end
+  def render_template(view, template, layout_name = nil, locals = nil); end
+end
+class ActionView::StreamingTemplateRenderer::Body
+  def each(&block); end
+  def initialize(&start); end
+  def log_error(exception); end
+end
 class ActionView::CacheExpiry
   def all_view_paths; end
   def clear_cache; end

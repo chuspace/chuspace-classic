@@ -35,8 +35,8 @@ class Hash
   def reverse_merge!(other_hash); end
   def reverse_merge(other_hash); end
   def reverse_update(other_hash); end
-  def self.from_trusted_xml(xml); end
-  def self.try_convert(arg0); end
+  def self.[](*arg0); end
+  def self.from_xml(xml, disallowed_types = nil); end
   def slice!(*keys); end
   def stringify_keys!; end
   def stringify_keys; end
@@ -2013,6 +2013,28 @@ module ActiveSupport::Rescuable::ClassMethods
   def rescue_from(*klasses, with: nil, &block); end
   def rescue_with_handler(exception, object: nil, visited_exceptions: nil); end
 end
+module ActiveSupport::NumericWithFormat
+  def to_s(format = nil, options = nil); end
+end
+class File < IO
+  def self.atomic_write(file_name, temp_dir = nil); end
+  def self.probe_stat_in(dir); end
+end
+module Digest
+end
+module Digest::UUID
+  def self.uuid_from_hash(hash_class, uuid_namespace, name); end
+  def self.uuid_v3(uuid_namespace, name); end
+  def self.uuid_v4; end
+  def self.uuid_v5(uuid_namespace, name); end
+end
+module ActiveSupport::MarshalWithAutoloading
+  def load(source, proc = nil); end
+end
+module SecureRandom
+  def self.base36(n = nil); end
+  def self.base58(n = nil); end
+end
 class ActiveSupport::ExecutionWrapper
   def __callbacks; end
   def __callbacks?; end
@@ -2113,28 +2135,6 @@ class ActiveSupport::FileUpdateChecker
   def updated?; end
   def updated_at(paths); end
   def watched; end
-end
-module ActiveSupport::NumericWithFormat
-  def to_s(format = nil, options = nil); end
-end
-class File < IO
-  def self.empty?(arg0); end
-  def self.probe_stat_in(dir); end
-end
-module Digest
-end
-module Digest::UUID
-  def self.uuid_from_hash(hash_class, uuid_namespace, name); end
-  def self.uuid_v3(uuid_namespace, name); end
-  def self.uuid_v4; end
-  def self.uuid_v5(uuid_namespace, name); end
-end
-module ActiveSupport::MarshalWithAutoloading
-  def load(source, proc = nil); end
-end
-module SecureRandom
-  def self.base36(n = nil); end
-  def self.base58(n = nil); end
 end
 module ActiveSupport::Cache
   def self.expand_cache_key(key, namespace = nil); end
