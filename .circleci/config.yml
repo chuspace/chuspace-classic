@@ -94,7 +94,7 @@ jobs:
 
       - run:
           name: Copying mobius...
-          command: bundle exec rails chuspace:setup && sudo cp bin/mobius /etc/git/mobius
+          command: bundle exec rails chuspace:setup && sudo mkdir -p /etc/git && sudo cp bin/mobius /etc/git/mobius
 
       - run:
           name: Running tests...
