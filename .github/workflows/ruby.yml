@@ -25,11 +25,11 @@ jobs:
       - name: Set up Ruby
         uses: actions/setup-ruby@v1
         with:
-          ruby-version: 2.6.4
+          ruby-version: '2.x'
       - name: Set up Node
         uses: actions/setup-node@v1
         with:
-          node-version: 10.13.0
+          node-version: 10.16.0
       - name: Install dependencies
         run: |
           npm -g install chromedriver
