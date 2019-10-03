@@ -27,21 +27,21 @@ jobs:
           command: sudo apt install libvips libvips-dev
 
       - run:
-        name: Installing crystal
-        command: \
-          curl -sSL https://dist.crystal-lang.org/apt/setup.sh | sudo bash
-          curl -sL "https://keybase.io/crystal/pgp_keys.asc" | sudo apt-key add -
-          echo "deb https://dist.crystal-lang.org/apt crystal main" | sudo tee /etc/apt/sources.list.d/crystal.list
-          sudo apt-get update
-          sudo apt install crystal
+          name: Installing crystal...
+          command: |
+            curl -sSL https://dist.crystal-lang.org/apt/setup.sh | sudo bash
+            curl -sL "https://keybase.io/crystal/pgp_keys.asc" | sudo apt-key add -
+            echo "deb https://dist.crystal-lang.org/apt crystal main" | sudo tee /etc/apt/sources.list.d/crystal.list
+            sudo apt-get update
+            sudo apt install crystal
 
       - run:
-        name: Installing postgres client
-        command: |
-          echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
-          wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-          sudo apt-get update
-          sudo apt-get install postgresql-client-11
+          name: Installing postgres client
+          command: |
+            echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+            wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+            sudo apt-get update
+            sudo apt-get install postgresql-client-11
 
       - restore_cache:
           keys:
@@ -102,7 +102,6 @@ jobs:
           command: |
             mkdir /tmp/test-results
             TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
-
             bundle exec rspec --format progress \
                             --format RspecJunitFormatter \
                             --out /tmp/test-results/rspec.xml \
