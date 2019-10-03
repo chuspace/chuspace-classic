@@ -22,7 +22,7 @@ namespace :chuspace do
 
       system(
         ENV,
-        "cd #{MOBIUS_ROOT} && shards install && crystal build #{binary_src_path} --release -p --no-debug -o #{
+        "cd #{MOBIUS_ROOT} && shards update && crystal build #{binary_src_path} --release -p --no-debug -o #{
           binary_name
         }"
       )
