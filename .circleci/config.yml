@@ -45,8 +45,8 @@ jobs:
 
       - restore_cache:
           keys:
-            - v2-node-dependencies-{{ checksum "package.json" }}
-            - v2-node-dependencies-
+            - v1-node-dependencies-{{ checksum "package.json" }}
+            - v1-node-dependencies-
 
       - run: yarn install
 
@@ -54,12 +54,12 @@ jobs:
           paths:
             - node_modules
             - node_modules/.cache/**/*
-          key: v2-node-dependencies-{{ checksum "package.json" }}
+          key: v1-node-dependencies-{{ checksum "package.json" }}
 
       - restore_cache:
           keys:
-            - v2-rails-dependencies-{{ checksum "Gemfile.lock" }}
-            - v2-rails-dependencies-
+            - v1-rails-dependencies-{{ checksum "Gemfile.lock" }}
+            - v1-rails-dependencies-
 
       - run:
           name: Installing dependencies...
@@ -76,7 +76,7 @@ jobs:
             - ./tmp/cache/webpacker/**/*
             - ./public/packs-test/**/*
             - ./public/assets/**/*
-          key: v2-rails-dependencies-{{ checksum "Gemfile.lock" }}
+          key: v1-rails-dependencies-{{ checksum "Gemfile.lock" }}
 
       - run:
           name: Setting databases...
