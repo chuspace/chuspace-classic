@@ -9,6 +9,7 @@ export default class LazyImage extends LitElement {
     return {
       src: { type: String },
       alt: { type: String },
+      title: { type: String },
       editable: { type: Boolean }
     }
   }
@@ -18,6 +19,7 @@ export default class LazyImage extends LitElement {
 
     try {
       this.alt = JSON.parse(this.alt) || ''
+      this.title = JSON.parse(this.title) || ''
     } catch (e) {}
 
     if (this.handleChange) this.setAttribute('editable', true)
@@ -53,7 +55,7 @@ export default class LazyImage extends LitElement {
               `
             : null
         }
-        <img alt=${this.alt} data-src="${this.src}" data-sizes="auto" class="lazy blur-up" />
+        <img alt=${this.alt} data-src="${this.src}" title="${this.title}" data-sizes="auto" class="lazy blur-up" />
         ${
           this.editable
             ? html`

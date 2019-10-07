@@ -17,6 +17,7 @@ export default class ChuEditor extends LitElement {
     return {
       url: { type: String, reflect: true },
       id: { type: String },
+      param: { type: String },
       publicationId: { type: String },
       original: { type: String },
       content: { type: String },
@@ -26,6 +27,12 @@ export default class ChuEditor extends LitElement {
       saving: { type: Boolean, reflect: true },
       autofocus: { type: Boolean }
     }
+  }
+
+  constructor() {
+    super()
+
+    this.param = 'post'
   }
 
   onRecieved = (data: any) => {
@@ -50,7 +57,8 @@ export default class ChuEditor extends LitElement {
   disconnectedCallback() {
     super.disconnectedCallback()
 
-    if (ActioncableClient.subscribedTo('AutosaveChannel')) ActioncableClient.unsubscribe('AutosaveChannel')
+    if (ActioncableClient.subscribedTo('PostChannel')) ActioncableClient.unsubscribe('PostChannel')
+
     this.editor.destroy()
 
     window.onbeforeunload = null
@@ -110,7 +118,7 @@ export default class ChuEditor extends LitElement {
     () => {
       fetch(this.url, {
         method: 'POST',
-        body: JSON.stringify({ post: this.payload }),
+        body: JSON.stringify({ [this.param]: this.payload }),
         headers: {
           'Content-Type': 'application/json',
           'X-CSRF-TOKEN': Rails.csrfToken()
@@ -120,8 +128,9 @@ export default class ChuEditor extends LitElement {
         .then(async response => {
           if (response.redirect) {
             window.history.pushState(null, 'Edit', response.redirect)
-            this.id = response.slug
+            this.id = response.id
             await this.requestUpdate()
+
             const header = document.getElementById('post_header')
             if (header) header.innerHTML = response.header
           }

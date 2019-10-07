@@ -1,20 +1,20 @@
 // @flow
 
-import * as marks from './nodes'
-import * as nodes from './marks'
-import * as plugins from 'editor/plugins'
-
 import { ellipsis, emDash, smartQuotes } from 'prosemirror-inputrules'
 
 import { Schema } from 'prosemirror-model'
 import { keymap } from 'prosemirror-keymap'
-import toArray from 'lodash/toArray'
 
-class SchemaManager {
+export default class SchemaManager {
   elements: []
 
-  constructor(elements: [] = []) {
+  constructor(elements: [] = [], editor: any) {
     this.elements = elements
+
+    elements.forEach(element => {
+      element.bindEditor(editor)
+      element.init()
+    })
   }
 
   get nodes() {
@@ -174,14 +174,3 @@ class SchemaManager {
       }, {})
   }
 }
-
-export const manager = new SchemaManager([
-  ...toArray(marks).map(Mark => new Mark()),
-  ...toArray(plugins).map(Plugin => new Plugin()),
-  ...toArray(nodes).map(Node => new Node())
-])
-
-export const schema = new Schema({
-  nodes: manager.nodes,
-  marks: manager.marks
-})

@@ -12,6 +12,7 @@ import nanoid from 'nanoid/generate'
 import { nodeInputRule } from 'editor/commands'
 
 const IMAGE_INPUT_REGEX = /!\[(.+|:?)\]\((\S+)(?:(?:\s+)["'](\S+)["'])?\)/
+
 export default class Image extends Node {
   name = 'image'
 
@@ -47,6 +48,8 @@ export default class Image extends Node {
     return [
       nodeInputRule(IMAGE_INPUT_REGEX, type, match => {
         const [, alt, src, title] = match
+
+        console.log(match)
         return {
           src,
           alt,

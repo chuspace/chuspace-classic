@@ -1,5 +1,9 @@
 // @flow
 
+import * as marks from 'editor/schema/nodes'
+import * as nodes from 'editor/schema/marks'
+import * as plugins from 'editor/plugins'
+
 import { Change, ChangeSet, Span, simplifyChanges } from 'prosemirror-changeset'
 import { CodeBlockView, ImageView } from 'editor/views'
 import { Decoration, DecorationSet } from 'prosemirror-view'
@@ -7,12 +11,12 @@ import { EditorState, Plugin, PluginKey, Transaction } from 'prosemirror-state'
 import { baseKeymap, selectParentNode } from 'prosemirror-commands'
 import { getMarkAttrs, isMarkActive, isNodeActive } from 'editor/helpers'
 import { inputRules, undoInputRule } from 'prosemirror-inputrules'
-import { manager, schema } from 'editor/schema'
 import { markdownParser, markdownSerializer } from 'editor/markdowner'
 
 import { DOMSerializer } from 'prosemirror-model'
 import { EditorView } from 'prosemirror-view'
 import { Schema } from 'prosemirror-model'
+import SchemaManager from 'editor/schema'
 import { Selection } from 'prosemirror-state'
 import { Transform } from 'prosemirror-transform'
 import { dropCursor } from 'prosemirror-dropcursor'
@@ -20,6 +24,7 @@ import { gapCursor } from 'prosemirror-gapcursor'
 import get from 'lodash/get'
 import { keymap } from 'prosemirror-keymap'
 import { recreateTransform } from '@manuscripts/prosemirror-recreate-steps'
+import toArray from 'lodash/toArray'
 import without from 'lodash/without'
 
 function arrowHandler(dir) {
@@ -51,6 +56,10 @@ type Options = {
 export default class Editor {
   options = {}
   element: HTMLElement
+  elements: SchemaManager
+  schema: Schema
+  markdownParser: typeof markdownParser
+  markdownSerializer: markdownSerializer
   keymaps: any
   inputRules: []
   pasteRules: []
@@ -64,6 +73,12 @@ export default class Editor {
   constructor(options: Options = {}) {
     this.options = options
     this.element = options.element
+    this.elements = this.createElements()
+    this.schema = this.createSchema()
+
+    this.markdownParser = markdownParser(this.schema)
+    this.markdownSerializer = markdownSerializer
+
     this.keymaps = this.createKeymaps()
     this.inputRules = this.createInputRules()
     this.pasteRules = this.createPasteRules()
@@ -76,27 +91,45 @@ export default class Editor {
     if (this.options.autoFocus) this.focus()
   }
 
+  createElements() {
+    return new SchemaManager(
+      [
+        ...toArray(marks).map(Mark => new Mark()),
+        ...toArray(plugins).map(Plugin => new Plugin()),
+        ...toArray(nodes).map(Node => new Node())
+      ],
+      this
+    )
+  }
+
+  createSchema() {
+    return new Schema({
+      nodes: this.elements.nodes,
+      marks: this.elements.marks
+    })
+  }
+
   createKeymaps() {
-    return manager.keymaps({
-      schema: schema
+    return this.elements.keymaps({
+      schema: this.schema
     })
   }
 
   createInputRules() {
-    return manager.inputRules({
-      schema: schema
+    return this.elements.inputRules({
+      schema: this.schema
     })
   }
 
   createPasteRules() {
-    return manager.pasteRules({
-      schema: schema
+    return this.elements.pasteRules({
+      schema: this.schema
     })
   }
 
   createCommands() {
-    return manager.commands({
-      schema: schema,
+    return this.elements.commands({
+      schema: this.schema,
       view: this.view,
       editable: !!this.options.editable
     })
@@ -104,7 +137,7 @@ export default class Editor {
 
   get plugins() {
     return [
-      ...manager.plugins,
+      ...this.elements.plugins,
       inputRules({
         rules: this.inputRules
       }),
@@ -143,8 +176,8 @@ export default class Editor {
     // based on https://gitlab.com/mpapp-public/prosemirror-recreate-steps/blob/master/demo/history/index.js
 
     // recreate transform back to base doc
-    let baseDoc = markdownParser.parse(this.options.original)
-    let revisionDoc = markdownParser.parse(this.options.content)
+    let baseDoc = this.markdownParser.parse(this.options.original)
+    let revisionDoc = this.markdownParser.parse(this.options.content)
     let tr = recreateTransform(revisionDoc, baseDoc, true, true)
 
     // create decorations corresponding to the changes
@@ -191,7 +224,7 @@ export default class Editor {
       let slice = revisionDoc.slice(changes[index].fromA, changes[endIndex].toA)
       let span = document.createElement('span')
       span.setAttribute('class', 'insertion')
-      span.appendChild(DOMSerializer.fromSchema(schema).serializeFragment(slice.content))
+      span.appendChild(DOMSerializer.fromSchema(this.schema).serializeFragment(slice.content))
       decorations.push(
         Decoration.widget(changes[index].toB, span, {
           marks: []
@@ -220,7 +253,7 @@ export default class Editor {
   }
 
   createState = () => {
-    let doc = markdownParser.parse(this.options.content)
+    let doc = this.markdownParser.parse(this.options.content)
     let plugins = this.plugins
 
     if (this.options.original) {
@@ -230,7 +263,7 @@ export default class Editor {
     }
 
     return EditorState.create({
-      schema: schema,
+      schema: this.schema,
       doc: doc,
       plugins
     })
@@ -289,7 +322,7 @@ export default class Editor {
   }
 
   setActiveNodesAndMarks() {
-    this.activeMarks = Object.entries(schema.marks).reduce(
+    this.activeMarks = Object.entries(this.schema.marks).reduce(
       (marks, [name, mark]) => ({
         ...marks,
         [name]: (attrs = {}) => isMarkActive(this.state, mark, attrs)
@@ -297,7 +330,7 @@ export default class Editor {
       {}
     )
 
-    this.activeMarkAttrs = Object.entries(schema.marks).reduce(
+    this.activeMarkAttrs = Object.entries(this.schema.marks).reduce(
       (marks, [name, mark]) => ({
         ...marks,
         [name]: getMarkAttrs(this.state, mark)
@@ -305,7 +338,7 @@ export default class Editor {
       {}
     )
 
-    this.activeNodes = Object.entries(schema.nodes).reduce(
+    this.activeNodes = Object.entries(this.schema.nodes).reduce(
       (nodes, [name, node]) => ({
         ...nodes,
         [name]: (attrs = {}) => isNodeActive(this.state, node, attrs)
@@ -332,7 +365,7 @@ export default class Editor {
   }
 
   get content() {
-    const markdown = markdownSerializer.serialize(this.state.doc)
+    const markdown = this.markdownSerializer.serialize(this.state.doc)
     return markdown
   }
 
