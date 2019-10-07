@@ -15,6 +15,7 @@ import { markdownParser, markdownSerializer } from 'editor/markdowner'
 
 import { DOMSerializer } from 'prosemirror-model'
 import { EditorView } from 'prosemirror-view'
+import { MarkdownParser } from 'prosemirror-markdown'
 import { Schema } from 'prosemirror-model'
 import SchemaManager from 'editor/schema'
 import { Selection } from 'prosemirror-state'
@@ -58,7 +59,7 @@ export default class Editor {
   element: HTMLElement
   elements: SchemaManager
   schema: Schema
-  markdownParser: typeof markdownParser
+  markdownParser: MarkdownParser
   markdownSerializer: markdownSerializer
   keymaps: any
   inputRules: []
@@ -172,95 +173,9 @@ export default class Editor {
     ]
   }
 
-  _computeDiffDocument() {
-    // based on https://gitlab.com/mpapp-public/prosemirror-recreate-steps/blob/master/demo/history/index.js
-
-    // recreate transform back to base doc
-    let baseDoc = this.markdownParser.parse(this.options.original)
-    let revisionDoc = this.markdownParser.parse(this.options.content)
-    let tr = recreateTransform(revisionDoc, baseDoc, true, true)
-
-    // create decorations corresponding to the changes
-    let decorations = []
-    let changeSet = ChangeSet.create(revisionDoc).addSteps(tr.doc, tr.mapping.maps)
-    let changes = simplifyChanges(changeSet.changes, tr.doc)
-
-    function isCodeBlock(slice) {
-      return get(slice.content, 'content[0].type.name') === 'code_block'
-    }
-
-    let index = 0
-
-    // deletion
-    function findDeleteEndIndex(startIndex) {
-      for (let i = startIndex; i < changes.length; i++) {
-        // if we are at the end then that's the end index
-        if (i === changes.length - 1) return i
-        // if the next change is discontinuous then this is the end index
-        if (changes[i].toB + 1 !== changes[i + 1].fromB) return i
-      }
-    }
-
-    while (index < changes.length) {
-      let endIndex = findDeleteEndIndex(index)
-      decorations.push(Decoration.inline(changes[index].fromB, changes[endIndex].toB, { class: 'deletion' }, {}))
-      index = endIndex + 1
-    }
-
-    // insertion
-    function findInsertEndIndex(startIndex) {
-      for (let i = startIndex; i < changes.length; i++) {
-        // if we are at the end then that's the end index
-        if (i === changes.length - 1) return i
-        // if the next change is discontinuous then this is the end index
-        if (changes[i].toA + 1 !== changes[i + 1].fromA) return i
-      }
-    }
-    index = 0
-    while (index < changes.length) {
-      let endIndex = findInsertEndIndex(index)
-
-      // apply the insertion
-      let slice = revisionDoc.slice(changes[index].fromA, changes[endIndex].toA)
-      let span = document.createElement('span')
-      span.setAttribute('class', 'insertion')
-      span.appendChild(DOMSerializer.fromSchema(this.schema).serializeFragment(slice.content))
-      decorations.push(
-        Decoration.widget(changes[index].toB, span, {
-          marks: []
-        })
-      )
-
-      index = endIndex + 1
-    }
-
-    // plugin to apply diff decorations
-    const decorationSet = DecorationSet.create(tr.doc, decorations)
-    let decosPlugin = new Plugin({
-      key: new PluginKey('diffs'),
-      props: {
-        decorations() {
-          return decorationSet
-        }
-      }
-    })
-
-    // return
-    return {
-      doc: tr.doc,
-      plugins: [decosPlugin]
-    }
-  }
-
   createState = () => {
-    let doc = this.markdownParser.parse(this.options.content)
-    let plugins = this.plugins
-
-    if (this.options.original) {
-      let diff = this._computeDiffDocument()
-      doc = diff.doc
-      plugins = plugins.concat(diff.plugins)
-    }
+    const doc = this.markdownParser.parse(this.options.content)
+    const plugins = this.plugins
 
     return EditorState.create({
       schema: this.schema,
@@ -347,7 +262,7 @@ export default class Editor {
     )
   }
 
-  getMarkAttrs(type: ?string = null) {
+  getMarkAttrs(type: string) {
     return this.activeMarkAttrs[type]
   }
 
@@ -367,20 +282,6 @@ export default class Editor {
   get content() {
     const markdown = this.markdownSerializer.serialize(this.state.doc)
     return markdown
-  }
-
-  get title() {
-    return this.state.doc.firstChild.textContent
-  }
-
-  get summary() {
-    const summaryNode = this.state.doc.content.content[1]
-
-    if (summaryNode && summaryNode.type.name === 'heading' && summaryNode.attrs.level === 2) {
-      return summaryNode.textContent
-    }
-
-    return ''
   }
 
   destroy() {
