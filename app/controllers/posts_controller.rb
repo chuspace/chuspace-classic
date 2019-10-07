@@ -39,7 +39,7 @@ class PostsController < ApplicationController
         if blob&.persisted?
           render json: {
                    redirect: edit_publication_post_path(@publication, post),
-                   slug: post.slug,
+                   id: post.slug,
                    header:
                      render_to_string(
                        partial: 'posts/header/edit',
