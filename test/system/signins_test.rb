@@ -27,7 +27,7 @@ class SigninsTest < ApplicationSystemTestCase
 
     perform_enqueued_jobs do
       click_button 'Sign in'
-      sleep 0.1
+      sleep 1
 
       user = User.find_by_email @email
       mail = ActionMailer::Base.deliveries.last
