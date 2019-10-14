@@ -39,7 +39,7 @@ class Repository
   attr_accessor :name, :path, :author
   validates :name, :path, :author, presence: true
 
-  delegate :lookup, :checkout, :empty?, :bare?, :index, :branches, to: :rugged
+  delegate :lookup, :checkout, :empty?, :bare?, :index, :branches, :tags, to: :rugged
   delegate :tree, to: :commit
 
   sig { params(path: String).returns(T::Boolean) }
@@ -86,6 +86,11 @@ class Repository
   sig { params(sha: T.nilable(String)).returns(Rugged::Commit) }
   def commit(sha: commit_sha)
     lookup(sha)
+  end
+
+  sig { params(length: T.nilable(Integer)).returns(String) }
+  def short_sha(length = 10)
+    commit_sha.to_s[0..length]
   end
 
   sig { params(sha: T.nilable(String)).returns(T::Array[Blob]) }

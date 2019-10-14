@@ -13,7 +13,7 @@ class PostChannel < ApplicationCable::Channel
     post = publication.posts.find_by(slug: params[:id])
 
     if post&.can_edit?(user: current_user)
-      post.blob.save(io: data['body'], committer: current_user)
+      post.blob.save(io: data['body'], committer: current_user, commit_message: 'Autosaved')
       ActionCable.server.broadcast("post_#{post.id}", { success: true }.to_json)
     end
   end

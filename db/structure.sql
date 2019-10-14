@@ -144,7 +144,8 @@ CREATE TABLE public.posts (
     updated_at timestamp(6) without time zone NOT NULL,
     unlisted boolean DEFAULT false,
     preview_image_data character varying,
-    featured boolean
+    featured boolean,
+    commit_sha text
 );
 
 -- Name: publications; Type: TABLE
@@ -167,6 +168,20 @@ CREATE TABLE public.publications (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     unlisted boolean DEFAULT false
+);
+
+-- Name: revisions; Type: TABLE
+
+CREATE TABLE public.revisions (
+    id BIGSERIAL PRIMARY KEY,
+    post_id bigint NOT NULL,
+    author_id bigint NOT NULL,
+    "from" text,
+    "to" character varying,
+    node character varying,
+    meta jsonb,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 -- Name: schema_migrations; Type: TABLE
@@ -352,6 +367,10 @@ CREATE INDEX index_posts_on_author_id ON public.posts USING btree (author_id);
 
 CREATE UNIQUE INDEX index_posts_on_blob_path_and_publication_id ON public.posts USING btree (blob_path, publication_id);
 
+-- Name: index_posts_on_commit_sha; Type: INDEX
+
+CREATE INDEX index_posts_on_commit_sha ON public.posts USING btree (commit_sha);
+
 -- Name: index_posts_on_featured; Type: INDEX
 
 CREATE INDEX index_posts_on_featured ON public.posts USING btree (featured);
@@ -411,6 +430,14 @@ CREATE INDEX index_publications_on_topics ON public.publications USING gin (topi
 -- Name: index_publications_on_unlisted; Type: INDEX
 
 CREATE INDEX index_publications_on_unlisted ON public.publications USING btree (unlisted);
+
+-- Name: index_revisions_on_author_id; Type: INDEX
+
+CREATE INDEX index_revisions_on_author_id ON public.revisions USING btree (author_id);
+
+-- Name: index_revisions_on_post_id; Type: INDEX
+
+CREATE INDEX index_revisions_on_post_id ON public.revisions USING btree (post_id);
 
 -- Name: index_topics_on_name; Type: INDEX
 
@@ -486,6 +513,16 @@ ALTER TABLE ONLY public.publications
 ALTER TABLE ONLY public.posts
     ADD CONSTRAINT fk_rails_d5126cca81 FOREIGN KEY (publication_id) REFERENCES public.publications(id);
 
+-- Name: revisions fk_rails_eedd777d36; Type: FK CONSTRAINT
+
+ALTER TABLE ONLY public.revisions
+    ADD CONSTRAINT fk_rails_eedd777d36 FOREIGN KEY (post_id) REFERENCES public.posts(id);
+
+-- Name: revisions fk_rails_f61b4224ec; Type: FK CONSTRAINT
+
+ALTER TABLE ONLY public.revisions
+    ADD CONSTRAINT fk_rails_f61b4224ec FOREIGN KEY (author_id) REFERENCES public.users(id);
+
 -- PostgreSQL database dump complete
 
 SET search_path TO "$user", public;
@@ -511,5 +548,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190924171625'),
 ('20190925075537'),
 ('20190925075609'),
-('20190925080931');
+('20190925080931'),
+('20191006183619'),
+('20191007202001');
 

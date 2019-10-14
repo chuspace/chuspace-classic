@@ -6,6 +6,7 @@ import { LitElement, customElement, html } from 'lit-element'
 
 import ActioncableClient from 'helpers/actioncable-client'
 import Editor from 'editor'
+import { Transaction } from 'prosemirror-state'
 import debounce from 'lodash/debounce'
 import readingTime from 'helpers/reading-time'
 
@@ -88,7 +89,7 @@ export default class ChuEditor extends LitElement {
     }
   }
 
-  onChange = () => {
+  onChange = (transaction: Transaction) => {
     if (this.saving) return
 
     this.saving = true

@@ -51,7 +51,7 @@ type Options = {
   imageProviderPath: string,
   content: string,
   editable: boolean,
-  onChange: () => void
+  onChange: (transaction: Transaction) => void
 }
 
 export default class Editor {
@@ -225,7 +225,7 @@ export default class Editor {
   }
 
   emitUpdate(transaction: Transaction) {
-    this.options.onChange()
+    this.options.onChange(transaction)
   }
 
   focus() {

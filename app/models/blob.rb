@@ -120,7 +120,7 @@ class Blob
     @content = encode!(io)
 
     if valid? && Rugged::Repository.hash_data(content, :blob) != oid
-      commit_message ||= persisted? ? "Updated #{path}" : "Added #{path}"
+      commit_message ||= persisted? ? "Updated post #{path}" : "Created post #{path}"
       options = {
         commit: { message: commit_message, branch: branch, committer: committer },
         file: { content: content, path: path }
