@@ -24,7 +24,6 @@ import { dropCursor } from 'prosemirror-dropcursor'
 import { gapCursor } from 'prosemirror-gapcursor'
 import get from 'lodash/get'
 import { keymap } from 'prosemirror-keymap'
-import { recreateTransform } from '@manuscripts/prosemirror-recreate-steps'
 import toArray from 'lodash/toArray'
 import without from 'lodash/without'
 
