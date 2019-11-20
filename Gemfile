@@ -42,7 +42,7 @@ gem 'simple_form'
 gem 'puma', '>= 3.11'
 
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', github: 'rails/webpacker'
+gem 'webpacker'
 
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '>= 4.0'
@@ -148,8 +148,8 @@ group :development do
   # Fake data
   gem 'sorbet'
   gem 'database_consistency', require: false
-  gem 'tomo', github: 'gauravtiwari/tomo', require: false
-  gem 'runbook', github: 'gauravtiwari/runbook', branch: 'patch-1'
+  gem 'tomo', require: false
+  gem 'runbook'
 end
 
 group :test do
