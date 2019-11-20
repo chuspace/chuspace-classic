@@ -10,13 +10,10 @@ class AppUploader < Shrine
   plugin :determine_mime_type
   plugin :store_dimensions
   plugin :validation_helpers
-  plugin :delete_promoted
-  plugin :delete_raw
 
   unless Rails.env.test?
     plugin :restore_cached_data
     plugin :cached_attachment_data
     plugin :instrumentation
-    plugin :recache
   end
 end

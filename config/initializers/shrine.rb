@@ -3,8 +3,6 @@
 
 require 'shrine'
 require 'shrine/plugins/activerecord'
-require 'shrine/plugins/delete_promoted'
-require 'shrine/plugins/delete_raw'
 require 'shrine/storage/s3'
 require 'shrine/storage/file_system'
 require 'shrine/plugins/instrumentation'

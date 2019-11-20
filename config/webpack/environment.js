@@ -19,6 +19,12 @@ environment.plugins.append(
   })
 )
 
+environment.loaders.prepend('module', {
+  test: /\.mjs$/,
+  include: /node_modules/,
+  type: 'javascript/auto'
+})
+
 environment.loaders.append('null', nullLoader)
 const sassLoader = environment.loaders.get('sass').use.find(loader => loader.loader === 'sass-loader')
 sassLoader.options.importer = globImporter()
