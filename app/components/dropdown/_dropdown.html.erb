@@ -1,12 +1,12 @@
 <details class='relative inline-block' data-controller='dropdown'>
-  <summary>
+  <summary role='button' aria-label='Open dropdown'>
     <%= dropdown.opener %>
     <% if dropdown.arrow? %>
       <span class='drop__arrow'></span>
     <% end %>
   </summary>
 
-  <details-menu role="menu" class='<%= dropdown.css_classes %>'>
+  <details-menu role='menu' class='<%= dropdown.css_classes %>'>
     <% if dropdown.items&.any? %>
       <% dropdown.items.each do |item| %>
         <% if item.divider %>

@@ -22,6 +22,9 @@ class AvatarComponent < Components::Component
   end
 
   def render
-    @view.image_tag(avatar_url || gravatar_url, class: css_classes, 'data-sizes': 'auto', **options)
+    @view.image_tag(
+      avatar_url || gravatar_url,
+      class: css_classes, alt: 'Avatar image', 'data-sizes': 'auto', **options
+    )
   end
 end

@@ -32,6 +32,7 @@
             '',
             publication_post_path(post.publication, post),
             class: 'preview__image',
+            title: "Preview image #{post.title}",
             style: "background-image: url('#{post.preview_image_url(variant: :list)}');"
           )
         %>
