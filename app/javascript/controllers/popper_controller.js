@@ -1,6 +1,8 @@
 // @flow
 
+import 'tippy.js/dist/tippy.css'
 import 'tippy.js/themes/light.css'
+import 'tippy.js/animations/scale.css'
 
 import * as Rails from 'rails-ujs'
 import * as iframely from '@iframely/embed.js'
@@ -66,8 +68,17 @@ export default class PopperController extends Controller {
       maxWidth: 350,
       lazy: true,
       interactive: true,
+      touch: 'hold',
+      popperOptions: {
+        positionFixed: true
+      },
+      appendTo: document.body,
       arrow: true,
       flipOnUpdate: true,
+      onCreate: instance => {
+        // Setup our own custom state properties
+        instance.isFetching = false
+      },
       onShow: async instance => {
         if (instance.state.isFetching === true || instance.state.canFetch === false) {
           return
