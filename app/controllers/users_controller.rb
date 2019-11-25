@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   skip_verify_authorized only: :show
 
   def show
-    @posts = @user.posts.published.includes(:author).limit(20).order(id: :desc)
+    @posts = @user.posts.published.includes(:author, :publication).limit(20).order(id: :desc)
   end
 
   def update

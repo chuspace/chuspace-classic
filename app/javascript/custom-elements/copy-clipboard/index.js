@@ -25,7 +25,7 @@ export default class CopyClipboard extends LitElement {
       clipboard.on('success', e => {
         const instance = tippy(this, {
           arrow: true,
-          showOnInit: true,
+          showOnCreate: true,
           trigger: 'click',
           content: 'Copied'
         })
