@@ -103,7 +103,7 @@ CREATE TABLE public.invitations (
 
 CREATE TABLE public.keys (
     id BIGSERIAL PRIMARY KEY,
-    title character varying,
+    title character varying NOT NULL,
     key text NOT NULL,
     fingerprint character varying NOT NULL,
     user_id bigint NOT NULL,
@@ -168,20 +168,6 @@ CREATE TABLE public.publications (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     unlisted boolean DEFAULT false
-);
-
--- Name: revisions; Type: TABLE
-
-CREATE TABLE public.revisions (
-    id BIGSERIAL PRIMARY KEY,
-    post_id bigint NOT NULL,
-    author_id bigint NOT NULL,
-    "from" text,
-    "to" character varying,
-    node character varying,
-    meta jsonb,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
 );
 
 -- Name: schema_migrations; Type: TABLE
@@ -431,14 +417,6 @@ CREATE INDEX index_publications_on_topics ON public.publications USING gin (topi
 
 CREATE INDEX index_publications_on_unlisted ON public.publications USING btree (unlisted);
 
--- Name: index_revisions_on_author_id; Type: INDEX
-
-CREATE INDEX index_revisions_on_author_id ON public.revisions USING btree (author_id);
-
--- Name: index_revisions_on_post_id; Type: INDEX
-
-CREATE INDEX index_revisions_on_post_id ON public.revisions USING btree (post_id);
-
 -- Name: index_topics_on_name; Type: INDEX
 
 CREATE UNIQUE INDEX index_topics_on_name ON public.topics USING btree (name);
@@ -472,6 +450,16 @@ ALTER TABLE ONLY public.posts
 
 ALTER TABLE ONLY public.invitations
     ADD CONSTRAINT fk_rails_08fac6589b FOREIGN KEY (publication_id) REFERENCES public.publications(id);
+
+-- Name: visits fk_rails_09e5e7c20b; Type: FK CONSTRAINT
+
+ALTER TABLE ONLY public.visits
+    ADD CONSTRAINT fk_rails_09e5e7c20b FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+-- Name: events fk_rails_0cb5590091; Type: FK CONSTRAINT
+
+ALTER TABLE ONLY public.events
+    ADD CONSTRAINT fk_rails_0cb5590091 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 -- Name: likes fk_rails_1e09b5dabf; Type: FK CONSTRAINT
 
@@ -513,15 +501,10 @@ ALTER TABLE ONLY public.publications
 ALTER TABLE ONLY public.posts
     ADD CONSTRAINT fk_rails_d5126cca81 FOREIGN KEY (publication_id) REFERENCES public.publications(id);
 
--- Name: revisions fk_rails_eedd777d36; Type: FK CONSTRAINT
+-- Name: events fk_rails_ef9e5ff5fb; Type: FK CONSTRAINT
 
-ALTER TABLE ONLY public.revisions
-    ADD CONSTRAINT fk_rails_eedd777d36 FOREIGN KEY (post_id) REFERENCES public.posts(id);
-
--- Name: revisions fk_rails_f61b4224ec; Type: FK CONSTRAINT
-
-ALTER TABLE ONLY public.revisions
-    ADD CONSTRAINT fk_rails_f61b4224ec FOREIGN KEY (author_id) REFERENCES public.users(id);
+ALTER TABLE ONLY public.events
+    ADD CONSTRAINT fk_rails_ef9e5ff5fb FOREIGN KEY (visit_id) REFERENCES public.visits(id);
 
 -- PostgreSQL database dump complete
 
@@ -549,6 +532,5 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190925075537'),
 ('20190925075609'),
 ('20190925080931'),
-('20191006183619'),
 ('20191007202001');
 

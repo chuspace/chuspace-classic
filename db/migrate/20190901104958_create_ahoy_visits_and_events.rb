@@ -8,7 +8,7 @@ class CreateAhoyVisitsAndEvents < ActiveRecord::Migration[6.0]
       t.string :visitor_token
 
       # user
-      t.references :user
+      t.references :user, foreign_key: true
 
       # standard
       t.string :ip
@@ -47,8 +47,8 @@ class CreateAhoyVisitsAndEvents < ActiveRecord::Migration[6.0]
     add_index :visits, %i[visit_token], unique: true
 
     create_table :events do |t|
-      t.references :visit
-      t.references :user
+      t.references :visit, foreign_key: true
+      t.references :user, foreign_key: true
 
       t.string :name
       t.jsonb :properties

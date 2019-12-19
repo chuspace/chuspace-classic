@@ -4,7 +4,7 @@
 class CreateKeys < ActiveRecord::Migration[6.0]
   def change
     create_table :keys do |t|
-      t.string :title
+      t.string :title, null: false
       t.text :key, null: false
       t.index :key, unique: true
       t.string :fingerprint, null: false
