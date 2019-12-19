@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/skylight-core/all/skylight-core.rbi
 #
-# skylight-core-4.1.2
+# skylight-core-4.2.0
 module Skylight
 end
 module Skylight::Core
@@ -89,6 +89,7 @@ class Skylight::Core::Config
   def self.validators; end
   def send_or_get(val); end
   def set(key, val, scope = nil); end
+  def sinatra_route_prefixes?; end
   def to_json(*arg0); end
   def to_native_env; end
   def user_config; end
@@ -140,16 +141,22 @@ class Skylight::Core::Instrumenter
   def done(span, meta = nil); end
   def finalize_endpoint_segment(trace); end
   def gc; end
+  def handle_instrumenter_error(trace, e); end
   def ignore?(trace); end
   def initialize(uuid, config); end
   def instrument(cat, title = nil, desc = nil, meta = nil); end
   def limited_description(description); end
   def log_context; end
   def match?(string, regex); end
+  def mute; end
+  def muted=(val); end
+  def muted?; end
   def native_start; end
   def native_stop; end
   def native_submit_trace(_trace); end
   def native_track_desc(_endpoint, _description); end
+  def poison!; end
+  def poisoned?; end
   def process(trace); end
   def process_sql(sql); end
   def self.match?(string, regex); end
@@ -157,17 +164,21 @@ class Skylight::Core::Instrumenter
   def self.new(config); end
   def self.trace_class; end
   def shutdown; end
+  def silence_warnings(context); end
   def span_correlation_header(span); end
   def start!; end
-  def trace(endpoint, cat, title = nil, desc = nil, meta: nil, segment: nil); end
-  def trace_info; end
+  def trace(endpoint, cat, title = nil, desc = nil, meta: nil, segment: nil, component: nil); end
+  def unmute; end
   def uuid; end
+  def warnings_silenced?(context); end
   include Skylight::Core::Util::Logging
 end
 class Skylight::Core::Instrumenter::TraceInfo
   def current; end
   def current=(trace); end
   def initialize(key = nil); end
+  def muted=(val); end
+  def muted?; end
 end
 module Skylight::Core::Fanout
   def self.broken!; end
@@ -183,6 +194,8 @@ end
 class Skylight::Core::Trace
   def broken!; end
   def broken?; end
+  def compound_response_error_status; end
+  def compound_response_error_status=(arg0); end
   def config; end
   def deferred_spans; end
   def done(span, meta = nil); end
@@ -190,20 +203,23 @@ class Skylight::Core::Trace
   def endpoint=(value); end
   def gc_time; end
   def handle_unexpected_stop(expected, span); end
-  def initialize(instrumenter, cat, title, desc, meta); end
+  def initialize(instrumenter, cat, title, desc, meta, **arg5); end
   def inspect; end
   def instrument(cat, title = nil, desc = nil, meta = nil); end
   def instrumenter; end
   def log_context; end
   def maybe_broken(err); end
+  def maybe_warn(context, msg); end
   def meta; end
+  def mute_child_instrumentation(span); end
+  def muted?; end
   def normalized_stop(span, time); end
   def notifications; end
   def record(cat, title = nil, desc = nil); end
   def release; end
   def segment; end
-  def segment=(arg0); end
-  def self.new(instrumenter, endpoint, start, cat, title = nil, desc = nil, meta: nil, segment: nil); end
+  def segment=(value); end
+  def self.new(instrumenter, endpoint, start, cat, title = nil, desc = nil, meta: nil, segment: nil, component: nil); end
   def self.normalize_time(time); end
   def span_correlation_header(span); end
   def start(time, cat, title, desc, meta, opts = nil); end
@@ -213,6 +229,7 @@ class Skylight::Core::Trace
   def track_gc(time, now); end
   def uuid; end
   def uuid=(arg0); end
+  def warnings_silenced?(context); end
   include Skylight::Core::Util::Logging
 end
 module Skylight::Core::VM
@@ -299,13 +316,17 @@ module Skylight::Core::Instrumentable::ClassMethods
   def instrument(opts = nil, &block); end
   def instrumenter; end
   def instrumenter_class; end
+  def mute; end
+  def muted?; end
   def probe(*args); end
   def span_correlation_header(span); end
+  def spawn_shutdown_thread!; end
   def start!(config = nil); end
   def started?; end
   def stop!; end
-  def trace(endpoint = nil, cat = nil, title = nil, meta: nil, segment: nil); end
+  def trace(endpoint = nil, cat = nil, title = nil, meta: nil, segment: nil, component: nil); end
   def tracing?; end
+  def unmute; end
 end
 module Skylight::Core::Probes
   def self.add_path(path); end
@@ -381,6 +402,7 @@ class Skylight::Core::Probes::ActionController::Probe
 end
 module ActionController::Instrumentation
   def append_info_to_payload_without_sk(payload); end
+  def sk_rendered_mime; end
 end
 module Skylight::Core::Probes::ActionDispatch
 end

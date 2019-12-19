@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/components/all/components.rbi
 #
-# components-d46b7a32f4a3
+# components-12d33228b188
 module Components
   def self.component_names; end
   def self.components_path; end

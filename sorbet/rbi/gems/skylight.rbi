@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/skylight/all/skylight.rbi
 #
-# skylight-4.1.2
+# skylight-4.2.0
 module Skylight
   def self.check_install_errors(config); end
   def self.config_class; end
@@ -22,11 +22,15 @@ module Skylight
   include Skylight::Core::Instrumentable
 end
 class Skylight::Trace < Skylight::Core::Trace
-  def initialize(*arg0); end
+  def component; end
+  def component=(component); end
+  def initialize(*arg0, component: nil); end
   def maybe_broken(error); end
+  def native_get_component; end
   def native_get_endpoint; end
   def native_get_started_at; end
   def native_get_uuid; end
+  def native_set_component(arg0); end
   def native_set_endpoint(arg0); end
   def native_set_exception(arg0); end
   def native_span_get_category(arg0); end
@@ -40,6 +44,7 @@ class Skylight::Trace < Skylight::Core::Trace
   def native_start_span(arg0, arg1); end
   def native_stop_span(arg0, arg1); end
   def native_use_pruning; end
+  def resolve_component(component); end
   def self.native_new(arg0, arg1, arg2, arg3); end
   def too_many_spans!; end
   def too_many_spans?; end
@@ -51,6 +56,7 @@ class Skylight::Trace < Skylight::Core::Trace
 end
 class Skylight::Instrumenter < Skylight::Core::Instrumenter
   def check_install!; end
+  def handle_instrumenter_error(trace, e); end
   def native_start; end
   def native_stop; end
   def native_submit_trace(arg0); end
@@ -168,18 +174,13 @@ class Skylight::Util::Component
   def as_json(*arg0); end
   def environment; end
   def environment=(arg0); end
-  def initialize(environment, name); end
-  def known_web_context?; end
-  def known_worker_context?; end
+  def initialize(environment, name, force_worker: nil); end
   def name; end
   def name=(arg0); end
-  def passenger?; end
   def program_name; end
-  def rack_server?; end
-  def rails_server?; end
-  def resolve_name(given_name); end
+  def resolve_name(given_name, force_worker); end
+  def to_encoded_s; end
   def to_s; end
-  def unicorn?; end
   def validate_string!(string, kind); end
   def web?; end
   def worker?; end
@@ -231,6 +232,7 @@ class Skylight::Config < Skylight::Core::Config
   def check_nfs(path); end
   def check_sockdir_permissions(sockdir_path); end
   def component; end
+  def components; end
   def deploy; end
   def reporting_env?; end
   def self.default_values; end
@@ -242,8 +244,6 @@ class Skylight::Config < Skylight::Core::Config
   def to_native_env; end
   def validate!; end
   def validate_with_server; end
-  def web_context?; end
-  def worker_context?; end
   def write(path); end
 end
 class Skylight::NativeError < StandardError
@@ -264,13 +264,15 @@ class Skylight::SqlLexError < Skylight::NativeError
   def self.code; end
   def self.message; end
 end
+class Skylight::InstrumenterUnrecoverableError < Skylight::NativeError
+  def self.code; end
+  def self.message; end
+end
 class Skylight::Core::Util::Clock
   def native_hrtime; end
 end
 class Skylight::Railtie < Rails::Railtie
   def activate?(sk_config); end
-  def activate_for_web?(sk_config); end
-  def activate_for_worker?(sk_config); end
   def development_warning; end
   def load_skylight_config(app); end
   def self.config_class; end
@@ -280,5 +282,6 @@ class Skylight::Railtie < Rails::Railtie
   def self.namespace; end
   def self.root_key; end
   def self.version; end
+  def show_worker_activation_warning(sk_config); end
   include Skylight::Core::Railtie
 end

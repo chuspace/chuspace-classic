@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/device_detector/all/device_detector.rbi
 #
-# device_detector-1.0.2
+# device_detector-1.0.3
 class DeviceDetector
   def android_mobile_fragment?; end
   def android_tablet_fragment?; end
@@ -37,7 +37,7 @@ class DeviceDetector
   def touch_enabled?; end
   def user_agent; end
 end
-class Anonymous_Struct_427 < Struct
+class Anonymous_Struct_449 < Struct
   def regex_meta; end
   def regex_meta=(_); end
   def self.[](*arg0); end
@@ -47,7 +47,7 @@ class Anonymous_Struct_427 < Struct
   def user_agent; end
   def user_agent=(_); end
 end
-class DeviceDetector::MetadataExtractor < Anonymous_Struct_427
+class DeviceDetector::MetadataExtractor < Anonymous_Struct_449
   def call; end
   def extract_metadata; end
   def metadata_string; end
@@ -76,7 +76,7 @@ class DeviceDetector::MemoryCache
   def purge_cache; end
   def set(key, value); end
 end
-class Anonymous_Struct_428 < Struct
+class Anonymous_Struct_450 < Struct
   def self.[](*arg0); end
   def self.inspect; end
   def self.members; end
@@ -84,7 +84,7 @@ class Anonymous_Struct_428 < Struct
   def user_agent; end
   def user_agent=(_); end
 end
-class DeviceDetector::Parser < Anonymous_Struct_428
+class DeviceDetector::Parser < Anonymous_Struct_450
   def build_regex(src); end
   def filenames; end
   def filepaths; end
@@ -128,7 +128,7 @@ class DeviceDetector::OS < DeviceDetector::Parser
   def os_info; end
   def short_name; end
 end
-class InvalidName___Class_0x00___Configuration_429
+class InvalidName___Class_0x00___Configuration_451
   def max_cache_keys; end
   def max_cache_keys=(arg0); end
   def to_hash; end

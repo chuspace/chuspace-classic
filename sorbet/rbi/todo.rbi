@@ -7,9 +7,11 @@ module ::Anonymous_Delegator_11; end
 module ::Anonymous_Delegator_12; end
 module ::Anonymous_Delegator_13; end
 module ::Anonymous_Delegator_14; end
+module ::Anonymous_Delegator_15; end
 module ::Anonymous_Delegator_2; end
-module ::Anonymous_Delegator_406; end
-module ::Anonymous_Delegator_440; end
+module ::Anonymous_Delegator_3; end
+module ::Anonymous_Delegator_428; end
+module ::Anonymous_Delegator_462; end
 module ::Anonymous_Delegator_9; end
 module ActiveRecord::CollectionCacheKey; end
 module ActiveStorage::Blob::Analyzable; end
@@ -73,6 +75,10 @@ module T::Private::Methods::MethodHooks; end
 module T::Private::Methods::MethodHooks; end
 module T::Private::Methods::MethodHooks; end
 module T::Private::Methods::MethodHooks; end
+module T::Private::Methods::MethodHooks; end
+module T::Private::Methods::MethodHooks; end
+module T::Private::Methods::SingletonMethodHooks; end
+module T::Private::Methods::SingletonMethodHooks; end
 module T::Private::Methods::SingletonMethodHooks; end
 module T::Private::Methods::SingletonMethodHooks; end
 module T::Private::Methods::SingletonMethodHooks; end

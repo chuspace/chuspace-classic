@@ -7,7 +7,9 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rack-attack/all/rack-attack.rbi
 #
-# rack-attack-6.1.0
+# rack-attack-6.2.2
+module Rack
+end
 class Rack::Attack
   def blocklisted?(*args, &block); end
   def call(env); end
@@ -26,6 +28,8 @@ class Rack::Attack
   def self.cache; end
   def self.clear!; end
   def self.clear_configuration; end
+  def self.enabled; end
+  def self.enabled=(arg0); end
   def self.instrument(request); end
   def self.notifier; end
   def self.notifier=(arg0); end
@@ -48,13 +52,15 @@ end
 module Rack::Attack::FallbackPathNormalizer
   def self.normalize_path(path); end
 end
-module Rack
-end
 class Rack::Attack::Request < Rack::Request
 end
-class Rack::Attack::MisconfiguredStoreError < StandardError
+class Rack::Attack::Railtie < Rails::Railtie
 end
-class Rack::Attack::MissingStoreError < StandardError
+class Rack::Attack::Error < StandardError
+end
+class Rack::Attack::MisconfiguredStoreError < Rack::Attack::Error
+end
+class Rack::Attack::MissingStoreError < Rack::Attack::Error
 end
 class Rack::Attack::Throttle
   def block; end

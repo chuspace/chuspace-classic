@@ -599,35 +599,35 @@ class Net::SSH::KeyFactory
   def self.load_private_key(filename, passphrase = nil, ask_passphrase = nil, prompt = nil); end
   def self.load_public_key(filename); end
 end
-class InvalidName___Class_0x00___KeyType_430
+class InvalidName___Class_0x00___KeyType_452
   def self.encrypted_key?(data, error); end
   def self.error_classes; end
   def self.read(key_data, passphrase); end
 end
-class InvalidName___Class_0x00___OpenSSHPrivateKeyType_431 < InvalidName___Class_0x00___KeyType_430
+class InvalidName___Class_0x00___OpenSSHPrivateKeyType_453 < InvalidName___Class_0x00___KeyType_452
   def self.encrypted_key?(key_data, decode_error); end
   def self.error_classes; end
   def self.read(key_data, passphrase); end
 end
-class InvalidName___Class_0x00___OpenSSLKeyTypeBase_432 < InvalidName___Class_0x00___KeyType_430
+class InvalidName___Class_0x00___OpenSSLKeyTypeBase_454 < InvalidName___Class_0x00___KeyType_452
   def self.encrypted_key?(key_data, error); end
   def self.open_ssl_class; end
   def self.read(key_data, passphrase); end
 end
-class InvalidName___Class_0x00___OpenSSLPKeyType_433 < InvalidName___Class_0x00___OpenSSLKeyTypeBase_432
+class InvalidName___Class_0x00___OpenSSLPKeyType_455 < InvalidName___Class_0x00___OpenSSLKeyTypeBase_454
   def self.error_classes; end
   def self.open_ssl_class; end
   def self.read(key_data, passphrase); end
 end
-class InvalidName___Class_0x00___OpenSSLDSAKeyType_434 < InvalidName___Class_0x00___OpenSSLKeyTypeBase_432
+class InvalidName___Class_0x00___OpenSSLDSAKeyType_456 < InvalidName___Class_0x00___OpenSSLKeyTypeBase_454
   def self.error_classes; end
   def self.open_ssl_class; end
 end
-class InvalidName___Class_0x00___OpenSSLRSAKeyType_435 < InvalidName___Class_0x00___OpenSSLKeyTypeBase_432
+class InvalidName___Class_0x00___OpenSSLRSAKeyType_457 < InvalidName___Class_0x00___OpenSSLKeyTypeBase_454
   def self.error_classes; end
   def self.open_ssl_class; end
 end
-class InvalidName___Class_0x00___OpenSSLECKeyType_436 < InvalidName___Class_0x00___OpenSSLKeyTypeBase_432
+class InvalidName___Class_0x00___OpenSSLECKeyType_458 < InvalidName___Class_0x00___OpenSSLKeyTypeBase_454
   def self.error_classes; end
   def self.open_ssl_class; end
 end

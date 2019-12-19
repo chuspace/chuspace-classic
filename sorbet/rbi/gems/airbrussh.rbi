@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/airbrussh/all/airbrussh.rbi
 #
-# airbrussh-1.3.4
+# airbrussh-1.4.0
 module Airbrussh
   def self.configuration(options = nil); end
   def self.configure; end
@@ -109,6 +109,8 @@ class Airbrussh::Configuration
   def color=(arg0); end
   def command_output; end
   def command_output=(arg0); end
+  def context; end
+  def context=(arg0); end
   def formatters(io); end
   def initialize; end
   def log_file; end

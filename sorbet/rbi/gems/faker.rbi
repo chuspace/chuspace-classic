@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/faker/all/faker.rbi
 #
-# faker-2.5.0
+# faker-2.9.0
 module Faker
 end
 module Faker::Base58
@@ -177,6 +177,7 @@ class Faker::Bank < Faker::Base
   def self.routing_number; end
   def self.routing_number_with_format; end
   def self.swift_bic; end
+  def self.valid_checksum?(routing_number, checksum); end
   def self.valid_routing_number; end
 end
 class Faker::Beer < Faker::Base
@@ -367,6 +368,7 @@ class Faker::Date < Faker::Base
   def self.birthday_date(date, age); end
   def self.forward(legacy_days = nil, days: nil); end
   def self.get_date_object(date); end
+  def self.in_date_period(month: nil, year: nil); end
 end
 class Faker::DcComics < Faker::Base
   def self.hero; end
@@ -459,6 +461,7 @@ class Faker::FunnyName < Faker::Base
 end
 class Faker::Gender < Faker::Base
   def self.binary_type; end
+  def self.short_binary_type; end
   def self.type; end
 end
 class Faker::GreekPhilosophers < Faker::Base
@@ -499,6 +502,8 @@ class Faker::IDNumber < Faker::Base
   def self.brazilian_id_checksum_digit(digits); end
   def self.brazilian_id_digit(remainder); end
   def self.brazilian_rg(legacy_formatted = nil, formatted: nil); end
+  def self.chilean_id; end
+  def self.chilean_verification_code(digits); end
   def self.invalid; end
   def self.invalid_south_african_id_number; end
   def self.south_african_id_checksum_digit(id_number); end
@@ -517,10 +522,10 @@ class Faker::IndustrySegments < Faker::Base
 end
 class Faker::Internet < Faker::Base
   def self.device_token; end
-  def self.domain_name(legacy_subdomain = nil, subdomain: nil); end
+  def self.domain_name(legacy_subdomain = nil, subdomain: nil, domain: nil); end
   def self.domain_suffix; end
   def self.domain_word; end
-  def self.email(legacy_name = nil, legacy_separators = nil, name: nil, separators: nil); end
+  def self.email(legacy_name = nil, legacy_separators = nil, name: nil, separators: nil, domain: nil); end
   def self.fix_umlauts(legacy_string = nil, string: nil); end
   def self.free_email(legacy_name = nil, name: nil); end
   def self.ip_v4_address; end

@@ -5,9 +5,9 @@
 #
 # If you would like to make changes to this file, great! Please create the gem's shim here:
 #
-#   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/google-protobuf-3.9.2-universal/all/google-protobuf-3.9.2-universal.rbi
+#   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/google-protobuf-3.11.2-universal/all/google-protobuf-3.11.2-universal.rbi
 #
-# google-protobuf-3.9.2-universal-darwin
+# google-protobuf-3.11.2-universal-darwin
 module Google
 end
 module Google::Protobuf
@@ -26,65 +26,52 @@ end
 module Google::Protobuf::MessageExts::ClassMethods
 end
 class Google::Protobuf::DescriptorPool
-  def add(arg0); end
   def build(*arg0); end
   def lookup(arg0); end
   def self.generated_pool; end
 end
 class Google::Protobuf::Descriptor
-  def add_field(arg0); end
-  def add_oneof(arg0); end
   def each; end
   def each_oneof; end
   def file_descriptor; end
-  def initialize(arg0); end
+  def initialize(arg0, arg1, arg2); end
   def lookup(arg0); end
   def lookup_oneof(arg0); end
   def msgclass; end
   def name; end
-  def name=(arg0); end
 end
 class Google::Protobuf::FileDescriptor
-  def initialize(*arg0); end
+  def initialize(arg0, arg1, arg2); end
   def name; end
   def syntax; end
-  def syntax=(arg0); end
 end
 class Google::Protobuf::FieldDescriptor
   def clear(arg0); end
   def default; end
-  def default=(arg0); end
   def get(arg0); end
   def has?(arg0); end
+  def initialize(arg0, arg1, arg2); end
   def label; end
-  def label=(arg0); end
   def name; end
-  def name=(arg0); end
   def number; end
-  def number=(arg0); end
   def set(arg0, arg1); end
   def submsg_name; end
-  def submsg_name=(arg0); end
   def subtype; end
   def type; end
-  def type=(arg0); end
 end
 class Google::Protobuf::OneofDescriptor
-  def add_field(arg0); end
   def each; end
+  def initialize(arg0, arg1, arg2); end
   def name; end
-  def name=(arg0); end
 end
 class Google::Protobuf::EnumDescriptor
-  def add_value(arg0, arg1); end
   def each; end
   def enummodule; end
   def file_descriptor; end
-  def initialize(arg0); end
+  def initialize(arg0, arg1, arg2); end
   def lookup_name(arg0); end
   def lookup_value(arg0); end
   def name; end
-  def name=(arg0); end
 end
 class Google::Protobuf::Internal::MessageBuilderContext
   def initialize(arg0, arg1); end
@@ -99,20 +86,19 @@ class Google::Protobuf::Internal::OneofBuilderContext
   def optional(*arg0); end
 end
 class Google::Protobuf::Internal::EnumBuilderContext
-  def initialize(arg0); end
+  def initialize(arg0, arg1); end
   def value(arg0, arg1); end
 end
 class Google::Protobuf::Internal::FileBuilderContext
   def add_enum(arg0); end
   def add_message(arg0); end
-  def initialize(arg0, arg1); end
+  def initialize(arg0, arg1, arg2); end
 end
 class Google::Protobuf::Internal::Builder
   def add_enum(arg0); end
   def add_file(*arg0); end
   def add_message(arg0); end
-  def finalize_to_pool(arg0); end
-  def initialize; end
+  def initialize(arg0); end
 end
 class Google::Protobuf::RepeatedField
   def &(*args, &block); end
@@ -225,7 +211,7 @@ class Google::Protobuf::Map
   def to_h; end
   def values; end
 end
-class Anonymous_Struct_408 < Struct
+class Anonymous_Struct_430 < Struct
   def external_enumerator; end
   def external_enumerator=(_); end
   def repeated_field; end
@@ -235,7 +221,7 @@ class Anonymous_Struct_408 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Google::Protobuf::RepeatedField::ProxyingEnumerator < Anonymous_Struct_408
+class Google::Protobuf::RepeatedField::ProxyingEnumerator < Anonymous_Struct_430
   def each(*args, &block); end
 end
 class Google::Protobuf::Error < StandardError
@@ -243,4 +229,14 @@ end
 class Google::Protobuf::ParseError < Google::Protobuf::Error
 end
 class Google::Protobuf::TypeError < TypeError
+end
+module Google::Protobuf::Internal
+  def self.fixup_descriptor(package, msg_names, enum_names); end
+  def self.infer_package(names); end
+end
+class Google::Protobuf::Internal::NestingBuilder
+  def build(package); end
+  def build_msg(msg); end
+  def initialize(msg_names, enum_names); end
+  def parent(name); end
 end

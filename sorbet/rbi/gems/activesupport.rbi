@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/activesupport/all/activesupport.rbi
 #
-# activesupport-6.0.0
+# activesupport-6.0.2.1
 class Hash
   def _deep_transform_keys_in_object!(object, &block); end
   def _deep_transform_keys_in_object(object, &block); end
@@ -35,8 +35,8 @@ class Hash
   def reverse_merge!(other_hash); end
   def reverse_merge(other_hash); end
   def reverse_update(other_hash); end
-  def self.[](*arg0); end
   def self.from_xml(xml, disallowed_types = nil); end
+  def self.try_convert(arg0); end
   def slice!(*keys); end
   def stringify_keys!; end
   def stringify_keys; end
@@ -140,7 +140,6 @@ end
 class Module::DelegationError < NoMethodError
 end
 class ActiveSupport::Deprecation
-  def self.allocate; end
   def self.behavior(*args, &block); end
   def self.behavior=(arg); end
   def self.debug(*args, &block); end
@@ -153,7 +152,6 @@ class ActiveSupport::Deprecation
   def self.gem_name=(arg); end
   def self.initialize(*args, &block); end
   def self.instance; end
-  def self.new(*arg0); end
   def self.silence(*args, &block); end
   def self.silenced(*args, &block); end
   def self.silenced=(arg); end
@@ -1060,6 +1058,7 @@ module ActiveSupport::Dependencies::ZeitwerkIntegration::RequireDependency
 end
 module ActiveSupport::Dependencies::ZeitwerkIntegration::Inflector
   def self.camelize(basename, _abspath); end
+  def self.inflect(overrides); end
 end
 class Method
   def duplicable?; end
@@ -1988,37 +1987,12 @@ end
 class ActiveSupport::ProxyObject < BasicObject
   def raise(*args); end
 end
-module ActiveSupport::Configurable
-  def config; end
-  extend ActiveSupport::Concern
-end
-class ActiveSupport::Configurable::Configuration < ActiveSupport::InheritableOptions
-  def compile_methods!; end
-  def self.compile_methods!(keys); end
-end
-module ActiveSupport::Configurable::ClassMethods
-  def config; end
-  def config_accessor(*names, instance_reader: nil, instance_writer: nil, instance_accessor: nil); end
-  def configure; end
-end
-module ActiveSupport::Rescuable
-  def handler_for_rescue(exception); end
-  def rescue_with_handler(exception); end
-  extend ActiveSupport::Concern
-end
-module ActiveSupport::Rescuable::ClassMethods
-  def constantize_rescue_handler_class(class_or_name); end
-  def find_rescue_handler(exception); end
-  def handler_for_rescue(exception, object: nil); end
-  def rescue_from(*klasses, with: nil, &block); end
-  def rescue_with_handler(exception, object: nil, visited_exceptions: nil); end
-end
 module ActiveSupport::NumericWithFormat
   def to_s(format = nil, options = nil); end
 end
 class File < IO
   def self.atomic_write(file_name, temp_dir = nil); end
-  def self.probe_stat_in(dir); end
+  def self.empty?(arg0); end
 end
 module Digest
 end
@@ -2254,6 +2228,31 @@ class ActiveSupport::Cache::Strategy::LocalCache::Middleware
   def local_cache_key; end
   def name; end
   def new(app); end
+end
+module ActiveSupport::Rescuable
+  def handler_for_rescue(exception); end
+  def rescue_with_handler(exception); end
+  extend ActiveSupport::Concern
+end
+module ActiveSupport::Rescuable::ClassMethods
+  def constantize_rescue_handler_class(class_or_name); end
+  def find_rescue_handler(exception); end
+  def handler_for_rescue(exception, object: nil); end
+  def rescue_from(*klasses, with: nil, &block); end
+  def rescue_with_handler(exception, object: nil, visited_exceptions: nil); end
+end
+module ActiveSupport::Configurable
+  def config; end
+  extend ActiveSupport::Concern
+end
+class ActiveSupport::Configurable::Configuration < ActiveSupport::InheritableOptions
+  def compile_methods!; end
+  def self.compile_methods!(keys); end
+end
+module ActiveSupport::Configurable::ClassMethods
+  def config; end
+  def config_accessor(*names, instance_reader: nil, instance_writer: nil, instance_accessor: nil); end
+  def configure; end
 end
 class ActiveSupport::Cache::MemoryStore < ActiveSupport::Cache::Store
   def cached_size(key, entry); end

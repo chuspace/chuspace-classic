@@ -7,11 +7,11 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/runbook/all/runbook.rbi
 #
-# runbook-53d8be6a4f0b
+# runbook-0.16.1
 module Runbook
   def self._child_classes(mod); end
   def self._child_modules(mod); end
-  def self.book(title, &block); end
+  def self.book(title, *tags, labels: nil, &block); end
   def self.books; end
   def self.config; end
   def self.configuration; end
@@ -23,11 +23,24 @@ module Runbook
   def self.register(book); end
   def self.reset_configuration; end
   def self.runs; end
-  def self.section(title, &block); end
+  def self.runtime_methods; end
+  def self.section(title, *tags, labels: nil, &block); end
+  def self.setup(*tags, labels: nil, &block); end
   def self.statements; end
-  def self.step(title = nil, &block); end
+  def self.step(title = nil, *tags, labels: nil, &block); end
+  def self.views; end
+end
+class Runbook::AirbrusshContext
+  def current_task_name; end
+  def history; end
+  def initialize(config = nil); end
+  def position(command); end
+  def register_new_command(command); end
+  def set_current_task_name(task_name); end
 end
 class Runbook::Configuration
+  def _airbrussh_context; end
+  def _airbrussh_context=(arg0); end
   def enable_sudo_prompt; end
   def enable_sudo_prompt=(arg0); end
   def initialize; end
@@ -118,8 +131,9 @@ class Runbook::Entity < Runbook::Node
   def add(item); end
   def dsl; end
   def dynamic!; end
-  def initialize(title, parent: nil); end
+  def initialize(title, tags: nil, labels: nil, parent: nil); end
   def items; end
+  def labels; end
   def method_missing(method, *args, &block); end
   def parent; end
   def parent=(arg0); end
@@ -127,6 +141,7 @@ class Runbook::Entity < Runbook::Node
   def respond_to?(name, include_private = nil); end
   def run(run, metadata); end
   def self.inherited(child_class); end
+  def tags; end
   def title; end
   include Runbook::Hooks::Invoker
 end
@@ -141,7 +156,7 @@ class Runbook::Entities::Book::DSL
   def parent; end
 end
 class Runbook::Entities::Book < Runbook::Entity
-  def initialize(title); end
+  def initialize(title, tags: nil, labels: nil); end
   def self.initial_render_metadata; end
   def self.initial_run_metadata; end
 end
@@ -150,14 +165,21 @@ class Runbook::Entities::Section::DSL
   def parent; end
 end
 class Runbook::Entities::Section < Runbook::Entity
-  def initialize(title); end
+  def initialize(title, tags: nil, labels: nil); end
+end
+class Runbook::Entities::Setup::DSL
+  def initialize(parent); end
+  def parent; end
+end
+class Runbook::Entities::Setup < Runbook::Entity
+  def initialize(tags: nil, labels: nil); end
 end
 class Runbook::Entities::Step::DSL
   def initialize(parent); end
   def parent; end
 end
 class Runbook::Entities::Step < Runbook::Entity
-  def initialize(title = nil); end
+  def initialize(title = nil, tags: nil, labels: nil); end
 end
 class Runbook::Statement < Runbook::Node
   def parent; end
@@ -170,16 +192,18 @@ module Runbook::Statements
 end
 class Runbook::Statements::Ask < Runbook::Statement
   def default; end
-  def initialize(prompt, into:, default: nil); end
+  def echo; end
+  def initialize(prompt, into:, default: nil, echo: nil); end
   def into; end
   def prompt; end
 end
 class Runbook::Statements::Assert < Runbook::Statement
+  def abort_statement; end
   def attempts; end
   def cmd; end
   def cmd_raw; end
   def cmd_ssh_config; end
-  def initialize(cmd, cmd_ssh_config: nil, cmd_raw: nil, interval: nil, timeout: nil, attempts: nil, timeout_statement: nil); end
+  def initialize(cmd, cmd_ssh_config: nil, cmd_raw: nil, interval: nil, timeout: nil, attempts: nil, abort_statement: nil, timeout_statement: nil); end
   def interval; end
   def timeout; end
   def timeout_statement; end
@@ -307,6 +331,7 @@ module Runbook::Run::ClassMethods
   def past_position?(current_position, position); end
   def runbook__entities__book(object, metadata); end
   def runbook__entities__section(object, metadata); end
+  def runbook__entities__setup(object, metadata); end
   def runbook__entities__step(object, metadata); end
   def runbook__statements__ask(object, metadata); end
   def runbook__statements__confirm(object, metadata); end
@@ -327,22 +352,23 @@ module Runbook::Runs
 end
 module Runbook::Runs::SSHKit
   def self.included(base); end
-  extend Runbook::Helpers::SSHKitHelper
   extend Runbook::Run::ClassMethods
   extend Runbook::Runs::SSHKit::ClassMethods
   include Runbook::Run
 end
 module Runbook::Runs::SSHKit::ClassMethods
   def _handle_capture(object, metadata, &block); end
+  def runbook__entities__step(object, metadata); end
   def runbook__statements__assert(object, metadata); end
   def runbook__statements__capture(object, metadata); end
   def runbook__statements__capture_all(object, metadata); end
   def runbook__statements__command(object, metadata); end
   def runbook__statements__download(object, metadata); end
   def runbook__statements__upload(object, metadata); end
+  include Runbook::Helpers::SSHKitHelper
 end
 class Runbook::Toolbox
-  def ask(msg, default: nil); end
+  def ask(msg, default: nil, echo: nil); end
   def error(msg); end
   def exit(return_value); end
   def expand(msg, choices); end
@@ -371,6 +397,7 @@ end
 module Runbook::Views::Markdown
   def self.runbook__entities__book(object, output, metadata); end
   def self.runbook__entities__section(object, output, metadata); end
+  def self.runbook__entities__setup(object, output, metadata); end
   def self.runbook__entities__step(object, output, metadata); end
   def self.runbook__statements__ask(object, output, metadata); end
   def self.runbook__statements__assert(object, output, metadata); end
@@ -467,7 +494,12 @@ end
 module Runbook::Extensions::Sections
 end
 module Runbook::Extensions::Sections::DSL
-  def section(title, &block); end
+  def section(title, *tags, labels: nil, &block); end
+end
+module Runbook::Extensions::Setup
+end
+module Runbook::Extensions::Setup::DSL
+  def setup(*tags, labels: nil, &block); end
 end
 module Runbook::Extensions::SSHConfig
   def self.blank_ssh_config; end
@@ -494,7 +526,7 @@ end
 module Runbook::Extensions::Steps
 end
 module Runbook::Extensions::Steps::DSL
-  def step(title = nil, &block); end
+  def step(title = nil, *tags, labels: nil, &block); end
 end
 module Runbook::Extensions::Tmux
 end

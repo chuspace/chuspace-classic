@@ -7,18 +7,24 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/shrine-memory/all/shrine-memory.rbi
 #
-# shrine-memory-0.3.1
+# shrine-memory-0.1.0
 class Shrine
 end
 module Shrine::Storage
 end
 class Shrine::Storage::Memory
-  def clear!; end
+  def clear!(confirm = nil); end
   def delete(id); end
+  def download(id); end
   def exists?(id); end
   def initialize(store = nil); end
-  def open(id, *arg1); end
+  def movable?(io, id); end
+  def move(io, id, *arg2); end
+  def multi_delete(ids); end
+  def open(id); end
+  def read(id); end
   def store; end
+  def stream(id); end
   def upload(io, id, *arg2); end
   def url(id, **options); end
 end

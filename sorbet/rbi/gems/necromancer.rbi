@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/necromancer/all/necromancer.rbi
 #
-# necromancer-0.5.0
+# necromancer-0.5.1
 module Necromancer
   def convert(*args, &block); end
   def new(&block); end
@@ -83,16 +83,16 @@ module Necromancer::NumericConverters
   def self.load(conversions); end
 end
 class Necromancer::NumericConverters::StringToIntegerConverter < Necromancer::Converter
-  def call(value, options = nil); end
+  def call(value, **options); end
 end
 class Necromancer::NumericConverters::IntegerToStringConverter < Necromancer::Converter
-  def call(value, _); end
+  def call(value, **_); end
 end
 class Necromancer::NumericConverters::StringToFloatConverter < Necromancer::Converter
-  def call(value, options = nil); end
+  def call(value, **options); end
 end
 class Necromancer::NumericConverters::StringToNumericConverter < Necromancer::Converter
-  def call(value, options = nil); end
+  def call(value, **options); end
 end
 module Necromancer::RangeConverters
   def self.load(conversions); end

@@ -7,11 +7,18 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/action_policy/all/action_policy.rbi
 #
-# action_policy-0.3.2
+# action_policy-0.4.3
 module ActionPolicy
   def self.cache_store; end
   def self.cache_store=(arg0); end
   def self.lookup(target, allow_nil: nil, **options); end
+end
+module ActionPolicy::Ext
+end
+module ActionPolicy::Ext::PolicyCacheKey
+end
+module ActionPolicy::Ext::PolicyCacheKey::ObjectExt
+  def _policy_cache_key(use_object_id: nil); end
 end
 module ActionPolicy::Behaviours
 end
@@ -20,7 +27,8 @@ module ActionPolicy::Behaviours::PolicyFor
   def authorization_namespace; end
   def implicit_authorization_target!; end
   def implicit_authorization_target; end
-  def policy_for(record:, with: nil, namespace: nil, context: nil, **options); end
+  def policy_for(record:, with: nil, namespace: nil, context: nil, allow_nil: nil); end
+  def policy_for_cache_key(record:, with: nil, namespace: nil, context: nil, **arg4); end
 end
 module ActionPolicy::Policy
 end
@@ -45,8 +53,10 @@ module ActionPolicy::PrettyPrint
 end
 class ActionPolicy::PrettyPrint::Visitor
   def collect(ast); end
+  def colorize(val); end
   def eval_exp(exp); end
   def expression_with_result(sexp); end
+  def ignore_exp?(exp); end
   def indent; end
   def indent=(arg0); end
   def indented(str); end
@@ -71,7 +81,7 @@ module ActionPolicy::Policy::Core
   def allowed_to?(rule, record = nil, **options); end
   def apply(rule); end
   def check?(*args); end
-  def initialize(record = nil, _opts = nil); end
+  def initialize(record = nil, *arg1); end
   def inspect_rule(rule); end
   def pp(rule); end
   def record; end
@@ -98,12 +108,12 @@ class ActionPolicy::AuthorizationContextMissing < ActionPolicy::Error
 end
 module ActionPolicy::Policy::Authorization
   def authorization_context; end
-  def initialize(*args, **params); end
+  def initialize(record = nil, **params); end
   def self.included(base); end
 end
 module ActionPolicy::Policy::Authorization::ClassMethods
   def authorization_targets; end
-  def authorize(*ids, **opts); end
+  def authorize(*ids, allow_nil: nil, optional: nil); end
 end
 class ActionPolicy::Policy::FailureReasons
   def add(policy_or_class, rule, details = nil); end
@@ -204,24 +214,19 @@ module ActionPolicy::Policy::Scoping::ClassMethods
   def scope_matchers; end
   def scoping_handlers; end
 end
-module ActionPolicy::Ext
-end
 module ActionPolicy::Ext::YieldSelfThen
 end
 module ActionPolicy::Ext::YieldSelfThen::Ext
   def then; end
 end
-module ActionPolicy::Ext::PolicyCacheKey
-end
-module ActionPolicy::Ext::PolicyCacheKey::ObjectExt
-  def _policy_cache_key(use_object_id: nil); end
-end
 module ActionPolicy::Policy::Cache
   def apply(rule); end
   def apply_with_cache(rule); end
-  def cache_key(rule); end
+  def cache(*parts, **options); end
+  def cache_key(*parts); end
   def cache_namespace; end
   def context_cache_key; end
+  def rule_cache_key(rule); end
   def self.included(base); end
 end
 module ActionPolicy::Policy::Cache::ClassMethods
@@ -238,7 +243,6 @@ class ActionPolicy::Base
   extend ActionPolicy::Policy::Core::ClassMethods
   extend ActionPolicy::Policy::PreCheck::ClassMethods
   extend ActionPolicy::Policy::Scoping::ClassMethods
-  extend ActionPolicy::ScopeMatchers::ActionControllerParams
   extend ActionPolicy::ScopeMatchers::ActiveRecord
   include ActionPolicy::Policy::Aliases
   include ActionPolicy::Policy::Authorization
@@ -276,7 +280,7 @@ class ActionPolicy::LookupChain::NamespaceCache
 end
 module ActionPolicy::Behaviours::Memoized
   def __policies_cache__; end
-  def __policy_memoize__(record, with: nil, namespace: nil, **_opts); end
+  def __policy_memoize__(record, **options); end
   def self.included(base); end
   def self.prepended(base); end
 end
@@ -290,7 +294,7 @@ module ActionPolicy::PerThreadCache
   def self.fetch(key); end
 end
 module ActionPolicy::Behaviours::ThreadMemoized
-  def __policy_thread_memoize__(record, with: nil, namespace: nil, **_opts); end
+  def __policy_thread_memoize__(record, **options); end
   def self.included(base); end
   def self.prepended(base); end
 end
@@ -383,28 +387,26 @@ class ActionPolicy::NotFound < ActionPolicy::Error
   def message; end
   def target; end
 end
-module ActionPolicy::ScopeMatchers
-end
-module ActionPolicy::ScopeMatchers::ActionControllerParams
-  def params_filter(*args, &block); end
-end
-module Anonymous_Module_409
+module Anonymous_Module_431
   def policy_cache_key; end
 end
 class ActiveRecord::Relation
-  include Anonymous_Module_409
-  include Anonymous_Module_410
+  include Anonymous_Module_431
+  include Anonymous_Module_432
+end
+module ActionPolicy::ScopeMatchers
 end
 module ActionPolicy::ScopeMatchers::ActiveRecord
   def relation_scope(*args, &block); end
 end
-module Anonymous_Module_410
+module Anonymous_Module_432
   def policy_name; end
 end
 module ActionPolicy::Policy::Rails
 end
 module ActionPolicy::Policy::Rails::Instrumentation
   def apply(rule); end
+  def initialize(*arg0); end
 end
 module ActionPolicy::Rails
 end

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/simple_form/all/simple_form.rbi
 #
-# simple_form-5.0.0
+# simple_form-5.0.1
 module SimpleForm
   def boolean_label_class; end
   def boolean_label_class=(obj); end

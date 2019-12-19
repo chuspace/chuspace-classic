@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rugged/all/rugged.rbi
 #
-# rugged-0.28.3.1
+# rugged-0.28.4.1
 module Rugged
   def __cache_usage__; end
   def dotgit_attributes?(arg0); end

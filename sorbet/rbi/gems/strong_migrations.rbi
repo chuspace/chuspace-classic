@@ -7,13 +7,18 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/strong_migrations/all/strong_migrations.rbi
 #
-# strong_migrations-0.4.1
+# strong_migrations-0.5.1
 module StrongMigrations
   def self.add_check(&block); end
   def self.auto_analyze; end
   def self.auto_analyze=(arg0); end
+  def self.check_enabled?(check, version: nil); end
   def self.checks; end
   def self.checks=(arg0); end
+  def self.disable_check(check); end
+  def self.enable_check(check, start_after: nil); end
+  def self.enabled_checks; end
+  def self.enabled_checks=(arg0); end
   def self.error_messages; end
   def self.error_messages=(arg0); end
   def self.start_after; end
@@ -25,10 +30,11 @@ class StrongMigrations::Checker
   def backfill_code(table, column, default); end
   def command_str(command, args); end
   def connection; end
+  def constraint_str(statement, identifiers); end
   def direction; end
   def direction=(arg0); end
-  def foreign_key_str(statement, identifiers); end
   def initialize(migration); end
+  def new_table?(table); end
   def perform(method, *args); end
   def postgresql?; end
   def postgresql_version; end
@@ -42,11 +48,11 @@ module StrongMigrations::DatabaseTasks
   def migrate; end
 end
 module StrongMigrations::Migration
-  def initialize(*args); end
   def method_missing(method, *args); end
   def migrate(direction); end
   def safety_assured; end
   def stop!(message, header: nil); end
+  def strong_migrations_checker; end
 end
 class StrongMigrations::Railtie < Rails::Railtie
 end

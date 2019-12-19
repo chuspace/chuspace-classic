@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/errbase/all/errbase.rbi
 #
-# errbase-0.1.1
+# errbase-0.2.0
 module Errbase
   def self.report(e, info = nil); end
 end

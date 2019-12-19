@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/tty-prompt/all/tty-prompt.rbi
 #
-# tty-prompt-0.19.0
+# tty-prompt-0.20.0
 module TTY
 end
 class TTY::Prompt
@@ -15,7 +15,7 @@ class TTY::Prompt
   def ask(message = nil, **options, &block); end
   def clear_line(*args, &block); end
   def clear_lines(*args, &block); end
-  def collect(options = nil, &block); end
+  def collect(**options, &block); end
   def count_screen_lines(*args, &block); end
   def cursor; end
   def debug(*messages); end
@@ -46,7 +46,7 @@ class TTY::Prompt
   def puts(*args, &block); end
   def read_char(*args, &block); end
   def read_keypress(*args, &block); end
-  def read_line(*args, &block); end
+  def read_line(message, **options); end
   def read_multiline(*args, &block); end
   def reader; end
   def say(message = nil, options = nil); end
@@ -59,7 +59,7 @@ class TTY::Prompt
   def stdout; end
   def strip(*args, &block); end
   def subscribe(*args, &block); end
-  def suggest(message, possibilities, options = nil); end
+  def suggest(message, possibilities, **options); end
   def symbols; end
   def trigger(*args, &block); end
   def tty?; end
@@ -72,9 +72,9 @@ class TTY::Prompt::AnswersCollector
   def add_answer(answer); end
   def call(&block); end
   def create_collector; end
-  def initialize(prompt, options = nil); end
+  def initialize(prompt, **options); end
   def key(name, &block); end
-  def method_missing(method, *args, &block); end
+  def method_missing(method, *args, **options, &block); end
   def values(&block); end
 end
 class TTY::Prompt::ConverterRegistry
@@ -202,11 +202,12 @@ class TTY::Prompt::ConfirmQuestion < TTY::Prompt::Question
   def conversion; end
   def create_default_labels; end
   def create_suffix; end
-  def initialize(prompt, options = nil); end
+  def initialize(prompt, **options); end
   def negative(value = nil); end
   def negative?; end
   def positive(value = nil); end
   def positive?; end
+  def process_input(question); end
   def render_question; end
   def setup_defaults; end
   def suffix(value = nil); end
@@ -405,7 +406,7 @@ module TTY::Prompt::Symbols
 end
 class TTY::Prompt::Multiline < TTY::Prompt::Question
   def help(value = nil); end
-  def initialize(prompt, options = nil); end
+  def initialize(prompt, **options); end
   def keyenter(*arg0); end
   def keyreturn(*arg0); end
   def process_input(question); end
@@ -461,7 +462,7 @@ class TTY::Prompt::Suggestion
   def build_single_suggestion; end
   def evaluate; end
   def indent; end
-  def initialize(options = nil); end
+  def initialize(**options); end
   def measure_distances(message, possibilities); end
   def plural_text; end
   def single_text; end

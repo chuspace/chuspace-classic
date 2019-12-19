@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/actionmailer/all/actionmailer.rbi
 #
-# actionmailer-6.0.0
+# actionmailer-6.0.2.1
 module ActionMailer
   def self.eager_load!; end
   def self.gem_version; end
@@ -363,7 +363,7 @@ class ActionMailer::Base < AbstractController::Base
   extend ActiveSupport::Callbacks::ClassMethods
   extend ActiveSupport::DescendantsTracker
   extend ActiveSupport::Rescuable::ClassMethods
-  extend Anonymous_Module_15
+  extend Anonymous_Module_16
   extend Delayed::DelayMail
   include AbstractController::AssetPaths
   include AbstractController::Caching
@@ -400,6 +400,6 @@ class ActionMailer::Base::LateAttachmentsProxy < SimpleDelegator
   def _raise_error; end
   def inline; end
 end
-module Anonymous_Module_15
+module Anonymous_Module_16
   def inherited(klass); end
 end

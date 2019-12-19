@@ -215,14 +215,8 @@ class Ahoy::VisitProperties
 end
 class Ahoy::Engine < Rails::Engine
 end
-class ActionController::Base < ActionController::Metal
-  include Ahoy::Controller
-end
 class ActiveRecord::Base
   extend Ahoy::Model
-end
-class ActionView::Base
-  include Ahoy::Helper
 end
 module ActiveModel::Callbacks
   include Ahoy::Model

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/down/all/down.rbi
 #
-# down-4.8.1
+# down-5.0.0
 module Down
   def backend(value = nil); end
   def download(*args, &block); end
@@ -35,36 +35,38 @@ class Down::ChunkedIO
   def pos; end
   def posix?; end
   def read(length = nil, outbuf = nil); end
-  def readpartial(length = nil, outbuf = nil); end
+  def readpartial(maxlen = nil, outbuf = nil); end
   def retrieve_chunk; end
   def rewind; end
   def rewindable?; end
+  def seek(amount, whence = nil); end
   def size; end
   def size=(arg0); end
+  def tell; end
 end
 class Down::Error < StandardError
 end
 class Down::TooLarge < Down::Error
 end
-class Down::NotFound < Down::Error
+class Down::InvalidUrl < Down::Error
 end
-class Down::InvalidUrl < Down::NotFound
+class Down::TooManyRedirects < Down::Error
 end
-class Down::TooManyRedirects < Down::NotFound
-end
-class Down::ResponseError < Down::NotFound
+class Down::ResponseError < Down::Error
   def initialize(message, response: nil); end
   def response; end
 end
 class Down::ClientError < Down::ResponseError
 end
+class Down::NotFound < Down::ClientError
+end
 class Down::ServerError < Down::ResponseError
 end
-class Down::ConnectionError < Down::NotFound
+class Down::ConnectionError < Down::Error
 end
 class Down::TimeoutError < Down::ConnectionError
 end
-class Down::SSLError < Down::NotFound
+class Down::SSLError < Down::Error
 end
 module Down::Utils
   def filename_from_content_disposition(content_disposition); end

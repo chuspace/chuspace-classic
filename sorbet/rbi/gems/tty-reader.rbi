@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/tty-reader/all/tty-reader.rbi
 #
-# tty-reader-0.6.0
+# tty-reader-0.7.0
 module TTY
 end
 class TTY::Reader
@@ -114,7 +114,7 @@ module TTY::Reader::Keys
   def self.win_keys; end
   def win_keys; end
 end
-class Anonymous_Struct_437 < Struct
+class Anonymous_Struct_459 < Struct
   def ctrl; end
   def ctrl=(_); end
   def meta; end
@@ -128,10 +128,10 @@ class Anonymous_Struct_437 < Struct
   def shift; end
   def shift=(_); end
 end
-class TTY::Reader::Key < Anonymous_Struct_437
+class TTY::Reader::Key < Anonymous_Struct_459
   def initialize(*arg0); end
 end
-class Anonymous_Struct_438 < Struct
+class Anonymous_Struct_460 < Struct
   def key; end
   def key=(_); end
   def line; end
@@ -143,7 +143,7 @@ class Anonymous_Struct_438 < Struct
   def value; end
   def value=(_); end
 end
-class TTY::Reader::KeyEvent < Anonymous_Struct_438
+class TTY::Reader::KeyEvent < Anonymous_Struct_460
   def self.from(keys, char, line = nil); end
   def trigger?; end
 end

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/charlock_holmes/all/charlock_holmes.rbi
 #
-# charlock_holmes-0.7.6
+# charlock_holmes-0.7.7
 class CharlockHolmes::EncodingDetector
   def binary_scan_length; end
   def binary_scan_length=(arg0); end

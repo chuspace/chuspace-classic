@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/safely_block/all/safely_block.rbi
 #
-# safely_block-0.2.2
+# safely_block-0.3.0
 module Safely
   def self.env; end
   def self.env=(arg0); end

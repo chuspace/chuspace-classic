@@ -7,12 +7,12 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/aws-sdk-kms/all/aws-sdk-kms.rbi
 #
-# aws-sdk-kms-1.24.0
+# aws-sdk-kms-1.27.0
 module Aws::KMS
 end
 module Aws::KMS::Types
 end
-class Anonymous_Struct_48 < Struct
+class Anonymous_Struct_51 < Struct
   def alias_arn; end
   def alias_arn=(_); end
   def alias_name; end
@@ -24,40 +24,7 @@ class Anonymous_Struct_48 < Struct
   def target_key_id; end
   def target_key_id=(_); end
 end
-class Aws::KMS::Types::AliasListEntry < Anonymous_Struct_48
-  include Aws::Structure
-end
-class Anonymous_Struct_49 < Struct
-  def message; end
-  def message=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Aws::KMS::Types::AlreadyExistsException < Anonymous_Struct_49
-  include Aws::Structure
-end
-class Anonymous_Struct_50 < Struct
-  def key_id; end
-  def key_id=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Aws::KMS::Types::CancelKeyDeletionRequest < Anonymous_Struct_50
-  include Aws::Structure
-end
-class Anonymous_Struct_51 < Struct
-  def key_id; end
-  def key_id=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Aws::KMS::Types::CancelKeyDeletionResponse < Anonymous_Struct_51
+class Aws::KMS::Types::AliasListEntry < Anonymous_Struct_51
   include Aws::Structure
 end
 class Anonymous_Struct_52 < Struct
@@ -68,29 +35,29 @@ class Anonymous_Struct_52 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::CloudHsmClusterInUseException < Anonymous_Struct_52
+class Aws::KMS::Types::AlreadyExistsException < Anonymous_Struct_52
   include Aws::Structure
 end
 class Anonymous_Struct_53 < Struct
-  def message; end
-  def message=(_); end
+  def key_id; end
+  def key_id=(_); end
   def self.[](*arg0); end
   def self.inspect; end
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::CloudHsmClusterInvalidConfigurationException < Anonymous_Struct_53
+class Aws::KMS::Types::CancelKeyDeletionRequest < Anonymous_Struct_53
   include Aws::Structure
 end
 class Anonymous_Struct_54 < Struct
-  def message; end
-  def message=(_); end
+  def key_id; end
+  def key_id=(_); end
   def self.[](*arg0); end
   def self.inspect; end
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::CloudHsmClusterNotActiveException < Anonymous_Struct_54
+class Aws::KMS::Types::CancelKeyDeletionResponse < Anonymous_Struct_54
   include Aws::Structure
 end
 class Anonymous_Struct_55 < Struct
@@ -101,7 +68,7 @@ class Anonymous_Struct_55 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::CloudHsmClusterNotFoundException < Anonymous_Struct_55
+class Aws::KMS::Types::CloudHsmClusterInUseException < Anonymous_Struct_55
   include Aws::Structure
 end
 class Anonymous_Struct_56 < Struct
@@ -112,10 +79,43 @@ class Anonymous_Struct_56 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::CloudHsmClusterNotRelatedException < Anonymous_Struct_56
+class Aws::KMS::Types::CloudHsmClusterInvalidConfigurationException < Anonymous_Struct_56
   include Aws::Structure
 end
 class Anonymous_Struct_57 < Struct
+  def message; end
+  def message=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::CloudHsmClusterNotActiveException < Anonymous_Struct_57
+  include Aws::Structure
+end
+class Anonymous_Struct_58 < Struct
+  def message; end
+  def message=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::CloudHsmClusterNotFoundException < Anonymous_Struct_58
+  include Aws::Structure
+end
+class Anonymous_Struct_59 < Struct
+  def message; end
+  def message=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::CloudHsmClusterNotRelatedException < Anonymous_Struct_59
+  include Aws::Structure
+end
+class Anonymous_Struct_60 < Struct
   def custom_key_store_id; end
   def custom_key_store_id=(_); end
   def self.[](*arg0); end
@@ -123,12 +123,12 @@ class Anonymous_Struct_57 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::ConnectCustomKeyStoreRequest < Anonymous_Struct_57
+class Aws::KMS::Types::ConnectCustomKeyStoreRequest < Anonymous_Struct_60
   include Aws::Structure
 end
 class Aws::KMS::Types::ConnectCustomKeyStoreResponse < Aws::EmptyStructure
 end
-class Anonymous_Struct_58 < Struct
+class Anonymous_Struct_61 < Struct
   def alias_name; end
   def alias_name=(_); end
   def self.[](*arg0); end
@@ -138,10 +138,10 @@ class Anonymous_Struct_58 < Struct
   def target_key_id; end
   def target_key_id=(_); end
 end
-class Aws::KMS::Types::CreateAliasRequest < Anonymous_Struct_58
+class Aws::KMS::Types::CreateAliasRequest < Anonymous_Struct_61
   include Aws::Structure
 end
-class Anonymous_Struct_59 < Struct
+class Anonymous_Struct_62 < Struct
   def cloud_hsm_cluster_id; end
   def cloud_hsm_cluster_id=(_); end
   def custom_key_store_name; end
@@ -155,10 +155,10 @@ class Anonymous_Struct_59 < Struct
   def trust_anchor_certificate; end
   def trust_anchor_certificate=(_); end
 end
-class Aws::KMS::Types::CreateCustomKeyStoreRequest < Anonymous_Struct_59
+class Aws::KMS::Types::CreateCustomKeyStoreRequest < Anonymous_Struct_62
   include Aws::Structure
 end
-class Anonymous_Struct_60 < Struct
+class Anonymous_Struct_63 < Struct
   def custom_key_store_id; end
   def custom_key_store_id=(_); end
   def self.[](*arg0); end
@@ -166,10 +166,10 @@ class Anonymous_Struct_60 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::CreateCustomKeyStoreResponse < Anonymous_Struct_60
+class Aws::KMS::Types::CreateCustomKeyStoreResponse < Anonymous_Struct_63
   include Aws::Structure
 end
-class Anonymous_Struct_61 < Struct
+class Anonymous_Struct_64 < Struct
   def constraints; end
   def constraints=(_); end
   def grant_tokens; end
@@ -189,10 +189,10 @@ class Anonymous_Struct_61 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::CreateGrantRequest < Anonymous_Struct_61
+class Aws::KMS::Types::CreateGrantRequest < Anonymous_Struct_64
   include Aws::Structure
 end
-class Anonymous_Struct_62 < Struct
+class Anonymous_Struct_65 < Struct
   def grant_id; end
   def grant_id=(_); end
   def grant_token; end
@@ -202,14 +202,16 @@ class Anonymous_Struct_62 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::CreateGrantResponse < Anonymous_Struct_62
+class Aws::KMS::Types::CreateGrantResponse < Anonymous_Struct_65
   include Aws::Structure
 end
-class Anonymous_Struct_63 < Struct
+class Anonymous_Struct_66 < Struct
   def bypass_policy_lockout_safety_check; end
   def bypass_policy_lockout_safety_check=(_); end
   def custom_key_store_id; end
   def custom_key_store_id=(_); end
+  def customer_master_key_spec; end
+  def customer_master_key_spec=(_); end
   def description; end
   def description=(_); end
   def key_usage; end
@@ -225,10 +227,10 @@ class Anonymous_Struct_63 < Struct
   def tags; end
   def tags=(_); end
 end
-class Aws::KMS::Types::CreateKeyRequest < Anonymous_Struct_63
+class Aws::KMS::Types::CreateKeyRequest < Anonymous_Struct_66
   include Aws::Structure
 end
-class Anonymous_Struct_64 < Struct
+class Anonymous_Struct_67 < Struct
   def key_metadata; end
   def key_metadata=(_); end
   def self.[](*arg0); end
@@ -236,40 +238,7 @@ class Anonymous_Struct_64 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::CreateKeyResponse < Anonymous_Struct_64
-  include Aws::Structure
-end
-class Anonymous_Struct_65 < Struct
-  def message; end
-  def message=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Aws::KMS::Types::CustomKeyStoreHasCMKsException < Anonymous_Struct_65
-  include Aws::Structure
-end
-class Anonymous_Struct_66 < Struct
-  def message; end
-  def message=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Aws::KMS::Types::CustomKeyStoreInvalidStateException < Anonymous_Struct_66
-  include Aws::Structure
-end
-class Anonymous_Struct_67 < Struct
-  def message; end
-  def message=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Aws::KMS::Types::CustomKeyStoreNameInUseException < Anonymous_Struct_67
+class Aws::KMS::Types::CreateKeyResponse < Anonymous_Struct_67
   include Aws::Structure
 end
 class Anonymous_Struct_68 < Struct
@@ -280,10 +249,43 @@ class Anonymous_Struct_68 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::CustomKeyStoreNotFoundException < Anonymous_Struct_68
+class Aws::KMS::Types::CustomKeyStoreHasCMKsException < Anonymous_Struct_68
   include Aws::Structure
 end
 class Anonymous_Struct_69 < Struct
+  def message; end
+  def message=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::CustomKeyStoreInvalidStateException < Anonymous_Struct_69
+  include Aws::Structure
+end
+class Anonymous_Struct_70 < Struct
+  def message; end
+  def message=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::CustomKeyStoreNameInUseException < Anonymous_Struct_70
+  include Aws::Structure
+end
+class Anonymous_Struct_71 < Struct
+  def message; end
+  def message=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::CustomKeyStoreNotFoundException < Anonymous_Struct_71
+  include Aws::Structure
+end
+class Anonymous_Struct_72 < Struct
   def cloud_hsm_cluster_id; end
   def cloud_hsm_cluster_id=(_); end
   def connection_error_code; end
@@ -303,25 +305,31 @@ class Anonymous_Struct_69 < Struct
   def trust_anchor_certificate; end
   def trust_anchor_certificate=(_); end
 end
-class Aws::KMS::Types::CustomKeyStoresListEntry < Anonymous_Struct_69
+class Aws::KMS::Types::CustomKeyStoresListEntry < Anonymous_Struct_72
   include Aws::Structure
 end
-class Anonymous_Struct_70 < Struct
+class Anonymous_Struct_73 < Struct
   def ciphertext_blob; end
   def ciphertext_blob=(_); end
+  def encryption_algorithm; end
+  def encryption_algorithm=(_); end
   def encryption_context; end
   def encryption_context=(_); end
   def grant_tokens; end
   def grant_tokens=(_); end
+  def key_id; end
+  def key_id=(_); end
   def self.[](*arg0); end
   def self.inspect; end
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::DecryptRequest < Anonymous_Struct_70
+class Aws::KMS::Types::DecryptRequest < Anonymous_Struct_73
   include Aws::Structure
 end
-class Anonymous_Struct_71 < Struct
+class Anonymous_Struct_74 < Struct
+  def encryption_algorithm; end
+  def encryption_algorithm=(_); end
   def key_id; end
   def key_id=(_); end
   def plaintext; end
@@ -331,10 +339,10 @@ class Anonymous_Struct_71 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::DecryptResponse < Anonymous_Struct_71
+class Aws::KMS::Types::DecryptResponse < Anonymous_Struct_74
   include Aws::Structure
 end
-class Anonymous_Struct_72 < Struct
+class Anonymous_Struct_75 < Struct
   def alias_name; end
   def alias_name=(_); end
   def self.[](*arg0); end
@@ -342,10 +350,10 @@ class Anonymous_Struct_72 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::DeleteAliasRequest < Anonymous_Struct_72
+class Aws::KMS::Types::DeleteAliasRequest < Anonymous_Struct_75
   include Aws::Structure
 end
-class Anonymous_Struct_73 < Struct
+class Anonymous_Struct_76 < Struct
   def custom_key_store_id; end
   def custom_key_store_id=(_); end
   def self.[](*arg0); end
@@ -353,12 +361,12 @@ class Anonymous_Struct_73 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::DeleteCustomKeyStoreRequest < Anonymous_Struct_73
+class Aws::KMS::Types::DeleteCustomKeyStoreRequest < Anonymous_Struct_76
   include Aws::Structure
 end
 class Aws::KMS::Types::DeleteCustomKeyStoreResponse < Aws::EmptyStructure
 end
-class Anonymous_Struct_74 < Struct
+class Anonymous_Struct_77 < Struct
   def key_id; end
   def key_id=(_); end
   def self.[](*arg0); end
@@ -366,10 +374,10 @@ class Anonymous_Struct_74 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::DeleteImportedKeyMaterialRequest < Anonymous_Struct_74
+class Aws::KMS::Types::DeleteImportedKeyMaterialRequest < Anonymous_Struct_77
   include Aws::Structure
 end
-class Anonymous_Struct_75 < Struct
+class Anonymous_Struct_78 < Struct
   def message; end
   def message=(_); end
   def self.[](*arg0); end
@@ -377,10 +385,10 @@ class Anonymous_Struct_75 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::DependencyTimeoutException < Anonymous_Struct_75
+class Aws::KMS::Types::DependencyTimeoutException < Anonymous_Struct_78
   include Aws::Structure
 end
-class Anonymous_Struct_76 < Struct
+class Anonymous_Struct_79 < Struct
   def custom_key_store_id; end
   def custom_key_store_id=(_); end
   def custom_key_store_name; end
@@ -394,10 +402,10 @@ class Anonymous_Struct_76 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::DescribeCustomKeyStoresRequest < Anonymous_Struct_76
+class Aws::KMS::Types::DescribeCustomKeyStoresRequest < Anonymous_Struct_79
   include Aws::Structure
 end
-class Anonymous_Struct_77 < Struct
+class Anonymous_Struct_80 < Struct
   def custom_key_stores; end
   def custom_key_stores=(_); end
   def next_marker; end
@@ -409,10 +417,10 @@ class Anonymous_Struct_77 < Struct
   def truncated; end
   def truncated=(_); end
 end
-class Aws::KMS::Types::DescribeCustomKeyStoresResponse < Anonymous_Struct_77
+class Aws::KMS::Types::DescribeCustomKeyStoresResponse < Anonymous_Struct_80
   include Aws::Structure
 end
-class Anonymous_Struct_78 < Struct
+class Anonymous_Struct_81 < Struct
   def grant_tokens; end
   def grant_tokens=(_); end
   def key_id; end
@@ -422,10 +430,10 @@ class Anonymous_Struct_78 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::DescribeKeyRequest < Anonymous_Struct_78
+class Aws::KMS::Types::DescribeKeyRequest < Anonymous_Struct_81
   include Aws::Structure
 end
-class Anonymous_Struct_79 < Struct
+class Anonymous_Struct_82 < Struct
   def key_metadata; end
   def key_metadata=(_); end
   def self.[](*arg0); end
@@ -433,54 +441,19 @@ class Anonymous_Struct_79 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::DescribeKeyResponse < Anonymous_Struct_79
-  include Aws::Structure
-end
-class Anonymous_Struct_80 < Struct
-  def key_id; end
-  def key_id=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Aws::KMS::Types::DisableKeyRequest < Anonymous_Struct_80
-  include Aws::Structure
-end
-class Anonymous_Struct_81 < Struct
-  def key_id; end
-  def key_id=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Aws::KMS::Types::DisableKeyRotationRequest < Anonymous_Struct_81
-  include Aws::Structure
-end
-class Anonymous_Struct_82 < Struct
-  def message; end
-  def message=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Aws::KMS::Types::DisabledException < Anonymous_Struct_82
+class Aws::KMS::Types::DescribeKeyResponse < Anonymous_Struct_82
   include Aws::Structure
 end
 class Anonymous_Struct_83 < Struct
-  def custom_key_store_id; end
-  def custom_key_store_id=(_); end
+  def key_id; end
+  def key_id=(_); end
   def self.[](*arg0); end
   def self.inspect; end
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::DisconnectCustomKeyStoreRequest < Anonymous_Struct_83
+class Aws::KMS::Types::DisableKeyRequest < Anonymous_Struct_83
   include Aws::Structure
-end
-class Aws::KMS::Types::DisconnectCustomKeyStoreResponse < Aws::EmptyStructure
 end
 class Anonymous_Struct_84 < Struct
   def key_id; end
@@ -490,51 +463,10 @@ class Anonymous_Struct_84 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::EnableKeyRequest < Anonymous_Struct_84
+class Aws::KMS::Types::DisableKeyRotationRequest < Anonymous_Struct_84
   include Aws::Structure
 end
 class Anonymous_Struct_85 < Struct
-  def key_id; end
-  def key_id=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Aws::KMS::Types::EnableKeyRotationRequest < Anonymous_Struct_85
-  include Aws::Structure
-end
-class Anonymous_Struct_86 < Struct
-  def encryption_context; end
-  def encryption_context=(_); end
-  def grant_tokens; end
-  def grant_tokens=(_); end
-  def key_id; end
-  def key_id=(_); end
-  def plaintext; end
-  def plaintext=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Aws::KMS::Types::EncryptRequest < Anonymous_Struct_86
-  include Aws::Structure
-end
-class Anonymous_Struct_87 < Struct
-  def ciphertext_blob; end
-  def ciphertext_blob=(_); end
-  def key_id; end
-  def key_id=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Aws::KMS::Types::EncryptResponse < Anonymous_Struct_87
-  include Aws::Structure
-end
-class Anonymous_Struct_88 < Struct
   def message; end
   def message=(_); end
   def self.[](*arg0); end
@@ -542,10 +474,160 @@ class Anonymous_Struct_88 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::ExpiredImportTokenException < Anonymous_Struct_88
+class Aws::KMS::Types::DisabledException < Anonymous_Struct_85
+  include Aws::Structure
+end
+class Anonymous_Struct_86 < Struct
+  def custom_key_store_id; end
+  def custom_key_store_id=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::DisconnectCustomKeyStoreRequest < Anonymous_Struct_86
+  include Aws::Structure
+end
+class Aws::KMS::Types::DisconnectCustomKeyStoreResponse < Aws::EmptyStructure
+end
+class Anonymous_Struct_87 < Struct
+  def key_id; end
+  def key_id=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::EnableKeyRequest < Anonymous_Struct_87
+  include Aws::Structure
+end
+class Anonymous_Struct_88 < Struct
+  def key_id; end
+  def key_id=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::EnableKeyRotationRequest < Anonymous_Struct_88
   include Aws::Structure
 end
 class Anonymous_Struct_89 < Struct
+  def encryption_algorithm; end
+  def encryption_algorithm=(_); end
+  def encryption_context; end
+  def encryption_context=(_); end
+  def grant_tokens; end
+  def grant_tokens=(_); end
+  def key_id; end
+  def key_id=(_); end
+  def plaintext; end
+  def plaintext=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::EncryptRequest < Anonymous_Struct_89
+  include Aws::Structure
+end
+class Anonymous_Struct_90 < Struct
+  def ciphertext_blob; end
+  def ciphertext_blob=(_); end
+  def encryption_algorithm; end
+  def encryption_algorithm=(_); end
+  def key_id; end
+  def key_id=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::EncryptResponse < Anonymous_Struct_90
+  include Aws::Structure
+end
+class Anonymous_Struct_91 < Struct
+  def message; end
+  def message=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::ExpiredImportTokenException < Anonymous_Struct_91
+  include Aws::Structure
+end
+class Anonymous_Struct_92 < Struct
+  def encryption_context; end
+  def encryption_context=(_); end
+  def grant_tokens; end
+  def grant_tokens=(_); end
+  def key_id; end
+  def key_id=(_); end
+  def key_pair_spec; end
+  def key_pair_spec=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::GenerateDataKeyPairRequest < Anonymous_Struct_92
+  include Aws::Structure
+end
+class Anonymous_Struct_93 < Struct
+  def key_id; end
+  def key_id=(_); end
+  def key_pair_spec; end
+  def key_pair_spec=(_); end
+  def private_key_ciphertext_blob; end
+  def private_key_ciphertext_blob=(_); end
+  def private_key_plaintext; end
+  def private_key_plaintext=(_); end
+  def public_key; end
+  def public_key=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::GenerateDataKeyPairResponse < Anonymous_Struct_93
+  include Aws::Structure
+end
+class Anonymous_Struct_94 < Struct
+  def encryption_context; end
+  def encryption_context=(_); end
+  def grant_tokens; end
+  def grant_tokens=(_); end
+  def key_id; end
+  def key_id=(_); end
+  def key_pair_spec; end
+  def key_pair_spec=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::GenerateDataKeyPairWithoutPlaintextRequest < Anonymous_Struct_94
+  include Aws::Structure
+end
+class Anonymous_Struct_95 < Struct
+  def key_id; end
+  def key_id=(_); end
+  def key_pair_spec; end
+  def key_pair_spec=(_); end
+  def private_key_ciphertext_blob; end
+  def private_key_ciphertext_blob=(_); end
+  def public_key; end
+  def public_key=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::GenerateDataKeyPairWithoutPlaintextResponse < Anonymous_Struct_95
+  include Aws::Structure
+end
+class Anonymous_Struct_96 < Struct
   def encryption_context; end
   def encryption_context=(_); end
   def grant_tokens; end
@@ -561,10 +643,10 @@ class Anonymous_Struct_89 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::GenerateDataKeyRequest < Anonymous_Struct_89
+class Aws::KMS::Types::GenerateDataKeyRequest < Anonymous_Struct_96
   include Aws::Structure
 end
-class Anonymous_Struct_90 < Struct
+class Anonymous_Struct_97 < Struct
   def ciphertext_blob; end
   def ciphertext_blob=(_); end
   def key_id; end
@@ -576,10 +658,10 @@ class Anonymous_Struct_90 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::GenerateDataKeyResponse < Anonymous_Struct_90
+class Aws::KMS::Types::GenerateDataKeyResponse < Anonymous_Struct_97
   include Aws::Structure
 end
-class Anonymous_Struct_91 < Struct
+class Anonymous_Struct_98 < Struct
   def encryption_context; end
   def encryption_context=(_); end
   def grant_tokens; end
@@ -595,10 +677,10 @@ class Anonymous_Struct_91 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::GenerateDataKeyWithoutPlaintextRequest < Anonymous_Struct_91
+class Aws::KMS::Types::GenerateDataKeyWithoutPlaintextRequest < Anonymous_Struct_98
   include Aws::Structure
 end
-class Anonymous_Struct_92 < Struct
+class Anonymous_Struct_99 < Struct
   def ciphertext_blob; end
   def ciphertext_blob=(_); end
   def key_id; end
@@ -608,10 +690,10 @@ class Anonymous_Struct_92 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::GenerateDataKeyWithoutPlaintextResponse < Anonymous_Struct_92
+class Aws::KMS::Types::GenerateDataKeyWithoutPlaintextResponse < Anonymous_Struct_99
   include Aws::Structure
 end
-class Anonymous_Struct_93 < Struct
+class Anonymous_Struct_100 < Struct
   def custom_key_store_id; end
   def custom_key_store_id=(_); end
   def number_of_bytes; end
@@ -621,10 +703,10 @@ class Anonymous_Struct_93 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::GenerateRandomRequest < Anonymous_Struct_93
+class Aws::KMS::Types::GenerateRandomRequest < Anonymous_Struct_100
   include Aws::Structure
 end
-class Anonymous_Struct_94 < Struct
+class Anonymous_Struct_101 < Struct
   def plaintext; end
   def plaintext=(_); end
   def self.[](*arg0); end
@@ -632,10 +714,10 @@ class Anonymous_Struct_94 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::GenerateRandomResponse < Anonymous_Struct_94
+class Aws::KMS::Types::GenerateRandomResponse < Anonymous_Struct_101
   include Aws::Structure
 end
-class Anonymous_Struct_95 < Struct
+class Anonymous_Struct_102 < Struct
   def key_id; end
   def key_id=(_); end
   def policy_name; end
@@ -645,10 +727,10 @@ class Anonymous_Struct_95 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::GetKeyPolicyRequest < Anonymous_Struct_95
+class Aws::KMS::Types::GetKeyPolicyRequest < Anonymous_Struct_102
   include Aws::Structure
 end
-class Anonymous_Struct_96 < Struct
+class Anonymous_Struct_103 < Struct
   def policy; end
   def policy=(_); end
   def self.[](*arg0); end
@@ -656,10 +738,10 @@ class Anonymous_Struct_96 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::GetKeyPolicyResponse < Anonymous_Struct_96
+class Aws::KMS::Types::GetKeyPolicyResponse < Anonymous_Struct_103
   include Aws::Structure
 end
-class Anonymous_Struct_97 < Struct
+class Anonymous_Struct_104 < Struct
   def key_id; end
   def key_id=(_); end
   def self.[](*arg0); end
@@ -667,10 +749,10 @@ class Anonymous_Struct_97 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::GetKeyRotationStatusRequest < Anonymous_Struct_97
+class Aws::KMS::Types::GetKeyRotationStatusRequest < Anonymous_Struct_104
   include Aws::Structure
 end
-class Anonymous_Struct_98 < Struct
+class Anonymous_Struct_105 < Struct
   def key_rotation_enabled; end
   def key_rotation_enabled=(_); end
   def self.[](*arg0); end
@@ -678,10 +760,10 @@ class Anonymous_Struct_98 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::GetKeyRotationStatusResponse < Anonymous_Struct_98
+class Aws::KMS::Types::GetKeyRotationStatusResponse < Anonymous_Struct_105
   include Aws::Structure
 end
-class Anonymous_Struct_99 < Struct
+class Anonymous_Struct_106 < Struct
   def key_id; end
   def key_id=(_); end
   def self.[](*arg0); end
@@ -693,10 +775,10 @@ class Anonymous_Struct_99 < Struct
   def wrapping_key_spec; end
   def wrapping_key_spec=(_); end
 end
-class Aws::KMS::Types::GetParametersForImportRequest < Anonymous_Struct_99
+class Aws::KMS::Types::GetParametersForImportRequest < Anonymous_Struct_106
   include Aws::Structure
 end
-class Anonymous_Struct_100 < Struct
+class Anonymous_Struct_107 < Struct
   def import_token; end
   def import_token=(_); end
   def key_id; end
@@ -710,10 +792,44 @@ class Anonymous_Struct_100 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::GetParametersForImportResponse < Anonymous_Struct_100
+class Aws::KMS::Types::GetParametersForImportResponse < Anonymous_Struct_107
   include Aws::Structure
 end
-class Anonymous_Struct_101 < Struct
+class Anonymous_Struct_108 < Struct
+  def grant_tokens; end
+  def grant_tokens=(_); end
+  def key_id; end
+  def key_id=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::GetPublicKeyRequest < Anonymous_Struct_108
+  include Aws::Structure
+end
+class Anonymous_Struct_109 < Struct
+  def customer_master_key_spec; end
+  def customer_master_key_spec=(_); end
+  def encryption_algorithms; end
+  def encryption_algorithms=(_); end
+  def key_id; end
+  def key_id=(_); end
+  def key_usage; end
+  def key_usage=(_); end
+  def public_key; end
+  def public_key=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+  def signing_algorithms; end
+  def signing_algorithms=(_); end
+end
+class Aws::KMS::Types::GetPublicKeyResponse < Anonymous_Struct_109
+  include Aws::Structure
+end
+class Anonymous_Struct_110 < Struct
   def encryption_context_equals; end
   def encryption_context_equals=(_); end
   def encryption_context_subset; end
@@ -723,10 +839,10 @@ class Anonymous_Struct_101 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::GrantConstraints < Anonymous_Struct_101
+class Aws::KMS::Types::GrantConstraints < Anonymous_Struct_110
   include Aws::Structure
 end
-class Anonymous_Struct_102 < Struct
+class Anonymous_Struct_111 < Struct
   def constraints; end
   def constraints=(_); end
   def creation_date; end
@@ -750,10 +866,10 @@ class Anonymous_Struct_102 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::GrantListEntry < Anonymous_Struct_102
+class Aws::KMS::Types::GrantListEntry < Anonymous_Struct_111
   include Aws::Structure
 end
-class Anonymous_Struct_103 < Struct
+class Anonymous_Struct_112 < Struct
   def encrypted_key_material; end
   def encrypted_key_material=(_); end
   def expiration_model; end
@@ -769,109 +885,10 @@ class Anonymous_Struct_103 < Struct
   def valid_to; end
   def valid_to=(_); end
 end
-class Aws::KMS::Types::ImportKeyMaterialRequest < Anonymous_Struct_103
+class Aws::KMS::Types::ImportKeyMaterialRequest < Anonymous_Struct_112
   include Aws::Structure
 end
 class Aws::KMS::Types::ImportKeyMaterialResponse < Aws::EmptyStructure
-end
-class Anonymous_Struct_104 < Struct
-  def message; end
-  def message=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Aws::KMS::Types::IncorrectKeyMaterialException < Anonymous_Struct_104
-  include Aws::Structure
-end
-class Anonymous_Struct_105 < Struct
-  def message; end
-  def message=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Aws::KMS::Types::IncorrectTrustAnchorException < Anonymous_Struct_105
-  include Aws::Structure
-end
-class Anonymous_Struct_106 < Struct
-  def message; end
-  def message=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Aws::KMS::Types::InvalidAliasNameException < Anonymous_Struct_106
-  include Aws::Structure
-end
-class Anonymous_Struct_107 < Struct
-  def message; end
-  def message=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Aws::KMS::Types::InvalidArnException < Anonymous_Struct_107
-  include Aws::Structure
-end
-class Anonymous_Struct_108 < Struct
-  def message; end
-  def message=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Aws::KMS::Types::InvalidCiphertextException < Anonymous_Struct_108
-  include Aws::Structure
-end
-class Anonymous_Struct_109 < Struct
-  def message; end
-  def message=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Aws::KMS::Types::InvalidGrantIdException < Anonymous_Struct_109
-  include Aws::Structure
-end
-class Anonymous_Struct_110 < Struct
-  def message; end
-  def message=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Aws::KMS::Types::InvalidGrantTokenException < Anonymous_Struct_110
-  include Aws::Structure
-end
-class Anonymous_Struct_111 < Struct
-  def message; end
-  def message=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Aws::KMS::Types::InvalidImportTokenException < Anonymous_Struct_111
-  include Aws::Structure
-end
-class Anonymous_Struct_112 < Struct
-  def message; end
-  def message=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-end
-class Aws::KMS::Types::InvalidKeyUsageException < Anonymous_Struct_112
-  include Aws::Structure
 end
 class Anonymous_Struct_113 < Struct
   def message; end
@@ -881,7 +898,7 @@ class Anonymous_Struct_113 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::InvalidMarkerException < Anonymous_Struct_113
+class Aws::KMS::Types::IncorrectKeyException < Anonymous_Struct_113
   include Aws::Structure
 end
 class Anonymous_Struct_114 < Struct
@@ -892,7 +909,7 @@ class Anonymous_Struct_114 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::KMSInternalException < Anonymous_Struct_114
+class Aws::KMS::Types::IncorrectKeyMaterialException < Anonymous_Struct_114
   include Aws::Structure
 end
 class Anonymous_Struct_115 < Struct
@@ -903,10 +920,131 @@ class Anonymous_Struct_115 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::KMSInvalidStateException < Anonymous_Struct_115
+class Aws::KMS::Types::IncorrectTrustAnchorException < Anonymous_Struct_115
   include Aws::Structure
 end
 class Anonymous_Struct_116 < Struct
+  def message; end
+  def message=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::InvalidAliasNameException < Anonymous_Struct_116
+  include Aws::Structure
+end
+class Anonymous_Struct_117 < Struct
+  def message; end
+  def message=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::InvalidArnException < Anonymous_Struct_117
+  include Aws::Structure
+end
+class Anonymous_Struct_118 < Struct
+  def message; end
+  def message=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::InvalidCiphertextException < Anonymous_Struct_118
+  include Aws::Structure
+end
+class Anonymous_Struct_119 < Struct
+  def message; end
+  def message=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::InvalidGrantIdException < Anonymous_Struct_119
+  include Aws::Structure
+end
+class Anonymous_Struct_120 < Struct
+  def message; end
+  def message=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::InvalidGrantTokenException < Anonymous_Struct_120
+  include Aws::Structure
+end
+class Anonymous_Struct_121 < Struct
+  def message; end
+  def message=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::InvalidImportTokenException < Anonymous_Struct_121
+  include Aws::Structure
+end
+class Anonymous_Struct_122 < Struct
+  def message; end
+  def message=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::InvalidKeyUsageException < Anonymous_Struct_122
+  include Aws::Structure
+end
+class Anonymous_Struct_123 < Struct
+  def message; end
+  def message=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::InvalidMarkerException < Anonymous_Struct_123
+  include Aws::Structure
+end
+class Anonymous_Struct_124 < Struct
+  def message; end
+  def message=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::KMSInternalException < Anonymous_Struct_124
+  include Aws::Structure
+end
+class Anonymous_Struct_125 < Struct
+  def message; end
+  def message=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::KMSInvalidSignatureException < Anonymous_Struct_125
+  include Aws::Structure
+end
+class Anonymous_Struct_126 < Struct
+  def message; end
+  def message=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class Aws::KMS::Types::KMSInvalidStateException < Anonymous_Struct_126
+  include Aws::Structure
+end
+class Anonymous_Struct_127 < Struct
   def key_arn; end
   def key_arn=(_); end
   def key_id; end
@@ -916,10 +1054,10 @@ class Anonymous_Struct_116 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::KeyListEntry < Anonymous_Struct_116
+class Aws::KMS::Types::KeyListEntry < Anonymous_Struct_127
   include Aws::Structure
 end
-class Anonymous_Struct_117 < Struct
+class Anonymous_Struct_128 < Struct
   def arn; end
   def arn=(_); end
   def aws_account_id; end
@@ -930,12 +1068,16 @@ class Anonymous_Struct_117 < Struct
   def creation_date=(_); end
   def custom_key_store_id; end
   def custom_key_store_id=(_); end
+  def customer_master_key_spec; end
+  def customer_master_key_spec=(_); end
   def deletion_date; end
   def deletion_date=(_); end
   def description; end
   def description=(_); end
   def enabled; end
   def enabled=(_); end
+  def encryption_algorithms; end
+  def encryption_algorithms=(_); end
   def expiration_model; end
   def expiration_model=(_); end
   def key_id; end
@@ -952,13 +1094,15 @@ class Anonymous_Struct_117 < Struct
   def self.inspect; end
   def self.members; end
   def self.new(*arg0); end
+  def signing_algorithms; end
+  def signing_algorithms=(_); end
   def valid_to; end
   def valid_to=(_); end
 end
-class Aws::KMS::Types::KeyMetadata < Anonymous_Struct_117
+class Aws::KMS::Types::KeyMetadata < Anonymous_Struct_128
   include Aws::Structure
 end
-class Anonymous_Struct_118 < Struct
+class Anonymous_Struct_129 < Struct
   def message; end
   def message=(_); end
   def self.[](*arg0); end
@@ -966,10 +1110,10 @@ class Anonymous_Struct_118 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::KeyUnavailableException < Anonymous_Struct_118
+class Aws::KMS::Types::KeyUnavailableException < Anonymous_Struct_129
   include Aws::Structure
 end
-class Anonymous_Struct_119 < Struct
+class Anonymous_Struct_130 < Struct
   def message; end
   def message=(_); end
   def self.[](*arg0); end
@@ -977,10 +1121,10 @@ class Anonymous_Struct_119 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::LimitExceededException < Anonymous_Struct_119
+class Aws::KMS::Types::LimitExceededException < Anonymous_Struct_130
   include Aws::Structure
 end
-class Anonymous_Struct_120 < Struct
+class Anonymous_Struct_131 < Struct
   def key_id; end
   def key_id=(_); end
   def limit; end
@@ -992,10 +1136,10 @@ class Anonymous_Struct_120 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::ListAliasesRequest < Anonymous_Struct_120
+class Aws::KMS::Types::ListAliasesRequest < Anonymous_Struct_131
   include Aws::Structure
 end
-class Anonymous_Struct_121 < Struct
+class Anonymous_Struct_132 < Struct
   def aliases; end
   def aliases=(_); end
   def next_marker; end
@@ -1007,10 +1151,10 @@ class Anonymous_Struct_121 < Struct
   def truncated; end
   def truncated=(_); end
 end
-class Aws::KMS::Types::ListAliasesResponse < Anonymous_Struct_121
+class Aws::KMS::Types::ListAliasesResponse < Anonymous_Struct_132
   include Aws::Structure
 end
-class Anonymous_Struct_122 < Struct
+class Anonymous_Struct_133 < Struct
   def key_id; end
   def key_id=(_); end
   def limit; end
@@ -1022,10 +1166,10 @@ class Anonymous_Struct_122 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::ListGrantsRequest < Anonymous_Struct_122
+class Aws::KMS::Types::ListGrantsRequest < Anonymous_Struct_133
   include Aws::Structure
 end
-class Anonymous_Struct_123 < Struct
+class Anonymous_Struct_134 < Struct
   def grants; end
   def grants=(_); end
   def next_marker; end
@@ -1037,10 +1181,10 @@ class Anonymous_Struct_123 < Struct
   def truncated; end
   def truncated=(_); end
 end
-class Aws::KMS::Types::ListGrantsResponse < Anonymous_Struct_123
+class Aws::KMS::Types::ListGrantsResponse < Anonymous_Struct_134
   include Aws::Structure
 end
-class Anonymous_Struct_124 < Struct
+class Anonymous_Struct_135 < Struct
   def key_id; end
   def key_id=(_); end
   def limit; end
@@ -1052,10 +1196,10 @@ class Anonymous_Struct_124 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::ListKeyPoliciesRequest < Anonymous_Struct_124
+class Aws::KMS::Types::ListKeyPoliciesRequest < Anonymous_Struct_135
   include Aws::Structure
 end
-class Anonymous_Struct_125 < Struct
+class Anonymous_Struct_136 < Struct
   def next_marker; end
   def next_marker=(_); end
   def policy_names; end
@@ -1067,10 +1211,10 @@ class Anonymous_Struct_125 < Struct
   def truncated; end
   def truncated=(_); end
 end
-class Aws::KMS::Types::ListKeyPoliciesResponse < Anonymous_Struct_125
+class Aws::KMS::Types::ListKeyPoliciesResponse < Anonymous_Struct_136
   include Aws::Structure
 end
-class Anonymous_Struct_126 < Struct
+class Anonymous_Struct_137 < Struct
   def limit; end
   def limit=(_); end
   def marker; end
@@ -1080,10 +1224,10 @@ class Anonymous_Struct_126 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::ListKeysRequest < Anonymous_Struct_126
+class Aws::KMS::Types::ListKeysRequest < Anonymous_Struct_137
   include Aws::Structure
 end
-class Anonymous_Struct_127 < Struct
+class Anonymous_Struct_138 < Struct
   def keys; end
   def keys=(_); end
   def next_marker; end
@@ -1095,10 +1239,10 @@ class Anonymous_Struct_127 < Struct
   def truncated; end
   def truncated=(_); end
 end
-class Aws::KMS::Types::ListKeysResponse < Anonymous_Struct_127
+class Aws::KMS::Types::ListKeysResponse < Anonymous_Struct_138
   include Aws::Structure
 end
-class Anonymous_Struct_128 < Struct
+class Anonymous_Struct_139 < Struct
   def key_id; end
   def key_id=(_); end
   def limit; end
@@ -1110,10 +1254,10 @@ class Anonymous_Struct_128 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::ListResourceTagsRequest < Anonymous_Struct_128
+class Aws::KMS::Types::ListResourceTagsRequest < Anonymous_Struct_139
   include Aws::Structure
 end
-class Anonymous_Struct_129 < Struct
+class Anonymous_Struct_140 < Struct
   def next_marker; end
   def next_marker=(_); end
   def self.[](*arg0); end
@@ -1125,10 +1269,10 @@ class Anonymous_Struct_129 < Struct
   def truncated; end
   def truncated=(_); end
 end
-class Aws::KMS::Types::ListResourceTagsResponse < Anonymous_Struct_129
+class Aws::KMS::Types::ListResourceTagsResponse < Anonymous_Struct_140
   include Aws::Structure
 end
-class Anonymous_Struct_130 < Struct
+class Anonymous_Struct_141 < Struct
   def limit; end
   def limit=(_); end
   def marker; end
@@ -1140,10 +1284,10 @@ class Anonymous_Struct_130 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::ListRetirableGrantsRequest < Anonymous_Struct_130
+class Aws::KMS::Types::ListRetirableGrantsRequest < Anonymous_Struct_141
   include Aws::Structure
 end
-class Anonymous_Struct_131 < Struct
+class Anonymous_Struct_142 < Struct
   def message; end
   def message=(_); end
   def self.[](*arg0); end
@@ -1151,10 +1295,10 @@ class Anonymous_Struct_131 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::MalformedPolicyDocumentException < Anonymous_Struct_131
+class Aws::KMS::Types::MalformedPolicyDocumentException < Anonymous_Struct_142
   include Aws::Structure
 end
-class Anonymous_Struct_132 < Struct
+class Anonymous_Struct_143 < Struct
   def message; end
   def message=(_); end
   def self.[](*arg0); end
@@ -1162,10 +1306,10 @@ class Anonymous_Struct_132 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::NotFoundException < Anonymous_Struct_132
+class Aws::KMS::Types::NotFoundException < Anonymous_Struct_143
   include Aws::Structure
 end
-class Anonymous_Struct_133 < Struct
+class Anonymous_Struct_144 < Struct
   def bypass_policy_lockout_safety_check; end
   def bypass_policy_lockout_safety_check=(_); end
   def key_id; end
@@ -1179,12 +1323,14 @@ class Anonymous_Struct_133 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::PutKeyPolicyRequest < Anonymous_Struct_133
+class Aws::KMS::Types::PutKeyPolicyRequest < Anonymous_Struct_144
   include Aws::Structure
 end
-class Anonymous_Struct_134 < Struct
+class Anonymous_Struct_145 < Struct
   def ciphertext_blob; end
   def ciphertext_blob=(_); end
+  def destination_encryption_algorithm; end
+  def destination_encryption_algorithm=(_); end
   def destination_encryption_context; end
   def destination_encryption_context=(_); end
   def destination_key_id; end
@@ -1195,28 +1341,36 @@ class Anonymous_Struct_134 < Struct
   def self.inspect; end
   def self.members; end
   def self.new(*arg0); end
+  def source_encryption_algorithm; end
+  def source_encryption_algorithm=(_); end
   def source_encryption_context; end
   def source_encryption_context=(_); end
+  def source_key_id; end
+  def source_key_id=(_); end
 end
-class Aws::KMS::Types::ReEncryptRequest < Anonymous_Struct_134
+class Aws::KMS::Types::ReEncryptRequest < Anonymous_Struct_145
   include Aws::Structure
 end
-class Anonymous_Struct_135 < Struct
+class Anonymous_Struct_146 < Struct
   def ciphertext_blob; end
   def ciphertext_blob=(_); end
+  def destination_encryption_algorithm; end
+  def destination_encryption_algorithm=(_); end
   def key_id; end
   def key_id=(_); end
   def self.[](*arg0); end
   def self.inspect; end
   def self.members; end
   def self.new(*arg0); end
+  def source_encryption_algorithm; end
+  def source_encryption_algorithm=(_); end
   def source_key_id; end
   def source_key_id=(_); end
 end
-class Aws::KMS::Types::ReEncryptResponse < Anonymous_Struct_135
+class Aws::KMS::Types::ReEncryptResponse < Anonymous_Struct_146
   include Aws::Structure
 end
-class Anonymous_Struct_136 < Struct
+class Anonymous_Struct_147 < Struct
   def grant_id; end
   def grant_id=(_); end
   def grant_token; end
@@ -1228,10 +1382,10 @@ class Anonymous_Struct_136 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::RetireGrantRequest < Anonymous_Struct_136
+class Aws::KMS::Types::RetireGrantRequest < Anonymous_Struct_147
   include Aws::Structure
 end
-class Anonymous_Struct_137 < Struct
+class Anonymous_Struct_148 < Struct
   def grant_id; end
   def grant_id=(_); end
   def key_id; end
@@ -1241,10 +1395,10 @@ class Anonymous_Struct_137 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::RevokeGrantRequest < Anonymous_Struct_137
+class Aws::KMS::Types::RevokeGrantRequest < Anonymous_Struct_148
   include Aws::Structure
 end
-class Anonymous_Struct_138 < Struct
+class Anonymous_Struct_149 < Struct
   def key_id; end
   def key_id=(_); end
   def pending_window_in_days; end
@@ -1254,10 +1408,10 @@ class Anonymous_Struct_138 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::ScheduleKeyDeletionRequest < Anonymous_Struct_138
+class Aws::KMS::Types::ScheduleKeyDeletionRequest < Anonymous_Struct_149
   include Aws::Structure
 end
-class Anonymous_Struct_139 < Struct
+class Anonymous_Struct_150 < Struct
   def deletion_date; end
   def deletion_date=(_); end
   def key_id; end
@@ -1267,10 +1421,44 @@ class Anonymous_Struct_139 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::ScheduleKeyDeletionResponse < Anonymous_Struct_139
+class Aws::KMS::Types::ScheduleKeyDeletionResponse < Anonymous_Struct_150
   include Aws::Structure
 end
-class Anonymous_Struct_140 < Struct
+class Anonymous_Struct_151 < Struct
+  def grant_tokens; end
+  def grant_tokens=(_); end
+  def key_id; end
+  def key_id=(_); end
+  def message; end
+  def message=(_); end
+  def message_type; end
+  def message_type=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+  def signing_algorithm; end
+  def signing_algorithm=(_); end
+end
+class Aws::KMS::Types::SignRequest < Anonymous_Struct_151
+  include Aws::Structure
+end
+class Anonymous_Struct_152 < Struct
+  def key_id; end
+  def key_id=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+  def signature; end
+  def signature=(_); end
+  def signing_algorithm; end
+  def signing_algorithm=(_); end
+end
+class Aws::KMS::Types::SignResponse < Anonymous_Struct_152
+  include Aws::Structure
+end
+class Anonymous_Struct_153 < Struct
   def self.[](*arg0); end
   def self.inspect; end
   def self.members; end
@@ -1280,10 +1468,10 @@ class Anonymous_Struct_140 < Struct
   def tag_value; end
   def tag_value=(_); end
 end
-class Aws::KMS::Types::Tag < Anonymous_Struct_140
+class Aws::KMS::Types::Tag < Anonymous_Struct_153
   include Aws::Structure
 end
-class Anonymous_Struct_141 < Struct
+class Anonymous_Struct_154 < Struct
   def message; end
   def message=(_); end
   def self.[](*arg0); end
@@ -1291,10 +1479,10 @@ class Anonymous_Struct_141 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::TagException < Anonymous_Struct_141
+class Aws::KMS::Types::TagException < Anonymous_Struct_154
   include Aws::Structure
 end
-class Anonymous_Struct_142 < Struct
+class Anonymous_Struct_155 < Struct
   def key_id; end
   def key_id=(_); end
   def self.[](*arg0); end
@@ -1304,10 +1492,10 @@ class Anonymous_Struct_142 < Struct
   def tags; end
   def tags=(_); end
 end
-class Aws::KMS::Types::TagResourceRequest < Anonymous_Struct_142
+class Aws::KMS::Types::TagResourceRequest < Anonymous_Struct_155
   include Aws::Structure
 end
-class Anonymous_Struct_143 < Struct
+class Anonymous_Struct_156 < Struct
   def message; end
   def message=(_); end
   def self.[](*arg0); end
@@ -1315,10 +1503,10 @@ class Anonymous_Struct_143 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::UnsupportedOperationException < Anonymous_Struct_143
+class Aws::KMS::Types::UnsupportedOperationException < Anonymous_Struct_156
   include Aws::Structure
 end
-class Anonymous_Struct_144 < Struct
+class Anonymous_Struct_157 < Struct
   def key_id; end
   def key_id=(_); end
   def self.[](*arg0); end
@@ -1328,10 +1516,10 @@ class Anonymous_Struct_144 < Struct
   def tag_keys; end
   def tag_keys=(_); end
 end
-class Aws::KMS::Types::UntagResourceRequest < Anonymous_Struct_144
+class Aws::KMS::Types::UntagResourceRequest < Anonymous_Struct_157
   include Aws::Structure
 end
-class Anonymous_Struct_145 < Struct
+class Anonymous_Struct_158 < Struct
   def alias_name; end
   def alias_name=(_); end
   def self.[](*arg0); end
@@ -1341,10 +1529,10 @@ class Anonymous_Struct_145 < Struct
   def target_key_id; end
   def target_key_id=(_); end
 end
-class Aws::KMS::Types::UpdateAliasRequest < Anonymous_Struct_145
+class Aws::KMS::Types::UpdateAliasRequest < Anonymous_Struct_158
   include Aws::Structure
 end
-class Anonymous_Struct_146 < Struct
+class Anonymous_Struct_159 < Struct
   def cloud_hsm_cluster_id; end
   def cloud_hsm_cluster_id=(_); end
   def custom_key_store_id; end
@@ -1358,12 +1546,12 @@ class Anonymous_Struct_146 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::UpdateCustomKeyStoreRequest < Anonymous_Struct_146
+class Aws::KMS::Types::UpdateCustomKeyStoreRequest < Anonymous_Struct_159
   include Aws::Structure
 end
 class Aws::KMS::Types::UpdateCustomKeyStoreResponse < Aws::EmptyStructure
 end
-class Anonymous_Struct_147 < Struct
+class Anonymous_Struct_160 < Struct
   def description; end
   def description=(_); end
   def key_id; end
@@ -1373,7 +1561,43 @@ class Anonymous_Struct_147 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Aws::KMS::Types::UpdateKeyDescriptionRequest < Anonymous_Struct_147
+class Aws::KMS::Types::UpdateKeyDescriptionRequest < Anonymous_Struct_160
+  include Aws::Structure
+end
+class Anonymous_Struct_161 < Struct
+  def grant_tokens; end
+  def grant_tokens=(_); end
+  def key_id; end
+  def key_id=(_); end
+  def message; end
+  def message=(_); end
+  def message_type; end
+  def message_type=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+  def signature; end
+  def signature=(_); end
+  def signing_algorithm; end
+  def signing_algorithm=(_); end
+end
+class Aws::KMS::Types::VerifyRequest < Anonymous_Struct_161
+  include Aws::Structure
+end
+class Anonymous_Struct_162 < Struct
+  def key_id; end
+  def key_id=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+  def signature_valid; end
+  def signature_valid=(_); end
+  def signing_algorithm; end
+  def signing_algorithm=(_); end
+end
+class Aws::KMS::Types::VerifyResponse < Anonymous_Struct_162
   include Aws::Structure
 end
 module Aws::KMS::ClientApi
@@ -1400,11 +1624,14 @@ class Aws::KMS::Client < Seahorse::Client::Base
   def enable_key_rotation(params = nil, options = nil); end
   def encrypt(params = nil, options = nil); end
   def generate_data_key(params = nil, options = nil); end
+  def generate_data_key_pair(params = nil, options = nil); end
+  def generate_data_key_pair_without_plaintext(params = nil, options = nil); end
   def generate_data_key_without_plaintext(params = nil, options = nil); end
   def generate_random(params = nil, options = nil); end
   def get_key_policy(params = nil, options = nil); end
   def get_key_rotation_status(params = nil, options = nil); end
   def get_parameters_for_import(params = nil, options = nil); end
+  def get_public_key(params = nil, options = nil); end
   def import_key_material(params = nil, options = nil); end
   def initialize(*args); end
   def list_aliases(params = nil, options = nil); end
@@ -1420,13 +1647,64 @@ class Aws::KMS::Client < Seahorse::Client::Base
   def schedule_key_deletion(params = nil, options = nil); end
   def self.errors_module; end
   def self.identifier; end
+  def sign(params = nil, options = nil); end
   def tag_resource(params = nil, options = nil); end
   def untag_resource(params = nil, options = nil); end
   def update_alias(params = nil, options = nil); end
   def update_custom_key_store(params = nil, options = nil); end
   def update_key_description(params = nil, options = nil); end
+  def verify(params = nil, options = nil); end
   def waiter_names; end
+  include Anonymous_Module_163
   include Aws::ClientStubs
+end
+module Anonymous_Module_163
+  def cancel_key_deletion(*args, &block); end
+  def connect_custom_key_store(*args, &block); end
+  def create_alias(*args, &block); end
+  def create_custom_key_store(*args, &block); end
+  def create_grant(*args, &block); end
+  def create_key(*args, &block); end
+  def decrypt(*args, &block); end
+  def delete_alias(*args, &block); end
+  def delete_custom_key_store(*args, &block); end
+  def delete_imported_key_material(*args, &block); end
+  def describe_custom_key_stores(*args, &block); end
+  def describe_key(*args, &block); end
+  def disable_key(*args, &block); end
+  def disable_key_rotation(*args, &block); end
+  def disconnect_custom_key_store(*args, &block); end
+  def enable_key(*args, &block); end
+  def enable_key_rotation(*args, &block); end
+  def encrypt(*args, &block); end
+  def generate_data_key(*args, &block); end
+  def generate_data_key_pair(*args, &block); end
+  def generate_data_key_pair_without_plaintext(*args, &block); end
+  def generate_data_key_without_plaintext(*args, &block); end
+  def generate_random(*args, &block); end
+  def get_key_policy(*args, &block); end
+  def get_key_rotation_status(*args, &block); end
+  def get_parameters_for_import(*args, &block); end
+  def get_public_key(*args, &block); end
+  def import_key_material(*args, &block); end
+  def list_aliases(*args, &block); end
+  def list_grants(*args, &block); end
+  def list_key_policies(*args, &block); end
+  def list_keys(*args, &block); end
+  def list_resource_tags(*args, &block); end
+  def list_retirable_grants(*args, &block); end
+  def put_key_policy(*args, &block); end
+  def re_encrypt(*args, &block); end
+  def retire_grant(*args, &block); end
+  def revoke_grant(*args, &block); end
+  def schedule_key_deletion(*args, &block); end
+  def sign(*args, &block); end
+  def tag_resource(*args, &block); end
+  def untag_resource(*args, &block); end
+  def update_alias(*args, &block); end
+  def update_custom_key_store(*args, &block); end
+  def update_key_description(*args, &block); end
+  def verify(*args, &block); end
 end
 module Aws::KMS::Errors
   extend Aws::Errors::DynamicErrors
@@ -1485,6 +1763,10 @@ class Aws::KMS::Errors::ExpiredImportTokenException < Aws::KMS::Errors::ServiceE
   def initialize(context, message, data = nil); end
   def message; end
 end
+class Aws::KMS::Errors::IncorrectKeyException < Aws::KMS::Errors::ServiceError
+  def initialize(context, message, data = nil); end
+  def message; end
+end
 class Aws::KMS::Errors::IncorrectKeyMaterialException < Aws::KMS::Errors::ServiceError
   def initialize(context, message, data = nil); end
   def message; end
@@ -1526,6 +1808,10 @@ class Aws::KMS::Errors::InvalidMarkerException < Aws::KMS::Errors::ServiceError
   def message; end
 end
 class Aws::KMS::Errors::KMSInternalException < Aws::KMS::Errors::ServiceError
+  def initialize(context, message, data = nil); end
+  def message; end
+end
+class Aws::KMS::Errors::KMSInvalidSignatureException < Aws::KMS::Errors::ServiceError
   def initialize(context, message, data = nil); end
   def message; end
 end

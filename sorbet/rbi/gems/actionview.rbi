@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/actionview/all/actionview.rbi
 #
-# actionview-6.0.0
+# actionview-6.0.2.1
 module ActionView
   def self.eager_load!; end
   def self.gem_version; end
@@ -568,15 +568,150 @@ module ActionView::Helpers::TranslationHelper
   extend ActiveSupport::Concern
   include ActionView::Helpers::TagHelper
 end
-class ActionView::LogSubscriber < ActiveSupport::LogSubscriber
+class ActionView::AbstractRenderer
+  def any_templates?(*args, &block); end
+  def build_rendered_collection(templates, spacer); end
+  def build_rendered_template(content, template, layout = nil); end
+  def extract_details(options); end
+  def formats(*args, &block); end
+  def initialize(lookup_context); end
+  def instrument(name, **options); end
+  def prepend_formats(formats); end
+  def render; end
+  def template_exists?(*args, &block); end
 end
-module ActionView::Context
-  def _layout_for(name = nil); end
-  def _prepare_context; end
-  def output_buffer; end
-  def output_buffer=(arg0); end
-  def view_flow; end
-  def view_flow=(arg0); end
+class ActionView::AbstractRenderer::RenderedCollection
+  def body; end
+  def format; end
+  def initialize(rendered_templates, spacer); end
+  def rendered_templates; end
+  def self.empty(format); end
+end
+class ActionView::AbstractRenderer::RenderedCollection::EmptyCollection
+  def body; end
+  def format; end
+  def initialize(format); end
+end
+class ActionView::AbstractRenderer::RenderedTemplate
+  def body; end
+  def format; end
+  def initialize(body, layout, template); end
+  def layout; end
+  def template; end
+end
+class ActionView::TemplateRenderer < ActionView::AbstractRenderer
+  def determine_template(options); end
+  def find_layout(layout, keys, formats); end
+  def render(context, options); end
+  def render_template(view, template, layout_name, locals); end
+  def render_with_layout(*args, &block); end
+  def resolve_layout(layout, keys, formats); end
+end
+module ActionView::ViewPaths
+  def _prefixes; end
+  def any_templates?(*args, &block); end
+  def append_view_path(path); end
+  def details_for_lookup; end
+  def formats(*args, &block); end
+  def formats=(arg); end
+  def locale(*args, &block); end
+  def locale=(arg); end
+  def lookup_context; end
+  def prepend_view_path(path); end
+  def self.all_view_paths; end
+  def self.get_view_paths(klass); end
+  def self.set_view_paths(klass, paths); end
+  def template_exists?(*args, &block); end
+  def view_paths(*args, &block); end
+  extend ActiveSupport::Concern
+end
+module ActionView::ViewPaths::ClassMethods
+  def _prefixes; end
+  def _view_paths; end
+  def _view_paths=(paths); end
+  def append_view_path(path); end
+  def local_prefixes; end
+  def prepend_view_path(path); end
+  def view_paths; end
+  def view_paths=(paths); end
+end
+class ActionView::PathSet
+  def +(array); end
+  def <<(*args); end
+  def [](*args, &block); end
+  def _find_all(path, prefixes, args); end
+  def compact; end
+  def concat(*args); end
+  def each(*args, &block); end
+  def exists?(path, prefixes, *args); end
+  def find(*args); end
+  def find_all(path, prefixes = nil, *args); end
+  def find_all_with_query(query); end
+  def find_file(*args, &block); end
+  def include?(*args, &block); end
+  def initialize(paths = nil); end
+  def initialize_copy(other); end
+  def insert(*args); end
+  def paths; end
+  def pop(*args, &block); end
+  def push(*args); end
+  def size(*args, &block); end
+  def to_ary; end
+  def typecast(paths); end
+  def unshift(*args); end
+  include Enumerable
+end
+class ActionView::I18nProxy < I18n::Config
+  def initialize(original_config, lookup_context); end
+  def locale; end
+  def locale=(value); end
+  def lookup_context; end
+  def original_config; end
+end
+module ActionView::Rendering
+  def _normalize_args(action = nil, options = nil); end
+  def _normalize_options(options); end
+  def _process_format(format); end
+  def _render_template(options); end
+  def initialize; end
+  def process(*arg0); end
+  def render_to_body(options = nil); end
+  def rendered_format; end
+  def view_context; end
+  def view_context_class; end
+  def view_renderer; end
+  extend ActiveSupport::Concern
+  include ActionView::ViewPaths
+end
+module ActionView::Rendering::ClassMethods
+  def _helpers; end
+  def _routes; end
+  def build_view_context_class(klass, supports_path, routes, helpers); end
+  def view_context_class; end
+end
+module ActionView::Layouts
+  def _conditional_layout?; end
+  def _default_layout(lookup_context, formats, require_layout = nil); end
+  def _include_layout?(options); end
+  def _layout(*arg0); end
+  def _layout_conditions(*args, &block); end
+  def _layout_for_option(name); end
+  def _normalize_layout(value); end
+  def _normalize_options(options); end
+  def action_has_layout=(arg0); end
+  def action_has_layout?; end
+  def initialize(*arg0); end
+  extend ActiveSupport::Concern
+  include ActionView::Rendering
+end
+module ActionView::Layouts::ClassMethods
+  def _implied_layout_name; end
+  def _write_layout_method; end
+  def inherited(klass); end
+  def layout(layout, conditions = nil); end
+end
+module ActionView::Layouts::ClassMethods::LayoutConditions
+  def _conditional_layout?; end
 end
 class ActionView::Template
   def compile!(view); end
@@ -603,6 +738,8 @@ class ActionView::Template
   def original_encoding(*args, &block); end
   def refresh(*args, &block); end
   def render(*args, &orig); end
+  def render_with_mini_profiler(*args, &orig); end
+  def render_without_mini_profiler(view, locals, buffer = nil, &block); end
   def self.finalize_compiled_template_methods; end
   def self.finalize_compiled_template_methods=(_); end
   def short_identifier; end
@@ -686,7 +823,7 @@ class ActionView::Template::Handlers::Builder
   def self.default_format=(val); end
   def self.default_format?; end
 end
-class ActionView::Template::LegacyTemplate < Anonymous_Delegator_14
+class ActionView::Template::LegacyTemplate < Anonymous_Delegator_15
   def initialize(template, source); end
   def source; end
 end
@@ -761,6 +898,58 @@ class ActionView::FallbackFileSystemResolver < ActionView::FileSystemResolver
   def reject_files_external_to_app(files); end
   def self.instances; end
   def self.new(*arg0); end
+end
+module ActionView::CollectionCaching
+  def cache_collection_render(instrumentation_payload, view, template); end
+  def callable_cache_key?; end
+  def collection_by_cache_keys(view, template); end
+  def expanded_cache_key(key, view, template, digest_path); end
+  def fetch_or_cache_partial(cached_partials, template, order_by:); end
+  extend ActiveSupport::Concern
+end
+class ActionView::PartialIteration
+  def first?; end
+  def index; end
+  def initialize(size); end
+  def iterate!; end
+  def last?; end
+  def size; end
+end
+class ActionView::PartialRenderer < ActionView::AbstractRenderer
+  def as_variable(options); end
+  def collection_cache; end
+  def collection_cache=(obj); end
+  def collection_from_object; end
+  def collection_from_options; end
+  def collection_with_template(*arg0); end
+  def collection_without_template(*arg0); end
+  def find_partial(path, template_keys); end
+  def find_template(path, locals); end
+  def initialize(*arg0); end
+  def merge_prefix_into_object_path(prefix, object_path); end
+  def partial_path(object, view); end
+  def prefixed_partial_names; end
+  def raise_invalid_identifier(path); end
+  def raise_invalid_option_as(as); end
+  def render(context, options, block); end
+  def render_collection(view, template); end
+  def render_partial(view, template); end
+  def retrieve_template_keys(variable); end
+  def retrieve_variable(path, as); end
+  def self.collection_cache; end
+  def self.collection_cache=(obj); end
+  def setup(context, options, as, block); end
+  include ActionView::CollectionCaching
+end
+class ActionView::LogSubscriber < ActiveSupport::LogSubscriber
+end
+module ActionView::Context
+  def _layout_for(name = nil); end
+  def _prepare_context; end
+  def output_buffer; end
+  def output_buffer=(arg0); end
+  def view_flow; end
+  def view_flow=(arg0); end
 end
 class ActionView::LookupContext
   def digest_cache; end
@@ -854,6 +1043,26 @@ class ActionView::Template::Types::Type
   def to_str; end
   def to_sym; end
 end
+class ActionView::StreamingTemplateRenderer < ActionView::TemplateRenderer
+  def delayed_render(buffer, template, layout, view, locals); end
+  def render_template(view, template, layout_name = nil, locals = nil); end
+end
+class ActionView::StreamingTemplateRenderer::Body
+  def each(&block); end
+  def initialize(&start); end
+  def log_error(exception); end
+end
+class ActionView::CacheExpiry
+  def all_view_paths; end
+  def clear_cache; end
+  def clear_cache_if_necessary; end
+  def dirs_to_watch; end
+  def initialize(watcher:); end
+end
+class ActionView::CacheExpiry::Executor
+  def before(target); end
+  def initialize(watcher:); end
+end
 class ActionView::Base
   def _routes; end
   def _routes=(val); end
@@ -927,6 +1136,7 @@ class ActionView::Base
   extend ActionView::Helpers::SanitizeHelper::ClassMethods
   extend ActionView::Helpers::SanitizeHelper::ClassMethods
   extend ActionView::Helpers::UrlHelper::ClassMethods
+  include ActionCable::Helpers::ActionCableHelper
   include ActionView::Helpers
   include ActionView::Helpers::AssetTagHelper
   include ActionView::Helpers::FormHelper
@@ -945,220 +1155,8 @@ class ActionView::Base
   include ActionView::Helpers::UrlHelper
   include ActionView::Helpers::UrlHelper
   include ActionView::Helpers::UrlHelper
+  include Ahoy::Helper
+  include MetaTags::ViewHelper
   include SimpleForm::ActionViewExtensions::FormHelper
-end
-module ActionView::ViewPaths
-  def _prefixes; end
-  def any_templates?(*args, &block); end
-  def append_view_path(path); end
-  def details_for_lookup; end
-  def formats(*args, &block); end
-  def formats=(arg); end
-  def locale(*args, &block); end
-  def locale=(arg); end
-  def lookup_context; end
-  def prepend_view_path(path); end
-  def self.all_view_paths; end
-  def self.get_view_paths(klass); end
-  def self.set_view_paths(klass, paths); end
-  def template_exists?(*args, &block); end
-  def view_paths(*args, &block); end
-  extend ActiveSupport::Concern
-end
-module ActionView::ViewPaths::ClassMethods
-  def _prefixes; end
-  def _view_paths; end
-  def _view_paths=(paths); end
-  def append_view_path(path); end
-  def local_prefixes; end
-  def prepend_view_path(path); end
-  def view_paths; end
-  def view_paths=(paths); end
-end
-class ActionView::I18nProxy < I18n::Config
-  def initialize(original_config, lookup_context); end
-  def locale; end
-  def locale=(value); end
-  def lookup_context; end
-  def original_config; end
-end
-module ActionView::Rendering
-  def _normalize_args(action = nil, options = nil); end
-  def _normalize_options(options); end
-  def _process_format(format); end
-  def _render_template(options); end
-  def initialize; end
-  def process(*arg0); end
-  def render_to_body(options = nil); end
-  def rendered_format; end
-  def view_context; end
-  def view_context_class; end
-  def view_renderer; end
-  extend ActiveSupport::Concern
-  include ActionView::ViewPaths
-end
-module ActionView::Rendering::ClassMethods
-  def _helpers; end
-  def _routes; end
-  def build_view_context_class(klass, supports_path, routes, helpers); end
-  def view_context_class; end
-end
-module ActionView::Layouts
-  def _conditional_layout?; end
-  def _default_layout(lookup_context, formats, require_layout = nil); end
-  def _include_layout?(options); end
-  def _layout(*arg0); end
-  def _layout_conditions(*args, &block); end
-  def _layout_for_option(name); end
-  def _normalize_layout(value); end
-  def _normalize_options(options); end
-  def action_has_layout=(arg0); end
-  def action_has_layout?; end
-  def initialize(*arg0); end
-  extend ActiveSupport::Concern
-  include ActionView::Rendering
-end
-module ActionView::Layouts::ClassMethods
-  def _implied_layout_name; end
-  def _write_layout_method; end
-  def inherited(klass); end
-  def layout(layout, conditions = nil); end
-end
-module ActionView::Layouts::ClassMethods::LayoutConditions
-  def _conditional_layout?; end
-end
-class ActionView::PathSet
-  def +(array); end
-  def <<(*args); end
-  def [](*args, &block); end
-  def _find_all(path, prefixes, args); end
-  def compact; end
-  def concat(*args); end
-  def each(*args, &block); end
-  def exists?(path, prefixes, *args); end
-  def find(*args); end
-  def find_all(path, prefixes = nil, *args); end
-  def find_all_with_query(query); end
-  def find_file(*args, &block); end
-  def include?(*args, &block); end
-  def initialize(paths = nil); end
-  def initialize_copy(other); end
-  def insert(*args); end
-  def paths; end
-  def pop(*args, &block); end
-  def push(*args); end
-  def size(*args, &block); end
-  def to_ary; end
-  def typecast(paths); end
-  def unshift(*args); end
-  include Enumerable
-end
-module ActionView::CollectionCaching
-  def cache_collection_render(instrumentation_payload, view, template); end
-  def callable_cache_key?; end
-  def collection_by_cache_keys(view, template); end
-  def expanded_cache_key(key, view, template, digest_path); end
-  def fetch_or_cache_partial(cached_partials, template, order_by:); end
-  extend ActiveSupport::Concern
-end
-class ActionView::AbstractRenderer
-  def any_templates?(*args, &block); end
-  def build_rendered_collection(templates, spacer); end
-  def build_rendered_template(content, template, layout = nil); end
-  def extract_details(options); end
-  def formats(*args, &block); end
-  def initialize(lookup_context); end
-  def instrument(name, **options); end
-  def prepend_formats(formats); end
-  def render; end
-  def template_exists?(*args, &block); end
-end
-class ActionView::AbstractRenderer::RenderedCollection
-  def body; end
-  def format; end
-  def initialize(rendered_templates, spacer); end
-  def rendered_templates; end
-  def self.empty(format); end
-end
-class ActionView::AbstractRenderer::RenderedCollection::EmptyCollection
-  def body; end
-  def format; end
-  def initialize(format); end
-end
-class ActionView::AbstractRenderer::RenderedTemplate
-  def body; end
-  def format; end
-  def initialize(body, layout, template); end
-  def layout; end
-  def template; end
-end
-class ActionView::PartialIteration
-  def first?; end
-  def index; end
-  def initialize(size); end
-  def iterate!; end
-  def last?; end
-  def size; end
-end
-class ActionView::PartialRenderer < ActionView::AbstractRenderer
-  def as_variable(options); end
-  def collection_cache; end
-  def collection_cache=(obj); end
-  def collection_from_object; end
-  def collection_from_options; end
-  def collection_with_template(*arg0); end
-  def collection_without_template(*arg0); end
-  def find_partial(path, template_keys); end
-  def find_template(path, locals); end
-  def initialize(*arg0); end
-  def merge_prefix_into_object_path(prefix, object_path); end
-  def partial_path(object, view); end
-  def prefixed_partial_names; end
-  def raise_invalid_identifier(path); end
-  def raise_invalid_option_as(as); end
-  def render(context, options, block); end
-  def render_collection(view, template); end
-  def render_partial(view, template); end
-  def retrieve_template_keys(variable); end
-  def retrieve_variable(path, as); end
-  def self.collection_cache; end
-  def self.collection_cache=(obj); end
-  def setup(context, options, as, block); end
-  include ActionView::CollectionCaching
-end
-class ActionView::TemplateRenderer < ActionView::AbstractRenderer
-  def determine_template(options); end
-  def find_layout(layout, keys, formats); end
-  def render(context, options); end
-  def render_template(view, template, layout_name, locals); end
-  def render_with_layout(*args, &block); end
-  def resolve_layout(layout, keys, formats); end
-end
-class ActionView::StreamingTemplateRenderer < ActionView::TemplateRenderer
-  def delayed_render(buffer, template, layout, view, locals); end
-  def render_template(view, template, layout_name = nil, locals = nil); end
-end
-class ActionView::StreamingTemplateRenderer::Body
-  def each(&block); end
-  def initialize(&start); end
-  def log_error(exception); end
-end
-class ActionView::CacheExpiry
-  def all_view_paths; end
-  def clear_cache; end
-  def clear_cache_if_necessary; end
-  def dirs_to_watch; end
-  def initialize(watcher:); end
-end
-class ActionView::CacheExpiry::Executor
-  def before(target); end
-  def initialize(watcher:); end
-end
-module ActionView::RoutingUrlFor
-  def _generate_paths_by_default; end
-  def _routes_context; end
-  def ensure_only_path_option(options); end
-  def optimize_routes_generation?; end
-  def url_for(options = nil); end
-  def url_options; end
+  include Webpacker::Helper
 end

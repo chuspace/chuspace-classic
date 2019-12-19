@@ -5,9 +5,9 @@
 #
 # If you would like to make changes to this file, great! Please create the gem's shim here:
 #
-#   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/grpc-1.24.0-universal/all/grpc-1.24.0-universal.rbi
+#   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/grpc-1.25.0-universal/all/grpc-1.25.0-universal.rbi
 #
-# grpc-1.24.0-universal-darwin
+# grpc-1.25.0-universal-darwin
 class Struct::Status < Struct
   def code; end
   def code=(_); end
@@ -344,7 +344,7 @@ class GRPC::ClientStub
   include GRPC::Core::StatusCodes
   include GRPC::Core::TimeConsts
 end
-class Anonymous_Struct_407 < Struct
+class Anonymous_Struct_429 < Struct
   def input; end
   def input=(_); end
   def marshal_method; end
@@ -360,7 +360,7 @@ class Anonymous_Struct_407 < Struct
   def unmarshal_method; end
   def unmarshal_method=(_); end
 end
-class GRPC::RpcDesc < Anonymous_Struct_407
+class GRPC::RpcDesc < Anonymous_Struct_429
   def arity_error(mth, want, msg); end
   def assert_arity_matches(mth); end
   def bidi_streamer?; end

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/ruby-vips/all/ruby-vips.rbi
 #
-# ruby-vips-2.0.15
+# ruby-vips-2.0.16
 module GObject
   def g_object_get_property(*arg0); end
   def g_object_ref(*arg0); end
@@ -160,6 +160,10 @@ module Vips
   def self.vips_object_unref_outputs(*arg0); end
   def self.vips_operation_get_flags(*arg0); end
   def self.vips_operation_new(*arg0); end
+  def self.vips_region_fetch(*arg0); end
+  def self.vips_region_height(*arg0); end
+  def self.vips_region_new(*arg0); end
+  def self.vips_region_width(*arg0); end
   def self.vips_type_map(*arg0); end
   def self.vips_value_get_array_double(*arg0); end
   def self.vips_value_get_array_image(*arg0); end
@@ -218,6 +222,10 @@ module Vips
   def vips_object_unref_outputs(*arg0); end
   def vips_operation_get_flags(*arg0); end
   def vips_operation_new(*arg0); end
+  def vips_region_fetch(*arg0); end
+  def vips_region_height(*arg0); end
+  def vips_region_new(*arg0); end
+  def vips_region_width(*arg0); end
   def vips_type_map(*arg0); end
   def vips_value_get_array_double(*arg0); end
   def vips_value_get_array_image(*arg0); end
@@ -415,6 +423,24 @@ class Vips::Interpolate::Struct < Vips::Object::Struct
 end
 class Vips::Interpolate::ManagedStruct < Vips::Object::ManagedStruct
   include Vips::Interpolate::InterpolateLayout
+end
+class Vips::Region < Vips::Object
+  def fetch(left, top, width, height); end
+  def height; end
+  def initialize(name); end
+  def width; end
+end
+module Vips::Region::RegionLayout
+  def self.included(base); end
+end
+class Vips::Region::Struct < Vips::Object::Struct
+  include Vips::Region::RegionLayout
+end
+class Vips::Region::ManagedStruct < Vips::Object::ManagedStruct
+  include Vips::Region::RegionLayout
+end
+class Object < BasicObject
+  def library_name(name, abi_number); end
 end
 module GLib
   def g_free(*arg0); end

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/meta-tags/all/meta-tags.rbi
 #
-# meta-tags-2.12.0
+# meta-tags-2.13.0
 module MetaTags
   def self.config; end
   def self.configure; end
@@ -122,9 +122,5 @@ module MetaTags::ViewHelper
   def set_meta_tags(meta_tags = nil); end
   def title(title = nil, headline = nil); end
 end
-class ActionView::Base
-  include MetaTags::ViewHelper
-end
-class ActionController::Base < ActionController::Metal
-  include MetaTags::ControllerHelper
+class MetaTags::Railtie < Rails::Railtie
 end

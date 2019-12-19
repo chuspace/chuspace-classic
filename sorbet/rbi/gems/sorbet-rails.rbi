@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/sorbet-rails/all/sorbet-rails.rbi
 #
-# sorbet-rails-0.5.6
+# sorbet-rails-0.5.9.1
 module SorbetRails
   def self.config(&blk); end
   def self.configure(*args, &blk); end
@@ -106,6 +106,7 @@ class SorbetRails::ModelPlugins::ActiveRecordAttribute < SorbetRails::ModelPlugi
 end
 class SorbetRails::ModelPlugins::ActiveRecordAssoc < SorbetRails::ModelPlugins::Base
   def assoc_should_be_untyped?(*args, &blk); end
+  def belongs_to_and_required?(*args, &blk); end
   def generate(*args, &blk); end
   def initialize(*args, &blk); end
   def polymorphic_assoc?(*args, &blk); end
@@ -223,12 +224,11 @@ module SorbetRails::CustomFinderMethods
   def first_n(n); end
   def last_n(n); end
 end
-module SorbetRails::CustomParamsMethods
-  def fetch_typed(*args, &blk); end
-  def require_typed(*args, &blk); end
-  extend T::Helpers
+module SorbetRails::PluckToTStruct
+  def pluck_to_tstruct(*args, &blk); end
   extend T::Private::Methods::MethodHooks
   extend T::Private::Methods::SingletonMethodHooks
   extend T::Sig
-  include Kernel
+end
+class SorbetRails::PluckToTStruct::UnexpectedType < StandardError
 end

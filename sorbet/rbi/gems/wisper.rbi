@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/wisper/all/wisper.rbi
 #
-# wisper-2.0.0
+# wisper-2.0.1
 module Wisper
   def self.clear; end
   def self.configuration; end
@@ -109,12 +109,12 @@ class Wisper::GlobalListeners
   include Singleton
 end
 class Wisper::TemporaryListeners
-  def clear; end
+  def build_registrations(listeners); end
   def key; end
   def registrations; end
   def self.registrations; end
   def self.subscribe(*listeners, &block); end
-  def subscribe(*listeners, &block); end
+  def subscribe(*listeners, &_block); end
 end
 module Wisper::Broadcasters
 end

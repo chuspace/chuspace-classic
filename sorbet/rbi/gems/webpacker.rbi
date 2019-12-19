@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/webpacker/all/webpacker.rbi
 #
-# webpacker-2cef2fd6c208
+# webpacker-4.2.2
 class Webpacker::Instance
   def commands; end
   def compiler; end
@@ -110,13 +110,16 @@ class Webpacker::Compiler
 end
 class Webpacker::Commands
   def bootstrap; end
-  def clean(count_to_keep = nil); end
+  def clean(count = nil); end
   def clobber; end
   def compile; end
   def compiler(*args, &block); end
   def config(*args, &block); end
+  def current_version; end
   def initialize(webpacker); end
+  def logger(*args, &block); end
   def manifest(*args, &block); end
+  def versions; end
 end
 class Webpacker::DevServer
   def config; end
@@ -170,6 +173,7 @@ module Webpacker
   def compiler(*args, &block); end
   def config(*args, &block); end
   def dev_server(*args, &block); end
+  def ensure_log_goes_to_stdout; end
   def env(*args, &block); end
   def instance; end
   def instance=(instance); end

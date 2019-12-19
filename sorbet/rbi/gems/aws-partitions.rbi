@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/aws-partitions/all/aws-partitions.rbi
 #
-# aws-partitions-1.220.0
+# aws-partitions-1.257.0
 module Aws
 end
 module Aws::Partitions
@@ -21,18 +21,17 @@ module Aws::Partitions
   def self.service_ids; end
 end
 class Aws::Partitions::EndpointProvider
-  def default_endpoint(partition, service, region); end
   def default_partition; end
   def dns_suffix_for(region); end
-  def endpoint_for(region, service); end
+  def endpoint_for(region, service, sts_regional_endpoints); end
   def get_partition(region); end
   def initialize(rules); end
   def partition_containing_region(region); end
   def partition_matching_region(region); end
-  def resolve(region, service); end
+  def resolve(region, service, sts_regional_endpoints); end
   def self.default_provider; end
   def self.dns_suffix_for(region); end
-  def self.resolve(region, service); end
+  def self.resolve(region, service, sts_regional_endpoints = nil); end
   def self.signing_region(region, service); end
   def signing_region(region, service); end
 end
@@ -40,11 +39,13 @@ class Aws::Partitions::Partition
   def initialize(options = nil); end
   def name; end
   def region(region_name); end
+  def region?(region_name); end
   def regions; end
   def self.build(partition); end
   def self.build_regions(partition); end
   def self.build_services(partition); end
   def service(service_name); end
+  def service?(service_name); end
   def services; end
 end
 class Aws::Partitions::PartitionList

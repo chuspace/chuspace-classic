@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rack-mini-profiler/all/rack-mini-profiler.rbi
 #
-# rack-mini-profiler-1.1.0
+# rack-mini-profiler-1.1.4
 module Rack
 end
 class Rack::MiniProfiler
@@ -268,7 +268,6 @@ module Rack::MiniProfiler::ProfilingMethods
   def profile_method(klass, method, type = nil, &blk); end
   def profile_singleton_method(klass, method, type = nil, &blk); end
   def record_sql(query, elapsed_ms, params = nil); end
-  def singleton_class(klass); end
   def start_step(name); end
   def step(name, opts = nil); end
   def uncounter_method(klass, method); end
