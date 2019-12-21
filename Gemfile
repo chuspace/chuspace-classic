@@ -95,7 +95,7 @@ gem 'sorbet-runtime'
 gem 'sorbet-rails'
 
 # Github data
-gem 'octokit'
+gem 'octokit', require: false
 
 # environment variables
 gem 'dotenv-rails', require: 'dotenv/rails-now'

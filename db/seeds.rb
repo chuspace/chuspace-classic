@@ -1,6 +1,8 @@
 # typed: ignore
 # frozen_string_literal: true
 
+require 'octokit'
+
 return unless Rails.env.development? || ENV.fetch('RUN_DB_SEED', 'no') == 'yes'
 
 fetched = 0
