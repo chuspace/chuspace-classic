@@ -27,12 +27,15 @@ class Posts::PublishController < ApplicationController
           end
 
           @post.update(commit_sha: @publication.repository.commit_sha)
-          @publication.repository.tags.create(
-            @publication.repository.short_sha,
-            @publication.repository.commit_sha,
-            message: "Publish post #{@post.blob_path}",
-            tagger: { name: Current.user.name, email: Current.user.email, time: Time.now }
-          )
+
+          if @post.commit_sha_previously_changed?
+            @publication.repository.tags.create(
+              @publication.repository.short_sha,
+              @publication.repository.commit_sha,
+              message: "Publish post #{@post.blob_path}",
+              tagger: { name: Current.user.name, email: Current.user.email, time: Time.now }
+            )
+          end
 
           format.html { redirect_to publication_post_path(@publication, @post) }
         else

@@ -301,6 +301,10 @@ CREATE INDEX index_friendly_id_slugs_on_sluggable_type_and_sluggable_id ON publi
 
 CREATE UNIQUE INDEX index_invitations_on_code ON public.invitations USING btree (code);
 
+-- Name: index_invitations_on_identifier; Type: INDEX
+
+CREATE INDEX index_invitations_on_identifier ON public.invitations USING btree (identifier);
+
 -- Name: index_invitations_on_identifier_and_publication_id; Type: INDEX
 
 CREATE UNIQUE INDEX index_invitations_on_identifier_and_publication_id ON public.invitations USING btree (identifier, publication_id);
