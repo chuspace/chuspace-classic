@@ -2,13 +2,13 @@ version: 1.0
 shards:
   db:
     github: crystal-lang/crystal-db
-    version: 0.6.0
+    version: 0.8.0
 
   dotenv:
     github: gdotdesign/cr-dotenv
-    version: 0.2.0
+    version: 0.6.0
 
   pg:
     github: will/crystal-pg
-    version: 0.18.0
+    version: 0.20.0
 

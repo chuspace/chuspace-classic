@@ -19,7 +19,7 @@ module Mobius
 
         sql = <<-STRING
           UPDATE keys
-          SET last_used='#{Time.now}'
+          SET last_used='#{Time.utc}'
           WHERE fingerprint = $1
         STRING
 
