@@ -1,10 +1,10 @@
 # typed: ignore
 # frozen_string_literal: true
 
-class DropdownComponent < Components::Component
+class DropdownComponent < ElementalComponents::Component
   DEFAULT_CSS_CLASS = 'dropdown'
   element :opener
-  element :content
+  element :body
   attribute :items
   attribute :drop_arrow, default: :yes
   attribute :css_class

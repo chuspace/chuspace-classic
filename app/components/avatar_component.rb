@@ -1,7 +1,7 @@
 # typed: ignore
 # frozen_string_literal: true
 
-class AvatarComponent < Components::Component
+class AvatarComponent < ElementalComponents::Component
   DEFAULT_CSS_CLASS = 'avatar lazy blur-up'
 
   attribute :avatar_url

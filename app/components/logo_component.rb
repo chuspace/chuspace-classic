@@ -1,7 +1,7 @@
 # typed: ignore
 # frozen_string_literal: true
 
-class LogoComponent < Components::Component
+class LogoComponent < ElementalComponents::Component
   TYPES = {
     badge: { css_class: 'logo logo__badge', label: 'chuspace' },
     full: { css_class: 'logo logo__full', label: 'chuspace', version: 'axiom' }

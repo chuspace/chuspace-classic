@@ -5,7 +5,7 @@
     <% end %>
   <% end %>
 
-  <% d.content do %>
+  <% d.body do %>
     <%= content_tag :div, class: 'flex items-center' do %>
       <%= text_field_tag 'repository_path', ssh_path, class: 'input py-2 px-4 w-64', readonly: true, id: 'copy_repository_path' %>
       <div class='bg-grey-lightest p-4'>

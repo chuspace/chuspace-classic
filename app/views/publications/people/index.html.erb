@@ -17,7 +17,7 @@
                   <svg-icon name='more-horizontal' feather='true'></svg-icon>
                 <% end %>
 
-                <% d.content do %>
+                <% d.body do %>
                   <% Collaborator.roles.except(:owner).map do |role, _| %>
                     <% unless collaborator.role == role %>
                       <%= link_to "Make #{role}", publication_person_path(@publication, collaborator, role: role), class: "link link--default dropdown__item", role: "menuitem", tabindex: "-1", method: :patch, remote: true %>

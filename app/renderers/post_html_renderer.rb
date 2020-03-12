@@ -2,8 +2,6 @@
 # frozen_string_literal: true
 
 class PostHtmlRenderer < CommonMarker::HtmlRenderer
-  extend T::Sig
-
   def initialize
     super
     @count = 0
@@ -68,7 +66,7 @@ class PostHtmlRenderer < CommonMarker::HtmlRenderer
 
   def url_or_mailto?(url_str)
     url = URI.parse(url_str)
-    T.unsafe(url.kind_of?(URI::HTTP)) || T.unsafe(url.kind_of?(URI::HTTPS)) || T.unsafe(url.kind_of?(URI::MailTo))
+    url.kind_of?(URI::HTTP) || url.kind_of?(URI::HTTPS) || url.kind_of?(URI::MailTo)
   end
 
   def string_content_for(node, content = '')
