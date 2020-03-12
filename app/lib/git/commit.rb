@@ -3,8 +3,6 @@
 
 module Git
   class Commit
-    extend T::Sig
-
     include EncodingHelper
     attr_accessor :head, :refs
 
@@ -43,8 +41,6 @@ module Git
     end
 
     class << self
-      extend T::Sig
-
       def find(repo, commit_id = 'HEAD')
         return Commit.new(commit_id) if commit_id.is_a?(Rugged::Commit)
 
@@ -82,17 +78,6 @@ module Git
       #   }
       # }
 
-      sig do
-        params(
-          repository: Repository,
-          options: {
-            file: { content: String, path: String, previous_path: T.nilable(String) },
-            commit: { message: String, branch: String, committer: T.nilable(User) }
-          },
-          action: Symbol
-        )
-          .returns(String)
-      end
       def create(repository:, options:, action: :add)
         rugged = repository.rugged
         file = options[:file]

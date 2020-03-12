@@ -20,7 +20,8 @@ export class FetchClient {
   isConfigured = false
   headers: any = {
     'Content-Type': 'application/json',
-    'X-Requested-With': 'Chuspace'
+    'X-Requested-With': 'Chuspace fetch',
+    'X-CSRF-TOKEN': Rails.csrfToken()
   }
 
   constructor() {
@@ -40,13 +41,9 @@ export class FetchClient {
     this.headers = Object.assign({}, this.headers, input.headers || {})
     this.isConfigured = true
 
-    const newBody = Object.assign({}, input.body, { [Rails.csrfParam()]: Rails.csrfToken() })
-
-    console.log(newBody)
-
     return fetch(input.url, {
       method: input.method || 'GET',
-      body: JSON.stringify(newBody),
+      body: JSON.stringify(input.body),
       credentials: 'same-origin',
       headers: this.headers
     })
