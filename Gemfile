@@ -79,7 +79,7 @@ gem 'sshkey'
 gem 'yabeda'
 
 # View components
-gem "elemental_components", git: 'https://github.com/jensljungblad/elemental_components'
+gem 'elemental_components', git: 'https://github.com/jensljungblad/elemental_components'
 
 # Security
 gem 'rack-attack'

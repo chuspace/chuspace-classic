@@ -50,6 +50,8 @@ type Options = {
   imageProviderPath: string,
   content: string,
   editable: boolean,
+  mode: ?string,
+  nodes: ?string,
   onChange: (transaction: Transaction) => void
 }
 
@@ -75,7 +77,6 @@ export default class Editor {
     this.element = options.element
     this.elements = this.createElements()
     this.schema = this.createSchema()
-
     this.markdownParser = markdownParser(this.schema)
     this.markdownSerializer = markdownSerializer
 
@@ -91,12 +92,17 @@ export default class Editor {
     if (this.options.autoFocus) this.focus()
   }
 
-  createElements() {
+  createElements = () => {
+    console.log(this.options.nodes)
     return new SchemaManager(
       [
         ...toArray(marks).map(Mark => new Mark()),
-        ...toArray(plugins).map(Plugin => new Plugin()),
-        ...toArray(nodes).map(Node => new Node())
+        ...toArray(plugins)
+          .map(Plugin => new Plugin())
+          .filter(plugin => plugin.mode == this.options.mode || plugin.mode == 'all'),
+        ...toArray(nodes)
+          .map(Node => new Node())
+          .filter(plugin => !this.options.nodes || this.options.nodes == plugin.name)
       ],
       this
     )
@@ -179,14 +185,15 @@ export default class Editor {
     return EditorState.create({
       schema: this.schema,
       doc: doc,
+      editions: [{ type: 'create', id: 2545478126, from: 87, to: 93, text: 'hello', previousText: 'foo' }],
       plugins
     })
   }
 
   createView() {
     let nodeViews = {
-      code_block: (node, view, getPos) => new CodeBlockView({ node, view, getPos }),
-      image: (node, view, getPos) => new ImageView({ node, view, getPos })
+      code_block: (node, view, getPos) => new CodeBlockView({ node, view, getPos, editable: this.options.editable }),
+      image: (node, view, getPos) => new ImageView({ node, view, getPos, editable: this.options.editable })
     }
 
     if (this.options.original) {
@@ -208,7 +215,7 @@ export default class Editor {
   }
 
   handleSave = (e: Event) => {
-    this.options.onChange()
+    this.options.editable ? this.options.onChange() : false
     return true
   }
 
@@ -224,7 +231,7 @@ export default class Editor {
   }
 
   emitUpdate(transaction: Transaction) {
-    this.options.onChange(transaction)
+    this.options.editable ? this.options.onChange(transaction) : false
   }
 
   focus() {

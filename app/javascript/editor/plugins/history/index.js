@@ -6,6 +6,7 @@ import { Element } from 'editor/base'
 
 export default class History extends Element {
   name = 'history'
+  mode = 'all'
 
   options = {
     depth: '',

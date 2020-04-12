@@ -7,7 +7,21 @@ export default class Doc extends Node {
 
   get schema() {
     return {
-      content: 'heading block+'
+      content: this.content
     }
+  }
+
+  get content() {
+    let content = 'heading block+'
+
+    switch (this.editor.options.mode) {
+      case 'contribution':
+        content = 'block+'
+        break
+      default:
+        break
+    }
+
+    return content
   }
 }

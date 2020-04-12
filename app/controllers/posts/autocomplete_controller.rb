@@ -8,7 +8,8 @@ class Posts::AutocompleteController < ApplicationController
     authorize! ::Posts::Publish, context: { post: @post }
 
     @posts = @publication.posts.where.not(id: @post.id).autocomplete_search(query: params[:q]).limit(10)
-    respond_to { |type| type.html_fragment { render partial: 'posts/autocomplete' } }
+    response.content_type = 'text/html; fragment'
+    render partial: 'posts/autocomplete'
   end
 
   private

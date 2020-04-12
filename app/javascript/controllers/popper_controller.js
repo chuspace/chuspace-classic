@@ -8,7 +8,7 @@ import * as Rails from 'rails-ujs'
 import * as iframely from '@iframely/embed.js'
 
 import { html, render } from 'lit-html'
-import tippy, { followCursor, sticky } from 'tippy.js'
+import tippy, { followCursor, inlinePositioning, sticky } from 'tippy.js'
 
 import { Controller } from 'stimulus'
 import truncate from 'lodash/truncate'
@@ -71,7 +71,7 @@ export default class PopperController extends Controller {
       interactive: true,
       sticky: true,
       followCursor: 'initial',
-      plugins: [followCursor, sticky],
+      plugins: [followCursor, sticky, inlinePositioning],
       touch: 'hold',
       popperOptions: {
         positionFixed: true

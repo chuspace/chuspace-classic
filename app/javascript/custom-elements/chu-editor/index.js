@@ -23,6 +23,8 @@ export default class ChuEditor extends LitElement {
       original: { type: String },
       content: { type: String },
       channel: { type: String },
+      mode: { type: String },
+      nodes: { type: String },
       editable: { type: Boolean },
       imageProviderPath: { type: String },
       saving: { type: Boolean, reflect: true },
@@ -34,6 +36,7 @@ export default class ChuEditor extends LitElement {
     super()
 
     this.param = 'post'
+    this.mode = 'full'
   }
 
   onRecieved = (data: any) => {
@@ -51,7 +54,9 @@ export default class ChuEditor extends LitElement {
       placeholder: 'Write your post',
       onChange: this.onChange,
       original: this.original,
-      content: this.content || ''
+      content: this.content || '',
+      mode: this.mode,
+      nodes: this.nodes
     })
   }
 

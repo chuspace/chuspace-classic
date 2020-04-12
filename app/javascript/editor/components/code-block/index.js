@@ -153,7 +153,7 @@ export default class CodeEditor extends LitElement {
   render = () => {
     return html`
       <div class="code-editor-container code-editor-container--${this.theme}" contenteditable="false">
-        <div class="code-editor-toolbar font-headings" contenteditable="false">
+        <div class="code-editor-toolbar" contenteditable="false">
           ${Controls({ destroy: this.onDestroy })}
           <div class="code-editor-toolbar-menu" contenteditable="false">
             ${this.readonly

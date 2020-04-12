@@ -10,9 +10,12 @@ import type { BaseViewPropType } from './base'
 import { EditorView } from 'prosemirror-view'
 
 export default class ImageView extends BaseView {
-  constructor(props: BaseViewPropType) {
+  editable: boolean = false
+
+  constructor(props: BaseViewPropType & { editable: boolean }) {
     super(props, false)
 
+    this.editable = props.editable
     this.containerNode = document.createElement('div')
     this.renderElement()
   }
@@ -24,7 +27,7 @@ export default class ImageView extends BaseView {
           src=${this.node.attrs.src || ''}
           alt=${this.node.attrs.alt || ''}
           title=${this.node.attrs.title || this.node.attrs.alt || ''}
-          .handleChange=${this.handleChange}
+          .handleChange=${this.editable ? this.handleChange : null}
           .handleDelete=${this.handleDelete}
         ></lazy-image>
       `,

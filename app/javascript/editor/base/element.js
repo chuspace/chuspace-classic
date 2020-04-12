@@ -6,6 +6,7 @@ export default class Element {
   options: any
   name: ?string
   editor: any
+  mode: string = 'all'
 
   get type() {
     return 'element'

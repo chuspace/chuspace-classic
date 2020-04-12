@@ -8,6 +8,7 @@ import includes from 'lodash/includes'
 
 export default class Placeholder extends Element {
   name = 'placeholder'
+  mode = 'full'
 
   options = {
     h1Class: 'title title__label',
@@ -67,7 +68,7 @@ export default class Placeholder extends Element {
               const isSummary = secondChild === node && node.attrs.level === 2
               const isEmptyBody = secondChild === node && node.type.name === 'paragraph' && doc.childCount <= 3
 
-              if (isTitle || (isSummary || isEmptyBody)) {
+              if (isTitle || isSummary || isEmptyBody) {
                 decorations.push(this.getDecoration(node, pos))
               } else {
                 if (node.type.name == 'heading') {

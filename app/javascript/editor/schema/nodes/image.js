@@ -49,7 +49,6 @@ export default class Image extends Node {
       nodeInputRule(IMAGE_INPUT_REGEX, type, match => {
         const [, alt, src, title] = match
 
-        console.log(match)
         return {
           src,
           alt,
