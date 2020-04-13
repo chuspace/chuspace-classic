@@ -46,6 +46,7 @@ export default class CodeEditor extends LitElement {
 
     this.loaded = false
     this.lines = 0
+
     this.options = {
       root: null,
       rootMargin: '0px',
@@ -154,7 +155,7 @@ export default class CodeEditor extends LitElement {
     return html`
       <div class="code-editor-container code-editor-container--${this.theme}" contenteditable="false">
         <div class="code-editor-toolbar" contenteditable="false">
-          ${Controls({ destroy: this.onDestroy })}
+          ${this.readonly ? null : Controls({ destroy: this.onDestroy })}
           <div class="code-editor-toolbar-menu" contenteditable="false">
             ${this.readonly
               ? html`

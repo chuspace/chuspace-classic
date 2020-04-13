@@ -25,8 +25,6 @@ class HighlightState {
 
     const { fromPos, toPos } = tr.getMeta('highlight')
 
-    console.log(this.highlightsAt(fromPos))
-
     if (action.type == 'add') {
       decos = decos.add(tr.doc, [Decoration.inline(fromPos, toPos, { class: 'selection bg-green-lightest' })])
     } else if (action.type == 'remove') {

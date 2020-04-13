@@ -7,7 +7,8 @@ import EditionItem from './item'
 import { Element } from 'editor/base'
 
 function createInlineDecoration(from, to, edition) {
-  return Decoration.inline(from, to, { class: 'edition bg-red-lightest' }, { edition })
+  const cssClass = edition.state === 'merged' ? 'edition bg-blue-lightest' : 'edition bg-red-lightest'
+  return Decoration.inline(from, to, { class: cssClass }, { edition })
 }
 
 class EditionState {
@@ -40,10 +41,13 @@ class EditionState {
       decos = decos.add(tr.doc, [createInlineDecoration(action.from, action.to, action.edition)])
     } else if (actionType == 'updateEdition') {
       const edition = this.findEdition(action.id)
-      decos = decos.remove([edition])
-      decos = decos.add(tr.doc, [createInlineDecoration(action.from, action.to, action.edition)])
+      if (edition) edition.spec.edition = action.edition
+    } else if (actionType === 'mergeEdition') {
+      const edition = this.findEdition(action.id)
+      if (edition) edition.spec.edition.state = 'merged'
     } else if (actionType == 'deleteEdition') {
-      decos = decos.remove([this.findEdition(action.id)])
+      const edition = this.findEdition(action.id)
+      decos = decos.remove([edition])
     }
 
     return new EditionState(decos)

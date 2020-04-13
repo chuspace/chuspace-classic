@@ -98,9 +98,9 @@ export default class CodeBlockView extends BaseView {
    * commands executed on the outer editor see an accurate selection
    */
   forwardSelection = () => {
-    if (!this.cm.hasFocus()) return
     let state = this.view.state
     let selection = this.asProseMirrorSelection(state.doc)
+
     if (!selection.eq(state.selection)) {
       this.view.dispatch(state.tr.setSelection(selection))
     }
@@ -127,7 +127,7 @@ export default class CodeBlockView extends BaseView {
   }
 
   /**
-   * this helper function translates from a CodeMirror selction to a
+   * this helper function translates from a CodeMirror selection to a
    * ProseMirror selection.Because CodeMirror uses a line/column based
    * indexing system,indexFromPos is used to convert to an actual character
    * index.
