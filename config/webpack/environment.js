@@ -6,7 +6,7 @@ const nullLoader = require('./loaders/null')
 const globImporter = require('node-sass-glob-importer')
 
 environment.config.merge({
-  stats: 'minimal'
+  stats: 'minimal',
 })
 
 environment.plugins.append('IgnoreFlow', new webpack.IgnorePlugin(/\.flow$/))
@@ -15,18 +15,18 @@ environment.plugins.append(
   new LodashModuleReplacementPlugin({
     collections: true,
     paths: true,
-    shorthands: true
+    shorthands: true,
   })
 )
 
 environment.loaders.prepend('module', {
   test: /\.mjs$/,
   include: /node_modules/,
-  type: 'javascript/auto'
+  type: 'javascript/auto',
 })
 
 environment.loaders.append('null', nullLoader)
-const sassLoader = environment.loaders.get('sass').use.find(loader => loader.loader === 'sass-loader')
-sassLoader.options.importer = globImporter()
+const sassLoader = environment.loaders.get('sass').use.find((loader) => loader.loader === 'sass-loader')
+sassLoader.options.sassOptions.importer = globImporter()
 
 module.exports = environment

@@ -8,8 +8,10 @@ import { EditorState, Plugin, PluginKey, Transaction } from 'prosemirror-state'
 
 import { Node } from 'editor/base'
 import { Node as PMNode } from 'prosemirror-model'
-import nanoid from 'nanoid/generate'
+import { customAlphabet } from 'nanoid'
 import { nodeInputRule } from 'editor/commands'
+
+const nanoid = customAlphabet('1234567890abcdef', 10)
 
 const IMAGE_INPUT_REGEX = /!\[(.+|:?)\]\((\S+)(?:(?:\s+)["'](\S+)["'])?\)/
 
@@ -21,11 +23,11 @@ export default class Image extends Node {
       attrs: {
         src: {},
         alt: {
-          default: null
+          default: null,
         },
         title: {
-          default: null
-        }
+          default: null,
+        },
       },
       inline: true,
       group: 'inline',
@@ -36,25 +38,25 @@ export default class Image extends Node {
           getAttrs: (dom: PMNode) => ({
             src: dom.getAttribute('src'),
             title: dom.getAttribute('title'),
-            alt: dom.getAttribute('alt')
-          })
-        }
+            alt: dom.getAttribute('alt'),
+          }),
+        },
       ],
-      toDOM: (node: PMNode) => ['img', node.attrs]
+      toDOM: (node: PMNode) => ['img', node.attrs],
     }
   }
 
   inputRules({ type }: PMNode) {
     return [
-      nodeInputRule(IMAGE_INPUT_REGEX, type, match => {
+      nodeInputRule(IMAGE_INPUT_REGEX, type, (match) => {
         const [, alt, src, title] = match
 
         return {
           src,
           alt,
-          title
+          title,
         }
-      })
+      }),
     ]
   }
 
@@ -81,15 +83,15 @@ export default class Image extends Node {
                 return
               }
 
-              const images = Array.from(event.dataTransfer.files).filter(file => /image/i.test(file.type))
+              const images = Array.from(event.dataTransfer.files).filter((file) => /image/i.test(file.type))
 
               if (images.length === 0) {
                 return
               }
 
-              const placeholderPlugin = view.state.plugins.find(plugin => plugin.key === 'image-placeholder$1')
+              const placeholderPlugin = view.state.plugins.find((plugin) => plugin.key === 'image-placeholder$1')
               const findPlaceholder = placeholderPlugin.props.findPlaceholder
-              let id = nanoid('1234567890abcdef', 10)
+              let id = nanoid()
               let tr = view.state.tr
               if (!tr.selection.empty) tr.deleteSelection()
 
@@ -101,10 +103,10 @@ export default class Image extends Node {
               const { schema } = view.state
               const coordinates = view.posAtCoords({
                 left: event.clientX,
-                top: event.clientY
+                top: event.clientY,
               })
 
-              images.forEach(image => {
+              images.forEach((image) => {
                 const formData = new FormData()
                 formData.append('image', image)
                 let pos = findPlaceholder(view.state, id)
@@ -113,9 +115,9 @@ export default class Image extends Node {
                   type: 'POST',
                   url: view.props.imageProviderPath,
                   data: formData,
-                  success: data => {
+                  success: (data) => {
                     const node = schema.nodes.image.create({
-                      src: data.url
+                      src: data.url,
                     })
 
                     if (pos == null) return
@@ -125,15 +127,15 @@ export default class Image extends Node {
                       .setMeta(placeholderPlugin, { remove: { id } })
                     view.dispatch(transaction)
                   },
-                  error: data => {
+                  error: (data) => {
                     view.dispatch(tr.setMeta(placeholderPlugin, { remove: { id } }))
-                  }
+                  },
                 })
               })
-            }
-          }
-        }
-      })
+            },
+          },
+        },
+      }),
     ]
   }
 }

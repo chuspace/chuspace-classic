@@ -14,7 +14,7 @@ export type BaseViewPropType = {
 export default class BaseView {
   options: {}
   dom: Element
-  view: EditorView
+  outerView: EditorView
   schema: Schema
   isSelected: boolean
   getPos: () => number
@@ -22,7 +22,7 @@ export default class BaseView {
   containerNode: HTMLElement
 
   constructor(props: BaseViewPropType, render: boolean = true) {
-    this.view = props.view
+    this.outerView = props.view
     this.schema = props.view.state.schema
     this.getPos = props.getPos
     this.node = props.node
@@ -43,14 +43,14 @@ export default class BaseView {
   }
 
   selectNode = () => {
-    if (this.view.editable) {
+    if (this.outerView.editable) {
       this.isSelected = true
       this.renderElement()
     }
   }
 
   deselectNode = () => {
-    if (this.view.editable) {
+    if (this.outerView.editable) {
       this.isSelected = false
       this.renderElement()
     }

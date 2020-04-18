@@ -40,7 +40,7 @@ export default class ImageView extends BaseView {
   handleChange = (attrs: ?{ align: String, alt: string } = {}) => {
     this.node.attrs = Object.assign({}, this.node.attrs, attrs)
     this.renderElement()
-    this.view.dispatch(this.view.state.tr.setNodeMarkup(this.getPos(), null, this.node.attrs))
+    this.outerView.dispatch(this.outerView.state.tr.setNodeMarkup(this.getPos(), null, this.node.attrs))
   }
 
   handleDelete = () => {

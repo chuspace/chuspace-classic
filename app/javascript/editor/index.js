@@ -93,16 +93,15 @@ export default class Editor {
   }
 
   createElements = () => {
-    console.log(this.options.nodes)
     return new SchemaManager(
       [
-        ...toArray(marks).map(Mark => new Mark()),
+        ...toArray(marks).map((Mark) => new Mark()),
         ...toArray(plugins)
-          .map(Plugin => new Plugin())
-          .filter(plugin => plugin.mode == this.options.mode || plugin.mode == 'all'),
+          .map((Plugin) => new Plugin())
+          .filter((plugin) => plugin.mode == this.options.mode || plugin.mode == 'all'),
         ...toArray(nodes)
-          .map(Node => new Node())
-          .filter(plugin => !this.options.nodes || this.options.nodes == plugin.name)
+          .map((Node) => new Node())
+          .filter((plugin) => !this.options.nodes || this.options.nodes == plugin.name)
       ],
       this
     )

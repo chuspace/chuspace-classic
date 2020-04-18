@@ -121,7 +121,7 @@ class Tooltip {
     `
   }
 
-  renderEdition = edition => {
+  renderEdition = (edition) => {
     return html`
       <div
         class="bg-green-lighter rounded-md px-4 py-3 break-words whitespace-normal p-4 text-base font-normal"
@@ -129,7 +129,7 @@ class Tooltip {
       >
         ${edition.spec.edition.text}
         <svg-icon
-          @click=${e => this.handleEdit(e, edition)}
+          @click=${(e) => this.handleEdit(e, edition)}
           class="cursor-pointer"
           name="edit"
           width="20"
@@ -140,7 +140,7 @@ class Tooltip {
         ></svg-icon>
 
         <svg-icon
-          @click=${e => this.handleMerge(e, edition)}
+          @click=${(e) => this.handleMerge(e, edition)}
           class="cursor-pointer"
           name="git-merge"
           width="20"
@@ -178,7 +178,7 @@ class Tooltip {
     return true
   }
 
-  updateEdition = editionMeta => {
+  updateEdition = (editionMeta) => {
     const edition = new EditionItem(this.editionText, this.selectedText)
     const meta = Object.assign({}, editionMeta, { edition })
 
@@ -227,7 +227,7 @@ class Tooltip {
     const createText = edition ? 'Update' : 'Create'
     const deleteText = edition ? 'Remove' : 'Discard'
     const createFunc = edition ? () => this.updateEdition(edition) : this.createEdition
-    const deleteFunc = event => (edition ? this.discardEdition(event, edition) : this.discardEdition(event))
+    const deleteFunc = (event) => (edition ? this.discardEdition(event, edition) : this.discardEdition(event))
 
     return html`
       <div class="w-full p-4">
@@ -251,7 +251,6 @@ ${edition ? edition.spec.edition.text : null}</textarea
     let state = view.state
     this.state = state
 
-    console.log(view)
     // Don't do anything if the document/selection didn't change
     if (lastState && lastState.doc.eq(state.doc) && lastState.selection.eq(state.selection)) return
 
@@ -298,14 +297,14 @@ ${edition ? edition.spec.edition.text : null}</textarea
 }
 
 export const tooltipPlugin = new Plugin({
-  key: new PluginKey('contribution_toolbar'),
+  key: new PluginKey('tooltip'),
   view(editorView) {
     return new Tooltip(editorView)
   }
 })
 
 export class ContributionToolbar extends Element {
-  name = 'contribution_toolbar'
+  name = 'tooltip'
   mode = 'full'
 
   get plugins() {
