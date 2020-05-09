@@ -14,9 +14,12 @@ export default class Doc extends Node {
   get content() {
     let content = 'heading block+'
 
-    switch (this.editor.options.mode) {
-      case 'contribution':
+    switch (this.options.appearance) {
+      case 'comment':
         content = 'block+'
+        break
+      case 'plain':
+        content = 'text+'
         break
       default:
         break

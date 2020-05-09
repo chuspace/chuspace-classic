@@ -1,9 +1,5 @@
 // @flow
 
-import * as marks from 'editor/schema/nodes'
-import * as nodes from 'editor/schema/marks'
-import * as plugins from 'editor/plugins'
-
 import { Change, ChangeSet, Span, simplifyChanges } from 'prosemirror-changeset'
 import { CodeBlockView, ImageView } from 'editor/views'
 import { Decoration, DecorationSet } from 'prosemirror-view'
@@ -13,19 +9,14 @@ import { getMarkAttrs, isMarkActive, isNodeActive } from 'editor/helpers'
 import { inputRules, undoInputRule } from 'prosemirror-inputrules'
 import { markdownParser, markdownSerializer } from 'editor/markdowner'
 
-import { DOMSerializer } from 'prosemirror-model'
 import { EditorView } from 'prosemirror-view'
 import { MarkdownParser } from 'prosemirror-markdown'
 import { Schema } from 'prosemirror-model'
 import SchemaManager from 'editor/schema'
 import { Selection } from 'prosemirror-state'
-import { Transform } from 'prosemirror-transform'
 import { dropCursor } from 'prosemirror-dropcursor'
 import { gapCursor } from 'prosemirror-gapcursor'
-import get from 'lodash/get'
 import { keymap } from 'prosemirror-keymap'
-import toArray from 'lodash/toArray'
-import without from 'lodash/without'
 
 function arrowHandler(dir) {
   return (state, dispatch, view) => {
@@ -50,104 +41,46 @@ type Options = {
   imageProviderPath: string,
   content: string,
   editable: boolean,
-  mode: ?string,
-  nodes: ?string,
+  appearance: 'default' | 'comment' | 'plain' | 'contribution',
   onChange: (transaction: Transaction) => void
 }
 
 export default class Editor {
   options = {}
   element: HTMLElement
-  elements: SchemaManager
+  manager: SchemaManager
   schema: Schema
   markdownParser: MarkdownParser
   markdownSerializer: markdownSerializer
-  keymaps: any
-  inputRules: []
-  pasteRules: []
   state: EditorState
   view: EditorView
-  commands: []
   activeMarks: {}
   activeNodes: {}
   activeMarkAttrs: {}
 
-  constructor(options: Options = {}) {
+  constructor(options: Options) {
     this.options = options
     this.element = options.element
-    this.elements = this.createElements()
-    this.schema = this.createSchema()
+    this.manager = new SchemaManager(this)
+    this.schema = this.manager.schema
     this.markdownParser = markdownParser(this.schema)
     this.markdownSerializer = markdownSerializer
 
-    this.keymaps = this.createKeymaps()
-    this.inputRules = this.createInputRules()
-    this.pasteRules = this.createPasteRules()
     this.state = this.createState()
     this.view = this.createView()
-    this.commands = this.createCommands()
-
-    this.view.props.commands = this.commands
+    this.view.props.commands = this.manager.commands
     this.setActiveNodesAndMarks()
     if (this.options.autoFocus) this.focus()
   }
 
-  createElements = () => {
-    return new SchemaManager(
-      [
-        ...toArray(marks).map((Mark) => new Mark()),
-        ...toArray(plugins)
-          .map((Plugin) => new Plugin())
-          .filter((plugin) => plugin.mode == this.options.mode || plugin.mode == 'all'),
-        ...toArray(nodes)
-          .map((Node) => new Node())
-          .filter((plugin) => !this.options.nodes || this.options.nodes == plugin.name)
-      ],
-      this
-    )
-  }
-
-  createSchema() {
-    return new Schema({
-      nodes: this.elements.nodes,
-      marks: this.elements.marks
-    })
-  }
-
-  createKeymaps() {
-    return this.elements.keymaps({
-      schema: this.schema
-    })
-  }
-
-  createInputRules() {
-    return this.elements.inputRules({
-      schema: this.schema
-    })
-  }
-
-  createPasteRules() {
-    return this.elements.pasteRules({
-      schema: this.schema
-    })
-  }
-
-  createCommands() {
-    return this.elements.commands({
-      schema: this.schema,
-      view: this.view,
-      editable: !!this.options.editable
-    })
-  }
-
   get plugins() {
     return [
-      ...this.elements.plugins,
+      ...this.manager.plugins,
       inputRules({
-        rules: this.inputRules
+        rules: this.manager.inputRules
       }),
-      ...this.pasteRules,
-      ...this.keymaps,
+      ...this.manager.pasteRules,
+      ...this.manager.keymaps,
       keymap({
         Backspace: undoInputRule,
         Escape: selectParentNode,
@@ -276,7 +209,7 @@ export default class Editor {
       ...this.activeMarks,
       ...this.activeNodes
     }).reduce(
-      (types, [name, value]) => ({
+      (types, [name, value]: [string, Function]) => ({
         ...types,
         [name]: (attrs = {}) => value(attrs)
       }),

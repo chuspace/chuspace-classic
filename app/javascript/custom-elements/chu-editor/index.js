@@ -23,8 +23,7 @@ export default class ChuEditor extends LitElement {
       original: { type: String },
       content: { type: String },
       channel: { type: String },
-      mode: { type: String },
-      nodes: { type: String },
+      appearance: { type: String },
       editable: { type: Boolean },
       imageProviderPath: { type: String },
       saving: { type: Boolean, reflect: true },
@@ -36,7 +35,7 @@ export default class ChuEditor extends LitElement {
     super()
 
     this.param = 'post'
-    this.mode = 'full'
+    this.appearance = 'default'
   }
 
   onRecieved = (data: any) => {
@@ -55,8 +54,7 @@ export default class ChuEditor extends LitElement {
       onChange: this.onChange,
       original: this.original,
       content: this.content || '',
-      mode: this.mode,
-      nodes: this.nodes
+      appearance: this.appearance
     })
   }
 
@@ -130,8 +128,8 @@ export default class ChuEditor extends LitElement {
           'X-CSRF-TOKEN': Rails.csrfToken()
         }
       })
-        .then(response => response.json())
-        .then(async response => {
+        .then((response) => response.json())
+        .then(async (response) => {
           if (response.redirect) {
             window.history.pushState(null, 'Edit', response.redirect)
             this.id = response.id

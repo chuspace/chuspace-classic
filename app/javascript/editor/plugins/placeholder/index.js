@@ -8,7 +8,6 @@ import includes from 'lodash/includes'
 
 export default class Placeholder extends Element {
   name = 'placeholder'
-  mode = 'full'
 
   options = {
     h1Class: 'title title__label',
@@ -47,7 +46,7 @@ export default class Placeholder extends Element {
       new Plugin({
         props: {
           decorations: ({ doc, plugins }) => {
-            const editablePlugin = plugins.find(plugin => plugin.key.startsWith('editable$'))
+            const editablePlugin = plugins.find((plugin) => plugin.key.startsWith('editable$'))
             const editable = editablePlugin.props.editable()
 
             if (!editable) {

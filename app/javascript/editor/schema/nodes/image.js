@@ -12,7 +12,6 @@ import { customAlphabet } from 'nanoid'
 import { nodeInputRule } from 'editor/commands'
 
 const nanoid = customAlphabet('1234567890abcdef', 10)
-
 const IMAGE_INPUT_REGEX = /!\[(.+|:?)\]\((\S+)(?:(?:\s+)["'](\S+)["'])?\)/
 
 export default class Image extends Node {
@@ -23,11 +22,11 @@ export default class Image extends Node {
       attrs: {
         src: {},
         alt: {
-          default: null,
+          default: null
         },
         title: {
-          default: null,
-        },
+          default: null
+        }
       },
       inline: true,
       group: 'inline',
@@ -38,11 +37,11 @@ export default class Image extends Node {
           getAttrs: (dom: PMNode) => ({
             src: dom.getAttribute('src'),
             title: dom.getAttribute('title'),
-            alt: dom.getAttribute('alt'),
-          }),
-        },
+            alt: dom.getAttribute('alt')
+          })
+        }
       ],
-      toDOM: (node: PMNode) => ['img', node.attrs],
+      toDOM: (node: PMNode) => ['img', node.attrs]
     }
   }
 
@@ -54,9 +53,9 @@ export default class Image extends Node {
         return {
           src,
           alt,
-          title,
+          title
         }
-      }),
+      })
     ]
   }
 
@@ -103,7 +102,7 @@ export default class Image extends Node {
               const { schema } = view.state
               const coordinates = view.posAtCoords({
                 left: event.clientX,
-                top: event.clientY,
+                top: event.clientY
               })
 
               images.forEach((image) => {
@@ -117,7 +116,7 @@ export default class Image extends Node {
                   data: formData,
                   success: (data) => {
                     const node = schema.nodes.image.create({
-                      src: data.url,
+                      src: data.url
                     })
 
                     if (pos == null) return
@@ -129,13 +128,13 @@ export default class Image extends Node {
                   },
                   error: (data) => {
                     view.dispatch(tr.setMeta(placeholderPlugin, { remove: { id } }))
-                  },
+                  }
                 })
               })
-            },
-          },
-        },
-      }),
+            }
+          }
+        }
+      })
     ]
   }
 }

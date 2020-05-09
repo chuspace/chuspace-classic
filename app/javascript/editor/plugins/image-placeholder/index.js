@@ -7,7 +7,6 @@ import { Element } from 'editor/base'
 
 export default class ImagePlaceholder extends Element {
   name = 'image-placeholder'
-  mode = 'full'
 
   get plugins() {
     return [

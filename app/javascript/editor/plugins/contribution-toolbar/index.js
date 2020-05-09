@@ -5,7 +5,9 @@ import { EditorState, Plugin, PluginKey, TextSelection } from 'prosemirror-state
 import { html, render } from 'lit-html'
 
 import EditionItem from '../edition/item'
+import Editor from '../..'
 import { Element } from 'editor/base'
+import { Fragment } from 'prosemirror-model'
 import autosize from 'autosize'
 import { editionPlugin } from '../edition'
 import { highlightPlugin } from '../highlight'
@@ -18,11 +20,13 @@ class Tooltip {
   view: EditorView
   editionText: ?string
   selectedText: ?string
+  mainEditor: Editor
 
-  constructor(view: EditorView) {
+  constructor(view: EditorView, mainEditor: Editor) {
     this.editionText = null
     this.selectedText = null
     this.view = view
+    this.mainEditor = mainEditor
     this.tooltip = document.createElement('div')
     this.tooltip.contentEditable = 'false'
     this.tooltip.className = 'absolute bg-white z-50 transform -translate-x-1/2'
@@ -80,7 +84,10 @@ class Tooltip {
       })
     )
 
-    this.view.dispatch(this.state.tr.insertText(edition.spec.edition.text, edition.from, edition.to))
+    const nodes = this.mainEditor.markdownParser.parse('**hello**')
+    const fragment = Fragment.from(nodes)
+
+    this.view.dispatch(this.state.tr.replaceWith(edition.from, edition.to, fragment))
   }
 
   get tooltipMarkup() {
@@ -286,7 +293,7 @@ ${edition ? edition.spec.edition.text : null}</textarea
       // crossing lines, end may be more to the left)
       let left = Math.max((start.left + end.left) / 2, start.left + 3)
 
-      this.tooltip.style.left = left / 2 - box.left + 'px'
+      this.tooltip.style.left = left - box.left + 'px'
       this.tooltip.style.bottom = box.bottom - start.top + 'px'
     }
   }
@@ -296,18 +303,18 @@ ${edition ? edition.spec.edition.text : null}</textarea
   }
 }
 
-export const tooltipPlugin = new Plugin({
-  key: new PluginKey('tooltip'),
-  view(editorView) {
-    return new Tooltip(editorView)
-  }
-})
+export const tooltipPlugin = (editor: Editor) =>
+  new Plugin({
+    key: new PluginKey('tooltip'),
+    view(editorView) {
+      return new Tooltip(editorView, editor)
+    }
+  })
 
 export class ContributionToolbar extends Element {
   name = 'tooltip'
-  mode = 'full'
 
   get plugins() {
-    return [tooltipPlugin]
+    return [tooltipPlugin(this.editor)]
   }
 }

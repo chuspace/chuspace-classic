@@ -2,7 +2,7 @@
 
 import { ResolvedPos } from 'prosemirror-model'
 
-export default function(pos: ?ResolvedPos = null, type: ?ResolvedPos = null) {
+export default (pos: ?ResolvedPos = null, type: ?ResolvedPos = null) => {
   if (!pos || !type) {
     return false
   }
@@ -13,16 +13,16 @@ export default function(pos: ?ResolvedPos = null, type: ?ResolvedPos = null) {
     return false
   }
 
-  const link = start.node.marks.find(mark => mark.type === type)
+  const mark = start.node.marks.find((mark) => mark.type === type)
 
-  if (!link) {
+  if (!mark) {
     return false
   }
 
   let startIndex = pos.index()
   let startPos = pos.start() + start.offset
 
-  while (startIndex > 0 && link.isInSet(pos.parent.child(startIndex - 1).marks)) {
+  while (startIndex > 0 && mark.isInSet(pos.parent.child(startIndex - 1).marks)) {
     startIndex -= 1
     startPos -= pos.parent.child(startIndex).nodeSize
   }
