@@ -1,13 +1,14 @@
 // @flow
 
+import { Fragment, Mark as PMMark } from 'prosemirror-model'
 import { InputRule, inputRules } from 'prosemirror-inputrules'
 import { Plugin, PluginKey, TextSelection } from 'prosemirror-state'
 import { pasteRule, removeMark, updateMark } from 'editor/commands'
 
 import { Mark } from 'editor/base'
-import { Mark as PMMark } from 'prosemirror-model'
 import { getMarkRange } from 'editor/helpers'
 import isUrl from 'is-url'
+import { markdownSerializer } from 'editor/markdowner'
 
 const LINK_INPUT_REGEX = /(^|[^!])\[(.*?)\]\((\S+)\)(\s)$/
 export default class Link extends Mark {
@@ -85,14 +86,44 @@ export default class Link extends Mark {
     return [
       new Plugin({
         key: new PluginKey('link'),
-        view(editorView) {
+        view: (editorView) => {
           return {
-            update(view, laststate) {
-              const state = view.state
-              let sel = state.selection
-
-              console.log(sel)
-            }
+            // update: (view, laststate) => {
+            //   const state = view.state
+            //   let sel = state.selection
+            //   const mark = Object.entries(view.state.schema.marks).find(([name, type], _) => {
+            //     return getMarkRange(view.state.doc.resolve(sel.anchor), type)
+            //   })
+            //   if (mark) {
+            //     const [name, type] = mark
+            //     const range = getMarkRange(view.state.doc.resolve(sel.anchor), type)
+            //     const $start = view.state.doc.resolve(range.from)
+            //     const $end = view.state.doc.resolve(range.to)
+            //     let parent = $start.parent
+            //     let child = parent.childAfter($start.parentOffset)
+            //     if (!child.node) return
+            //     console.log(parent)
+            //     let markElement = child.node.marks.find((mark) => mark.type.name == name)
+            //     let markIndex = child.node.marks.findIndex((mark) => mark.type.name == name)
+            //     let markdownString
+            //     switch (name) {
+            //       case 'link':
+            //         markdownString = `[${child.node.text}](${markElement.attrs.href})`
+            //         break
+            //       case 'code':
+            //         markdownString = `\`${child.node.text}\``
+            //         break
+            //       default:
+            //         open = markdownSerializer.marks[name].open
+            //         close = markdownSerializer.marks[name].close
+            //         markdownString = `${open}${child.node.text}${close}`
+            //         break
+            //     }
+            //     const marker = Fragment.from(view.state.schema.text(markdownString, child.node.marks))
+            //     const newtr = view.state.tr.insertText(markdownString, $start.pos, $end.pos)
+            //     view.dispatch(newtr)
+            //   }
+            // }
           }
         },
         props: {
