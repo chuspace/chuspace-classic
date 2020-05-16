@@ -4,17 +4,43 @@ import * as marks from 'editor/schema/nodes'
 import * as nodes from 'editor/schema/marks'
 import * as plugins from 'editor/plugins'
 
+import { CodeBlockView, ImageView } from 'editor/views'
+import Editor, { type Options } from '..'
 import { ellipsis, emDash, smartQuotes } from 'prosemirror-inputrules'
 
-import Editor from '..'
 import { Schema } from 'prosemirror-model'
 import { keymap } from 'prosemirror-keymap'
 import toArray from 'lodash/toArray'
+
+export const filterElementsBy = (elements: [], type: string) => {
+  return elements
+    .filter((element) => element.type === type)
+    .reduce(
+      (nodes, { name, schema }) => ({
+        ...nodes,
+        [name]: schema
+      }),
+      {}
+    )
+}
 
 export default class SchemaManager {
   elements: []
   schema: Schema
   editor: Editor
+
+  static inMemorySchema(options: { appearance: string }) {
+    const elements = [
+      ...toArray(marks).map((Mark) => new Mark(options)),
+      ...toArray(plugins).map((Plugin) => new Plugin(options)),
+      ...toArray(nodes).map((Node) => new Node(options))
+    ]
+
+    return new Schema({
+      nodes: filterElementsBy(elements, 'node'),
+      marks: filterElementsBy(elements, 'mark')
+    })
+  }
 
   constructor(editor: Editor) {
     this.elements = [
@@ -37,33 +63,25 @@ export default class SchemaManager {
   }
 
   get nodes() {
-    return this.elements
-      .filter((element) => element.type === 'node')
-      .reduce(
-        (nodes, { name, schema }) => ({
-          ...nodes,
-          [name]: schema
-        }),
-        {}
-      )
+    return filterElementsBy(this.elements, 'node')
   }
 
   get marks() {
-    return this.elements
-      .filter((element) => element.type === 'mark')
-      .reduce(
-        (marks, { name, schema }) => ({
-          ...marks,
-          [name]: schema
-        }),
-        {}
-      )
+    return filterElementsBy(this.elements, 'mark')
   }
 
   get plugins(): Array<any> {
     return this.elements
       .filter((element) => element.plugins)
       .reduce((allPlugins, { plugins }) => [...allPlugins, ...plugins], [])
+  }
+
+  get nodeViews(): {} {
+    return {
+      code_block: (node, view, getPos) =>
+        new CodeBlockView({ node, view, getPos, editable: this.editor.options.editable }),
+      image: (node, view, getPos) => new ImageView({ node, view, getPos, editable: this.editor.options.editable })
+    }
   }
 
   get keymaps(): Array<any> {

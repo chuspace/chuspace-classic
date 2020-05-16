@@ -2,16 +2,18 @@
 
 import { Decoration, DecorationSet, EditorView } from 'prosemirror-view'
 import { EditorState, Plugin, PluginKey, TextSelection } from 'prosemirror-state'
+import { Fragment, Slice } from 'prosemirror-model'
 import { html, render } from 'lit-html'
+import { markdownParser, markdownSerializer } from 'editor/markdowner'
 
 import EditionItem from '../edition/item'
 import Editor from '../..'
 import { Element } from 'editor/base'
-import { Fragment } from 'prosemirror-model'
+import { ReplaceStep } from 'prosemirror-transform'
+import SchemaManager from 'editor/schema'
 import autosize from 'autosize'
 import { editionPlugin } from '../edition'
 import { highlightPlugin } from '../highlight'
-import { markdownSerializer } from 'editor/markdowner'
 
 class Tooltip {
   tooltip: HTMLElement
@@ -67,6 +69,9 @@ class Tooltip {
   }
 
   handleMerge = (e, edition) => {
+    const fragment = this.mainEditor.markdownParser.parse(edition.spec.edition.text).content.content[1].content
+    this.view.dispatch(this.state.tr.replaceWith(edition.from, edition.to, fragment))
+
     this.view.dispatch(
       this.state.tr.setMeta(editionPlugin, {
         type: 'deleteEdition',
@@ -75,6 +80,8 @@ class Tooltip {
     )
 
     edition.spec.edition.state = 'merged'
+    edition.spec.edition.text = edition.spec.edition.previousText
+    edition.spec.edition.previousText = edition.spec.edition.text
     this.view.dispatch(
       this.state.tr.setMeta(editionPlugin, {
         type: 'newEdition',
@@ -83,11 +90,6 @@ class Tooltip {
         edition: edition.spec.edition
       })
     )
-
-    const nodes = this.mainEditor.markdownParser.parse('**hello**')
-    const fragment = Fragment.from(nodes)
-
-    this.view.dispatch(this.state.tr.replaceWith(edition.from, edition.to, fragment))
   }
 
   get tooltipMarkup() {

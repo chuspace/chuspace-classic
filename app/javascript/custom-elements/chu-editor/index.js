@@ -20,7 +20,6 @@ export default class ChuEditor extends LitElement {
       id: { type: String },
       param: { type: String },
       publicationId: { type: String },
-      original: { type: String },
       content: { type: String },
       channel: { type: String },
       appearance: { type: String },
@@ -52,7 +51,6 @@ export default class ChuEditor extends LitElement {
       imageProviderPath: this.imageProviderPath,
       placeholder: 'Write your post',
       onChange: this.onChange,
-      original: this.original,
       content: this.content || '',
       appearance: this.appearance
     })

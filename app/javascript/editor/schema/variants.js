@@ -1,9 +1,21 @@
 // @flow
 
 export const SchemaVariants = {
-  default: {},
+  default: {
+    nodes: [],
+    marks: [],
+    plugins: []
+  },
 
-  comment: {},
+  comment: {
+    nodes: [],
+    marks: [],
+    plugins: []
+  },
 
-  contribution: {}
+  contribution: {
+    nodes: [],
+    marks: [],
+    plugins: []
+  }
 }

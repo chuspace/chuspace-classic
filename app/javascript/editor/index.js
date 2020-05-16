@@ -1,7 +1,6 @@
 // @flow
 
 import { Change, ChangeSet, Span, simplifyChanges } from 'prosemirror-changeset'
-import { CodeBlockView, ImageView } from 'editor/views'
 import { Decoration, DecorationSet } from 'prosemirror-view'
 import { EditorState, Plugin, PluginKey, Transaction } from 'prosemirror-state'
 import { baseKeymap, selectParentNode } from 'prosemirror-commands'
@@ -34,10 +33,9 @@ function arrowHandler(dir) {
   }
 }
 
-type Options = {
+export type Options = {
   autoFocus: boolean,
   element: HTMLElement,
-  original: string,
   imageProviderPath: string,
   content: string,
   editable: boolean,
@@ -46,7 +44,7 @@ type Options = {
 }
 
 export default class Editor {
-  options = {}
+  options: Options = {}
   element: HTMLElement
   manager: SchemaManager
   schema: Schema
@@ -123,21 +121,12 @@ export default class Editor {
   }
 
   createView() {
-    let nodeViews = {
-      code_block: (node, view, getPos) => new CodeBlockView({ node, view, getPos, editable: this.options.editable }),
-      image: (node, view, getPos) => new ImageView({ node, view, getPos, editable: this.options.editable })
-    }
-
-    if (this.options.original) {
-      nodeViews = {}
-    }
-
     const view = new EditorView(this.element, {
       state: this.state,
       editable: () => !!this.options.editable,
       imageProviderPath: this.options.imageProviderPath,
       dispatchTransaction: this.dispatchTransaction.bind(this),
-      nodeViews
+      nodeViews: this.manager.nodeViews
     })
 
     view.dom.style.whiteSpace = 'pre-wrap'
