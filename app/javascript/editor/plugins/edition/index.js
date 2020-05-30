@@ -54,7 +54,7 @@ class EditionState {
   }
 
   static init(state: EditorState) {
-    let decos = state.editions.map(c => createInlineDecoration(c.from, c.to, new EditionItem(c.text, c.previousText)))
+    let decos = state.editions.map((c) => createInlineDecoration(c.from, c.to, new EditionItem(c.text, c.previousText)))
     return new EditionState(DecorationSet.create(state.doc, decos))
   }
 }

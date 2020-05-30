@@ -51,7 +51,7 @@ class Tooltip {
 
     let { from, to } = edition ? edition : this.state.selection
 
-    this.view.dispatch(this.state.tr.setMeta('highlight', { type: 'add', fromPos: from, toPos: to }))
+    this.view.dispatch(this.state.tr.setMeta('highlight', { action: 'add', type: 'add', fromPos: from, toPos: to }))
 
     // These are in screen coordinates
     let start = this.view.coordsAtPos(from),
@@ -201,7 +201,7 @@ class Tooltip {
 
     this.editor.remove()
     this.view.dispatch(
-      this.state.tr.setMeta('highlight', { type: 'remove', fromPos: editionMeta.from, toPos: editionMeta.to })
+      this.state.tr.setMeta('highlight', { action: 'remove', fromPos: editionMeta.from, toPos: editionMeta.to })
     )
 
     return true
@@ -219,13 +219,13 @@ class Tooltip {
       )
 
       this.view.dispatch(
-        this.state.tr.setMeta('highlight', { type: 'remove', fromPos: edition.from, toPos: edition.to })
+        this.state.tr.setMeta('highlight', { action: 'remove', fromPos: edition.from, toPos: edition.to })
       )
     }
 
     if (!edition) {
       let sel = this.state.selection
-      this.view.dispatch(this.state.tr.setMeta('highlight', { type: 'remove', fromPos: sel.from, toPos: sel.to }))
+      this.view.dispatch(this.state.tr.setMeta('highlight', { action: 'remove', fromPos: sel.from, toPos: sel.to }))
     }
 
     this.editor.remove()

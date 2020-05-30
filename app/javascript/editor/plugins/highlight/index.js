@@ -4,6 +4,12 @@ import { Decoration, DecorationSet, EditorView } from 'prosemirror-view'
 import { EditorState, Plugin, PluginKey, Transaction } from 'prosemirror-state'
 
 import { Element } from 'editor/base'
+import HighlightItem from './item'
+import cssClasses from './constants'
+
+function createInlineDecoration(from, to, highlight) {
+  return Decoration.inline(from, to, { class: cssClasses[highlight.type] }, { highlight })
+}
 
 class HighlightState {
   decorations: DecorationSet
@@ -17,17 +23,17 @@ class HighlightState {
   }
 
   apply(tr: Transaction) {
-    let action = tr.getMeta('highlight')
+    const action = tr.getMeta('highlight')
     if (!action) return this
 
+    const { fromPos, toPos } = tr.getMeta('highlight')
     let decos = this.decorations
     decos = decos.map(tr.mapping, tr.doc)
 
-    const { fromPos, toPos } = tr.getMeta('highlight')
-
-    if (action.type == 'add') {
-      decos = decos.add(tr.doc, [Decoration.inline(fromPos, toPos, { class: 'selection bg-green-lightest' })])
-    } else if (action.type == 'remove') {
+    if (action.action == 'add') {
+      if (!action.type) return this
+      decos = decos.add(tr.doc, [Decoration.inline(fromPos, toPos, { class: cssClasses[action.type] })])
+    } else if (action.action == 'remove') {
       decos = decos.remove(this.highlightsAt(fromPos))
     }
 
@@ -35,7 +41,8 @@ class HighlightState {
   }
 
   static init(state: EditorState) {
-    return new HighlightState(DecorationSet.empty)
+    const decos = state.highlights.map((c) => createInlineDecoration(c.from, c.to, new HighlightItem(c.action, c.type)))
+    return new HighlightState(DecorationSet.create(state.doc, decos))
   }
 }
 

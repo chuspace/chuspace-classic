@@ -1,6 +1,7 @@
 // @flow
 
 import { Change, ChangeSet, Span, simplifyChanges } from 'prosemirror-changeset'
+import { DOMSerializer, Schema } from 'prosemirror-model'
 import { Decoration, DecorationSet } from 'prosemirror-view'
 import { EditorState, Plugin, PluginKey, Transaction } from 'prosemirror-state'
 import { baseKeymap, selectParentNode } from 'prosemirror-commands'
@@ -10,12 +11,12 @@ import { markdownParser, markdownSerializer } from 'editor/markdowner'
 
 import { EditorView } from 'prosemirror-view'
 import { MarkdownParser } from 'prosemirror-markdown'
-import { Schema } from 'prosemirror-model'
 import SchemaManager from 'editor/schema'
 import { Selection } from 'prosemirror-state'
 import { dropCursor } from 'prosemirror-dropcursor'
 import { gapCursor } from 'prosemirror-gapcursor'
 import { keymap } from 'prosemirror-keymap'
+import { recreateTransform } from './recreate'
 
 function arrowHandler(dir) {
   return (state, dispatch, view) => {
@@ -38,6 +39,7 @@ export type Options = {
   element: HTMLElement,
   imageProviderPath: string,
   content: string,
+  revision: string,
   editable: boolean,
   appearance: 'default' | 'comment' | 'plain' | 'contribution',
   onChange: (transaction: Transaction) => void
@@ -109,13 +111,21 @@ export default class Editor {
   }
 
   createState = () => {
-    const doc = this.markdownParser.parse(this.options.content)
-    const plugins = this.plugins
+    let doc = this.markdownParser.parse(this.options.content)
+    let plugins = this.plugins
+
+    if (this.options.revision) {
+      let diff = this._computeDiffDocument()
+      doc = diff.doc
+
+      plugins = this.plugins.concat(diff.plugins)
+    }
 
     return EditorState.create({
       schema: this.schema,
       doc: doc,
-      editions: [{ type: 'create', id: 2545478126, from: 87, to: 93, text: 'hello', previousText: 'foo' }],
+      highlights: [],
+      editions: [],
       plugins
     })
   }
@@ -133,6 +143,77 @@ export default class Editor {
     view.dom.classList.add('chu-editor')
 
     return view
+  }
+
+  _computeDiffDocument() {
+    let baseDoc = this.markdownParser.parse(this.options.content)
+    let revisionDoc = this.markdownParser.parse(this.options.revision)
+    let tr = recreateTransform(revisionDoc, baseDoc, true, true)
+
+    // create decorations corresponding to the changes
+    const decorations = []
+    let changeSet = ChangeSet.create(revisionDoc).addSteps(tr.doc, tr.mapping.maps)
+    let changes = simplifyChanges(changeSet.changes, tr.doc)
+
+    // deletion
+    function findDeleteEndIndex(startIndex) {
+      for (let i = startIndex; i < changes.length; i++) {
+        // if we are at the end then that's the end index
+        if (i === changes.length - 1) return i
+        // if the next change is discontinuous then this is the end index
+        if (changes[i].toB + 1 !== changes[i + 1].fromB) return i
+      }
+    }
+    let index = 0
+    while (index < changes.length) {
+      let endIndex = findDeleteEndIndex(index)
+      decorations.push(Decoration.inline(changes[index].fromB, changes[endIndex].toB, { class: 'deletion' }, {}))
+      index = endIndex + 1
+    }
+
+    // insertion
+    function findInsertEndIndex(startIndex) {
+      for (let i = startIndex; i < changes.length; i++) {
+        // if we are at the end then that's the end index
+        if (i === changes.length - 1) return i
+        // if the next change is discontinuous then this is the end index
+        if (changes[i].toA + 1 !== changes[i + 1].fromA) return i
+      }
+    }
+    index = 0
+    while (index < changes.length) {
+      let endIndex = findInsertEndIndex(index)
+
+      // apply the insertion
+      let slice = revisionDoc.slice(changes[index].fromA, changes[endIndex].toA)
+
+      let span = document.createElement('span')
+      span.setAttribute('class', 'insertion')
+      span.appendChild(DOMSerializer.fromSchema(this.schema).serializeFragment(slice.content))
+      decorations.push(
+        Decoration.widget(changes[index].toB, span, {
+          marks: []
+        })
+      )
+
+      index = endIndex + 1
+    }
+
+    // plugin to apply diff decorations
+    const decorationSet = DecorationSet.create(tr.doc, decorations)
+    let decosPlugin = new Plugin({
+      key: new PluginKey('diffs'),
+      props: {
+        decorations() {
+          return decorationSet
+        }
+      }
+    })
+
+    return {
+      doc: tr.doc,
+      plugins: [decosPlugin]
+    }
   }
 
   handleSave = (e: Event) => {

@@ -57,7 +57,8 @@
 
       <chu-editor
         spellcheck="false"
-        content="<%= @post.blob_content %>"
+        content="<%= @post.published_blob.content %>"
+        revision="<%= @post.blob.content %>"
         id="<%= @post.slug %>"
         publicationId='<%= @publication.slug %>'
         imageProviderPath='<%= publication_images_path(@post.publication) %>'

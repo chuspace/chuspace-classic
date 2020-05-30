@@ -21,6 +21,7 @@ export default class ChuEditor extends LitElement {
       param: { type: String },
       publicationId: { type: String },
       content: { type: String },
+      revision: { type: String },
       channel: { type: String },
       appearance: { type: String },
       editable: { type: Boolean },
@@ -52,6 +53,7 @@ export default class ChuEditor extends LitElement {
       placeholder: 'Write your post',
       onChange: this.onChange,
       content: this.content || '',
+      revision: this.revision || '',
       appearance: this.appearance
     })
   }
