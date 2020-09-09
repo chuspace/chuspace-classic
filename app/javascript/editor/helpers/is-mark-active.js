@@ -1,4 +1,4 @@
-export default function(state, type) {
+export default (state, type) => {
   const { from, $from, to, empty } = state.selection
 
   if (empty) {

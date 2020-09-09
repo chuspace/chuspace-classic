@@ -18,14 +18,14 @@ export default class CodeBlockView extends BaseView {
   updating: boolean = false
   mode: string = DEFAULT_MODE
   content: string
-  readOnly: boolean
+  readOnly: boolean | 'nocursor'
   lines: number
   theme: string
   incomingChanges: boolean = false
   getCMInstance: () => CodeMirror
   onLanguageChange: (mode: string) => void
 
-  constructor(props: BaseViewPropType & { theme: string }) {
+  constructor(props: BaseViewPropType & { theme: string, editable: boolean }) {
     // Call super but don't render the view
     super(props, false)
     const { mode } = LANGUAGE_MODE_HASH[this.node.attrs.language] || { mode: 'auto' }
@@ -34,7 +34,7 @@ export default class CodeBlockView extends BaseView {
     this.mode = mode
     this.node.attrs.language = mode
     this.content = this.node.textContent || ''
-    this.readOnly = false
+    this.readOnly = props.editable ? false : 'nocursor'
     this.lines = this.content.split(/\r\n|\r|\n/).length
     this.theme = props.theme || 'light'
 
@@ -81,7 +81,6 @@ export default class CodeBlockView extends BaseView {
     })
 
     this.cm.on('focus', () => this.forwardSelection())
-
     if (!this.content) this.cm.focus()
   }
 
@@ -89,7 +88,7 @@ export default class CodeBlockView extends BaseView {
   onLanguageChange = (mode: string) => {
     this.cm.setOption('mode', mode)
     this.node.attrs.language = mode
-    this.view.dispatch(this.view.state.tr.setNodeMarkup(this.getPos(), null, this.node.attrs))
+    this.outerView.dispatch(this.outerView.state.tr.setNodeMarkup(this.getPos(), null, this.node.attrs))
   }
 
   /**
@@ -98,11 +97,11 @@ export default class CodeBlockView extends BaseView {
    * commands executed on the outer editor see an accurate selection
    */
   forwardSelection = () => {
-    if (!this.cm.hasFocus()) return
-    let state = this.view.state
+    let state = this.outerView.state
     let selection = this.asProseMirrorSelection(state.doc)
+
     if (!selection.eq(state.selection)) {
-      this.view.dispatch(state.tr.setSelection(selection))
+      this.outerView.dispatch(state.tr.setSelection(selection).setMeta('foo', 'bar'))
     }
   }
 
@@ -117,17 +116,17 @@ export default class CodeBlockView extends BaseView {
 
     if (change) {
       let start = this.getPos() + 1
-      let tr = this.view.state.tr.replaceWith(
+      let tr = this.outerView.state.tr.replaceWith(
         start + change.from,
         start + change.to,
         change.text ? this.schema.text(change.text) : null
       )
-      this.view.dispatch(tr)
+      this.outerView.dispatch(tr)
     }
   }
 
   /**
-   * this helper function translates from a CodeMirror selction to a
+   * this helper function translates from a CodeMirror selection to a
    * ProseMirror selection.Because CodeMirror uses a line/column based
    * indexing system,indexFromPos is used to convert to an actual character
    * index.
@@ -137,6 +136,7 @@ export default class CodeBlockView extends BaseView {
     let offset = this.getPos() + 1
     let anchor = this.cm.indexFromPos(this.cm.getCursor('anchor')) + offset
     let head = this.cm.indexFromPos(this.cm.getCursor('head')) + offset
+
     return TextSelection.create(doc, anchor, head)
   }
 
@@ -161,7 +161,7 @@ export default class CodeBlockView extends BaseView {
    * a new paragraph after a code block.
    */
   codeMirrorKeymap = () => {
-    let view = this.view
+    let view = this.outerView
     let mod = /Mac/.test(navigator.platform) ? 'Cmd' : 'Ctrl'
 
     return CodeMirror.normalizeKeyMap({
@@ -195,11 +195,11 @@ export default class CodeBlockView extends BaseView {
     ) {
       return CodeMirror.Pass
     }
-    this.view.focus()
+    this.outerView.focus()
     let targetPos = this.getPos() + (dir < 0 ? 0 : this.node.nodeSize)
-    let selection = Selection.near(this.view.state.doc.resolve(targetPos), dir)
-    this.view.dispatch(this.view.state.tr.setSelection(selection).scrollIntoView())
-    this.view.focus()
+    let selection = Selection.near(this.outerView.state.doc.resolve(targetPos), dir)
+    this.outerView.dispatch(this.outerView.state.tr.setSelection(selection).scrollIntoView())
+    this.outerView.focus()
   }
 
   /**

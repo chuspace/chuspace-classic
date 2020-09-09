@@ -5,7 +5,7 @@ import * as Headroom from 'headroom.js'
 import { Controller } from 'stimulus'
 
 export default class extends Controller {
-  connect() {
+  connect = () => {
     this.headroom = new Headroom(this.element, {
       offset: 205,
       tolerance: 5,
@@ -21,5 +21,9 @@ export default class extends Controller {
     })
 
     this.headroom.init()
+  }
+
+  disconnect = () => {
+    this.headroom && this.headroom.destroy()
   }
 }

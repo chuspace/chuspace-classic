@@ -8,9 +8,9 @@ import * as Rails from 'rails-ujs'
 import * as iframely from '@iframely/embed.js'
 
 import { html, render } from 'lit-html'
+import tippy, { followCursor, inlinePositioning, sticky } from 'tippy.js'
 
 import { Controller } from 'stimulus'
-import tippy from 'tippy.js'
 import truncate from 'lodash/truncate'
 
 export default class PopperController extends Controller {
@@ -64,17 +64,20 @@ export default class PopperController extends Controller {
       content: INITIAL_CONTENT,
       animation: 'scale',
       theme: 'light',
+      allowHTML: true,
+      inlinePositioning: true,
       delay: 300,
       maxWidth: 350,
-      lazy: true,
       interactive: true,
+      sticky: true,
+      followCursor: 'initial',
+      plugins: [followCursor, sticky, inlinePositioning],
       touch: 'hold',
       popperOptions: {
         positionFixed: true
       },
       appendTo: document.body,
       arrow: true,
-      flipOnUpdate: true,
       onCreate: instance => {
         // Setup our own custom state properties
         instance.isFetching = false
@@ -102,17 +105,14 @@ export default class PopperController extends Controller {
           }
 
           instance.setContent(this.tooltipMarkup(href, data))
-          const height = instance.popperChildren.tooltip.clientHeight
-          instance.popper.style.height = height + 'px'
         } catch (error) {
-          instance.setContent('Link preview unavailable')
+          instance.setContent('<div class="text-center">Link preview unavailable</div>')
         } finally {
           instance.state.isFetching = false
         }
       },
 
       onHidden(instance) {
-        const { tooltip } = instance.popperChildren
         instance.state.canFetch = true
       }
     })

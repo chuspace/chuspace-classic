@@ -1,7 +1,5 @@
 <% set_meta_tags @post %>
 
-<%= render 'posts/series', post: @post %>
-
 <article class='relative'>
   <% if signed_in? && allowed_to?(:republish?, @post) %>
     <div class='flex justify-between items-center card card-default mb-8'>
@@ -10,54 +8,70 @@
     </div>
   <% end %>
 
-  <%= content_tag :h1, @post.title, class: 'title' %>
-  <%= content_tag :h2, @post.summary, class: 'summary' %>
+  <div class='flex items-top relative'>
+    <div class='w-full sm:w-3/12 text-center'>
+      <div class='sticky top-0' style='top: 6rem;'>
+        <%= link_to user_path(@post.author) do %>
+          <%= component(
+              'avatar',
+              avatar_url: @post.author.avatar_url(variant: :md),
+              gravatar_url: @post.author.gravatar_url(variant: :md),
+              variant: :md,
+              css_class: 'mx-auto',
+              options: { title: @post.author.name, alt: @post.author.name }
+            )
+            %>
 
-  <div class='mt-8'>
-    <%= link_to user_path(@post.author), class: 'flex items-center' do %>
-      <%= component 'avatar', avatar_url: @post.author.avatar_url(variant: :sm), gravatar_url: @post.author.gravatar_url(variant: :sm), variant: :sm %>
-      <div class='ml-2 flex-1 text-sm'>
-        <p class='font-medium'><%= @post.author.name %></p>
-        <div class='horizontal__list text-grey text-xs'>
-          <%= content_tag :li, @post.published_at.strftime("%b %d, %Y") %>
-          <%= content_tag :li do %>
-            <%= @post.reading_time %> min read
+          <div>
+            <h3 class='text-2xl mt-8'><%= @post.author.name %></h3>
+            <h3 class='text-base font-normal text-grey'><%= @post.author.nickname %></h3>
+            <%= content_tag :p, @post.author.bio, class: 'mt-2 text-sm w-full sm:w-3/4' unless @post.author.bio.blank? %>
+          </div>
+        <% end %>
+
+        <div class='mt-4 flex items-center justify-center'>
+          <div class='mr-4' id='<%= @post.slug %>_container'>
+            <%= render 'posts/likes', publication: @post.publication, post: @post %>
+          </div>
+
+          <%= link_to publication_post_share_path(@post.publication, @post, 'twitter'), class: 'mr-4', target: '_blank', rel: 'noopener noreferrer nofollow' do %>
+            <svg-icon name='twitter' feather='true' width='24' height='24' stroke='#1da1f2' color='#1da1f2'></svg-icon>
+          <% end %>
+
+          <%= link_to publication_post_share_path(@post.publication, @post, 'facebook'), target: '_blank', rel: 'noopener noreferrer nofollow' do %>
+            <svg-icon name='facebook' feather='true' width='24' height='24' stroke='#3b5998' color='#3b5998'></svg-icon>
           <% end %>
         </div>
+
+        <%= render 'posts/series', post: @post %>
       </div>
-    <% end %>
-  </div>
-
-  <div class='chu-editor mt-8'>
-    <%= @post.body_html.html_safe %>
-  </div>
-
-  <ul class='list-none flex p-0 m-0'>
-    <% @post.topics.each do |topic| %>
-      <li class='list-none badge badge--grey mr-2'><%= topic %></li>
-    <% end %>
-  </ul>
-
-  <div class='mt-12 flex'>
-    <div class='flex-1' id='<%= @post.slug %>_container'>
-      <%= render 'posts/likes', publication: @post.publication, post: @post %>
     </div>
 
-    <div class='flex'>
-      <%= link_to publication_post_share_path(@post.publication, @post, 'twitter'), class: 'mr-4', target: '_blank', rel: 'noopener noreferrer nofollow' do %>
-        <svg-icon name='twitter' feather='true' width='24' height='24' stroke='#1da1f2' color='#1da1f2'></svg-icon>
-      <% end %>
+    <div class='w-full sm:w-9/12 pl-12'>
+      <ul class='list-none flex items-center p-0 m-0'>
+        <%= content_tag :li, @post.published_at.strftime("%b %d, %Y"), class: 'text-grey text-sm font-medium mr-4' %>
+        <% @post.topics.each do |topic| %>
+          <li class='list-none badge badge--grey mr-2'><%= topic %></li>
+        <% end %>
+      </ul>
 
-      <%= link_to publication_post_share_path(@post.publication, @post, 'facebook'), target: '_blank', rel: 'noopener noreferrer nofollow' do %>
-        <svg-icon name='facebook' feather='true' width='24' height='24' stroke='#3b5998' color='#3b5998'></svg-icon>
-      <% end %>
-    </div>
-  </div>
+      <chu-editor
+        spellcheck="false"
+        content="<%= @post.published_blob.content %>"
+        revision="<%= @post.blob.content %>"
+        id="<%= @post.slug %>"
+        publicationId='<%= @publication.slug %>'
+        imageProviderPath='<%= publication_images_path(@post.publication) %>'
+        class='chu-editor pb-32 block'
+        appearance='contribution'
+      >
+      </chu-editor>
 
-  <div class='author mt-4 mb-24 border-t border-grey-lightest'>
-    <div class='list'>
-      <%= render 'users/user', badge: 'author', user: @post.author %>
-      <%= render 'publications/publication', badge: 'publication', publication: @post.publication unless @post.publication.personal %>
+      <% unless @post.publication.personal %>
+        <div class='author mt-4 mb-24 border-t border-grey-lightest'>
+          <%= render 'publications/publication', badge: 'publication', publication: @post.publication %>
+        </div>
+      <% end %>
     </div>
   </div>
 </article>

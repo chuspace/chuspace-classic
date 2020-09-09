@@ -5,7 +5,7 @@ class CreateInvitations < ActiveRecord::Migration[6.0]
   def change
     create_table :invitations do |t|
       t.references :sender, null: false, index: true, foreign_key: { to_table: :users }
-      t.string :identifier, null: false
+      t.string :identifier, null: false, index: true
       t.index %i[identifier publication_id], unique: true
 
       t.integer :role, null: false

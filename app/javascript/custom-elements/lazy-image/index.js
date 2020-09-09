@@ -63,7 +63,7 @@ export default class LazyImage extends LitElement {
                   <input
                     type="text"
                     @change=${this.onCaptionChange}
-                    class="input input--borderless p-0 italic text-center text-sm font-headings"
+                    class="input input--borderless p-0 italic text-center text-sm"
                     value=${this.alt}
                     maxlength=${70}
                     placeholder="Click to enter caption (optional)"

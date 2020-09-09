@@ -58,7 +58,7 @@ class Post < ApplicationRecord
   end
 
   def published_blob
-    @published_blob ||= publication.repository.lookup(blob_id)
+    @published_blob ||= publication.repository.blob_at(path: blob_path, sha: commit_sha)
   end
 
   def blob
@@ -106,7 +106,7 @@ class Post < ApplicationRecord
   end
 
   def reading_time
-    (words_count / WORDS_PER_MINUTE).round
+    words_count > WORDS_PER_MINUTE ? (words_count / WORDS_PER_MINUTE).round : 1
   end
 
   def publish_label

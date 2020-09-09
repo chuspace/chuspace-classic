@@ -27,7 +27,7 @@ export default class ImagePlaceholder extends Element {
               let deco = Decoration.widget(action.add.pos, widget, { id: action.add.id })
               set = set.add(tr.doc, [deco])
             } else if (action && action.remove) {
-              set = set.remove(set.find(null, null, spec => spec.id == action.remove.id))
+              set = set.remove(set.find(null, null, (spec) => spec.id == action.remove.id))
             }
 
             return set
@@ -40,7 +40,7 @@ export default class ImagePlaceholder extends Element {
 
           findPlaceholder(state: EditorState, id: string) {
             let decos = this.getState(state)
-            let found = decos.find(null, null, spec => spec.id == id)
+            let found = decos.find(null, null, (spec) => spec.id == id)
             return found.length ? found[0].from : null
           }
         }

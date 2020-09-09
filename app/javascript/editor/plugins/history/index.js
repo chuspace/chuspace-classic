@@ -14,13 +14,13 @@ export default class History extends Element {
 
   keys() {
     const isMac = typeof navigator !== 'undefined' ? /Mac/.test(navigator.platform) : false
-    const keymap = {
+    let keymap = {
       'Mod-z': undo,
       'Shift-Mod-z': redo
     }
 
     if (!isMac) {
-      keymap['Mod-y'] = redo
+      keymap = Object.assign({}, keymap, { 'Mod-y': redo })
     }
 
     return keymap

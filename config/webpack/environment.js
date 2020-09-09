@@ -26,7 +26,7 @@ environment.loaders.prepend('module', {
 })
 
 environment.loaders.append('null', nullLoader)
-const sassLoader = environment.loaders.get('sass').use.find(loader => loader.loader === 'sass-loader')
-sassLoader.options.importer = globImporter()
+const sassLoader = environment.loaders.get('sass').use.find((loader) => loader.loader === 'sass-loader')
+sassLoader.options.sassOptions.importer = globImporter()
 
 module.exports = environment

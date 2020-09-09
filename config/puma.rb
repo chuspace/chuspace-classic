@@ -6,10 +6,8 @@ threads_count = Integer(ENV['RAILS_MAX_THREADS'] || 5)
 threads threads_count, threads_count
 
 preload_app!
-
 early_hints true
 
-rackup DefaultRackup
 port ENV['PORT'] || 3_000
 environment ENV['RACK_ENV'] || 'development'
 
@@ -23,10 +21,3 @@ lowlevel_error_handler do |ex, env|
     ]
   ]
 end
-
-before_fork do
-  puts 'Puma master process about to fork. Closing existing Active record connections.'
-  ActiveRecord::Base.connection.disconnect!
-end
-
-on_worker_boot { ActiveRecord::Base.establish_connection }

@@ -9,4 +9,8 @@ export default class extends Controller {
       else this.element.open = false
     })
   }
+
+  disconnect() {
+    this.element.open = false
+  }
 }

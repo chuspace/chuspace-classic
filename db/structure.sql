@@ -103,7 +103,7 @@ CREATE TABLE public.invitations (
 
 CREATE TABLE public.keys (
     id BIGSERIAL PRIMARY KEY,
-    title character varying,
+    title character varying NOT NULL,
     key text NOT NULL,
     fingerprint character varying NOT NULL,
     user_id bigint NOT NULL,
@@ -144,7 +144,8 @@ CREATE TABLE public.posts (
     updated_at timestamp(6) without time zone NOT NULL,
     unlisted boolean DEFAULT false,
     preview_image_data character varying,
-    featured boolean
+    featured boolean,
+    commit_sha text
 );
 
 -- Name: publications; Type: TABLE
@@ -300,6 +301,10 @@ CREATE INDEX index_friendly_id_slugs_on_sluggable_type_and_sluggable_id ON publi
 
 CREATE UNIQUE INDEX index_invitations_on_code ON public.invitations USING btree (code);
 
+-- Name: index_invitations_on_identifier; Type: INDEX
+
+CREATE INDEX index_invitations_on_identifier ON public.invitations USING btree (identifier);
+
 -- Name: index_invitations_on_identifier_and_publication_id; Type: INDEX
 
 CREATE UNIQUE INDEX index_invitations_on_identifier_and_publication_id ON public.invitations USING btree (identifier, publication_id);
@@ -351,6 +356,10 @@ CREATE INDEX index_posts_on_author_id ON public.posts USING btree (author_id);
 -- Name: index_posts_on_blob_path_and_publication_id; Type: INDEX
 
 CREATE UNIQUE INDEX index_posts_on_blob_path_and_publication_id ON public.posts USING btree (blob_path, publication_id);
+
+-- Name: index_posts_on_commit_sha; Type: INDEX
+
+CREATE INDEX index_posts_on_commit_sha ON public.posts USING btree (commit_sha);
 
 -- Name: index_posts_on_featured; Type: INDEX
 
@@ -446,6 +455,16 @@ ALTER TABLE ONLY public.posts
 ALTER TABLE ONLY public.invitations
     ADD CONSTRAINT fk_rails_08fac6589b FOREIGN KEY (publication_id) REFERENCES public.publications(id);
 
+-- Name: visits fk_rails_09e5e7c20b; Type: FK CONSTRAINT
+
+ALTER TABLE ONLY public.visits
+    ADD CONSTRAINT fk_rails_09e5e7c20b FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+-- Name: events fk_rails_0cb5590091; Type: FK CONSTRAINT
+
+ALTER TABLE ONLY public.events
+    ADD CONSTRAINT fk_rails_0cb5590091 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
 -- Name: likes fk_rails_1e09b5dabf; Type: FK CONSTRAINT
 
 ALTER TABLE ONLY public.likes
@@ -486,6 +505,11 @@ ALTER TABLE ONLY public.publications
 ALTER TABLE ONLY public.posts
     ADD CONSTRAINT fk_rails_d5126cca81 FOREIGN KEY (publication_id) REFERENCES public.publications(id);
 
+-- Name: events fk_rails_ef9e5ff5fb; Type: FK CONSTRAINT
+
+ALTER TABLE ONLY public.events
+    ADD CONSTRAINT fk_rails_ef9e5ff5fb FOREIGN KEY (visit_id) REFERENCES public.visits(id);
+
 -- PostgreSQL database dump complete
 
 SET search_path TO "$user", public;
@@ -511,5 +535,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190924171625'),
 ('20190925075537'),
 ('20190925075609'),
-('20190925080931');
+('20190925080931'),
+('20191007202001');
 

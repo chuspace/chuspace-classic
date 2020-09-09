@@ -1,6 +1,6 @@
 <details class='relative inline-block' data-controller='dropdown'>
   <summary role='button' aria-label='Open dropdown'>
-    <%= dropdown.opener %>
+    <%= dropdown.opener.content %>
     <% if dropdown.arrow? %>
       <span class='drop__arrow'></span>
     <% end %>
@@ -16,7 +16,7 @@
         <% end %>
       <% end %>
     <% else %>
-      <%= dropdown.content %>
+      <%= dropdown.body.content %>
     <% end %>
   </details-menu>
 </details>

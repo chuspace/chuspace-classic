@@ -1,11 +1,7 @@
 // @flow
 
-import * as marks from 'editor/schema/nodes'
-import * as nodes from 'editor/schema/marks'
-import * as plugins from 'editor/plugins'
-
 import { Change, ChangeSet, Span, simplifyChanges } from 'prosemirror-changeset'
-import { CodeBlockView, ImageView } from 'editor/views'
+import { DOMSerializer, Schema } from 'prosemirror-model'
 import { Decoration, DecorationSet } from 'prosemirror-view'
 import { EditorState, Plugin, PluginKey, Transaction } from 'prosemirror-state'
 import { baseKeymap, selectParentNode } from 'prosemirror-commands'
@@ -13,19 +9,14 @@ import { getMarkAttrs, isMarkActive, isNodeActive } from 'editor/helpers'
 import { inputRules, undoInputRule } from 'prosemirror-inputrules'
 import { markdownParser, markdownSerializer } from 'editor/markdowner'
 
-import { DOMSerializer } from 'prosemirror-model'
 import { EditorView } from 'prosemirror-view'
 import { MarkdownParser } from 'prosemirror-markdown'
-import { Schema } from 'prosemirror-model'
 import SchemaManager from 'editor/schema'
 import { Selection } from 'prosemirror-state'
-import { Transform } from 'prosemirror-transform'
 import { dropCursor } from 'prosemirror-dropcursor'
 import { gapCursor } from 'prosemirror-gapcursor'
-import get from 'lodash/get'
 import { keymap } from 'prosemirror-keymap'
-import toArray from 'lodash/toArray'
-import without from 'lodash/without'
+import { recreateTransform } from './recreate'
 
 function arrowHandler(dir) {
   return (state, dispatch, view) => {
@@ -43,106 +34,53 @@ function arrowHandler(dir) {
   }
 }
 
-type Options = {
+export type Options = {
   autoFocus: boolean,
   element: HTMLElement,
-  original: string,
   imageProviderPath: string,
   content: string,
+  revision: string,
   editable: boolean,
-  onChange: () => void
+  appearance: 'default' | 'comment' | 'plain' | 'contribution',
+  onChange: (transaction: Transaction) => void
 }
 
 export default class Editor {
-  options = {}
+  options: Options = {}
   element: HTMLElement
-  elements: SchemaManager
+  manager: SchemaManager
   schema: Schema
   markdownParser: MarkdownParser
   markdownSerializer: markdownSerializer
-  keymaps: any
-  inputRules: []
-  pasteRules: []
   state: EditorState
   view: EditorView
-  commands: []
   activeMarks: {}
   activeNodes: {}
   activeMarkAttrs: {}
 
-  constructor(options: Options = {}) {
+  constructor(options: Options) {
     this.options = options
     this.element = options.element
-    this.elements = this.createElements()
-    this.schema = this.createSchema()
-
+    this.manager = new SchemaManager(this)
+    this.schema = this.manager.schema
     this.markdownParser = markdownParser(this.schema)
     this.markdownSerializer = markdownSerializer
 
-    this.keymaps = this.createKeymaps()
-    this.inputRules = this.createInputRules()
-    this.pasteRules = this.createPasteRules()
     this.state = this.createState()
     this.view = this.createView()
-    this.commands = this.createCommands()
-
-    this.view.props.commands = this.commands
+    this.view.props.commands = this.manager.commands
     this.setActiveNodesAndMarks()
     if (this.options.autoFocus) this.focus()
   }
 
-  createElements() {
-    return new SchemaManager(
-      [
-        ...toArray(marks).map(Mark => new Mark()),
-        ...toArray(plugins).map(Plugin => new Plugin()),
-        ...toArray(nodes).map(Node => new Node())
-      ],
-      this
-    )
-  }
-
-  createSchema() {
-    return new Schema({
-      nodes: this.elements.nodes,
-      marks: this.elements.marks
-    })
-  }
-
-  createKeymaps() {
-    return this.elements.keymaps({
-      schema: this.schema
-    })
-  }
-
-  createInputRules() {
-    return this.elements.inputRules({
-      schema: this.schema
-    })
-  }
-
-  createPasteRules() {
-    return this.elements.pasteRules({
-      schema: this.schema
-    })
-  }
-
-  createCommands() {
-    return this.elements.commands({
-      schema: this.schema,
-      view: this.view,
-      editable: !!this.options.editable
-    })
-  }
-
   get plugins() {
     return [
-      ...this.elements.plugins,
+      ...this.manager.plugins,
       inputRules({
-        rules: this.inputRules
+        rules: this.manager.inputRules
       }),
-      ...this.pasteRules,
-      ...this.keymaps,
+      ...this.manager.pasteRules,
+      ...this.manager.keymaps,
       keymap({
         Backspace: undoInputRule,
         Escape: selectParentNode,
@@ -173,32 +111,32 @@ export default class Editor {
   }
 
   createState = () => {
-    const doc = this.markdownParser.parse(this.options.content)
-    const plugins = this.plugins
+    let doc = this.markdownParser.parse(this.options.content)
+    let plugins = this.plugins
+
+    if (this.options.revision) {
+      let diff = this._computeDiffDocument()
+      doc = diff.doc
+
+      plugins = this.plugins.concat(diff.plugins)
+    }
 
     return EditorState.create({
       schema: this.schema,
       doc: doc,
+      highlights: [],
+      editions: [],
       plugins
     })
   }
 
   createView() {
-    let nodeViews = {
-      code_block: (node, view, getPos) => new CodeBlockView({ node, view, getPos }),
-      image: (node, view, getPos) => new ImageView({ node, view, getPos })
-    }
-
-    if (this.options.original) {
-      nodeViews = {}
-    }
-
     const view = new EditorView(this.element, {
       state: this.state,
       editable: () => !!this.options.editable,
       imageProviderPath: this.options.imageProviderPath,
       dispatchTransaction: this.dispatchTransaction.bind(this),
-      nodeViews
+      nodeViews: this.manager.nodeViews
     })
 
     view.dom.style.whiteSpace = 'pre-wrap'
@@ -207,8 +145,79 @@ export default class Editor {
     return view
   }
 
+  _computeDiffDocument() {
+    let baseDoc = this.markdownParser.parse(this.options.content)
+    let revisionDoc = this.markdownParser.parse(this.options.revision)
+    let tr = recreateTransform(revisionDoc, baseDoc, true, true)
+
+    // create decorations corresponding to the changes
+    const decorations = []
+    let changeSet = ChangeSet.create(revisionDoc).addSteps(tr.doc, tr.mapping.maps)
+    let changes = simplifyChanges(changeSet.changes, tr.doc)
+
+    // deletion
+    function findDeleteEndIndex(startIndex) {
+      for (let i = startIndex; i < changes.length; i++) {
+        // if we are at the end then that's the end index
+        if (i === changes.length - 1) return i
+        // if the next change is discontinuous then this is the end index
+        if (changes[i].toB + 1 !== changes[i + 1].fromB) return i
+      }
+    }
+    let index = 0
+    while (index < changes.length) {
+      let endIndex = findDeleteEndIndex(index)
+      decorations.push(Decoration.inline(changes[index].fromB, changes[endIndex].toB, { class: 'deletion' }, {}))
+      index = endIndex + 1
+    }
+
+    // insertion
+    function findInsertEndIndex(startIndex) {
+      for (let i = startIndex; i < changes.length; i++) {
+        // if we are at the end then that's the end index
+        if (i === changes.length - 1) return i
+        // if the next change is discontinuous then this is the end index
+        if (changes[i].toA + 1 !== changes[i + 1].fromA) return i
+      }
+    }
+    index = 0
+    while (index < changes.length) {
+      let endIndex = findInsertEndIndex(index)
+
+      // apply the insertion
+      let slice = revisionDoc.slice(changes[index].fromA, changes[endIndex].toA)
+
+      let span = document.createElement('span')
+      span.setAttribute('class', 'insertion')
+      span.appendChild(DOMSerializer.fromSchema(this.schema).serializeFragment(slice.content))
+      decorations.push(
+        Decoration.widget(changes[index].toB, span, {
+          marks: []
+        })
+      )
+
+      index = endIndex + 1
+    }
+
+    // plugin to apply diff decorations
+    const decorationSet = DecorationSet.create(tr.doc, decorations)
+    let decosPlugin = new Plugin({
+      key: new PluginKey('diffs'),
+      props: {
+        decorations() {
+          return decorationSet
+        }
+      }
+    })
+
+    return {
+      doc: tr.doc,
+      plugins: [decosPlugin]
+    }
+  }
+
   handleSave = (e: Event) => {
-    this.options.onChange()
+    this.options.editable ? this.options.onChange() : false
     return true
   }
 
@@ -224,7 +233,7 @@ export default class Editor {
   }
 
   emitUpdate(transaction: Transaction) {
-    this.options.onChange()
+    this.options.editable ? this.options.onChange(transaction) : false
   }
 
   focus() {
@@ -270,7 +279,7 @@ export default class Editor {
       ...this.activeMarks,
       ...this.activeNodes
     }).reduce(
-      (types, [name, value]) => ({
+      (types, [name, value]: [string, Function]) => ({
         ...types,
         [name]: (attrs = {}) => value(attrs)
       }),

@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.4'
+ruby '2.6.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '>= 6.x'
@@ -79,7 +79,7 @@ gem 'sshkey'
 gem 'yabeda'
 
 # View components
-gem 'components', git: 'https://github.com/jensljungblad/components.git'
+gem 'elemental_components', git: 'https://github.com/jensljungblad/elemental_components'
 
 # Security
 gem 'rack-attack'
@@ -90,12 +90,8 @@ gem 'commonmarker'
 # Friendly urls
 gem 'babosa', github: 'empathyby/babosa'
 
-# Typechecking
-gem 'sorbet-runtime'
-gem 'sorbet-rails'
-
 # Github data
-gem 'octokit'
+gem 'octokit', require: false
 
 # environment variables
 gem 'dotenv-rails', require: 'dotenv/rails-now'
@@ -109,7 +105,6 @@ gem 'maxminddb'
 
 # Error tracking
 gem 'sentry-raven'
-gem 'skylight'
 
 # Cron jobs
 gem 'whenever', require: false
@@ -145,8 +140,7 @@ group :development do
   gem 'awesome_print'
   # Pry
   gem 'pry-rails'
-  # Fake data
-  gem 'sorbet'
+
   gem 'database_consistency', require: false
   gem 'tomo', require: false
   gem 'runbook'

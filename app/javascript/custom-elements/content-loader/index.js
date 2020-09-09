@@ -2,7 +2,9 @@
 
 import { LitElement, customElement, html, svg } from 'lit-element'
 
-import nanoid from 'nanoid/generate'
+import { customAlphabet } from 'nanoid'
+
+const nanoid = customAlphabet('1234567890abcdef', 10)
 
 export default class ContentLoader extends LitElement {
   static get properties() {
@@ -10,7 +12,7 @@ export default class ContentLoader extends LitElement {
       type: { type: String },
       lines: { type: Number },
       width: { type: Number },
-      height: { type: Number }
+      height: { type: Number },
     }
   }
 
@@ -45,11 +47,11 @@ export default class ContentLoader extends LitElement {
       speed: 2,
       style: {},
       boxWidth: 400,
-      className: 'loader'
+      className: 'loader',
     }
 
-    const idClip = nanoid('1234567890abcdef', 10)
-    const idGradient = nanoid('1234567890abcdef', 10)
+    const idClip = nanoid()
+    const idGradient = nanoid()
     const rtlStyle = props.rtl ? { transform: 'scaleX(-1)' } : {}
     const keyTimes = `0; ${props.interval}; 1`
     const dur = `${props.speed}s`

@@ -1,11 +1,12 @@
 html, body
-  @apply font-headings
+  @apply leading-normal
   width: 100%
   position: relative
   font-weight: normal
   margin: 0
   padding: 0
   box-sizing: border-box
+  font-family: 'Open Sans', sans-serif
   color: rgba(0, 0, 0, 0.8)
   --x-height-multiplier: 0.375
   --baseline-multiplier: 0.17
@@ -24,8 +25,7 @@ html, body
   margin-top: calc(60px + 2rem)
 
 h1, h2, h3, h4, h5, h6, strong
-  @apply font-headings
-  line-height: 1.15
+  @apply leading-tight
 
 .dialog-open
   overflow: hidden
@@ -55,3 +55,6 @@ button
 
 input[type='file']
   color: transparent
+
+hr
+  @apply mb-4 border-grey-lighter

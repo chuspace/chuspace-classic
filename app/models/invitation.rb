@@ -5,7 +5,7 @@ class Invitation < ApplicationRecord
   db_belongs_to :publication
   db_belongs_to :sender, class_name: 'User', foreign_key: :sender_id
 
-  validates :identifier, presence: true
+  validates :identifier, :role, presence: true
   validates :identifier, presence: true, email: true, if: -> { recipient.blank? }
   validates_db_uniqueness_of :identifier, scope: :publication_id
   validates_db_uniqueness_of :code

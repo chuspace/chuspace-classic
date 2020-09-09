@@ -46,7 +46,7 @@ export default class Placeholder extends Element {
       new Plugin({
         props: {
           decorations: ({ doc, plugins }) => {
-            const editablePlugin = plugins.find(plugin => plugin.key.startsWith('editable$'))
+            const editablePlugin = plugins.find((plugin) => plugin.key.startsWith('editable$'))
             const editable = editablePlugin.props.editable()
 
             if (!editable) {
@@ -67,7 +67,7 @@ export default class Placeholder extends Element {
               const isSummary = secondChild === node && node.attrs.level === 2
               const isEmptyBody = secondChild === node && node.type.name === 'paragraph' && doc.childCount <= 3
 
-              if (isTitle || (isSummary || isEmptyBody)) {
+              if (isTitle || isSummary || isEmptyBody) {
                 decorations.push(this.getDecoration(node, pos))
               } else {
                 if (node.type.name == 'heading') {

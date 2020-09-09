@@ -2,7 +2,6 @@
 # frozen_string_literal: true
 
 class Repository
-  extend T::Sig
   include Commitable, ActiveModel::AttributeMethods, ActiveModel::Model
 
   class NoRepository < StandardError; end
@@ -39,76 +38,67 @@ class Repository
   attr_accessor :name, :path, :author
   validates :name, :path, :author, presence: true
 
-  delegate :lookup, :checkout, :empty?, :bare?, :index, :branches, to: :rugged
+  delegate :lookup, :checkout, :empty?, :bare?, :index, :branches, :tags, to: :rugged
   delegate :tree, to: :commit
 
-  sig { params(path: String).returns(T::Boolean) }
   def self.in_post_path?(path)
     path.start_with?(DRAFTS_ROOT_PATH, POSTS_ROOT_PATH)
   end
 
-  sig { params(path: String).returns(T::Boolean) }
   def self.in_image_path?(path)
     path.start_with?(IMAGES_ROOT_PATH)
   end
 
-  sig { returns(T.nilable(Rugged::Repository)) }
   def rugged
     @rugged ||= Rugged::Repository.bare(path)
   rescue Rugged::RepositoryError, Rugged::OSError, TypeError
     nil
   end
 
-  sig { returns(T::Boolean) }
   def persisted?
     !!rugged
   end
 
   alias present? persisted?
 
-  sig { returns(T::Boolean) }
   def blank?
     !persisted?
   end
 
-  sig { returns(T.nilable(Rugged::Reference)) }
   def head
     rugged.head
   rescue Rugged::ReferenceError
     nil
   end
 
-  sig { returns(T.nilable(String)) }
   def commit_sha
     head&.target&.oid
   end
 
-  sig { params(sha: T.nilable(String)).returns(Rugged::Commit) }
   def commit(sha: commit_sha)
     lookup(sha)
   end
 
-  sig { params(sha: T.nilable(String)).returns(T::Array[Blob]) }
+  def short_sha(length = 10)
+    commit_sha.to_s[0..length]
+  end
+
   def blobs(sha: commit_sha)
     Blob.all(repository: self, commit_sha: sha)
   end
 
-  sig { params(path: String, sha: T.nilable(String)).returns(T.nilable(Blob)) }
   def blob_at(path:, sha: commit_sha)
     Blob.find(repository: self, path: path, commit_sha: sha)
   end
 
-  sig { params(path: String, content: String, commit_message: T.nilable(String), branch: String).returns(Blob) }
   def create_blob(path:, content:, commit_message: nil, branch: DEFAULT_BRANCH)
     Blob.create(repository: self, path: path, content: content, commit_message: commit_message, branch: branch)
   end
 
-  sig { params(name: String).returns(Rugged::Branch) }
   def find_branch(name:)
     branches.find { |branch| branch.name == name }
   end
 
-  sig { returns(String) }
   def ssh_path
     "git@chuspace.com:#{name}"
   end
@@ -132,7 +122,6 @@ class Repository
     sha
   end
 
-  sig { returns(Repository) }
   def create
     unless persisted?
       Rails.logger.info "Creating repository <#{name}> at <#{path}>."

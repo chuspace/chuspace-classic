@@ -1,11 +1,9 @@
-# typed: false
+# typed: true
 # frozen_string_literal: true
 
 class PostMarkdownService
-  extend T::Sig
   attr_reader :content, :markdown_doc, :title, :preview_image, :summary, :body_md, :body_html
 
-  sig { params(content: T.nilable(String)).returns(CommonMarker::Node) }
   def initialize(content:)
     @title = nil
     @summary = nil
@@ -17,12 +15,10 @@ class PostMarkdownService
     @markdown_doc ||= CommonMarker.render_doc(content || '')
   end
 
-  sig { params(content: T.nilable(String)).returns(PostMarkdownService) }
   def self.call(content:)
     new(content: content).parse
   end
 
-  sig { returns(T.nilable(PostMarkdownService)) }
   def parse
     @markdown_doc.walk do |node|
       if node.type == :image
@@ -55,17 +51,14 @@ class PostMarkdownService
 
   private
 
-  sig { params(node: CommonMarker::Node).returns(T::Boolean) }
   def title?(node)
     node.type == :header && node.header_level == 1
   end
 
-  sig { params(node: CommonMarker::Node).returns(T::Boolean) }
   def summary?(node)
     node.type == :header && node.header_level == 2
   end
 
-  sig { params(node: CommonMarker::Node, content: String).returns(String) }
   def string_content_for(node, content = '')
     node.each do |subnode|
       case subnode.type.to_sym
@@ -81,6 +74,6 @@ class PostMarkdownService
 
   def url_or_mailto?(url_str)
     url = URI.parse(url_str)
-    T.unsafe(url.kind_of?(URI::HTTP)) || T.unsafe(url.kind_of?(URI::HTTPS)) || T.unsafe(url.kind_of?(URI::MailTo))
+    url.kind_of?(URI::HTTP) || url.kind_of?(URI::HTTPS) || url.kind_of?(URI::MailTo)
   end
 end

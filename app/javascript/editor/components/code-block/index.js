@@ -46,6 +46,7 @@ export default class CodeEditor extends LitElement {
 
     this.loaded = false
     this.lines = 0
+
     this.options = {
       root: null,
       rootMargin: '0px',
@@ -132,13 +133,13 @@ export default class CodeEditor extends LitElement {
     })
 
   initClipboardJS = (node: ?HTMLElement) => {
-    const clipboard = new ClipboardJS(node, { text: trigger => this.cm && this.cm.getDoc().getValue() })
+    const clipboard = new ClipboardJS(node, { text: (trigger) => this.cm && this.cm.getDoc().getValue() })
 
-    clipboard.on('success', e => {
+    clipboard.on('success', (e) => {
       this.cm && this.cm.execCommand('selectAll')
       const instance = tippy(node, {
         arrow: true,
-        showOnInit: true,
+        showOnCreate: true,
         trigger: 'click',
         content: 'Copied'
       })
@@ -153,13 +154,11 @@ export default class CodeEditor extends LitElement {
   render = () => {
     return html`
       <div class="code-editor-container code-editor-container--${this.theme}" contenteditable="false">
-        <div class="code-editor-toolbar font-headings" contenteditable="false">
-          ${Controls({ destroy: this.onDestroy })}
+        <div class="code-editor-toolbar" contenteditable="false">
+          ${this.readonly ? null : Controls({ destroy: this.onDestroy })}
           <div class="code-editor-toolbar-menu" contenteditable="false">
             ${this.readonly
-              ? html`
-                  <div class="code-editor-language-badge badge badge--grey mr-4">${this.mode}</div>
-                `
+              ? html` <div class="code-editor-language-badge badge badge--grey mr-4">${this.mode}</div> `
               : html`
                   <code-editor-language-switcher
                     mode=${this.mode}

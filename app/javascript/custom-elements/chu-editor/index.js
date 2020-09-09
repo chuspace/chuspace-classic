@@ -6,6 +6,7 @@ import { LitElement, customElement, html } from 'lit-element'
 
 import ActioncableClient from 'helpers/actioncable-client'
 import Editor from 'editor'
+import { Transaction } from 'prosemirror-state'
 import debounce from 'lodash/debounce'
 import readingTime from 'helpers/reading-time'
 
@@ -19,9 +20,10 @@ export default class ChuEditor extends LitElement {
       id: { type: String },
       param: { type: String },
       publicationId: { type: String },
-      original: { type: String },
       content: { type: String },
+      revision: { type: String },
       channel: { type: String },
+      appearance: { type: String },
       editable: { type: Boolean },
       imageProviderPath: { type: String },
       saving: { type: Boolean, reflect: true },
@@ -33,6 +35,7 @@ export default class ChuEditor extends LitElement {
     super()
 
     this.param = 'post'
+    this.appearance = 'default'
   }
 
   onRecieved = (data: any) => {
@@ -49,8 +52,9 @@ export default class ChuEditor extends LitElement {
       imageProviderPath: this.imageProviderPath,
       placeholder: 'Write your post',
       onChange: this.onChange,
-      original: this.original,
-      content: this.content || ''
+      content: this.content || '',
+      revision: this.revision || '',
+      appearance: this.appearance
     })
   }
 
@@ -88,7 +92,7 @@ export default class ChuEditor extends LitElement {
     }
   }
 
-  onChange = () => {
+  onChange = (transaction: Transaction) => {
     if (this.saving) return
 
     this.saving = true
@@ -124,8 +128,8 @@ export default class ChuEditor extends LitElement {
           'X-CSRF-TOKEN': Rails.csrfToken()
         }
       })
-        .then(response => response.json())
-        .then(async response => {
+        .then((response) => response.json())
+        .then(async (response) => {
           if (response.redirect) {
             window.history.pushState(null, 'Edit', response.redirect)
             this.id = response.id

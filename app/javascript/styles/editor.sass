@@ -1,18 +1,20 @@
 .chu-editor
-  @apply font-content
-  letter-spacing: -0.004rem
   font-weight: 400
   font-style: normal
-  font-size: 23px
+  font-size: 20px
   color: rgba(0, 0, 0, 0.8)
   line-height: 1.5
   outline: none
+  position: relative
+
+  &:last-child
+    @apply mb-0
 
   div
     @apply whitespace-no-wrap
 
   blockquote
-    @apply border-l-2 -ml-4 pl-4 mb-8
+    @apply border-l-2 -ml-4 pl-4 mb-6
     font-style: italic
 
   .title
@@ -35,10 +37,10 @@
         text-decoration: underline
 
   strong
-    @apply mb-6 font-content
+    @apply mb-6
 
   code-editor, lazy-image, p
-    @apply mb-8 block
+    @apply mb-6 block
 
   figure, p > div
     @apply whitespace-no-wrap
@@ -76,7 +78,7 @@
       color: inherit
 
   ul, ol
-    @apply ml-8 mb-8 list-disc
+    @apply ml-8 mb-6 list-disc
 
     li
       p

@@ -2,7 +2,7 @@ require "dotenv"
 require "db"
 require "pg"
 
-Dotenv.load!("/home/git/chuspace.com/current/.env")
+Dotenv.load("/Users/gaurav/personal/chuspace/.env")
 
 module Mobius
   module Hooks
@@ -43,24 +43,6 @@ module Mobius
         publication_id = ENV.fetch("GIT_PUBLICATION_ID", "")
         user_id = ENV.fetch("GIT_USER_ID", "")
 
-        blob_names.each do |file|
-          blob = `git show #{refs[1]}:'#{file}'`
-          encoding = encoding(blob)
-          mime_type = encoding[:type]
-
-          errors << "#{file}: Invalid file name, should be lowercase, no spaces and separated by a hyphen" unless FILENAME_REGEX.match(file)
-          errors << "#{file}: File name out of range, should be #{FILE_NAME_RANGE} chars" unless FILE_NAME_RANGE.includes?(file.size)
-
-          case mime_type
-          when "text/plain"
-            errors << "#{file}: Max post size is #{MAX_POST_SIZE}MB" if encoding[:size] > MAX_POST_SIZE
-          when "image/gif", "image/png", "image/jpeg"
-            errors << "#{file}: Max image size is #{MAX_IMAGE_SIZE}MB" if encoding[:size] > MAX_IMAGE_SIZE
-          else
-            errors << "#{file}: Unsupported file format"
-          end
-        end
-
         database = DB.open ENV.fetch("DATABASE_URL")
         unauthorized_role = 0
 
@@ -82,6 +64,44 @@ module Mobius
         response = database.query sql, user_id, unauthorized_role do |response|
           response.each do
             errors << "#{response.read(String)}: You are only allowed to edit your own posts."
+          end
+        end
+
+        blob_names.each do |file|
+          blob = `git show #{refs[1]}:'#{file}'`
+          encoding = encoding(blob)
+          mime_type = encoding[:type]
+
+          errors << "#{file}: Invalid file name, should be lowercase, no spaces and separated by a hyphen" unless FILENAME_REGEX.match(file)
+          errors << "#{file}: File name out of range, should be #{FILE_NAME_RANGE} chars" unless FILE_NAME_RANGE.includes?(file.size)
+
+          persistence_sql = <<-STRING
+            SELECT
+              "posts"."blob_path"
+            FROM
+              "posts"
+            WHERE
+              "posts"."blob_path" = $1
+              AND "posts"."author_id" = $2
+          STRING
+
+          begin
+            database.query_one persistence_sql, file, user_id, as: { String }
+          rescue PQ::PQError
+            STDERR.puts "ERROR: Something went wrong!"
+          rescue DB::Error
+            errors << "#{file}: Unpublished posts should be the drafts folder" if File.dirname(file) != "drafts"
+          ensure
+            database.close
+          end
+
+          case mime_type
+          when "text/plain"
+            errors << "#{file}: Max post size is #{MAX_POST_SIZE}MB" if encoding[:size] > MAX_POST_SIZE
+          when "image/gif", "image/png", "image/jpeg"
+            errors << "#{file}: Max image size is #{MAX_IMAGE_SIZE}MB" if encoding[:size] > MAX_IMAGE_SIZE
+          else
+            errors << "#{file}: Unsupported file format"
           end
         end
 
