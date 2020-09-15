@@ -1,12 +1,11 @@
 <aside class='mb-5 w-full text-center sm:text-left sm:w-1/3'>
-  <%= component(
-    'avatar',
+  <%= render(AvatarComponent.new(
     avatar_url: @user.avatar_url(variant: :profile),
     gravatar_url: @user.gravatar_url(variant: :profile),
-    variant: :profile,
+    type: :profile,
     css_class: 'mx-auto sm:mx-0',
     options: { title: @user.name, alt: @user.name }
-  )
+  ))
   %>
 
   <div>
@@ -42,7 +41,7 @@
   <div class='flex items-center justify-center sm:justify-start mt-4' role='img' aria-label='List of <%= @user.name %> publications'>
     <% @user.publications.listed.each do |publication| %>
       <%= link_to publication_path(publication) do %>
-        <%= component 'avatar', avatar_url: publication.avatar_url, variant: :xs, css_class: 'mr-2', options: { title: publication.name, alt: publication.name } %>
+        <%= render(AvatarComponent.new(avatar_url: publication.avatar_url, variant: :xs, css_class: 'mr-2', options: { title: publication.name, alt: publication.name })) %>
       <% end %>
     <% end %>
   </div>

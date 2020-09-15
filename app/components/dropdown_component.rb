@@ -1,13 +1,17 @@
 # typed: ignore
 # frozen_string_literal: true
 
-class DropdownComponent < ElementalComponents::Component
+class DropdownComponent < ApplicationComponent
   DEFAULT_CSS_CLASS = 'dropdown'
-  element :opener
-  element :body
-  attribute :items
-  attribute :drop_arrow, default: :yes
-  attribute :css_class
+  with_content_areas :opener, :body
+
+  attr_reader :items, :drop_arrow, :css_class
+
+  def initialize(drop_arrow: :yes, css_class: nil)
+    @items = items
+    @drop_arrow = drop_arrow
+    @css_class = css_class
+  end
 
   def arrow?
     drop_arrow == :yes

@@ -1,7 +1,7 @@
 <% if @users.any? %>
   <% @users.each do |user| %>
     <%= content_tag :li, role: 'option', class: 'dropdown__item', 'data-autocomplete-value': user.nickname, 'aria-disabled': @publication.members.include?(user) do  %>
-      <%= component('avatar', avatar_url: user.avatar_url, gravatar_url: user.gravatar_url, variant: :xs) %>
+      <%= render(AvatarComponent.new(avatar_url: user.avatar_url, gravatar_url: user.gravatar_url, type: :xs)) %>
       <div class='flex-1'>
         <%= user.name %>
         <span class='text-sm text-grey'><%= user.nickname %></span>

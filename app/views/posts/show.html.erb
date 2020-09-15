@@ -12,8 +12,7 @@
     <div class='w-full sm:w-3/12 text-center'>
       <div class='sticky top-0' style='top: 6rem;'>
         <%= link_to user_path(@post.author) do %>
-          <%= component(
-              'avatar',
+          <%= AvatarComponent.new(
               avatar_url: @post.author.avatar_url(variant: :md),
               gravatar_url: @post.author.gravatar_url(variant: :md),
               variant: :md,

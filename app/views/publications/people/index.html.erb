@@ -12,12 +12,12 @@
         <% @collaborators.each do |collaborator| %>
           <%= render 'users/user', badge: collaborator.role, user: collaborator.user do %>
             <% if Current.user.present? && allowed_to?(:update?, collaborator) %>
-              <%= component 'dropdown', flush: true, drop_arrow: :no do |d| %>
-                <% d.opener do %>
+              <%= render(DropdownComponent.new(drop_arrow: :no)) do |component| %>
+                <% component.with(:opener) do %>
                   <svg-icon name='more-horizontal' feather='true'></svg-icon>
                 <% end %>
 
-                <% d.body do %>
+                <% component.with(:body) do %>
                   <% Collaborator.roles.except(:owner).map do |role, _| %>
                     <% unless collaborator.role == role %>
                       <%= link_to "Make #{role}", publication_person_path(@publication, collaborator, role: role), class: "link link--default dropdown__item", role: "menuitem", tabindex: "-1", method: :patch, remote: true %>

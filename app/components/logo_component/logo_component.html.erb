@@ -1,0 +1,4 @@
+<%= link_to root_path, class: 'link link-white relative' do %>
+  <span class='<%= css_class %>'></span>
+  <%= content_tag :span, version, class: "logo__version logo__version--#{type}" if version %>
+<% end %>

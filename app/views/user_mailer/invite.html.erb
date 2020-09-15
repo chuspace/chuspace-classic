@@ -1,7 +1,7 @@
 <tr>
   <td>
     <div class='mb-20 center'>
-      <%= component('avatar', avatar_url: @publication.avatar_url(variant: :xl), variant: :xl, css_class: 'mx-auto') %>
+      <%= render(AvatarComponent.new(avatar_url: @publication.avatar_url(variant: :xl), type: :xl, css_class: 'mx-auto')) %>
     </div>
   </td>
 </tr>

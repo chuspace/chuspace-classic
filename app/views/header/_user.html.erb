@@ -3,12 +3,12 @@
     <%= render 'shared/compose_button' %>
   </div>
 
-  <%= component 'dropdown', flush: true do |d| %>
-    <% d.opener do %>
-      <%= component('avatar', avatar_url: Current.user.avatar_url, gravatar_url: Current.user.gravatar_url, variant: :xs) %>
+  <%= render(DropdownComponent.new) do |component| %>
+    <% component.with(:opener) do %>
+      <%= render(AvatarComponent.new(avatar_url: Current.user.avatar_url, gravatar_url: Current.user.gravatar_url, type: :xs)) %>
     <% end %>
 
-    <% d.body do %>
+    <% component.with(:body) do %>
       <%= content_tag :div, "Signed in as <strong>#{Current.user.nickname}</strong>".html_safe, class: "dropdown__item whitespace-normal", role: "menuitem", tabindex: "-1" %>
       <div class='dropdown__divider'></div>
       <%= link_to "Your profile", user_path(Current.user), class: "#{link_class(user_path(Current.user))} dropdown__item", role: "menuitem", tabindex: "-1" %>

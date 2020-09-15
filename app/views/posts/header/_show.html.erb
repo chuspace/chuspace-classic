@@ -1,12 +1,11 @@
 <div class='flex items-center flex-1 ml-4'>
   <% unless @publication.personal %>
     <%= link_to publication_path(@publication), class: "mr-4" do %>
-      <%= component(
-          'avatar',
+      <%= render(AvatarComponent.new(
           avatar_url: @publication.avatar_url || @publication.owner.avatar_url,
           gravatar_url: @publication.owner.gravatar_url,
-          variant: :xs
-        )
+          type: :xs
+        ))
       %>
     <% end %>
   <% end %>
