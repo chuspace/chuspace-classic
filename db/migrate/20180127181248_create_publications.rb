@@ -16,8 +16,8 @@ class CreatePublications < ActiveRecord::Migration[6.0]
       t.string :repo_name, null: false
       t.index :repo_name, unique: true
 
-      t.string :repo_path, null: false
-      t.index :repo_path, unique: true
+      t.integer :repo_id, null: false
+      t.index :repo_id, unique: true
 
       t.boolean :personal
       t.index %i[owner_id personal], unique: true

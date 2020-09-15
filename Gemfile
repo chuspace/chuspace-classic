@@ -68,18 +68,16 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Turblinks
 gem 'turbolinks'
 
-# Git API
-gem 'rugged'
-gem 'charlock_holmes'
-
-# SSH host key support
-gem 'sshkey'
-
 # Instrumentation
 gem 'yabeda'
 
 # View components
-gem 'elemental_components', git: 'https://github.com/jensljungblad/elemental_components'
+gem 'view_component'
+
+# Omninauth
+gem 'omniauth-github', github: 'omniauth/omniauth-github', branch: 'master'
+gem 'omniauth-gitlab'
+gem 'omniauth-atlassian-bitbucket'
 
 # Security
 gem 'rack-attack'
