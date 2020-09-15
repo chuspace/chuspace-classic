@@ -27,7 +27,6 @@ Rails.application.routes.draw do
     resources :settings, only: :index
     namespace :settings do
       resources :profiles, path: 'profile', only: %i[index]
-      resources :keys, path: 'key', except: %i[show update]
     end
   end
 
