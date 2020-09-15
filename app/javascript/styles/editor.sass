@@ -1,3 +1,10 @@
+.CodeMirror
+  @apply rounded-b max-w-full pt-4 font-normal overflow-y-auto
+  font-family: 'Open Sans', sans-serif
+  height: auto!important
+
+  .CodeMirror-scroll
+    max-height: 600px
 .chu-editor
   font-weight: 400
   font-style: normal
@@ -6,6 +13,7 @@
   line-height: 1.5
   outline: none
   position: relative
+  height: auto
 
   &:last-child
     @apply mb-0
@@ -26,7 +34,7 @@
     text-decoration: underline
     overflow-wrap: break-word
 
-  h1, h2, h3, h4, h5, h6
+  h1, h2, h3, h4, h5, h6, &.cm-header
     @apply mb-6
     letter-spacing: -0.07rem
 
@@ -36,7 +44,7 @@
       &:hover
         text-decoration: underline
 
-  strong
+  strong, &.cm-strong
     @apply mb-6
 
   code-editor, lazy-image, p
@@ -45,13 +53,13 @@
   figure, p > div
     @apply whitespace-no-wrap
 
-  pre
+  pre, &.cm-pre
     @apply whitespace-pre-wrap
 
-  code
+  code, &.cm-code
     @apply bg-grey-lightest p-1 border border-grey-lighter rounded-sm whitespace-pre-wrap text-base font-normal
 
-  img
+  img, &.cm-image
     width: 800px
 		min-height: 400px
 
@@ -77,7 +85,7 @@
       background: inherit
       color: inherit
 
-  ul, ol
+  ul, ol, &.cm-list
     @apply ml-8 mb-6 list-disc
 
     li

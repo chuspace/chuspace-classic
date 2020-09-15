@@ -1,0 +1,432 @@
+/**
+ * @fileoverview Implements markdown editor
+ * @author NHN FE Development Lab <dl_javascript@nhn.com>
+ */
+
+import 'codemirror/lib/codemirror.css'
+import '../css/md-syntax-highlighting.css'
+import 'codemirror/mode/javascript/javascript'
+
+import {
+  getMdEndCh,
+  getMdEndLine,
+  getMdStartCh,
+  getMdStartLine,
+  isStyledTextNode,
+  traverseParentNodes
+} from './utils/markdown'
+
+import CodeMirrorExt from './codeMirrorExt'
+import CommandManager from './commandManager'
+import ComponentManager from './componentManager'
+import KeyMapper from './keyMapper'
+import MdListManager from './mdListManager'
+import MdTextObject from './mdTextObject'
+import { getMarkInfo } from './markTextHelper'
+import isBoolean from 'tui-code-snippet/type/isBoolean'
+import mdAddImage from './markdownCommands/addImage'
+import mdAddLine from './markdownCommands/addLine'
+import mdAddLink from './markdownCommands/addLink'
+import mdBlockquote from './markdownCommands/blockquote'
+import mdBold from './markdownCommands/bold'
+import mdChangeTaskMarker from './markdownCommands/changeTaskMarker'
+import mdCode from './markdownCommands/code'
+import mdCodeBlock from './markdownCommands/codeBlock'
+import mdHR from './markdownCommands/hr'
+import mdHeading from './markdownCommands/heading'
+import mdIndent from './markdownCommands/indent'
+import mdItalic from './markdownCommands/italic'
+import mdMoveNextCursorOrIndent from './markdownCommands/moveNextCursorOrIndent'
+import mdMovePrevCursorOrOutdent from './markdownCommands/movePrevCursorOrOutdent'
+import mdOL from './markdownCommands/ol'
+import mdOutdent from './markdownCommands/outdent'
+import mdParagraph from './markdownCommands/paragraph'
+import mdStrike from './markdownCommands/strike'
+import mdTable from './markdownCommands/table'
+import mdTask from './markdownCommands/task'
+import mdToggleTaskMarker from './markdownCommands/toggleTaskMarker'
+import mdUL from './markdownCommands/ul'
+
+const keyMapper = KeyMapper.getSharedInstance()
+
+const defaultToolbarState = {
+  strong: false,
+  emph: false,
+  strike: false,
+  thematicBreak: false,
+  blockQuote: false,
+  code: false,
+  codeBlock: false,
+  list: false,
+  taskList: false,
+  orderedList: false,
+  heading: false,
+  table: false
+}
+
+const ATTR_NAME_MARK = 'data-tui-mark'
+const TASK_MARKER_KEY_RX = /x|backspace/i
+
+/**
+ * Class MarkdownEditor
+ * @param {HTMLElement} el - container element
+ * @param {EventManager} eventManager - event manager
+ * @param {Object} options - options of editor
+ */
+class MarkdownEditor extends CodeMirrorExt {
+  constructor(el, eventManager, toastMark, options) {
+    super(el, {
+      dragDrop: true,
+      allowDropFileTypes: ['image'],
+      extraKeys: {
+        Enter: () => this.eventManager.emit('command', 'AddLine'),
+        Tab: () => this.eventManager.emit('command', 'MoveNextCursorOrIndent'),
+        'Shift-Tab': () => this.eventManager.emit('command', 'MovePrevCursorOrOutdent'),
+        'Shift-Ctrl-X': () => this.eventManager.emit('command', 'ToggleTaskMarker')
+      },
+      viewportMargin: options && options.height === 'auto' ? Infinity : 10
+    })
+    this.eventManager = eventManager
+    this.isMarkdownMode = true
+    this.componentManager = new ComponentManager(this)
+    this.toastMark = toastMark
+    this.componentManager.addManager(MdListManager)
+    this.commandManager = new CommandManager(this, {
+      useCommandShortcut: options.useCommandShortcut
+    })
+
+    /**
+     * latest state info
+     * @type {object}
+     * @private
+     */
+    this._latestState = null
+
+    /**
+     * map of marked lines
+     * @type {Object.<number, boolean}
+     * @private
+     */
+    this._markedLines = {}
+    this._addDefaultCommands()
+    this._initEvent()
+  }
+
+  /**
+   * _initEvent
+   * Initialize EventManager event handler
+   * @private
+   */
+  _initEvent() {
+    this.cm.getWrapperElement().addEventListener('click', () => {
+      this.eventManager.emit('click', {
+        source: 'markdown'
+      })
+    })
+
+    this.cm.on('beforeChange', (cm, ev) => {
+      if (ev.origin === 'paste') {
+        this.eventManager.emit('pasteBefore', {
+          source: 'markdown',
+          data: ev
+        })
+      }
+    })
+
+    this.cm.on('change', (cm, cmEvent) => {
+      this._refreshCodeMirrorMarks(cmEvent)
+      this._emitMarkdownEditorChangeEvent(cmEvent)
+    })
+
+    this.cm.on('focus', () => {
+      this.eventManager.emit('focus', {
+        source: 'markdown'
+      })
+    })
+
+    this.cm.on('blur', () => {
+      this.eventManager.emit('blur', {
+        source: 'markdown'
+      })
+    })
+
+    this.cm.on('scroll', (cm, eventData) => {
+      this.eventManager.emit('scroll', {
+        source: 'markdown',
+        data: eventData
+      })
+    })
+
+    this.cm.on('keydown', (cm, keyboardEvent) => {
+      this.eventManager.emit('keydown', {
+        source: 'markdown',
+        data: keyboardEvent
+      })
+
+      this.eventManager.emit('keyMap', {
+        source: 'markdown',
+        keyMap: keyMapper.convert(keyboardEvent),
+        data: keyboardEvent
+      })
+    })
+
+    this.cm.on('keyup', (cm, keyboardEvent) => {
+      this.eventManager.emit('keyup', {
+        source: 'markdown',
+        data: keyboardEvent
+      })
+
+      const { key } = keyboardEvent
+
+      if (TASK_MARKER_KEY_RX.test(key)) {
+        this.eventManager.emit('command', 'ChangeTaskMarker')
+      }
+    })
+
+    this.cm.on('copy', (cm, ev) => {
+      this.eventManager.emit('copy', {
+        source: 'markdown',
+        data: ev
+      })
+    })
+
+    this.cm.on('cut', (cm, ev) => {
+      this.eventManager.emit('cut', {
+        source: 'markdown',
+        data: ev
+      })
+    })
+
+    this.cm.on('paste', (cm, clipboardEvent) => {
+      this.eventManager.emit('paste', {
+        source: 'markdown',
+        data: clipboardEvent
+      })
+    })
+
+    this.cm.on('drop', (cm, eventData) => {
+      eventData.preventDefault()
+
+      this.eventManager.emit('drop', {
+        source: 'markdown',
+        data: eventData
+      })
+    })
+
+    this.cm.on('cursorActivity', () => this._onChangeCursorActivity())
+  }
+
+  /**
+   * Set Editor value
+   * @param {string} markdown - Markdown syntax text
+   * @param {boolean} [cursorToEnd=true] - move cursor to contents end
+   * @override
+   */
+  setValue(markdown, cursorToEnd) {
+    super.setValue(markdown, cursorToEnd)
+  }
+
+  /**
+   * Get text object of current range
+   * @param {{start, end}} range Range object of each editor
+   * @returns {MdTextObject}
+   */
+  getTextObject(range) {
+    return new MdTextObject(this, range)
+  }
+
+  /**
+   * Emit contentChangedFromMarkdown event
+   * @param {event} e - Event object
+   * @private
+   */
+  _emitMarkdownEditorContentChangedEvent(eventObj) {
+    this.eventManager.emit('contentChangedFromMarkdown', eventObj)
+  }
+
+  /**
+   * Emit changeEvent
+   * @param {event} e - Event object
+   * @private
+   */
+  _emitMarkdownEditorChangeEvent(e) {
+    if (e.origin !== 'setValue') {
+      const eventObj = {
+        source: 'markdown'
+      }
+
+      this.eventManager.emit('changeFromMarkdown', eventObj)
+      this.eventManager.emit('change', eventObj)
+    }
+  }
+
+  _refreshCodeMirrorMarks(e) {
+    const { from, to, text } = e
+    const changed = this.toastMark.editMarkdown([from.line + 1, from.ch + 1], [to.line + 1, to.ch + 1], text.join('\n'))
+
+    this._emitMarkdownEditorContentChangedEvent(changed)
+
+    if (!changed.length) {
+      return
+    }
+
+    changed.forEach((editResult) => this._markNodes(editResult))
+  }
+
+  _markNodes(editResult) {
+    const { nodes, removedNodeRange } = editResult
+
+    if (removedNodeRange) {
+      this._removeBackgroundOfLines(removedNodeRange)
+    }
+
+    if (nodes.length) {
+      const [editFromPos] = nodes[0].sourcepos
+      const [, editToPos] = nodes[nodes.length - 1].sourcepos
+      const editFrom = { line: editFromPos[0] - 1, ch: editFromPos[1] - 1 }
+      const editTo = { line: editToPos[0] - 1, ch: editToPos[1] }
+      const marks = this.cm.findMarks(editFrom, editTo)
+
+      for (const mark of marks) {
+        if (mark.attributes && ATTR_NAME_MARK in mark.attributes) {
+          mark.clear()
+        }
+      }
+
+      for (const parent of nodes) {
+        const walker = parent.walker()
+        let event = walker.next()
+
+        while (event) {
+          const { node, entering } = event
+
+          // eslint-disable-next-line max-depth
+          if (entering) {
+            this._markNode(node)
+          }
+          event = walker.next()
+        }
+      }
+    }
+  }
+
+  _removeBackgroundOfLines(removedNodeRange) {
+    const [startLine, endLine] = removedNodeRange.line
+
+    for (let index = startLine; index <= endLine; index += 1) {
+      if (this._markedLines[index]) {
+        this.cm.removeLineClass(index, 'background')
+        this._markedLines[index] = false
+      }
+    }
+  }
+
+  _markCodeBlockBackground(lineBackground) {
+    const { start, end, className } = lineBackground
+
+    for (let index = start; index <= end; index += 1) {
+      let lineClassName = className
+
+      if (index === start) {
+        lineClassName += ' start'
+      } else if (index === end) {
+        lineClassName += ' end'
+      }
+
+      this.cm.addLineClass(index, 'background', lineClassName)
+      this._markedLines[index] = true
+    }
+  }
+
+  _markNode(node) {
+    const from = { line: getMdStartLine(node) - 1, ch: getMdStartCh(node) - 1 }
+    const to = { line: getMdEndLine(node) - 1, ch: getMdEndCh(node) }
+    const markInfo = getMarkInfo(node, from, to, this.cm.getLine(to.line))
+
+    if (markInfo) {
+      const { marks = [], lineBackground = {} } = markInfo
+
+      marks.forEach(({ start, end, className }) => {
+        const attributes = { [ATTR_NAME_MARK]: '' }
+
+        this.cm.markText(start, end, { className, attributes })
+      })
+
+      this._markCodeBlockBackground(lineBackground)
+    }
+  }
+
+  _onChangeCursorActivity() {
+    const { line, ch } = this.cm.getCursor()
+    const mdLine = line + 1
+    const mdCh = this.cm.getLine(line).length === ch ? ch : ch + 1
+    let mdNode = this.toastMark.findNodeAtPosition([mdLine, mdCh])
+    let state = null
+
+    // To prevent to execute codemirror command in codeblock
+    this.cm.state.isCursorInCodeBlock = mdNode && mdNode.type === 'codeBlock'
+    this.eventManager.emit('cursorActivity', {
+      source: 'markdown',
+      cursor: { line, ch },
+      markdownNode: mdNode
+    })
+  }
+
+  /**
+   * latestState reset
+   */
+  resetState() {
+    this._latestState = null
+  }
+
+  getToastMark() {
+    return this.toastMark
+  }
+
+  _addDefaultCommands() {
+    this.addCommand(mdBold)
+    this.addCommand(mdItalic)
+    this.addCommand(mdBlockquote)
+    this.addCommand(mdHeading)
+    this.addCommand(mdParagraph)
+    this.addCommand(mdHR)
+    this.addCommand(mdAddLink)
+    this.addCommand(mdAddImage)
+    this.addCommand(mdUL)
+    this.addCommand(mdOL)
+    this.addCommand(mdIndent)
+    this.addCommand(mdOutdent)
+    this.addCommand(mdTable)
+    this.addCommand(mdTask)
+    this.addCommand(mdCode)
+    this.addCommand(mdCodeBlock)
+    this.addCommand(mdStrike)
+    this.addCommand(mdChangeTaskMarker)
+    this.addCommand(mdToggleTaskMarker)
+    this.addCommand(mdMoveNextCursorOrIndent)
+    this.addCommand(mdMovePrevCursorOrOutdent)
+    this.addCommand(mdAddLine)
+  }
+
+  addCommand(type, props) {
+    if (!props) {
+      this.commandManager.addCommand(type)
+    } else {
+      this.commandManager.addCommand(CommandManager.command(type, props))
+    }
+  }
+
+  /**
+   * MarkdownEditor factory method
+   * @param {HTMLElement} el - Container element for editor
+   * @param {EventManager} eventManager - EventManager instance
+   * @param {Object} options - options of editor
+   * @returns {MarkdownEditor} - MarkdownEditor
+   * @ignore
+   */
+  static factory(el, eventManager, toastMark, options) {
+    return new MarkdownEditor(el, eventManager, toastMark, options)
+  }
+}
+
+export default MarkdownEditor

@@ -2,11 +2,10 @@
 # frozen_string_literal: true
 
 class Publication < ApplicationRecord
-  include Repoable, Avatarable, Topicable, Reserved, AvatarUploader::Attachment.new(:avatar)
+  include Repoable, Avatarable, Topicable, AvatarUploader::Attachment.new(:avatar)
   extend FriendlyId
 
   friendly_id :name, use: %i[slugged history], slug_limit: 70
-  reserved :name
 
   before_validation :add_owning_collaboration, on: :create
 

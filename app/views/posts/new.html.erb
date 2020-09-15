@@ -1,11 +1,6 @@
-<chu-editor
-  spellcheck="false"
-  url="<%= publication_posts_path(@publication) %>"
-  class='chu-editor pb-32 block'
-  channel='PostChannel'
-  publicationId='<%= @publication.slug %>'
-  imageProviderPath='<%= publication_images_path(@publication) %>'
-  autofocus
-  editable
+<code-editor
+  mode='gfm'
+  content=''
+  theme='light'
 >
-</chu-editor>
+</code-editor>

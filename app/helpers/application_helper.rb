@@ -17,9 +17,6 @@ module ApplicationHelper
   private
 
   def layout_classes_mapping
-    {
-      posts: { edit: 'layout__narrow', new: 'layout__narrow' },
-      'posts/publish': { index: 'layout__narrow', create: 'layout__narrow' }
-    }
+    { 'posts/publish': { index: 'layout__narrow', create: 'layout__narrow' } }
   end
 end

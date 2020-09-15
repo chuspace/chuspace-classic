@@ -1,13 +1,9 @@
-<chu-editor
-  spellcheck="false"
-  content="<%= @post.blob_content %>"
-  id="<%= @post.slug %>"
-  publicationId='<%= @publication.slug %>'
-  imageProviderPath='<%= publication_images_path(@post.publication) %>'
-  class='chu-editor pb-32 block'
-  channel='PostChannel'
-  editable
+<code-editor
+  mode='gfm'
+  content='<%= @post.blob_content %>'
+  theme='light'
 >
-</chu-editor>
+</code-editor>
+
 
 <%= render 'posts/publish', post: @post if params[:controller] == 'posts/publish' %>

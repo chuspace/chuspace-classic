@@ -1,5 +1,5 @@
 export { default as AlertNotification } from './alert-notification'
-export { default as ChuEditor } from './chu-editor'
+export { default as CodeEditor } from './code-editor'
 export { default as DropImage } from './drop-image'
 export { default as InputAutocomplete } from './input-autocomplete'
 export { default as ContentLoader } from './content-loader'

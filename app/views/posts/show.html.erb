@@ -55,17 +55,11 @@
         <% end %>
       </ul>
 
-      <chu-editor
-        spellcheck="false"
-        content="<%= @post.published_blob.content %>"
-        revision="<%= @post.blob.content %>"
-        id="<%= @post.slug %>"
-        publicationId='<%= @publication.slug %>'
-        imageProviderPath='<%= publication_images_path(@post.publication) %>'
-        class='chu-editor pb-32 block'
-        appearance='contribution'
+      <code-editor
+        mode='ruby'
+        content='<%= @post.blob_content %>'
       >
-      </chu-editor>
+      </code-editor>
 
       <% unless @post.publication.personal %>
         <div class='author mt-4 mb-24 border-t border-grey-lightest'>

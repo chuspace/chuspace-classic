@@ -37,10 +37,6 @@ Rails.application.routes.draw do
 
   resources :publications, only: %i[new create index edit], param: :slug
 
-  namespace :mobius do
-    resources :post_receive, only: :create, constraints: MobiusConstraint.new
-  end
-
   mount Easymon::Engine => '/alive' if Rails.env.production?
   mount AvatarUploader.derivation_endpoint => 'avatar/variants'
   mount PreviewImageUploader.derivation_endpoint => 'images/variants'
@@ -64,6 +60,5 @@ Rails.application.routes.draw do
       resources :likes, path: 'like', only: :create, module: 'posts'
       resources :autocomplete, only: :index, module: 'posts'
     end
-    resources :repositories, path: '', param: :slug, only: :show, format: :git
   end
 end
