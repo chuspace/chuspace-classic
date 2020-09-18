@@ -74,10 +74,12 @@ gem 'yabeda'
 # View components
 gem 'view_component'
 
+# Encryption
+gem 'blind_index'
+gem 'lockbox'
+
 # Omninauth
 gem 'omniauth-github', github: 'omniauth/omniauth-github', branch: 'master'
-gem 'omniauth-gitlab'
-gem 'omniauth-atlassian-bitbucket'
 
 # Security
 gem 'rack-attack'
@@ -106,6 +108,9 @@ gem 'sentry-raven'
 
 # Cron jobs
 gem 'whenever', require: false
+
+# Icons
+gem 'octicons_helper'
 
 group :production do
   # Resource monitoring

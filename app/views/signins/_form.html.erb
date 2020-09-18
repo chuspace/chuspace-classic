@@ -1,8 +1,0 @@
-<%= simple_form_for user, as: :signin, url: signins_path, remote: true do |f| %>
-  <%= f.input :email, autofocus: true %>
-
-  <div class='flex items-center mt-8'>
-    <%= f.button :button, 'Sign in' %>
-    <%= link_to('Sign up', root_path, class: 'link text-sm underline ml-4') %>
-  </div>
-<% end %>

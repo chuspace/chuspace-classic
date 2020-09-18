@@ -19,12 +19,7 @@ class CreatePublications < ActiveRecord::Migration[6.0]
       t.integer :repo_id, null: false
       t.index :repo_id, unique: true
 
-      t.boolean :personal
-      t.index %i[owner_id personal], unique: true
-
       t.references :owner, index: true, null: false, foreign_key: { to_table: :users }
-      t.string :website
-      t.string :twitter
 
       t.string :topics, array: true, default: []
       t.index :topics, using: 'gin'

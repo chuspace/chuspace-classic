@@ -14,8 +14,6 @@ module Authentication
       value: user.id, expires: 1.year.from_now, domain: COOKIE_DOMAINS, secure: Rails.env.production?
     }
     user.update_tracked_fields!(request)
-    user.regenerate_auth_token
-    user.update(auth_token_expires_at: Time.now)
     user
   end
 

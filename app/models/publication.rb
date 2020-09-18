@@ -9,17 +9,11 @@ class Publication < ApplicationRecord
 
   before_validation :add_owning_collaboration, on: :create
 
-  validates_presence_of :name, :slug
-  validates_presence_of :description, :avatar, unless: :personal
+  validates_presence_of :name, :slug, :owner_id, :avatar
   validates :name, length: { in: 1..39 }, format: { with: /\A^[a-zA-Z0-9\s]*$\z/i }
   validates :slug, length: { in: 1..39 }, format: { with: /\A^[a-z0-9]+(?:-[a-z0-9]+)*$\z/i }
-  validates :description, length: { in: 1..80 }, unless: :personal
+  validates :description, length: { in: 1..80 }, allow_blank: true
   validates_db_uniqueness_of :slug, :name
-  validates_db_uniqueness_of :personal, scope: :owner_id
-  validate :personal_attribute_should_contain_valid_values
-
-  validates :website, url: true, allow_blank: true
-  validates :twitter, url: { twitter: true }, allow_blank: true
 
   has_many :posts, dependent: :destroy
   has_many :invitations, dependent: :destroy
@@ -41,9 +35,5 @@ class Publication < ApplicationRecord
 
   def add_owning_collaboration
     self.owning_collaboration = build_owning_collaboration(user: owner, publication: self, role: 'owner')
-  end
-
-  def personal_attribute_should_contain_valid_values
-    errors.add(:personal, :invalid) unless personal || personal.nil?
   end
 end

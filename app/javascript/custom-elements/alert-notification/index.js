@@ -28,9 +28,7 @@ export default class AlertNotification extends LitElement {
   render() {
     return html`
       <div class="alert alert--${this.level}" @click=${this.hide}>
-        <div class="p-4 ">
-          ${this.message}
-        </div>
+        <div class="p-4 ">${this.message}</div>
       </div>
     `
   }

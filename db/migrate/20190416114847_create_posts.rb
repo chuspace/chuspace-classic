@@ -12,12 +12,15 @@ class CreatePosts < ActiveRecord::Migration[6.0]
 
       t.text :body_html
 
-      t.string :blob_id
-      t.string :blob_path, null: false
-      t.index %i[blob_path publication_id], unique: true
+      t.string :preview_image_data
 
-      t.integer :status, default: 0, null: false
-      t.index :status
+      t.boolean :featured, index: true
+      t.boolean :private, index: true
+
+      t.string :blob_id, index: true
+      t.string :blob_path, null: false, index: true
+      t.string :commit_sha, null: false, index: true
+      t.integer :status, default: 0, null: false, index: true
 
       t.references :author, index: true, null: false, foreign_key: { to_table: :users }
       t.references :publication, null: false, foreign_key: true

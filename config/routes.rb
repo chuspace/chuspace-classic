@@ -12,12 +12,7 @@ Rails.application.routes.draw do
   get :about, to: 'pages#about', format: :html, as: :about
   get :contact, to: 'pages#contact', format: :html, as: :contact
 
-  resources :signins, path: 'signin', only: %i[index create destroy]
-  resources :signups, path: 'signup', only: %i[index create]
-
-  resources :check_nicknames, only: :create
-  resources :check_emails, only: :create
-  resources :magic_logins, only: :index
+  get '/auth/:provider/callback', to: 'sessions#create', as: :omniauth_github
 
   namespace :autocomplete do
     resources :topics, only: :index

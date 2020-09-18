@@ -61,3 +61,7 @@ bin/git-hooks/*
 public/avatars
 public/uploads
 public/sitemap*
+
+/config/credentials/development.key
+
+/config/credentials/production.key
